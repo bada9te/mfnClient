@@ -64,6 +64,7 @@ const EnumBattles = props => {
                                             battleId={item._id}
                                             makeBatlleVote={makeBatlleVote}
                                             postNScore="post1Score"
+                                            votedBy={item?.votedBy}
                                         />
                                     }
                                     post2={
@@ -90,6 +91,7 @@ const EnumBattles = props => {
                                             battleId={item._id}
                                             makeBatlleVote={makeBatlleVote}
                                             postNScore="post2Score"
+                                            votedBy={item?.votedBy}
                                         />
                                     }
                                     createdAt={item.createdAt}
