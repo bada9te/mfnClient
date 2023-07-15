@@ -1,0 +1,122 @@
+import passwordImage from '../../images/password.png'
+import './AccountRestore.scss'
+import AccountRestoreForm from '../../components/forms/account-restore/account-restore'
+import { Avatar, Box, Card, CardActions, CardContent, Typography, Stack } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { cancelAccountRestoring, checkUserVerifyTokenById } from '../../components/forms/account-restore/accountRestoreFormSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
+import * as Alert from "../../components/alerts/alerts";
+
+
+const AccountRestore = (props)=> {
+    const { userId, actionId, verifyToken, type } = useParams();
+    const actionIsValid = useSelector(state => state.accountRestoreForm.actionIsValid);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const cancelAccountRestore = () => {
+        dispatch(cancelAccountRestoring({
+            userId,
+            actionId,
+            verifyToken,
+            type,
+        }))
+        .then(unwrapResult)
+        .then(result => {
+            if (result.data.done && result.data.action) {
+                Alert.alertSuccess('Action canceled');
+                navigate('/login');
+            } else {
+                Alert.alertError('Unexpected error');
+            }
+        });
+    }
+
+    useEffect(() => {
+        dispatch(checkUserVerifyTokenById({
+            userId,
+            actionId,
+            verifyToken,
+            type,
+        }));
+    }, [userId, verifyToken, actionId, dispatch, type])
+
+    return(
+        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
+            <Card sx={{width: '20rem', height: 'fit-content', boxShadow: 3}}>
+                {
+                    (() => {
+                        if (actionIsValid) {
+                            return (
+                                <>
+                                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
+                                        <Avatar src={passwordImage} sx={{ m: 1, bgcolor: 'secondary.main' }}/>
+                                    </Box>
+                                    <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                        Your account is ready to be restored
+                                    </Typography>
+                                    <CardContent>
+                                        <AccountRestoreForm userId={userId} actionId={actionId} verifyToken={verifyToken} type={type}/>
+                                    </CardContent>
+
+                                    <CardActions>
+                                        <Stack direction="column" spacing={0.75} mx={1.5} mb={1.5}>
+                                            <Typography 
+                                                fontSize={16} sx={{ cursor: 'pointer' }}
+                                                component="div" fontWeight="bold" 
+                                                color="primary" onClick={cancelAccountRestore}
+                                            >
+                                                Cancel account restore action
+                                            </Typography>
+                                        </Stack>
+                                    </CardActions>
+                                </>
+                            );
+                        } else {
+                            return (
+                                <>
+                                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
+                                        <Avatar src={passwordImage} sx={{ m: 1, bgcolor: 'secondary.main' }}/>
+                                    </Box>
+                                    <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                        Validation error
+                                    </Typography>
+                                    <CardContent>
+                                        <Typography textAlign={'center'}>This action is not valid</Typography>
+                                    </CardContent>
+                                </>
+                            );
+                        }
+                    })()
+                }
+            </Card>
+        </Box>
+    );
+}
+
+export default AccountRestore;
+
+
+/*
+        <>
+            <div className="container-fluid position-sticky">
+                <div className="row mb-5">
+                    <Topbar text="Account Restore" username="UserName" where="account-restore"/>
+                </div>
+                <div className="row mb-5">
+                    <h1 className='hs'><span className='first-first-letter'>C</span>hanging password of account</h1>
+                    <h2 className='hs'><span className='second-first-letter'>A</span>ccount name</h2>
+                </div>
+                
+                <div className='d-flex justify-content-center' >
+                    <img className='logo' src={logotup} style={{width: '19em', height:'19em', borderRadius: '50%'}}></img>
+                    <div className="container login-form-all" style={{border: '3px solid #d2d4d5', borderRadius: '10px', width:'340px', height:'330px'}}>
+                        <AccountRestoreForm/>
+                    </div>
+                    
+                </div>
+            </div>
+        </>
+*/

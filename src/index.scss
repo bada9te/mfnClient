@@ -1,0 +1,93 @@
+:root {
+  --outer_space: #292A2A;
+  --humming_bird: #CAF8F8;
+  --keppel: #36B2AC;
+  --eastern_blue: #1C94A4;
+
+  --background_lighter: #ffffff;
+}
+
+[data-bs-theme="dark"] {
+  --background_lighter: #2b3136;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+.MuiDrawer-paper {
+  width: 20% !important;
+}
+*/
+@media (max-width: 500px) {
+  .MuiDrawer-paper {
+    width: 100% !important;
+  }
+  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 700px) and (min-width: 500px){
+  .MuiDrawer-paper {
+    width: 70% !important;
+  }
+  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 700px){
+  .MuiDrawer-paper {
+    width: 50% !important;
+  }
+  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 900px){
+  .MuiDrawer-paper {
+    width: 40% !important;
+  }
+  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 1400px) and (min-width: 1200px) {
+  .MuiDrawer-paper {
+    width: 30% !important;
+  }
+  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom { 
+    width: 100% !important;
+  }
+}
+
+
+@media (min-width: 1400px) {
+  .MuiDrawer-paper {
+    width: 20% !important;
+  }
+  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom { 
+    width: 100% !important;
+  }
+}
+
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

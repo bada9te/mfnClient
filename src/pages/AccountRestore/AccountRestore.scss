@@ -1,0 +1,20 @@
+.first-first-letter {
+    color: #1BA39C;
+}
+.second-first-letter {
+    color: #333333;
+}
+
+.restore-image {
+    display: block;
+}
+
+.head-text {
+    font-size: 60px;
+}
+
+@media screen and (max-width: 770px) {
+    .restore-image {
+        display: none;
+    }
+}

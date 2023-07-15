@@ -1,0 +1,29 @@
+import { MenuItem, Typography } from "@mui/material";
+import { Chat, QueueMusic, TrackChanges } from '@mui/icons-material';
+
+
+const TopBarLeftMenuMin = props => {
+    const {handleNavigate, pages} = props;
+
+    return (
+        <>
+            {
+                pages.map((item, key) => {
+                    return (
+                        <MenuItem onClick={() => handleNavigate(item)} key={key}>
+                            <Typography textAlign="center" display="flex" alignItems="center">
+                                {item === "Feed" ? <QueueMusic sx={{mr: 1}}/> : null}
+                                {item === "Chats" ? <Chat sx={{mr: 1}}/> : null}
+                                {item === "Battles" ? <TrackChanges sx={{mr: 1}}/> : null}
+                                {item}
+                            </Typography>
+                        </MenuItem>
+                    );
+                })
+            }
+            
+        </>
+    );
+}
+
+export default TopBarLeftMenuMin;

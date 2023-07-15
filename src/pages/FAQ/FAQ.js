@@ -1,0 +1,70 @@
+import { ExpandMore } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
+
+
+
+const FAQ = (props) => {
+    const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla gravida, lectus fermentum ullamcorper sollicitudin, lacus velit ultrices tellus, non facilisis sem enim non sem. Maecenas condimentum aliquet maximus. Morbi lorem metus, tempor vitae posuere ac, sagittis a mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat ipsum lacinia lectus commodo, convallis mattis lectus condimentum. Nullam at ex lacus. Ut a elit in velit vulputate faucibus."
+
+
+    return (
+        <Box sx={{m: 2, mt: 3}}>
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMore/>}>
+                    <Typography>Who we are?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {text}
+                </AccordionDetails>    
+            </Accordion> 
+
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMore/>}>
+                    <Typography>How can I restore my account?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {text}
+                </AccordionDetails>    
+            </Accordion>
+            
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMore/>}>
+                    <Typography>How can I post sth?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {text}
+                </AccordionDetails>    
+            </Accordion>
+                
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMore/>}>
+                    <Typography>What type of data can I load?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {text}
+                </AccordionDetails>    
+            </Accordion>
+                
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMore/>}>
+                    <Typography>How can I report something or somebody?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {text}
+                </AccordionDetails>    
+            </Accordion>
+
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMore/>}>
+                    <Typography>How do battles work?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {text}
+                </AccordionDetails>    
+            </Accordion>    
+        </Box>
+    );
+}
+
+
+export default FAQ;

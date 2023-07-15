@@ -1,0 +1,17 @@
+.comment {
+    background-color: var(--background_lighter);
+    .background {
+        background-color: var(--background_lighter);
+    }
+    .text {
+        color: var(--text_color);
+    }
+    .input {
+        background-color: var(--input_background);
+        color: var(--input_text);
+    }
+    .accordion-button {
+        background-color: var(--background_lighter);
+        color: var(--text_color);
+    }
+}
