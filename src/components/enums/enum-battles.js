@@ -6,11 +6,14 @@ import Spinner from "../common/spinner/Spinner";
 import { Box, Typography } from "@mui/material";
 
 
+
 const EnumBattles = props => {
+    const { makeBatlleVote } = props;
     const locations = useSelector(state => state.base.locations);
     const battles = useSelector(state => state.battlesContainer.battles);
     const isLoading = useSelector(state => state.battlesContainer.isLoading);
     const page = useSelector(state => state.battlesContainer.page);
+
 
 
     return (
@@ -57,6 +60,10 @@ const EnumBattles = props => {
                                             profileLinkAccessable={true}
                                             commentsAllowed={item.post1.commentsAllowed}
                                             downloadsAllowed={item.post1.downloadsAllowed}
+
+                                            battleId={item._id}
+                                            makeBatlleVote={makeBatlleVote}
+                                            postNScore="post1Score"
                                         />
                                     }
                                     post2={
@@ -79,6 +86,10 @@ const EnumBattles = props => {
                                             profileLinkAccessable={true}
                                             commentsAllowed={item.post2.commentsAllowed}
                                             downloadsAllowed={item.post2.downloadsAllowed}
+
+                                            battleId={item._id}
+                                            makeBatlleVote={makeBatlleVote}
+                                            postNScore="post2Score"
                                         />
                                     }
                                     createdAt={item.createdAt}

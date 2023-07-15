@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PaginationTree from "../../common/pagination/pagination";
 import EnumBattles from "../../enums/enum-battles";
 import CreateBattleForm from "../../forms/create-battle/create-battle";
-import { fetchBattles, setPage } from "./battlesContainerSlice";
+import { fetchBattles, makeVote, setPage } from "./battlesContainerSlice";
 
 
 function TabPanel(props) {
@@ -36,6 +36,16 @@ const BattlesContainer = props => {
     const currentUser = useSelector(state => state.base.user);
 
 
+    const makeBatlleVote = async(battleId, postNScore, voteCount, voterId) => {
+        dispatch(makeVote({
+            battleId, 
+            postNScore, 
+            voteCount, 
+            voterId
+        }));
+    }
+
+
     const handleTabSwitch = (event, key) => {
         setStatus(key);
         if (key === 0) {
@@ -64,11 +74,11 @@ const BattlesContainer = props => {
                 </Box>
 
                 <TabPanel value={status} index={0}>
-                    <EnumBattles battlesData={battles}/>
+                    <EnumBattles battlesData={battles} makeBatlleVote={makeBatlleVote}/>
                 </TabPanel>
             
                 <TabPanel value={status} index={1}>
-                    <EnumBattles battlesData={battles}/>
+                    <EnumBattles battlesData={battles} makeBatlleVote={makeBatlleVote}/>
                 </TabPanel>
 
                 <TabPanel value={status} index={2}>

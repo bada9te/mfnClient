@@ -35,6 +35,9 @@ const PostItem = (props) => {
         handlePostSelection,
         downloadsAllowed,
         commentsAllowed,
+        battleId,
+        makeBattleVote,
+        postNScore,
     } = props;
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false)
@@ -387,8 +390,7 @@ const PostItem = (props) => {
                         } else if (status === "voting") {
                             return (
                                 <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-                                    <Button size="small" onClick={() => console.log('vote')}>Free Vote (+1)</Button>
-                                    <Button size="small">Vote with coins</Button>
+                                    <Button size="small" onClick={() => makeBattleVote(battleId, postNScore, 1, currentUser?._id)}>Free Vote (+1)</Button>
                                 </CardActions>
                             );
                         }

@@ -64,7 +64,15 @@ const battlesContainerSlice = createSlice({
 
             // votes
             .addCase(makeVote.fulfilled, (state, { meta }) => {
-                console.log(state.battles);
+                const battles = JSON.parse(JSON.stringify(current(state.battles)));
+
+                battles.forEach(battle => {
+                    if (battle._id === meta.arg.battleId) {
+                        battle[meta.arg.postNScore] += 1;
+                    }
+                });
+
+                state.battles = battles;
             })
 
             // add or remove like
