@@ -2,7 +2,6 @@ import './App.scss';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify } from './pages/pages';
 import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { store } from './redux/store';
 import { id } from './components/baseSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
@@ -11,8 +10,6 @@ import { useSelector } from 'react-redux';
 
 
 function App() {
-  //const currentUser = useSelector(state => state.base.user);
-  const [cookies, , ] = useCookies(['user']);
   const navigate = useNavigate();
   const themeStyle = useSelector(state => state.base.theme);
   const location = useLocation();
@@ -42,7 +39,7 @@ function App() {
     } else if (location.pathname !== '/' && !regAllowed.test(location.pathname)) {
       navigate('/login');
     }
-  }, [cookies.Token, location.pathname, navigate, regAllowed]);
+  }, [location.pathname, navigate, regAllowed]);
 
 
 
