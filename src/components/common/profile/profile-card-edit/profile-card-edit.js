@@ -18,7 +18,6 @@ const ProfileCardEdit = (props) => {
                 backgroundSize: 'cover', 
                 objectFit: 'contain', 
                 backgroundColor: theme !== 'light' ? '#1e1e1e' : 'white', 
-                //color: theme !== 'light' ? 'white' : '#292A2A',
                 }}
             >
                 <Box sx={{
