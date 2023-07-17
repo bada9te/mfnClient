@@ -67,19 +67,6 @@ const postsContainerSlice = createSlice({
                 }
             });
             state.posts = posts;
-        },
-        updateLikesSocket: (state, action) => {
-            const posts = JSON.parse(JSON.stringify(current(state.posts)));
-            posts.forEach(item => {
-                if (item._id === action.payload.postId) {
-                    if (item.likedBy.indexOf(action.payload.userId) === -1) {
-                        item.likedBy.push(action.payload.userId);
-                    } else {
-                        item.likedBy = item.likedBy.filter(id => id !== action.payload.userId);
-                    }
-                }
-            });
-            state.posts = posts;
         }
     },
     extraReducers: (builder) => {
@@ -99,7 +86,17 @@ const postsContainerSlice = createSlice({
 
             // add or remove like
             .addCase(switchPostLike.fulfilled, (state, { meta }) => {
-                postsContainerSlice.caseReducers.updateLikesSocket(meta.arg);
+                const posts = JSON.parse(JSON.stringify(current(state.posts)));
+                posts.forEach(item => {
+                    if (item._id === meta.arg.postId) {
+                        if (item.likedBy.indexOf(meta.arg.userId) === -1) {
+                            item.likedBy.push(meta.arg.userId);
+                        } else {
+                            item.likedBy = item.likedBy.filter(id => id !== meta.arg.userId);
+                        }
+                    }
+                });
+                state.posts = posts;
             })
             
             // switch in saved

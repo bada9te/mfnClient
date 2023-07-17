@@ -183,13 +183,13 @@ const PostItem = (props) => {
         userSocket.on(`post-${id}-was-liked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(true);
             setLikesAmount(likesAmount + 1);
-            dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
+            //dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unliked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(false);
             setLikesAmount(likesAmount - 1);
-            dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
+            //dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-saved`, (data) => {
