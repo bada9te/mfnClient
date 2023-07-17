@@ -179,12 +179,12 @@ const PostItem = (props) => {
     // socket
     useEffect(() => {
         userSocket.on(`post-${id}-was-liked`, (data) => {
-            //setLikesAmount(likesAmount + 1);
+            setLikesAmount(likesAmount + 1);
             dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unliked`, (data) => {
-            //setLikesAmount(likesAmount - 1);
+            setLikesAmount(likesAmount - 1);
             dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
             //console.log(data);
         });
