@@ -64,7 +64,7 @@ const store = configureStore({
         userSelectModal:        userSelectModalSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
-    devTools: true,
+    devTools: process.env.REACT_APP_VERSION_TYPE === "production" ? false : true,
 });
 
 // action creators
