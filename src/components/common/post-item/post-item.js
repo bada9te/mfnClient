@@ -66,8 +66,8 @@ const PostItem = (props) => {
                     setIsLiked(false);
                     setLikesAmount(likesAmount - 1);
                     userSocket.emit("post-remove-like", {
-                        eventUserId: currentUser._id,
-                        postId: id,
+                        sender: currentUser._id,
+                        post: id,
                         postOwnerId: user[0],
                     });
                 } else {
@@ -145,8 +145,8 @@ const PostItem = (props) => {
             if (isSaved) {
                 setSavesAmount(savesAmount - 1);
                 userSocket.emit("post-remove-save", {
-                    eventUserId: currentUser._id,
-                    postId: id,
+                    sender: currentUser._id,
+                    post: id,
                     postOwnerId: user[0],
                 });
             } else {
@@ -193,17 +193,13 @@ const PostItem = (props) => {
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-saved`, (data) => {
+            if (data.sender === currentUser._id) setIsSaved(true);
             setSavesAmount(savesAmount + 1);
-            if (data.sender === currentUser._id) {
-                setIsSaved(true);
-            }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unsaved`, (data) => {
+            if (data.sender === currentUser._id) setIsSaved(false);
             setSavesAmount(savesAmount - 1);
-            if (data.sender === currentUser._id) {
-                setIsSaved(false);
-            }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-commented`, (data) => {
