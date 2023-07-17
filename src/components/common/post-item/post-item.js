@@ -8,7 +8,7 @@ import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardC
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp } from "@mui/icons-material";
 import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
 import { useDispatch, useSelector } from "react-redux";
-import { switchPostInSaved, switchPostLike, updateCommentsSocket } from "../../containers/posts-container/postsContainerSlice";
+import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSocket } from "../../containers/posts-container/postsContainerSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { fetchComments } from "../../containers/comments-container/commentsContainerSlice";
 import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments-modal/commentsModalSlice";
@@ -168,8 +168,6 @@ const PostItem = (props) => {
         }
     }
         
-    
-
     // init
     useEffect(() => {
         if (currentUser._id && currentUser._id !== "") {
@@ -181,29 +179,25 @@ const PostItem = (props) => {
     // socket
     useEffect(() => {
         userSocket.on(`post-${id}-was-liked`, (data) => {
-            setLikesAmount(likesAmount + 1);
-            if (data.sender === currentUser._id) {
-                setIsLiked(true);
-            }
+            //setLikesAmount(likesAmount + 1);
+            dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unliked`, (data) => {
-            setLikesAmount(likesAmount - 1);
-            if (data.sender === currentUser._id) {
-                setIsLiked(false);
-            }
+            //setLikesAmount(likesAmount - 1);
+            dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-saved`, (data) => {
             setSavesAmount(savesAmount + 1);
-            if (data.sender !== currentUser._id) {
+            if (data.sender === currentUser._id) {
                 setIsSaved(true);
             }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unsaved`, (data) => {
             setSavesAmount(savesAmount - 1);
-            if (data.sender !== currentUser._id) {
+            if (data.sender === currentUser._id) {
                 setIsSaved(false);
             }
             //console.log(data);
