@@ -206,7 +206,7 @@ const PostItem = (props) => {
         });
         userSocket.on(`post-${id}-was-unsaved`, (data) => {
             if (data.sender !== currentUser._id) {
-                setSavesAmount(savesAmount + 1);
+                setSavesAmount(savesAmount - 1);
             } else {
                 setIsSaved(false);
             }
