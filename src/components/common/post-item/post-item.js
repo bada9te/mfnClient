@@ -113,7 +113,7 @@ const PostItem = (props) => {
     // open owner profile
     const goToProfile = () => {
         if (profileLinkAccessable) {
-            navigate(`/app/profile/${user[0]}`)
+            navigate(`/profile/${user[0]}`)
         }
     }
 
