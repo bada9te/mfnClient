@@ -63,6 +63,7 @@ const PostItem = (props) => {
         if (status !== "upload") {
             if (status !== "upload") {
                 if (isLiked) {
+                    setIsLiked(false);
                     setLikesAmount(likesAmount - 1);
                     userSocket.emit("post-remove-like", {
                         eventUserId: currentUser._id,
@@ -70,6 +71,7 @@ const PostItem = (props) => {
                         postOwnerId: user[0],
                     });
                 } else {
+                    setIsLiked(true);
                     setLikesAmount(likesAmount + 1);
                     userSocket.emit("post-add-like", {
                         receiver: user[0],
