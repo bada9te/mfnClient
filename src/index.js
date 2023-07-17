@@ -12,12 +12,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { store } from './redux/store';
 import { Provider as ReduxProvider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import axios from 'axios';
 
 
 
-// APP
-axios.defaults.withCredentials = true;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 

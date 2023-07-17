@@ -7,6 +7,9 @@ import { id } from './components/baseSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { useSelector } from 'react-redux';
+import * as Alert from './components/alerts/alerts';
+import axios from 'axios';
+
 
 
 function App() {
@@ -24,6 +27,7 @@ function App() {
     },
   });
 
+  
   useEffect(() => {
     let currentUserId = localStorage.getItem('mfnCurrentUser') ? JSON.parse(localStorage.getItem('mfnCurrentUser')).id : null;
     
@@ -41,6 +45,24 @@ function App() {
     }
   }, [location.pathname, navigate, regAllowed]);
 
+
+  useEffect(() => {
+    // AXIOS SETUP
+    axios.defaults.withCredentials = true;
+    axios.interceptors.response.use(
+        response => {
+            return response;
+        }, 
+        error => {
+            if (error.response.status === 401) {
+                localStorage.removeItem("mfnCurrentUser");
+                navigate('/login');
+                Alert.alertWarning('Session expired, pls re-login');
+            }
+            return error;
+        }
+    )
+  }, [navigate]);
 
 
   return (
