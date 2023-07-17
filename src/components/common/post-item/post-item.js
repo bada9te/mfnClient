@@ -8,7 +8,7 @@ import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardC
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp } from "@mui/icons-material";
 import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
 import { useDispatch, useSelector } from "react-redux";
-import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSocket } from "../../containers/posts-container/postsContainerSlice";
+import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSocket, updateSavesSocket } from "../../containers/posts-container/postsContainerSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { fetchComments } from "../../containers/comments-container/commentsContainerSlice";
 import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments-modal/commentsModalSlice";
@@ -63,7 +63,6 @@ const PostItem = (props) => {
         if (status !== "upload") {
             if (status !== "upload") {
                 if (isLiked) {
-                    setIsLiked(false);
                     setLikesAmount(likesAmount - 1);
                     userSocket.emit("post-remove-like", {
                         sender: currentUser._id,
@@ -71,7 +70,6 @@ const PostItem = (props) => {
                         postOwnerId: user[0],
                     });
                 } else {
-                    setIsLiked(true);
                     setLikesAmount(likesAmount + 1);
                     userSocket.emit("post-add-like", {
                         receiver: user[0],
@@ -181,18 +179,34 @@ const PostItem = (props) => {
         userSocket.on(`post-${id}-was-liked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(true);
             setLikesAmount(likesAmount + 1);
+            dispatch(updateLikesSocket({
+                userId: data.sender,
+                postId: id,
+            }));
         });
         userSocket.on(`post-${id}-was-unliked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(false);
             setLikesAmount(likesAmount - 1);
+            dispatch(updateLikesSocket({
+                userId: data.sender,
+                postId: id,
+            }));
         });
         userSocket.on(`post-${id}-was-saved`, (data) => {
             if (data.sender === currentUser._id) setIsSaved(true);
             setSavesAmount(savesAmount + 1);
+            dispatch(updateSavesSocket({
+                userId: data.sender,
+                postId: id,
+            }));
         });
         userSocket.on(`post-${id}-was-unsaved`, (data) => {
             if (data.sender === currentUser._id) setIsSaved(false);
             setSavesAmount(savesAmount - 1);
+            dispatch(updateSavesSocket({
+                userId: data.sender,
+                postId: id,
+            }));
         });
         userSocket.on(`post-${id}-was-commented`, (data) => {
             dispatch(updateCommentsSocket(data));

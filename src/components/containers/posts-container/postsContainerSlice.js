@@ -67,6 +67,32 @@ const postsContainerSlice = createSlice({
                 }
             });
             state.posts = posts;
+        },
+        updateLikesSocket: (state, action) => {
+            const posts = JSON.parse(JSON.stringify(current(state.posts)));
+            posts.forEach(item => {
+                if (item._id === action.payload.postId) {
+                    if (item.likedBy.indexOf(action.payload.userId) === -1) {
+                        item.likedBy.push(action.payload.userId);
+                    } else {
+                        item.likedBy = item.likedBy.filter(id => id !== action.payload.userId);
+                    }
+                }
+            });
+            state.posts = posts;
+        },
+        updateSavesSocket: (state, action) => {
+            const posts = JSON.parse(JSON.stringify(current(state.posts)));
+            posts.forEach(item => {
+                if (item._id === action.payload.postId) {
+                    if (item.savedBy.indexOf(action.payload.userId) === -1) {
+                        item.savedBy.push(action.payload.userId);
+                    } else {
+                        item.savedBy = item.savedBy.filter(id => id !== action.payload.userId);
+                    }
+                }
+            });
+            state.posts = posts;
         }
     },
     extraReducers: (builder) => {
@@ -86,32 +112,12 @@ const postsContainerSlice = createSlice({
 
             // add or remove like
             .addCase(switchPostLike.fulfilled, (state, { meta }) => {
-                const posts = JSON.parse(JSON.stringify(current(state.posts)));
-                posts.forEach(item => {
-                    if (item._id === meta.arg.postId) {
-                        if (item.likedBy.indexOf(meta.arg.userId) === -1) {
-                            item.likedBy.push(meta.arg.userId);
-                        } else {
-                            item.likedBy = item.likedBy.filter(id => id !== meta.arg.userId);
-                        }
-                    }
-                });
-                state.posts = posts;
+                postsContainerSlice.caseReducers.updateLikesSocket(state, { payload: meta.arg });
             })
             
             // switch in saved
             .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
-                const posts = JSON.parse(JSON.stringify(current(state.posts)));
-                posts.forEach(item => {
-                    if (item._id === meta.arg.postId) {
-                        if (item.savedBy.indexOf(meta.arg.userId) === -1) {
-                            item.savedBy.push(meta.arg.userId);
-                        } else {
-                            item.savedBy = item.savedBy.filter(id => id !== meta.arg.userId);
-                        }
-                    }
-                });
-                state.posts = posts;
+                postsContainerSlice.caseReducers.updateSavesSocket(state, { payload: meta.arg });
             })
 
             // comment added
