@@ -127,7 +127,7 @@ const CustomAudioPlayer = (props) => {
     // main
     useEffect(() => {
         dispatch(setControlsLocked(true));
-        if (containerRef.current && src !== '') {
+        if (containerRef.current && src && src !== '') {
             const waveSurfer = WaveSurfer.create({
                 container: containerRef.current,
                 cursorColor: 'red',
