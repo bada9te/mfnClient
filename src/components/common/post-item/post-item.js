@@ -181,33 +181,29 @@ const PostItem = (props) => {
     // socket
     useEffect(() => {
         userSocket.on(`post-${id}-was-liked`, (data) => {
-            if (data.sender !== currentUser._id) {
-                setLikesAmount(likesAmount + 1);
-            } else {
+            setLikesAmount(likesAmount + 1);
+            if (data.sender === currentUser._id) {
                 setIsLiked(true);
             }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unliked`, (data) => {
-            if (data.sender !== currentUser._id) {
-                setLikesAmount(likesAmount - 1);
-            } else {
+            setLikesAmount(likesAmount - 1);
+            if (data.sender === currentUser._id) {
                 setIsLiked(false);
             }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-saved`, (data) => {
+            setSavesAmount(savesAmount + 1);
             if (data.sender !== currentUser._id) {
-                setSavesAmount(savesAmount + 1);
-            } else {
                 setIsSaved(true);
             }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unsaved`, (data) => {
+            setSavesAmount(savesAmount - 1);
             if (data.sender !== currentUser._id) {
-                setSavesAmount(savesAmount - 1);
-            } else {
                 setIsSaved(false);
             }
             //console.log(data);
