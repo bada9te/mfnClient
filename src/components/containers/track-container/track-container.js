@@ -49,6 +49,8 @@ const TrackContainer = (props) => {
                                     likedBy={postData.likedBy}
                                     savedBy={postData.savedBy}
                                     comments={postData.comments}
+                                    commentsAllowed={postData.commentsAllowed}
+                                    downloadsAllowed={postData.downloadsAllowed}
                                     status={null}
                                     profileLinkAccessable={true}
                                 />
