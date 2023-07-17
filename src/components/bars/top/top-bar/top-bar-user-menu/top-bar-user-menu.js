@@ -13,7 +13,7 @@ const TopBarUserMenu = props => {
     const itemsNL = ['Login', 'Support'];
     const navigate = useNavigate();
     const currentUser = useSelector(state => state?.base?.user);
-    const notifications = useSelector(state => state.base.user.notifications);
+    const notifications = useSelector(state => state.notificationsContainer.notifications);
 
 
     const handleNavigate = (where) => {
@@ -61,7 +61,7 @@ const TopBarUserMenu = props => {
                                             case 'Profile':
                                                 return (<Person sx={{mr: 1}}/>);
                                             case 'Notifications':
-                                                if (notifications.length > 0) 
+                                                if (notifications.length > 0 && notifications.find(i => i.checked === false)) 
                                                     return (
                                                         <StyledBadge
                                                             overlap="circular"

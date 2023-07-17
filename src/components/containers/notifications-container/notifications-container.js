@@ -1,51 +1,75 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../../common/spinner/Spinner";
 import EnumNotifications from "../../enums/enum-notifications";
-import { fetchNotifications } from "./notificationsContainerSlice";
+import { fetchReadNotifications, fetchUnreadNotifications, setPage } from "./notificationsContainerSlice";
+
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+            <Box sx={{ p: 0 }}>
+                {children}
+            </Box>
+        )}
+      </div>
+    );
+}
+
+
+
 
 const NotificationsContainer = props => {
-    const isLoading = useSelector(state => state.notificationsContainer.isLoading);
-    const notifications = useSelector (state => state.notificationsContainer.notifications);
+    const [status, setStatus] = useState(0);
     const currentUserId = useSelector(state => state.base.user._id);
+    const page = useSelector(state => state.notificationsContainer.page);
     const dispatch = useDispatch();
+
+
+    const handleTabSwitch = (event, key) => {
+        setStatus(key);
+        if (key === 0) {
+            dispatch(setPage("Unread"));
+        } else if (key === 1) {
+            dispatch(setPage("Read"));
+        }
+    }
 
     
     useEffect(() => {
         if (currentUserId) {
-            dispatch(fetchNotifications());
+            if (page === "Unread") dispatch(fetchUnreadNotifications());
+            else if (page === "Read") dispatch(fetchReadNotifications());
         }
-    }, [dispatch, currentUserId]);
+    }, [dispatch, currentUserId, page]);
 
     return (
-        <>
-            {
-                (() => {
-                    if (isLoading) {
-                        return (
-                            <Box sx={{minHeight: '88vh', display: 'flex', alignItems: 'center'}}>
-                                <Spinner/>
-                            </Box>
-                        );
-                    } else if (notifications?.length === 0) {
-                        return (
-                            <Box sx={{minHeight: '88vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Typography sx={{textAlign: 'center', fontSize: 16}}>No notifications yet</Typography>
-                            </Box>
-                        );
-                    } else {
-                        return (
-                            <Box sx={{ width: '100%', py: 4 }}>
-                                <Stack spacing={1} direction="column" useFlexGap>
-                                    <EnumNotifications/>
-                                </Stack>
-                            </Box>
-                        );
-                    }
-                })()
-            }
-        </>
+        <Box>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', my: 3 }}>
+                <Tabs value={status} onChange={handleTabSwitch}>
+                    <Tab label="Unread" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
+                    <Tab label="Read" id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
+                </Tabs>
+            </Box>
+
+            <TabPanel value={status} index={0}>
+                <EnumNotifications/>
+            </TabPanel>
+        
+            <TabPanel value={status} index={1}>
+                <EnumNotifications/>
+            </TabPanel>
+        </Box>
     );
 }
 

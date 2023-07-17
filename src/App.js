@@ -9,6 +9,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { useSelector } from 'react-redux';
 import * as Alert from './components/alerts/alerts';
 import axios from 'axios';
+import { fetchUnreadNotifications } from './components/containers/notifications-container/notificationsContainerSlice';
 
 
 
@@ -38,6 +39,8 @@ function App() {
         .then(result => {
           if (!result.data.done) {
             navigate('/login');
+          } else {
+            store.dispatch(fetchUnreadNotifications());
           }
         });
     } else if (location.pathname !== '/' && !regAllowed.test(location.pathname)) {

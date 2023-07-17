@@ -14,14 +14,14 @@ import userSocket from '../../../../socket/user/socket-user';
 import UserSelectModal from '../../../modals/user-select-modal/user-select-modal';
 import CommentsModal from '../../../modals/comments-modal/comments-modal';
 import StyledBadge from "./styled-badge/styled-badge";
-import { addOrRemoveNotificationId } from '../../../baseSlice';
+import { fetchUnreadNotifications } from '../../../containers/notifications-container/notificationsContainerSlice';
 
 
 
 const Topbar = (props) => {
     const user = useSelector(state => state?.base?.user);
     const locations = useSelector(state => state?.base?.locations);
-    const notifications = useSelector(state => state.base.user.notifications);
+    const notifications = useSelector(state => state.notificationsContainer.notifications);
     const dispatch = useDispatch();
 
 
@@ -65,16 +65,16 @@ const Topbar = (props) => {
     useEffect(() => {
         if (user._id !== "") {
             userSocket.on(`subscribed-on-${user._id}`, (data) => {
-                dispatch(addOrRemoveNotificationId(data._id));
+                dispatch(fetchUnreadNotifications());
             });
             userSocket.on(`user-${user._id}-post-was-liked`, (data) => {
-                dispatch(addOrRemoveNotificationId(data._id));
+                dispatch(fetchUnreadNotifications());
             });
             userSocket.on(`user-${user._id}-post-was-saved`, (data) => {
-                dispatch(addOrRemoveNotificationId(data._id));
+                dispatch(fetchUnreadNotifications());
             });
             userSocket.on(`post-shared-to-${user._id}`, (data) => {
-                dispatch(addOrRemoveNotificationId(data._id));
+                dispatch(fetchUnreadNotifications());
             });
     
             return () => {
@@ -158,10 +158,11 @@ const Topbar = (props) => {
                                         component="span"
                                         sx={{ mr: 1, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700, color: 'white', textDecoration: 'none', alignItems: 'center',}}
                                     >
-                                        { user && user?._id !== "" ? user?.nick : "Login" }
+                                        { //user && user?._id !== "" ? user?.nick : "Login" 
+                                        }
                                     </Typography>
                                     {
-                                        notifications.length > 0
+                                        notifications.length > 0 && notifications.find(i => i.checked === false)
                                         ?
                                         <StyledBadge
                                             overlap="circular"

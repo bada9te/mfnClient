@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { httpLogin } from "../requests/auth";
 import { httpGetUserById } from "../requests/users";
 import { handleSubscribtion } from "./common/profile/profile-card/profileCardSlice";
-import notificationsContainerSlice from "./containers/notifications-container/notificationsContainerSlice";
 
 const initialState = {
     user: {
@@ -16,7 +15,6 @@ const initialState = {
         background: '',
         subscribers: [],
         subscribedOn: [],
-        notifications: [],
     },
     theme: JSON.parse(localStorage.getItem('mfnCurrentUser'))?.theme || 'light',
     locations: {
@@ -44,6 +42,7 @@ export const id = createAsyncThunk(
     }
 );
 
+
 const baseSlice = createSlice({
     name: 'base',
     initialState: initialState,
@@ -69,17 +68,6 @@ const baseSlice = createSlice({
         updatePartOfUser: (state, action) => {
             state.user[action.payload.what] = action.payload.value;
         },
-        addOrRemoveNotificationId: (state, action) => {
-            const id = action.payload;
-            const notifications = JSON.parse(JSON.stringify(current(state.user.notifications)));
-
-            if (!notifications.includes(id)) {
-                state.user.notifications.push(id);
-            } else {
-                notifications.splice(notifications.indexOf(id), 1);
-                state.user.notifications = notifications;
-            }
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -120,5 +108,4 @@ export const {
     setTheme,
     setCurrenUserIsFollowedOn,
     updatePartOfUser,
-    addOrRemoveNotificationId,
 } = actions;

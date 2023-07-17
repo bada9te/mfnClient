@@ -1,18 +1,20 @@
 
-import { Delete, ExpandMore } from "@mui/icons-material";
+import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Card, CardHeader, IconButton, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { addOrRemoveNotificationId } from "../../baseSlice";
-import { deleteNotification } from "../../containers/notifications-container/notificationsContainerSlice";
+import { deleteNotification, markNotificationAsRead } from "../../containers/notifications-container/notificationsContainerSlice";
 
 const NotificationItem = props => {
-    const {id, user, text, post, comment, createdAt} = props;
+    const {id, user, text, post, comment, createdAt, page} = props;
     const dispatch = useDispatch();
 
 
     const handleDelete = () => {
         dispatch(deleteNotification(id));
-        dispatch(addOrRemoveNotificationId(id));
+    }
+
+    const hadleMarkAsRead = () => {
+        dispatch(markNotificationAsRead(id));
     }
 
     return (
@@ -30,6 +32,12 @@ const NotificationItem = props => {
                     title={user[1]}
                     subheader={createdAt}
                     action={
+                        page === "Unread"
+                        ?
+                        <IconButton onClick={hadleMarkAsRead}>
+                            <TaskAlt/>
+                        </IconButton>
+                        :
                         <IconButton onClick={handleDelete}>
                             <Delete/>
                         </IconButton>

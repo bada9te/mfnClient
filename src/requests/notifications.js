@@ -24,8 +24,17 @@ const httpMarkNotificationAsRead = async(id) => {
     return response;
 }
 
-const httpGetAllNotificationsWithReceiverId = async(id) => {
-    const response = await axios.get(`${API_URL}/notifications/get-all-with-receiver`, {
+const httpGetAllUnreadNotificationsWithReceiverId = async(id) => {
+    const response = await axios.get(`${API_URL}/notifications/get-all-unread`, {
+        params: {
+            receiverId: id,
+        },
+    });
+    return response;
+}
+
+const httpGetAllReadNotificationsWithReceiverId = async(id) => {
+    const response = await axios.get(`${API_URL}/notifications/get-all-read`, {
         params: {
             receiverId: id,
         },
@@ -47,6 +56,7 @@ export {
     httpCreateNotification,
     httpDeleteNotifcation,
     httpMarkNotificationAsRead,
-    httpGetAllNotificationsWithReceiverId,
+    httpGetAllUnreadNotificationsWithReceiverId,
+    httpGetAllReadNotificationsWithReceiverId,
     httpGetAllNotificationsByIds,
 }

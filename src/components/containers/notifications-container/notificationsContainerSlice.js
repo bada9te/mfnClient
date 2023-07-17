@@ -1,16 +1,26 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit"
-import { httpCreateNotification, httpDeleteNotifcation, httpGetAllNotificationsWithReceiverId } from "../../../requests/notifications";
+import { httpCreateNotification, httpDeleteNotifcation, httpGetAllReadNotificationsWithReceiverId, httpGetAllUnreadNotificationsWithReceiverId, httpMarkNotificationAsRead } from "../../../requests/notifications";
 
 const initialState = {
     isLoading: false,
     notifications: [],
+    page: "Unread",
 }
 
-export const fetchNotifications = createAsyncThunk(
-    'notifications-container/fetch',
+
+export const fetchUnreadNotifications = createAsyncThunk(
+    'notifications-container/fetch-unread',
     async(_, thunkApi) => {
         const userId = thunkApi.getState().base.user._id;
-        return await httpGetAllNotificationsWithReceiverId(userId);
+        return await httpGetAllUnreadNotificationsWithReceiverId(userId);
+    }
+);
+
+export const fetchReadNotifications = createAsyncThunk(
+    'notifications-container/fetch-unread',
+    async(_, thunkApi) => {
+        const userId = thunkApi.getState().base.user._id;
+        return await httpGetAllReadNotificationsWithReceiverId(userId);
     }
 );
 
@@ -25,6 +35,13 @@ export const deleteNotification = createAsyncThunk(
     'notifications-container/delete',
     async(notificationId, thunkApi) => {
         return await httpDeleteNotifcation(notificationId);
+    }
+);
+
+export const markNotificationAsRead = createAsyncThunk(
+    'notificatons-container/mark-as-read',
+    async(notificationId, thunkApi) => {
+        return await httpMarkNotificationAsRead(notificationId);
     }
 );
 
@@ -46,18 +63,21 @@ const notificationsContainerSlice = createSlice({
 
             state.notifications = notifications.filter(item => item._id !== notificationId);
         },
+        setPage: (state, action) => {
+            state.page = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
             // fetch
-            .addCase(fetchNotifications.pending, (state) => {
+            .addCase(fetchReadNotifications.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(fetchNotifications.rejected, (state) => {
+            .addCase(fetchReadNotifications.rejected, (state) => {
                 state.isLoading = false;
                 state.notifications = [];
             })
-            .addCase(fetchNotifications.fulfilled, (state, action) => {
+            .addCase(fetchReadNotifications.fulfilled, (state, action) => {
                 const notifications = action.payload.data.notifications;
                 notifications.forEach((notification) => {
                     if (!notification.checked) {
@@ -75,7 +95,15 @@ const notificationsContainerSlice = createSlice({
                 const notificationId = meta.arg;
 
                 state.notifications = notifications.filter(notification => notification._id !== notificationId);
-            });
+            })
+
+            // mark as read
+            .addCase(markNotificationAsRead.fulfilled, (state, { meta }) => {
+                const notifications = JSON.parse(JSON.stringify(current(state.notifications)));
+                const notificationId = meta.arg;
+
+                state.notifications = notifications.filter(notification => notification._id !== notificationId);
+            })
     }
 });
 
@@ -86,4 +114,5 @@ export const {
     setIsLoading,
     addNotification,
     removeNotificationById,
+    setPage,
 } = actions;
