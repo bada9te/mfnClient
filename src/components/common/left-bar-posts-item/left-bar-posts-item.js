@@ -40,7 +40,7 @@ const LeftBarPostsItem = (props) => {
             }
             
             <CardActions>
-                <Stack direction="column" spacing={0.75} sx={{display: 'flex', my: 0.5, mx: 1}}>
+                <Stack direction="column" spacing={0.75} sx={{display: 'flex', my: 0.5, mx: 1, flexWrap: 'wrap'}}>
                     <Typography
                         fontSize={16} sx={{ cursor: 'pointer' }}
                         component="div" fontWeight="bold" 
