@@ -55,7 +55,7 @@ const ProfileCardForm = (props) => {
                 // assign bg to current user on server
                 result = await httpUpdateUser(currentUser?._id, result.data.file.filename, "background");
             }
-            navigate('/app/profile-edit');
+            navigate('/profile-edit');
             alertUser("Profile", result.data.done);
         }
     }
