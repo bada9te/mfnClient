@@ -151,14 +151,12 @@ const PostItem = (props) => {
                 });
             } else {
                 setSavesAmount(savesAmount + 1);
-                if (!isSaved && currentUser._id !== user[0]) {
-                    userSocket.emit("post-add-save", {
-                        receiver: user[0],
-                        sender: currentUser._id,
-                        post: id,
-                        text: `${currentUser.nick} bookmarked your track`,
-                    });
-                }
+                userSocket.emit("post-add-save", {
+                    receiver: user[0],
+                    sender: currentUser._id,
+                    post: id,
+                    text: `${currentUser.nick} bookmarked your track`,
+                });
             }
             dispatch(switchPostInSaved({userId: currentUser._id, postId: id}))
                 .then(unwrapResult)
@@ -183,24 +181,18 @@ const PostItem = (props) => {
         userSocket.on(`post-${id}-was-liked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(true);
             setLikesAmount(likesAmount + 1);
-            dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
-            //console.log(data);
         });
         userSocket.on(`post-${id}-was-unliked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(false);
             setLikesAmount(likesAmount - 1);
-            dispatch(updateLikesSocket({ postId: data.post, userId: data.sender }));
-            //console.log(data);
         });
         userSocket.on(`post-${id}-was-saved`, (data) => {
             if (data.sender === currentUser._id) setIsSaved(true);
             setSavesAmount(savesAmount + 1);
-            //console.log(data);
         });
         userSocket.on(`post-${id}-was-unsaved`, (data) => {
             if (data.sender === currentUser._id) setIsSaved(false);
             setSavesAmount(savesAmount - 1);
-            //console.log(data);
         });
         userSocket.on(`post-${id}-was-commented`, (data) => {
             dispatch(updateCommentsSocket(data));
