@@ -181,19 +181,35 @@ const PostItem = (props) => {
     // socket
     useEffect(() => {
         userSocket.on(`post-${id}-was-liked`, (data) => {
-            setLikesAmount(likesAmount + 1);
+            if (data.sender !== currentUser._id) {
+                setLikesAmount(likesAmount + 1);
+            } else {
+                setIsLiked(true);
+            }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unliked`, (data) => {
-            setLikesAmount(likesAmount - 1);
+            if (data.sender !== currentUser._id) {
+                setLikesAmount(likesAmount - 1);
+            } else {
+                setIsLiked(false);
+            }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-saved`, (data) => {
-            setSavesAmount(savesAmount + 1);
+            if (data.sender !== currentUser._id) {
+                setSavesAmount(savesAmount + 1);
+            } else {
+                setIsSaved(true);
+            }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-unsaved`, (data) => {
-            setSavesAmount(savesAmount - 1);
+            if (data.sender !== currentUser._id) {
+                setSavesAmount(savesAmount + 1);
+            } else {
+                setIsSaved(false);
+            }
             //console.log(data);
         });
         userSocket.on(`post-${id}-was-commented`, (data) => {
@@ -213,7 +229,7 @@ const PostItem = (props) => {
             userSocket.off(`post-${id}-was-commented`);
             userSocket.off(`post-${id}-was-uncommented`);
         };
-    }, [id, likesAmount, savesAmount, dispatch]);
+    }, [id, likesAmount, savesAmount, dispatch, currentUser?._id]);
 
     // for post upload form visualization
     useEffect(() => {}, [commentsAllowed, downloadsAllowed])
