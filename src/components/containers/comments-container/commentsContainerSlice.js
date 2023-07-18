@@ -13,8 +13,7 @@ const initialState = {
 
 export const fetchComments = createAsyncThunk(
     'comments-conatiner/fetch',
-    async({postId, commentsIds}, thunkApi) => {
-        //const ids = thunkApi.getState().commentsModal.commentsIds;
+    async(commentsIds) => {
         return await httpGetAllCommentsWithIds(commentsIds);
     }
 );

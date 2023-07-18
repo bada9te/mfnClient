@@ -19,9 +19,19 @@ const httpGetAllCommentsWithIds = async(ids) => {
     return response;
 }
 
+// get one comment
+const httpGetCommentWithId = async(id) => {
+    const response = await axios.get(`${API_URL}/comments/id`, {
+        params: {
+            id: id,
+        },
+    });
+    return response;
+}
+
 // rm by id
 const httpRemoveCommentById = async(id) => {
-    const response = await axios.post(`${API_URL}/comments/rm-id`, {
+    const response = await axios.post(`${API_URL}/comments/remove`, {
         id: id,
     });
     return response;
@@ -30,5 +40,6 @@ const httpRemoveCommentById = async(id) => {
 export {
     httpAddComment,
     httpGetAllCommentsWithIds,
+    httpGetCommentWithId,
     httpRemoveCommentById,
 }

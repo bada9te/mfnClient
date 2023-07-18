@@ -43,9 +43,10 @@ const AddCommentForm = (props) => {
                 
                 userSocket.emit("post-add-comment", {
                     sender: currentUser,
-                    postId: postId,
-                    comment: result.data.comment,
+                    post: postId,
+                    comment: result.data.comment._id,
                     receiver: replyingTo[0] === null ? null : replyingTo[0],
+                    text: `${currentUser.nick} commented your post.`
                 });
 
             } else {

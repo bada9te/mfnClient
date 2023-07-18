@@ -3,7 +3,9 @@ import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Card, CardHeader, IconButton, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { fetchComments } from "../../containers/comments-container/commentsContainerSlice";
 import { deleteNotification, markNotificationAsRead } from "../../containers/notifications-container/notificationsContainerSlice";
+import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments-modal/commentsModalSlice";
 
 const NotificationItem = props => {
     const {id, user, text, post, comment, createdAt, page} = props;
@@ -16,6 +18,15 @@ const NotificationItem = props => {
 
     const hadleMarkAsRead = () => {
         dispatch(markNotificationAsRead(id));
+    }
+
+    const handleOpenComment = (commentId) => {
+        setCommentsModalIsShowing(true);
+        fetchComments([commentId]);
+    }
+
+    const handleOpenPost = (trackId, ownerId) => {
+        navigate(`/track/${trackId}`, {state: {trackId: trackId, ownerId: ownerId}});
     }
 
     return (
@@ -55,14 +66,18 @@ const NotificationItem = props => {
                                     return (
                                         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                                             <Typography>{post.title}, by {post.owner.nick}</Typography>
-                                            <Button variant="outlined" onClick={() => navigate(`/track/${post._id}`, {state: {trackId: post._id, ownerId: post.owner._id}})}>Open related post</Button>
+                                            <Button variant="outlined" onClick={() => handleOpenPost(post._id, post.owner._id)}>Open related post</Button>
                                         </Box>
                                     );
                                 } else if (comment !== null) {
                                     return (
-                                        <>
-                                            COMMENT NOTIFICATION
-                                        </>
+                                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                                            <Typography>{post.title}, by {post.owner.nick}</Typography>
+                                            <Box sx={{display: 'flex', alignItems: 'center'}}>
+                                                <Button variant="outlined" onClick={handleOpenComment}>Show related comment</Button>
+                                                <Button variant="outlined" onClick={() => handleOpenPost(post._id, post.owner._id)}>Open related post</Button>
+                                            </Box>
+                                        </Box>
                                     );
                                 }
                             })()

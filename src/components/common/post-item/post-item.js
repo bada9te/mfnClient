@@ -139,7 +139,6 @@ const PostItem = (props) => {
         if (status !== "upload") {
             dispatch(setCommentsModalIsShowing(true));
             dispatch(fetchComments({
-                postId: id, 
                 commentsIds: comments,
             }));
         }
@@ -218,12 +217,10 @@ const PostItem = (props) => {
         });
         userSocket.on(`post-${id}-was-commented`, (data) => {
             dispatch(updateCommentsSocket(data));
-            console.log(data);
         });
         userSocket.on(`post-${id}-was-uncommented`, (data) => {
             dispatch(updateCommentsSocket(data));
-            console.log(data);
-        })
+        });
 
         return () => {
             userSocket.off(`post-${id}-was-liked`);
