@@ -46,8 +46,8 @@ const AddCommentForm = (props) => {
                     sender: currentUser,
                     post: postId,
                     comment: result.data.comment._id,
-                    receiver: replyingTo[0] === null ? null : replyingTo[0], // to fix ... set track owner as receiver
-                    text: `${currentUser.nick} commented your post.`
+                    receiver: replyingTo[0] === null ? postOwnerId : replyingTo[0], // to fix ... set track owner as receiver
+                    text: `${currentUser.nick} ${replyingTo[0] === null ? "Commented your post" : "Answered on your comment"}.`
                 });
 
             } else {
