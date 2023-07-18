@@ -50,9 +50,9 @@ const ReportForm = (props) => {
                     onChange={handleChange}
                     
                     error={Boolean(errors.FoulType)}
-                    helperText={errors.FoulType?.message}
+                    helperText={errors.FoulType && "This option is required"}
                     {...register("FoulType", {
-                        required: 'Pls provide the foul type',
+                        required: true,
                     })}
                 >
                     <MenuItem value={"Copyright infringement"}>Copyright infringement</MenuItem>

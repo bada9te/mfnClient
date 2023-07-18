@@ -39,7 +39,7 @@ const RegisterForm = (props) => {
                     error={Boolean(errors.Email)}
                     helperText={errors.Email && "Email address is not valid"}
                     {...register("Email", {
-                        required: true,
+                        required: "Pls provide your email address",
                         pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     })}
                 />
@@ -51,11 +51,12 @@ const RegisterForm = (props) => {
                     label="Nickname"
                     name="nickname"
                     error={Boolean(errors.Nickname)}
-                    helperText={errors.Nickname && "Nickname is not valid"}
+                    helperText={errors.Nickname && "Nickname must be from 4 to 20 characters"}
                     {...register("Nickname", {
+                        minLength: 4,
                         maxLength: 20,
                         required: true,
-                    })} 
+                    })}
                 />
                 <TextField
                     margin="normal"
@@ -66,7 +67,7 @@ const RegisterForm = (props) => {
                     name="password"
                     type="password"
                     error={Boolean(errors.Password)}
-                    helperText={errors.Password && "Password is not valid"}
+                    helperText={errors.Password && "Password must be from 8 to 20 characters"}
                     {...register("Password", {
                         maxLength: 20,
                         minLength: 8,

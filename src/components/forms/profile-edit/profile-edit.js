@@ -130,7 +130,7 @@ const Password = (props) => {
                 name="password"
                 type="password"
                 error={Boolean(errors.OldPassword)}
-                helperText={errors.OldPassword && "Password is not valid"}
+                helperText={errors.OldPassword && "Password must be from 4 to 20 characters"}
                 {...register("OldPassword", {
                     maxLength: 20,
                     minLength: 8,
@@ -155,7 +155,7 @@ const Nickname = (props) => {
                 name="nickname"
                 type="text"
                 error={Boolean(errors.NewNickname)}
-                helperText={errors.NewNickname && "Nickname is not valid"}
+                helperText={errors.NewNickname && "Nickname must be from 4 to 20 characters"}
                 {...register("NewNickname", {
                     maxLength: 20,
                     minLength: 4,
@@ -180,7 +180,7 @@ const Description = (props) => {
                 name="newDescription"
                 type="text"
                 error={Boolean(errors.NewDescription)}
-                helperText={errors.NewDescription && "Description is not valid"}
+                helperText={errors.NewNickname && "Description must be from 4 to 20 characters"}
                 {...register("NewDescription", {
                     maxLength: 20,
                     minLength: 4,
@@ -207,7 +207,6 @@ const Email = (props) => {
                 error={Boolean(errors.OldEmail)}
                 helperText={errors.OldEmail && "Email is not valid"}
                 {...register("OldEmail", {
-                    minLength: 4,
                     required: true,
                     pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                 })}
