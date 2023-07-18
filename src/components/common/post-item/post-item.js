@@ -78,6 +78,7 @@ const PostItem = (props) => {
                         sender: currentUser._id,
                         post: id,
                         text: `${currentUser.nick} liked your track`,
+                        selfAction: user[0] === currentUser._id,
                     });
                 }
             }
@@ -163,6 +164,7 @@ const PostItem = (props) => {
                     sender: currentUser._id,
                     post: id,
                     text: `${currentUser.nick} bookmarked your track`,
+                    selfAction: user[0] === currentUser._id,
                 });
             }
             dispatch(switchPostInSaved({userId: currentUser._id, postId: id}))
