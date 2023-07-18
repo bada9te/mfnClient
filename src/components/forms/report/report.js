@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { Box, TextField, Button, MenuItem } from "@mui/material";
 import * as Alert from "../../alerts/alerts";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { httpCreateReport } from "../../../requests/reports";
-
+import { setIsShowing as setReportModalIsShowing } from "../../modals/report-modal/reportModalSlice";
 
 
 
@@ -13,6 +13,7 @@ const ReportForm = (props) => {
     const [value, setValue] = useState("");
     const reportingItemId = useSelector(state => state.reportForm.reportingItemId);
     const currentUser = useSelector(state => state.base.user);
+    const dispatch = useDispatch();
 
     const handleChange = (event) => {
         console.log(event.target)
@@ -29,10 +30,13 @@ const ReportForm = (props) => {
         }).then(result => {
             if (result.data.done) {
                 Alert.alertSuccess('Report sent');
+                dispatch(setReportModalIsShowing(false));
             } else {
                 Alert.alertError("Can't send a report");
             }
-        })
+        }).catch(_ => {
+            Alert.alertError("Can't send a report");
+        });
     }
 
     return (
