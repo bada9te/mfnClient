@@ -42,10 +42,10 @@ const AddCommentForm = (props) => {
                 Alert.alertSuccess("Comment added");
                 
                 userSocket.emit("post-add-comment", {
-                    eventUser: currentUser,
+                    sender: currentUser,
                     postId: postId,
                     comment: result.data.comment,
-                    isReplyTo: replyingTo[0] === null ? null : replyingTo[0],
+                    receiver: replyingTo[0] === null ? null : replyingTo[0],
                 });
 
             } else {

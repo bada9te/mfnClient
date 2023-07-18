@@ -218,11 +218,11 @@ const PostItem = (props) => {
         });
         userSocket.on(`post-${id}-was-commented`, (data) => {
             dispatch(updateCommentsSocket(data));
-            //console.log(data);
+            console.log(data);
         });
         userSocket.on(`post-${id}-was-uncommented`, (data) => {
             dispatch(updateCommentsSocket(data));
-            //console.log(data);
+            console.log(data);
         })
 
         return () => {

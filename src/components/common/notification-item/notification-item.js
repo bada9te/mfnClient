@@ -1,13 +1,14 @@
 
 import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Card, CardHeader, IconButton, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Card, CardHeader, IconButton, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { deleteNotification, markNotificationAsRead } from "../../containers/notifications-container/notificationsContainerSlice";
 
 const NotificationItem = props => {
     const {id, user, text, post, comment, createdAt, page} = props;
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
 
     const handleDelete = () => {
         dispatch(deleteNotification(id));
@@ -52,9 +53,10 @@ const NotificationItem = props => {
                             (() => {
                                 if (post !== null) {
                                     return (
-                                        <>
-                                            POST NOTIFICATION
-                                        </>
+                                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                                            <Typography>{post.title}, by {post.owner.nick}</Typography>
+                                            <Button variant="outlined" onClick={() => navigate(`/track/${post._id}`, {state: {trackId: post._id, ownerId: post.owner._id}})}>Open related post</Button>
+                                        </Box>
                                     );
                                 } else if (comment !== null) {
                                     return (
