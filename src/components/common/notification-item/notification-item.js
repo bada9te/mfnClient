@@ -22,7 +22,11 @@ const NotificationItem = props => {
 
     const handleOpenComment = (commentId) => {
         setCommentsModalIsShowing(true);
-        fetchComments([commentId]);
+        fetchComments({
+            commentsIds: [commentId],
+            postOwnerId: post.owner._id,
+            postId: post._id,
+        });
     }
 
     const handleOpenPost = (trackId, ownerId) => {

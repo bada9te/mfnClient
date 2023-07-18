@@ -139,6 +139,8 @@ const PostItem = (props) => {
         if (status !== "upload") {
             dispatch(setCommentsModalIsShowing(true));
             dispatch(fetchComments({
+                postId: id,
+                postOwnerId: user[0],
                 commentsIds: comments,
             }));
         }

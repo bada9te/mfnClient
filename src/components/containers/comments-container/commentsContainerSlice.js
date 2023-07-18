@@ -8,12 +8,13 @@ const initialState = {
     replyingTo: [null, null],
     isLoading: true,
     postId: null,
+    postOwnerId: null,
 }
 
 
 export const fetchComments = createAsyncThunk(
     'comments-conatiner/fetch',
-    async(commentsIds) => {
+    async({postId, commentsIds, postOwnerId}) => {
         return await httpGetAllCommentsWithIds(commentsIds);
     }
 );
@@ -91,6 +92,7 @@ const commentsContainerSlice = createSlice({
         builder
             // fetch
             .addCase(fetchComments.pending, (state, { meta }) => {
+                state.postOwnerId = meta.arg.postOwnerId;
                 state.postId = meta.arg.postId;
                 state.commentsIds = meta.arg.commentsIds;
                 state.isLoading = true;

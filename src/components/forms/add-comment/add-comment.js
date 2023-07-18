@@ -16,6 +16,7 @@ const AddCommentForm = (props) => {
     const currentUser = useSelector(state => state?.base?.user);
     const postId = useSelector(state => state.commentsContainer.postId);
     const replyingTo = useSelector(state => state.commentsContainer.replyingTo);
+    const postOwnerId = useSelector(state => state.commentsContainer.postOwnerId);
 
 
     const onSubmit = async(data) => {
@@ -45,7 +46,7 @@ const AddCommentForm = (props) => {
                     sender: currentUser,
                     post: postId,
                     comment: result.data.comment._id,
-                    receiver: replyingTo[0] === null ? null : replyingTo[0],
+                    receiver: replyingTo[0] === null ? null : replyingTo[0], // to fix ... set track owner as receiver
                     text: `${currentUser.nick} commented your post.`
                 });
 
