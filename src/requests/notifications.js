@@ -17,9 +17,23 @@ const httpDeleteNotifcation = async(id) => {
     return response;
 }
 
+const httpDeleteManyNotifcations = async(ids) => {
+    const response = await axios.post(`${API_URL}/notifications/delete-many`, {
+        ids: ids,
+    });
+    return response;
+}
+
 const httpMarkNotificationAsRead = async(id) => {
     const response = await axios.post(`${API_URL}/notifications/mark-as-read`, {
         id: id,
+    });
+    return response;
+}
+
+const httpMarkManyNotificationsAsRead = async(ids) => {
+    const response = await axios.post(`${API_URL}/notifications/mark-many-as-read`, {
+        ids: ids,
     });
     return response;
 }
@@ -55,7 +69,9 @@ const httpGetAllNotificationsByIds = async(ids) => {
 export {
     httpCreateNotification,
     httpDeleteNotifcation,
+    httpDeleteManyNotifcations,
     httpMarkNotificationAsRead,
+    httpMarkManyNotificationsAsRead,
     httpGetAllUnreadNotificationsWithReceiverId,
     httpGetAllReadNotificationsWithReceiverId,
     httpGetAllNotificationsByIds,

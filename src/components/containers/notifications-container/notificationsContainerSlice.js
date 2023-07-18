@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit"
-import { httpCreateNotification, httpDeleteNotifcation, httpGetAllReadNotificationsWithReceiverId, httpGetAllUnreadNotificationsWithReceiverId, httpMarkNotificationAsRead } from "../../../requests/notifications";
+import { httpCreateNotification, httpDeleteManyNotifcations, httpDeleteNotifcation, httpGetAllReadNotificationsWithReceiverId, httpGetAllUnreadNotificationsWithReceiverId, httpMarkManyNotificationsAsRead, httpMarkNotificationAsRead } from "../../../requests/notifications";
 
 const initialState = {
     isLoading: false,
@@ -38,12 +38,27 @@ export const deleteNotification = createAsyncThunk(
     }
 );
 
+export const deleteManyNotifications = createAsyncThunk(
+    'notifications-container/delete-many',
+    async(ids) => {
+        return await httpDeleteManyNotifcations(ids);
+    }
+);
+
 export const markNotificationAsRead = createAsyncThunk(
     'notificatons-container/mark-as-read',
     async(notificationId, thunkApi) => {
         return await httpMarkNotificationAsRead(notificationId);
     }
 );
+
+export const markManyNotificationsAsRead = createAsyncThunk(
+    'notificatons-container/mark-many-as-read',
+    async(ids) => {
+        return await httpMarkManyNotificationsAsRead(ids);
+    }
+);
+
 
 
 const notificationsContainerSlice = createSlice({
@@ -97,12 +112,28 @@ const notificationsContainerSlice = createSlice({
                 state.notifications = notifications.filter(notification => notification._id !== notificationId);
             })
 
+            // delete many
+            .addCase(markManyNotificationsAsRead.fulfilled, (state, { meta }) => {
+                const notifications = JSON.parse(JSON.stringify(current(state.notifications)));
+                const notificationIds = meta.arg;
+
+                state.notifications = notifications.filter(notification => !notificationIds.includes(notification._id));
+            })
+
             // mark as read
             .addCase(markNotificationAsRead.fulfilled, (state, { meta }) => {
                 const notifications = JSON.parse(JSON.stringify(current(state.notifications)));
                 const notificationId = meta.arg;
 
                 state.notifications = notifications.filter(notification => notification._id !== notificationId);
+            })
+
+            // mark many as read
+            .addCase(deleteManyNotifications.fulfilled, (state, { meta }) => {
+                const notifications = JSON.parse(JSON.stringify(current(state.notifications)));
+                const notificationIds = meta.arg;
+
+                state.notifications = notifications.filter(notification => !notificationIds.includes(notification._id));
             })
     }
 });

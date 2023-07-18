@@ -1,9 +1,11 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Button, Tab, Tabs } from "@mui/material";
+import { unwrapResult } from "@reduxjs/toolkit";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EnumNotifications from "../../enums/enum-notifications";
-import { fetchReadNotifications, fetchUnreadNotifications, setPage } from "./notificationsContainerSlice";
+import { deleteManyNotifications, fetchReadNotifications, fetchUnreadNotifications, markManyNotificationsAsRead, setPage } from "./notificationsContainerSlice";
+import * as Alert from "../../alerts/alerts";
 
 
 function TabPanel(props) {
@@ -33,6 +35,7 @@ const NotificationsContainer = props => {
     const [status, setStatus] = useState(0);
     const currentUserId = useSelector(state => state.base.user._id);
     const page = useSelector(state => state.notificationsContainer.page);
+    const notifications = useSelector(state => state.notificationsContainer.notifications);
     const dispatch = useDispatch();
 
 
@@ -42,6 +45,30 @@ const NotificationsContainer = props => {
             dispatch(setPage("Unread"));
         } else if (key === 1) {
             dispatch(setPage("Read"));
+        }
+    }
+
+    const handleDeleteAllClick = () => {
+        if (notifications && notifications.length > 0) {
+            dispatch(deleteManyNotifications(notifications.map(i => i._id)))
+                .then(unwrapResult)
+                .then(result => {
+                    if (result.data.done) {
+                        Alert.alertSuccess("Notifications removed");
+                    }
+                });
+        }
+    }
+
+    const handleReadAllClick = () => {
+        if (notifications && notifications.length > 0) {
+            dispatch(markManyNotificationsAsRead(notifications.map(i => i._id)))
+                .then(unwrapResult)
+                .then(result => {
+                    if (result.data.done) {
+                        Alert.alertSuccess("Notifications marked as read");
+                    }
+                });
         }
     }
 
@@ -63,10 +90,12 @@ const NotificationsContainer = props => {
             </Box>
 
             <TabPanel value={status} index={0}>
+                <Button fullWidth onClick={handleReadAllClick}>Mark all notifications as read</Button>
                 <EnumNotifications/>
             </TabPanel>
         
             <TabPanel value={status} index={1}>
+                <Button fullWidth onClick={handleDeleteAllClick}>Delete all read notifications</Button>
                 <EnumNotifications/>
             </TabPanel>
         </Box>

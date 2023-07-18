@@ -24,7 +24,7 @@ const NotificationItem = props => {
                     //onClick={handleCommentSelection}
                     avatar={
                         <Avatar
-                            src={user[2]} 
+                            src={user[2].endsWith('/') ? "NULL" : user[2]} 
                             sx={{bgcolor: "gray", boxShadow: 3}} 
                             aria-label="recipe"
                         />
