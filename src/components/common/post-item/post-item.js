@@ -15,6 +15,8 @@ import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments
 import { setIsMuted, setIsPlaying, setLoop, setSrc } from "../audio-player/audioPlayerSlice";
 import { setIsShowing as setUserSelectModalIsShowing } from '../../modals/user-select-modal/userSelectModalSlice';
 import { setSelectType, setSharedItem } from '../../containers/user-select-container/userSelectContainerSlice';
+import { setReportingItemId } from '../../forms/report/reportFormSlice';
+import { setIsShowing as setReportModalIsShowing } from '../../modals/report-modal/reportModalSlice';
 
 
 
@@ -124,6 +126,12 @@ const PostItem = (props) => {
             dispatch(setSelectType('postShare'));
             dispatch(setUserSelectModalIsShowing(true));
         }
+    }
+
+    // report track
+    const reportTrack = () => {
+        dispatch(setReportingItemId(id));
+        dispatch(setReportModalIsShowing(true));
     }
 
     // comments modal
@@ -250,6 +258,7 @@ const PostItem = (props) => {
                             downloadsAllowed={downloadsAllowed} 
                             handleAudioDownload={handleAudioDownload} 
                             handleShareTrack={shareTrack}
+                            handleReportTrack={reportTrack}
                         />
                     }
                 />

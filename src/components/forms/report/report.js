@@ -1,49 +1,70 @@
 import { useForm } from "react-hook-form";
-import { Box, TextField, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Box, TextField, Button, MenuItem } from "@mui/material";
 import * as Alert from "../../alerts/alerts";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { httpCreateReport } from "../../../requests/reports";
+
+
 
 
 const ReportForm = (props) => {
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm();
-    const [value, setValue] = useState('');
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [value, setValue] = useState("");
+    const reportingItemId = useSelector(state => state.reportForm.reportingItemId);
+    const currentUser = useSelector(state => state.base.user);
 
     const handleChange = (event) => {
+        console.log(event.target)
         setValue(event.target.value);
     };
     
     const onSubmit = async(data) => {
-        console.log(data)
+        await httpCreateReport({
+            contactReason: data.FoulType,
+            email: currentUser.email,
+            message: data.Message || "Not provided",
+            reportOwner: currentUser._id,
+            reportedPost: reportingItemId, 
+        }).then(result => {
+            if (result.data.done) {
+                Alert.alertSuccess('Report sent');
+            } else {
+                Alert.alertError("Can't send a report");
+            }
+        })
     }
 
     return (
         <>
             <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{margin: 1}}>
-                <FormControl>
-                    <InputLabel id="simple-select-label">Foul type</InputLabel>
-                    <Select
-                        labelId="simple-select-label"
-                        id="simple-select"
-                        value={value}
-                        label="Foul type"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value={"Copyright infringement"}>Copyright infringement</MenuItem>
-                        <MenuItem value={"Propaganda of violence"}>Propaganda of violence</MenuItem>
-                        <MenuItem value={"Propaganda of fascism" }>Propaganda of fascism</MenuItem>
-                    </Select>
-                </FormControl>
+                <TextField
+                    select
+                    fullWidth
+                    defaultValue={value}
+                    label="Select"
+                    onChange={handleChange}
+                    
+                    error={Boolean(errors.FoulType)}
+                    helperText={errors.FoulType?.message}
+                    {...register("FoulType", {
+                        required: 'Pls provide the foul type',
+                    })}
+                >
+                    <MenuItem value={"Copyright infringement"}>Copyright infringement</MenuItem>
+                    <MenuItem value={"Propaganda of violence"}>Propaganda of violence</MenuItem>
+                    <MenuItem value={"Propaganda of fascism" }>Propaganda of fascism</MenuItem>
+                </TextField>
+                
                 <TextField
                     multiline
                     margin="normal"
-                    required
                     fullWidth
                     id="message"
-                    label="Describe the violation in details (optional)"
+                    label="Describe the foul in details (optional)"
                     name="message"
-                    autoComplete="email"
                     error={Boolean(errors.Message)}
-                    helperText={errors.Message && "Violation details are not valid"}
+                    helperText={errors.Message && errors.Message.type === "minLength" && <span>Min length must be 10</span>}
                     {...register("Message", {
                         required: false,
                         minLength: 10,

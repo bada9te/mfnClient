@@ -24,6 +24,8 @@ import userSelectContainerSlice       from "../components/containers/user-select
 import accountRestoreFormSlice        from "../components/forms/account-restore/accountRestoreFormSlice";
 import accountRestoreRequestFormSlice from "../components/forms/account-restore-request/accountRestoreRequestFormSlice";
 import accountVerifyFormSlice         from "../components/forms/account-verify/accountVerifyFormSlice";
+import reportModalSlice               from "../components/modals/report-modal/reportModalSlice";
+import reportFormSlice                from "../components/forms/report/reportFormSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 
@@ -56,12 +58,14 @@ const store = configureStore({
         accountRestoreForm:        accountRestoreFormSlice,
         accountRestoreRequestForm: accountRestoreRequestFormSlice,
         accountVerifyForm:         accountVerifyFormSlice,
+        reportForm:                reportFormSlice,
 
         // modals
         postSelectModal:        postSelectModalSlice,
         commentsModal:          commentsModalSlice,
         imageCropperModal:      imageCropperModalSlice,
         userSelectModal:        userSelectModalSlice,
+        reportModal:            reportModalSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
     devTools: process.env.REACT_APP_VERSION_TYPE === "production" ? false : true,

@@ -93,7 +93,7 @@ const notificationsContainerSlice = createSlice({
                 state.notifications = [];
             })
             .addCase(fetchReadNotifications.fulfilled, (state, action) => {
-                const notifications = action.payload.data.notifications;
+                const notifications = action.payload.data?.notifications;
                 notifications.forEach((notification) => {
                     if (!notification.checked) {
                         state.sthIsUnread = true;

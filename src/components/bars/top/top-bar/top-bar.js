@@ -15,6 +15,7 @@ import UserSelectModal from '../../../modals/user-select-modal/user-select-modal
 import CommentsModal from '../../../modals/comments-modal/comments-modal';
 import StyledBadge from "./styled-badge/styled-badge";
 import { fetchUnreadNotifications } from '../../../containers/notifications-container/notificationsContainerSlice';
+import ReportsModal from '../../../modals/report-modal/report-modal';
 
 
 
@@ -92,6 +93,7 @@ const Topbar = (props) => {
         <>
             <UserSelectModal/>
             <CommentsModal/>
+            <ReportsModal/>
             <AppBar position="sticky" sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Container maxWidth="xl" >
                     <Toolbar disableGutters>
@@ -158,8 +160,7 @@ const Topbar = (props) => {
                                         component="span"
                                         sx={{ mr: 1, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700, color: 'white', textDecoration: 'none', alignItems: 'center',}}
                                     >
-                                        { //user && user?._id !== "" ? user?.nick : "Login" 
-                                        }
+                                        { user && user?._id !== "" ? user?.nick : "Login" }
                                     </Typography>
                                     {
                                         notifications.length > 0 && notifications.find(i => i.checked === false)

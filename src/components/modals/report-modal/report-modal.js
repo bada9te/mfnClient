@@ -5,7 +5,7 @@ import ReportForm from "../../forms/report/report";
 import { setIsShowing } from "./reportModalSlice";
 
 const ReportsModal = props => {
-    const isShowing = useSelector(state => state.reportsModalSlice.isShowing);
+    const isShowing = useSelector(state => state.reportModal.isShowing);
     const dispatch = useDispatch();
 
     const handleClose = () => {

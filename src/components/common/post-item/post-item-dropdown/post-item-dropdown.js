@@ -3,7 +3,7 @@ import { Report, Download, Share, MoreVert } from "@mui/icons-material";
 import { useState } from "react";
 
 const PostItemDropDown = props => {
-    const { downloadsAllowed, handleAudioDownload, handleShareTrack } = props;
+    const { downloadsAllowed, handleAudioDownload, handleShareTrack, handleReportTrack } = props;
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     // click
@@ -13,6 +13,8 @@ const PostItemDropDown = props => {
             handleAudioDownload();
         } else if (i === 'Share') {
             handleShareTrack();
+        } else if (i === 'Report') {
+            handleReportTrack();
         }
         handleCloseUserMenu();
     }
