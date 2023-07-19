@@ -16,6 +16,10 @@ const initialState = {
         subscribers: [],
         subscribedOn: [],
     },
+    token: {
+        expiresAt: null,
+        accessToken: '',
+    },
     theme: JSON.parse(localStorage.getItem('mfnCurrentUser'))?.theme || 'light',
     locations: {
         images: `${process.env.REACT_APP_API_URL}/uploads/images`,
@@ -68,12 +72,16 @@ const baseSlice = createSlice({
         updatePartOfUser: (state, action) => {
             state.user[action.payload.what] = action.payload.value;
         },
+        setToken: (state, action) => {
+            state.token = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
             .addCase(login.fulfilled, (state, action) => {
                 if (action.payload.data.user.verified) {
                     state.user = action.payload.data.user;
+                    state.token = action.payload.data.token;
                 }
             })
             .addCase(id.fulfilled, (state, action) => {
@@ -108,4 +116,5 @@ export const {
     setTheme,
     setCurrenUserIsFollowedOn,
     updatePartOfUser,
+    setToken,
 } = actions;

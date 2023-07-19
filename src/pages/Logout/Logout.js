@@ -17,6 +17,7 @@ const Logout = (props) => {
         let timeout = null;
         if (currentUser?._id !== "") {
             localStorage.removeItem("mfnCurrentUser");
+            localStorage.removeItem("mfnCurrentToken");
             httpLogOut().then(() => {
                 dispatch(logoutUser());
                 timeout = setTimeout(() => {
