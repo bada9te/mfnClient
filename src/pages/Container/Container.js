@@ -8,7 +8,6 @@ import AudioPlayer from "../../components/common/audio-player/audio-player";
 import LeftBarPosts from "../../components/bars/left/left-bar-posts/left-bar-posts";
 import RightBarUsers from "../../components/bars/right/right-bar-users/right-bar-users";
 import { Box } from "@mui/material";
-//import './swipe-handler';
 
 
 

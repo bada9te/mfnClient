@@ -48,7 +48,7 @@ const AddCommentForm = (props) => {
                     comment: result.data.comment._id,
                     receiver: replyingTo[0] === null ? postOwnerId : replyingTo[0],
                     text: `${currentUser.nick} ${replyingTo[0] === null ? "Commented your post" : "Answered on your comment"}.`,
-                    selfAction: currentUser === postOwnerId,
+                    selfAction: currentUser._id === postOwnerId,
                 }); 
             } else {
                 Alert.alertError("Can't add a comment");
