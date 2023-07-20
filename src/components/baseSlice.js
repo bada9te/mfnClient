@@ -16,10 +16,6 @@ const initialState = {
         subscribers: [],
         subscribedOn: [],
     },
-    token: {
-        expiresAt: null,
-        accessToken: '',
-    },
     theme: JSON.parse(localStorage.getItem('mfnCurrentUser'))?.theme || 'light',
     locations: {
         images: `${process.env.REACT_APP_API_URL}/uploads/images`,

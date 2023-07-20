@@ -18,7 +18,6 @@ const LoginForm = (props) => {
         dispatch(login(data))
         .then(unwrapResult)
         .then((result) => {
-            console.log(result.data)
             if (result.data.done) {
                 if (result.data.user.verified) {
                     localStorage.setItem('mfnCurrentUser', JSON.stringify({
