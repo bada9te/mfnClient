@@ -8,7 +8,7 @@ import { Box, Typography } from "@mui/material";
 
 
 const EnumBattles = props => {
-    const { makeBatlleVote } = props;
+    const { makeBattleVote } = props;
     const locations = useSelector(state => state.base.locations);
     const battles = useSelector(state => state.battlesContainer.battles);
     const isLoading = useSelector(state => state.battlesContainer.isLoading);
@@ -39,6 +39,7 @@ const EnumBattles = props => {
                             return (  
                                 <BattleItem 
                                     key={key}
+                                    id={item._id}
                                     title={item.title}
                                     post1={
                                         <PostItem 
@@ -62,7 +63,7 @@ const EnumBattles = props => {
                                             downloadsAllowed={item.post1.downloadsAllowed}
 
                                             battleId={item._id}
-                                            makeBatlleVote={makeBatlleVote}
+                                            makeBattleVote={makeBattleVote}
                                             postNScore="post1Score"
                                             votedBy={item?.votedBy}
                                         />
@@ -89,7 +90,7 @@ const EnumBattles = props => {
                                             downloadsAllowed={item.post2.downloadsAllowed}
 
                                             battleId={item._id}
-                                            makeBatlleVote={makeBatlleVote}
+                                            makeBattleVote={makeBattleVote}
                                             postNScore="post2Score"
                                             votedBy={item?.votedBy}
                                         />

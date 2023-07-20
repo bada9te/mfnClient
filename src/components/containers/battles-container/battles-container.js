@@ -1,6 +1,7 @@
 import { Box, Tabs, Tab, Card, Typography  } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import userSocket from "../../../socket/user/socket-user";
 import PaginationTree from "../../common/pagination/pagination";
 import EnumBattles from "../../enums/enum-battles";
 import CreateBattleForm from "../../forms/create-battle/create-battle";
@@ -36,13 +37,17 @@ const BattlesContainer = props => {
     const currentUser = useSelector(state => state.base.user);
 
 
-    const makeBatlleVote = async(battleId, postNScore, voteCount, voterId) => {
+    const makeBattleVote = async(battleId, postNScore, voteCount, voterId) => {
         dispatch(makeVote({
             battleId, 
             postNScore, 
             voteCount, 
             voterId
         }));
+
+        userSocket.emit("battle-add-vote", {
+            battleId, postNScore, voteCount, voterId,
+        });
     }
 
 
@@ -74,11 +79,11 @@ const BattlesContainer = props => {
                 </Box>
 
                 <TabPanel value={status} index={0}>
-                    <EnumBattles battlesData={battles} makeBatlleVote={makeBatlleVote}/>
+                    <EnumBattles battlesData={battles} makeBattleVote={makeBattleVote}/>
                 </TabPanel>
             
                 <TabPanel value={status} index={1}>
-                    <EnumBattles battlesData={battles} makeBatlleVote={makeBatlleVote}/>
+                    <EnumBattles battlesData={battles} makeBattleVote={makeBattleVote}/>
                 </TabPanel>
 
                 <TabPanel value={status} index={2}>

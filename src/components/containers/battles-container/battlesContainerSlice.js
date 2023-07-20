@@ -45,6 +45,18 @@ const battlesContainerSlice = createSlice({
         },
         setPage: (state, action) => {
             state.page = action.payload;
+        },
+        socketAddVote: (state, action) => {
+            const battles = JSON.parse(JSON.stringify(current(state.battles)));
+
+            battles.forEach(battle => {
+                if (battle._id === action.payload.battleId) {
+                    battle[action.payload.postNScore] += 1;
+                    battle.votedBy.push(action.payload.voterId);
+                }
+            });
+
+            state.battles = battles;
         }
     },
     extraReducers: (builder) => {
@@ -64,15 +76,7 @@ const battlesContainerSlice = createSlice({
 
             // votes
             .addCase(makeVote.fulfilled, (state, { meta }) => {
-                const battles = JSON.parse(JSON.stringify(current(state.battles)));
-
-                battles.forEach(battle => {
-                    if (battle._id === meta.arg.battleId) {
-                        battle[meta.arg.postNScore] += 1;
-                    }
-                });
-
-                state.battles = battles;
+                battlesContainerSlice.caseReducers.socketAddVote(state, { payload: meta.arg });
             })
 
             // add or remove like
@@ -155,4 +159,5 @@ export const {
     setBattles,
     setIsLoading,
     setPage,
+    socketAddVote,
 } = actions;

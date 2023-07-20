@@ -2,11 +2,15 @@ import { memo, useEffect, useState } from 'react';
 import getTimeLeft from '../../../common-functions/getTimeLeft';
 import { Card, CardActions, CardContent, Typography, Box, Stack } from '@mui/material';
 import battleImg from '../../../images/battle-disk.png';
+import userSocket from '../../../socket/user/socket-user';
+import { useDispatch } from 'react-redux';
+import { socketAddVote } from '../../containers/battles-container/battlesContainerSlice';
 
 
 const BattleItem = (props) => {
-    const {post1, post2, createdAt, willFinishAt, title, post1Score, post2Score, bg1, bg2, winner, finished} = props;
+    const {id, post1, post2, createdAt, willFinishAt, title, post1Score, post2Score, bg1, bg2, winner, finished} = props;
     const [timeleft, setTimeLeft] = useState(new Date(willFinishAt).getTime() - new Date().getTime());
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!finished) {
@@ -21,6 +25,17 @@ const BattleItem = (props) => {
             }
         }
     });
+
+    useEffect(() => {
+        userSocket.on(`battle-${id}-voted`, (data) => {
+            //console.log(data);
+            dispatch(socketAddVote(data));
+        });
+
+        return () => {
+            userSocket.off(`battle-${id}-voted`);
+        }
+    }, [dispatch, id]);
 
 
     return (
