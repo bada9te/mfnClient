@@ -57,6 +57,11 @@ const battlesContainerSlice = createSlice({
             });
 
             state.battles = battles;
+        },
+        removeFromInProgress: (state, action) => {
+            const battles = JSON.parse(JSON.stringify(current(state.battles)));
+
+            state.battles = battles.filter(battle => battle._id !== action.payload);
         }
     },
     extraReducers: (builder) => {
@@ -160,4 +165,5 @@ export const {
     setIsLoading,
     setPage,
     socketAddVote,
+    removeFromInProgress,
 } = actions;

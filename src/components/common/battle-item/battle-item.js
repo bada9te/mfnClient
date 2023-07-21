@@ -4,7 +4,7 @@ import { Card, CardActions, CardContent, Typography, Box, Stack } from '@mui/mat
 import battleImg from '../../../images/battle-disk.png';
 import userSocket from '../../../socket/user/socket-user';
 import { useDispatch } from 'react-redux';
-import { socketAddVote } from '../../containers/battles-container/battlesContainerSlice';
+import { removeFromInProgress, socketAddVote } from '../../containers/battles-container/battlesContainerSlice';
 
 
 const BattleItem = (props) => {
@@ -22,6 +22,8 @@ const BattleItem = (props) => {
                 return () => {
                     clearInterval(interval);
                 }
+            } else {
+                dispatch(removeFromInProgress(id));
             }
         }
     });
