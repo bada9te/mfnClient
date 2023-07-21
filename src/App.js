@@ -18,7 +18,7 @@ function App() {
   const themeStyle = useSelector(state => state.base.theme);
   const location = useLocation();
   
-  const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout)\/*/);
+  const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q)\/*/);
 
 
   // theme setup

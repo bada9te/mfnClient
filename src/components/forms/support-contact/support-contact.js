@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { Box, TextField, Button } from "@mui/material";
 import { useSelector } from "react-redux";
-import { httpCreateReport } from "../../../requests/reports";
 import * as Alert from "../../alerts/alerts";
+import { httpCreateSupportRequest } from "../../../requests/support-requests";
 
 
 const FormSupportContact = (props) => {
@@ -10,14 +10,13 @@ const FormSupportContact = (props) => {
     const currentUser = useSelector(state => state?.base?.user);
 
     const onSubmit = async(data) => {
-        const reportData = {
+        const supportRequestData = {
             contactReason: data.ContactReason,
             email: data.Email,
             message: data.Message,
-            reportOwner: currentUser._id,
         };
 
-        const result = await httpCreateReport(reportData);
+        const result = await httpCreateSupportRequest(supportRequestData);
         if (result.data.done) {
             reset();
             Alert.alertSuccess("Successfully sent");
@@ -44,7 +43,7 @@ const FormSupportContact = (props) => {
                     })} 
                 />
                 <TextField
-                    value={currentUser?.email || ""}
+                    defaultValue={currentUser?.email || ""}
                     margin="normal"
                     required
                     fullWidth
