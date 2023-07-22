@@ -1,10 +1,12 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
 import { Report, Download, Share, MoreVert } from "@mui/icons-material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const PostItemDropDown = props => {
     const { downloadsAllowed, handleAudioDownload, handleShareTrack, handleReportTrack } = props;
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const currentUser = useSelector(state => state.base.user);
 
     // click
     const handleClick = (i) => {
@@ -42,11 +44,17 @@ const PostItemDropDown = props => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >   
-                <MenuItem onClick={() => handleClick('Share')}>
-                    <Typography textAlign="center" display="flex" alignItems="center">
-                        <Share sx={{mr: 1}}/>Share
-                    </Typography>
-                </MenuItem>
+                {
+                    currentUser && currentUser._id !== ""
+                    ?
+                    <MenuItem onClick={() => handleClick('Share')}>
+                        <Typography textAlign="center" display="flex" alignItems="center">
+                            <Share sx={{mr: 1}}/>Share
+                        </Typography>
+                    </MenuItem>
+                    :
+                    null
+                }
                 {
                     downloadsAllowed
                     ?
