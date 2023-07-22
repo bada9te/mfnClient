@@ -8,6 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteComment, setReplyingTo } from "../../containers/comments-container/commentsContainerSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import CommentDropDown from "./comment-dropdown/comment-dropdown";
+import { setReportingItemId } from "../../forms/report/reportFormSlice";
+import { setIsShowing as setReportsModalIsShowing } from "../../modals/report-modal/reportModalSlice";
+import { updateCommentsSocket } from "../../containers/posts-container/postsContainerSlice";
+import userSocket from "../../../socket/user/socket-user";
+
 
 
 const Comment = (props) => {
@@ -29,20 +34,28 @@ const Comment = (props) => {
         dispatch(deleteComment(id))
             .then(unwrapResult)
             .then(result => {
+                //console.log(result);
                 if (result.data.done) {
-                    console.log(`Comment: ${id} was removed.`);
+                    //console.log(`Comment: ${id} was removed.`);
+                    //console.log(result.data)
+                    dispatch(updateCommentsSocket({
+                        comment: result.data.comment
+                    }));
+                    
+                    userSocket.emit("post-remove-comment", {
+                        postId: result.data.comment.post,
+                        comment: result.data.comment,
+                    });
                 }
-
-                /*
-                userSocket.emit("post-remove-comment", {
-                    //postId: postId,
-                    comment: comment,
-                });*/
             });
     }
 
+    // report comment
+    const handleReportComment = () => {
+        dispatch(setReportingItemId(id));
+        dispatch(setReportsModalIsShowing(true));
+    }
 
-    
 
     // open owner profile
     const goToProfile = (id) => {
@@ -72,6 +85,7 @@ const Comment = (props) => {
                         <CommentDropDown 
                             handleReply={handleCommentSelection} 
                             handleDelete={handleCommentRemoving}
+                            handleReport={handleReportComment}
                             canBeDeleted={user[0] === currentUserId}
                         />
                         //<Button onClick={handleCommentSelection}>Reply</Button>

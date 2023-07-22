@@ -3,13 +3,14 @@ import { Report, MoreVert, Reply, Delete } from "@mui/icons-material";
 import { useState } from "react";
 
 const CommentDropDown = props => {
-    const { handleReply, handleDelete, canBeDeleted } = props;
+    const { handleReply, handleDelete, canBeDeleted, handleReport } = props;
     const [anchorElComment, setAnchorElComment] = useState(null);
 
     // click
     const handleClick = (i) => {
         if (i === 'Reply') handleReply();
         else if (i === 'Delete') handleDelete();
+        else if (i === 'Report') handleReport();
         handleCloseCommentMenu();
     }
 
