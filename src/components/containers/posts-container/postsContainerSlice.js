@@ -54,15 +54,34 @@ const postsContainerSlice = createSlice({
         },
         updateCommentsSocket: (state, action) => {
             const posts = JSON.parse(JSON.stringify(current(state.posts)));
-            const commentId = action.payload.comment._id;
+            const comment = action.payload.comment;
+            const commentId = comment._id;
 
             //console.log('New comment', commentId)
             posts.forEach(item => {
                 if (item._id === action.payload.comment.post) {
-                    if (item.comments.indexOf(commentId) === -1) {
-                        item.comments.push(commentId);
-                    } else {
-                        item.comments = item.comments.filter(id => id !== commentId);
+                    // if not a reply
+                    if (!comment?.isReply) {
+                        if (item.comments.indexOf(commentId) === -1) {
+                            item.comments.push(commentId);
+                        } else {
+                            item.comments = item.comments.filter(id => id !== commentId);
+                        }
+                    }
+                    // if reply 
+                    else {
+                        const isReplyTo = comment.isReplyTo;
+                        item.comments = item.comments.map(item => {
+                            if (item._id === isReplyTo) {
+                                if (item.replies.indexOf(commentId) === -1) {
+                                    item.replies.push(commentId);
+                                } else {
+                                    item.replies = item.replies.filter(id => id !== commentId);
+                                }
+                                return item;
+                            }
+                            return item;
+                        });
                     }
                 }
             });
@@ -122,19 +141,7 @@ const postsContainerSlice = createSlice({
 
             // comment added
             .addCase(createComment.fulfilled, (state, action) => {
-                const posts = JSON.parse(JSON.stringify(current(state.posts)));
-                const commentId = action.payload.data.comment._id;
-                //console.log('New comment', commentId)
-                posts.forEach(item => {
-                    if (item._id === action.payload.data.comment.post) {
-                        if (item.comments.indexOf(commentId) === -1) {
-                            item.comments.push(commentId);
-                        } else {
-                            item.comments = item.comments.filter(id => id !== commentId);
-                        }
-                    }
-                });
-                state.posts = posts;
+                postsContainerSlice.caseReducers.updateCommentsSocket(state, { payload: action.payload.data });
             })
     }
 })

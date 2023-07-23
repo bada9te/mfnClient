@@ -121,6 +121,7 @@ const commentsContainerSlice = createSlice({
                     nick: currentUser.nick, 
                     avatar: currentUser.avatar,
                 };
+                comment.isReply = action.meta.arg.replyingId === null ? false : true;
 
                 commentsContainerSlice.caseReducers.addComment(state, {
                     payload: {

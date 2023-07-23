@@ -11,7 +11,7 @@ import userSocket from "../../../socket/user/socket-user";
 
 
 const AddCommentForm = (props) => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state?.base?.user);
     const postId = useSelector(state => state.commentsContainer.postId);
@@ -35,6 +35,7 @@ const AddCommentForm = (props) => {
             replyingId: replyingTo[0],
             comment: commentData,
             currentUser: currentUser,
+
         }))
         .then(unwrapResult)
         .then(result => {
@@ -49,7 +50,10 @@ const AddCommentForm = (props) => {
                     receiver: replyingTo[0] === null ? postOwnerId : replyingTo[0],
                     text: `${currentUser.nick} ${replyingTo[0] === null ? "Commented your post" : "Answered on your comment"}.`,
                     selfAction: currentUser._id === postOwnerId,
+                    isReply: replyingTo[0] === null ? false : true,
                 }); 
+
+                reset();
             } else {
                 Alert.alertError("Can't add a comment");
             }

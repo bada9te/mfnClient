@@ -133,21 +133,38 @@ const battlesContainerSlice = createSlice({
             // comment added
             .addCase(createComment.fulfilled, (state, action) => {
                 const battles = JSON.parse(JSON.stringify(current(state.battles)));
-                const postId = action.payload.data.comment.post;
-                const commentId = action.payload.data.comment._id;
+                
+                
+                const comment = action.payload.comment;
+                const commentId = comment._id;
+                const postId = comment.post;
+
+                
+
+            //console.log('New comment', commentId)
 
                 battles.forEach(battle => {
-                    if (battle.post1._id === postId) {
-                        if (battle.post1.comments.indexOf(commentId) === -1) {
-                            battle.post1.comments.push(commentId);
-                        } else {
-                            battle.post1.comments = battle.post1.comments.filter(id => id !== commentId);
-                        }
-                    } else if (battle.post2._id === postId) {
-                        if (battle.post2.comments.indexOf(commentId) === -1) {
-                            battle.post2.comments.push(commentId);
-                        } else {
-                            battle.post2.comments = battle.post2.comments.filter(id => id !== commentId);
+                    if (battle.post1._id === postId || battle.post2._id === postId) {
+                        let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
+
+                        // comment is not a reply
+                        if (!comment?.isReply) {
+                            if (battle[postNumberStr].comments.indexOf(commentId) === -1) {
+                                battle[postNumberStr].comments.push(commentId);
+                            } else {
+                                battle[postNumberStr].comments = battle[postNumberStr].comments.filter(id => id !== commentId);
+                            }
+                        } 
+                        // comment is a reply
+                        else {
+                            const isReplyTo = comment.isReplyTo;
+                            battle[postNumberStr].comments = battle[postNumberStr].comments.map(item => {
+                                if (item._id === isReplyTo) {
+                                    item.replies.push(commentId);
+                                    return item;
+                                }
+                                return item;
+                            });
                         }
                     }
                 });
