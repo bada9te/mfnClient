@@ -19,7 +19,7 @@ axios.interceptors.response.use(
             localStorage.setItem("mfnCurrentToken", JSON.stringify(result.data.token));
             axios.defaults.headers.common['Authorization'] = result.data.token.accessToken;
             originalRequest.headers['Authorization'] = result.data.token.accessToken;
-            console.log(originalRequest, 'Retrying request...');
+            //console.log(originalRequest, 'Retrying request...');
             return await axios.request(originalRequest);
         } catch (error) {
             localStorage.removeItem("mfnCurrentUser");
