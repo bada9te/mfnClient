@@ -8,7 +8,7 @@ import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardC
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp } from "@mui/icons-material";
 import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
 import { useDispatch, useSelector } from "react-redux";
-import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSocket, updateSavesSocket } from "../../containers/posts-container/postsContainerSlice";
+import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSocket, updateSavesSocket, deleteTrack as deletePost } from "../../containers/posts-container/postsContainerSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { fetchComments } from "../../containers/comments-container/commentsContainerSlice";
 import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments-modal/commentsModalSlice";
@@ -135,6 +135,17 @@ const PostItem = (props) => {
         dispatch(setReportModalIsShowing(true));
     }
 
+    // delete post
+    const deleteTrack = () => {
+        dispatch(deletePost(id))
+            .then(unwrapResult)
+            .then(result => {
+                if (result.data.done) {
+                    Alert.alertSuccess('Post deleted');
+                }
+            });
+    }
+
     // comments modal
     const switchShowCommentsModal = () => {
         if (status !== "upload") {
@@ -256,10 +267,12 @@ const PostItem = (props) => {
                     subheader={createdAt}
                     action={
                         <PostItemDropDown 
+                            owner={user[0]}
                             downloadsAllowed={downloadsAllowed} 
                             handleAudioDownload={handleAudioDownload} 
                             handleShareTrack={shareTrack}
                             handleReportTrack={reportTrack}
+                            handleDeleteTrack={deleteTrack}
                         />
                     }
                 />

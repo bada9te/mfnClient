@@ -93,6 +93,13 @@ const httpGetPostById = async(id) => {
 }
 
 
+const httpDeletePostById = async(id) => {
+    return await axios.post(`${API_URL}/posts/delete`, {
+        id: id,
+    });
+}
+
+
 
 
 export {
@@ -104,4 +111,5 @@ export {
     httpSwitchLike,
     httpSwitchPostInSaved,
     httpGetPostById,
+    httpDeletePostById,
 }

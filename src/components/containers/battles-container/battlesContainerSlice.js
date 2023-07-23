@@ -134,14 +134,13 @@ const battlesContainerSlice = createSlice({
             .addCase(createComment.fulfilled, (state, action) => {
                 const battles = JSON.parse(JSON.stringify(current(state.battles)));
                 
-                
-                const comment = action.payload.comment;
+                const comment = action.payload.data.comment;
                 const commentId = comment._id;
                 const postId = comment.post;
 
                 
 
-            //console.log('New comment', commentId)
+                //console.log('New comment', commentId)
 
                 battles.forEach(battle => {
                     if (battle.post1._id === postId || battle.post2._id === postId) {

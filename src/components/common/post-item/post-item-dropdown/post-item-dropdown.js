@@ -1,10 +1,10 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
-import { Report, Download, Share, MoreVert } from "@mui/icons-material";
+import { Report, Download, Share, MoreVert, Delete } from "@mui/icons-material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const PostItemDropDown = props => {
-    const { downloadsAllowed, handleAudioDownload, handleShareTrack, handleReportTrack } = props;
+    const { owner, downloadsAllowed, handleAudioDownload, handleShareTrack, handleReportTrack, handleDeleteTrack } = props;
     const [anchorElUser, setAnchorElUser] = useState(null);
     const currentUser = useSelector(state => state.base.user);
 
@@ -17,6 +17,8 @@ const PostItemDropDown = props => {
             handleShareTrack();
         } else if (i === 'Report') {
             handleReportTrack();
+        } else if (i === 'Delete') {
+            handleDeleteTrack();
         }
         handleCloseUserMenu();
     }
@@ -71,6 +73,17 @@ const PostItemDropDown = props => {
                         <Report sx={{mr: 1}}/>Report
                     </Typography>
                 </MenuItem>
+                {
+                    owner === currentUser._id
+                    ?
+                    <MenuItem onClick={() => handleClick('Delete')}>
+                        <Typography textAlign="center" display="flex" alignItems="center">
+                            <Delete sx={{mr: 1}}/>Delete
+                        </Typography>
+                    </MenuItem>
+                    :
+                    null
+                }
             </Menu>
 
             <IconButton aria-label="post-dropdown" onClick={(e) => setAnchorElUser(e.currentTarget)}>

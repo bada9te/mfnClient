@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
-import { httpGetAllPostsWithOwnerId, httpGetUserSavedPosts, httpGetAllPosts, httpSwitchLike, httpSwitchPostInSaved } from "../../../requests/posts";
+import { httpGetAllPostsWithOwnerId, httpGetUserSavedPosts, httpGetAllPosts, httpSwitchLike, httpSwitchPostInSaved, httpDeletePostById } from "../../../requests/posts";
 import { createComment } from "../comments-container/commentsContainerSlice";
 
 
@@ -38,6 +38,13 @@ export const switchPostInSaved = createAsyncThunk(
         return await httpSwitchPostInSaved(userId, postId);
     }
 );
+
+export const deleteTrack = createAsyncThunk(
+    'posts/delete',
+    async(postId) => {
+        return await httpDeletePostById(postId);
+    }
+)
 
 
 
@@ -143,6 +150,14 @@ const postsContainerSlice = createSlice({
             .addCase(createComment.fulfilled, (state, action) => {
                 postsContainerSlice.caseReducers.updateCommentsSocket(state, { payload: action.payload.data });
             })
+
+            // post deleted
+            .addCase(deleteTrack.fulfilled, (state, { meta }) => {
+                const posts = JSON.parse(JSON.stringify(current(state.posts)));
+                const postId = meta.arg;
+
+                state.posts = posts.filter(item => item.id !== postId);
+            });
     }
 })
 
