@@ -87,19 +87,17 @@ const battlesContainerSlice = createSlice({
             // add or remove like
             .addCase(switchPostLike.fulfilled, (state, { meta }) => {
                 const battles = JSON.parse(JSON.stringify(current(state.battles)));
+                const postId = meta.arg.postId;
+                const userId = meta.arg.userId;
 
                 battles.forEach(battle => {
-                    if (battle.post1._id === meta.arg.postId) {
-                        if (battle.post1.likedBy.indexOf(meta.arg.userId) === -1) {
-                            battle.post1.likedBy.push(meta.arg.userId);
+                    if (battle.post1._id === postId || battle.post2._id === postId) {
+                        let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
+
+                        if (battle[postNumberStr].likedBy.indexOf(userId) === -1) {
+                            battle[postNumberStr].likedBy.push(userId);
                         } else {
-                            battle.post1.likedBy = battle.post1.likedBy.filter(id => id !== meta.arg.userId);
-                        }
-                    } else if (battle.post2._id === meta.arg.postId) {
-                        if (battle.post2.likedBy.indexOf(meta.arg.userId) === -1) {
-                            battle.post2.likedBy.push(meta.arg.userId);
-                        } else {
-                            battle.post2.likedBy = battle.post2.likedBy.filter(id => id !== meta.arg.userId);
+                            battle[postNumberStr].likedBy = battle[postNumberStr].likedBy.filter(id => id !== userId);
                         }
                     }
                 });
@@ -110,19 +108,17 @@ const battlesContainerSlice = createSlice({
             // switch in saved
             .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
                 const battles = JSON.parse(JSON.stringify(current(state.battles)));
+                const postId = meta.arg.postId;
+                const userId = meta.arg.userId;
 
                 battles.forEach(battle => {
-                    if (battle.post1._id === meta.arg.postId) {
-                        if (battle.post1.savedBy.indexOf(meta.arg.userId) === -1) {
-                            battle.post1.savedBy.push(meta.arg.userId);
+                    if (battle.post1._id === postId || battle.post2._id === postId) {
+                        let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
+
+                        if (battle[postNumberStr].savedBy.indexOf(userId) === -1) {
+                            battle[postNumberStr].savedBy.push(userId);
                         } else {
-                            battle.post1.savedBy = battle.post1.savedBy.filter(id => id !== meta.arg.userId);
-                        }
-                    } else if (battle.post2._id === meta.arg.postId) {
-                        if (battle.post2.savedBy.indexOf(meta.arg.userId) === -1) {
-                            battle.post2.savedBy.push(meta.arg.userId);
-                        } else {
-                            battle.post2.savedBy = battle.post2.savedBy.filter(id => id !== meta.arg.userId);
+                            battle[postNumberStr].savedBy = battle[postNumberStr].savedBy.filter(id => id !== userId);
                         }
                     }
                 });
@@ -133,12 +129,11 @@ const battlesContainerSlice = createSlice({
             // comment added
             .addCase(createComment.fulfilled, (state, action) => {
                 const battles = JSON.parse(JSON.stringify(current(state.battles)));
+
                 
                 const comment = action.payload.data.comment;
                 const commentId = comment._id;
                 const postId = comment.post;
-
-                
 
                 //console.log('New comment', commentId)
 
