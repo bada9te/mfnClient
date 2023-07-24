@@ -131,19 +131,23 @@ const PostItem = (props) => {
 
     // report track
     const reportTrack = () => {
-        dispatch(setReportingItemId(id));
-        dispatch(setReportModalIsShowing(true));
+        if (status !== "upload") {
+            dispatch(setReportingItemId(id));
+            dispatch(setReportModalIsShowing(true));
+        }
     }
 
     // delete post
     const deleteTrack = () => {
-        dispatch(deletePost(id))
-            .then(unwrapResult)
-            .then(result => {
-                if (result.data.done) {
-                    Alert.alertSuccess('Post deleted');
-                }
-            });
+        if (status !== "upload") {
+            dispatch(deletePost(id))
+                .then(unwrapResult)
+                .then(result => {
+                    if (result.data.done) {
+                        Alert.alertSuccess('Post deleted');
+                    }
+                });
+        }
     }
 
     // comments modal
