@@ -91,7 +91,7 @@ const battlesContainerSlice = createSlice({
                 const userId = meta.arg.userId;
 
                 battles.forEach(battle => {
-                    if (battle.post1._id === postId || battle.post2._id === postId) {
+                    if (battle.post1?._id === postId || battle.post2?._id === postId) {
                         let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
 
                         if (battle[postNumberStr].likedBy.indexOf(userId) === -1) {
@@ -112,7 +112,7 @@ const battlesContainerSlice = createSlice({
                 const userId = meta.arg.userId;
 
                 battles.forEach(battle => {
-                    if (battle.post1._id === postId || battle.post2._id === postId) {
+                    if (battle.post1?._id === postId || battle.post2?._id === postId) {
                         let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
 
                         if (battle[postNumberStr].savedBy.indexOf(userId) === -1) {
@@ -138,7 +138,7 @@ const battlesContainerSlice = createSlice({
                 //console.log('New comment', commentId)
 
                 battles.forEach(battle => {
-                    if (battle.post1._id === postId || battle.post2._id === postId) {
+                    if (battle.post1?._id === postId || battle.post2?._id === postId) {
                         let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
 
                         // comment is not a reply

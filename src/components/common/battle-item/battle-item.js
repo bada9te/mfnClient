@@ -103,7 +103,14 @@ const BattleItem = (props) => {
                                                     Finished, the winner is "<b>{post2.props.title}</b>"
                                                 </>
                                             );
-                                        } else {
+                                        } else if (!post1.props.id || !post2.props.id) {
+                                            return (
+                                                <>
+                                                    Finished, <b>{post1Score}:{post2Score}</b>
+                                                </>
+                                            );
+                                        }
+                                        else {
                                             return (
                                                 <>
                                                     Finished with <b>draw</b>

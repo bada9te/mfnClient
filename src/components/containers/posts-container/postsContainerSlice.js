@@ -156,7 +156,7 @@ const postsContainerSlice = createSlice({
                 const posts = JSON.parse(JSON.stringify(current(state.posts)));
                 const postId = meta.arg;
 
-                state.posts = posts.filter(item => item.id !== postId);
+                state.posts = posts.filter(item => item._id !== postId);
             });
     }
 })

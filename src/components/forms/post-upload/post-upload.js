@@ -81,7 +81,7 @@ const PostUploadForm = (props)=> {
     };
 
     useEffect(() => {
-        console.log('TODO: clear me');
+        //console.log('TODO: clear me');
     }, [])
 
 
