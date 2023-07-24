@@ -17,6 +17,7 @@ import { setIsShowing as setUserSelectModalIsShowing } from '../../modals/user-s
 import { setSelectType, setSharedItem } from '../../containers/user-select-container/userSelectContainerSlice';
 import { setReportingItemId } from '../../forms/report/reportFormSlice';
 import { setIsShowing as setReportModalIsShowing } from '../../modals/report-modal/reportModalSlice';
+import { setActionType, setIsShowing as setConfirmModalIsShowing, setItemId, setText } from '../../modals/confirm-modal/confirmModalSlice';
 
 
 
@@ -140,13 +141,10 @@ const PostItem = (props) => {
     // delete post
     const deleteTrack = () => {
         if (status !== "upload") {
-            dispatch(deletePost(id))
-                .then(unwrapResult)
-                .then(result => {
-                    if (result.data.done) {
-                        Alert.alertSuccess('Post deleted');
-                    }
-                });
+            dispatch(setConfirmModalIsShowing(true));
+            dispatch(setActionType("delete-post"));
+            dispatch(setItemId(id));
+            dispatch(setText("By confirming this, you agree that your post will be removed without any ability to restore."))
         }
     }
 

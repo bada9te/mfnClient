@@ -16,6 +16,7 @@ import CommentsModal from '../../../modals/comments-modal/comments-modal';
 import StyledBadge from "./styled-badge/styled-badge";
 import { fetchUnreadNotifications } from '../../../containers/notifications-container/notificationsContainerSlice';
 import ReportsModal from '../../../modals/report-modal/report-modal';
+import ConfirmModal from '../../../modals/confirm-modal/confirm-modal';
 
 
 
@@ -94,6 +95,7 @@ const Topbar = (props) => {
             <UserSelectModal/>
             <CommentsModal/>
             <ReportsModal/>
+            <ConfirmModal/>
             <AppBar position="sticky" sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Container maxWidth="xl" >
                     <Toolbar disableGutters>

@@ -26,6 +26,7 @@ import accountRestoreRequestFormSlice from "../components/forms/account-restore-
 import accountVerifyFormSlice         from "../components/forms/account-verify/accountVerifyFormSlice";
 import reportModalSlice               from "../components/modals/report-modal/reportModalSlice";
 import reportFormSlice                from "../components/forms/report/reportFormSlice";
+import confirmModalSlice              from "../components/modals/confirm-modal/confirmModalSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 
@@ -66,6 +67,7 @@ const store = configureStore({
         imageCropperModal:      imageCropperModalSlice,
         userSelectModal:        userSelectModalSlice,
         reportModal:            reportModalSlice,
+        confirmModal:           confirmModalSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
     devTools: process.env.REACT_APP_VERSION_TYPE === "production" ? false : true,
