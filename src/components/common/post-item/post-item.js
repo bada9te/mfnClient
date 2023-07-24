@@ -8,7 +8,7 @@ import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardC
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp } from "@mui/icons-material";
 import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
 import { useDispatch, useSelector } from "react-redux";
-import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSocket, updateSavesSocket, deleteTrack as deletePost } from "../../containers/posts-container/postsContainerSlice";
+import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSocket, updateSavesSocket } from "../../containers/posts-container/postsContainerSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { fetchComments } from "../../containers/comments-container/commentsContainerSlice";
 import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments-modal/commentsModalSlice";
@@ -17,7 +17,9 @@ import { setIsShowing as setUserSelectModalIsShowing } from '../../modals/user-s
 import { setSelectType, setSharedItem } from '../../containers/user-select-container/userSelectContainerSlice';
 import { setReportingItemId } from '../../forms/report/reportFormSlice';
 import { setIsShowing as setReportModalIsShowing } from '../../modals/report-modal/reportModalSlice';
-import { setActionType, setIsShowing as setConfirmModalIsShowing, setItemId, setText } from '../../modals/confirm-modal/confirmModalSlice';
+import { setIsShowing as setConfirmModalIsShowing } from '../../modals/confirm-modal/confirmModalSlice';
+import { setActionType, setItemId, setText, setTitle } from '../../containers/confirm-container/confirmContainerSlice';
+
 
 
 
@@ -144,7 +146,8 @@ const PostItem = (props) => {
             dispatch(setConfirmModalIsShowing(true));
             dispatch(setActionType("delete-post"));
             dispatch(setItemId(id));
-            dispatch(setText("By confirming this, you agree that your post will be removed without any ability to restore."))
+            dispatch(setText("By confirming this, you agree that your post will be removed without any ability to restore."));
+            dispatch(setTitle("Confirm track deletion"));
         }
     }
 
@@ -259,6 +262,7 @@ const PostItem = (props) => {
                         
                         <Avatar 
                             onClick={goToProfile}
+                            
                             src={user[2].endsWith('/') ? "NULL" : user[2]} 
                             sx={{bgcolor: "gray", boxShadow: 3, cursor: 'pointer'}} 
                             aria-label="recipe"

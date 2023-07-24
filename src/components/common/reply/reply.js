@@ -3,6 +3,8 @@ import getTimeSince from "../../../common-functions/getTimeSince";
 import { useDispatch, useSelector } from "react-redux";
 import { setReplyingTo } from "../../containers/comments-container/commentsContainerSlice";
 import CommentDropDown from "../comment/comment-dropdown/comment-dropdown";
+import { setReportingItemId } from "../../forms/report/reportFormSlice";
+import { setIsShowing as setReportModalIsShowing } from "../../modals/report-modal/reportModalSlice";
 
 
 const Reply = props => {
@@ -17,13 +19,19 @@ const Reply = props => {
         }));
     }
 
+    // report comment
+    const handleReportComment = () => {
+        dispatch(setReportingItemId(id));
+        dispatch(setReportModalIsShowing(true));
+    }
+
     return (
         <Card sx={{ mb: 1, boxShadow: 1 }}>
             <CardHeader
                 //onClick={() => goToProfile(item.owner._id)}
                 avatar={
                     <Avatar
-                        src={`${locations?.images}/${item.owner.avatar}`}
+                        src={item.owner.avatar.endsWith('/') ? "NULL" : `${locations?.images}/${item.owner.avatar}`}
                         sx={{bgcolor: "gray", boxShadow: 3}} 
                         aria-label="recipe"
                     />
@@ -31,8 +39,7 @@ const Reply = props => {
                 title={item.owner.nick}
                 subheader={`${getTimeSince(new Date(item.createdAt))} ago`}
                 action={
-                    <CommentDropDown handleReply={handleSelect}/>
-                    //<Button onClick={handleSelect}>Reply</Button>
+                    <CommentDropDown handleReply={handleSelect} handleReport={handleReportComment}/>
                 }
             />
 

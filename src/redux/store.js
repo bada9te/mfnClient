@@ -27,6 +27,7 @@ import accountVerifyFormSlice         from "../components/forms/account-verify/a
 import reportModalSlice               from "../components/modals/report-modal/reportModalSlice";
 import reportFormSlice                from "../components/forms/report/reportFormSlice";
 import confirmModalSlice              from "../components/modals/confirm-modal/confirmModalSlice";
+import confirmContainerSlice          from "../components/containers/confirm-container/confirmContainerSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 
@@ -51,6 +52,7 @@ const store = configureStore({
         postSelectContainer:    postSelectContainerSlice,
         notificationsContainer: notificationsContainerSlice,
         userSelectContainer:    userSelectContainerSlice,
+        confirmContainer:       confirmContainerSlice,
         
         // forms
         createBattleForm:          createBattleFormSlice,

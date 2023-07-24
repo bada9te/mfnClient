@@ -92,10 +92,10 @@ const Topbar = (props) => {
 
     return (
         <>
+            <ConfirmModal/>
             <UserSelectModal/>
             <CommentsModal/>
             <ReportsModal/>
-            <ConfirmModal/>
             <AppBar position="sticky" sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Container maxWidth="xl" >
                     <Toolbar disableGutters>

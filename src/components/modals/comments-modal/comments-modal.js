@@ -39,7 +39,7 @@ const CommentsModal = props => {
     
 
     return (
-        <Dialog open={isShowing} scroll='paper' fullWidth maxWidth='sm'>
+        <Dialog open={isShowing} scroll='paper' fullWidth maxWidth='sm' sx={{zIndex: 9}}>
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     Comments
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>

@@ -5,13 +5,12 @@ import './comment.scss';
 import { ExpandMore } from "@mui/icons-material";
 import Reply from "../reply/reply";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteComment, setReplyingTo } from "../../containers/comments-container/commentsContainerSlice";
-import { unwrapResult } from "@reduxjs/toolkit";
+import { setReplyingTo } from "../../containers/comments-container/commentsContainerSlice";
 import CommentDropDown from "./comment-dropdown/comment-dropdown";
 import { setReportingItemId } from "../../forms/report/reportFormSlice";
 import { setIsShowing as setReportsModalIsShowing } from "../../modals/report-modal/reportModalSlice";
-import { updateCommentsSocket } from "../../containers/posts-container/postsContainerSlice";
-import userSocket from "../../../socket/user/socket-user";
+import { setIsShowing } from "../../modals/confirm-modal/confirmModalSlice";
+import { setActionType, setItemId, setText, setTitle } from "../../containers/confirm-container/confirmContainerSlice";
 
 
 
@@ -31,23 +30,11 @@ const Comment = (props) => {
     }
 
     const handleCommentRemoving = async() => {
-        dispatch(deleteComment(id))
-            .then(unwrapResult)
-            .then(result => {
-                //console.log(result);
-                if (result.data.done) {
-                    //console.log(`Comment: ${id} was removed.`);
-                    //console.log(result.data)
-                    dispatch(updateCommentsSocket({
-                        comment: result.data.comment
-                    }));
-                    
-                    userSocket.emit("post-remove-comment", {
-                        postId: result.data.comment.post,
-                        comment: result.data.comment,
-                    });
-                }
-            });
+        dispatch(setIsShowing(true));
+        dispatch(setActionType("delete-comment"));
+        dispatch(setItemId(id));
+        dispatch(setText("By confirming this, you agree that your comment will be removed without any ability to restore."));
+        dispatch(setTitle("Confirm comment deletion"));
     }
 
     // report comment
@@ -74,7 +61,7 @@ const Comment = (props) => {
                     //onClick={handleCommentSelection}
                     avatar={
                         <Avatar 
-                            src={user[2]} 
+                            src={user[2].endsWith('/') ? "NULL" : user[2]} 
                             sx={{bgcolor: "gray", boxShadow: 3}} 
                             aria-label="recipe"
                         />
@@ -107,7 +94,7 @@ const Comment = (props) => {
                                         key={i}
                                         id={id}
                                         item={item}
-                                        goToProfile={goToProfile}
+                                        //goToProfile={goToProfile}
                                     />
                                 )
                             })
