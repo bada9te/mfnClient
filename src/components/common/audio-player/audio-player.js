@@ -1,10 +1,11 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Drawer, IconButton, Slider, Typography } from '@mui/material';
-import { setControlsLocked, setIsMuted, setIsPlaying, setIsShowing, setLoop } from './audioPlayerSlice';
+import { setControlsLocked, setIsLoading, setIsMuted, setIsPlaying, setIsShowing, setLoop } from './audioPlayerSlice';
 import { setValue } from '../../bars/bottom/bottom-bar/bottomBarSlice';
 import WaveSurfer from 'wavesurfer.js'
 import { FastRewind, Loop, Pause, PlayArrow, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material';
+import { SpinnerLinear } from '../spinner/Spinner';
 
 const getTime = (t) => {
     var minute = Math.floor(t / 60); // get minute(integer) from time
@@ -22,6 +23,7 @@ const CustomAudioPlayer = (props) => {
     const src = useSelector(state => state.audioPlayer.src);
     const loop = useSelector(state => state.audioPlayer.loop);
     const controlsLocked = useSelector(state => state.audioPlayer.controlsLocked);
+    const isLoading = useSelector(state => state.audioPlayer.isLoading);
     const dispatch = useDispatch();
 
     const [volume, setVolume] = useState(50);
@@ -124,10 +126,13 @@ const CustomAudioPlayer = (props) => {
         } 
     })
     
-    // main
+    // main effect
     useEffect(() => {
         if (containerRef.current && src && src !== '') {
             dispatch(setControlsLocked(true));
+            dispatch(setIsLoading(true));
+
+            // ws instance
             const waveSurfer = WaveSurfer.create({
                 container: containerRef.current,
                 cursorColor: 'red',
@@ -138,7 +143,8 @@ const CustomAudioPlayer = (props) => {
                 waveColor: theme === 'dark' ? '#90caf9' : '#1976d2'
             });
 
-            waveSurfer.load(src);
+            
+            // event handlers
             waveSurfer.on('finish', () => {
                 handlePlaybackFinish();
             });
@@ -146,6 +152,7 @@ const CustomAudioPlayer = (props) => {
                 handleTimeChange(t);
             })
             waveSurfer.on('ready', () => {
+                dispatch(setIsLoading(false));
                 setDuration(getTime(waveSurfer.getDuration()));
                 waveSurferRef.current = waveSurfer;
                 waveSurfer.setVolume(volume / 100);
@@ -153,7 +160,10 @@ const CustomAudioPlayer = (props) => {
                 dispatch(setControlsLocked(false));
                 dispatch(setIsPlaying(true));
             });
-    
+
+            // load audio
+            waveSurfer.load(src);
+            
             return () => {
                 waveSurfer.destroy();
             }
@@ -173,6 +183,7 @@ const CustomAudioPlayer = (props) => {
                 }}
             >
                 <Box>
+                    { isLoading && <SpinnerLinear/> }
                     <Box ref={containerRef}></Box>
                     
                     <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}> 

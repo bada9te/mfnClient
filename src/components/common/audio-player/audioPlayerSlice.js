@@ -7,6 +7,7 @@ const initialState = {
     isMuted: false,
     loop: false,
     controlsLocked: true,
+    isLoading: false,
 }
 
 const audioPlayerSlice = createSlice({
@@ -30,6 +31,9 @@ const audioPlayerSlice = createSlice({
         },
         setControlsLocked: (state, action) => {
             state.controlsLocked = action.payload;
+        },
+        setIsLoading: (state, action) => {
+            state.isLoading = action.payload;
         }
     }
 });
@@ -44,4 +48,5 @@ export const {
     setIsMuted,
     setLoop,
     setControlsLocked,
+    setIsLoading,
 } = actions;

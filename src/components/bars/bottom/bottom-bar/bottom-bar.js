@@ -5,16 +5,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { setShowLB, setShowRB, setValue } from "./bottomBarSlice";
 import { setIsShowing as setAudioPlayerIsShowing } from "../../../common/audio-player/audioPlayerSlice";
+import { SpinnerLinear } from "../../../common/spinner/Spinner";
 
 
 const BottomBar = (props) => {
     const navigate= useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
-    const user = useSelector(state => state.base.user);
 
-    
+    const user = useSelector(state => state.base.user);
     const value = useSelector(state => state.bottomBar.value);
+    const isLoading = useSelector(state => state.audioPlayer.isLoading);
+
     const handleShowRB = () => dispatch(setShowRB(true));
     const handleShowLB = () => dispatch(setShowLB(true));
     const handleShowAudioPlayer = () => dispatch(setAudioPlayerIsShowing(true));
@@ -47,6 +49,7 @@ const BottomBar = (props) => {
     return (
         <>
             <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
+                { isLoading && <SpinnerLinear/> }
                 <BottomNavigation
                     showLabels
                     value={value === '' ? location.pathname : value}

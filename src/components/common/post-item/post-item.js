@@ -22,7 +22,6 @@ import { setActionType, setItemId, setText, setTitle } from '../../containers/co
 
 
 
-
 const PostItem = (props) => {
     const {
         id, 
@@ -254,6 +253,21 @@ const PostItem = (props) => {
 
     // for post upload form visualization
     useEffect(() => {}, [commentsAllowed, downloadsAllowed])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <>
             <Card sx={{width: '400px', boxShadow: 3}}>
@@ -419,7 +433,7 @@ const PostItem = (props) => {
                         })()
                     }
                     </>
-                    
+
                 </CardContent>
                 {
                     (() => {
