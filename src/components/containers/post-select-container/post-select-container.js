@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import getTimeSince from "../../../common-functions/getTimeSince";
 import PostItem from "../../common/post-item/post-item";
-import Spinner from "../../common/spinner/Spinner";
+import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { setPost1 as setBattlePost1, setPost2 as setBattlePost2 } from "../../forms/create-battle/createBattleFormSlice";
 import { setIsShowing as setPostSelectModalIsShowing } from "../../modals/post-select-modal/postSelectModalSlice";
 
@@ -26,7 +26,7 @@ const PostSelectContainer = props => {
                     if (isLoading && query !== "") {
                         return (
                             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <Spinner/>
+                                <SpinnerCircular/>
                             </Box>
                         );
                     } else if (posts && posts.length > 0) {

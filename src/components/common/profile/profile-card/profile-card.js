@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import * as Alert from "../../../alerts/alerts";
-import Spinner from "../../spinner/Spinner";
+import { SpinnerLinear } from "../../spinner/Spinner";
 import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
 import "./profile-card.scss";
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,8 +56,8 @@ const ProfileCard = (props) => {
             {
                 profileCardIsLoading
                 ?
-                <Box sx={{m: 3, minHeight: '200px', display: 'flex', alignItems: 'center'}}>
-                    <Spinner/>
+                <Box sx={{minHeight: '200px'}}>
+                    <SpinnerLinear/>
                 </Box>     
                 :
                 <Box sx={{

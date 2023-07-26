@@ -1,13 +1,27 @@
-import { Spinner as Sp } from "react-bootstrap";
-import './spinner.scss';
+import { Box, CircularProgress, LinearProgress } from "@mui/material";
 
 
-const Spinner = props => {
+const SpinnerCircular = props => {
     return (
-        <div className="w-100 d-flex justify-content-center spinner" style={{ margin: '0 auto' }}>
-            <Sp animation="border"/>
-        </div>
+        <Box sx={{ display: 'flex' }}>
+            <CircularProgress />
+        </Box>
     );
 }
 
-export default Spinner;
+const SpinnerLinear = props => {
+    return (
+        <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+        </Box>
+    );
+}
+
+export { SpinnerCircular, SpinnerLinear };
+
+
+/*
+        <div className="w-100 d-flex justify-content-center spinner" style={{ margin: '0 auto' }}>
+            <Sp animation="border"/>
+        </div>
+        */

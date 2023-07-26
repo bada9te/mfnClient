@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Spinner from "../../common/spinner/Spinner";
+import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, List, Typography } from "@mui/material";
 import EnumRightbarUsers from "../../enums/enum-rightbar-users";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,7 +35,7 @@ const RightBarUsersContainer = props => {
                         if (isLoading && searchQuery !== "") {
                             return (
                                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
-                                    <Spinner/>
+                                    <SpinnerCircular/>
                                 </Box>
                             );
                         } else if (usersData && usersData.length > 0) {

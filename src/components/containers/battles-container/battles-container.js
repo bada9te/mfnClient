@@ -70,7 +70,7 @@ const BattlesContainer = props => {
     return (
         <>
             <Box>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider', my: 3 }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 3 }}>
                     <Tabs value={status} onChange={handleTabSwitch}>
                         <Tab label="In progress" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
                         <Tab label="Finished" id="simple-tab-1" aria-controls="simple-tabpanel-1"/>

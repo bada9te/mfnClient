@@ -42,14 +42,13 @@ const BattleItem = (props) => {
 
     return (
         <>
-            <Card sx={{ boxShadow: 3, mb: 3, p: 0, mx: 0 }}>
+            <Card sx={{ boxShadow: 3, my: 3, p: 0, mx: 0 }}>
                 <Box sx={{ 
                         display: 'flex', 
                         justifyContent: 'center', 
                         alignItems: 'center', 
                         fontSize: 24, 
                         p: 1,
-                        backgroundColor: 'rgba(230,230,230,0.3)',
                         boxShadow: 1
                     }}
                 >
@@ -80,7 +79,6 @@ const BattleItem = (props) => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        bgcolor: 'rgba(230,230,230,0.3)',
                     }}
                 >
                     {

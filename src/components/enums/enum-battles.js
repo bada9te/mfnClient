@@ -2,8 +2,9 @@ import BattleItem from "../common/battle-item/battle-item";
 import PostItem from "../common/post-item/post-item";
 import getTimeSince from "../../common-functions/getTimeSince";
 import { useSelector } from "react-redux";
-import Spinner from "../common/spinner/Spinner";
+import { SpinnerLinear } from "../common/spinner/Spinner";
 import { Box, Typography } from "@mui/material";
+import PostItemUnavailable from "../common/post-item/post-item-unavailable";
 
 
 const PostFromData = (props) => {
@@ -42,7 +43,7 @@ const PostFromData = (props) => {
                     votedBy={votedBy}
                 />
                 :
-                <Typography>Post was removed</Typography>
+                <PostItemUnavailable/>
             }
         </>
     );
@@ -61,9 +62,7 @@ const EnumBattles = props => {
                 (() => {
                     if (isLoading) {
                         return (
-                            <Box sx={{m: 3, height: '70vh', display: 'flex', alignItems: 'center'}}>
-                                <Spinner/>
-                            </Box> 
+                            <SpinnerLinear/>
                         );
                     } else if (battles.length === 0) {
                         return (

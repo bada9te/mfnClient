@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Spinner from '../../common/spinner/Spinner';
+import { SpinnerLinear } from '../../common/spinner/Spinner';
 import PaginationTree from '../../common/pagination/pagination';
 
 import { Box, Stack, Typography } from '@mui/material';
@@ -37,13 +37,13 @@ const PostsContainer = (props) => {
                 (() => {
                     if (isLoading) {
                         return (
-                            <Box sx={{mt: 3, mb: 5, minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Spinner/>
-                            </Box>
+                            
+                                <SpinnerLinear/>
+                            
                         );
                     } else if (posts?.length === 0) {
                         return (
-                            <Box sx={{mt: 3, mb: 5, minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <Box sx={{mt: 3, mb: 5, minHeight: '78vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                 <Typography sx={{textAlign: 'center'}}>No tracks yet</Typography>
                             </Box>
                         );

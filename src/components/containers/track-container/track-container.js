@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import ProfileCard from "../../common/profile/profile-card/profile-card";
 import PostItem from "../../common/post-item/post-item";
 import getTimeSince from "../../../common-functions/getTimeSince";
-import Spinner from "../../common/spinner/Spinner";
+import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchInspectingPost } from "./trackContainerSlice";
 import { Box } from "@mui/material";
@@ -28,7 +28,7 @@ const TrackContainer = (props) => {
                     if (isLoading || !postData) {
                         return (
                             <Box sx={{mt: 3, mb: 5, minHeight: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Spinner/>
+                                <SpinnerCircular/>
                             </Box>
                         );
                     } else {
