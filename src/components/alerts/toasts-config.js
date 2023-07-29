@@ -1,4 +1,4 @@
-const toastsConfig = (changes) => {
+const toastsConfig = (changes={}) => {
     // defaut config
     const config = {
         position: "top-right",
