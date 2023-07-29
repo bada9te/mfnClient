@@ -1,5 +1,4 @@
 import { Pagination, Box } from "@mui/material";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActivePage } from "./paginationSlice";
 
@@ -11,10 +10,6 @@ const PaginationTree = props => {
     const handlePageChange = (e, pageNumber) => {
         dispatch(setActivePage(pageNumber))
     }
-
-    useEffect(() => {
-        console.log(maxPage)
-    }, [maxPage])
  
     return (
         <>

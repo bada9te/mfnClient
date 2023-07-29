@@ -2,12 +2,13 @@ import { httpSaveFile } from "../../../requests/files";
 import { httpUpdateUser } from "../../../requests/users";
 import { useNavigate } from "react-router-dom";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
-import * as Alert from "../../alerts/alerts";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePartOfUser } from "../../baseSlice";
 import { setImageType, setIsShowing } from "../../modals/image-cropper-modal/imageCropperModalSlice";
 import { setPicture } from "./profileCardFormSlice";
+import { toast } from "react-toastify";
+import toastsConfig from "../../alerts/toasts-config";
 
 
 const ProfileCardForm = (props) => {
@@ -19,6 +20,7 @@ const ProfileCardForm = (props) => {
     const imageType = useSelector(state => state.imageCropperModal.imageType);
     const avatarTitle = useSelector(state => state.profileCardForm.avatarTitle);
     const backgroundTitle = useSelector(state => state.profileCardForm.backgroundTitle);
+    const theme = useSelector(state => state.base.theme);
 
 
     const cropImageFile = (img, what) => {
@@ -39,6 +41,8 @@ const ProfileCardForm = (props) => {
         dispatch(setIsShowing(value));
 
         if (picture != null) { 
+            const id = toast.loading("Updating profile...");
+
             // save image on server
             let blob = await fetch(picture).then(r => r.blob());
             let result = await httpSaveFile(blobToFile(blob, currentUser?.nick + `${imageType}.jpg`));
@@ -56,7 +60,22 @@ const ProfileCardForm = (props) => {
                 result = await httpUpdateUser(currentUser?._id, result.data.file.filename, "background");
             }
             navigate('/profile-edit');
-            alertUser("Profile", result.data.done);
+
+            if (result.data.done) {
+                toast.update(id, {
+                    render: "Profile updated", 
+                    isLoading: false,
+                    type: "success",
+                    ...toastsConfig({ theme })
+                });
+            } else {
+                toast.update(id, {
+                    render: "Profile not updated", 
+                    isLoading: false,
+                    type: "error",
+                    ...toastsConfig({ theme })
+                });
+            }
         }
     }
 
@@ -65,14 +84,6 @@ const ProfileCardForm = (props) => {
         dispatch(updatePartOfUser({what, value}))
     }
     
-    const alertUser = (what, done) => {
-        if (done) {
-            Alert.alertSuccess(`${what} updated`);
-        } else {
-            Alert.alertError(`Error, ${what.toLowerCase()} not updated`);
-        }
-    }
-
 
     return (
         <>

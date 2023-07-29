@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { restoreAccount } from "./accountRestoreFormSlice";
 import * as Alert from "../../alerts/alerts";
 import { useNavigate } from "react-router-dom";
@@ -12,25 +12,30 @@ const AccountRestoreForm = (props)=> {
     const { register, handleSubmit, getValues, formState: { errors } } = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const theme = useSelector(state => state.base.theme);
 
 
     const onSubmit = data => {
-        dispatch(restoreAccount({
-            userId,
-            actionId,
-            verifyToken,
-            newValue: data.newValue,
-            type: type,
-        }))
-        .then(unwrapResult)
-        .then(result => {
-            if (result.data.done) {
-                Alert.alertSuccess('Password updated');
-                navigate('/login');
-            } else {
-                Alert.alertError('Unexpected error');
-            }
-        });
+        Alert.alertPromise("Updating account...", "Password updated", "Unexpected error", () => {
+            return new Promise((resolve, reject) => {
+                dispatch(restoreAccount({
+                    userId,
+                    actionId,
+                    verifyToken,
+                    newValue: data.newValue,
+                    type: type,
+                }))
+                .then(unwrapResult)
+                .then(result => {
+                    if (result.data.done) {
+                        navigate('/login');
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                });
+            });
+        }, { theme });
     }
     
 

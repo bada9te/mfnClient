@@ -13,6 +13,7 @@ const ReportForm = (props) => {
     const [value, setValue] = useState("");
     const reportingItemId = useSelector(state => state.reportForm.reportingItemId);
     const currentUser = useSelector(state => state.base.user);
+    const theme = useSelector(state => state.base.theme);
     const dispatch = useDispatch();
 
     const handleChange = (event) => {
@@ -21,22 +22,26 @@ const ReportForm = (props) => {
     };
     
     const onSubmit = async(data) => {
-        await httpCreateReport({
-            contactReason: data.FoulType,
-            email: currentUser.email,
-            message: data.Message || "Not provided",
-            reportOwner: currentUser._id,
-            reportedPost: reportingItemId, 
-        }).then(result => {
-            if (result.data.done) {
-                Alert.alertSuccess('Report sent');
-                dispatch(setReportModalIsShowing(false));
-            } else {
-                Alert.alertError("Can't send a report");
-            }
-        }).catch(_ => {
-            Alert.alertError("Can't send a report");
-        });
+        Alert.alertPromise("Sending report...", "Report sent", "Can't send a report", () => {
+            return new Promise(async(resolve, reject) => {
+                await httpCreateReport({
+                    contactReason: data.FoulType,
+                    email: currentUser.email,
+                    message: data.Message || "Not provided",
+                    reportOwner: currentUser._id,
+                    reportedPost: reportingItemId, 
+                }).then(result => {
+                    if (result.data.done) {
+                        dispatch(setReportModalIsShowing(false));
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }).catch(_ => {
+                    reject();
+                });
+            })
+        }, { theme })
     }
 
     return (

@@ -43,7 +43,6 @@ const FormProfileEdit = (props) => {
                             }
                         }
                     });
-                //result = await httpUpdateUser(currentUser?._id, data.NewPassword, "password");
                 break;
             case "OldEmail":
                 if (data.OldEmail !== currentUser.email) {

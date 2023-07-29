@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { prepareToRestore } from "./accountRestoreRequestFormSlice";
 import * as Alert from "../../alerts/alerts";
 import { useNavigate } from "react-router-dom";
@@ -11,21 +11,26 @@ const AccountRestoreRequestForm = (props)=> {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const theme = useSelector(state => state.base.theme);
 
     const onSubmit = data => {
-        dispatch(prepareToRestore({email: data.Email, type: "password"}))
-            .then(unwrapResult)
-            .then(result => {
-                if(result.data.done) {
-                    const user = result.data.user;
-                    if (user) {
-                        Alert.alertSuccess('Check your email for next steps');
-                        navigate('/login')
-                    } else {
-                        Alert.alertError('Account is not found');
-                    }
-                }
+        Alert.alertPromise("Requesting...", "Check your email for next steps", "Account is not found", () => {
+            return new Promise((resolve, reject) => {
+                dispatch(prepareToRestore({email: data.Email, type: "password"}))
+                    .then(unwrapResult)
+                    .then(result => {
+                        if(result.data.done) {
+                            const user = result.data.user;
+                            if (user) {
+                                navigate('/login')
+                                resolve();
+                            } else {
+                                reject();
+                            }
+                        }
+                    });
             });
+        }, { theme });
     }
     
 

@@ -26,7 +26,7 @@ const PostsContainer = (props) => {
     const dispatchDocumentsCount = useCallback((result) => {
         if (result.data.done) {
             let count = result.data.count;
-            count = count % 2 === 0 ? count / 12 : count / 12 + 1;
+            count = count % 2 === 0 ? count / 12 : Math.ceil(count / 12);
             dispatch(setMaxPage(count));
         }
     }, [dispatch]);
@@ -86,7 +86,7 @@ const PostsContainer = (props) => {
             }
             {
                 (() => {
-                    if (maxPage !== 1 || true) {
+                    if (maxPage !== 1) {
                         return (
                             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
                                 <PaginationTree/>

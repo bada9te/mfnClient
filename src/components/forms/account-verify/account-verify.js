@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Alert from "../../alerts/alerts";
 import { useNavigate } from "react-router-dom";
 import { verifyAccount } from "./accountVerifyFormSlice";
@@ -12,23 +12,27 @@ const AccountVerifyForm = (props)=> {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const theme = useSelector(state => state.base.theme);
 
     const onSubmit = data => {
-        dispatch(verifyAccount({
-            userId: userId,
-            actionId: actionId,
-            verifyToken: data.Code,
-        }))
-        .then(unwrapResult)
-        .then(result => {
-            if (result.data.done && result.data.user?.verified) {
-                Alert.alertSuccess('Account verified');
-                navigate('/login');
-            } else {
-                Alert.alertError("Can't verify account");
-            }
-        });
+        Alert.alertPromise("Verifying...", "Account verified", "Can't verify this account", () => {
+            return new Promise((resolve, reject) => {
+                dispatch(verifyAccount({
+                    userId: userId,
+                    actionId: actionId,
+                    verifyToken: data.Code,
+                }))
+                .then(unwrapResult)
+                .then(result => {
+                    if (result.data.done && result.data.user?.verified) {
+                        navigate('/login');
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                });
+            })
+        }, { theme })
     }
     
 

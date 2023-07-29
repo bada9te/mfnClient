@@ -19,6 +19,7 @@ const CreateBattleForm = props => {
     const title = useSelector(state => state.createBattleForm.title);
     const post1 = useSelector(state => state.createBattleForm.post1);
     const post2 = useSelector(state => state.createBattleForm.post2);
+    const theme = useSelector(state => state.base.theme);
     const dispatch = useDispatch();
 
     const handleOpenPostSelectModal = (isMine) => {
@@ -28,16 +29,20 @@ const CreateBattleForm = props => {
 
 
     const onSubmit = async(data) => {
-        dispatch(createBattle())
-            .then(unwrapResult)
-            .then(result => {
-                if (result.data.done) {
-                    reset();
-                    Alert.alertSuccess("Battle was successfully created");
-                } else {
-                    Alert.alertError("Can't create the battle");
-                }
-            });
+        Alert.alertPromise("Creating battle...", "Battle was successfully created", "Can't create the battle", () => {
+            return new Promise((resolve, reject) => {
+                dispatch(createBattle())
+                    .then(unwrapResult)
+                    .then(result => {
+                        if (result.data.done) {
+                            reset();
+                            resolve();
+                        } else {
+                            reject();
+                        }
+                    });
+            })
+        }, { theme });
     }
 
     return (

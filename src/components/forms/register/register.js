@@ -2,25 +2,45 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { httpRegister } from "../../../requests/auth";
 import { Box, TextField, Button } from "@mui/material";
-import * as Alert from "../../alerts/alerts";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import toastsConfig from "../../alerts/toasts-config";
 
 
 const RegisterForm = (props) => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
+    const theme = useSelector(state => state.base.theme);
     
     const onSubmit = async(data) => {
+        const id = toast.loading("Registering new user...");
+
         try {
             const result = await httpRegister(data);
     
             if (result.data.done) {
                 navigate('/login');
-                Alert.alertSuccess("Account " + result.data.user.email + " was successfully created");
+                toast.update(id, { 
+                    render: "Account " + result.data.user.email + " was successfully created", 
+                    type: "success", 
+                    isLoading: false, 
+                    ...toastsConfig({ theme }) 
+                });
             } else {
-                Alert.alertError("Can't create the new account");
+                toast.update(id, { 
+                    render: "Can't create the new account", 
+                    type: "error", 
+                    isLoading: false, 
+                    ...toastsConfig({ theme }) 
+                });
             }
         } catch (error) {
-            Alert.alertError(error.response.data.error);
+            toast.update(id, { 
+                render: error.response.data.error, 
+                type: "error", 
+                isLoading: false, 
+                ...toastsConfig({ theme }) 
+            });
         }
     }
 

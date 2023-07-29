@@ -16,13 +16,17 @@ const FormSupportContact = (props) => {
             message: data.Message,
         };
 
-        const result = await httpCreateSupportRequest(supportRequestData);
-        if (result.data.done) {
-            reset();
-            Alert.alertSuccess("Successfully sent");
-        } else {
-            Alert.alertError("Sth went wrong");
-        }
+        Alert.alertPromise("Sending support request...", "Successfully sent", "Sth went wrong", () => {
+            return new Promise(async(resolve, reject) => {
+                const result = await httpCreateSupportRequest(supportRequestData);
+                if (result.data.done) {
+                    reset();
+                    resolve();
+                } else {
+                    reject();
+                }
+            })
+        })
     }
 
     return (

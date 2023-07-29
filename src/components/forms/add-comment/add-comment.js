@@ -17,6 +17,7 @@ const AddCommentForm = (props) => {
     const postId = useSelector(state => state.commentsContainer.postId);
     const replyingTo = useSelector(state => state.commentsContainer.replyingTo);
     const postOwnerId = useSelector(state => state.commentsContainer.postOwnerId);
+    const theme = useSelector(state => state.base.theme);
 
 
     const onSubmit = async(data) => {
@@ -31,35 +32,34 @@ const AddCommentForm = (props) => {
             commentData.isReply = true;
         }
 
-        dispatch(createComment({
-            replyingId: replyingTo[0],
-            comment: commentData,
-            currentUser: currentUser,
-
-        }))
-        .then(unwrapResult)
-        .then(result => {
-            if (result.data.done) {
-                //handleCommentAdding(result.data.comment.isReplyTo || null, result.data.comment);
-                Alert.alertSuccess("Comment added");
-                
-                userSocket.emit("post-add-comment", {
-                    sender: currentUser,
-                    post: postId,
-                    comment: result.data.comment._id,
-                    receiver: replyingTo[0] === null ? postOwnerId : replyingTo[0],
-                    text: `${currentUser.nick} ${replyingTo[0] === null ? "Commented your post" : "Answered on your comment"}.`,
-                    selfAction: currentUser._id === postOwnerId,
-                    isReply: replyingTo[0] === null ? false : true,
-                }); 
-
-                reset();
-            } else {
-                Alert.alertError("Can't add a comment");
-            }
-        });
-
-
+        Alert.alertPromise("Creating comment...", "Comment added", "Can't add a comment", () => {
+            return new Promise((resolve, reject) => {
+                dispatch(createComment({
+                    replyingId: replyingTo[0],
+                    comment: commentData,
+                    currentUser: currentUser,
+                }))
+                .then(unwrapResult)
+                .then(result => {
+                    if (result.data.done) {
+                        userSocket.emit("post-add-comment", {
+                            sender: currentUser,
+                            post: postId,
+                            comment: result.data.comment._id,
+                            receiver: replyingTo[0] === null ? postOwnerId : replyingTo[0],
+                            text: `${currentUser.nick} ${replyingTo[0] === null ? "Commented your post" : "Answered on your comment"}.`,
+                            selfAction: currentUser._id === postOwnerId,
+                            isReply: replyingTo[0] === null ? false : true,
+                        }); 
+        
+                        reset();
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                });
+            });
+        }, { theme });
     }
 
     return (

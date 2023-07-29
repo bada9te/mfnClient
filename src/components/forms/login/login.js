@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import * as Alert from "../../alerts/alerts";
 import { Box, TextField, Button } from "@mui/material";
 import { login } from "../../baseSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +18,7 @@ const LoginForm = (props) => {
     
     const onSubmit = async(data) => {
         // show process
-        const id = toast.loading("Logging in...", { ...toastsConfig() });
+        const id = toast.loading("Logging in...", { ...toastsConfig({ theme }) });
         // update store
         dispatch(login(data))
             .then(unwrapResult)
@@ -33,16 +32,36 @@ const LoginForm = (props) => {
                         }));
                         localStorage.setItem('mfnCurrentToken', JSON.stringify(result.data.token))
                         navigate('/');
-                        toast.update(id, { render: "Successfully logged in", type: "success", isLoading: false, ...toastsConfig() });
+                        toast.update(id, { 
+                            render: "Successfully logged in", 
+                            type: "success", 
+                            isLoading: false, 
+                            ...toastsConfig({ theme }) 
+                        });
                     } else {
-                        toast.update(id, { render: "Pls verify your account via email", type: "warning", isLoading: false, ...toastsConfig() });
+                        toast.update(id, { 
+                            render: "Pls verify your account via email", 
+                            type: "warning", 
+                            isLoading: false, 
+                            ...toastsConfig({ theme }) 
+                        });
                     }
                 } else {
-                    toast.update(id, { render: "Can't log in", type: "error", isLoading: false, ...toastsConfig() });
+                    toast.update(id, { 
+                        render: "Can't log in", 
+                        type: "error", 
+                        isLoading: false, 
+                        ...toastsConfig({ theme }) 
+                    });
                 }
             })
             .catch((err) => {
-                toast.update(id, { render: err.message, type: "error", isLoading: false, ...toastsConfig() });
+                toast.update(id, { 
+                    render: err.message, 
+                    type: "error", 
+                    isLoading: false, 
+                    ...toastsConfig({ theme }) 
+                });
             });
     };
 
