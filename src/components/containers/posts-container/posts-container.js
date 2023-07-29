@@ -26,7 +26,7 @@ const PostsContainer = (props) => {
     const dispatchDocumentsCount = useCallback((result) => {
         if (result.data.done) {
             let count = result.data.count;
-            count = count % 2 === 0 ? count / 12 : Math.ceil(count / 12);
+            count = Math.ceil(count / 12);
             dispatch(setMaxPage(count));
         }
     }, [dispatch]);
