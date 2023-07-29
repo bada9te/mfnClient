@@ -13,7 +13,7 @@ const RegisterForm = (props) => {
     const theme = useSelector(state => state.base.theme);
     
     const onSubmit = async(data) => {
-        const id = toast.loading("Registering new user...");
+        const id = toast.loading("Registering new user...", { theme });
 
         try {
             const result = await httpRegister(data);

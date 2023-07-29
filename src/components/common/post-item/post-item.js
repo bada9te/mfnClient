@@ -57,7 +57,8 @@ const PostItem = (props) => {
     const volume = useSelector(state => state.audioPlayer.volume);
     const loop = useSelector(state => state.audioPlayer.loop);
     const controlsLocked = useSelector(state => state.audioPlayer.controlsLocked);
-    
+    const theme = useSelector(state => state.base.theme);
+
     // nav
     const navigate = useNavigate();
     
@@ -186,7 +187,7 @@ const PostItem = (props) => {
                 .then(unwrapResult)
                 .then(result => {
                     if (result.data.done) {
-                        Alert.alertSuccess(`Success`);
+                        Alert.alertSuccess(`Success`, { theme });
                     }
                 });
         }

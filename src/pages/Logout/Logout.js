@@ -12,6 +12,7 @@ const Logout = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.base.user);
+    const theme = useSelector(state => state.base.theme);
     
     useEffect(() => {
         let timeout = null;
@@ -21,7 +22,7 @@ const Logout = (props) => {
             httpLogOut().then(() => {
                 dispatch(logoutUser());
                 timeout = setTimeout(() => {
-                    Alert.alertSuccess("Logged out");
+                    Alert.alertSuccess("Logged out", { theme });
                     navigate('/login')
                 }, 1000);
             });
@@ -29,12 +30,12 @@ const Logout = (props) => {
             navigate('/');
         }
         return () => clearTimeout(timeout);
-    }, [currentUser?._id, dispatch, navigate]);
+    }, [currentUser?._id, dispatch, navigate, theme]);
     
     return (
         <>
             <Box sx={{ width: '100%', minHeight: '100vh', py: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Stack direction="column" spacing={4}>
+                <Stack direction="column" spacing={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Typography variant="h4" sx={{my: 2}}>Logging out</Typography>
                     <SpinnerCircular/>
                 </Stack>
