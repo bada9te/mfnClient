@@ -6,6 +6,9 @@ import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from './postsContainerSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { setMaxPage } from '../../common/pagination/paginationSlice';
+import { useCallback } from 'react';
 
 
 const PostsContainer = (props) => {
@@ -15,20 +18,41 @@ const PostsContainer = (props) => {
     const currentUser = useSelector(state => state?.base?.user);
     const isLoading = useSelector(state => state?.postsContainer?.isLoading);
     const activePage = useSelector(state => state?.pagination?.activePage);
+    const maxPage = useSelector(state => state?.pagination?.maxPage);
     const posts = useSelector(state => state.postsContainer.posts);
     const dispatch = useDispatch();
     
-    
+
+    const dispatchDocumentsCount = useCallback((result) => {
+        if (result.data.done) {
+            let count = result.data.count;
+            count = count % 2 === 0 ? count / 12 : count / 12 + 1;
+            dispatch(setMaxPage(count));
+        }
+    }, [dispatch]);
+
 
     useEffect(() => {
         if (savedOnly) {
-            dispatch(fetchPosts({payload: currentUser?._id, activePage, type: "savedOnly"}));
+            dispatch(fetchPosts({payload: currentUser?._id, activePage, type: "savedOnly"}))
+                .then(unwrapResult)
+                .then(result => {
+                    dispatchDocumentsCount(result);
+                });
         } else if (id) {
-            dispatch(fetchPosts({payload: id, activePage, type: "byOwnerId"}));
+            dispatch(fetchPosts({payload: id, activePage, type: "byOwnerId"}))
+                .then(unwrapResult)
+                .then(result => {
+                    dispatchDocumentsCount(result);
+                });
         } else {
-            dispatch(fetchPosts({payload: null, activePage, type: "all"}));
+            dispatch(fetchPosts({payload: null, activePage, type: "all"}))
+                .then(unwrapResult)
+                .then(result => {
+                    dispatchDocumentsCount(result);
+                });
         }
-    }, [savedOnly, id, currentUser?._id, dispatch, activePage]);
+    }, [savedOnly, id, currentUser?._id, dispatch, activePage, dispatchDocumentsCount]);
     
     
     return ( 
@@ -55,18 +79,18 @@ const PostsContainer = (props) => {
                                         <EnumPosts profileLinkAccessable={profileLinkAccessable} except={except}/>
                                     </Stack>
                                 </Box>
-                                {
-                                    (() => {
-                                        if (posts?.length >= 12) {
-                                            return (
-                                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
-                                                    <PaginationTree/>
-                                                </Box>
-                                            );
-                                        }
-                                    })()
-                                }
                             </>
+                        );
+                    }
+                })()
+            }
+            {
+                (() => {
+                    if (maxPage !== 1 || true) {
+                        return (
+                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
+                                <PaginationTree/>
+                            </Box>
                         );
                     }
                 })()

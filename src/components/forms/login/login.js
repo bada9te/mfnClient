@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as Alert from "../../alerts/alerts";
 import { Box, TextField, Button } from "@mui/material";
 import { login } from "../../baseSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from '@reduxjs/toolkit';
 import { toast } from "react-toastify";
 import toastsConfig from "../../alerts/toasts-config";
@@ -14,6 +14,7 @@ const LoginForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const theme = useSelector(state => state.base.theme);
     
     
     const onSubmit = async(data) => {

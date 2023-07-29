@@ -24,6 +24,7 @@ const PostUploadForm = (props)=> {
     const isShowing = useSelector(state => state.imageCropperModal.isShowing);
     const commentsAllowed = useSelector(state => state.postUploadForm.commentsAllowed);
     const downloadsAllowed = useSelector(state => state.postUploadForm.downloadsAllowed);
+    const theme = useSelector(state => state.base.theme);
     const dispatch = useDispatch();
 
 
@@ -37,22 +38,25 @@ const PostUploadForm = (props)=> {
     // form submit
     const onSubmit = async(data) => {
         let blob = await fetch(picture).then(r => r.blob());
-        Promise.all([
-            dispatch(savePostFile({file: data.Audio[0], type: 'audio'})),
-            dispatch(savePostFile({file: blobToFile(blob, data.Image[0].name), type: 'image'}))
-        ]).then(() => {
-            dispatch(uploadPost())
-                .then(unwrapResult)
-                .then(result => {
-                    if (result.data.done) {
-                        reset();
-                        Alert.alertSuccess("Post uploaded");
-                    } else {
-                        Alert.alertError("Can't upload the post");
-                    }
+        Alert.alertPromise("Uploading...", "Post uploaded", "Can't upload the post", () => {
+            return new Promise((resolve, reject) => {
+                Promise.all([
+                    dispatch(savePostFile({file: data.Audio[0], type: 'audio'})),
+                    dispatch(savePostFile({file: blobToFile(blob, data.Image[0].name), type: 'image'}))
+                ]).then(() => {
+                    dispatch(uploadPost())
+                        .then(unwrapResult)
+                        .then(result => {
+                            if (result.data.done) {
+                                reset();
+                                resolve();
+                            } else {
+                                reject();
+                            }
+                        });
                 });
-        })
-                
+            }); 
+        }, { theme });  
     }
 
     const handleImageCropModalClose = (value, picture) => {

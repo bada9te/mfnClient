@@ -139,7 +139,7 @@ const CustomAudioPlayer = (props) => {
                 responsive: true,
                 cursorWidth: 2,
                 barWidth: 2,
-                barHeight: 10,
+                barHeight: 1,
                 waveColor: theme === 'dark' ? '#90caf9' : '#1976d2'
             });
 

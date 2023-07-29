@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { httpGetAllPostsWithOwnerId, httpGetUserSavedPosts, httpGetAllPosts, httpSwitchLike, httpSwitchPostInSaved, httpDeletePostById } from "../../../requests/posts";
+import { setMaxPage } from "../../common/pagination/paginationSlice";
 import { createComment } from "../comments-container/commentsContainerSlice";
 
 
