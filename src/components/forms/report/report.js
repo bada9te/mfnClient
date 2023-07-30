@@ -26,10 +26,10 @@ const ReportForm = (props) => {
             return new Promise(async(resolve, reject) => {
                 await httpCreateReport({
                     contactReason: data.FoulType,
-                    email: currentUser.email,
+                    email: currentUser.email !== "" ? currentUser.email : "Not provided",
                     message: data.Message || "Not provided",
-                    reportOwner: currentUser._id,
                     reportedPost: reportingItemId, 
+                    ...(currentUser._id !== "" && {reportOwner: currentUser._id})
                 }).then(result => {
                     if (result.data.done) {
                         dispatch(setReportModalIsShowing(false));
