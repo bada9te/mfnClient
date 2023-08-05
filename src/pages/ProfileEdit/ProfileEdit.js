@@ -1,25 +1,20 @@
 import ProfileCardEdit from "../../components/common/profile/profile-card-edit/profile-card-edit";
 import FormProfileEdit from "../../components/forms/profile-edit/profile-edit";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, Card, Stack, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { Delete } from "@mui/icons-material";
-import { deleteAccount } from "../../components/forms/profile-card/profileCardFormSlice";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
+import { setIsShowing as setConfirmModalIsShowing } from "../../components/modals/confirm-modal/confirmModalSlice";
+import { setActionType, setText, setTitle } from "../../components/containers/confirm-container/confirmContainerSlice";
 
 
 const ProfileEdit = (props) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const handleAccountDelete = async() => {
-        dispatch(deleteAccount())
-            .then(unwrapResult)
-            .then(result => {
-                if (result.data.done) {
-                    navigate('/logout')
-                }
-            })
+        dispatch(setConfirmModalIsShowing(true));
+        dispatch(setActionType("delete-account"));
+        dispatch(setText("By confirming this, you agree that your account will be removed without any ability to restore."));
+        dispatch(setTitle("Confirm account deletion"));
     } 
 
 
@@ -40,7 +35,22 @@ const ProfileEdit = (props) => {
                     <FormProfileEdit title="Email" current="Current email" />
                 </Box>
             </Stack>
-            <Button color="error" variant="contained" startIcon={<Delete/>} onClick={handleAccountDelete}>Delete account</Button>
+
+            <Card sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                m: 3,
+                p: 3,
+                boxShadow: 3
+            }}>
+                <Typography sx={{
+                    fontSize: 34,
+                    mb: 2,
+                    textAlign: 'center'
+                }}>Danger zone</Typography>
+                <Button color="error" variant="contained" startIcon={<Delete/>} onClick={handleAccountDelete}>Delete account</Button>
+            </Card>
         </>
     );
 }

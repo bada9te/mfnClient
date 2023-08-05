@@ -11,6 +11,8 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import ConfirmContainer from '../../containers/confirm-container/confirm-container';
 import { deleteComment } from '../../containers/comments-container/commentsContainerSlice';
 import userSocket from '../../../socket/user/socket-user';
+import { deleteAccount } from '../../forms/profile-card/profileCardFormSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -21,6 +23,7 @@ const ConfirmModal = (props) => {
     const actionType = useSelector(state => state.confirmContainer.actionType);
     const itemId = useSelector(state => state.confirmContainer.itemId);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
     const handleClose = (confirmed) => {
@@ -51,6 +54,15 @@ const ConfirmModal = (props) => {
                             });
                         }
                     });
+                    break;
+                case "delete-account":
+                    dispatch(deleteAccount())
+                        .then(unwrapResult)
+                        .then(result => {
+                            if (result.data.done) {
+                                navigate('/logout')
+                            }
+                        });
                     break;
                 default:
                     break;
