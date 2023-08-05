@@ -1,10 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { httpDeleteAccount } from "../../../requests/users";
 
 const initialState = {
     picture: null,
     avatarTitle: "Select image",
     backgroundTitle: "Select image",
 }
+
+
+export const deleteAccount = createAsyncThunk(
+    'profile-card-form/delete-account', 
+    async(_, thunkApi) => {
+        const currentUser = thunkApi.getState().base.user;
+        return await httpDeleteAccount(currentUser._id);
+    }
+);
 
 
 const profileCardFormSlice = createSlice({

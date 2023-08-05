@@ -6,20 +6,24 @@ import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from './postsContainerSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
+import { createSelector, unwrapResult } from '@reduxjs/toolkit';
 import { setMaxPage } from '../../common/pagination/paginationSlice';
 import { useCallback } from 'react';
 
 
+
 const PostsContainer = (props) => {
     const {id, profileLinkAccessable, savedOnly, except} = props;
-
+    
     
     const currentUser = useSelector(state => state?.base?.user);
     const isLoading = useSelector(state => state?.postsContainer?.isLoading);
     const activePage = useSelector(state => state?.pagination?.activePage);
     const maxPage = useSelector(state => state?.pagination?.maxPage);
-    const posts = useSelector(state => state.postsContainer.posts);
+
+
+
+    const posts = useSelector(state => state?.postsContainer?.posts);
     const dispatch = useDispatch();
     
 
@@ -86,7 +90,7 @@ const PostsContainer = (props) => {
             }
             {
                 (() => {
-                    if (maxPage !== 1) {
+                    if (maxPage && maxPage !== 1) {
                         return (
                             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
                                 <PaginationTree/>

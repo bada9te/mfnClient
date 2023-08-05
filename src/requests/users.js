@@ -93,6 +93,14 @@ const httpRestoreAccount = async(userId, actionId, verifyToken, newValue, type) 
     return response;
 }
 
+// delete 
+const httpDeleteAccount = async(id) => {
+    const response = await axios.post(`${API_URL}/users/delete`, {
+        id: id,
+    });
+    return response;
+}
+
 
 export {
     httpGetUserByEmail,
@@ -104,4 +112,5 @@ export {
     httpVerifyAccount,
     httpPrepareAccountToRestore,
     httpRestoreAccount,
+    httpDeleteAccount,
 }

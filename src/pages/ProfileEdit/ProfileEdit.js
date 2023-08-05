@@ -1,9 +1,27 @@
 import ProfileCardEdit from "../../components/common/profile/profile-card-edit/profile-card-edit";
 import FormProfileEdit from "../../components/forms/profile-edit/profile-edit";
-import { Box, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { Delete } from "@mui/icons-material";
+import { deleteAccount } from "../../components/forms/profile-card/profileCardFormSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 
 
 const ProfileEdit = (props) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleAccountDelete = async() => {
+        dispatch(deleteAccount())
+            .then(unwrapResult)
+            .then(result => {
+                if (result.data.done) {
+                    navigate('/logout')
+                }
+            })
+    } 
+
 
     return (
         <>
@@ -22,6 +40,7 @@ const ProfileEdit = (props) => {
                     <FormProfileEdit title="Email" current="Current email" />
                 </Box>
             </Stack>
+            <Button color="error" variant="contained" startIcon={<Delete/>} onClick={handleAccountDelete}>Delete account</Button>
         </>
     );
 }
