@@ -6,9 +6,10 @@ import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from './postsContainerSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
+import { createSelector, unwrapResult } from '@reduxjs/toolkit';
 import { setMaxPage } from '../../common/pagination/paginationSlice';
 import { useCallback } from 'react';
+import { store } from '../../../redux/store';
 
 
 
@@ -18,12 +19,16 @@ const PostsContainer = (props) => {
     
     const currentUser = useSelector(state => state?.base?.user);
     const isLoading = useSelector(state => state?.postsContainer?.isLoading);
-    const activePage = useSelector(state => state?.pagination?.activePage);
-    const maxPage = useSelector(state => state?.pagination?.maxPage);
-
-
-
-    const posts = useSelector(state => state?.postsContainer?.posts);
+ 
+    const [posts, activePage, maxPage] = createSelector([
+        state => state.postsContainer.posts,
+        state => state?.pagination?.activePage,
+        state => state?.pagination?.maxPage,
+    ], (...data) => {
+        return data;
+    })(store.getState());
+    
+    
     const dispatch = useDispatch();
     
 
