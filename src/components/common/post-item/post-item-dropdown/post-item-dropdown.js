@@ -74,7 +74,7 @@ const PostItemDropDown = props => {
                     </Typography>
                 </MenuItem>
                 {
-                    owner === currentUser._id
+                    currentUser && owner === currentUser._id
                     ?
                     <MenuItem onClick={() => handleClick('Delete')}>
                         <Typography textAlign="center" display="flex" alignItems="center">

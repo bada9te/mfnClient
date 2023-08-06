@@ -5,7 +5,7 @@ import { setTheme } from "../../baseSlice";
 const ThemeSwitcher = props => {
     const dispatch = useDispatch();
     const theme = useSelector(state => state?.base?.theme);
-    const currentUserId = useSelector(state => state?.base?.user._id);
+    const currentUserId = useSelector(state => state?.base?.user?._id);
 
     const changeTheme = (e) => {
         dispatch(setTheme(e.target.checked ? 'dark' : 'light'));

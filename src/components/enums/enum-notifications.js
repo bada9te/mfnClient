@@ -32,15 +32,14 @@ const EnumNotifications = props => {
                                 <Stack spacing={1} direction="column" useFlexGap>
                                     {
                                         notifications.map((notification, key) => {
-                                            
                                             return (
                                                 <NotificationItem
                                                     key={key}
                                                     id={notification._id}
                                                     user={[
-                                                        notification.sender._id, 
-                                                        notification.sender.nick, 
-                                                        `${locations?.images}/${notification.sender.avatar}`,
+                                                        notification.sender?._id || "", 
+                                                        notification.sender?.nick || "Deleted User", 
+                                                        notification.sender?.avatar ? `${locations?.images}/${notification.sender?.avatar}` : "NULL",
                                                     ]}
                                                     text={notification.text}
                                                     comment={notification.comment}

@@ -195,11 +195,11 @@ const PostItem = (props) => {
         
     // init
     useEffect(() => {
-        if (currentUser._id && currentUser._id !== "") {
+        if (currentUser && currentUser._id !== "") {
             likedBy.find(likedById => likedById === currentUser?._id) ? setIsLiked(true) : setIsLiked(false);
             savedBy.find(savedById => savedById === currentUser?._id) ? setIsSaved(true) : setIsSaved(false);
         }
-    }, [likedBy, currentUser?.savedPosts, currentUser?._id, id, savedBy]);
+    }, [likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, id, savedBy]);
 
     // socket
     useEffect(() => {

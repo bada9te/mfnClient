@@ -57,7 +57,7 @@ const BottomBar = (props) => {
                     >
                     <BottomNavigationAction value="tracks" label="Tracks" icon={<MusicNote />} />
                     {
-                        user._id !== "" && user 
+                        user && user._id !== "" 
                         ?
                         <BottomNavigationAction value="/post-upload" label="New post" icon={<AddCircle />} />
                         :

@@ -65,7 +65,7 @@ const Topbar = (props) => {
 
     // current user socket notifications
     useEffect(() => {
-        if (user._id !== "") {
+        if (user && user._id !== "") {
             userSocket.on(`subscribed-on-${user._id}`, (data) => {
                 dispatch(fetchUnreadNotifications());
             });
@@ -173,12 +173,12 @@ const Topbar = (props) => {
                                             variant="dot"
                                             >
                                             <Avatar 
-                                                alt={user.nick} 
+                                                alt={user?.nick} 
                                                 src={user?.avatar !== "" ? `${locations?.images}/${user?.avatar}` : "NULL"} 
                                             />
                                         </StyledBadge>
                                         :
-                                        <Avatar alt={user.nick} src={`${locations?.images}/${user?.avatar}`} />
+                                        <Avatar alt={user?.nick} src={`${locations?.images}/${user?.avatar}`} />
                                     }
                                 </IconButton>
                             </Tooltip>
