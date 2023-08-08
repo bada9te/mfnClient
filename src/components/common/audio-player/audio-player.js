@@ -1,9 +1,8 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Drawer, IconButton, Slider, Typography } from '@mui/material';
-import { setControlsLocked, setIsLoading, setIsMuted, setIsPlaying, setIsShowing, setLoop } from './audioPlayerSlice';
+import { setControlsLocked, setIsMuted, setIsPlaying, setIsShowing, setLoop } from './audioPlayerSlice';
 import { setValue } from '../../bars/bottom/bottom-bar/bottomBarSlice';
-import WaveSurfer from 'wavesurfer.js'
 import { FastRewind, Loop, Pause, PlayArrow, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material';
 import { SpinnerLinear } from '../spinner/Spinner';
 
@@ -16,7 +15,6 @@ const getTime = (t) => {
 }
 
 const CustomAudioPlayer = (props) => {
-    const theme = useSelector(state => state.base.theme);
     const isShowing = useSelector(state => state.audioPlayer.isShowing);
     const isPlaying = useSelector(state => state.audioPlayer.isPlaying);
     const isMuted = useSelector(state => state.audioPlayer.isMuted);
@@ -27,10 +25,10 @@ const CustomAudioPlayer = (props) => {
     const dispatch = useDispatch();
 
     const [volume, setVolume] = useState(50);
+    const [progress, setProgress] = useState(0);
     const [time, setTime] = useState("00:00");
     const [duration, setDuration] = useState("00:00");
     const containerRef = useRef();
-    const waveSurferRef = useRef();
 
     
     // HANDLERS ---------------------->
@@ -42,133 +40,88 @@ const CustomAudioPlayer = (props) => {
     // volume
     const handleVolumeChange = (event, vol) => {
         setVolume(vol);
+        containerRef.current.volume = vol / 100;
     };
     // play/pause
     const handlePlayPause = () => {
         dispatch(setIsPlaying(!isPlaying));
+        if (!isPlaying === false) {
+            containerRef.current.pause();
+        } else {
+            containerRef.current.play();
+        } 
     };
     // mute / unmute
     const handleMuteUnmute = () => {
         dispatch(setIsMuted(!isMuted));
+        containerRef.current.muted = !isMuted === false ? false : true;
     }
     // switch loop
     const handleSwitchLoop = () => {
         dispatch(setLoop(!loop));
+        containerRef.current.loop = !loop === false ? false : true;
     }
     //rewind to start
     const handleRewind = () => {
-        try { waveSurferRef?.current?.seekTo(0); } catch (error) {}
+        containerRef.current.currentTime = 0;
     }
-    // time change
-    const handleTimeChange = (t) => {
-        try { 
-            setTime(getTime(t));
-        } catch (error) {
-            
-        }
+    
+
+    // rewind on progressbar 
+    const rewindOnProgressBar = (e, value) => {
+        containerRef.current.currentTime = containerRef.current.duration * value / 100;
+        setProgress(value);
     }
 
-    // on playback finish
-    const handlePlaybackFinish = useCallback((loopValue) => {
-        try {
-            if (loopValue) {
-                waveSurferRef?.current?.seekTo(0);
-                waveSurferRef?.current?.play();
-            } else {
-                waveSurferRef?.current?.seekTo(0);
-                waveSurferRef?.current?.pause();
-                dispatch(setIsPlaying(false));
-            }
-        } catch (error) {}
-    }, [dispatch]);
-    // HANDLERS ---------------------->
 
 
     // play-pause
     useEffect(() => {
         try { 
             if (isPlaying) {
-                waveSurferRef?.current?.play();
+                containerRef?.current?.play();
             } else {
-                waveSurferRef?.current?.pause(); 
+                containerRef?.current?.pause(); 
             }
         } catch (error) {}
     }, [isPlaying]);
 
     // volume
     useEffect(() => {
-        try { waveSurferRef?.current?.setVolume(volume / 100); } catch (error) {}
+        try { containerRef.current.volume = volume / 100; } catch (error) {}
     }, [volume]);
 
     // mute / unmute
     useEffect(() => {
-        try { waveSurferRef?.current?.setMute(isMuted); } catch (error) {}
+        try { containerRef.current.muted = isMuted; } catch (error) {}
     }, [isMuted]);
 
     // loop
     useEffect(() => {
-        try {
-            waveSurferRef?.current?.un('finish');
-            waveSurferRef?.current?.on('finish', () => {
-                handlePlaybackFinish(loop);
-            });
-        } catch (error) {
-            
-        }
-    }, [loop, handlePlaybackFinish]);
+        try { containerRef.current.loop = loop; } catch (error) {}
+    }, [loop]);
 
-    // theme 
-    useEffect(() => {
-        try {
-            waveSurferRef?.current?.setWaveColor(theme === 'dark' ? '#90caf9' : '#1976d2');
-        } catch (error) {
 
-        } 
-    })
-    
     // main effect
     useEffect(() => {
-        if (containerRef.current && src && src !== '') {
-            dispatch(setControlsLocked(true));
-            dispatch(setIsLoading(true));
+        let container = containerRef.current;
+        dispatch(setControlsLocked(true));
+        dispatch(setIsPlaying(false));
 
-            // ws instance
-            const waveSurfer = WaveSurfer.create({
-                container: containerRef.current,
-                cursorColor: 'red',
-                responsive: true,
-                cursorWidth: 2,
-                barWidth: 2,
-                barHeight: 1,
-                waveColor: theme === 'dark' ? '#90caf9' : '#1976d2'
+        if (container) {
+            dispatch(setControlsLocked(false));
+            dispatch(setIsPlaying(true));
+            container.addEventListener("loadeddata", () => {
+                setDuration(getTime(containerRef.current.duration));
+                containerRef.current.removeEventListener("loadeddata", this);
             });
-
-            
-            // event handlers
-            waveSurfer.on('finish', () => {
-                handlePlaybackFinish();
+            container.addEventListener("timeupdate", () => {
+                setProgress(containerRef.current.currentTime / containerRef.current.duration * 100);
+                setTime(getTime(containerRef.current.currentTime));
             });
-            waveSurfer.on('audioprocess', (t) => {
-                handleTimeChange(t);
-            })
-            waveSurfer.on('ready', () => {
-                dispatch(setIsLoading(false));
-                setDuration(getTime(waveSurfer.getDuration()));
-                waveSurferRef.current = waveSurfer;
-                waveSurfer.setVolume(volume / 100);
-                waveSurfer.play();
-                dispatch(setControlsLocked(false));
-                dispatch(setIsPlaying(true));
-            });
-
-            // load audio
-            waveSurfer.load(src);
-            
-            return () => {
-                waveSurfer.destroy();
-            }
+            container.play();
         }
-    }, [containerRef.current, src]);
+    }, [src, dispatch]);
 
 
     return (
@@ -184,25 +137,46 @@ const CustomAudioPlayer = (props) => {
             >
                 <Box>
                     { isLoading && <SpinnerLinear/> }
-                    <Box ref={containerRef}></Box>
                     
-                    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}> 
+                    
+                    <Box sx={{mx: 3}}>
+                        <audio src={src} ref={containerRef} ></audio>
+                        {
+                            containerRef.current
+                            ?
+                            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: '100%', mt: 1}}>
+                                <Box sx={{mr: 1.5}}>
+                                    <Typography noWrap>{time}</Typography>
+                                </Box>
+                                <Slider 
+                                    sx={{my: 1.5}} 
+                                    aria-label="Progress" 
+                                    value={progress || 0}
+                                    onChange={rewindOnProgressBar} 
+                                    disabled={controlsLocked ? true : false} 
+                                />
+                                <Box sx={{ml: 1.5}}>
+                                    <Typography noWrap>{duration}</Typography>
+                                </Box>
+                            </Box>
+                            :
+                            null
+                        }
+                    </Box>
+                    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: 1}}>  
                         <Box sx={{mx: 1.5}}>
-                            <Typography noWrap>{time} / {duration}</Typography>
-                        </Box>  
-                        <Box>
-                            <IconButton onClick={handleRewind} disabled={controlsLocked ? true : false}>
-                                <FastRewind/> 
-                            </IconButton>
                             <IconButton onClick={handlePlayPause} disabled={controlsLocked ? true : false}>
                                 { isPlaying ? <Pause/> : <PlayArrow/> }
+                            </IconButton>
+                            <IconButton onClick={handleRewind} disabled={controlsLocked ? true : false}>
+                                <FastRewind/> 
                             </IconButton>
                             <IconButton onClick={handleSwitchLoop} disabled={controlsLocked ? true : false}>
                                 <Loop sx={{color: loop ? '#1BA39C' : ''}}/>
                             </IconButton>
                         </Box>
                         
-                        <Box sx={{display: 'flex', alignItems: 'center'}}>
+                        <Box sx={{display: 'flex', alignItems: 'center', mx: 1.5}}>
                             <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
                                 { isMuted ? <VolumeOff/> : <VolumeDown/>}
                             </IconButton>
