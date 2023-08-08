@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Drawer, IconButton, Slider, Typography } from '@mui/material';
 import { setControlsLocked, setIsMuted, setIsPlaying, setIsShowing, setLoop } from './audioPlayerSlice';
