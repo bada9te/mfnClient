@@ -8,6 +8,7 @@ const initialState = {
     loop: false,
     controlsLocked: true,
     isLoading: false,
+    currentTrack: null,
 }
 
 const audioPlayerSlice = createSlice({
@@ -34,6 +35,9 @@ const audioPlayerSlice = createSlice({
         },
         setIsLoading: (state, action) => {
             state.isLoading = action.payload;
+        },
+        setCurrentTrack: (state, action) => {
+            state.currentTrack = action.payload;
         }
     }
 });
@@ -49,4 +53,5 @@ export const {
     setLoop,
     setControlsLocked,
     setIsLoading,
+    setCurrentTrack,
 } = actions;

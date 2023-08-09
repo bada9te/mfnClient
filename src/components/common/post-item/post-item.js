@@ -12,7 +12,7 @@ import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSoc
 import { unwrapResult } from "@reduxjs/toolkit";
 import { fetchComments } from "../../containers/comments-container/commentsContainerSlice";
 import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments-modal/commentsModalSlice";
-import { setIsMuted, setIsPlaying, setLoop, setSrc } from "../audio-player/audioPlayerSlice";
+import { setCurrentTrack, setIsMuted, setIsPlaying, setLoop, setSrc } from "../audio-player/audioPlayerSlice";
 import { setIsShowing as setUserSelectModalIsShowing } from '../../modals/user-select-modal/userSelectModalSlice';
 import { setSelectType, setSharedItem } from '../../containers/user-select-container/userSelectContainerSlice';
 import { setReportingItemId } from '../../forms/report/reportFormSlice';
@@ -98,6 +98,7 @@ const PostItem = (props) => {
     const playAudio = () => {
         dispatch(setSrc(audio));
         dispatch(setIsPlaying(true));
+        dispatch(setCurrentTrack(props));
     }
 
     // pause audio
@@ -258,23 +259,11 @@ const PostItem = (props) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     return (
         <>
             <Card sx={{width: '400px', boxShadow: 3}}>
                 <CardHeader
                     avatar={
-                        
                         <Avatar 
                             onClick={goToProfile}
                             
@@ -392,50 +381,53 @@ const PostItem = (props) => {
                         </Box>
                     </Box>
                 </Box>
-                    
-                <CardContent sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    m: 0, 
-                    p: 0, 
-                    paddingBottom: 0, 
-                    "&:last-child": { paddingBottom: 0 }
-                }}>
-                    <>
-                    {
-                        (() => {
-                            if (currentAudio === audio && isPlaying) {
-                                return (
-                                    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
-                                        <Box>
-                                            <IconButton onClick={pauseAudio} disabled={controlsLocked ? true : false}>
-                                                <Pause/>
-                                            </IconButton>
-                                            <IconButton onClick={switchLoop} disabled={controlsLocked ? true : false}>
-                                                <Loop sx={{ color: loop ? '#1BA39C' : '' }}/>
+                
+                {
+                    status !== "in-player"
+                    &&
+                    <CardContent sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        m: 0, 
+                        p: 0, 
+                        paddingBottom: 0, 
+                        "&:last-child": { paddingBottom: 0 }
+                    }}>
+                        <>
+                        {
+                            (() => {
+                                if (currentAudio === audio && isPlaying) {
+                                    return (
+                                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
+                                            <Box>
+                                                <IconButton onClick={pauseAudio} disabled={controlsLocked ? true : false}>
+                                                    <Pause/>
+                                                </IconButton>
+                                                <IconButton onClick={switchLoop} disabled={controlsLocked ? true : false}>
+                                                    <Loop sx={{ color: loop ? '#1BA39C' : '' }}/>
+                                                </IconButton>
+                                            </Box>
+                                            
+                                            <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
+                                                {  isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
                                             </IconButton>
                                         </Box>
-                                        
-                                        <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
-                                            {  isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
-                                        </IconButton>
-                                    </Box>
-                                );
-                            } else {
-                                return (
-                                    <>
-                                        <IconButton onClick={playAudio}>
-                                            <PlayArrow/>
-                                        </IconButton>
-                                    </>
-                                );
-                            }
-                        })()
-                    }
-                    </>
-
-                </CardContent>
+                                    );
+                                } else {
+                                    return (
+                                        <>
+                                            <IconButton onClick={playAudio}>
+                                                <PlayArrow/>
+                                            </IconButton>
+                                        </>
+                                    );
+                                }
+                            })()
+                        }
+                        </>
+                    </CardContent>
+                }
                 {
                     (() => {
                         if (status === "selecting") {

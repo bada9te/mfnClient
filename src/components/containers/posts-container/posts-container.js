@@ -70,9 +70,7 @@ const PostsContainer = (props) => {
                 (() => {
                     if (isLoading) {
                         return (
-                            
-                                <SpinnerLinear/>
-                            
+                            <SpinnerLinear/>
                         );
                     } else if (posts?.length === 0) {
                         return (
