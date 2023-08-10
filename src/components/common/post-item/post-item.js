@@ -46,8 +46,6 @@ const PostItem = (props) => {
     } = props;
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false)
-    const [likesAmount, setLikesAmount] = useState(likedBy.length);
-    const [savesAmount, setSavesAmount] = useState(savedBy.length);
 
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state?.base?.user);
@@ -68,14 +66,12 @@ const PostItem = (props) => {
         if (status !== "upload") {
             if (status !== "upload") {
                 if (isLiked) {
-                    setLikesAmount(likesAmount - 1);
                     userSocket.emit("post-remove-like", {
                         sender: currentUser._id,
                         post: id,
                         postOwnerId: user[0],
                     });
                 } else {
-                    setLikesAmount(likesAmount + 1);
                     userSocket.emit("post-add-like", {
                         receiver: user[0],
                         sender: currentUser._id,
@@ -168,14 +164,12 @@ const PostItem = (props) => {
     const switchInSaved = async() => {
         if (status !== "upload") {
             if (isSaved) {
-                setSavesAmount(savesAmount - 1);
                 userSocket.emit("post-remove-save", {
                     sender: currentUser._id,
                     post: id,
                     postOwnerId: user[0],
                 });
             } else {
-                setSavesAmount(savesAmount + 1);
                 userSocket.emit("post-add-save", {
                     receiver: user[0],
                     sender: currentUser._id,
@@ -206,7 +200,6 @@ const PostItem = (props) => {
     useEffect(() => {
         userSocket.on(`post-${id}-was-liked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(true);
-            setLikesAmount(likesAmount + 1);
             dispatch(updateLikesSocket({
                 userId: data.sender,
                 postId: id,
@@ -214,7 +207,6 @@ const PostItem = (props) => {
         });
         userSocket.on(`post-${id}-was-unliked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(false);
-            setLikesAmount(likesAmount - 1);
             dispatch(updateLikesSocket({
                 userId: data.sender,
                 postId: id,
@@ -222,7 +214,6 @@ const PostItem = (props) => {
         });
         userSocket.on(`post-${id}-was-saved`, (data) => {
             if (data.sender === currentUser._id) setIsSaved(true);
-            setSavesAmount(savesAmount + 1);
             dispatch(updateSavesSocket({
                 userId: data.sender,
                 postId: id,
@@ -230,7 +221,6 @@ const PostItem = (props) => {
         });
         userSocket.on(`post-${id}-was-unsaved`, (data) => {
             if (data.sender === currentUser._id) setIsSaved(false);
-            setSavesAmount(savesAmount - 1);
             dispatch(updateSavesSocket({
                 userId: data.sender,
                 postId: id,
@@ -251,7 +241,7 @@ const PostItem = (props) => {
             userSocket.off(`post-${id}-was-commented`);
             userSocket.off(`post-${id}-was-uncommented`);
         };
-    }, [id, likesAmount, savesAmount, dispatch, currentUser?._id]);
+    }, [id, dispatch, currentUser?._id]);
 
     // for post upload form visualization
     useEffect(() => {}, [commentsAllowed, downloadsAllowed])
@@ -340,7 +330,7 @@ const PostItem = (props) => {
                                         </IconButton>
                                     </span>
                                 </Tooltip>
-                                <Typography sx={{ fontSize: 12 }}>{savesAmount}</Typography>
+                                <Typography sx={{ fontSize: 12 }}>{savedBy.length}</Typography>
                             </Box>
                             {
                                 commentsAllowed
@@ -376,7 +366,7 @@ const PostItem = (props) => {
                                         </IconButton>
                                     </span>
                                 </Tooltip>
-                                <Typography sx={{ fontSize: 12 }}>{likesAmount}</Typography>
+                                <Typography sx={{ fontSize: 12 }}>{likedBy.length}</Typography>
                             </Box>
                         </Box>
                     </Box>
