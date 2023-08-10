@@ -120,12 +120,13 @@ const CustomAudioPlayer = (props) => {
             dispatch(setIsPlaying(true));
             container.addEventListener("loadeddata", () => {
                 setDuration(getTime(containerRef.current.duration));
-                containerRef.current.removeEventListener("loadeddata", this);
+                container.removeEventListener("loadeddata", this);
             });
             container.addEventListener("timeupdate", () => {
-                setProgress(containerRef.current.currentTime / containerRef.current.duration * 100);
-                setTime(getTime(containerRef.current.currentTime));
-                containerRef.current.removeEventListener("timeupdate", this);
+                
+                setProgress(container.currentTime / container.duration * 100);
+                setTime(getTime(container.currentTime));
+                container.removeEventListener("timeupdate", this);
             });
             container.addEventListener("ended", () => {
                 handleRewind();
