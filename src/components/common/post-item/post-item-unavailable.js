@@ -6,7 +6,7 @@ import { Card, CardHeader, CardContent, Typography, Skeleton } from "@mui/materi
 
 
 const PostItemUnavailable = (props) => {
-
+    const { status } = props;
 
     return (
         <>
@@ -20,17 +20,21 @@ const PostItemUnavailable = (props) => {
                 />
                 
                 <Skeleton variant="rectangular" height={160} />
-                <CardContent sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    m: 1, 
-                    p: 0, 
-                    paddingBottom: 0, 
-                    "&:last-child": { paddingBottom: 0 }
-                }}>
-                    <Typography sx={{textAlign: 'center', width: '100%'}}>Track is unavailable</Typography>
-                </CardContent>
+                { 
+                    status !== "in-player" 
+                    &&
+                    <CardContent sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        m: 1, 
+                        p: 0, 
+                        paddingBottom: 0, 
+                        "&:last-child": { paddingBottom: 0 }
+                    }}>
+                        <Typography sx={{textAlign: 'center', width: '100%'}}>Track is unavailable</Typography> 
+                    </CardContent>
+                }
             </Card>
         </>
     );

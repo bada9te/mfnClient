@@ -20,7 +20,7 @@ function animateBars(analyser, canvas, canvasCtx, dataArray, bufferLength, theme
     // Loop through each element in the `dataArray`.
     for (var i = 0; i < bufferLength; i++) {
       // Calculate the height of the current bar based on the audio data and the canvas height.
-      barHeight = (dataArray[i] / 255) * HEIGHT;
+      barHeight = (dataArray[i] / 255) * HEIGHT / 1.35;
   
       // Generate random RGB values for each bar.
       const maximum = 10;

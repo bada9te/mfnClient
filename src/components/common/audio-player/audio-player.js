@@ -8,6 +8,7 @@ import { SpinnerLinear } from '../spinner/Spinner';
 import PostItem from '../post-item/post-item';
 import audioAnalyzer from './audiowave/analyzer';
 import WaveForm from './audiowave/waveform';
+import PostItemUnavailable from '../post-item/post-item-unavailable';
 
 const getTime = (t) => {
     var minute = Math.floor(t / 60); // get minute(integer) from time
@@ -153,9 +154,7 @@ const CustomAudioPlayer = (props) => {
                 <Stack direction="row" flexWrap="wrap" sx={{display: 'flex', justifyContent: 'space-around', m: 0, p: 0}}>
                     <Box sx={{display: 'flex', justifyContent: 'center', width: { xs: '100%', md: 'auto' }}}>
                         {
-                            currentTrack 
-                            && 
-                            <PostItem {...currentTrack} status="in-player"/> 
+                            currentTrack ? <PostItem {...currentTrack} status="in-player"/> : <PostItemUnavailable status="in-player"/>
                         }
                     </Box>
                     
