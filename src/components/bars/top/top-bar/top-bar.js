@@ -27,7 +27,7 @@ const Topbar = (props) => {
     const dispatch = useDispatch();
 
 
-    const pages = ['Feed', 'Battles'];
+    const pages = ['Feed', 'Battles', 'Playlists'];
     const navigate = useNavigate();
 
     const handleNavigate = (where) => {
@@ -178,7 +178,10 @@ const Topbar = (props) => {
                                             />
                                         </StyledBadge>
                                         :
-                                        <Avatar alt={user?.nick} src={`${locations?.images}/${user?.avatar}`} />
+                                        <Avatar 
+                                            alt={user?.nick} 
+                                            src={user?.avatar !== "" ? `${locations?.images}/${user?.avatar}` : "NULL"} 
+                                        />
                                     }
                                 </IconButton>
                             </Tooltip>

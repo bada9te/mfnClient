@@ -10,7 +10,7 @@ const Support = (props) => {
     return (
         <>
             <Box>
-                <Box sx={{pt: 2}}>
+                <Box sx={{m: 2}}>
                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                         Support
                     </Typography>
