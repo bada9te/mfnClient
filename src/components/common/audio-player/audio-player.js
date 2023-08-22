@@ -161,7 +161,7 @@ const CustomAudioPlayer = (props) => {
                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'flex-end', flexGrow: 4}}>
                         <Box sx={{ width: '100%' }}>
                             <Box ref={waveformContainerRef} sx={{width: '100%', height: '120px'}}>
-                                {analyzerData && <WaveForm analyzerData={analyzerData} waveContainerRef={waveformContainerRef}/>}
+                                {analyzerData && <WaveForm analyzerData={analyzerData} />}
                             </Box>
                             <Box sx={{display: 'flex', alignItems: 'center', mx: 1}}>
                                 <audio src={src} ref={containerRef} crossOrigin="anonymous"></audio>

@@ -16,6 +16,7 @@ import SavedPosts      from "./SavedPosts/SavedPosts";
 import Notifications   from "./Notifications/Notifications";
 import AccountRestoreEmailCheck from "./AccountRestoreEmailCheck/AccountRestoreEmailCheck";
 import AccountVerify   from "./AccountVerify/AccountVerify";
+import Playlists       from "./Playlists/Playlists";
 
 export {
     Container, 
@@ -36,6 +37,7 @@ export {
     Notifications,
     AccountRestoreEmailCheck,
     AccountVerify,
+    Playlists,
 };
 
 

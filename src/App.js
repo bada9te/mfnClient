@@ -1,6 +1,6 @@
 import './App.scss';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify } from './pages/pages';
+import { Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists } from './pages/pages';
 import { useEffect, useState } from 'react';
 import { store } from './redux/store';
 import { id } from './components/baseSlice';
@@ -18,7 +18,7 @@ function App() {
   const themeStyle = useSelector(state => state.base.theme);
   const location = useLocation();
   
-  const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q)\/*/);
+  const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
 
   // theme setup
@@ -74,6 +74,7 @@ function App() {
             <Route path='/support'         element={<Support/>}/>
             <Route path='/f.a.q'           element={<FAQ/>}/>
             <Route path='/notifications'   element={<Notifications/>}/>
+            <Route path='/playlists'       element={<Playlists/>}/>
             <Route path='/*'               element={<NotFound404/>}/>
           </Route>
         </Routes>

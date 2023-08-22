@@ -39,6 +39,9 @@ const Topbar = (props) => {
             case 'Battles':
                 navigate('/battles');
                 break;
+            case 'Playlists':
+                navigate('/playlists');
+                break;
             default: 
                 break;
         }

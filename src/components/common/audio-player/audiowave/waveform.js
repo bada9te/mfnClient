@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import animateBars from "./animateBars";
 
 // Component to render the waveform
-const WaveForm = ({ analyzerData, waveContainerRef }) => {
+const WaveForm = ({ analyzerData }) => {
     const theme = useSelector(state => state.base.theme);
 
     // Ref for the canvas element
