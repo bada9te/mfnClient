@@ -30,21 +30,23 @@ function App() {
 
   
   useEffect(() => {
-    let currentUserId = localStorage.getItem('mfnCurrentUser') ? JSON.parse(localStorage.getItem('mfnCurrentUser')).id : null;
-    
-    if (currentUserId) {
-      //console.log(currentUserId)
-      store.dispatch(id(currentUserId))
-        .then(unwrapResult)
-        .then(result => {
-          if (!result.data.done) {
-            navigate('/login');
-          } else {
-            store.dispatch(fetchUnreadNotifications());
-          }
-        });
-    } else if (location.pathname !== '/' && !regAllowed.test(location.pathname)) {
-      navigate('/login');
+    if (store.getState().base.user._id === "") {
+      let currentUserId = localStorage.getItem('mfnCurrentUser') ? JSON.parse(localStorage.getItem('mfnCurrentUser')).id : null;
+      
+      if (currentUserId) {
+        //console.log(currentUserId)
+        store.dispatch(id(currentUserId))
+          .then(unwrapResult)
+          .then(result => {
+            if (!result.data.done) {
+              navigate('/login');
+            } else {
+              store.dispatch(fetchUnreadNotifications());
+            }
+          });
+      } else if (location.pathname !== '/' && !regAllowed.test(location.pathname)) {
+        navigate('/login');
+      }
     }
   }, [location.pathname, navigate, regAllowed]);
 
