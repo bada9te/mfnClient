@@ -28,6 +28,7 @@ import reportModalSlice               from "../components/modals/report-modal/re
 import reportFormSlice                from "../components/forms/report/reportFormSlice";
 import confirmModalSlice              from "../components/modals/confirm-modal/confirmModalSlice";
 import confirmContainerSlice          from "../components/containers/confirm-container/confirmContainerSlice";
+import playlistsContainerSlice        from "../components/containers/playlists-container/playlistsContainerSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 
@@ -53,6 +54,7 @@ const store = configureStore({
         notificationsContainer: notificationsContainerSlice,
         userSelectContainer:    userSelectContainerSlice,
         confirmContainer:       confirmContainerSlice,
+        playlistsContainer:     playlistsContainerSlice,
         
         // forms
         createBattleForm:          createBattleFormSlice,

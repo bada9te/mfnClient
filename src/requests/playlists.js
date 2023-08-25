@@ -30,16 +30,20 @@ const httpSwitchTrackInPlaylist = async(playlistId, trackId) => {
 }
 
 // get by owner
-const httpGetPlaylistByOwner = async(ownerId) => {
-    return await axios.post(`${API_URL}/playlists/owner`, {
-        ownerId,
+const httpGetPlaylistsByOwner = async(ownerId) => {
+    return await axios.get(`${API_URL}/playlists/owner`, {
+        params: {
+            ownerId,
+        },
     });
 }
 
 // get by title
-const httpGetPlaylistByTitle = async(title) => {
-    return await axios.post(`${API_URL}/playlists/title`, {
-        title,
+const httpGetPlaylistsByTitle = async(title) => {
+    return await axios.get(`${API_URL}/playlists/title`, {
+        params: {
+            title,
+        },
     });
 }
 
@@ -48,6 +52,6 @@ export {
     httpCreatePlaylist,
     httpDeletePlaylistById,
     httpSwitchTrackInPlaylist,
-    httpGetPlaylistByOwner,
-    httpGetPlaylistByTitle,
+    httpGetPlaylistsByOwner,
+    httpGetPlaylistsByTitle,
 }
