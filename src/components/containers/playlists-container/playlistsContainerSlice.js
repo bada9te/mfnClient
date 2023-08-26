@@ -4,6 +4,7 @@ import { httpGetPlaylistsByOwner } from "../../../requests/playlists";
 const initialState = {
     playlists: [],
     isLoading: true,
+    page: "Explore",
 }
 
 
@@ -25,6 +26,9 @@ const playlistsContainerSlice = createSlice({
         },
         setIsLoading: (state, action) => {
             state.isLoading = action.payload;
+        },
+        setPage: (state, action) => {
+            state.page = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -52,4 +56,5 @@ export default reducer;
 export const {
     setPlaylists,
     setIsLoading,
+    setPage,
 } = actions;

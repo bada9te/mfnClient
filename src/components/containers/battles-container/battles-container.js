@@ -100,7 +100,7 @@ const BattlesContainer = props => {
                             <CreateBattleForm/>
                         </Card>
                         :
-                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh'}}>
+                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
                             <Typography>
                                 Please login to create a new one
                             </Typography>

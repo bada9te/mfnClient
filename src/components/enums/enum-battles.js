@@ -66,7 +66,7 @@ const EnumBattles = props => {
                         );
                     } else if (battles.length === 0) {
                         return (
-                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh'}}>
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
                                 <Typography>
                                     No battles found
                                 </Typography>
