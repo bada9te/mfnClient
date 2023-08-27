@@ -42,7 +42,6 @@ const playlistsContainerSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(fetchCurrentUserPlaylists.fulfilled, (state, action) => {
-                console.log(action.payload);
                 state.playlists = action.payload.data.playlists;
                 state.isLoading = false;
             })

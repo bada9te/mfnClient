@@ -1,4 +1,4 @@
-import { Box, Tabs, Tab, Card, Typography  } from "@mui/material";
+import { Box, Tabs, Tab, Card, Typography, CardContent  } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import userSocket from "../../../socket/user/socket-user";
@@ -90,14 +90,16 @@ const BattlesContainer = props => {
                     {
                         currentUser && currentUser._id !== ""
                         ?
-                        <Card sx={{mb: 4, boxShadow: 0}}>
+                        <Card sx={{my: 3, boxShadow: 0, mx: {sx: 0, md: 2}}}>
                             <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                                 Create battle
                             </Typography>
                             <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                                 Create battle using form below:
                             </Typography>
-                            <CreateBattleForm/>
+                            <CardContent>
+                                <CreateBattleForm/>
+                            </CardContent>
                         </Card>
                         :
                         <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>

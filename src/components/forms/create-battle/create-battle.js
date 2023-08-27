@@ -47,7 +47,9 @@ const CreateBattleForm = props => {
 
     return (
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-            <Box sx={{px: 3}}>
+            <Box sx={{
+                
+            }}>
                 <TextField
                     margin="normal"
                     required
@@ -143,7 +145,7 @@ const CreateBattleForm = props => {
                 variant="contained"
                 sx={{ mt: 1, mb: 2 }}
             >
-                Create
+                Create battle
             </Button>
         </Box>
     );

@@ -1,8 +1,9 @@
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Card, CardContent, Tab, Tabs, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumPlaylists from "../../enums/enum-playlists";
+import CreatePlaylistForm from "../../forms/create-playlist/create-playlist";
 import { fetchCurrentUserPlaylists, setPage } from "./playlistsContainerSlice";
 
 
@@ -31,6 +32,7 @@ function TabPanel(props) {
 const PlaylistsContainer = (props) => {
     const playlists = useSelector(state => state.playlistsContainer.playlists);
     const isLoading = useSelector(state => state.playlistsContainer.isLoading);
+    const tabPage = useSelector(state => state.playlistsContainer.page);
     const currentUser = useSelector(state => state.base.user);
 
     const dispatch = useDispatch();
@@ -39,17 +41,21 @@ const PlaylistsContainer = (props) => {
     const handleTabSwitch = (event, key) => {
         setStatus(key);
         if (key === 0) {
-            dispatch(setPage("All"));
+            dispatch(setPage("Explore"));
         } else if (key === 1) {
-            dispatch(setPage("My"));
+            dispatch(setPage("My playlists"));
         }
     }
 
     useEffect(() => {
         if (currentUser && currentUser._id !== "") {
-            dispatch(fetchCurrentUserPlaylists());
+            if (tabPage === "My playlists") {
+                dispatch(fetchCurrentUserPlaylists());
+            } else if (tabPage === "Explore") {
+                console.log("TODO: load all public playlists")
+            }
         }
-    }, [dispatch, currentUser]);
+    }, [dispatch, currentUser, tabPage]);
 
 
     return (
@@ -95,7 +101,28 @@ const PlaylistsContainer = (props) => {
             </TabPanel>
 
             <TabPanel value={status} index={2}>
-                create playlist tab
+                {
+                    currentUser && currentUser._id !== ""
+                    ?
+                    <Card sx={{my: 3, boxShadow: 0, mx: {sx: 0, md: 2}}}>
+                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                            Create playlist
+                        </Typography>
+                        <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                            Create playlist using form below:
+                        </Typography>
+                        <CardContent>
+
+                            <CreatePlaylistForm/>
+                        </CardContent>
+                    </Card>
+                    :
+                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
+                        <Typography>
+                            Please login to create a new one
+                        </Typography>
+                    </Box>
+                }
             </TabPanel>
         </Box>
     );

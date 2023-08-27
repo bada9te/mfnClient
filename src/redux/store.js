@@ -29,6 +29,7 @@ import reportFormSlice                from "../components/forms/report/reportFor
 import confirmModalSlice              from "../components/modals/confirm-modal/confirmModalSlice";
 import confirmContainerSlice          from "../components/containers/confirm-container/confirmContainerSlice";
 import playlistsContainerSlice        from "../components/containers/playlists-container/playlistsContainerSlice";
+import createPlaylistFormSlice        from "../components/forms/create-playlist/createPlaylistFormSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 
@@ -64,6 +65,7 @@ const store = configureStore({
         accountRestoreRequestForm: accountRestoreRequestFormSlice,
         accountVerifyForm:         accountVerifyFormSlice,
         reportForm:                reportFormSlice,
+        createPlaylistForm:        createPlaylistFormSlice,
 
         // modals
         postSelectModal:        postSelectModalSlice,

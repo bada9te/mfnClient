@@ -9,7 +9,7 @@ const initialState = {
 }
 
 export const createBattle = createAsyncThunk(
-    'create-battle-form',
+    'create-battle-form/create',
     async(_, thunkApi) => {
         const currentState = thunkApi.getState();
         const title = currentState.createBattleForm.title;

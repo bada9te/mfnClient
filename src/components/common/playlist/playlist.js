@@ -1,6 +1,6 @@
 const Playlist = (props) => {
     const { playlist } = props;
-    console.log(playlist)
+    //console.log(playlist)
 
     return (
         <>
