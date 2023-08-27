@@ -50,7 +50,7 @@ const CreatePlaylistForm = props => {
                 })}
             />
             
-            <FormGroup>
+            <FormGroup sx={{my: 2}}>
                 <FormControlLabel
                     control={
                         <Checkbox color="primary" {...register("AllowDownloads", {})}
@@ -58,7 +58,7 @@ const CreatePlaylistForm = props => {
                             onChange={(e) => dispatch(setPublicAccess(e.target.checked))}
                         />
                     }
-                    label="Public access"
+                    label="Make playlist public"
                 />
             </FormGroup>
 

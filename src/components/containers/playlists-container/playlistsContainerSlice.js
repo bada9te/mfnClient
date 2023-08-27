@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { httpGetPlaylistsByOwner } from "../../../requests/playlists";
+import { httpGetPlaylistsByOwner, httpGetPublicavailablePlaylists } from "../../../requests/playlists";
 
 const initialState = {
     playlists: [],
@@ -15,6 +15,13 @@ export const fetchCurrentUserPlaylists = createAsyncThunk(
         return await httpGetPlaylistsByOwner(userId);
     }
 );
+
+export const fetchPublicAvailablePlaylists = createAsyncThunk(
+    'playlists-container/explore',
+    async() => {
+        return await httpGetPublicavailablePlaylists();
+    }
+)
 
 
 const playlistsContainerSlice = createSlice({
@@ -42,6 +49,19 @@ const playlistsContainerSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(fetchCurrentUserPlaylists.fulfilled, (state, action) => {
+                state.playlists = action.payload.data.playlists;
+                state.isLoading = false;
+            })
+
+            // fetch public available
+            .addCase(fetchPublicAvailablePlaylists.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchPublicAvailablePlaylists.rejected, (state) => {
+                state.playlists = [];
+                state.isLoading = false;
+            })
+            .addCase(fetchPublicAvailablePlaylists.fulfilled, (state, action) => {
                 state.playlists = action.payload.data.playlists;
                 state.isLoading = false;
             })

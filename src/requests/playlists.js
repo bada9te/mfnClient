@@ -5,11 +5,12 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 
 // create
-const httpCreatePlaylist = async(owner, title) => {
+const httpCreatePlaylist = async(owner, title, publicAccess) => {
     return await axios.post(`${API_URL}/playlists/create`, {
         playlist: {
             owner, 
             title,
+            public: publicAccess,
         }
     });
 }
@@ -47,6 +48,11 @@ const httpGetPlaylistsByTitle = async(title) => {
     });
 }
 
+// get public available
+const httpGetPublicavailablePlaylists = async() => {
+    return await axios.get(`${API_URL}/playlists/public-available`);
+}
+
 
 export {
     httpCreatePlaylist,
@@ -54,4 +60,5 @@ export {
     httpSwitchTrackInPlaylist,
     httpGetPlaylistsByOwner,
     httpGetPlaylistsByTitle,
+    httpGetPublicavailablePlaylists,
 }

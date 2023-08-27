@@ -1,10 +1,10 @@
-import { Box, Card, CardContent, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Card, CardActions, CardContent, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumPlaylists from "../../enums/enum-playlists";
 import CreatePlaylistForm from "../../forms/create-playlist/create-playlist";
-import { fetchCurrentUserPlaylists, setPage } from "./playlistsContainerSlice";
+import { fetchCurrentUserPlaylists, fetchPublicAvailablePlaylists, setPage } from "./playlistsContainerSlice";
 
 
 function TabPanel(props) {
@@ -32,7 +32,7 @@ function TabPanel(props) {
 const PlaylistsContainer = (props) => {
     const playlists = useSelector(state => state.playlistsContainer.playlists);
     const isLoading = useSelector(state => state.playlistsContainer.isLoading);
-    const tabPage = useSelector(state => state.playlistsContainer.page);
+    //const tabPage = useSelector(state => state.playlistsContainer.page);
     const currentUser = useSelector(state => state.base.user);
 
     const dispatch = useDispatch();
@@ -44,18 +44,20 @@ const PlaylistsContainer = (props) => {
             dispatch(setPage("Explore"));
         } else if (key === 1) {
             dispatch(setPage("My playlists"));
+        } else if (key === 2) {
+            dispatch(setPage("Create new"))
         }
     }
 
     useEffect(() => {
         if (currentUser && currentUser._id !== "") {
-            if (tabPage === "My playlists") {
+            if (status === 1) {
                 dispatch(fetchCurrentUserPlaylists());
-            } else if (tabPage === "Explore") {
-                console.log("TODO: load all public playlists")
+            } else if (status === 0) {
+                dispatch(fetchPublicAvailablePlaylists());
             }
         }
-    }, [dispatch, currentUser, tabPage]);
+    }, [dispatch, currentUser, status]);
 
 
     return (
@@ -69,7 +71,27 @@ const PlaylistsContainer = (props) => {
             </Box>
 
             <TabPanel value={status} index={0}>
-                explore tab
+                {
+                    (() => {
+                        if (isLoading) {
+                            return (<SpinnerLinear/>);
+                        }
+
+                        if (playlists && playlists.length > 0) {
+                            return (
+                                <Stack sx={{my: 3, mx: {sx: 0, md: 2}}}>
+                                    <EnumPlaylists/>
+                                </Stack>
+                            );
+                        } else {
+                            return (
+                                <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                    <Typography sx={{textAlign: 'center'}}>No playlists yet</Typography>
+                                </Box>
+                            );
+                        }
+                    })()
+                }
             </TabPanel>
             
             <TabPanel value={status} index={1}>
@@ -88,7 +110,11 @@ const PlaylistsContainer = (props) => {
                         }
 
                         if (playlists && playlists.length > 0) {
-                            return (<EnumPlaylists/>);
+                            return (
+                                <Stack sx={{my: 3, mx: {sx: 0, md: 2}}}>
+                                    <EnumPlaylists/>
+                                </Stack>
+                            );
                         } else {
                             return (
                                 <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -112,9 +138,13 @@ const PlaylistsContainer = (props) => {
                             Create playlist using form below:
                         </Typography>
                         <CardContent>
-
                             <CreatePlaylistForm/>
                         </CardContent>
+                        <CardActions>
+                            <Box sx={{mx: 2, mb: 2}}>
+                                <Typography>Notice, public playlists are visible to all users</Typography>
+                            </Box>
+                        </CardActions>
                     </Card>
                     :
                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>

@@ -12,7 +12,7 @@ export const createPlaylist = createAsyncThunk(
     async(_, thunkApi) => {
         const currentState = thunkApi.getState();
 
-        return await httpCreatePlaylist(currentState.base.user._id, currentState.createPlaylistForm.title);
+        return await httpCreatePlaylist(currentState.base.user._id, currentState.createPlaylistForm.title, currentState.createPlaylistForm.publicAccess);
     }
 );
 
