@@ -18,8 +18,9 @@ export const fetchCurrentUserPlaylists = createAsyncThunk(
 
 export const fetchPublicAvailablePlaylists = createAsyncThunk(
     'playlists-container/explore',
-    async() => {
-        return await httpGetPublicavailablePlaylists();
+    async(activePage) => {
+        let skipCount = (activePage - 1) * 12;
+        return await httpGetPublicavailablePlaylists(skipCount);
     }
 )
 

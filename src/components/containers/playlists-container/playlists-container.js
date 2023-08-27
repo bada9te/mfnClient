@@ -1,6 +1,12 @@
 import { Box, Card, CardActions, CardContent, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { store } from "../../../redux/store";
+import PaginationTree from "../../common/pagination/pagination";
+import { setMaxPage } from "../../common/pagination/paginationSlice";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumPlaylists from "../../enums/enum-playlists";
 import CreatePlaylistForm from "../../forms/create-playlist/create-playlist";
@@ -30,14 +36,25 @@ function TabPanel(props) {
 
 
 const PlaylistsContainer = (props) => {
-    const playlists = useSelector(state => state.playlistsContainer.playlists);
     const isLoading = useSelector(state => state.playlistsContainer.isLoading);
     //const tabPage = useSelector(state => state.playlistsContainer.page);
     const currentUser = useSelector(state => state.base.user);
 
+    // multi-selector
+    const [playlists, activePage, maxPage] = createSelector([
+        state => state.playlistsContainer.playlists,
+        state => state?.pagination?.activePage,
+        state => state?.pagination?.maxPage,
+    ], (...data) => {
+        return data;
+    })(store.getState());
+
     const dispatch = useDispatch();
+
+    // used to know the page number
     const [status, setStatus] = useState(0);
 
+    // on tab switch
     const handleTabSwitch = (event, key) => {
         setStatus(key);
         if (key === 0) {
@@ -49,15 +66,29 @@ const PlaylistsContainer = (props) => {
         }
     }
 
+    // set max page in pagination tree
+    const dispatchDocumentsCount = useCallback((result) => {
+        if (result.data.done) {
+            let count = result.data.count;
+            count = Math.ceil(count / 12);
+            dispatch(setMaxPage(count));
+        }
+    }, [dispatch]);
+
+    // main effect 
     useEffect(() => {
         if (currentUser && currentUser._id !== "") {
             if (status === 1) {
                 dispatch(fetchCurrentUserPlaylists());
             } else if (status === 0) {
-                dispatch(fetchPublicAvailablePlaylists());
+                dispatch(fetchPublicAvailablePlaylists(activePage))
+                    .then(unwrapResult)
+                    .then(result => {
+                        dispatchDocumentsCount(result);
+                    });
             }
         }
-    }, [dispatch, currentUser, status]);
+    }, [dispatch, currentUser, status, activePage, dispatchDocumentsCount]);
 
 
     return (
@@ -119,6 +150,17 @@ const PlaylistsContainer = (props) => {
                             return (
                                 <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                     <Typography sx={{textAlign: 'center'}}>No playlists yet</Typography>
+                                </Box>
+                            );
+                        }
+                    })()
+                }
+                {
+                    (() => {
+                        if (maxPage && maxPage !== 1) {
+                            return (
+                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
+                                    <PaginationTree/>
                                 </Box>
                             );
                         }

@@ -49,8 +49,12 @@ const httpGetPlaylistsByTitle = async(title) => {
 }
 
 // get public available
-const httpGetPublicavailablePlaylists = async() => {
-    return await axios.get(`${API_URL}/playlists/public-available`);
+const httpGetPublicavailablePlaylists = async(skipCount) => {
+    return await axios.get(`${API_URL}/playlists/public-available`, {
+        params: {
+            skipCount,
+        }
+    });
 }
 
 
