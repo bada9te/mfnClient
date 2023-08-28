@@ -49,7 +49,7 @@ const httpGetPlaylistsByTitle = async(title) => {
 }
 
 // get public available
-const httpGetPublicavailablePlaylists = async(skipCount) => {
+const httpGetPublicAvailablePlaylists = async(skipCount) => {
     return await axios.get(`${API_URL}/playlists/public-available`, {
         params: {
             skipCount,
@@ -64,5 +64,5 @@ export {
     httpSwitchTrackInPlaylist,
     httpGetPlaylistsByOwner,
     httpGetPlaylistsByTitle,
-    httpGetPublicavailablePlaylists,
+    httpGetPublicAvailablePlaylists,
 }

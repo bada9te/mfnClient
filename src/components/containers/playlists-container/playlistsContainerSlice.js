@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { httpGetPlaylistsByOwner, httpGetPublicavailablePlaylists } from "../../../requests/playlists";
+import { httpGetPlaylistsByOwner, httpGetPublicAvailablePlaylists } from "../../../requests/playlists";
 
 const initialState = {
     playlists: [],
@@ -20,7 +20,7 @@ export const fetchPublicAvailablePlaylists = createAsyncThunk(
     'playlists-container/explore',
     async(activePage) => {
         let skipCount = (activePage - 1) * 12;
-        return await httpGetPublicavailablePlaylists(skipCount);
+        return await httpGetPublicAvailablePlaylists(skipCount);
     }
 )
 

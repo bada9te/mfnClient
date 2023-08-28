@@ -37,17 +37,11 @@ function TabPanel(props) {
 
 const PlaylistsContainer = (props) => {
     const isLoading = useSelector(state => state.playlistsContainer.isLoading);
-    //const tabPage = useSelector(state => state.playlistsContainer.page);
     const currentUser = useSelector(state => state.base.user);
+    const playlists = useSelector(state => state.playlistsContainer.playlists)
+    const activePage = useSelector(state => state?.pagination?.activePage) 
 
-    // multi-selector
-    const [playlists, activePage, maxPage] = createSelector([
-        state => state.playlistsContainer.playlists,
-        state => state?.pagination?.activePage,
-        state => state?.pagination?.maxPage,
-    ], (...data) => {
-        return data;
-    })(store.getState());
+       
 
     const dispatch = useDispatch();
 
@@ -77,18 +71,19 @@ const PlaylistsContainer = (props) => {
 
     // main effect 
     useEffect(() => {
-        if (currentUser && currentUser._id !== "") {
+        if (currentUser?._id !== "") {
             if (status === 1) {
                 dispatch(fetchCurrentUserPlaylists());
             } else if (status === 0) {
                 dispatch(fetchPublicAvailablePlaylists(activePage))
                     .then(unwrapResult)
                     .then(result => {
+                        console.log(result)
                         dispatchDocumentsCount(result);
                     });
             }
         }
-    }, [dispatch, currentUser, status, activePage, dispatchDocumentsCount]);
+    }, [dispatch, currentUser?._id, status, activePage, dispatchDocumentsCount]);
 
 
     return (
@@ -155,17 +150,6 @@ const PlaylistsContainer = (props) => {
                         }
                     })()
                 }
-                {
-                    (() => {
-                        if (maxPage && maxPage !== 1) {
-                            return (
-                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
-                                    <PaginationTree/>
-                                </Box>
-                            );
-                        }
-                    })()
-                }
             </TabPanel>
 
             <TabPanel value={status} index={2}>
@@ -196,6 +180,10 @@ const PlaylistsContainer = (props) => {
                     </Box>
                 }
             </TabPanel>
+
+            {
+                status < 1 && playlists?.length > 0 ? <PaginationTree/> : null
+            }
         </Box>
     );
 }

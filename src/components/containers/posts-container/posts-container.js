@@ -20,13 +20,9 @@ const PostsContainer = (props) => {
     const currentUser = useSelector(state => state?.base?.user);
     const isLoading = useSelector(state => state?.postsContainer?.isLoading);
  
-    const [posts, activePage, maxPage] = createSelector([
-        state => state.postsContainer.posts,
-        state => state?.pagination?.activePage,
-        state => state?.pagination?.maxPage,
-    ], (...data) => {
-        return data;
-    })(store.getState());
+
+    const posts = useSelector(state => state.postsContainer.posts);
+    const activePage = useSelector(state => state?.pagination?.activePage);
     
     
     const dispatch = useDispatch();
@@ -91,17 +87,10 @@ const PostsContainer = (props) => {
                     }
                 })()
             }
-            {
-                (() => {
-                    if (maxPage && maxPage !== 1) {
-                        return (
-                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
-                                <PaginationTree/>
-                            </Box>
-                        );
-                    }
-                })()
-            }
+            
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
+                <PaginationTree/>
+            </Box>
         </>
     );
 }
