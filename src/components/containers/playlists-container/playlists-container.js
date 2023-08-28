@@ -85,7 +85,7 @@ const PlaylistsContainer = (props) => {
 
 
     return (
-        <Box>
+        <Box sx={{pb: 3}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 3 }}>
                 <Tabs value={status} onChange={handleTabSwitch}>
                     <Tab label="Explore" id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
@@ -103,7 +103,7 @@ const PlaylistsContainer = (props) => {
 
                         if (playlists && playlists.length > 0) {
                             return (
-                                <Stack sx={{my: 3, mx: {sx: 0, md: 2}}}>
+                                <Stack spacing={2} sx={{my: 3, mx: {sx: 0, md: 2}}}>
                                     <EnumPlaylists/>
                                 </Stack>
                             );
@@ -135,7 +135,7 @@ const PlaylistsContainer = (props) => {
 
                         if (playlists && playlists.length > 0) {
                             return (
-                                <Stack sx={{my: 3, mx: {sx: 0, md: 2}}}>
+                                <Stack spacing={2} sx={{my: 3, mx: {sx: 0, md: 2}}}>
                                     <EnumPlaylists/>
                                 </Stack>
                             );

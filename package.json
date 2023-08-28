@@ -19,7 +19,6 @@
     "js-cookie": "^3.0.5",
     "qs": "^6.11.2",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.7.2",
     "react-bootstrap-icons": "^1.10.2",
     "react-bottom-scroll-listener": "^5.1.0",
     "react-chat-elements": "^12.0.10",
