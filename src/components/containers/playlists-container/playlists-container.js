@@ -3,8 +3,6 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createSelector } from "reselect";
-import { store } from "../../../redux/store";
 import PaginationTree from "../../common/pagination/pagination";
 import { setMaxPage } from "../../common/pagination/paginationSlice";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
@@ -78,7 +76,7 @@ const PlaylistsContainer = (props) => {
                 dispatch(fetchPublicAvailablePlaylists(activePage))
                     .then(unwrapResult)
                     .then(result => {
-                        console.log(result)
+                        //console.log(result)
                         dispatchDocumentsCount(result);
                     });
             }

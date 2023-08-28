@@ -6,10 +6,9 @@ import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from './postsContainerSlice';
-import { createSelector, unwrapResult } from '@reduxjs/toolkit';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { setMaxPage } from '../../common/pagination/paginationSlice';
 import { useCallback } from 'react';
-import { store } from '../../../redux/store';
 
 
 
