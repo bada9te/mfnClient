@@ -18,7 +18,7 @@ const Container = (props) => {
             <Topbar text="Music From Nothing" username="UserName" where="feed"/>
             <LeftBarPosts/>
             <RightBarUsers/>
-                <Box sx={{pb: 10}}>
+                <Box sx={{py: 6.5}}>
                     <Outlet/>
                 </Box>
             <AudioPlayer/>
