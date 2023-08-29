@@ -1,5 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit"
 import { httpGetPlaylistsByOwner, httpGetPublicAvailablePlaylists } from "../../../requests/playlists";
+import { createComment } from "../comments-container/commentsContainerSlice";
+import { switchPostInSaved, switchPostLike } from "../posts-container/postsContainerSlice";
 
 const initialState = {
     playlists: [],
@@ -65,6 +67,98 @@ const playlistsContainerSlice = createSlice({
             .addCase(fetchPublicAvailablePlaylists.fulfilled, (state, action) => {
                 state.playlists = action.payload.data.playlists;
                 state.isLoading = false;
+            })
+
+
+            .addCase(switchPostLike.fulfilled, (state, { meta }) => {
+                const plData = current(state.playlists);
+                if (plData.length > 0) {
+                    const playlists = JSON.parse(JSON.stringify(plData));
+                    const postId = meta.arg.postId;
+                    const userId = meta.arg.userId;
+
+                    playlists.forEach(playlist => {
+                        const index = playlist.tracks.map(i => i._id).indexOf(postId);
+                        if (index !== -1) {
+                            const track = playlist.tracks[index];
+
+                            if (track.likedBy.indexOf(userId) === -1) {
+                                track.likedBy.push(userId);
+                            } else {
+                                track.likedBy = track.likedBy.filter(id => id !== userId);
+                            }
+                        }
+                    });
+                    
+
+                    state.playlists = playlists;
+                }
+            })
+            .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
+                const plData = current(state.playlists)
+                if (plData.length > 0) {
+                    const playlists = JSON.parse(JSON.stringify(plData));
+                    const postId = meta.arg.postId;
+                    const userId = meta.arg.userId;
+
+                    playlists.forEach(playlist => {
+                        const index = playlist.tracks.map(i => i._id).indexOf(postId);
+                        if (index !== -1) {
+                            const track = playlist.tracks[index];
+
+                            if (track.savedBy.indexOf(userId) === -1) {
+                                track.savedBy.push(userId);
+                            } else {
+                                track.savedBy = track.savedBy.filter(id => id !== userId);
+                            }
+                        }
+                    });
+
+                    state.playlists = playlists;
+                }
+            })
+
+            .addCase(createComment.fulfilled, (state, action) => {
+                const plData = current(state.playlists);
+
+                if (plData.length > 0) {
+                    const playlists = JSON.parse(JSON.stringify(plData));
+                    const comment = action.payload.data.comment;
+                    const commentId = comment._id;
+                    const postId = comment.post;
+
+                    playlists.forEach(playlist => {
+                        const index = playlist.tracks.map(i => i._id).indexOf(postId);
+                        if (index !== -1) {
+                            const track = playlist.tracks[index];
+
+                            // if not a reply
+                            if (!comment?.isReply) {
+                                if (track.comments.indexOf(commentId) === -1) {
+                                    track.comments.push(commentId);
+                                } else {
+                                    track.comments = track.comments.filter(id => id !== commentId);
+                                }
+                            }
+                            // if reply 
+                            else {
+                                const commentIndex = track.comments.map(i => i._id).indexOf(comment.isReplyTo);
+                                
+                                if (commentIndex !== -1) {
+                                    const trackComment = track.comments[commentIndex];
+
+                                    if (trackComment.replies.indexOf(commentId) === -1) {
+                                        trackComment.replies.push(commentId);
+                                    } else {
+                                        trackComment.replies = trackComment.replies.filter(id => id !== commentId);
+                                    }
+                                }
+                            }
+
+                            state.playlists = playlists;
+                        }
+                    });
+                }
             })
     }
     

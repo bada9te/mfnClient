@@ -1,11 +1,12 @@
 import { Add, ExpandMore } from "@mui/icons-material";
 import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails } from "@mui/material";
 import PlaylistDropdown from "./playlist-dropdown/post-item-dropdown";
-import PlaylistTrack from "./playlist-track/playlist-track";
+import PostsContainer from "../../containers/posts-container/posts-container";
+import EnumPosts from "../../enums/enum-posts";
+import EnumPlaylistTracks from "../../enums/enum-playlist-tracks";
 
 const Playlist = (props) => {
     const { playlist } = props;
-    //console.log(playlist)
 
     return (
         <Card>
@@ -18,9 +19,8 @@ const Playlist = (props) => {
                 action={
                     <>
                         <Button startIcon={<Add/>}>Add track</Button>
-                        <PlaylistDropdown/>
+                        <PlaylistDropdown owner={playlist.owner}/>
                     </>
-                    
                 }
             />
             <CardContent sx={{p: {xs: 0, md: 2}}}>
@@ -40,11 +40,9 @@ const Playlist = (props) => {
                                         <Typography>No tracks in this playlist</Typography>
                                     );
                                 } else {
-                                    playlist.tracks.map((track, key) => {
-                                        return (
-                                            <PlaylistTrack/>
-                                        );
-                                    });
+                                    return (
+                                        <EnumPlaylistTracks tracks={playlist.tracks}/>
+                                    );
                                 }
                             })()
                         }

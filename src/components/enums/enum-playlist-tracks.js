@@ -2,21 +2,14 @@ import PostItem from "../common/post-item/post-item";
 import getTimeSince from "../../common-functions/getTimeSince";
 import { useSelector } from "react-redux";
 
-const EnumPosts = props => {
-    const {except, profileLinkAccessable} = props;
+const EnumPlaylistTracks = props => {
+    const {tracks, profileLinkAccessable} = props;
     const locations = useSelector(state => state.base.locations);
-    const posts = useSelector(state => state.postsContainer.posts);
 
     return (
         <>
             {
-                posts
-                .filter(item => {
-                    if (except && except.indexOf(item._id) >= 0) {
-                        return false;
-                    } 
-                    return true;
-                })
+                tracks
                 .map((item, key) => {
                     return (
                         <PostItem 
@@ -33,6 +26,7 @@ const EnumPosts = props => {
                                 downloadsAllowed: item.downloadsAllowed,
                                 status: null,
                                 profileLinkAccessable: profileLinkAccessable,
+                                minimal: true,
                             }}
                         />
                     );
@@ -42,4 +36,4 @@ const EnumPosts = props => {
     )
 }
 
-export default EnumPosts;
+export default EnumPlaylistTracks;

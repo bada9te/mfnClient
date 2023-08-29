@@ -4,13 +4,14 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const PlaylistDropdown = props => {
-    const { owner, downloadsAllowed, handleAudioDownload, handleShareTrack, handleReportTrack, handleDeleteTrack } = props;
+    const { owner } = props;
     const [anchorElUser, setAnchorElUser] = useState(null);
     const currentUser = useSelector(state => state.base.user);
 
     // click
     const handleClick = (i) => {
         //console.log(i);
+        /*
         if (i === 'Download') {
             handleAudioDownload();
         } else if (i === 'Share') {
@@ -20,6 +21,7 @@ const PlaylistDropdown = props => {
         } else if (i === 'Delete') {
             handleDeleteTrack();
         }
+        */
         handleCloseUserMenu();
     }
 
@@ -47,34 +49,7 @@ const PlaylistDropdown = props => {
                 onClose={handleCloseUserMenu}
             >   
                 {
-                    currentUser && currentUser._id !== ""
-                    ?
-                    <MenuItem onClick={() => handleClick('Share')}>
-                        <Typography textAlign="center" display="flex" alignItems="center">
-                            <Share sx={{mr: 1}}/>Share
-                        </Typography>
-                    </MenuItem>
-                    :
-                    null
-                }
-                {
-                    downloadsAllowed
-                    ?
-                    <MenuItem onClick={() => handleClick('Download')}>
-                        <Typography textAlign="center" display="flex" alignItems="center">
-                            <Download sx={{mr: 1}}/>Download
-                        </Typography>
-                    </MenuItem>
-                    :
-                    null
-                }
-                <MenuItem onClick={() => handleClick('Report')}>
-                    <Typography textAlign="center" display="flex" alignItems="center">
-                        <Report sx={{mr: 1}}/>Report
-                    </Typography>
-                </MenuItem>
-                {
-                    currentUser && owner === currentUser._id
+                    currentUser && currentUser._id === owner._id
                     ?
                     <MenuItem onClick={() => handleClick('Delete')}>
                         <Typography textAlign="center" display="flex" alignItems="center">
@@ -84,6 +59,18 @@ const PlaylistDropdown = props => {
                     :
                     null
                 }
+                
+                <MenuItem onClick={() => handleClick('Download')}>
+                    <Typography textAlign="center" display="flex" alignItems="center">
+                        <Share sx={{mr: 1}}/>Share
+                    </Typography>
+                </MenuItem>
+                
+                <MenuItem onClick={() => handleClick('Report')}>
+                    <Typography textAlign="center" display="flex" alignItems="center">
+                        <Report sx={{mr: 1}}/>Report
+                    </Typography>
+                </MenuItem>
             </Menu>
 
             <IconButton aria-label="post-dropdown" onClick={(e) => setAnchorElUser(e.currentTarget)}>

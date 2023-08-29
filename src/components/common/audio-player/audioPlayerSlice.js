@@ -45,17 +45,16 @@ const audioPlayerSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(switchPostLike.fulfilled, (state, { meta }) => {
-                console.log(meta.arg)
                 if (state.currentTrack) {
                     const track = JSON.parse(JSON.stringify(current(state.currentTrack)));
                     const postId = meta.arg.postId;
                     const userId = meta.arg.userId;
     
-                    if (track.id === postId) {
-                        if (track.likedBy.indexOf(userId) === -1) {
-                            track.likedBy.push(userId);
+                    if (track.base._id === postId) {
+                        if (track.base.likedBy.indexOf(userId) === -1) {
+                            track.base.likedBy.push(userId);
                         } else {
-                            track.likedBy = track.likedBy.filter(id => id !== userId);
+                            track.base.likedBy = track.base.likedBy.filter(id => id !== userId);
                         }
                     }
     
@@ -63,53 +62,58 @@ const audioPlayerSlice = createSlice({
                 }
             })
             .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
-                const track = JSON.parse(JSON.stringify(current(state.currentTrack)));
-                const postId = meta.arg.postId;
-                const userId = meta.arg.userId;
+                if (state.currentTrack) {
+                    const track = JSON.parse(JSON.stringify(current(state.currentTrack)));
+                    const postId = meta.arg.postId;
+                    const userId = meta.arg.userId;
 
-                if (track.id === postId) {
-                    if (track.savedBy.indexOf(userId) === -1) {
-                        track.savedBy.push(userId);
-                    } else {
-                        track.savedBy = track.savedBy.filter(id => id !== userId);
-                    }
-                }
-
-                state.currentTrack = track;
-            })
-            .addCase(createComment.fulfilled, (state, { meta }) => {
-                const track = JSON.parse(JSON.stringify(current(state.currentTrack)));
-                const comment = meta.comment;
-                const commentId = comment._id;
-                const postId = comment.post;
-
-                if (track.id === postId) {
-                    // if not a reply
-                    if (!comment?.isReply) {
-                        if (track.comments.indexOf(commentId) === -1) {
-                            track.comments.push(commentId);
+                    if (track.base._id === postId) {
+                        if (track.base.savedBy.indexOf(userId) === -1) {
+                            track.base.savedBy.push(userId);
                         } else {
-                            track.comments = track.comments.filter(id => id !== commentId);
+                            track.base.savedBy = track.base.savedBy.filter(id => id !== userId);
                         }
                     }
-                    // if reply 
-                    else {
-                        const isReplyTo = comment.isReplyTo;
-                        track.comments = track.comments.map(item => {
-                            if (item._id === isReplyTo) {
-                                if (item.replies.indexOf(commentId) === -1) {
-                                    item.replies.push(commentId);
-                                } else {
-                                    item.replies = item.replies.filter(id => id !== commentId);
+
+                    state.currentTrack = track;
+                }
+            })
+            .addCase(createComment.fulfilled, (state, action) => {
+                if (state.currentTrack) {
+                    console.log(action.payload.data.comment)
+                    const track = JSON.parse(JSON.stringify(current(state.currentTrack)));
+                    const comment = action.payload.data.comment;
+                    const commentId = comment._id;
+                    const postId = comment.post;
+
+                    if (track.base._id === postId) {
+                        // if not a reply
+                        if (!comment?.isReply) {
+                            if (track.base.comments.indexOf(commentId) === -1) {
+                                track.base.comments.push(commentId);
+                            } else {
+                                track.base.comments = track.base.comments.filter(id => id !== commentId);
+                            }
+                        }
+                        // if reply 
+                        else {
+                            const isReplyTo = comment.isReplyTo;
+                            track.comments = track.base.comments.map(item => {
+                                if (item._id === isReplyTo) {
+                                    if (item.replies.indexOf(commentId) === -1) {
+                                        item.replies.push(commentId);
+                                    } else {
+                                        item.replies = item.replies.filter(id => id !== commentId);
+                                    }
+                                    return item;
                                 }
                                 return item;
-                            }
-                            return item;
-                        });
+                            });
+                        }
                     }
+                        
+                    state.currentTrack = track;
                 }
-                    
-                state.currentTrack = track;
             })
     }
 });

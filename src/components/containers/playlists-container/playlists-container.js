@@ -76,7 +76,6 @@ const PlaylistsContainer = (props) => {
                 dispatch(fetchPublicAvailablePlaylists(activePage))
                     .then(unwrapResult)
                     .then(result => {
-                        //console.log(result)
                         dispatchDocumentsCount(result);
                     });
             }

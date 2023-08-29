@@ -99,6 +99,15 @@ const httpDeletePostById = async(id) => {
     });
 }
 
+const httpGetManyByIds = async(ids, skipCount) => {
+    return await axios.get(`${API_URL}/posts/ids`, {
+        params: {
+            ids,
+            skipCount,
+        },
+    });
+}
+
 
 
 
@@ -112,4 +121,5 @@ export {
     httpSwitchPostInSaved,
     httpGetPostById,
     httpDeletePostById,
+    httpGetManyByIds,
 }

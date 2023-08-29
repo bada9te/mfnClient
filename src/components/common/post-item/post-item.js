@@ -1,15 +1,13 @@
 import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
-import * as Alert from '../../alerts/alerts';
 import userSocket from '../../../socket/user/socket-user';
 
 import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, CardActions, Box, Typography, Skeleton } from "@mui/material";
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp } from "@mui/icons-material";
 import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
 import { useDispatch, useSelector } from "react-redux";
-import { switchPostInSaved, switchPostLike, updateCommentsSocket, updateLikesSocket, updateSavesSocket } from "../../containers/posts-container/postsContainerSlice";
-import { unwrapResult } from "@reduxjs/toolkit";
+import { updateCommentsSocket, updateLikesSocket, updateSavesSocket } from "../../containers/posts-container/postsContainerSlice";
 import { fetchComments } from "../../containers/comments-container/commentsContainerSlice";
 import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments-modal/commentsModalSlice";
 import { setCurrentTrack, setIsMuted, setIsPlaying, setLoop, setSrc } from "../audio-player/audioPlayerSlice";
@@ -21,28 +19,14 @@ import { setIsShowing as setConfirmModalIsShowing } from '../../modals/confirm-m
 import { setActionType, setItemId, setText, setTitle } from '../../containers/confirm-container/confirmContainerSlice';
 
 
+import changeLikes from './functions/changeLikes';
+import changeSaves from './functions/changeSaves';
+
+
 
 const PostItem = (props) => {
     const {
-        id, 
-        user, 
-        img, 
-        audio, 
-        createdAt, 
-        title, 
-        description, 
-        likedBy, 
-        savedBy, 
-        comments, 
-        status, 
-        profileLinkAccessable, 
-        handlePostSelection,
-        downloadsAllowed,
-        commentsAllowed,
-        battleId,
-        makeBattleVote,
-        postNScore,
-        votedBy,
+        base, addons
     } = props;
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false)
@@ -63,26 +47,7 @@ const PostItem = (props) => {
 
     // handle likes
     const onLikesChanged = async(e, value) => {
-        if (status !== "upload") {
-            if (status !== "upload") {
-                if (isLiked) {
-                    userSocket.emit("post-remove-like", {
-                        sender: currentUser._id,
-                        post: id,
-                        postOwnerId: user[0],
-                    });
-                } else {
-                    userSocket.emit("post-add-like", {
-                        receiver: user[0],
-                        sender: currentUser._id,
-                        post: id,
-                        text: `${currentUser.nick} liked your track`,
-                        selfAction: user[0] === currentUser._id,
-                    });
-                }
-            }
-            dispatch(switchPostLike({userId: currentUser._id, postId: id}));
-        } 
+        changeLikes(addons, base, isLiked, currentUser, dispatch); 
     }
 
     // switch loop
@@ -92,7 +57,7 @@ const PostItem = (props) => {
 
     // play aduio
     const playAudio = () => {
-        dispatch(setSrc(audio));
+        dispatch(setSrc(base.audio));
         dispatch(setIsPlaying(true));
         dispatch(setCurrentTrack(props));
     }
@@ -109,21 +74,21 @@ const PostItem = (props) => {
     
     // handle audio download
     const handleAudioDownload = () => {
-        if (status !== "upload") {
-            saveAs(audio, `${user[1]} - ${title}`);
+        if (base.status !== "upload") {
+            saveAs(base.audio, `${base.owner.nick} - ${base.title}`);
         }
     }
     // open owner profile
     const goToProfile = () => {
-        if (profileLinkAccessable) {
-            navigate(`/profile/${user[0]}`)
+        if (addons.profileLinkAccessable) {
+            navigate(`/profile/${base.owner._id}`)
         }
     }
 
     // open user select modal to share
     const shareTrack = () => {
-        if (status !== "upload") {
-            dispatch(setSharedItem(id));
+        if (addons.status !== "upload") {
+            dispatch(setSharedItem(base._id));
             dispatch(setSelectType('postShare'));
             dispatch(setUserSelectModalIsShowing(true));
         }
@@ -131,18 +96,18 @@ const PostItem = (props) => {
 
     // report track
     const reportTrack = () => {
-        if (status !== "upload") {
-            dispatch(setReportingItemId(id));
+        if (addons.status !== "upload") {
+            dispatch(setReportingItemId(base._id));
             dispatch(setReportModalIsShowing(true));
         }
     }
 
     // delete post
     const deleteTrack = () => {
-        if (status !== "upload") {
+        if (base.status !== "upload") {
             dispatch(setConfirmModalIsShowing(true));
             dispatch(setActionType("delete-post"));
-            dispatch(setItemId(id));
+            dispatch(setItemId(base._id));
             dispatch(setText("By confirming this, you agree that your post will be removed without any ability to restore."));
             dispatch(setTitle("Confirm track deletion"));
         }
@@ -150,101 +115,78 @@ const PostItem = (props) => {
 
     // comments modal
     const switchShowCommentsModal = () => {
-        if (status !== "upload") {
+        if (base.status !== "upload") {
             dispatch(setCommentsModalIsShowing(true));
             dispatch(fetchComments({
-                postId: id,
-                postOwnerId: user[0],
-                commentsIds: comments,
+                postId: base._id,
+                postOwnerId: base.owner._id,
+                commentsIds: base.comments,
             }));
         }
     }
 
     // add to saved or remove from saved
     const switchInSaved = async() => {
-        if (status !== "upload") {
-            if (isSaved) {
-                userSocket.emit("post-remove-save", {
-                    sender: currentUser._id,
-                    post: id,
-                    postOwnerId: user[0],
-                });
-            } else {
-                userSocket.emit("post-add-save", {
-                    receiver: user[0],
-                    sender: currentUser._id,
-                    post: id,
-                    text: `${currentUser.nick} bookmarked your track`,
-                    selfAction: user[0] === currentUser._id,
-                });
-            }
-            dispatch(switchPostInSaved({userId: currentUser._id, postId: id}))
-                .then(unwrapResult)
-                .then(result => {
-                    if (result.data.done) {
-                        Alert.alertSuccess(`Success`, { theme });
-                    }
-                });
-        }
+        changeSaves(base, isSaved, currentUser, theme, dispatch);
     }
         
     // init
     useEffect(() => {
         if (currentUser && currentUser._id !== "") {
-            likedBy.find(likedById => likedById === currentUser?._id) ? setIsLiked(true) : setIsLiked(false);
-            savedBy.find(savedById => savedById === currentUser?._id) ? setIsSaved(true) : setIsSaved(false);
+            base.likedBy.find(likedById => likedById === currentUser?._id) ? setIsLiked(true) : setIsLiked(false);
+            base.savedBy.find(savedById => savedById === currentUser?._id) ? setIsSaved(true) : setIsSaved(false);
         }
-    }, [likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, id, savedBy]);
+    }, [base.likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, base._id, base.savedBy]);
 
     // socket
     useEffect(() => {
-        userSocket.on(`post-${id}-was-liked`, (data) => {
+        userSocket.on(`post-${base._id}-was-liked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(true);
             dispatch(updateLikesSocket({
                 userId: data.sender,
-                postId: id,
+                postId: base._id,
             }));
         });
-        userSocket.on(`post-${id}-was-unliked`, (data) => {
+        userSocket.on(`post-${base._id}-was-unliked`, (data) => {
             if (data.sender === currentUser._id) setIsLiked(false);
             dispatch(updateLikesSocket({
                 userId: data.sender,
-                postId: id,
+                postId: base._id,
             }));
         });
-        userSocket.on(`post-${id}-was-saved`, (data) => {
+        userSocket.on(`post-${base._id}-was-saved`, (data) => {
             if (data.sender === currentUser._id) setIsSaved(true);
             dispatch(updateSavesSocket({
                 userId: data.sender,
-                postId: id,
+                postId: base._id,
             }));
         });
-        userSocket.on(`post-${id}-was-unsaved`, (data) => {
+        userSocket.on(`post-${base._id}-was-unsaved`, (data) => {
             if (data.sender === currentUser._id) setIsSaved(false);
             dispatch(updateSavesSocket({
                 userId: data.sender,
-                postId: id,
+                postId: base._id,
             }));
         });
-        userSocket.on(`post-${id}-was-commented`, (data) => {
+        userSocket.on(`post-${base._id}-was-commented`, (data) => {
             dispatch(updateCommentsSocket(data));
         });
-        userSocket.on(`post-${id}-was-uncommented`, (data) => {
+        userSocket.on(`post-${base._id}-was-uncommented`, (data) => {
             dispatch(updateCommentsSocket(data));
         });
 
         return () => {
-            userSocket.off(`post-${id}-was-liked`);
-            userSocket.off(`post-${id}-was-unliked`);
-            userSocket.off(`post-${id}-was-saved`);
-            userSocket.off(`post-${id}-was-unsaved`);
-            userSocket.off(`post-${id}-was-commented`);
-            userSocket.off(`post-${id}-was-uncommented`);
+            userSocket.off(`post-${base._id}-was-liked`);
+            userSocket.off(`post-${base._id}-was-unliked`);
+            userSocket.off(`post-${base._id}-was-saved`);
+            userSocket.off(`post-${base._id}-was-unsaved`);
+            userSocket.off(`post-${base._id}-was-commented`);
+            userSocket.off(`post-${base._id}-was-uncommented`);
         };
-    }, [id, dispatch, currentUser?._id]);
+    }, [base._id, dispatch, currentUser?._id]);
 
     // for post upload form visualization
-    useEffect(() => {}, [commentsAllowed, downloadsAllowed])
+    useEffect(() => {}, [addons.commentsAllowed, addons.downloadsAllowed])
 
 
 
@@ -256,19 +198,18 @@ const PostItem = (props) => {
                     avatar={
                         <Avatar 
                             onClick={goToProfile}
-                            
-                            src={user[2].endsWith('/') ? "NULL" : user[2]} 
+                            src={base.ownerAvatar.endsWith('/') ? "NULL" : base.ownerAvatar} 
                             sx={{bgcolor: "gray", boxShadow: 3, cursor: 'pointer'}} 
                             aria-label="recipe"
-                            alt={user[1]}
+                            alt={base.owner.nick}
                         />
                     }
-                    title={user[1]}
-                    subheader={createdAt}
+                    title={base.owner.nick}
+                    subheader={base.createdAt}
                     action={
                         <PostItemDropDown 
-                            owner={user[0]}
-                            downloadsAllowed={downloadsAllowed} 
+                            owner={base.owner._id}
+                            downloadsAllowed={addons.downloadsAllowed} 
                             handleAudioDownload={handleAudioDownload} 
                             handleShareTrack={shareTrack}
                             handleReportTrack={reportTrack}
@@ -278,102 +219,98 @@ const PostItem = (props) => {
                 />
                 
                 
-                <Box sx={{ position: 'relative' }}>
-                    {
-                        (() => {
-                            if (img?.endsWith('/') || !img) {
-                                return (
-                                    <Skeleton variant="rectangular" width={400} height={160} />
-                                );
-                            } else {
-                                return (
-                                    <CardMedia
-                                        component="img"
-                                        height="160"
-                                        width="400"
-                                        image={img}
-                                        alt="Paella dish"
-                                    />
-                                );
-                            }
-                        })()
-                    }
-                    <Box sx={{
-                            position: 'absolute',
-                            bottom: 0,
-                            left: 0,
-                            width: '100%',
-                            bgcolor: 'rgba(0,0,0,0.3)',
-                            color: 'white',
-                            padding: '10px',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            backdropFilter: 'blur(5px)'
-                        }}
-                    >
-                        <Box>
-                            <Typography variant='h5'>{title}</Typography>
-                            <Typography variant='p'>{description}</Typography>
-                        </Box>
-                        <Box sx={{ display: 'flex' }}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <Tooltip title="Save">
-                                    <span>
-                                        <IconButton 
-                                            aria-label="bookmark" 
-                                            onClick={switchInSaved} 
-                                            sx={{ color: 'white' }}
-                                            disabled={currentUser && currentUser._id !== "" ? false : true}
-                                        >
-                                            { isSaved ? <Bookmark/> : <BookmarkBorder/> }
-                                        </IconButton>
-                                    </span>
-                                </Tooltip>
-                                <Typography sx={{ fontSize: 12 }}>{savedBy.length}</Typography>
+                    
+                    <Box sx={{ position: 'relative' }}>
+                        {
+                            (() => {
+                                if (base.img?.endsWith('/') || !base.img) {
+                                    return (
+                                        <Skeleton variant="rectangular" width={400} height={160} />
+                                    );
+                                } else {
+                                    return (
+                                        <CardMedia component="img" height="160" width="400" image={base.img} alt="Paella dish"/>
+                                    );
+                                }
+                            })()
+                        }
+                        <Box sx={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 0,
+                                width: '100%',
+                                bgcolor: 'rgba(0,0,0,0.3)',
+                                color: 'white',
+                                padding: '10px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                backdropFilter: 'blur(5px)'
+                            }}
+                        >
+                            <Box>
+                                <Typography variant='h5'>{base.title}</Typography>
+                                <Typography variant='p'>{base.description}</Typography>
                             </Box>
-                            {
-                                commentsAllowed
-                                ?
+                            <Box sx={{ display: 'flex' }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <Tooltip title="Comment out">
+                                    <Tooltip title="Save">
                                         <span>
                                             <IconButton 
-                                                aria-label="comment" 
-                                                sx={{ color: 'white' }} 
-                                                onClick={switchShowCommentsModal}
+                                                aria-label="bookmark" 
+                                                onClick={switchInSaved} 
+                                                sx={{ color: 'white' }}
                                                 disabled={currentUser && currentUser._id !== "" ? false : true}
                                             >
-                                                <CommentOutlined />
+                                                { isSaved ? <Bookmark/> : <BookmarkBorder/> }
                                             </IconButton>
                                         </span>
                                     </Tooltip>
-                                    <Typography sx={{ fontSize: 12 }}>{comments.length}</Typography>
+                                    <Typography sx={{ fontSize: 12 }}>{base.savedBy.length}</Typography>
                                 </Box>
-                                :
-                                null
-                            }
-                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <Tooltip title="Like">
-                                    <span>
-                                        <IconButton 
-                                            aria-label="add to favorites" 
-                                            onClick={(e) => onLikesChanged(e, -isLiked)} 
-                                            sx={{ color: 'white' }}
-                                            disabled={currentUser && currentUser._id !== "" ? false : true}
-                                        >
-                                            { isLiked ? <Favorite/> : <FavoriteBorder/> }
-                                        </IconButton>
-                                    </span>
-                                </Tooltip>
-                                <Typography sx={{ fontSize: 12 }}>{likedBy.length}</Typography>
+                                {
+                                    addons.commentsAllowed
+                                    ?
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <Tooltip title="Comment out">
+                                            <span>
+                                                <IconButton 
+                                                    aria-label="comment" 
+                                                    sx={{ color: 'white' }} 
+                                                    onClick={switchShowCommentsModal}
+                                                    disabled={currentUser && currentUser._id !== "" ? false : true}
+                                                >
+                                                    <CommentOutlined />
+                                                </IconButton>
+                                            </span>
+                                        </Tooltip>
+                                        <Typography sx={{ fontSize: 12 }}>{base.comments.length}</Typography>
+                                    </Box>
+                                    :
+                                    null
+                                }
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    <Tooltip title="Like">
+                                        <span>
+                                            <IconButton 
+                                                aria-label="add to favorites" 
+                                                onClick={(e) => onLikesChanged(e, -isLiked)} 
+                                                sx={{ color: 'white' }}
+                                                disabled={currentUser && currentUser._id !== "" ? false : true}
+                                            >
+                                                { isLiked ? <Favorite/> : <FavoriteBorder/> }
+                                            </IconButton>
+                                        </span>
+                                    </Tooltip>
+                                    <Typography sx={{ fontSize: 12 }}>{base.likedBy.length}</Typography>
+                                </Box>
                             </Box>
                         </Box>
                     </Box>
-                </Box>
+                
                 
                 {
-                    status !== "in-player"
+                    addons.status !== "in-player"
                     &&
                     <CardContent sx={{
                         display: 'flex',
@@ -387,7 +324,7 @@ const PostItem = (props) => {
                         <>
                         {
                             (() => {
-                                if (currentAudio === audio && isPlaying) {
+                                if (currentAudio === base.audio && isPlaying) {
                                     return (
                                         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
                                             <Box>
@@ -420,16 +357,16 @@ const PostItem = (props) => {
                 }
                 {
                     (() => {
-                        if (status === "selecting") {
+                        if (addons.status === "selecting") {
                             return (
                                 <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-                                    <Button size="small" onClick={handlePostSelection}>Select</Button>
+                                    <Button size="small" onClick={addons.handlePostSelection}>Select</Button>
                                 </CardActions>
                             );
-                        } else if (status === "voting" && !votedBy.includes(currentUser?._id)) {
+                        } else if (addons.status === "voting" && !addons.votedBy.includes(currentUser?._id)) {
                             return (
                                 <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-                                    <Button size="small" onClick={() => makeBattleVote(battleId, postNScore, 1, currentUser?._id)}>Free Vote (+1)</Button>
+                                    <Button size="small" onClick={() => addons.makeBattleVote(addons.battleId, addons.postNScore, 1, currentUser?._id)}>Free Vote (+1)</Button>
                                 </CardActions>
                             );
                         }

@@ -154,7 +154,11 @@ const CustomAudioPlayer = (props) => {
                 <Stack direction="row" flexWrap="wrap" sx={{display: 'flex', justifyContent: 'space-around', m: 0, p: 0}}>
                     <Box sx={{display: 'flex', justifyContent: 'center', width: { xs: '100%', md: 'auto' }}}>
                         {
-                            currentTrack ? <PostItem {...currentTrack} status="in-player"/> : <PostItemUnavailable status="in-player"/>
+                            currentTrack 
+                            ? 
+                            <PostItem base={{...currentTrack.base}} addons={{...currentTrack.addons, status: "in-player"}}/> 
+                            : 
+                            <PostItemUnavailable status="in-player"/>
                         }
                     </Box>
                     

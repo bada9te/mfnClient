@@ -18,29 +18,24 @@ const PostFromData = (props) => {
                 data?._id && data._id !== ""
                 ?
                 <PostItem
-                    id={data._id}
-                    user={[
-                        data.owner._id, 
-                        data.owner.nick, 
-                        `${locations?.images}/${data.owner.avatar}`,
-                    ]}
-                    createdAt={getTimeSince(new Date(data.createdAt)) + ' ago'}
-                    title={data.title} 
-                    description={data.description}
-                    img={`${locations?.images}/${data.image}`}
-                    audio={`${locations?.audios}/${data.audio}`}
-                    likedBy={data.likedBy}
-                    savedBy={data.savedBy}
-                    comments={data.comments}
-                    status={page === "In Progress" ? "voting" : null}
-                    profileLinkAccessable={true}
-                    commentsAllowed={data.commentsAllowed}
-                    downloadsAllowed={data.downloadsAllowed}
-        
-                    battleId={battleId}
-                    makeBattleVote={makeBattleVote}
-                    postNScore="post1Score"
-                    votedBy={votedBy}
+                    base={{
+                        ...data, 
+                        ownerAvatar: `${locations?.images}/${data.owner.avatar}`,
+                        createdAt: getTimeSince(new Date(data.createdAt)) + ' ago',
+                        img: `${locations?.images}/${data.image}`,
+                        audio: `${locations?.audios}/${data.audio}`,
+                    }}
+
+                    addons={{
+                        status: page === "In Progress" ? "voting" : null,
+                        profileLinkAccessable: true,
+                        commentsAllowed: data.commentsAllowed,
+                        downloadsAllowed: data.downloadsAllowed,
+                        battleId: battleId,
+                        makeBattleVote: makeBattleVote,
+                        postNScore: "post1Score",
+                        votedBy: votedBy,
+                    }}
                 />
                 :
                 <PostItemUnavailable/>
