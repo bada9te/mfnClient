@@ -1,27 +1,23 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
-import { Report, Download, Share, MoreVert, Delete } from "@mui/icons-material";
+import { Report, Share, MoreVert, Delete } from "@mui/icons-material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const PlaylistDropdown = props => {
-    const { owner } = props;
+    const { owner, handlers } = props;
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const currentUser = useSelector(state => state.base.user);
+    const currentUserId = useSelector(state => state.base.user._id);
 
     // click
     const handleClick = (i) => {
-        //console.log(i);
-        /*
-        if (i === 'Download') {
-            handleAudioDownload();
-        } else if (i === 'Share') {
-            handleShareTrack();
+        if (i === 'Share') {
+            handlers.sharePlaylist();
         } else if (i === 'Report') {
-            handleReportTrack();
+            handlers.reportPlaylist();
         } else if (i === 'Delete') {
-            handleDeleteTrack();
+            handlers.deletePlaylist();
         }
-        */
+        
         handleCloseUserMenu();
     }
 
@@ -48,15 +44,13 @@ const PlaylistDropdown = props => {
                 onClose={handleCloseUserMenu}
             >   
                 {
-                    currentUser && currentUser._id === owner._id
-                    ?
+                    currentUserId === owner._id
+                    &&
                     <MenuItem onClick={() => handleClick('Delete')}>
                         <Typography textAlign="center" display="flex" alignItems="center">
                             <Delete sx={{mr: 1}}/>Delete
                         </Typography>
                     </MenuItem>
-                    :
-                    null
                 }
                 
                 <MenuItem onClick={() => handleClick('Download')}>

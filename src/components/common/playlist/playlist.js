@@ -1,12 +1,42 @@
 import { Add, ExpandMore } from "@mui/icons-material";
 import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails, Box, Stack } from "@mui/material";
-import PlaylistDropdown from "./playlist-dropdown/post-item-dropdown";
-import PostsContainer from "../../containers/posts-container/posts-container";
-import EnumPosts from "../../enums/enum-posts";
+import PlaylistDropdown from "./playlist-dropdown/playlist-dropdown";
 import EnumPlaylistTracks from "../../enums/enum-playlist-tracks";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectType, setSharedItem } from "../../containers/user-select-container/userSelectContainerSlice";
+import { setIsShowing as setUserSelectModalIsShowing } from "../../modals/user-select-modal/userSelectModalSlice";
+import { setReportingItemId } from "../../forms/report/reportFormSlice";
+import { setIsShowing as setReportModalIsShowing } from "../../modals/report-modal/reportModalSlice";
+import { setIsShowing as setConfirmModalIsShowing } from "../../modals/confirm-modal/confirmModalSlice";
+import { setActionType, setItemId, setText, setTitle } from "../../containers/confirm-container/confirmContainerSlice";
 
 const Playlist = (props) => {
     const { playlist } = props;
+    const currentUserId = useSelector(state => state.base.user._id);
+    const dispatch = useDispatch();
+
+
+     // open user select modal to share
+     const sharePlaylist = () => {
+        dispatch(setSharedItem(playlist._id));
+        dispatch(setSelectType('playlistShare'));
+        dispatch(setUserSelectModalIsShowing(true));
+    }
+
+    // report track
+    const reportPlaylist = () => {
+        dispatch(setReportingItemId(playlist._id));
+        dispatch(setReportModalIsShowing(true));
+    }
+
+    // delete post
+    const deletePlaylist = () => {
+        dispatch(setConfirmModalIsShowing(true));
+        dispatch(setActionType("delete-playlist"));
+        dispatch(setItemId(playlist._id));
+        dispatch(setText("By confirming this, you agree that your post will be removed without any ability to restore."));
+        dispatch(setTitle("Confirm track deletion"));
+    }
 
     return (
         <Card>
@@ -18,8 +48,15 @@ const Playlist = (props) => {
                 subheader={playlist.createdAt}
                 action={
                     <>
-                        <Button startIcon={<Add/>}>Add track</Button>
-                        <PlaylistDropdown owner={playlist.owner}/>
+                        { currentUserId === playlist.owner && <Button startIcon={<Add/>}>Add track</Button> }
+                        <PlaylistDropdown 
+                            owner={playlist.owner} 
+                            handlers={{
+                                sharePlaylist,
+                                reportPlaylist,
+                                deletePlaylist
+                            }}
+                        />
                     </>
                 }
             />
@@ -46,7 +83,6 @@ const Playlist = (props) => {
                                                 <EnumPlaylistTracks tracks={playlist.tracks}/>
                                             </Stack>
                                         </Box>
-                                        
                                     );
                                 }
                             })()

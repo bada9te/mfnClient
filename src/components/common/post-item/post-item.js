@@ -73,7 +73,7 @@ const PostItem = (props) => {
     }
     
     // handle audio download
-    const handleAudioDownload = () => {
+    const audioDownload = () => {
         if (base.status !== "upload") {
             saveAs(base.audio, `${base.owner.nick} - ${base.title}`);
         }
@@ -210,10 +210,12 @@ const PostItem = (props) => {
                         <PostItemDropDown 
                             owner={base.owner._id}
                             downloadsAllowed={addons.downloadsAllowed} 
-                            handleAudioDownload={handleAudioDownload} 
-                            handleShareTrack={shareTrack}
-                            handleReportTrack={reportTrack}
-                            handleDeleteTrack={deleteTrack}
+                            handlers={{
+                                audioDownload,
+                                shareTrack,
+                                reportTrack,
+                                deleteTrack,
+                            }}
                         />
                     }
                 />

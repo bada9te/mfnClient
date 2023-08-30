@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const PostItemDropDown = props => {
-    const { owner, downloadsAllowed, handleAudioDownload, handleShareTrack, handleReportTrack, handleDeleteTrack } = props;
+    const { owner, handlers, downloadsAllowed } = props;
     const [anchorElUser, setAnchorElUser] = useState(null);
     const currentUser = useSelector(state => state.base.user);
 
@@ -12,13 +12,13 @@ const PostItemDropDown = props => {
     const handleClick = (i) => {
         //console.log(i);
         if (i === 'Download') {
-            handleAudioDownload();
+            handlers.audioDownload();
         } else if (i === 'Share') {
-            handleShareTrack();
+            handlers.shareTrack();
         } else if (i === 'Report') {
-            handleReportTrack();
+            handlers.reportTrack();
         } else if (i === 'Delete') {
-            handleDeleteTrack();
+            handlers.deleteTrack();
         }
         handleCloseUserMenu();
     }
