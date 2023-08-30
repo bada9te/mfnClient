@@ -31,10 +31,11 @@ const httpSwitchTrackInPlaylist = async(playlistId, trackId) => {
 }
 
 // get by owner
-const httpGetPlaylistsByOwner = async(ownerId) => {
+const httpGetPlaylistsByOwner = async(ownerId, skipCount) => {
     return await axios.get(`${API_URL}/playlists/owner`, {
         params: {
             ownerId,
+            skipCount,
         },
     });
 }

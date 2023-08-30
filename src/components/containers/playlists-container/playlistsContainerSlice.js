@@ -11,10 +11,11 @@ const initialState = {
 
 
 export const fetchCurrentUserPlaylists = createAsyncThunk(
-    'playlists-container/fetch',
-    async(_, thunkApi) => {
+    'playlists-container/fetch-user-playlists',
+    async(activePage, thunkApi) => {
+        let skipCount = (activePage - 1) * 12;
         const userId = thunkApi.getState().base.user._id;
-        return await httpGetPlaylistsByOwner(userId);
+        return await httpGetPlaylistsByOwner(userId, skipCount);
     }
 );
 

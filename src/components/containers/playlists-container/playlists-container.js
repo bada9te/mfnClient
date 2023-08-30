@@ -31,6 +31,20 @@ function TabPanel(props) {
     );
 }
 
+const PlaylistsEnumWithPagination = () => {
+    const playlists = useSelector(state => state.playlistsContainer.playlists)
+    return (
+        <>
+            <Stack spacing={2} sx={{my: 3, mx: {sx: 0, md: 2}}}>
+                <EnumPlaylists/>
+            </Stack>
+            {
+                playlists?.length > 0 ? <PaginationTree/> : null
+            }
+        </>
+    );
+}
+
 
 
 const PlaylistsContainer = (props) => {
@@ -69,16 +83,14 @@ const PlaylistsContainer = (props) => {
 
     // main effect 
     useEffect(() => {
-        if (currentUser?._id !== "") {
-            if (status === 1) {
-                dispatch(fetchCurrentUserPlaylists());
-            } else if (status === 0) {
-                dispatch(fetchPublicAvailablePlaylists(activePage))
-                    .then(unwrapResult)
-                    .then(result => {
-                        dispatchDocumentsCount(result);
-                    });
-            }
+        if (status === 1 && currentUser?._id !== "") {
+            dispatch(fetchCurrentUserPlaylists(activePage));
+        } else if (status === 0) {
+            dispatch(fetchPublicAvailablePlaylists(activePage))
+                .then(unwrapResult)
+                .then(result => {
+                    dispatchDocumentsCount(result);
+                });
         }
     }, [dispatch, currentUser?._id, status, activePage, dispatchDocumentsCount]);
 
@@ -102,9 +114,7 @@ const PlaylistsContainer = (props) => {
 
                         if (playlists && playlists.length > 0) {
                             return (
-                                <Stack spacing={2} sx={{my: 3, mx: {sx: 0, md: 2}}}>
-                                    <EnumPlaylists/>
-                                </Stack>
+                                <PlaylistsEnumWithPagination/>
                             );
                         } else {
                             return (
@@ -134,9 +144,7 @@ const PlaylistsContainer = (props) => {
 
                         if (playlists && playlists.length > 0) {
                             return (
-                                <Stack spacing={2} sx={{my: 3, mx: {sx: 0, md: 2}}}>
-                                    <EnumPlaylists/>
-                                </Stack>
+                                <PlaylistsEnumWithPagination/>
                             );
                         } else {
                             return (
@@ -177,10 +185,6 @@ const PlaylistsContainer = (props) => {
                     </Box>
                 }
             </TabPanel>
-
-            {
-                status < 1 && playlists?.length > 0 ? <PaginationTree/> : null
-            }
         </Box>
     );
 }

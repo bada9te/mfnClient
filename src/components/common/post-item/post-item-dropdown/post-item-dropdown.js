@@ -38,13 +38,13 @@ const PostItemDropDown = props => {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-                keepMounted
                 transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
+                keepMounted={false}
             >   
                 {
                     currentUser && currentUser._id !== ""

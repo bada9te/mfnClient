@@ -1,5 +1,5 @@
 import { Add, ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails } from "@mui/material";
+import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails, Box, Stack } from "@mui/material";
 import PlaylistDropdown from "./playlist-dropdown/post-item-dropdown";
 import PostsContainer from "../../containers/posts-container/posts-container";
 import EnumPosts from "../../enums/enum-posts";
@@ -32,7 +32,7 @@ const Playlist = (props) => {
                     >
                         <Typography>{playlist.title}</Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails sx={{p: {xs: 0, md: 2}}}>
                         {
                             (() => {
                                 if (playlist.tracks.length === 0) {
@@ -41,7 +41,12 @@ const Playlist = (props) => {
                                     );
                                 } else {
                                     return (
-                                        <EnumPlaylistTracks tracks={playlist.tracks}/>
+                                        <Box sx={{ width: '100%' }}>
+                                            <Stack spacing={4} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}} direction="row" useFlexGap flexWrap="wrap">
+                                                <EnumPlaylistTracks tracks={playlist.tracks}/>
+                                            </Stack>
+                                        </Box>
+                                        
                                     );
                                 }
                             })()

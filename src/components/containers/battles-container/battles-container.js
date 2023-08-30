@@ -80,10 +80,16 @@ const BattlesContainer = props => {
 
                 <TabPanel value={status} index={0}>
                     <EnumBattles battlesData={battles} makeBattleVote={makeBattleVote}/>
+                    {
+                        battles?.length > 0 ? <PaginationTree/> : null
+                    }
                 </TabPanel>
             
                 <TabPanel value={status} index={1}>
                     <EnumBattles battlesData={battles} makeBattleVote={makeBattleVote}/>
+                    {
+                        battles?.length > 0 ? <PaginationTree/> : null
+                    }
                 </TabPanel>
 
                 <TabPanel value={status} index={2}>
@@ -110,9 +116,6 @@ const BattlesContainer = props => {
                     }
                 </TabPanel>
             </Box>
-            {
-                status < 2 && battles?.length > 0 ? <PaginationTree/> : null
-            }
         </>
     );
 }

@@ -40,7 +40,6 @@ const PlaylistDropdown = props => {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-                keepMounted
                 transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
