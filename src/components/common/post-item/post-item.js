@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
 import userSocket from '../../../socket/user/socket-user';
 
-import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, CardActions, Box, Typography, Skeleton } from "@mui/material";
+import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, CardActions, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp } from "@mui/icons-material";
 import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
 import { useDispatch, useSelector } from "react-redux";
@@ -326,27 +326,57 @@ const PostItem = (props) => {
                                     if (currentAudio === base.audio && isPlaying) {
                                         return (
                                             <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
-                                                <Box>
-                                                    <IconButton onClick={pauseAudio} disabled={controlsLocked ? true : false}>
-                                                        <Pause/>
-                                                    </IconButton>
-                                                    <IconButton onClick={switchLoop} disabled={controlsLocked ? true : false}>
-                                                        <Loop sx={{ color: loop ? '#1BA39C' : '' }}/>
-                                                    </IconButton>
-                                                </Box>
                                                 
-                                                <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
-                                                    {  isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
-                                                </IconButton>
+                                                <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
+                                                    <Button 
+                                                        sx={{ borderRadius: 0 }}
+                                                        variant="contained" size="small" onClick={pauseAudio} 
+                                                        disabled={controlsLocked ? true : false}
+                                                    >
+                                                        <Pause/>
+                                                    </Button>
+
+                                                    <Button 
+                                                        sx={{ 
+                                                            backgroundColor: loop ? '#1BA39C' : '', 
+                                                            color: loop ? 'white' : '',
+                                                            borderRadius: 50
+                                                        }} 
+                                                        variant="contained" size="small" onClick={switchLoop} 
+                                                        disabled={controlsLocked ? true : false}
+                                                    >
+                                                        <Loop/> 
+                                                    </Button>
+                                                </ButtonGroup>
+                                                <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
+                                                    <Button 
+                                                        sx={{ 
+                                                            backgroundColor: isMuted || volume === 0 ? '#f44336' : '',
+                                                            color: isMuted ? 'white' : '',
+                                                            borderTopLeftRadius: 50,
+                                                            borderBottomLeftRadius: 50,
+                                                        }} 
+                                                        variant="contained" size="small" onClick={handleMuteUnmute} 
+                                                        disabled={controlsLocked ? true : false}
+                                                    >
+                                                        { isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
+                                                    </Button>
+                                                </ButtonGroup>
                                             </Box>
                                         );
                                     } else {
                                         return (
-                                            <>
-                                                <IconButton onClick={playAudio}>
+                                            <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
+                                                <Button 
+                                                    sx={{ 
+                                                        borderTopRightRadius: 50,
+                                                        borderBottomRightRadius: 50,
+                                                    }} 
+                                                    variant="contained" size="small" onClick={playAudio}
+                                                >
                                                     <PlayArrow/>
-                                                </IconButton>
-                                            </>
+                                                </Button>
+                                            </ButtonGroup>
                                         );
                                     }
                                 })()
