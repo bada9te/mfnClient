@@ -9,6 +9,8 @@ import { setReportingItemId } from "../../forms/report/reportFormSlice";
 import { setIsShowing as setReportModalIsShowing } from "../../modals/report-modal/reportModalSlice";
 import { setIsShowing as setConfirmModalIsShowing } from "../../modals/confirm-modal/confirmModalSlice";
 import { setActionType, setItemId, setText, setTitle } from "../../containers/confirm-container/confirmContainerSlice";
+import { setSelectingFor } from "../../containers/post-select-container/postSelectContainerSlice";
+import { setIsShowing as setPostSelectModalIsShowing } from "../../modals/post-select-modal/postSelectModalSlice";
 
 const Playlist = (props) => {
     const { playlist } = props;
@@ -38,6 +40,12 @@ const Playlist = (props) => {
         dispatch(setTitle("Confirm track deletion"));
     }
 
+
+    const handleTrackAdding = () => {
+        dispatch(setSelectingFor("playlist"));
+        dispatch(setPostSelectModalIsShowing(true));
+    }
+
     return (
         <Card>
             <CardHeader
@@ -48,7 +56,11 @@ const Playlist = (props) => {
                 subheader={playlist.createdAt}
                 action={
                     <>
-                        { currentUserId === playlist.owner && <Button startIcon={<Add/>}>Add track</Button> }
+                        { 
+                            currentUserId === playlist.owner._id 
+                            && 
+                            <Button startIcon={<Add/>} onClick={handleTrackAdding}>Add track</Button> 
+                        }
                         <PlaylistDropdown 
                             owner={playlist.owner} 
                             handlers={{

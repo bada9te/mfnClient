@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit"
-import { httpGetPlaylistsByOwner, httpGetPublicAvailablePlaylists } from "../../../requests/playlists";
+import { httpGetPlaylistsByOwner, httpGetPublicAvailablePlaylists, httpSwitchTrackInPlaylist } from "../../../requests/playlists";
 import { createComment } from "../comments-container/commentsContainerSlice";
 import { switchPostInSaved, switchPostLike } from "../posts-container/postsContainerSlice";
 
@@ -7,6 +7,8 @@ const initialState = {
     playlists: [],
     isLoading: true,
     page: "Explore",
+    targetTrack: null,
+    targetPlaylist: null,
 }
 
 
@@ -25,7 +27,15 @@ export const fetchPublicAvailablePlaylists = createAsyncThunk(
         let skipCount = (activePage - 1) * 12;
         return await httpGetPublicAvailablePlaylists(skipCount);
     }
-)
+);
+
+export const switchTrackInPlaylist = createAsyncThunk(
+    'playlists-container/switch-track',
+    async(track, thunkApi) => {
+        const playlistId = thunkApi.getState().playlistsContainer.targetPlaylist;
+        return await httpSwitchTrackInPlaylist(playlistId, track.base._id);
+    }
+);
 
 
 const playlistsContainerSlice = createSlice({
@@ -40,6 +50,12 @@ const playlistsContainerSlice = createSlice({
         },
         setPage: (state, action) => {
             state.page = action.payload;
+        },
+        setTargetTrack: (state, action) => {
+            state.targetTrack = action.payload;
+        },
+        setTargetPlaylist: (state, action) => {
+            state.targetPlaylist = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -172,4 +188,5 @@ export const {
     setPlaylists,
     setIsLoading,
     setPage,
+    setTargetTrack,
 } = actions;

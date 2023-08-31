@@ -3,7 +3,6 @@ import BattleItem from "../../common/battle-item/battle-item";
 import PostItem from "../../common/post-item/post-item";
 import PostSelectModal from "../../modals/post-select-modal/post-select-modal";
 import * as Alert from "../../alerts/alerts";
-import getTimeSince from "../../../common-functions/getTimeSince";
 import { Box, TextField, Button, Card } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createBattle, setTitle } from "./createBattleFormSlice";
@@ -15,13 +14,13 @@ import { setIsShowing as setPostSelectModalIsShowing} from "../../modals/post-se
 
 const CreateBattleForm = props => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const locations = useSelector(state => state?.base?.locations);
     const title = useSelector(state => state.createBattleForm.title);
     const post1 = useSelector(state => state.createBattleForm.post1);
     const post2 = useSelector(state => state.createBattleForm.post2);
     const theme = useSelector(state => state.base.theme);
     const dispatch = useDispatch();
 
+    
     const handleOpenPostSelectModal = (isMine) => {
         dispatch(setIsMine(isMine));
         dispatch(setPostSelectModalIsShowing(true));
@@ -72,66 +71,47 @@ const CreateBattleForm = props => {
                 <BattleItem
                     title={title}
                     post1={
-                        post1 != null 
-                        ?
-                        <PostItem 
-                            id={post1._id} 
-                            user={[post1.owner._id, post1.owner.nick, `${locations?.images}/${post1.owner.avatar}`,]}
-                            createdAt={getTimeSince(new Date(post1.createdAt)) + ' ago'} 
-                            title={post1.title}  
-                            description={post1.description} 
-                            img={`${locations?.images}/${post1.image}`}
-                            audio={`${locations?.audios}/${post1.audio}`} 
-                            likedBy={post1.likedBy} status={null}
-                            savedBy={post1.savedBy}
-                            comments={post1.comments}
-                            commentsAllowed={post1.commentsAllowed}
-                            downloadsAllowed={post1.downloadsAllowed}
-                            profileLinkAccessable={true} 
-                        />
-                        :
                         <>
-                            <Card sx={{ width: '25em',  minHeight: '240px', maxHeight: '285px', my: 3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <Button
-                                    variant="contained"
-                                    sx={{ mt: 1, mb: 2 }}
-                                    onClick={() => handleOpenPostSelectModal(true)}
-                                >
-                                    Select my track
-                                </Button>
-                            </Card>
-                            <PostSelectModal/>
+                            {
+                                post1 != null 
+                                ?
+                                <PostItem base={post1.base} addons={{...post1.addons, status: null}} />
+                                :
+                                <>
+                                    <Card sx={{ width: '25em',  minHeight: '240px', maxHeight: '285px', my: 3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                        <Button
+                                            variant="contained"
+                                            sx={{ mt: 1, mb: 2 }}
+                                            onClick={() => handleOpenPostSelectModal(true)}
+                                        >
+                                            Select my track
+                                        </Button>
+                                    </Card>
+                                    <PostSelectModal/>
+                                </>
+                            }
                         </>
                     }
                     post2={
-                        post2 != null 
-                        ?
-                        <PostItem 
-                            id={post2._id} 
-                            user={[post2.owner._id, post2.owner.nick, `${locations?.images}/${post2.owner.avatar}`,]}
-                            createdAt={getTimeSince(new Date(post2.createdAt)) + ' ago'} 
-                            title={post2.title} description={post2.description} 
-                            img={`${locations?.images}/${post2.image}`}
-                            audio={`${locations?.audios}/${post2.audio}`} 
-                            likedBy={post2.likedBy} status={null} 
-                            savedBy={post2.savedBy}
-                            comments={post2.comments}
-                            profileLinkAccessable={true} 
-                            commentsAllowed={post2.commentsAllowed}
-                            downloadsAllowed={post2.downloadsAllowed}
-                        />
-                        :
                         <>
-                            <Card sx={{ width: '25em',  minHeight: '240px', maxHeight: '285px', my: 3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <Button
-                                    variant="contained"
-                                    sx={{ mt: 1, mb: 2 }}
-                                    onClick={() => handleOpenPostSelectModal(false)}
-                                >
-                                    Select opponent track
-                                </Button>
-                            </Card>
-                            <PostSelectModal/>
+                            {
+                                post2 != null 
+                                ?
+                                <PostItem base={post2.base} addons={{...post2.addons, status: null}}/>
+                                :
+                                <>
+                                    <Card sx={{ width: '25em',  minHeight: '240px', maxHeight: '285px', my: 3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                        <Button
+                                            variant="contained"
+                                            sx={{ mt: 1, mb: 2 }}
+                                            onClick={() => handleOpenPostSelectModal(false)}
+                                        >
+                                            Select opponent track
+                                        </Button>
+                                    </Card>
+                                    <PostSelectModal/>
+                                </>
+                            }
                         </>
                     }
                     createdAt="XX:XX:XX"

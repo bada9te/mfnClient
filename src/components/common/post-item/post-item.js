@@ -219,9 +219,6 @@ const PostItem = (props) => {
                         />
                     }
                 />
-                
-                
-                    
                     <Box sx={{ position: 'relative' }}>
                         {
                             (() => {
@@ -324,36 +321,36 @@ const PostItem = (props) => {
                         "&:last-child": { paddingBottom: 0 }
                     }}>
                         <>
-                        {
-                            (() => {
-                                if (currentAudio === base.audio && isPlaying) {
-                                    return (
-                                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
-                                            <Box>
-                                                <IconButton onClick={pauseAudio} disabled={controlsLocked ? true : false}>
-                                                    <Pause/>
-                                                </IconButton>
-                                                <IconButton onClick={switchLoop} disabled={controlsLocked ? true : false}>
-                                                    <Loop sx={{ color: loop ? '#1BA39C' : '' }}/>
+                            {
+                                (() => {
+                                    if (currentAudio === base.audio && isPlaying) {
+                                        return (
+                                            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
+                                                <Box>
+                                                    <IconButton onClick={pauseAudio} disabled={controlsLocked ? true : false}>
+                                                        <Pause/>
+                                                    </IconButton>
+                                                    <IconButton onClick={switchLoop} disabled={controlsLocked ? true : false}>
+                                                        <Loop sx={{ color: loop ? '#1BA39C' : '' }}/>
+                                                    </IconButton>
+                                                </Box>
+                                                
+                                                <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
+                                                    {  isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
                                                 </IconButton>
                                             </Box>
-                                            
-                                            <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
-                                                {  isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
-                                            </IconButton>
-                                        </Box>
-                                    );
-                                } else {
-                                    return (
-                                        <>
-                                            <IconButton onClick={playAudio}>
-                                                <PlayArrow/>
-                                            </IconButton>
-                                        </>
-                                    );
-                                }
-                            })()
-                        }
+                                        );
+                                    } else {
+                                        return (
+                                            <>
+                                                <IconButton onClick={playAudio}>
+                                                    <PlayArrow/>
+                                                </IconButton>
+                                            </>
+                                        );
+                                    }
+                                })()
+                            }
                         </>
                     </CardContent>
                 }
@@ -362,7 +359,7 @@ const PostItem = (props) => {
                         if (addons.status === "selecting") {
                             return (
                                 <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-                                    <Button size="small" onClick={addons.handlePostSelection}>Select</Button>
+                                    <Button size="small" onClick={() => addons.selectPost({base, addons})}>Select</Button>
                                 </CardActions>
                             );
                         } else if (addons.status === "voting" && !addons.votedBy.includes(currentUser?._id)) {

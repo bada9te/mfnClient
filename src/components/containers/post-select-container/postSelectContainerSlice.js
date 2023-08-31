@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit"
-import { httpGetPostsByTitle } from "../../../requests/posts";
+import { httpGetPostsByTitle, httpGetUserSavedPosts } from "../../../requests/posts";
 import { createComment } from "../comments-container/commentsContainerSlice";
 import { switchPostInSaved, switchPostLike } from "../posts-container/postsContainerSlice";
 
 const initialState = {
     isMine: true,
+    selectingFor: "battle",
+    initiator: null,
     query: "",
     isLoading: false,
     posts: [],
+
 }
 
 
@@ -20,6 +23,15 @@ export const fetchByTitle = createAsyncThunk(
         const isMine = currentState.postSelectContainer.isMine;
 
         return await httpGetPostsByTitle(query, isMine, currentUserId);
+    }
+);
+
+export const fetchSavedPosts = createAsyncThunk(
+    'post-select-container/fetchSaved',
+    async(_, thunkApi) => {
+        const currentUserId = thunkApi.getState().base.user._id;
+
+        return await httpGetUserSavedPosts(currentUserId);
     }
 );
 
@@ -39,6 +51,9 @@ const postSelectContainerSlice = createSlice({
         },
         setPosts: (state, action) => {
             state.posts = action.payload;
+        },
+        setSelectingFor: (state, action) => {
+            state.selectingFor = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -51,6 +66,18 @@ const postSelectContainerSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(fetchByTitle.fulfilled, (state, action) => {
+                state.posts = action.payload.data.posts;
+                state.isLoading = false;
+            })
+
+            // fetch saved posts
+            .addCase(fetchSavedPosts.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchSavedPosts.rejected, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(fetchSavedPosts.fulfilled, (state, action) => {
                 state.posts = action.payload.data.posts;
                 state.isLoading = false;
             })
@@ -113,4 +140,5 @@ export const {
     setIsShowing,
     setPosts,
     setQuery,
+    setSelectingFor,
 } = actions;

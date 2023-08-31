@@ -1,10 +1,15 @@
 import { Box, Stack, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getTimeSince from "../../../common-functions/getTimeSince";
 import PostItem from "../../common/post-item/post-item";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { setPost1 as setBattlePost1, setPost2 as setBattlePost2 } from "../../forms/create-battle/createBattleFormSlice";
 import { setIsShowing as setPostSelectModalIsShowing } from "../../modals/post-select-modal/postSelectModalSlice";
+import { switchTrackInPlaylist } from "../playlists-container/playlistsContainerSlice";
+import { fetchSavedPosts } from "./postSelectContainerSlice";
+
+
 
 const PostSelectContainer = props => {
     const locations = useSelector(state => state.base.locations);
@@ -12,12 +17,27 @@ const PostSelectContainer = props => {
     const posts = useSelector(state => state.postSelectContainer.posts);
     const query = useSelector(state => state.postSelectContainer.query);
     const isMine = useSelector(state => state.postSelectContainer.isMine);
+    const selectingFor = useSelector(state => state.postSelectContainer.selectingFor);
     const dispatch = useDispatch();
 
+    
     const handlePostSelection = (post) => {
         dispatch(setPostSelectModalIsShowing(false));
-        isMine ? dispatch(setBattlePost1(post)) : dispatch(setBattlePost2(post));
+        if (selectingFor === "playlist") {
+            dispatch(switchTrackInPlaylist(post));
+        } else if (selectingFor === "battle") {
+            isMine ? dispatch(setBattlePost1(post)) : dispatch(setBattlePost2(post));
+        }
     }
+
+    useEffect(() => {
+        console.log('effext1')
+        if (selectingFor === "playlist") {
+            console.log('effext2')
+            dispatch(fetchSavedPosts());
+        }
+    }, [dispatch, selectingFor])
+
 
     return (
         <Stack spacing={4} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', height: '100%'}} direction="row" useFlexGap flexWrap="wrap">
@@ -34,25 +54,19 @@ const PostSelectContainer = props => {
                             return (
                                 <PostItem
                                     key={key}
-                                    id={item._id}
-                                    user={[
-                                        item.owner._id, 
-                                        item.owner.nick, 
-                                        `${locations?.images}/${item.owner.avatar}`,
-                                    ]}
-                                    createdAt={getTimeSince(new Date(item.createdAt)) + ' ago'}
-                                    title={item.title} 
-                                    description={item.description}
-                                    img={`${locations?.images}/${item.image}`}
-                                    audio={`${locations?.audios}/${item.audio}`}
-                                    likedBy={item.likedBy}
-                                    savedBy={item.savedBy}
-                                    comments={item.comments}
-                                    status={'selecting'}
-                                    profileLinkAccessable={false}
-                                    handlePostSelection={() => handlePostSelection(item)}
-                                    commentsAllowed={item.commentsAllowed}
-                                    downloadsAllowed={item.downloadsAllowed}
+                                    base={{
+                                        ...item, 
+                                        ownerAvatar: `${locations?.images}/${item.owner.avatar}`,
+                                        createdAt: getTimeSince(new Date(item.createdAt)) + ' ago',
+                                        img: `${locations?.images}/${item.image}`,
+                                        audio: `${locations?.audios}/${item.audio}`,
+                                    }}
+                                    addons={{
+                                        commentsAllowed: item.commentsAllowed,
+                                        downloadsAllowed: item.downloadsAllowed,
+                                        status: 'selecting',
+                                        selectPost: handlePostSelection,
+                                    }}
                                 />
                             );
                         });

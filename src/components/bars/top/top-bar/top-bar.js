@@ -18,6 +18,7 @@ import { fetchUnreadNotifications } from '../../../containers/notifications-cont
 import ReportsModal from '../../../modals/report-modal/report-modal';
 import ConfirmModal from '../../../modals/confirm-modal/confirm-modal';
 import PropTypes from 'prop-types';
+import PostSelectModal from '../../../modals/post-select-modal/post-select-modal';
 
 function HideOnScroll(props) {
     const { children, window } = props;
@@ -125,6 +126,7 @@ const Topbar = (props) => {
             <UserSelectModal/>
             <CommentsModal/>
             <ReportsModal/>
+            <PostSelectModal/>
 
             <HideOnScroll {...props}>
                 <AppBar sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
