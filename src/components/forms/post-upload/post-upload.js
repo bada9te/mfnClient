@@ -202,24 +202,29 @@ const PostUploadForm = (props)=> {
 
 
                     <PostItem
+                        base={{
+                            owner: {
+                                _id: currentUser?._id,
+                                nick: currentUser?.nick,
+                            },
+                            ownerAvatar: `${locations?.images}/${currentUser?.avatar}`,
+                            createdAt: 'now',
+                            title,
+                            description,
+                            img: picture,
+                            audio,
+                            likedBy: [],
+                            savedBy: [],
+                            comments: [],
+                        }}
+                        addons={{
+                            commentsAllowed,
+                            downloadsAllowed,
+                            status: "upload",
+                            profileLinkAccessable: false,
+                        }}
                         id={null}
-                        user={[
-                            currentUser?._id, 
-                            currentUser?.nick, 
-                            `${locations?.images}/${currentUser?.avatar}`,
-                        ]}
-                        createdAt={'now'}
-                        title={title} 
-                        description={description}
-                        img={picture}
-                        audio={audio}
-                        likedBy={[]}
-                        savedBy={[]}
-                        comments=""
-                        status="upload"
-                        profileLinkAccessable={false}
-                        commentsAllowed={commentsAllowed}
-                        downloadsAllowed={downloadsAllowed}
+                        
                     />
                 </Stack>
             </Box>

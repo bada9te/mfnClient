@@ -7,7 +7,7 @@ const initialState = {
     playlists: [],
     isLoading: true,
     page: "Explore",
-    targetTrack: null,
+    //targetTrack: null,
     targetPlaylist: null,
 }
 
@@ -189,4 +189,5 @@ export const {
     setIsLoading,
     setPage,
     setTargetTrack,
+    setTargetPlaylist,
 } = actions;

@@ -11,6 +11,7 @@ import { setIsShowing as setConfirmModalIsShowing } from "../../modals/confirm-m
 import { setActionType, setItemId, setText, setTitle } from "../../containers/confirm-container/confirmContainerSlice";
 import { setSelectingFor } from "../../containers/post-select-container/postSelectContainerSlice";
 import { setIsShowing as setPostSelectModalIsShowing } from "../../modals/post-select-modal/postSelectModalSlice";
+import { setTargetPlaylist } from "../../containers/playlists-container/playlistsContainerSlice";
 
 const Playlist = (props) => {
     const { playlist } = props;
@@ -42,6 +43,7 @@ const Playlist = (props) => {
 
 
     const handleTrackAdding = () => {
+        dispatch(setTargetPlaylist(playlist._id))
         dispatch(setSelectingFor("playlist"));
         dispatch(setPostSelectModalIsShowing(true));
     }

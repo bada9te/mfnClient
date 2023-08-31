@@ -87,9 +87,13 @@ const PostsContainer = (props) => {
                 })()
             }
             
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
-                <PaginationTree/>
-            </Box>
+            {
+                posts.length > 0
+                &&
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
+                    <PaginationTree/>
+                </Box>
+            }
         </>
     );
 }
