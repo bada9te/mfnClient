@@ -86,6 +86,26 @@ const playlistsContainerSlice = createSlice({
                 state.isLoading = false;
             })
 
+            // switch track in playlist
+            .addCase(switchTrackInPlaylist.fulfilled, (state, action) => {
+                const playlistFromPayload = action.payload.data.playlist;
+                const plData = current(state.playlists);
+
+                if (plData.length > 0) {
+                    
+                    const playlists = JSON.parse(JSON.stringify(plData));
+                    const playlistId = playlistFromPayload._id;
+
+                    const playlistIndex = playlists.map(i => i._id).indexOf(playlistId);
+
+                    if (playlistIndex !== -1) {
+                        playlists[playlistIndex].tracks = playlistFromPayload.tracks;
+                    }
+
+                    state.playlists = playlists;
+                }
+            })
+
 
             .addCase(switchPostLike.fulfilled, (state, { meta }) => {
                 const plData = current(state.playlists);
