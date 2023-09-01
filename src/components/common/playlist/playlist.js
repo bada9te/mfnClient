@@ -26,22 +26,22 @@ const Playlist = (props) => {
         dispatch(setUserSelectModalIsShowing(true));
     }
 
-    // report track
+    // report playlist
     const reportPlaylist = () => {
         dispatch(setReportingItemId(playlist._id));
         dispatch(setReportModalIsShowing(true));
     }
 
-    // delete post
+    // delete playlist
     const deletePlaylist = () => {
         dispatch(setConfirmModalIsShowing(true));
         dispatch(setActionType("delete-playlist"));
         dispatch(setItemId(playlist._id));
-        dispatch(setText("By confirming this, you agree that your post will be removed without any ability to restore."));
-        dispatch(setTitle("Confirm track deletion"));
+        dispatch(setText("By confirming this, you agree that your playlist will be removed without any ability to restore."));
+        dispatch(setTitle("Confirm playlist deletion"));
     }
 
-
+    // add track to playlist
     const handleTrackAdding = () => {
         dispatch(setTargetPlaylist(playlist._id))
         dispatch(setSelectingFor("playlist"));

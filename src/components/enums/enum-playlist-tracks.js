@@ -27,7 +27,6 @@ const EnumPlaylistTracks = props => {
                                 downloadsAllowed: item.downloadsAllowed,
                                 status: null,
                                 profileLinkAccessable: profileLinkAccessable,
-                                minimal: true,
                             }}
                         />
                     );

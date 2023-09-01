@@ -1,3 +1,4 @@
+import { AddCircle, Timelapse, Whatshot } from "@mui/icons-material";
 import { Box, Tabs, Tab, Card, Typography, CardContent  } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,9 +73,9 @@ const BattlesContainer = props => {
             <Box>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 3 }}>
                     <Tabs value={status} onChange={handleTabSwitch}>
-                        <Tab label="In progress" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
-                        <Tab label="Finished" id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
-                        <Tab label="Create new" id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
+                        <Tab icon={<Whatshot/>} label={"In progress"} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
+                        <Tab icon={<Timelapse/>} label={"Finished"} id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
+                        <Tab icon={<AddCircle/>}label="Create new" id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
                     </Tabs>
                 </Box>
 

@@ -1,7 +1,9 @@
+import { CreateNewFolder, Explore, Topic } from "@mui/icons-material";
 import { Box, Card, CardActions, CardContent, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
+import { Folder, Folder2 } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import PaginationTree from "../../common/pagination/pagination";
 import { setMaxPage } from "../../common/pagination/paginationSlice";
@@ -99,9 +101,9 @@ const PlaylistsContainer = (props) => {
         <Box sx={{pb: 3}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 3 }}>
                 <Tabs value={status} onChange={handleTabSwitch}>
-                    <Tab label="Explore" id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
-                    <Tab label="My playlists" id="simple-tab-1" aria-controls="simple-tabpanel-1" />
-                    <Tab label="Create new" id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
+                    <Tab icon={<Explore/>} label="Explore" id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
+                    <Tab icon={<Topic/>}label="My playlists" id="simple-tab-1" aria-controls="simple-tabpanel-1" />
+                    <Tab icon={<CreateNewFolder/>} label="Create new" id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
                 </Tabs>
             </Box>
 

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EnumNotifications from "../../enums/enum-notifications";
 import { deleteManyNotifications, fetchReadNotifications, fetchUnreadNotifications, markManyNotificationsAsRead, setPage } from "./notificationsContainerSlice";
 import * as Alert from "../../alerts/alerts";
+import { Checklist, MarkAsUnread } from "@mui/icons-material";
 
 
 function TabPanel(props) {
@@ -84,8 +85,8 @@ const NotificationsContainer = props => {
         <Box>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', my: 3 }}>
                 <Tabs value={status} onChange={handleTabSwitch}>
-                    <Tab label="Unread" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
-                    <Tab label="Read" id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
+                    <Tab icon={<MarkAsUnread/>} label="Unread" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
+                    <Tab icon={<Checklist/>} label="Read" id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
                 </Tabs>
             </Box>
 
