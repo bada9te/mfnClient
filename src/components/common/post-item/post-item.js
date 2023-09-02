@@ -329,14 +329,16 @@ const PostItem = (props) => {
                                                 
                                                 <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
                                                     <Button 
+                                                        startIcon={<Pause/>}
                                                         sx={{ borderRadius: 0 }}
                                                         variant="contained" size="small" onClick={pauseAudio} 
                                                         disabled={controlsLocked ? true : false}
                                                     >
-                                                        <Pause/>
+                                                        Pause
                                                     </Button>
 
                                                     <Button 
+                                                        startIcon={<Loop/>}
                                                         sx={{ 
                                                             backgroundColor: loop ? '#1BA39C' : '', 
                                                             color: loop ? 'white' : '',
@@ -345,11 +347,12 @@ const PostItem = (props) => {
                                                         variant="contained" size="small" onClick={switchLoop} 
                                                         disabled={controlsLocked ? true : false}
                                                     >
-                                                        <Loop/> 
+                                                        Loop 
                                                     </Button>
                                                 </ButtonGroup>
                                                 <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
                                                     <Button 
+                                                        startIcon={ isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
                                                         sx={{ 
                                                             backgroundColor: isMuted || volume === 0 ? '#f44336' : '',
                                                             color: isMuted ? 'white' : '',
@@ -359,7 +362,7 @@ const PostItem = (props) => {
                                                         variant="contained" size="small" onClick={handleMuteUnmute} 
                                                         disabled={controlsLocked ? true : false}
                                                     >
-                                                        { isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
+                                                        Mute
                                                     </Button>
                                                 </ButtonGroup>
                                             </Box>
@@ -368,13 +371,14 @@ const PostItem = (props) => {
                                         return (
                                             <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
                                                 <Button 
+                                                    startIcon={<PlayArrow/>}
                                                     sx={{ 
                                                         borderTopRightRadius: 50,
                                                         borderBottomRightRadius: 50,
                                                     }} 
                                                     variant="contained" size="small" onClick={playAudio}
                                                 >
-                                                    <PlayArrow/>
+                                                    Play
                                                 </Button>
                                             </ButtonGroup>
                                         );
