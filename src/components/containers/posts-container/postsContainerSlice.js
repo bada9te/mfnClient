@@ -65,60 +65,66 @@ const postsContainerSlice = createSlice({
             const commentId = comment._id;
 
             //console.log('New comment', commentId)
-            posts.forEach(item => {
-                if (item._id === action.payload.comment.post) {
-                    // if not a reply
-                    if (!comment?.isReply) {
-                        if (item.comments.indexOf(commentId) === -1) {
-                            item.comments.push(commentId);
-                        } else {
-                            item.comments = item.comments.filter(id => id !== commentId);
-                        }
-                    }
-                    // if reply 
-                    else {
-                        const isReplyTo = comment.isReplyTo;
-                        item.comments = item.comments.map(item => {
-                            if (item._id === isReplyTo) {
-                                if (item.replies.indexOf(commentId) === -1) {
-                                    item.replies.push(commentId);
-                                } else {
-                                    item.replies = item.replies.filter(id => id !== commentId);
-                                }
-                                return item;
-                            }
-                            return item;
-                        });
+            const index = posts.map(i => i._id).indexOf(action.payload.comment.post);
+
+            if (index !== -1) {
+                let post = posts[index];
+                // if not a reply
+                if (!comment?.isReply) {
+                    if (post.comments.indexOf(commentId) === -1) {
+                        post.comments.push(commentId);
+                    } else {
+                        post.comments = post.comments.filter(id => id !== commentId);
                     }
                 }
-            });
-            state.posts = posts;
+                // if reply 
+                else {
+                    const isReplyTo = comment.isReplyTo;
+                    post.comments = post.comments.map(item => {
+                        if (item._id === isReplyTo) {
+                            if (item.replies.indexOf(commentId) === -1) {
+                                item.replies.push(commentId);
+                            } else {
+                                item.replies = item.replies.filter(id => id !== commentId);
+                            }
+                            return item;
+                        }
+                        return item;
+                    });
+                }
+
+                state.posts = posts;
+            }
         },
         updateLikesSocket: (state, action) => {
             const posts = JSON.parse(JSON.stringify(current(state.posts)));
-            posts.forEach(item => {
-                if (item._id === action.payload.postId) {
-                    if (item.likedBy.indexOf(action.payload.userId) === -1) {
-                        item.likedBy.push(action.payload.userId);
-                    } else {
-                        item.likedBy = item.likedBy.filter(id => id !== action.payload.userId);
-                    }
+            const index = posts.map(i => i._id).indexOf(action.payload.postId);
+
+            if (index !== -1) {
+                let post = posts[index];
+
+                if (post.likedBy.indexOf(action.payload.userId) === -1) {
+                    post.likedBy.push(action.payload.userId);
+                } else {
+                    post.likedBy = post.likedBy.filter(id => id !== action.payload.userId);
                 }
-            });
-            state.posts = posts;
+                state.posts = posts;
+            }
         },
         updateSavesSocket: (state, action) => {
             const posts = JSON.parse(JSON.stringify(current(state.posts)));
-            posts.forEach(item => {
-                if (item._id === action.payload.postId) {
-                    if (item.savedBy.indexOf(action.payload.userId) === -1) {
-                        item.savedBy.push(action.payload.userId);
-                    } else {
-                        item.savedBy = item.savedBy.filter(id => id !== action.payload.userId);
-                    }
+            const index = posts.map(i => i._id).indexOf(action.payload.postId);
+            
+            if (index !== -1) {
+                let post = posts[index];
+
+                if (post.savedBy.indexOf(action.payload.userId) === -1) {
+                    post.savedBy.push(action.payload.userId);
+                } else {
+                    post.savedBy = post.savedBy.filter(id => id !== action.payload.userId);
                 }
-            });
-            state.posts = posts;
+                state.posts = posts;
+            }
         }
     },
     extraReducers: (builder) => {
