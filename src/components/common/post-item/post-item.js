@@ -193,7 +193,7 @@ const PostItem = (props) => {
 
     return (
         <>
-            <Card sx={{width: '400px', boxShadow: 3}}>
+            <Card sx={{width: '400px', boxShadow: 3, borderRadius: 5}}>
                 <CardHeader
                     avatar={
                         <Avatar 

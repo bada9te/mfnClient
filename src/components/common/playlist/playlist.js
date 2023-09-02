@@ -49,7 +49,7 @@ const Playlist = (props) => {
     }
 
     return (
-        <Card>
+        <Card sx={{borderRadius: 5}}>
             <CardHeader
                 avatar={
                     <Avatar src={playlist.ownerAvatar}/>
