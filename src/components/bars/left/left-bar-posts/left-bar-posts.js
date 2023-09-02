@@ -24,6 +24,7 @@ const LeftBarPosts = (props) => {
             anchor="left"
             open={showLB}
             onClose={closeLB}
+            keepMounted
         >
             <Box sx={{
                 pt: '70px',

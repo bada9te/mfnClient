@@ -1,4 +1,5 @@
-import { Card, CardActions, CardMedia, CardHeader, Avatar, Skeleton, Stack, Typography } from '@mui/material';
+import { Person2 } from '@mui/icons-material';
+import { Card, CardActions, CardMedia, CardHeader, Avatar, Skeleton, Button, ButtonGroup, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -41,16 +42,24 @@ const RightBarUsersItem = (props) => {
                     })()
                 }
                 
-                <CardActions>
-                    <Stack direction="column" spacing={0.75} mx={1} my={0.5}>
-                        <Typography
-                            fontSize={16} sx={{ cursor: 'pointer' }}
-                            component="div" fontWeight="bold" 
-                            color="primary" onClick={() => navigate(`/profile/${id}`)}
-                        >
-                            Open profile
-                        </Typography>
-                    </Stack>
+                <CardActions sx={{m: 0, p: 0}}>
+                    <Box sx={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
+                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
+                            <Button
+                                startIcon={<Person2/>}
+                                sx={{ 
+                                    borderTopLeftRadius: 50,
+                                    borderBottomLeftRadius: 50,
+                                    borderTopRightRadius: 0,
+                                    borderBottomRightRadius: 0
+                                }} 
+                                variant="contained" size="small"
+                                onClick={() => navigate(`/profile/${id}`)}
+                            >
+                                Open profile 
+                            </Button>
+                        </ButtonGroup>
+                    </Box>
                 </CardActions>
             </Card>
         </>

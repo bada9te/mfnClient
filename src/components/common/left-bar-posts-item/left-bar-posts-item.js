@@ -1,4 +1,5 @@
-import { Card, Avatar, CardMedia, CardActions, CardHeader, Stack, Typography, Skeleton } from '@mui/material';
+import { Person2, Visibility } from '@mui/icons-material';
+import { Card, Avatar, CardMedia, CardActions, CardHeader, Skeleton, ButtonGroup, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -39,23 +40,28 @@ const LeftBarPostsItem = (props) => {
                 })()
             }
             
-            <CardActions>
-                <Stack direction="column" spacing={0.75} sx={{display: 'flex', my: 0.5, mx: 1, flexWrap: 'wrap'}}>
-                    <Typography
-                        fontSize={16} sx={{ cursor: 'pointer' }}
-                        component="div" fontWeight="bold" 
-                        color="primary" onClick={() => navigate(`/track/${id}`, {state: {trackId: id, ownerId: user[0]}})}
+            <CardActions sx={{m: 0, p: 0}}>
+                <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
+                    <Button 
+                        startIcon={<Visibility/>}
+                        sx={{ borderRadius: 0 }}
+                        variant="contained" size="small" 
+                        onClick={() => navigate(`/track/${id}`, {state: {trackId: id, ownerId: user[0]}})}
                     >
                         See track
-                    </Typography>
-                    <Typography
-                        fontSize={16} sx={{ cursor: 'pointer' }}
-                        component="div" fontWeight="bold" 
-                        color="primary" onClick={() => navigate(`/profile/${user[0]}`)}
+                    </Button>
+
+                    <Button
+                        startIcon={<Person2/>}
+                        sx={{ 
+                            borderRadius: 50
+                        }} 
+                        variant="contained" size="small"
+                        onClick={() => navigate(`/profile/${user[0]}`)}
                     >
-                        Open profile
-                    </Typography>
-                </Stack>
+                        Open profile 
+                    </Button>
+                </ButtonGroup>
             </CardActions>
         </Card>
     );

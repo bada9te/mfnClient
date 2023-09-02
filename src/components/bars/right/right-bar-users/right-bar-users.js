@@ -24,6 +24,7 @@ const RightBarUsers = (props) => {
             anchor="right"
             open={showRB}
             onClose={closeRB}
+            keepMounted
         >
             <Box sx={{
                 pt: '70px',

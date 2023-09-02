@@ -35,24 +35,25 @@ const TrackContainer = (props) => {
                         return (
                             <Box sx={{ py: 3, display: 'flex', justifyContent: 'space-around', alignItems: 'center', boxShadow: 2}} flexWrap="wrap">
                                 <PostItem 
+                                    base={{
+                                        ...postData, 
+                                        ownerAvatar: `${locations?.images}/${postData.owner.avatar}`,
+                                        createdAt: getTimeSince(new Date(postData.createdAt)) + ' ago',
+                                        img: `${locations?.images}/${postData.image}`,
+                                        audio: `${locations?.audios}/${postData.audio}`,
+                                    }}
+                                    addons={{
+                                        commentsAllowed: postData.commentsAllowed,
+                                        downloadsAllowed: postData.downloadsAllowed,
+                                        status: null,
+                                        profileLinkAccessable: true,
+                                    }}
                                     id={postData._id}
                                     user={[
                                         postData.owner._id, 
                                         postData.owner.nick, 
                                         `${locations?.images}/${postData.owner.avatar}`,
                                     ]}
-                                    createdAt={getTimeSince(new Date(postData.createdAt)) + ' ago'}
-                                    title={postData.title} 
-                                    description={postData.description}
-                                    img={`${locations?.images}/${postData.image}`}
-                                    audio={`${locations?.audios}/${postData.audio}`}
-                                    likedBy={postData.likedBy}
-                                    savedBy={postData.savedBy}
-                                    comments={postData.comments}
-                                    commentsAllowed={postData.commentsAllowed}
-                                    downloadsAllowed={postData.downloadsAllowed}
-                                    status={null}
-                                    profileLinkAccessable={true}
                                 />
                                 <ProfileCard id={postData.owner._id}/>
                             </Box>
