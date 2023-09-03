@@ -19,7 +19,9 @@ const BottomBar = (props) => {
 
     const handleShowRB = () => dispatch(setShowRB(true));
     const handleShowLB = () => dispatch(setShowLB(true));
-    const handleShowAudioPlayer = () => dispatch(setAudioPlayerIsShowing(true));
+    const handleShowAudioPlayer = () => {
+        dispatch(setAudioPlayerIsShowing(true));
+    }
 
     const handleChange = (event, newValue) => {
         dispatch(setValue(newValue));

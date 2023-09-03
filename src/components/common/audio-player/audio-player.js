@@ -149,6 +149,11 @@ const CustomAudioPlayer = (props) => {
                 ModalProps={{
                     keepMounted: true,
                 }}
+                sx={{
+                    ".MuiDrawer-paper": {
+                        borderRadius: '20px 20px 0 0',
+                    },
+                }}
             >
                 { isLoading && <SpinnerLinear/> }
                 <Stack direction="row" flexWrap="wrap" sx={{display: 'flex', justifyContent: 'space-around', m: 0, p: 0}}>

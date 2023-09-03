@@ -22,6 +22,10 @@ import PostSelectModal from '../../../modals/post-select-modal/post-select-modal
 
 function HideOnScroll(props) {
     const { children, window } = props;
+
+    const leftBarIsShowing = useSelector(state => state.bottomBar.showLB);
+    const rightBarIsShwoing = useSelector(state => state.bottomBar.showRB);
+    const audioPlayerIsShowing = useSelector(state => state.audioPlayer.isShowing);
     // Note that you normally won't need to set the window ref as useScrollTrigger
     // will default to window.
     // This is only being set here because the demo is in an iframe.
@@ -30,7 +34,7 @@ function HideOnScroll(props) {
     });
   
     return (
-      <Slide appear={false} direction="down" in={!trigger}>
+      <Slide appear={false} direction="down" in={!trigger || leftBarIsShowing || rightBarIsShwoing || audioPlayerIsShowing}>
         {children}
       </Slide>
     );
