@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import getTimeSince from "../../common-functions/getTimeSince";
 import NotificationItem from "../common/notification-item/notification-item";
-import { SpinnerCircular } from "../common/spinner/Spinner";
+import { SpinnerLinear } from "../common/spinner/Spinner";
 
 const EnumNotifications = props => {
     const notifications = useSelector(state => state.notificationsContainer.notifications);
@@ -16,9 +16,7 @@ const EnumNotifications = props => {
                 (() => {
                     if (isLoading) {
                         return (
-                            <Box sx={{minHeight: '70vh', display: 'flex', alignItems: 'center'}}>
-                                <SpinnerCircular/>
-                            </Box>
+                            <SpinnerLinear/>
                         );
                     } else if (notifications?.length === 0) {
                         return (

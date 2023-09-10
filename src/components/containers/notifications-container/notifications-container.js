@@ -37,6 +37,7 @@ const NotificationsContainer = props => {
     const currentUserId = useSelector(state => state.base.user._id);
     const page = useSelector(state => state.notificationsContainer.page);
     const notifications = useSelector(state => state.notificationsContainer.notifications);
+    const isLoading = useSelector(state => state.notificationsContainer.isLoading);
     const dispatch = useDispatch();
 
 
@@ -51,25 +52,37 @@ const NotificationsContainer = props => {
 
     const handleDeleteAllClick = () => {
         if (notifications && notifications.length > 0) {
-            dispatch(deleteManyNotifications(notifications.map(i => i._id)))
-                .then(unwrapResult)
-                .then(result => {
-                    if (result.data.done) {
-                        Alert.alertSuccess("Notifications removed");
-                    }
+            Alert.alertPromise('Pending...', 'Notifications removed', 'Error occured', () => {
+                return new Promise((resolve, reject) => {
+                    dispatch(deleteManyNotifications(notifications.map(i => i._id)))
+                        .then(unwrapResult)
+                        .then(result => {
+                            if (result.data.done) {
+                                resolve();
+                            } else {
+                                reject();
+                            }
+                        });
                 });
+            });
         }
     }
 
     const handleReadAllClick = () => {
         if (notifications && notifications.length > 0) {
-            dispatch(markManyNotificationsAsRead(notifications.map(i => i._id)))
-                .then(unwrapResult)
-                .then(result => {
-                    if (result.data.done) {
-                        Alert.alertSuccess("Notifications marked as read");
-                    }
+            Alert.alertPromise('Pending...', 'Notifications marked as read', 'Error occured', () => {
+                return new Promise((resolve, reject) => {
+                    dispatch(markManyNotificationsAsRead(notifications.map(i => i._id)))
+                        .then(unwrapResult)
+                        .then(result => {
+                            if (result.data.done) {
+                                resolve();
+                            } else {
+                                reject();
+                            }
+                        });
                 });
+            });
         }
     }
 
@@ -83,7 +96,7 @@ const NotificationsContainer = props => {
 
     return (
         <Box>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider', my: 3 }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 3 }}>
                 <Tabs value={status} onChange={handleTabSwitch}>
                     <Tab icon={<MarkAsUnread/>} label="Unread" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
                     <Tab icon={<Checklist/>} label="Read" id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
@@ -91,12 +104,12 @@ const NotificationsContainer = props => {
             </Box>
 
             <TabPanel value={status} index={0}>
-                <Button fullWidth onClick={handleReadAllClick}>Mark all notifications as read</Button>
+                { !isLoading && <Button fullWidth onClick={handleReadAllClick}>Mark all notifications as read</Button> }
                 <EnumNotifications/>
             </TabPanel>
         
             <TabPanel value={status} index={1}>
-                <Button fullWidth onClick={handleDeleteAllClick}>Delete all read notifications</Button>
+                { !isLoading && <Button fullWidth onClick={handleDeleteAllClick}>Delete all read notifications</Button> }
                 <EnumNotifications/>
             </TabPanel>
         </Box>
