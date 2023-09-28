@@ -36,6 +36,7 @@ const PostsContainer = (props) => {
     }, [dispatch]);
 
 
+
     useEffect(() => {
         if (savedOnly) {
             dispatch(fetchPosts({payload: currentUser?._id, activePage, type: "savedOnly"}))

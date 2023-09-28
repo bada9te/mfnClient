@@ -13,7 +13,7 @@ const ProfileCardEdit = (props) => {
         <>
             <Box sx={{
                 boxShadow: 2,  
-                backgroundImage: `url(${locations?.images}/${currentUser?.background})`, 
+                backgroundImage: currentUser?.background ? `url(${locations?.images}/${currentUser?.background})` : null, 
                 backgroundRepeat: 'no-repeat', 
                 backgroundSize: 'cover', 
                 objectFit: 'contain', 
@@ -45,7 +45,7 @@ const ProfileCardEdit = (props) => {
                     >
                         <Avatar
                             alt={currentUser?.nick} 
-                            sx={{boxShadow: 3, fontSize: 100}} 
+                            sx={{boxShadow: 3, fontSize: 100, boxShadow: 5}} 
                             src={currentUser?.avatar !== "" ? `${locations?.images}/${currentUser?.avatar}` : "NULL"}
                             style={{objectFit: 'contain', width: '35vw', height: '35vw', maxHeight: '160px', maxWidth: '160px'}}
                             >

@@ -42,7 +42,7 @@ const RightBarUsers = (props) => {
                     <TextField
                         margin="normal"
                         fullWidth
-                        id="nickname"
+                        id="user-nickname"
                         label="Nickname"
                         name="nickname"
                         type="text"

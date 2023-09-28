@@ -97,7 +97,7 @@ const BattlesContainer = props => {
                     {
                         currentUser && currentUser._id !== ""
                         ?
-                        <Card sx={{my: 3, boxShadow: 0, mx: {sx: 0, md: 2}}}>
+                        <Card sx={{my: 3, boxShadow: 3, borderRadius: 5, mx: {sx: 0, md: 2}}}>
                             <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                                 Create battle
                             </Typography>

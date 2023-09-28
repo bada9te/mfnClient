@@ -1,20 +1,23 @@
-import { useForm } from "react-hook-form";
+import { useForm }        from "react-hook-form";
 import { httpUpdateUser } from "../../../requests/users";
-import * as Alert from "../../alerts/alerts";
+import * as Alert         from "../../alerts/alerts";
 import { Box, Card, CardContent, Typography, Button, TextField, Avatar } from "@mui/material";
-import EmailImage from "../../../images/email.png"
+import EmailImage    from "../../../images/email.png"
 import PasswordImage from "../../../images/password.png"
-import TextImage from "../../../images/text.png"
+import TextImage     from "../../../images/text.png"
+import ClearImage     from "../../../images/logo_clear.png"
 import { useDispatch, useSelector } from "react-redux";
 import { updatePartOfUser } from "../../baseSlice";
 import { prepareToRestore } from "../account-restore-request/accountRestoreRequestFormSlice";
-import { unwrapResult } from "@reduxjs/toolkit";
+import { unwrapResult }     from "@reduxjs/toolkit";
+import { Delete } from "@mui/icons-material";
 
 
 const FormProfileEdit = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { title, current } = props;
     const currentUser = useSelector(state => state?.base?.user);
+    const theme = useSelector(state => state.base.theme);
     const dispatch = useDispatch();
 
     // form submit
@@ -23,56 +26,73 @@ const FormProfileEdit = (props) => {
         const keys = Object.keys(data);
         switch (keys.at(keys.length - 1)) {
             case "NewNickname":
-                result = await httpUpdateUser(currentUser?._id, data.NewNickname, "nick");
-                dispatchUser("nick", data.NewNickname);
-                break;
-            case "NewDescription":
-                result = await httpUpdateUser(currentUser?._id, data.NewDescription, "description");
-                dispatchUser("description", data.NewDescription);
-                break;
-            case "OldPassword":
-                dispatch(prepareToRestore({email: currentUser.email, type: "password"}))
-                    .then(unwrapResult)
-                    .then(result => {
-                        if(result.data.done) {
-                            const user = result.data.user;
-                            if (user) {
-                                Alert.alertSuccess('Check your email for next steps');
-                            } else {
-                                Alert.alertError('Account is not found');
-                            }
+                Alert.alertPromise("Updating nickname...", "Updated", "Can't update nickname", () => {
+                    return new Promise(async(resolve, reject) => {
+                        result = await httpUpdateUser(currentUser?._id, data.NewNickname, "nick");
+                        if (result) {
+                            dispatchUser("nick", data.NewNickname);
+                            resolve();
+                        } else {
+                            reject();
                         }
                     });
+                }, { theme });
+                break;
+            case "NewDescription":
+                Alert.alertPromise("Updating description...", "Updated", "Can't update description", () => {
+                    return new Promise(async(resolve, reject) => {
+                        result = await httpUpdateUser(currentUser?._id, data.NewDescription, "description");
+                        if (result) {
+                            dispatchUser("description", data.NewDescription);
+                            resolve();
+                        } else {
+                            reject();
+                        }
+                    });
+                }, { theme })
+                break;
+            case "OldPassword":
+                Alert.alertPromise("Processing...", "Check your email for next steps", "Unexpected error", () => {
+                    return new Promise((resolve, reject) => {
+                        dispatch(prepareToRestore({email: currentUser.email, type: "password"}))
+                            .then(unwrapResult)
+                            .then(result => {
+                                if(result.data.done) {
+                                    const user = result.data.user;
+                                    if (user) {
+                                        resolve();
+                                    } else {
+                                        reject();
+                                    }
+                                }
+                            });
+                    });
+                }, { theme });
                 break;
             case "OldEmail":
                 if (data.OldEmail !== currentUser.email) {
-                    Alert.alertWarning('Emails did not match');
+                    Alert.alertWarning('Emails did not match', { theme });
                 } else {
-                    dispatch(prepareToRestore({email: data.OldEmail, type: "email"}))
-                        .then(unwrapResult)
-                        .then(result => {
-                            if(result.data.done) {
-                                const user = result.data.user;
-                                if (user) {
-                                    Alert.alertSuccess('Check your email for next steps');
-                                } else {
-                                    Alert.alertError('Account is not found');
-                                }
-                            }
+                    Alert.alertPromise("Processing...", "Check your email for next steps", "Incorrect email", () => {
+                        return new Promise((resolve, reject) => {
+                            dispatch(prepareToRestore({email: data.OldEmail, type: "email"}))
+                                .then(unwrapResult)
+                                .then(result => {
+                                    if(result.data.done) {
+                                        const user = result.data.user;
+                                        if (user) {
+                                            resolve();
+                                        } else {
+                                            reject();
+                                        }
+                                    }
+                                });
                         });
+                    }, { theme });
                 }
-                //dispatchUser("email", data.NewEmail);
                 break;
             default:
                 break;
-        }
-
-        if (result) {
-            if (result.data.done) {
-                Alert.alertSuccess("Updated");
-            } else {
-                Alert.alertSuccess("Can't update the profile");
-            }
         }
     }
 
@@ -85,10 +105,11 @@ const FormProfileEdit = (props) => {
         <>
             <Card sx={{ width: '20rem', height: 'fit-content', boxShadow: 3 }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                    { title === "Password"    ? <Avatar src={PasswordImage} alt="password" sx={{ m: 1, bgcolor: 'secondary.main' }}/>  : null }
-                    { title === "Nickname"    ? <Avatar src={TextImage} alt="nickname" sx={{ m: 1, bgcolor: 'secondary.main' }}/> : null }
-                    { title === "Description" ? <Avatar src={TextImage} alt="description" sx={{ m: 1, bgcolor: 'secondary.main' }}/> : null }
-                    { title === "Email"       ? <Avatar src={EmailImage} alt="email" sx={{ m: 1, bgcolor: 'secondary.main' }}/> : null }
+                    { title === "Password"    ? <Avatar src={PasswordImage} alt="password" sx={{ m: 1, boxShadow: 5 }}/>  : null }
+                    { title === "Nickname"    ? <Avatar src={TextImage} alt="nickname" sx={{ m: 1, boxShadow: 5 }}/> : null }
+                    { title === "Description" ? <Avatar src={TextImage} alt="description" sx={{ m: 1, boxShadow: 5 }}/> : null }
+                    { title === "Email"       ? <Avatar src={EmailImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/> : null }
+                    { title === "Danger Zone" ? <Avatar src={ClearImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/> : null }
                 </Box>
                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 2, mb: 0}}>
                     { title }
@@ -99,15 +120,20 @@ const FormProfileEdit = (props) => {
                         { title === "Nickname"    ? <Nickname    register={register} errors={errors}/> : null }
                         { title === "Description" ? <Description register={register} errors={errors} current={current}/> : null }
                         { title === "Email"       ? <Email       register={register} errors={errors} current={current}/> : null }
+                        { title === "Danger Zone" ? <DangerZone  register={register} error={errors}/> : null }
 
-                        <Button
+                        {
+                            title !== "Danger Zone" 
+                            &&
+                            <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 1 }}
                             >
                                 Change { title.toLowerCase() }
-                        </Button>
+                            </Button>
+                        }
                     </Box>
                 </CardContent>
             </Card>
@@ -211,6 +237,22 @@ const Email = (props) => {
                 })}
             />
         </>
+    );
+}
+
+const DangerZone = (props) => {
+    const {handleAccountDelete} = props;
+
+    return (
+        <Button 
+            color="error" 
+            variant="contained" 
+            startIcon={<Delete/>} 
+            onClick={handleAccountDelete}
+            fullWidth
+        >
+            Delete account
+        </Button>
     );
 }
 

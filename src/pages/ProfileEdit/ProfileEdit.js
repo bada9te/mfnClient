@@ -2,7 +2,6 @@ import ProfileCardEdit from "../../components/common/profile/profile-card-edit/p
 import FormProfileEdit from "../../components/forms/profile-edit/profile-edit";
 import { Box, Button, Card, Stack, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { Delete } from "@mui/icons-material";
 import { setIsShowing as setConfirmModalIsShowing } from "../../components/modals/confirm-modal/confirmModalSlice";
 import { setActionType, setText, setTitle } from "../../components/containers/confirm-container/confirmContainerSlice";
 
@@ -35,22 +34,10 @@ const ProfileEdit = (props) => {
                     <FormProfileEdit title="Email" current="Current email" />
                 </Box>
             </Stack>
-
-            <Card sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                m: 3,
-                p: 3,
-                boxShadow: 3
-            }}>
-                <Typography sx={{
-                    fontSize: 34,
-                    mb: 2,
-                    textAlign: 'center'
-                }}>Danger zone</Typography>
-                <Button color="error" variant="contained" startIcon={<Delete/>} onClick={handleAccountDelete}>Delete account</Button>
-            </Card>
+            <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
+                <FormProfileEdit title="Danger Zone" />
+            </Box>
+            
         </>
     );
 }

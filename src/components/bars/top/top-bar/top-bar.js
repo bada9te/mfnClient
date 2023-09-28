@@ -210,12 +210,14 @@ const Topbar = (props) => {
                                                 variant="dot"
                                                 >
                                                 <Avatar 
+                                                    sx={{ boxShadow: 5 }}
                                                     alt={user?.nick} 
                                                     src={user?.avatar !== "" ? `${locations?.images}/${user?.avatar}` : "NULL"} 
                                                 />
                                             </StyledBadge>
                                             :
                                             <Avatar 
+                                                sx={{ boxShadow: 5 }}
                                                 alt={user?.nick} 
                                                 src={user?.avatar !== "" ? `${locations?.images}/${user?.avatar}` : "NULL"} 
                                             />
