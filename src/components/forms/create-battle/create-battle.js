@@ -45,7 +45,7 @@ const CreateBattleForm = props => {
     }
 
     return (
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{p: 0, m: 0}}>
             <Box sx={{
                 
             }}>
@@ -67,7 +67,7 @@ const CreateBattleForm = props => {
                 />
             </Box>
             
-            <Box sx={{my: 3}}>
+            
                 <BattleItem
                     title={title}
                     post1={
@@ -78,10 +78,10 @@ const CreateBattleForm = props => {
                                 <PostItem base={post1.base} addons={{...post1.addons, status: null}} />
                                 :
                                 <>
-                                    <Card sx={{ width: '25em',  minHeight: '240px', maxHeight: '285px', my: 3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Card sx={{ boxShadow: 3, borderRadius: 5, width: '25em',  minHeight: '240px', maxHeight: '285px', my: 3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         <Button
                                             variant="contained"
-                                            sx={{ mt: 1, mb: 2 }}
+                                            sx={{ mt: 1, mb: 2, boxShadow: 10 }}
                                             onClick={() => handleOpenPostSelectModal(true)}
                                         >
                                             Select my track
@@ -100,10 +100,10 @@ const CreateBattleForm = props => {
                                 <PostItem base={post2.base} addons={{...post2.addons, status: null}}/>
                                 :
                                 <>
-                                    <Card sx={{ width: '25em',  minHeight: '240px', maxHeight: '285px', my: 3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Card sx={{ boxShadow: 5, borderRadius: 5, width: '25em',  minHeight: '240px', maxHeight: '285px', my: 3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         <Button
                                             variant="contained"
-                                            sx={{ mt: 1, mb: 2 }}
+                                            sx={{ mt: 1, mb: 2, boxShadow: 10 }}
                                             onClick={() => handleOpenPostSelectModal(false)}
                                         >
                                             Select opponent track
@@ -117,7 +117,7 @@ const CreateBattleForm = props => {
                     createdAt="XX:XX:XX"
                     willFinishAt="XX:XX:XX"
                 />
-            </Box>
+            
             
             <Button
                 type="submit"

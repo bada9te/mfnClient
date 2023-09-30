@@ -61,7 +61,7 @@ const ProfileCard = (props) => {
                 </Box>     
                 :
                 <Box sx={{
-                    boxShadow: 3,  
+                    boxShadow: 1,  
                     backgroundImage: `url(${locations?.images}/${profileOwner?.background})`, 
                     backgroundRepeat: 'no-repeat', 
                     backgroundSize: 'cover', 
@@ -72,7 +72,7 @@ const ProfileCard = (props) => {
                         display: 'flex', 
                         justifyContent: 'center', 
                         alignItems: 'center',
-                        boxShadow: 3,
+                        boxShadow: 1,
                     }}>
                         <Stack 
                             spacing={3} 

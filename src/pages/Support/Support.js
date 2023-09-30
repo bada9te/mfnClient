@@ -21,7 +21,7 @@ const Support = (props) => {
 
                 <Box sx={{pt: 5, m: 1, w: '100%', display: 'flex', justifyContent: 'center'}}>
                     
-                        <Card sx={{boxShadow: 5, maxWidth: 700, borderRadius: 5}}>
+                        <Card sx={{boxShadow: 3, maxWidth: 700, borderRadius: 5}}>
                             <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                                 <Avatar src={supportContactImage} sx={{ m: 1, boxShadow: 5 }}/>
                             </Box>

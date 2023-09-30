@@ -54,7 +54,7 @@ const AccountRestore = (props)=> {
                             return (
                                 <>
                                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
+                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 3 }}/>
                                     </Box>
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Your account is ready to be restored

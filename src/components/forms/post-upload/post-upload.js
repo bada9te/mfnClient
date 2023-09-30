@@ -105,7 +105,7 @@ const PostUploadForm = (props)=> {
             }
             <Box sx={{ width: '100%' }}>
                 <Stack spacing={{ xs: 1, sm: 2 }} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}} direction="row" useFlexGap flexWrap="wrap">
-                    <Card sx={{width: '40rem', height: 'fit-content', boxShadow: 5, borderRadius: 5}}>
+                    <Card sx={{width: '40rem', height: 'fit-content', boxShadow: 3, borderRadius: 5}}>
                         <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                             Your new post
                         </Typography>

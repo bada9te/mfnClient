@@ -42,7 +42,7 @@ const BattleItem = (props) => {
 
     return (
         <>
-            <Card sx={{ boxShadow: 3, my: 3, p: 0, mx: {xs: 0, md: 2 }, borderRadius: 5}}>
+            <Card sx={{ boxShadow: 3, my: 3, p: 0, mx: {xs: 0, md: 0, sm: 2 }, borderRadius: 5 }}>
                 <Box sx={{ 
                         display: 'flex', 
                         justifyContent: 'center', 
@@ -69,7 +69,7 @@ const BattleItem = (props) => {
                     <Box sx={{ width: '100%' }}>
                         <Stack spacing={{ xs: 1, sm: 2 }} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', zIndex: 9999}} direction="row" useFlexGap flexWrap="wrap">
                             {post1}
-                            <img className="p-3" style={{borderRadius: '50%'}} src={battleImg} width="200px" height="200px" alt="battle"/>
+                            <img className="p-3" style={{borderRadius: '50%' }} src={battleImg} width="200px" height="200px" alt="battle"/>
                             {post2}
                         </Stack>
                     </Box>

@@ -12,7 +12,7 @@ const ProfileCardEdit = (props) => {
     return (
         <>
             <Box sx={{
-                boxShadow: 2,  
+                boxShadow: 1,  
                 backgroundImage: currentUser?.background ? `url(${locations?.images}/${currentUser?.background})` : null, 
                 backgroundRepeat: 'no-repeat', 
                 backgroundSize: 'cover', 
@@ -23,7 +23,8 @@ const ProfileCardEdit = (props) => {
                 <Box sx={{
                     display: 'flex', 
                     justifyContent: 'center', 
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    boxShadow: 1
                     }}
                 >
                     <Stack 
