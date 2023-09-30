@@ -30,7 +30,7 @@ function App() {
 
   
   useEffect(() => {
-    if (store.getState().base.user._id === "") {
+    if (store.getState().base.user?._id === "") {
       let currentUserId = localStorage.getItem('mfnCurrentUser') ? JSON.parse(localStorage.getItem('mfnCurrentUser')).id : null;
       
       if (currentUserId) {

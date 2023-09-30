@@ -74,7 +74,7 @@ const PostItem = (props) => {
     
     // handle audio download
     const audioDownload = () => {
-        if (base.status !== "upload") {
+        if (addons.status !== "upload") {
             saveAs(base.audio, `${base.owner.nick} - ${base.title}`);
         }
     }
@@ -104,7 +104,7 @@ const PostItem = (props) => {
 
     // delete post
     const deleteTrack = () => {
-        if (base.status !== "upload") {
+        if (addons.status !== "upload") {
             dispatch(setConfirmModalIsShowing(true));
             dispatch(setActionType("delete-post"));
             dispatch(setItemId(base._id));
@@ -115,7 +115,7 @@ const PostItem = (props) => {
 
     // comments modal
     const switchShowCommentsModal = () => {
-        if (base.status !== "upload") {
+        if (addons.status !== "upload") {
             dispatch(setCommentsModalIsShowing(true));
             dispatch(fetchComments({
                 postId: base._id,

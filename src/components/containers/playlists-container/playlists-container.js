@@ -163,7 +163,7 @@ const PlaylistsContainer = (props) => {
                 {
                     currentUser && currentUser._id !== ""
                     ?
-                    <Card sx={{my: 3, boxShadow: 5, borderRadius: 5, mx: {sx: 0, md: 2}}}>
+                    <Card sx={{my: 3, boxShadow: 5, borderRadius: 5, mx: {sx: 0, md: 2}, m: 1}}>
                         <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                             Create playlist
                         </Typography>
