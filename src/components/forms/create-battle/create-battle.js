@@ -123,7 +123,7 @@ const CreateBattleForm = props => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 1, mb: 2 }}
+                sx={{ mt: 1, mb: 2, boxShadow: 10 }}
             >
                 Create battle
             </Button>

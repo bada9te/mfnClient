@@ -1,13 +1,15 @@
 import passwordImage from '../../images/password.png'
 import './AccountRestore.scss'
 import AccountRestoreForm from '../../components/forms/account-restore/account-restore'
-import { Avatar, Box, Card, CardActions, CardContent, Typography, Stack } from '@mui/material';
+import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { cancelAccountRestoring, checkUserVerifyTokenById } from '../../components/forms/account-restore/accountRestoreFormSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import * as Alert from "../../components/alerts/alerts";
+import LogRegVerContainer from '../../components/containers/log-reg-ver-conatiner/log-reg-ver-container';
+import newPasswordBG from '../../images/newPasswordFormBG.png';
 
 
 const AccountRestore = (props)=> {
@@ -44,17 +46,17 @@ const AccountRestore = (props)=> {
     }, [userId, verifyToken, actionId, dispatch, type])
 
     return(
-        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
-            <Card sx={{width: '20rem', height: 'fit-content', boxShadow: 3}}>
+        <LogRegVerContainer bg={newPasswordBG}>
+            <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 3}}>
                 {
                     (() => {
                         if (actionIsValid) {
                             return (
                                 <>
                                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                                        <Avatar src={passwordImage} sx={{ m: 1, bgcolor: 'secondary.main' }}/>
+                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
                                     </Box>
-                                    <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Your account is ready to be restored
                                     </Typography>
                                     <CardContent>
@@ -90,9 +92,9 @@ const AccountRestore = (props)=> {
                             );
                         }
                     })()
-                }
-            </Card>
-        </Box>
+                }  
+            </Box>
+        </LogRegVerContainer>
     );
 }
 

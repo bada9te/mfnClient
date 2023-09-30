@@ -1,10 +1,12 @@
-import { Avatar, Box, Card, CardContent, Typography } from "@mui/material";
+import { Avatar, Box, CardContent, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import passwordImage from "../../images/password.png"
 import AccountVerifyForm from "../../components/forms/account-verify/account-verify";
 import { checkUserVerifyById } from "../../components/forms/account-verify/accountVerifyFormSlice";
+import LogRegVerContainer from "../../components/containers/log-reg-ver-conatiner/log-reg-ver-container";
+import VerifyAccBG from '../../images/verifyFormBG.png';
 
 
 const AccountVerify = props => {
@@ -17,17 +19,17 @@ const AccountVerify = props => {
     }, [userId, dispatch]);
 
     return(
-        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
-            <Card sx={{width: '20rem', height: 'fit-content', boxShadow: 3}}>
+        <LogRegVerContainer bg={VerifyAccBG}>
+            <Box sx={{width: '30rem', height: 'fit-content'}}>
                 {
                     (() => {
                         if (actionIsValid) {
                             return (
                                 <>
                                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                                        <Avatar src={passwordImage} sx={{ m: 1, bgcolor: 'secondary.main' }}/>
+                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
                                     </Box>
-                                    <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Verify your account 
                                     </Typography>
                                     <CardContent>
@@ -52,8 +54,8 @@ const AccountVerify = props => {
                         }
                     })()
                 }
-            </Card>
-        </Box>
+            </Box>
+        </LogRegVerContainer>
     );
 }
 

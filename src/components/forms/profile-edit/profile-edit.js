@@ -103,7 +103,7 @@ const FormProfileEdit = (props) => {
 
     return (
         <>
-            <Card sx={{ width: '20rem', height: 'fit-content', boxShadow: 3 }}>
+            <Card sx={{ width: '20rem', height: 'fit-content', boxShadow: 5, borderRadius: 5 }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     { title === "Password"    ? <Avatar src={PasswordImage} alt="password" sx={{ m: 1, boxShadow: 5 }}/>  : null }
                     { title === "Nickname"    ? <Avatar src={TextImage} alt="nickname" sx={{ m: 1, boxShadow: 5 }}/> : null }
@@ -129,7 +129,7 @@ const FormProfileEdit = (props) => {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 1 }}
+                                sx={{ mt: 3, mb: 1, boxShadow: 10 }}
                             >
                                 Change { title.toLowerCase() }
                             </Button>

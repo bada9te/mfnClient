@@ -20,10 +20,10 @@ const Support = (props) => {
                 </Box>
 
                 <Box sx={{pt: 5, m: 1, w: '100%', display: 'flex', justifyContent: 'center'}}>
-                    <Box sx={{boxShadow: 3, maxWidth: 700}}>
-                        <Card>
+                    
+                        <Card sx={{boxShadow: 5, maxWidth: 700, borderRadius: 5}}>
                             <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                                <Avatar src={supportContactImage} sx={{ m: 1, bgcolor: 'secondary.main' }}/>
+                                <Avatar src={supportContactImage} sx={{ m: 1, boxShadow: 5 }}/>
                             </Box>
                             <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                                 Contact us
@@ -46,7 +46,7 @@ const Support = (props) => {
                                 </Stack>
                             </CardActions>
                         </Card>
-                    </Box>
+                    
                 </Box>
             </Box>
         </>

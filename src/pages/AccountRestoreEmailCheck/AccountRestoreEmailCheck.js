@@ -1,19 +1,21 @@
 import emailImage from '../../images/email.png'
-import { Avatar, Box, Card, CardActions, CardContent, Typography, Stack } from '@mui/material';
+import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AccountRestoreRequestForm from '../../components/forms/account-restore-request/account-restore-request';
+import LogRegVerContainer from '../../components/containers/log-reg-ver-conatiner/log-reg-ver-container';
+import VerifyEmailBG from '../../images/emailCheckFormBG.png';
 
 
 const AccountRestoreEmailCheck = (props)=> {
     const navigate = useNavigate();
 
     return(
-        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
-            <Card sx={{width: '20rem', height: 'fit-content', boxShadow: 3}}>
+        <LogRegVerContainer bg={VerifyEmailBG}>
+            <Box sx={{width: '30rem', height: 'fit-content'}}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                    <Avatar src={emailImage} sx={{ m: 1, bgcolor: 'secondary.main' }}/>
+                    <Avatar src={emailImage} sx={{ m: 1, boxShadow: 5 }}/>
                 </Box>
-                <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                     Account restore
                 </Typography>
                 <CardContent>
@@ -30,8 +32,9 @@ const AccountRestoreEmailCheck = (props)=> {
                         </Typography>
                     </Stack>
                 </CardActions>
-            </Card>
-        </Box>
+            </Box>
+        </LogRegVerContainer>
+        
     );
 }
 

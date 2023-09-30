@@ -134,7 +134,7 @@ const AccountRestoreForm = (props)=> {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, boxShadow: 10 }}
             >
                 Confirm
             </Button>
