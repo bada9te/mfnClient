@@ -2,11 +2,11 @@ import { Avatar, Box, CardContent, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import passwordImage from "../../images/password.png"
+import passwordImage from "../../images/icons/password.png"
 import AccountVerifyForm from "../../components/forms/account-verify/account-verify";
 import { checkUserVerifyById } from "../../components/forms/account-verify/accountVerifyFormSlice";
-import LogRegVerContainer from "../../components/containers/log-reg-ver-conatiner/log-reg-ver-container";
-import VerifyAccBG from '../../images/verifyFormBG.png';
+import LogRegVerContainer from "../../components/containers/image-left-form-conatiner/image-left-form-container";
+import VerifyAccBG from '../../images/bgs/verifyFormBG.png';
 
 
 const AccountVerify = props => {

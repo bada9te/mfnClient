@@ -1,9 +1,9 @@
-import emailImage from '../../images/email.png'
+import emailImage from '../../images/icons/email.png'
 import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AccountRestoreRequestForm from '../../components/forms/account-restore-request/account-restore-request';
-import LogRegVerContainer from '../../components/containers/log-reg-ver-conatiner/log-reg-ver-container';
-import VerifyEmailBG from '../../images/emailCheckFormBG.png';
+import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
+import VerifyEmailBG from '../../images/bgs/emailCheckFormBG.png';
 
 
 const AccountRestoreEmailCheck = (props)=> {
@@ -34,7 +34,6 @@ const AccountRestoreEmailCheck = (props)=> {
                 </CardActions>
             </Box>
         </LogRegVerContainer>
-        
     );
 }
 

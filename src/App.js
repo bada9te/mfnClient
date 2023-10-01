@@ -25,6 +25,12 @@ function App() {
   const theme = createTheme({
     palette: {
       mode: themeStyle,
+      primary : {
+        main: '#1C94A4',
+        light: '#42a5f5',
+        dark: '#257a76',
+        contrastText: '#fff',
+      },
     },
   });
 

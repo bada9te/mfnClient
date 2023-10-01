@@ -2,10 +2,10 @@ import { useForm }        from "react-hook-form";
 import { httpUpdateUser } from "../../../requests/users";
 import * as Alert         from "../../alerts/alerts";
 import { Box, Card, CardContent, Typography, Button, TextField, Avatar } from "@mui/material";
-import EmailImage    from "../../../images/email.png"
-import PasswordImage from "../../../images/password.png"
-import TextImage     from "../../../images/text.png"
-import ClearImage     from "../../../images/logo_clear.png"
+import EmailImage    from "../../../images/icons/email.png"
+import PasswordImage from "../../../images/icons/password.png"
+import TextImage     from "../../../images/icons/text.png"
+import ClearImage     from "../../../images/icons/logo_clear.png"
 import { useDispatch, useSelector } from "react-redux";
 import { updatePartOfUser } from "../../baseSlice";
 import { prepareToRestore } from "../account-restore-request/accountRestoreRequestFormSlice";

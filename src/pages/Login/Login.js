@@ -1,9 +1,9 @@
 import LoginForm from '../../components/forms/login/login';
 import { CardActions, CardContent, Typography, Box, Avatar, Stack } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import loginImage from '../../images/logo.png';
-import loginFormBG from '../../images/loginFormBG.png';
-import LogRegVerContainer from '../../components/containers/log-reg-ver-conatiner/log-reg-ver-container';
+import loginImage from '../../images/icons/logo.png';
+import loginFormBG from '../../images/bgs/loginFormBG.png';
+import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 
 
 const Login = (props) => {

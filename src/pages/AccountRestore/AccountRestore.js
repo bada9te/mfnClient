@@ -1,4 +1,4 @@
-import passwordImage from '../../images/password.png'
+import passwordImage from '../../images/icons/password.png'
 import './AccountRestore.scss'
 import AccountRestoreForm from '../../components/forms/account-restore/account-restore'
 import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
@@ -8,8 +8,8 @@ import { useEffect } from 'react';
 import { cancelAccountRestoring, checkUserVerifyTokenById } from '../../components/forms/account-restore/accountRestoreFormSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import * as Alert from "../../components/alerts/alerts";
-import LogRegVerContainer from '../../components/containers/log-reg-ver-conatiner/log-reg-ver-container';
-import newPasswordBG from '../../images/newPasswordFormBG.png';
+import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
+import newPasswordBG from '../../images/bgs/newPasswordFormBG.png';
 
 
 const AccountRestore = (props)=> {

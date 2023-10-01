@@ -1,4 +1,4 @@
-import logoImg from '../../../../images/logo.png';
+import logoImg from '../../../../images/icons/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { memo, useEffect, useState } from "react";
 

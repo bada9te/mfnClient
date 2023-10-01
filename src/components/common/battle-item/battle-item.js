@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import getTimeLeft from '../../../common-functions/getTimeLeft';
 import { Card, CardActions, CardContent, Typography, Box, Stack } from '@mui/material';
-import battleImg from '../../../images/battle-disk.png';
+import battleImg from '../../../images/icons/battle-disk.png';
 import userSocket from '../../../socket/user/socket-user';
 import { useDispatch } from 'react-redux';
 import { removeFromInProgress, socketAddVote } from '../../containers/battles-container/battlesContainerSlice';
