@@ -6,8 +6,9 @@ import userSocket from "../../../socket/user/socket-user";
 import PaginationTree from "../../common/pagination/pagination";
 import EnumBattles from "../../enums/enum-battles";
 import CreateBattleForm from "../../forms/create-battle/create-battle";
+import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
 import { fetchBattles, makeVote, setPage } from "./battlesContainerSlice";
-
+import newBattleFormBG from "../../../images/bgs/newBattleFormBG.png"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -94,27 +95,29 @@ const BattlesContainer = props => {
                 </TabPanel>
 
                 <TabPanel value={status} index={2}>
-                    {
-                        currentUser && currentUser._id !== ""
-                        ?
-                        <Card sx={{my: 3, px: 2, boxShadow: 3, borderRadius: 5, mx: {sx: 0, md: 2}}}>
-                            <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                Create battle
-                            </Typography>
-                            <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                Create battle using form below:
-                            </Typography>
-                            <CardContent>
-                                <CreateBattleForm/>
-                            </CardContent>
-                        </Card>
-                        :
-                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
-                            <Typography>
-                                Please login to create a new one
-                            </Typography>
+                    <ImageRightFormContainer bg={newBattleFormBG}>
+                        <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
+                            {
+                                currentUser && currentUser._id !== ""
+                                ?
+                                <Box sx={{ mb: 3 }}>
+                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                                        Create battle
+                                    </Typography>
+                                    <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                                        Create battle using form below:
+                                    </Typography>
+                                    <CreateBattleForm/>
+                                </Box>
+                                :
+                                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
+                                    <Typography>
+                                        Please login to create a new one
+                                    </Typography>
+                                </Box>
+                            }
                         </Box>
-                    }
+                    </ImageRightFormContainer>
                 </TabPanel>
             </Box>
         </>

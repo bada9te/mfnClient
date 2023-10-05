@@ -1,16 +1,16 @@
 import { memo } from 'react';
-import { Card, CardHeader, CardContent, Typography, Skeleton } from "@mui/material";
+import { Card, CardHeader, CardContent, Typography, Skeleton, Button } from "@mui/material";
 
 
 
 
 
 const PostItemUnavailable = (props) => {
-    const { status } = props;
+    const { status, text, selectHandler } = props;
 
     return (
         <>
-            <Card sx={{width: '400px', boxShadow: 5, borderRadius: 5}}>
+            <Card sx={{width: {xs: '375px', md: '400px'}, boxShadow: 5, borderRadius: 5}}>
                 <CardHeader
                     avatar={
                         <Skeleton variant="circular" width={40} height={40} />
@@ -21,19 +21,37 @@ const PostItemUnavailable = (props) => {
                 
                 <Skeleton variant="rectangular" height={160} />
                 { 
-                    status !== "in-player" 
-                    &&
-                    <CardContent sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        m: 1, 
-                        p: 0, 
-                        paddingBottom: 0, 
-                        "&:last-child": { paddingBottom: 0 }
-                    }}>
-                        <Typography sx={{textAlign: 'center', width: '100%'}}>Track is unavailable</Typography> 
-                    </CardContent>
+                    (() => {
+                        if (status !== "in-player" && status !== "battle-form") {
+                            return (
+                                <CardContent sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    m: 1, 
+                                    p: 0, 
+                                    paddingBottom: 0, 
+                                    "&:last-child": { paddingBottom: 0 }
+                                }}>
+                                    <Typography sx={{textAlign: 'center', width: '100%'}}>Track is unavailable</Typography> 
+                                </CardContent>
+                            );
+                        } else if (status === "battle-form") {
+                            return (
+                                <CardContent sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    m: 1, 
+                                    p: 0, 
+                                    paddingBottom: 0, 
+                                    "&:last-child": { paddingBottom: 0 }
+                                }}>
+                                    <Button variant="contained" sx={{ boxShadow: 10 }} onClick={selectHandler}>{text}</Button>
+                                </CardContent>
+                            );
+                        }
+                    })()
                 }
             </Card>
         </>

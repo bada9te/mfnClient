@@ -44,43 +44,50 @@ const PostUpload = (props) => {
                 :
                 null
             }
-                <Box sx={{width: '40rem', height: 'fit-content', boxShadow: 0, borderRadius: 5}}>
+                <Box sx={{width: '40rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                         Your new post
                     </Typography>
                     <Box sx={{
-                        width: '100%', 
-                        display: 'flex', 
-                        justifyContent: 'center', 
-                        alignItems: 'center', 
-                        mt: 3, 
-                        p: 1,
-                        maxWidth: {xs: '375px', md: '100%'},
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%'
                     }}>
-                        <PostItem
-                            base={{
-                                owner: {
-                                    _id: currentUser?._id,
-                                    nick: currentUser?.nick,
-                                },
-                                ownerAvatar: `${locations?.images}/${currentUser?.avatar}`,
-                                createdAt: 'now',
-                                title,
-                                description,
-                                img: picture,
-                                audio,
-                                likedBy: [],
-                                savedBy: [],
-                                comments: [],
-                            }}
-                            addons={{
-                                commentsAllowed,
-                                downloadsAllowed,
-                                status: "upload",
-                                profileLinkAccessable: false,
-                            }}
-                            id={null}
-                        />
+                        <Box sx={{
+                            width: '100%', 
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            mt: 3, 
+                            p: 1,
+                            maxWidth: {xs: '375px', sm: '100%', md: '100%'},
+                        }}>
+                            <PostItem
+                                base={{
+                                    owner: {
+                                        _id: currentUser?._id,
+                                        nick: currentUser?.nick,
+                                    },
+                                    ownerAvatar: `${locations?.images}/${currentUser?.avatar}`,
+                                    createdAt: 'now',
+                                    title,
+                                    description,
+                                    img: picture,
+                                    audio,
+                                    likedBy: [],
+                                    savedBy: [],
+                                    comments: [],
+                                }}
+                                addons={{
+                                    commentsAllowed,
+                                    downloadsAllowed,
+                                    status: "upload",
+                                    profileLinkAccessable: false,
+                                }}
+                                id={null}
+                            />
+                        </Box>
                     </Box>
                     <CardContent>
                         <PostUploadForm/>

@@ -6,7 +6,7 @@ const ImageRightFormContainer = (props) => {
 
     return (
         <Grid container component="main" sx={{  height: '100vh' }}>
-            <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square sx={{boxShadow: 20, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{boxShadow: 20, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 {props.children}
             </Grid>
 
@@ -14,7 +14,7 @@ const ImageRightFormContainer = (props) => {
                 item
                 xs={false}
                 sm={4}
-                md={8}
+                md={7}
                 sx={{
                     backgroundImage: `url(${bg})`,
                     backgroundRepeat: 'no-repeat',
