@@ -15,6 +15,7 @@ import newPasswordBG from '../../images/bgs/newPasswordFormBG.png';
 const AccountRestore = (props)=> {
     const { userId, actionId, verifyToken, type } = useParams();
     const actionIsValid = useSelector(state => state.accountRestoreForm.actionIsValid);
+    const theme = useSelector(state => state.base.theme);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -28,10 +29,10 @@ const AccountRestore = (props)=> {
         .then(unwrapResult)
         .then(result => {
             if (result.data.done && result.data.action) {
-                Alert.alertSuccess('Action canceled');
+                Alert.alertSuccess('Action canceled', { theme });
                 navigate('/login');
             } else {
-                Alert.alertError('Unexpected error');
+                Alert.alertError('Unexpected error', { theme });
             }
         });
     }
@@ -47,14 +48,14 @@ const AccountRestore = (props)=> {
 
     return(
         <LogRegVerContainer bg={newPasswordBG}>
-            <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 3}}>
+            <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 0}}>
                 {
                     (() => {
                         if (actionIsValid) {
                             return (
                                 <>
                                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 3 }}/>
+                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
                                     </Box>
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Your account is ready to be restored
@@ -80,9 +81,9 @@ const AccountRestore = (props)=> {
                             return (
                                 <>
                                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                                        <Avatar src={passwordImage} sx={{ m: 1, bgcolor: 'secondary.main' }}/>
+                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
                                     </Box>
-                                    <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Validation error
                                     </Typography>
                                     <CardContent>

@@ -1,16 +1,17 @@
 import { CreateNewFolder, Explore, Topic } from "@mui/icons-material";
-import { Box, Card, CardActions, CardContent, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Box, CardActions, CardContent, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { Folder, Folder2 } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import PaginationTree from "../../common/pagination/pagination";
 import { setMaxPage } from "../../common/pagination/paginationSlice";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumPlaylists from "../../enums/enum-playlists";
 import CreatePlaylistForm from "../../forms/create-playlist/create-playlist";
+import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
 import { fetchCurrentUserPlaylists, fetchPublicAvailablePlaylists, setPage } from "./playlistsContainerSlice";
+import newPlaylistBG from "../../../images/bgs/newPlaylistFormBG.png"
 
 
 function TabPanel(props) {
@@ -98,9 +99,9 @@ const PlaylistsContainer = (props) => {
 
 
     return (
-        <Box sx={{pb: 3}}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 3 }}>
-                <Tabs value={status} onChange={handleTabSwitch}>
+        <Box sx={{pb: 0}}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
+                <Tabs value={status} onChange={handleTabSwitch} centered variant="fullWidth">
                     <Tab icon={<Explore/>} label="Explore" id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
                     <Tab icon={<Topic/>}label="My playlists" id="simple-tab-1" aria-controls="simple-tabpanel-1" />
                     <Tab icon={<CreateNewFolder/>} label="Create new" id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
@@ -160,32 +161,35 @@ const PlaylistsContainer = (props) => {
             </TabPanel>
 
             <TabPanel value={status} index={2}>
-                {
-                    currentUser && currentUser._id !== ""
-                    ?
-                    <Card sx={{my: 3, boxShadow: 3, borderRadius: 5, mx: {sx: 0, md: 2}, m: 1}}>
-                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                            Create playlist
-                        </Typography>
-                        <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                            Create playlist using form below:
-                        </Typography>
-                        <CardContent>
-                            <CreatePlaylistForm/>
-                        </CardContent>
-                        <CardActions>
-                            <Box sx={{mx: 2, mb: 2}}>
-                                <Typography>Notice, public playlists are visible to all users</Typography>
+                    <ImageRightFormContainer bg={newPlaylistBG}>
+                        {
+                            currentUser && currentUser._id !== ""
+                            ?
+                            <Box sx={{width: '35rem', height: 'fit-content', boxShadow: 0, borderRadius: 5}}>
+                                <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                                    Create playlist
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                                    Create playlist using form below:
+                                </Typography>
+                                <CardContent>
+                                    <CreatePlaylistForm/>
+                                </CardContent>
+                                <CardActions>
+                                    <Box sx={{mx: 2, mb: 2}}>
+                                        <Typography>Notice, public playlists are visible to all users</Typography>
+                                    </Box>
+                                </CardActions>
                             </Box>
-                        </CardActions>
-                    </Card>
-                    :
-                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
-                        <Typography>
-                            Please login to create a new one
-                        </Typography>
-                    </Box>
-                }
+                            :
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
+                                <Typography>
+                                    Please login to create a new one
+                                </Typography>
+                            </Box>
+                        }
+                    </ImageRightFormContainer>
+                
             </TabPanel>
         </Box>
     );

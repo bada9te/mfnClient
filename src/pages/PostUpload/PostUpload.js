@@ -1,7 +1,7 @@
 import PostUploadForm from "../../components/forms/post-upload/post-upload";
 import PostItem from "../../components/common/post-item/post-item";
 import ImageCropperModal from "../../components/modals/image-cropper-modal/image-cropper-modal";
-import { Stack, Card, Typography, CardContent, Box } from "@mui/material";
+import { Typography, CardContent, Box } from "@mui/material";
 import ImageRightFormContainer from "../../components/containers/image-right-form-container/image-right-form.container";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsShowing as setCropModalIsShowing } from "../../components/modals/image-cropper-modal/imageCropperModalSlice";
