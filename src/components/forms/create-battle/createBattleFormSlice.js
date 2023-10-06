@@ -46,11 +46,11 @@ const createBattleFormSlice = createSlice({
                 posts = JSON.parse(JSON.stringify(posts));
 
                 posts.forEach(item => {
-                    if (item._id === meta.arg.postId) {
-                        if (item.likedBy.indexOf(meta.arg.userId) === -1) {
-                            item.likedBy.push(meta.arg.userId);
+                    if (item.base._id === meta.arg.postId) {
+                        if (item.base.likedBy.indexOf(meta.arg.userId) === -1) {
+                            item.base.likedBy.push(meta.arg.userId);
                         } else {
-                            item.likedBy = item.likedBy.filter(id => id !== meta.arg.userId);
+                            item.base.likedBy = item.base.likedBy.filter(id => id !== meta.arg.userId);
                         }
                     }
                 });
@@ -69,11 +69,11 @@ const createBattleFormSlice = createSlice({
                 posts = JSON.parse(JSON.stringify(posts));
                 
                 posts.forEach(item => {
-                    if (item._id === meta.arg.postId) {
-                        if (item.savedBy.indexOf(meta.arg.userId) === -1) {
-                            item.savedBy.push(meta.arg.userId);
+                    if (item.base._id === meta.arg.postId) {
+                        if (item.base.savedBy.indexOf(meta.arg.userId) === -1) {
+                            item.base.savedBy.push(meta.arg.userId);
                         } else {
-                            item.savedBy = item.savedBy.filter(id => id !== meta.arg.userId);
+                            item.base.savedBy = item.base.savedBy.filter(id => id !== meta.arg.userId);
                         }
                     }
                 });

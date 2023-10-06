@@ -48,6 +48,7 @@ const PostItem = (props) => {
     // handle likes
     const onLikesChanged = async(e, value) => {
         changeLikes(addons, base, isLiked, currentUser, dispatch); 
+        setIsLiked(!isLiked);
     }
 
     // switch loop
@@ -127,6 +128,7 @@ const PostItem = (props) => {
 
     // add to saved or remove from saved
     const switchInSaved = async() => {
+        setIsSaved(!isSaved);
         changeSaves(base, isSaved, currentUser, theme, dispatch);
     }
         
@@ -138,6 +140,7 @@ const PostItem = (props) => {
         }
     }, [base.likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, base._id, base.savedBy]);
 
+    /*
     // socket
     useEffect(() => {
         userSocket.on(`post-${base._id}-was-liked`, (data) => {
@@ -184,6 +187,7 @@ const PostItem = (props) => {
             userSocket.off(`post-${base._id}-was-uncommented`);
         };
     }, [base._id, dispatch, currentUser?._id]);
+    */
 
     // for post upload form visualization
     useEffect(() => {}, [addons.commentsAllowed, addons.downloadsAllowed])

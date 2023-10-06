@@ -81,7 +81,9 @@ const CreateBattleForm = props => {
                     {
                         post1 != null 
                         ?
-                        <PostItem base={post1.base} addons={{...post1.addons, status: null}} />
+                        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <PostItem base={post1.base} addons={{...post1.addons, status: null}} />
+                        </Box>
                         :
                         <PostSelectHolder text="Select my track" handler={() => handleOpenPostSelectModal(true)}/>
                     }
@@ -90,7 +92,9 @@ const CreateBattleForm = props => {
                     {
                         post2 != null 
                         ?
-                        <PostItem base={post2.base} addons={{...post2.addons, status: null}}/>
+                        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <PostItem base={post2.base} addons={{...post2.addons, status: null}}/>
+                        </Box>
                         :
                         <PostSelectHolder text="Select opponent track" handler={() => handleOpenPostSelectModal(false)}/>
                     }
