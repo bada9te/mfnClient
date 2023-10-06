@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Card, CardHeader, CardContent, Typography, Skeleton, Button } from "@mui/material";
+import { Search } from '@mui/icons-material';
 
 
 
@@ -10,7 +11,7 @@ const PostItemUnavailable = (props) => {
 
     return (
         <>
-            <Card sx={{width: {xs: '375px', md: '400px'}, boxShadow: 5, borderRadius: 5}}>
+            <Card sx={{width: {xs: '100%', sm: '375px', md: '400px'}, boxShadow: 5, borderRadius: 5}}>
                 <CardHeader
                     avatar={
                         <Skeleton variant="circular" width={40} height={40} />
@@ -40,14 +41,26 @@ const PostItemUnavailable = (props) => {
                             return (
                                 <CardContent sx={{
                                     display: 'flex',
-                                    justifyContent: 'center',
+                                    justifyContent: 'flex-start',
                                     alignItems: 'center',
-                                    m: 1, 
+                                    m: 0, 
                                     p: 0, 
                                     paddingBottom: 0, 
                                     "&:last-child": { paddingBottom: 0 }
                                 }}>
-                                    <Button variant="contained" sx={{ boxShadow: 10 }} onClick={selectHandler}>{text}</Button>
+                                    
+                                    <Button 
+                                        startIcon={<Search/>}
+                                        sx={{ 
+                                            borderTopRightRadius: 25,
+                                            borderBottomLeftRadius: 0
+                                        }} 
+                                        size="small"
+                                        variant="contained"  
+                                        onClick={selectHandler}
+                                    >
+                                        {text}
+                                    </Button>
                                 </CardContent>
                             );
                         }

@@ -1,9 +1,7 @@
 import { useForm } from "react-hook-form";
-import BattleItem from "../../common/battle-item/battle-item";
 import PostItem from "../../common/post-item/post-item";
-import PostSelectModal from "../../modals/post-select-modal/post-select-modal";
 import * as Alert from "../../alerts/alerts";
-import { Box, TextField, Button, Card, Stack } from "@mui/material";
+import { Box, TextField, Button, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createBattle, setTitle } from "./createBattleFormSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
@@ -21,19 +19,7 @@ const PostSelectHolder = props => {
         </Box>
     );
 }
-/*
-        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <Card sx={{ boxShadow: 5, borderRadius: 5, width: '375px', minHeight: '240px', m:0, p:0, maxHeight: '285px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Button
-                    variant="contained"
-                    sx={{ mt: 1, mb: 2, boxShadow: 10 }}
-                    onClick={handler}
-                >
-                    {text}
-                </Button>
-            </Card>
-        </Box>
-*/
+
 
 const CreateBattleForm = props => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();

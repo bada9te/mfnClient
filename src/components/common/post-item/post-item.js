@@ -193,7 +193,7 @@ const PostItem = (props) => {
 
     return (
         <>
-            <Card sx={{width: {xs: '375px', md: '400px'}, boxShadow: 3, borderRadius: 5}}>
+            <Card sx={{width: {xs: '100%', sm: '375px', md: '400px'}, boxShadow: 3, borderRadius: 5}}>
                 <CardHeader
                     avatar={
                         <Avatar 
@@ -224,11 +224,13 @@ const PostItem = (props) => {
                             (() => {
                                 if (base.img?.endsWith('/') || !base.img) {
                                     return (
-                                        <Skeleton variant="rectangular" width={400} height={160} />
+                                        <Skeleton variant="rectangular" height={160} sx={{
+                                            width: {xs: '100%', md: '400px'}
+                                        }} />
                                     );
                                 } else {
                                     return (
-                                        <CardMedia component="img" height="160" width="400" image={base.img} alt="Paella dish"/>
+                                        <CardMedia component="img" height="160" width={{xs: '100%', md: '400px'}} image={base.img} alt="Paella dish"/>
                                     );
                                 }
                             })()

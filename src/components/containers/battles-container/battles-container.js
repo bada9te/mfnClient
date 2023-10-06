@@ -1,5 +1,5 @@
 import { AddCircle, Timelapse, Whatshot } from "@mui/icons-material";
-import { Box, Tabs, Tab, Card, Typography, CardContent  } from "@mui/material";
+import { Box, Tabs, Tab, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import userSocket from "../../../socket/user/socket-user";
