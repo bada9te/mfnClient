@@ -55,7 +55,8 @@ const TrackContainer = (props) => {
                                         `${locations?.images}/${postData.owner.avatar}`,
                                     ]}
                                 />
-                                <ProfileCard id={postData.owner._id}/>
+                                
+                                <ProfileCard id={postData.owner._id} bgRadius={5}/>
                             </Box>
                         );
                     }

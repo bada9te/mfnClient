@@ -49,9 +49,10 @@ const RightBarUsersItem = (props) => {
                                 startIcon={<Person2/>}
                                 sx={{ 
                                     borderTopLeftRadius: 50,
-                                    borderBottomLeftRadius: 50,
+                                    borderBottomLeftRadius: 0,
                                     borderTopRightRadius: 0,
-                                    borderBottomRightRadius: 0
+                                    borderBottomRightRadius: 0,
+                                    pl: 2
                                 }} 
                                 variant="contained" size="small"
                                 onClick={() => navigate(`/profile/${id}`)}

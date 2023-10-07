@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const ProfileCard = (props) => {
-    const { id } = props;
+    const { id, bgRadius } = props;
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state?.base?.user);
     const locations = useSelector(state => state?.base?.locations);
@@ -61,18 +61,19 @@ const ProfileCard = (props) => {
                 </Box>     
                 :
                 <Box sx={{
-                    boxShadow: 1,  
+                    boxShadow: 10,  
                     backgroundImage: `url(${locations?.images}/${profileOwner?.background})`, 
                     backgroundRepeat: 'no-repeat', 
                     backgroundSize: 'cover', 
                     objectFit: 'contain', 
                     backgroundColor: theme !== 'light' ? '#1e1e1e' : 'white', 
+                    borderRadius: bgRadius ? bgRadius : 0,
                 }}>
                     <Box sx={{
                         display: 'flex', 
                         justifyContent: 'center', 
                         alignItems: 'center',
-                        boxShadow: 1,
+                        boxShadow: 0,
                     }}>
                         <Stack 
                             spacing={3} 

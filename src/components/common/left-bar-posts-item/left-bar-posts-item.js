@@ -54,7 +54,8 @@ const LeftBarPostsItem = (props) => {
                     <Button
                         startIcon={<Person2/>}
                         sx={{ 
-                            borderRadius: 50
+                            borderTopRightRadius: 50,
+                            pr: 2
                         }} 
                         variant="contained" size="small"
                         onClick={() => navigate(`/profile/${user[0]}`)}

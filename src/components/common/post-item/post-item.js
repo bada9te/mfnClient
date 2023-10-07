@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 import userSocket from '../../../socket/user/socket-user';
 
 import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, CardActions, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
-import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp }                   from "@mui/icons-material";
+import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp, CheckCircle, HowToVote }                   from "@mui/icons-material";
 import PostItemDropDown             from './post-item-dropdown/post-item-dropdown';
 import { useDispatch, useSelector } from "react-redux";
 import { updateCommentsSocket, updateLikesSocket, updateSavesSocket } from "../../containers/posts-container/postsContainerSlice";
@@ -348,7 +348,8 @@ const PostItem = (props) => {
                                                         sx={{ 
                                                             backgroundColor: loop ? '#1BA39C' : '', 
                                                             color: loop ? 'white' : '',
-                                                            borderRadius: 50
+                                                            borderTopRightRadius: 50,
+                                                            pr: 2
                                                         }} 
                                                         variant="contained" size="small" onClick={switchLoop} 
                                                         disabled={controlsLocked ? true : false}
@@ -363,7 +364,8 @@ const PostItem = (props) => {
                                                             backgroundColor: isMuted || volume === 0 ? '#f44336' : '',
                                                             color: isMuted ? 'white' : '',
                                                             borderTopLeftRadius: 50,
-                                                            borderBottomLeftRadius: 50,
+                                                            borderBottomLeftRadius: 0,
+                                                            pl: 2
                                                         }} 
                                                         variant="contained" size="small" onClick={handleMuteUnmute} 
                                                         disabled={controlsLocked ? true : false}
@@ -379,13 +381,52 @@ const PostItem = (props) => {
                                                 <Button 
                                                     startIcon={<PlayArrow/>}
                                                     sx={{ 
-                                                        borderTopRightRadius: 50,
-                                                        borderBottomRightRadius: 50,
+                                                        borderTopRightRadius: ["selecting", "voting"].includes(addons.status) && !addons?.votedBy?.includes(currentUser?._id) ? 0 : 50,
+                                                        borderBottomRightRadius: 0,
+                                                        borderTopLeftRadius: 0,
+                                                        pr: 2
                                                     }} 
                                                     variant="contained" size="small" onClick={playAudio}
                                                 >
                                                     Play
                                                 </Button>
+                                                {
+                                                    (() => {
+                                                        if (addons.status === "selecting") {
+                                                            return (
+                                                                <Button 
+                                                                    size="small" 
+                                                                    onClick={() => addons.selectPost({base, addons})}
+                                                                    startIcon={<CheckCircle/>}
+                                                                    sx={{ 
+                                                                        borderTopRightRadius: 50,
+                                                                        borderBottomRightRadius: 0,
+                                                                        pr: 2,
+                                                                        backgroundColor: '#36B2AC'
+                                                                    }}
+                                                                >
+                                                                    Select
+                                                                </Button>
+                                                            );
+                                                        } else if (addons.status === "voting" && !addons.votedBy.includes(currentUser?._id)) {
+                                                            return (
+                                                                <Button 
+                                                                    size="small" 
+                                                                    onClick={() => addons.makeBattleVote(addons.battleId, addons.postNScore, 1, currentUser?._id)}
+                                                                    startIcon={<HowToVote/>}
+                                                                    sx={{ 
+                                                                        borderTopRightRadius: 50,
+                                                                        borderBottomRightRadius: 0,
+                                                                        pr: 2,
+                                                                        backgroundColor: '#36B2AC'
+                                                                    }}
+                                                                >
+                                                                    Vote (+1)
+                                                                </Button>
+                                                            );
+                                                        }
+                                                    })()
+                                                }
                                             </ButtonGroup>
                                         );
                                     }
@@ -393,23 +434,6 @@ const PostItem = (props) => {
                             }
                         </>
                     </CardContent>
-                }
-                {
-                    (() => {
-                        if (addons.status === "selecting") {
-                            return (
-                                <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-                                    <Button size="small" onClick={() => addons.selectPost({base, addons})}>Select</Button>
-                                </CardActions>
-                            );
-                        } else if (addons.status === "voting" && !addons.votedBy.includes(currentUser?._id)) {
-                            return (
-                                <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-                                    <Button size="small" onClick={() => addons.makeBattleVote(addons.battleId, addons.postNScore, 1, currentUser?._id)}>Free Vote (+1)</Button>
-                                </CardActions>
-                            );
-                        }
-                    })()
                 }
             </Card>
         </>

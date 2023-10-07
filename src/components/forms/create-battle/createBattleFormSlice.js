@@ -13,8 +13,8 @@ export const createBattle = createAsyncThunk(
     async(_, thunkApi) => {
         const currentState = thunkApi.getState();
         const title = currentState.createBattleForm.title;
-        const post1Id = currentState.createBattleForm.post1._id;
-        const post2Id = currentState.createBattleForm.post2._id;
+        const post1Id = currentState.createBattleForm.post1.base._id;
+        const post2Id = currentState.createBattleForm.post2.base._id;
 
         return await httpCreateBattle(title, post1Id, post2Id);
     }
