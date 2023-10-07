@@ -34,7 +34,7 @@ function TabPanel(props) {
 const BattlesContainer = props => {
     const [status, setStatus] = useState(0);
     const dispatch = useDispatch();
-    const battles = useSelector(state => state?.BattlesContainer?.battles);
+    const battles = useSelector(state => state.battlesContainer.battles);
     const activePage = useSelector(state => state?.pagination?.activePage);
     const currentUser = useSelector(state => state.base.user);
 
@@ -82,16 +82,12 @@ const BattlesContainer = props => {
 
                 <TabPanel value={status} index={0}>
                     <EnumBattles battlesData={battles} makeBattleVote={makeBattleVote}/>
-                    {
-                        battles?.length > 0 ? <PaginationTree/> : null
-                    }
+                    { battles?.length > 0 ? <PaginationTree/> : null }
                 </TabPanel>
             
                 <TabPanel value={status} index={1}>
                     <EnumBattles battlesData={battles} makeBattleVote={makeBattleVote}/>
-                    {
-                        battles?.length > 0 ? <PaginationTree/> : null
-                    }
+                    { battles?.length > 0 ? <PaginationTree/> : null }
                 </TabPanel>
 
                 <TabPanel value={status} index={2}>

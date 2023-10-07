@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import getTimeLeft from '../../../common-functions/getTimeLeft';
-import { Card, CardActions, CardContent, Typography, Box, Stack } from '@mui/material';
+import { Card, CardActions, CardContent, Typography, Box, Stack, Avatar } from '@mui/material';
 import battleImg from '../../../images/icons/battle-disk.png';
 import userSocket from '../../../socket/user/socket-user';
 import { useDispatch } from 'react-redux';
@@ -42,7 +42,7 @@ const BattleItem = (props) => {
 
     return (
         <>
-            <Card sx={{ boxShadow: 3, my: 3, p: 0, mx: {xs: 0, md: 2, sm: 1 }, borderRadius: 5 }}>
+            <Card sx={{ boxShadow: 5, my: 3, p: 0, mx: {xs: 0, md: 2, sm: 1 }, borderRadius: 5 }}>
                 <Box sx={{ 
                         display: 'flex', 
                         justifyContent: 'center', 
@@ -72,18 +72,17 @@ const BattleItem = (props) => {
                     <Box sx={{ width: '100%' }}>
                         <Stack spacing={{ xs: 1, sm: 2 }} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', zIndex: 9999}} direction="row" useFlexGap flexWrap="wrap">
                             {post1}
-                            <img className="p-3" style={{borderRadius: '50%' }} src={battleImg} width="200px" height="200px" alt="battle"/>
+                            <Avatar src={battleImg} sx={{width: '150px', height: '150px', boxShadow: 10}} alt="battle"></Avatar>
                             {post2}
                         </Stack>
                     </Box>
                 </CardContent>
 
                 <CardActions sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
                     {
                         finished 
                         ?
