@@ -11,7 +11,7 @@ const PostItemUnavailable = (props) => {
 
     return (
         <>
-            <Card sx={{width: {xs: '100%', sm: '375px', md: '400px'}, boxShadow: 5, borderRadius: 5}}>
+            <Card sx={{width: {xs: '95%', sm: '375px', md: '400px'}, boxShadow: 5, borderRadius: 5}}>
                 <CardHeader
                     avatar={
                         <Skeleton variant="circular" width={40} height={40} />

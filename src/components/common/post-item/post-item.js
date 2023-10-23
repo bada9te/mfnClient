@@ -198,7 +198,7 @@ const PostItem = (props) => {
     return (
         <>
             <Card sx={{
-                width: {xs: '100%', sm: '375px', md: '400px'}, 
+                width: {xs: '95%', sm: '375px', md: '400px'}, 
                 boxShadow: 3, 
                 borderRadius: addons.status === "in-player" ? 0 : 5,
                 

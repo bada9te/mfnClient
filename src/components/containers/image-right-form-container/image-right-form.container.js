@@ -25,6 +25,7 @@ const ImageRightFormContainer = (props) => {
                 sm={4}
                 md={8}
                 sx={{
+                    boxShadow: 20,
                     backgroundImage: `url(${bg})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundColor: (t) =>

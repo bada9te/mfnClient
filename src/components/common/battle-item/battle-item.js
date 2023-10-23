@@ -52,7 +52,6 @@ const BattleItem = (props) => {
                         boxShadow: 10,
                         backgroundColor: '#1C94A4',
                         color: 'white',
-                        
                     }}
                 >
                     <Box sx={{
@@ -68,14 +67,12 @@ const BattleItem = (props) => {
                     </Box>
                 </Box>
 
-                <CardContent>
-                    <Box sx={{ width: '100%' }}>
-                        <Stack spacing={{ xs: 1, sm: 2 }} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', zIndex: 9999}} direction="row" useFlexGap flexWrap="wrap">
-                            {post1}
-                            <Avatar src={battleImg} sx={{width: '150px', height: '150px', boxShadow: 10}} alt="battle"></Avatar>
-                            {post2}
-                        </Stack>
-                    </Box>
+                <CardContent sx={{py: 1, px: 0}}>
+                    <Stack spacing={{ xs: 1, sm: 2 }} sx={{width: '100%', display: 'flex', justifyContent: 'space-around', alignItems: 'center', zIndex: 9999}} direction="row" useFlexGap flexWrap="wrap">
+                        {post1}
+                        <Avatar src={battleImg} sx={{width: '150px', height: '150px', boxShadow: 10}} alt="battle"></Avatar>
+                        {post2}
+                    </Stack>
                 </CardContent>
 
                 <CardActions sx={{

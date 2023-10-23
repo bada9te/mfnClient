@@ -5,7 +5,7 @@ import getTimeSince from "../../../common-functions/getTimeSince";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchInspectingPost } from "./trackContainerSlice";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 
 const TrackContainer = (props) => {
@@ -33,7 +33,15 @@ const TrackContainer = (props) => {
                         );
                     } else {
                         return (
-                            <Box sx={{ py: 3, display: 'flex', justifyContent: 'space-around', alignItems: 'center', boxShadow: 2}} flexWrap="wrap">
+                            <Stack sx={{ 
+                                py: 3, 
+                                m: {xs: 0, md: 1.5}, 
+                                display: 'flex', 
+                                justifyContent: 'space-around', 
+                                alignItems: 'center', 
+                                boxShadow: 15,
+                                borderRadius: 5
+                            }} flexWrap="wrap" spacing={2} direction="row" useFlexGap>
                                 <PostItem 
                                     base={{
                                         ...postData, 
@@ -57,7 +65,7 @@ const TrackContainer = (props) => {
                                 />
                                 
                                 <ProfileCard id={postData.owner._id} bgRadius={5}/>
-                            </Box>
+                            </Stack>
                         );
                     }
                 })()

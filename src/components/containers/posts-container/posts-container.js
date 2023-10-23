@@ -76,13 +76,15 @@ const PostsContainer = (props) => {
                         );
                     } else {
                         return (
-                            <>
-                                <Box sx={{ width: '100%', py: 4 }}>
-                                    <Stack spacing={4} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}} direction="row" useFlexGap flexWrap="wrap">
-                                        <EnumPosts profileLinkAccessable={profileLinkAccessable} except={except}/>
-                                    </Stack>
-                                </Box>
-                            </>
+                            <Stack spacing={4} sx={{
+                                width: '100%', 
+                                py: 4, 
+                                display: 'flex', 
+                                justifyContent: 'space-around', 
+                                alignItems: 'center'
+                                }} direction="row" useFlexGap flexWrap="wrap">
+                                <EnumPosts profileLinkAccessable={profileLinkAccessable} except={except}/>
+                            </Stack>
                         );
                     }
                 })()
