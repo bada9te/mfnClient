@@ -70,8 +70,7 @@ const BattlesContainer = props => {
 
 
     return (
-        <>
-            <Box>
+            <Box height={'100%'}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                     <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                         <Tab icon={<Whatshot/>} label={"In progress"} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
@@ -82,12 +81,12 @@ const BattlesContainer = props => {
 
                 <TabPanel value={status} index={0}>
                     <EnumBattles battlesData={battles} makeBattleVote={makeBattleVote}/>
-                    { battles?.length > 0 ? <PaginationTree/> : null }
+                    { battles?.length > 0 ? <Box sx={{mb: 10}}><PaginationTree/></Box> : null }
                 </TabPanel>
             
                 <TabPanel value={status} index={1}>
                     <EnumBattles battlesData={battles} makeBattleVote={makeBattleVote}/>
-                    { battles?.length > 0 ? <PaginationTree/> : null }
+                    { battles?.length > 0 ? <Box sx={{mb: 10}}><PaginationTree/></Box> : null }
                 </TabPanel>
 
                 <TabPanel value={status} index={2}>
@@ -116,7 +115,7 @@ const BattlesContainer = props => {
                     </ImageRightFormContainer>
                 </TabPanel>
             </Box>
-        </>
+        
     );
 }
 

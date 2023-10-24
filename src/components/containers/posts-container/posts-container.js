@@ -81,7 +81,7 @@ const PostsContainer = (props) => {
                                 py: 4, 
                                 display: 'flex', 
                                 justifyContent: 'space-around', 
-                                alignItems: 'center'
+                                alignItems: 'center',
                                 }} direction="row" useFlexGap flexWrap="wrap">
                                 <EnumPosts profileLinkAccessable={profileLinkAccessable} except={except}/>
                             </Stack>
@@ -93,7 +93,7 @@ const PostsContainer = (props) => {
             {
                 posts.length > 0
                 &&
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 5}}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 10}}>
                     <PaginationTree/>
                 </Box>
             }

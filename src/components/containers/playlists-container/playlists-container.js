@@ -42,7 +42,7 @@ const PlaylistsEnumWithPagination = () => {
                 <EnumPlaylists/>
             </Stack>
             {
-                playlists?.length > 0 ? <PaginationTree/> : null
+                playlists?.length > 0 ? <Box sx={{mb: 10}}><PaginationTree/></Box> : null
             }
         </>
     );
@@ -99,7 +99,7 @@ const PlaylistsContainer = (props) => {
 
 
     return (
-        <Box sx={{pb: 0}}>
+        <Box sx={{width: '100%', height: '100%'}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} centered variant="fullWidth">
                     <Tab icon={<Explore/>} label="Explore" id="simple-tab-0" aria-controls="simple-tabpanel-0"/>

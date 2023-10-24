@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsShowing as setCropModalIsShowing } from "../../components/modals/image-cropper-modal/imageCropperModalSlice";
 import { setPicture } from "../../components/forms/post-upload/postUploadFormSlice";
 import newPostFormBG from '../../images/bgs/newPostFormBG.png';
+import BaseContentContainer from "../../components/containers/base-content-container/base-content-container";
 
 
 const PostUpload = (props) => {
@@ -31,57 +32,59 @@ const PostUpload = (props) => {
 
 
     return (
-        <ImageRightFormContainer bg={newPostFormBG}>
-            {
-                isShowing
-                ? 
-                <ImageCropperModal 
-                    show={isShowing} 
-                    handleImageCropModalClose={handleImageCropModalClose} 
-                    image={picture} 
-                    what={'post-image'}
-                />
-                :
-                null
-            }
-                <Box sx={{width: '40rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
-                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', py: 3, mb: 0}}>
-                        Your new post
-                    </Typography>
+        <BaseContentContainer>
+            <ImageRightFormContainer bg={newPostFormBG}>
+                {
+                    isShowing
+                    ? 
+                    <ImageCropperModal 
+                        show={isShowing} 
+                        handleImageCropModalClose={handleImageCropModalClose} 
+                        image={picture} 
+                        what={'post-image'}
+                    />
+                    :
+                    null
+                }
+                    <Box sx={{width: '40rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
+                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', py: 3, mb: 0}}>
+                            Your new post
+                        </Typography>
 
-                    <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                        <Box sx={{width: {xs: '100%', sm: '375px', md: '400px'}, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                            <PostItem
-                                base={{
-                                    owner: {
-                                        _id: currentUser?._id,
-                                        nick: currentUser?.nick,
-                                    },
-                                    ownerAvatar: `${locations?.images}/${currentUser?.avatar}`,
-                                    createdAt: 'now',
-                                    title,
-                                    description,
-                                    img: picture,
-                                    audio,
-                                    likedBy: [],
-                                    savedBy: [],
-                                    comments: [],
-                                }}
-                                addons={{
-                                    commentsAllowed,
-                                    downloadsAllowed,
-                                    status: "upload",
-                                    profileLinkAccessable: false,
-                                }}
-                                id={null}
-                            />
+                        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <Box sx={{width: {xs: '100%', sm: '375px', md: '400px'}, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                <PostItem
+                                    base={{
+                                        owner: {
+                                            _id: currentUser?._id,
+                                            nick: currentUser?.nick,
+                                        },
+                                        ownerAvatar: `${locations?.images}/${currentUser?.avatar}`,
+                                        createdAt: 'now',
+                                        title,
+                                        description,
+                                        img: picture,
+                                        audio,
+                                        likedBy: [],
+                                        savedBy: [],
+                                        comments: [],
+                                    }}
+                                    addons={{
+                                        commentsAllowed,
+                                        downloadsAllowed,
+                                        status: "upload",
+                                        profileLinkAccessable: false,
+                                    }}
+                                    id={null}
+                                />
+                            </Box>
                         </Box>
+                        <CardContent>
+                            <PostUploadForm/>
+                        </CardContent>
                     </Box>
-                    <CardContent>
-                        <PostUploadForm/>
-                    </CardContent>
-                </Box>
-        </ImageRightFormContainer>
+            </ImageRightFormContainer>
+        </BaseContentContainer>
     );
 }
 

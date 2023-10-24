@@ -95,7 +95,7 @@ const NotificationsContainer = props => {
     }, [dispatch, currentUserId, page]);
 
     return (
-        <Box>
+        <Box sx={{width: '100%', height: {lg: '100vh', md: '100vh', sm: '100vh', xs: '100vh'}}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                     <Tab icon={<MarkAsUnread/>} label="Unread" id="simple-tab-0" aria-controls="simple-tabpanel-0" />

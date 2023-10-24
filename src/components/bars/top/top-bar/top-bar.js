@@ -1,24 +1,17 @@
 import logoImg from '../../../../images/icons/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { memo, useEffect, useState } from "react";
-
 import {AppBar, IconButton, Avatar, Typography, Box, Toolbar, Tooltip, Menu, Container, useScrollTrigger, Slide } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import TopBarUserMenu from './top-bar-user-menu/top-bar-user-menu';
 import TopBarLeftMenuMin from './top-bar-left-menu-min/top-bar-left-menu-min';
 import TopBarLeftMenu from './top-bar-left-menu/top-bar-left-menu';
-
 import { useDispatch, useSelector } from "react-redux";
 import userSocket from '../../../../socket/user/socket-user';
-
-import UserSelectModal from '../../../modals/user-select-modal/user-select-modal';
-import CommentsModal from '../../../modals/comments-modal/comments-modal';
 import StyledBadge from "./styled-badge/styled-badge";
 import { fetchUnreadNotifications } from '../../../containers/notifications-container/notificationsContainerSlice';
-import ReportsModal from '../../../modals/report-modal/report-modal';
-import ConfirmModal from '../../../modals/confirm-modal/confirm-modal';
 import PropTypes from 'prop-types';
-import PostSelectModal from '../../../modals/post-select-modal/post-select-modal';
+
 
 function HideOnScroll(props) {
     const { children, window } = props;
@@ -125,15 +118,9 @@ const Topbar = (props) => {
     
 
     return (
-        <>
-            <ConfirmModal/>
-            <UserSelectModal/>
-            <CommentsModal/>
-            <ReportsModal/>
-            <PostSelectModal/>
-
+        
             <HideOnScroll {...props}>
-                <AppBar sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <AppBar component="nav" sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Container maxWidth="xl" >
                         <Toolbar disableGutters>
                             <Typography
@@ -248,7 +235,7 @@ const Topbar = (props) => {
                     </Container>
                 </AppBar>
             </HideOnScroll>
-        </>
+        
     );
 }
 

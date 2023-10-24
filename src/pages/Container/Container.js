@@ -7,23 +7,41 @@ import './Container.scss';
 import AudioPlayer from "../../components/common/audio-player/audio-player";
 import LeftBarPosts from "../../components/bars/left/left-bar-posts/left-bar-posts";
 import RightBarUsers from "../../components/bars/right/right-bar-users/right-bar-users";
-import { Box } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
+import ConfirmModal from "../../components/modals/confirm-modal/confirm-modal";
+import UserSelectModal from "../../components/modals/user-select-modal/user-select-modal";
+import CommentsModal from "../../components/modals/comments-modal/comments-modal";
+import ReportsModal from "../../components/modals/report-modal/report-modal";
+import PostSelectModal from "../../components/modals/post-select-modal/post-select-modal";
 
 
 
 const Container = (props) => {
 
     return (
-        <>
+        <Box sx={{ display: 'flex', pb: 7 }}>
+            <CssBaseline />
+
+            {/* MODALS */}
+            <ConfirmModal/>
+            <UserSelectModal/>
+            <CommentsModal/>
+            <ReportsModal/>
+            <PostSelectModal/>
+
+            {/* BARS */}
             <Topbar text="Music From Nothing" username="UserName" where="feed"/>
             <LeftBarPosts/>
             <RightBarUsers/>
-                <Box sx={{py: 6.5}}>
-                    <Outlet/>
-                </Box>
-            <AudioPlayer/>
+
+            {/* PAGES OUTLET */}
+            <Box sx={{width: '100%', pt: 8}}>
+                <Outlet/>
+            </Box>
+
             <BottomBar/>
-        </>
+            <AudioPlayer/>
+        </Box>
     );
 }
 

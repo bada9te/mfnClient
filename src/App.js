@@ -58,9 +58,7 @@ function App() {
 
 
   return (
-    <>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
         <Routes>
           {/* ACCOUNT MGMT */}
           <Route path='/login'     element={<Login/>}/>
@@ -87,7 +85,6 @@ function App() {
           </Route>
         </Routes>
       </ThemeProvider>
-    </>
   );
 }
 
