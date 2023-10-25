@@ -25,6 +25,7 @@ const RightBarUsers = (props) => {
             open={showRB}
             onClose={closeRB}
             keepMounted
+            elevation={3}
         >
             <Box sx={{
                 pt: '70px',

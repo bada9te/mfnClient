@@ -25,6 +25,7 @@ const LeftBarPosts = (props) => {
             open={showLB}
             onClose={closeLB}
             keepMounted
+            elevation={3}
         >
             <Box sx={{
                 pt: '70px',
