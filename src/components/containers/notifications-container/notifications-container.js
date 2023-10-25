@@ -38,6 +38,7 @@ const NotificationsContainer = props => {
     const page = useSelector(state => state.notificationsContainer.page);
     const notifications = useSelector(state => state.notificationsContainer.notifications);
     const isLoading = useSelector(state => state.notificationsContainer.isLoading);
+    const theme = useSelector(state => state.base.theme);
     const dispatch = useDispatch();
 
 
@@ -64,7 +65,7 @@ const NotificationsContainer = props => {
                             }
                         });
                 });
-            });
+            }, {theme});
         }
     }
 
@@ -82,7 +83,7 @@ const NotificationsContainer = props => {
                             }
                         });
                 });
-            });
+            }, {theme});
         }
     }
 
