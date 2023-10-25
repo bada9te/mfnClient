@@ -29,7 +29,7 @@ const RightBarUsers = (props) => {
             <Box sx={{
                 pt: '70px',
                 zIndex: 1,
-                boxShadow: 2
+                boxShadow: 5
                 }}
             >
                 <Box sx={{p: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>

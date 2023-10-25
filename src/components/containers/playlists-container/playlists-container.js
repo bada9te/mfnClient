@@ -161,34 +161,34 @@ const PlaylistsContainer = (props) => {
             </TabPanel>
 
             <TabPanel value={status} index={2}>
-                    <ImageRightFormContainer bg={newPlaylistBG}>
-                        {
-                            currentUser && currentUser._id !== ""
-                            ?
-                            <Box sx={{width: '35rem', height: 'fit-content', boxShadow: 0, borderRadius: 5}}>
-                                <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                    Create playlist
-                                </Typography>
-                                <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                    Create playlist using form below:
-                                </Typography>
-                                <CardContent>
-                                    <CreatePlaylistForm/>
-                                </CardContent>
-                                <CardActions>
-                                    <Box sx={{mx: 2, mb: 2}}>
-                                        <Typography>Notice, public playlists are visible to all users</Typography>
-                                    </Box>
-                                </CardActions>
-                            </Box>
-                            :
-                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
-                                <Typography>
-                                    Please login to create a new one
-                                </Typography>
-                            </Box>
-                        }
-                    </ImageRightFormContainer>
+                <ImageRightFormContainer bg={newPlaylistBG}>
+                    {
+                        currentUser && currentUser._id !== ""
+                        ?
+                        <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5}}>
+                            <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                                Create playlist
+                            </Typography>
+                            <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                                Create playlist using form below:
+                            </Typography>
+                            <CardContent>
+                                <CreatePlaylistForm/>
+                            </CardContent>
+                            <CardActions>
+                                <Box sx={{mx: 2, mb: 2}}>
+                                    <Typography>Notice, public playlists are visible to all users</Typography>
+                                </Box>
+                            </CardActions>
+                        </Box>
+                        :
+                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
+                            <Typography>
+                                Please login to create a new one
+                            </Typography>
+                        </Box>
+                    }
+                </ImageRightFormContainer>
                 
             </TabPanel>
         </Box>

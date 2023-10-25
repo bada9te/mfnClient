@@ -8,12 +8,10 @@ const Profile = (props) => {
     const { id } = useParams();
 
     return (
-        
-            <BaseContentContainer>
-                <ProfileCard id={id}/>
-                <PostsContainer id={id} profileLinkAccessable={false}/>
-            </BaseContentContainer>
-        
+        <BaseContentContainer>
+            <ProfileCard id={id}/>
+            <PostsContainer id={id} profileLinkAccessable={false}/>
+        </BaseContentContainer>
     );
 }
 

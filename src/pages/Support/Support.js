@@ -3,13 +3,15 @@ import { Box, CardActions, CardContent, Typography, Stack, Avatar } from "@mui/m
 import { useNavigate } from "react-router-dom";
 import supportContactImage from "../../images/icons/logo_support.png";
 import ImageRightFormContainer from "../../components/containers/image-right-form-container/image-right-form.container";
+import BaseContentContainer from "../../components/containers/base-content-container/base-content-container";
 import supportFromBG from "../../images/bgs/supportFormBG.png";
+
 
 const Support = (props) => {
     const navigate = useNavigate();
 
     return (
-        <>
+        <BaseContentContainer>
             <ImageRightFormContainer bg={supportFromBG}>
                 <Box sx={{boxShadow: 0, maxWidth: 700, borderRadius: 5}}>
                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
@@ -37,7 +39,7 @@ const Support = (props) => {
                     </CardActions>
                 </Box>
             </ImageRightFormContainer>    
-        </>
+        </BaseContentContainer>
     );
 }
 

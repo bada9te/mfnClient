@@ -6,6 +6,8 @@ import EmailImage    from "../../../images/icons/email.png"
 import PasswordImage from "../../../images/icons/password.png"
 import TextImage     from "../../../images/icons/text.png"
 import ClearImage     from "../../../images/icons/logo_clear.png"
+import { setIsShowing as setConfirmModalIsShowing } from "../../../components/modals/confirm-modal/confirmModalSlice";
+import { setActionType, setText, setTitle } from "../../../components/containers/confirm-container/confirmContainerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePartOfUser } from "../../baseSlice";
 import { prepareToRestore } from "../account-restore-request/accountRestoreRequestFormSlice";
@@ -99,7 +101,13 @@ const FormProfileEdit = (props) => {
     const dispatchUser = (what, value) => {
         dispatch(updatePartOfUser({what, value}));
     }
-    
+
+    const handleAccountDelete = async() => {
+        dispatch(setConfirmModalIsShowing(true));
+        dispatch(setActionType("delete-account"));
+        dispatch(setText("By confirming this, you agree that your account will be removed without any ability to restore."));
+        dispatch(setTitle("Confirm account deletion"));
+    } 
 
     return (
         <>
@@ -120,7 +128,7 @@ const FormProfileEdit = (props) => {
                         { title === "Nickname"    ? <Nickname    register={register} errors={errors}/> : null }
                         { title === "Description" ? <Description register={register} errors={errors} current={current}/> : null }
                         { title === "Email"       ? <Email       register={register} errors={errors} current={current}/> : null }
-                        { title === "Danger Zone" ? <DangerZone  register={register} error={errors}/> : null }
+                        { title === "Danger Zone" ? <DangerZone  register={register} errors={errors} handleAccountDelete={handleAccountDelete}/> : null }
 
                         {
                             title !== "Danger Zone" 

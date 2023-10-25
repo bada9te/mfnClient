@@ -9,7 +9,7 @@ const RightBarUsersItem = (props) => {
 
     return (
         <>
-            <Card sx={{mb: 1, boxShadow: 3}}>
+            <Card sx={{mb: 1, boxShadow: 5, borderRadius: 5}}>
                 <CardHeader
                     avatar={
                         <Avatar 

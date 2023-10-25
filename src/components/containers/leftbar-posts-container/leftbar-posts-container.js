@@ -28,7 +28,7 @@ const LeftBarPostsContainer = props => {
 
 
     return (
-            <List sx={{overflow: 'auto', position: 'relative', height: '100%'}}>
+            <List sx={{overflow: 'auto', position: 'relative', height: '100%', px: 0.5}}>
                 {
                     (() => {
                         if (isLoading && searchQuery !== "") {
