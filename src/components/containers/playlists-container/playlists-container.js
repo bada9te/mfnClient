@@ -161,7 +161,7 @@ const PlaylistsContainer = (props) => {
             </TabPanel>
 
             <TabPanel value={status} index={2}>
-                <ImageRightFormContainer bg={newPlaylistBG}>
+                <ImageRightFormContainer bg={newPlaylistBG} text="New playlist? Beautiful :)">
                     {
                         currentUser && currentUser._id !== ""
                         ?

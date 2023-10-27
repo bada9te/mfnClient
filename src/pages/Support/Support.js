@@ -12,7 +12,7 @@ const Support = (props) => {
 
     return (
         <BaseContentContainer>
-            <ImageRightFormContainer bg={supportFromBG}>
+            <ImageRightFormContainer bg={supportFromBG} text="Feel yourself free to contact us!">
                 <Box sx={{boxShadow: 0, maxWidth: 700, borderRadius: 5}}>
                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                         <Avatar src={supportContactImage} sx={{ m: 1, boxShadow: 5 }}/>

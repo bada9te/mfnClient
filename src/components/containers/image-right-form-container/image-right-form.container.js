@@ -1,8 +1,8 @@
-import { Paper } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { Grid } from "@mui/material";
 
 const ImageRightFormContainer = (props) => {
-    const { bg } = props;
+    const { bg, text } = props;
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
@@ -35,9 +35,22 @@ const ImageRightFormContainer = (props) => {
                     backgroundColor: (t) =>
                     t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    backgroundPosition: 'right',
+                    display: 'flex',
+                    alignItems: 'center'
                 }}
-            />
+            >
+                <Box sx={{ display: {xs: 'none', md: 'flex'} }}>
+                    <Typography sx={{
+                        color: 'white',
+                        fontSize: {xl: '10vh', lg: '4vw', md: 0},
+                        font: 'italic 1.2rem "Fira Sans", sans-serif',
+                        textAlign: 'center'
+                    }}>
+                        {text}
+                    </Typography>
+                </Box>
+            </Grid>
         </Grid>
     );
 }

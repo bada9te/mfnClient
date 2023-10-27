@@ -33,7 +33,7 @@ const PostUpload = (props) => {
 
     return (
         <BaseContentContainer>
-            <ImageRightFormContainer bg={newPostFormBG}>
+            <ImageRightFormContainer bg={newPostFormBG} text="Uploading sth new? Fascinating!">
                 {
                     isShowing
                     ? 

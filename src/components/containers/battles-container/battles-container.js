@@ -90,7 +90,7 @@ const BattlesContainer = props => {
                 </TabPanel>
 
                 <TabPanel value={status} index={2}>
-                    <ImageRightFormContainer bg={newBattleFormBG}>
+                    <ImageRightFormContainer bg={newBattleFormBG} text="Ready for a challenge?">
                         <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
                             {
                                 currentUser && currentUser._id !== ""
