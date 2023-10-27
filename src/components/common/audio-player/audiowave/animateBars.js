@@ -26,7 +26,7 @@ function animateBars(analyser, canvas, canvasCtx, dataArray, bufferLength, theme
       const maximum = 10;
       const minimum = -10;
 
-      let rgb = theme === 'dark' ? [144, 202, 249] : [25, 118, 210];
+      let rgb = theme === 'dark' ? [54, 178, 172] : [28, 148, 164];
 
       var r = rgb[0] + Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
       var g = rgb[1] + Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;

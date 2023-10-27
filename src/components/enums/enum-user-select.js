@@ -14,7 +14,7 @@ const EnumUserSelect = props => {
                         <UserSelectItem 
                             key={key}
                             id={item._id} 
-                            avatar={`${locations?.images}/${item.avatar}`} 
+                            avatar={item?.avatar ? `${locations?.images}/${item.avatar}` : "NULL"} 
                             nickname={item.nick} 
                             description={item.description}
                             userSelectionHandler={userSelectionHandler}

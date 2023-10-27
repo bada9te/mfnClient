@@ -14,6 +14,7 @@ const UserSelectItem = props => {
                             src={avatar} 
                             sx={{bgcolor: "gray", boxShadow: 3}} 
                             aria-label="recipe"
+                            alt={nickname}
                         />
                     }
                     title={nickname}

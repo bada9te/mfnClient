@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import userSocket from "../../../socket/user/socket-user";
 import EnumUserSelect from "../../enums/enum-user-select";
+import { setIsShowing } from "../../modals/user-select-modal/userSelectModalSlice";
 import { fetchUsers } from "./userSelectContainerSlice";
 
 
@@ -23,6 +24,7 @@ const UserSelectContainer = props => {
                 text: `Hey! Check this track!`,
             });
         }
+        dispatch(setIsShowing(false));
     }
 
     // fetch

@@ -8,6 +8,7 @@ import { fetchUserById, handleSubscribtion, setIsLoading, setProfileOwner } from
 import { unwrapResult } from '@reduxjs/toolkit';
 import userSocket from '../../../../socket/user/socket-user';
 import { useNavigate } from 'react-router-dom';
+import ProfileDefaultBGImage from "../../../../images/bgs/profileDefaultBG.png";
 
 
 const ProfileCard = (props) => {
@@ -62,7 +63,7 @@ const ProfileCard = (props) => {
                 :
                 <Box sx={{
                     boxShadow: 10,  
-                    backgroundImage: `url(${locations?.images}/${profileOwner?.background})`, 
+                    backgroundImage: profileOwner?.background ? `url(${locations?.images}/${profileOwner?.background})` : `url(${ProfileDefaultBGImage})`, 
                     backgroundRepeat: 'no-repeat', 
                     backgroundSize: 'cover', 
                     objectFit: 'contain', 
