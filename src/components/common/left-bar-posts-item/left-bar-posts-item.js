@@ -8,7 +8,11 @@ const LeftBarPostsItem = (props) => {
     const navigate = useNavigate();
 
     return (
-        <Card sx={{mb: 1, boxShadow: 5, borderRadius: 5}}>
+        <Card sx={{
+            mb: 1, 
+            boxShadow: 5, 
+            borderRadius: 5
+            }}>
             <CardHeader
                 avatar={
                     <Avatar 

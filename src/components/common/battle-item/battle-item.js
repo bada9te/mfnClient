@@ -42,18 +42,17 @@ const BattleItem = (props) => {
 
     return (
         <>
-            <Card sx={{ boxShadow: 5, my: 3, p: 0, mx: {xs: 0, md: 2, sm: 1 }, borderRadius: 5 }}>
+            <Card sx={{ boxShadow: 5, my: 3, p: 0, mx: {xs: 1, md: 2, sm: 1 }, borderRadius: 5 }}>
                 <Box sx={{ 
-                        display: 'flex', 
-                        justifyContent: 'center', 
-                        alignItems: 'center', 
-                        fontSize: 24, 
-                        p: 1,
-                        boxShadow: 10,
-                        backgroundColor: '#1C94A4',
-                        color: 'white',
-                    }}
-                >
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    fontSize: 24, 
+                    p: 1,
+                    boxShadow: 10,
+                    backgroundColor: '#1C94A4',
+                    color: 'white',
+                }}>
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -68,7 +67,13 @@ const BattleItem = (props) => {
                 </Box>
 
                 <CardContent sx={{py: 1, px: 0}}>
-                    <Stack spacing={{ xs: 1, sm: 2 }} sx={{width: '100%', display: 'flex', justifyContent: 'space-around', alignItems: 'center', zIndex: 9999}} direction="row" useFlexGap flexWrap="wrap">
+                    <Stack 
+                        spacing={{ xs: 1, sm: 2 }} 
+                        sx={{width: '100%', display: 'flex', justifyContent: 'space-around', alignItems: 'center', zIndex: 9999}} 
+                        direction={{sm: "column", xl: "row"}} 
+                        useFlexGap 
+                        flexWrap="wrap"
+                    >
                         {post1}
                         <Avatar src={battleImg} sx={{width: '150px', height: '150px', boxShadow: 10}} alt="battle"></Avatar>
                         {post2}

@@ -75,7 +75,7 @@ const battlesContainerSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(fetchBattles.fulfilled, (state, action) => {
-                state.battles = action.payload.data.battles;
+                state.battles = action.payload.data.battles.battles;
                 state.isLoading = false;
             })
 
