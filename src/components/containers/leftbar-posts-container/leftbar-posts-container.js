@@ -2,44 +2,51 @@ import { useEffect } from "react";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, List, Typography } from "@mui/material";
 import EnumLeftBarPosts from "../../enums/enum-leftbar-posts";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPostsByTitle } from "./leftBarPostsContainerSlice";
+import { useSelector } from "react-redux";
+import { useLazyQuery } from "@apollo/client";
+import { POSTS_BY_TITLE_QUERY } from "../../../graphql/posts";
 
 
 
 const LeftBarPostsContainer = props => {
     const searchQuery = useSelector(state => state.leftBarPosts.searchQuery);
-    const isLoading = useSelector(state => state.leftBarPostsContainer.isLoading);
-    const postsData = useSelector(state => state.leftBarPostsContainer.postsData);
-    const dispatch = useDispatch();
 
+    const [getPostsByTitle, { data, loading }] = useLazyQuery(POSTS_BY_TITLE_QUERY);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             if (searchQuery !== "") {
-                dispatch(fetchPostsByTitle(searchQuery));
+                getPostsByTitle({
+                    variables: {
+                        input: {
+                            title: searchQuery,
+                            userId: null,
+                            userIsOwner: null,
+                        },
+                    },
+                });
             }
         }, 750);
 
         return () => {
             clearTimeout(timer);
         }
-    }, [searchQuery, dispatch]);
+    }, [searchQuery]);
 
 
     return (
             <List sx={{overflow: 'auto', position: 'relative', height: '100%', px: 0.5}}>
                 {
                     (() => {
-                        if (isLoading && searchQuery !== "") {
+                        if (loading && searchQuery !== "") {
                             return (
                                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                                     <SpinnerCircular/>
                                 </Box>
                             );
-                        } else if (postsData && postsData.length > 0) {
+                        } else if (data?.postsByTitle && data?.postsByTitle.length > 0) {
                             return (
-                                <EnumLeftBarPosts/>
+                                <EnumLeftBarPosts posts={data.postsByTitle}/>
                             );
                         } else {
                             return (

@@ -2,58 +2,59 @@ import { useEffect } from "react";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, List, Typography } from "@mui/material";
 import EnumRightbarUsers from "../../enums/enum-rightbar-users";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsersByNick } from "./rightBarUsersContainerSlice";
-
+import { useSelector } from "react-redux";
+import { useLazyQuery } from "@apollo/client";
+import { USERS_BY_NICKNAME_QUERY } from "../../../graphql/users";
 
 
 
 const RightBarUsersContainer = props => {
     const searchQuery = useSelector(state => state.rightBarUsers.searchQuery);
-    const isLoading = useSelector(state => state.rightBarUsersContainer.isLoading);
-    const usersData = useSelector(state => state.rightBarUsersContainer.usersData);
-    const dispatch = useDispatch()
-
+    const [getUsersByNickname, { data, loading }] = useLazyQuery(USERS_BY_NICKNAME_QUERY);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             if (searchQuery !== "") {
-                dispatch(fetchUsersByNick(searchQuery))
+                getUsersByNickname({
+                    variables: {
+                        nick: searchQuery,
+                    },
+                });
             }
         }, 750);
 
         return () => {
             clearTimeout(timer);
         }
-    }, [searchQuery, dispatch]);
+    }, [searchQuery, getUsersByNickname]);
 
 
     return (
-            <List sx={{overflow: 'auto', position: 'relative', height: '100%', px: 0.5}}>
-                {
-                    (() => {
-                        if (isLoading && searchQuery !== "") {
-                            return (
-                                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
-                                    <SpinnerCircular/>
-                                </Box>
-                            );
-                        } else if (usersData && usersData.length > 0) {
-                            return (
-                                <EnumRightbarUsers/>
-                            );
-                        } else {
-                            return (
-                                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
-                                    <Typography>
-                                        Start typing nickname to search
-                                    </Typography>
-                                </Box>
-                            );
-                        }
-                    })()
-                }
-            </List>
+        <List sx={{overflow: 'auto', position: 'relative', height: '100%', px: 0.5}}>
+            {
+                (() => {
+                    if (loading && searchQuery !== "") {
+                        return (
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+                                <SpinnerCircular/>
+                            </Box>
+                        );
+                    } else if (data?.usersByNickname && data?.usersByNickname.length > 0) {
+                        return (
+                            <EnumRightbarUsers users={data.usersByNickname}/>
+                        );
+                    } else {
+                        return (
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+                                <Typography>
+                                    Start typing nickname to search
+                                </Typography>
+                            </Box>
+                        );
+                    }
+                })()
+            }
+        </List>
     );
 }
 

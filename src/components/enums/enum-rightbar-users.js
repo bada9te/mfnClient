@@ -2,13 +2,13 @@ import { useSelector } from "react-redux";
 import RightBarUsersItem from "../common/right-bar-users-item/right-bar-users-item";
 
 const EnumRightbarUsers = props => {
-    const usersData = useSelector(state => state.rightBarUsersContainer.usersData);
+    const { users } = props;
     const locations = useSelector(state => state.base.locations);
 
     return (
         <>
             {
-                usersData.map((item, key) => {
+                users.map((item, key) => {
                     return (
                         <div key={key}>
                             <RightBarUsersItem

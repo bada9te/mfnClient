@@ -2,13 +2,13 @@ import LeftBarPostsItem from "../common/left-bar-posts-item/left-bar-posts-item"
 import { useSelector } from "react-redux";
 
 const EnumLeftBarPosts = props => {
-    const postsData = useSelector(state => state.leftBarPostsContainer.postsData);
+    const { posts } = props;
     const locations = useSelector(state => state.base.locations);
 
     return (
         <>
             {
-                postsData.map((item, key) => {
+                posts.map((item, key) => {
                     return (
                         <div key={key}>
                             <LeftBarPostsItem 

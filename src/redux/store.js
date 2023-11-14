@@ -6,8 +6,6 @@ import bottomBarSlice                 from "../components/bars/bottom/bottom-bar
 import trackContainerSlice            from "../components/containers/track-container/trackContainerSlice";
 import leftBarPostsSlice              from "../components/bars/left/left-bar-posts/leftBarPostsSlice";
 import rightBarUsersSlice             from "../components/bars/right/right-bar-users/rightBarUsersSlice";
-import leftBarPostsContainerSlice     from "../components/containers/leftbar-posts-container/leftBarPostsContainerSlice";
-import rightBarUsersContainerSlice    from "../components/containers/rightbar-users-container/rightBarUsersContainerSlice";
 import commentsContainerSlice         from "../components/containers/comments-container/commentsContainerSlice";
 import postSelectContainerSlice       from "../components/containers/post-select-container/postSelectContainerSlice";
 import postSelectModalSlice           from "../components/modals/post-select-modal/postSelectModalSlice";
@@ -48,8 +46,6 @@ const store = configureStore({
         postsContainer:         postsContainerSlice,
         battlesContainer:       battlesContainerSlice,
         trackContainer:         trackContainerSlice,
-        leftBarPostsContainer:  leftBarPostsContainerSlice,
-        rightBarUsersContainer: rightBarUsersContainerSlice,
         commentsContainer:      commentsContainerSlice,
         postSelectContainer:    postSelectContainerSlice,
         notificationsContainer: notificationsContainerSlice,

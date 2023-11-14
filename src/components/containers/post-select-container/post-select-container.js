@@ -31,9 +31,7 @@ const PostSelectContainer = props => {
     }
 
     useEffect(() => {
-        console.log('effext1')
         if (selectingFor === "playlist") {
-            console.log('effext2')
             dispatch(fetchSavedPosts());
         }
     }, [dispatch, selectingFor])
