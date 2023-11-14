@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit"
 import { httpCreateBattle } from "../../../requests/battles";
-import { switchPostInSaved, switchPostLike } from "../../containers/posts-container/postsContainerSlice";
+
 
 const initialState = {
     title: "title",
@@ -34,55 +34,7 @@ const createBattleFormSlice = createSlice({
             state.post2 = action.payload;
         }
     },
-    extraReducers: (builder) => {
-        builder
-            // like or dislike
-            .addCase(switchPostLike.fulfilled, (state, { meta }) => {
-                let posts = [];
-
-                if (state.post1 !== null) posts.push(current(state.post1));
-                if (state.post2 !== null) posts.push(current(state.post2));
-                
-                posts = JSON.parse(JSON.stringify(posts));
-
-                posts.forEach(item => {
-                    if (item.base._id === meta.arg.postId) {
-                        if (item.base.likedBy.indexOf(meta.arg.userId) === -1) {
-                            item.base.likedBy.push(meta.arg.userId);
-                        } else {
-                            item.base.likedBy = item.base.likedBy.filter(id => id !== meta.arg.userId);
-                        }
-                    }
-                });
-
-                if (state.post1 !== null) state.post1 = posts[0];
-                if (state.post2 !== null) state.post2 = posts[1];
-            })
-
-            // switch in saved
-            .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
-                let posts = [];
-
-                if (state.post1 !== null) posts.push(current(state.post1));
-                if (state.post2 !== null) posts.push(current(state.post2));
-                
-                posts = JSON.parse(JSON.stringify(posts));
-                
-                posts.forEach(item => {
-                    if (item.base._id === meta.arg.postId) {
-                        if (item.base.savedBy.indexOf(meta.arg.userId) === -1) {
-                            item.base.savedBy.push(meta.arg.userId);
-                        } else {
-                            item.base.savedBy = item.base.savedBy.filter(id => id !== meta.arg.userId);
-                        }
-                    }
-                });
-
-                if (state.post1 !== null) state.post1 = posts[0];
-                if (state.post2 !== null) state.post2 = posts[1];
-            })
-    }
-})
+});
 
 const {reducer, actions} = createBattleFormSlice;
 

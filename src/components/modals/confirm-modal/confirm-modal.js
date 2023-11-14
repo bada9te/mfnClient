@@ -6,13 +6,12 @@ import Slide from '@mui/material/Slide';
 import * as Alert from "../../alerts/alerts";
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsShowing as setConfirmModalIsShowing } from './confirmModalSlice';
-import { deleteTrack, updateCommentsSocket } from '../../containers/posts-container/postsContainerSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
 import ConfirmContainer from '../../containers/confirm-container/confirm-container';
-import { deleteComment } from '../../containers/comments-container/commentsContainerSlice';
-import userSocket from '../../../socket/user/socket-user';
-import { deleteAccount } from '../../forms/profile-card/profileCardFormSlice';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { POST_DELETE_BY_ID_MUTATION } from '../../../graphql/posts';
+import { COMMENT_DELETE_BY_ID_MUTATION } from '../../../graphql/comments';
+import { USER_DELETE_BY_ID_MUTATION } from '../../../graphql/users';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -25,43 +24,31 @@ const ConfirmModal = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [deleteTrack, {}] = useMutation(POST_DELETE_BY_ID_MUTATION);
+    const [deleteComment, {}] = useMutation(COMMENT_DELETE_BY_ID_MUTATION);
+    const [deleteUser, {}] = useMutation(USER_DELETE_BY_ID_MUTATION);
 
     const handleClose = (confirmed) => {
         dispatch(setConfirmModalIsShowing(false));
         if (confirmed) {
             switch (actionType) {
                 case "delete-post":
-                    dispatch(deleteTrack(itemId))
-                    .then(unwrapResult)
-                    .then(result => {
-                        if (result.data.done) {
-                            Alert.alertSuccess('Post deleted');
-                        }
-                    });
+                    deleteTrack({ variables: { _id: itemId } })
+                        .then(result => {
+                            console.log(result);
+                        });
                     break;
                 case "delete-comment":
-                    dispatch(deleteComment(itemId))
-                    .then(unwrapResult)
-                    .then(result => {
-                        if (result.data.done) {
-                            dispatch(updateCommentsSocket({
-                                comment: result.data.comment
-                            }));
-                            
-                            userSocket.emit("post-remove-comment", {
-                                postId: result.data.comment.post,
-                                comment: result.data.comment,
-                            });
-                        }
-                    });
+                    deleteComment({ variables: { _id: itemId } })
+                        .then(result => {
+                            console.log(result);
+                        });
                     break;
                 case "delete-account":
-                    dispatch(deleteAccount())
-                        .then(unwrapResult)
+                    deleteUser({ variables: { _id: itemId } })
                         .then(result => {
-                            if (result.data.done) {
-                                navigate('/logout')
-                            }
+                            console.log(result);
+                            //navigate('/logout')
                         });
                     break;
                 default:

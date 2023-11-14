@@ -106,55 +106,6 @@ const playlistsContainerSlice = createSlice({
                 }
             })
 
-
-            .addCase(switchPostLike.fulfilled, (state, { meta }) => {
-                const plData = current(state.playlists);
-                if (plData.length > 0) {
-                    const playlists = JSON.parse(JSON.stringify(plData));
-                    const postId = meta.arg.postId;
-                    const userId = meta.arg.userId;
-
-                    playlists.forEach(playlist => {
-                        const index = playlist.tracks.map(i => i._id).indexOf(postId);
-                        if (index !== -1) {
-                            const track = playlist.tracks[index];
-
-                            if (track.likedBy.indexOf(userId) === -1) {
-                                track.likedBy.push(userId);
-                            } else {
-                                track.likedBy = track.likedBy.filter(id => id !== userId);
-                            }
-                        }
-                    });
-                    
-
-                    state.playlists = playlists;
-                }
-            })
-            .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
-                const plData = current(state.playlists)
-                if (plData.length > 0) {
-                    const playlists = JSON.parse(JSON.stringify(plData));
-                    const postId = meta.arg.postId;
-                    const userId = meta.arg.userId;
-
-                    playlists.forEach(playlist => {
-                        const index = playlist.tracks.map(i => i._id).indexOf(postId);
-                        if (index !== -1) {
-                            const track = playlist.tracks[index];
-
-                            if (track.savedBy.indexOf(userId) === -1) {
-                                track.savedBy.push(userId);
-                            } else {
-                                track.savedBy = track.savedBy.filter(id => id !== userId);
-                            }
-                        }
-                    });
-
-                    state.playlists = playlists;
-                }
-            })
-
             .addCase(createComment.fulfilled, (state, action) => {
                 const plData = current(state.playlists);
 

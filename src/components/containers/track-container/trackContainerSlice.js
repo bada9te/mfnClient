@@ -36,37 +36,6 @@ const trackContainer = createSlice({
                 state.inspectingPost = action.payload.data.post;
                 state.isLoading = false;
             })
-
-            .addCase(switchPostLike.fulfilled, (state, { meta }) => {
-                if (state.inspectingPost) {
-                    const post = JSON.parse(JSON.stringify(current(state.inspectingPost)));
-    
-                    if (post._id === meta.arg.postId) {
-                        if (post.likedBy.indexOf(meta.arg.userId) === -1) {
-                            post.likedBy.push(meta.arg.userId);
-                        } else {
-                            post.likedBy = post.likedBy.filter(id => id !== meta.arg.userId);
-                        }
-                    }
-                    state.inspectingPost = post;
-                }
-            })
-
-            .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
-                if (state.inspectingPost) {
-                    const post = JSON.parse(JSON.stringify(current(state.inspectingPost)));
-
-                    if (post._id === meta.arg.postId) {
-                        if (post.savedBy.indexOf(meta.arg.userId) === -1) {
-                            post.savedBy.push(meta.arg.userId);
-                        } else {
-                            post.savedBy = post.savedBy.filter(id => id !== meta.arg.userId);
-                        }
-                    }
-                    state.inspectingPost = post;
-                }
-            })
-
             .addCase(createComment.fulfilled, (state, action) => {
                 if (state.inspectingPost) {
                     const commentId = action.payload.data.comment._id;

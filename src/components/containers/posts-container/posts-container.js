@@ -1,30 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { SpinnerLinear } from '../../common/spinner/Spinner';
 import PaginationTree from '../../common/pagination/pagination';
 
 import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from './postsContainerSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
-import { setMaxPage } from '../../common/pagination/paginationSlice';
-import { useCallback } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../graphql/posts';
 import defineMaxPage from '../../../common-functions/defineMaxPage';
+import { setActivePage, setError, setIsLoading, setMaxPage, setPosts } from './postsContainerSlice';
 
 
 
 const PostsContainer = (props) => {
     const {id, profileLinkAccessable, savedOnly, except} = props;
-    const currentUser = useSelector(state => state?.base?.user);
 
-    const [maxCountPerPage, _] = useState(12);
-    const [maxPage, setMaxPage] = useState(1);
-    const [activePage, setActivePage] = useState(1);
-    const [posts, setPosts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const currentUser = useSelector(state => state?.base?.user);
+    const maxCountPerPage = useSelector(state => state.postsContainer.maxCountPerPage);
+    const maxPage = useSelector(state => state.postsContainer.maxPage)
+    const activePage = useSelector(state => state.postsContainer.activePage)
+    const posts = useSelector(state => state.postsContainer.posts)
+    const isLoading = useSelector(state => state.postsContainer.isLoading)
+    const error = useSelector(state => state.postsContainer.error)
 
 
     const [getSavedOnlyPosts, {}] = useLazyQuery(POSTS_SAVED_BY_USER_QUERY);
@@ -32,15 +30,16 @@ const PostsContainer = (props) => {
     const [getOwnerPosts, {}] = useLazyQuery(POSTS_BY_OWNER_QUERY);
     
     
-
-    
-
+    const handlePageChange = page => {
+        dispatch(setActivePage(page));
+    }
 
     useEffect(() => {
         const fetchData = async() => {
             try {
-                setIsLoading(true);
-                setError(null);
+                
+                dispatch(setIsLoading(true));
+                dispatch(setError(null));
 
                 let result;
                 let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
@@ -53,8 +52,8 @@ const PostsContainer = (props) => {
                             limit: maxCountPerPage
                         }
                     })
-                    setPosts(result.data.postsSavedByUser.posts);
-                    setMaxPage(defineMaxPage(result.data.postsSavedByUser.count, maxCountPerPage));
+                    dispatch(setPosts(result.data.postsSavedByUser.posts));
+                    dispatch(setMaxPage(defineMaxPage(result.data.postsSavedByUser.count, maxCountPerPage)));
                 } else if (id) {
                     result = await getOwnerPosts({
                         variables: {
@@ -63,8 +62,8 @@ const PostsContainer = (props) => {
                             limit: maxCountPerPage
                         }
                     })
-                    setPosts(result.data.postsByOwner.posts);
-                    setMaxPage(defineMaxPage(result.data.postsByOwner.count, maxCountPerPage));
+                    dispatch(setPosts(result.data.postsByOwner.posts));
+                    dispatch(setMaxPage(defineMaxPage(result.data.postsByOwner.count, maxCountPerPage)));
                 } else {
                     result = await getAllPosts({
                         variables: {
@@ -72,19 +71,19 @@ const PostsContainer = (props) => {
                             limit: maxCountPerPage
                         }
                     });
-                    setPosts(result.data.posts.posts);
-                    setMaxPage(defineMaxPage(result.data.posts.count, maxCountPerPage));
+                    dispatch(setPosts(result.data.posts.posts));
+                    dispatch(setMaxPage(defineMaxPage(result.data.posts.count, maxCountPerPage)));
                 }
             } catch (error) {
                 console.log(error)
-                setError(error);
+                dispatch(setError(error));
             } finally {
-                setIsLoading(false);
+                dispatch(setIsLoading(false));
             }
         }
 
         fetchData();
-    }, [savedOnly, id, currentUser?._id, activePage]);
+    }, [savedOnly, id, currentUser?._id, activePage, getAllPosts, getOwnerPosts, getSavedOnlyPosts, dispatch, maxCountPerPage]);
 
     
     
@@ -132,7 +131,7 @@ const PostsContainer = (props) => {
                 posts.length > 0 && !isLoading
                 &&
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 10}}>
-                    <PaginationTree maxPage={maxPage} activePage={activePage} handlePageChange={(page) => setActivePage(page)}/>
+                    <PaginationTree maxPage={maxPage} activePage={activePage} handlePageChange={handlePageChange}/>
                 </Box>
             }
         </>

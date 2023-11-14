@@ -1,51 +1,59 @@
 import { useForm } from "react-hook-form";
-import { Stack, Card, Typography, CardContent, FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
+import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
 import * as Alert from "../../alerts/alerts";
 import { useDispatch, useSelector } from "react-redux";
-import { savePostFile, setAudio, setAudioTitle, setCommentsAllowed, setDescription, setDownloadsAllowed, setImageTitle, setPicture, setTitle, uploadPost } from "./postUploadFormSlice";
+import { savePostFile, setAudio, setAudioTitle, setCommentsAllowed, setDescription, setDownloadsAllowed, setImageTitle, setPicture, setTitle } from "./postUploadFormSlice";
 import { setImageType, setIsShowing as setCropModalIsShowing } from "../../modals/image-cropper-modal/imageCropperModalSlice";
-import { useEffect } from "react";
-import { unwrapResult } from "@reduxjs/toolkit";
+import { useMutation } from "@apollo/client";
+import { POST_CREATE_MUTATION } from "../../../graphql/posts";
+import blobToFile from "../../../common-functions/blobToFile";
 
 
 
 const PostUploadForm = (props)=> {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const audioTitle = useSelector(state => state.postUploadForm.audioTitle);
-    const imageTitle = useSelector(state => state.postUploadForm.imageTitle);
-    const picture = useSelector(state => state.postUploadForm.picture);
-    const commentsAllowed = useSelector(state => state.postUploadForm.commentsAllowed);
-    const downloadsAllowed = useSelector(state => state.postUploadForm.downloadsAllowed);
-    const theme = useSelector(state => state.base.theme);
+    
     const dispatch = useDispatch();
+    const currentUserId = useSelector(state => state.base.user._id);
+    const theme = useSelector(state => state.base.theme);
+    const postUploadForm = useSelector(state => state.postUploadForm);
 
 
-    const blobToFile = (theBlob, fileName) => {
-        //A Blob() is almost a File() - it's just missing the two properties below which we will add
-        theBlob.lastModifiedDate = new Date();
-        theBlob.name = fileName;
-        return theBlob;
-    }
+    const [postUpload, { data, loading, error }] = useMutation(POST_CREATE_MUTATION);
+
 
     // form submit
     const onSubmit = async(data) => {
-        let blob = await fetch(picture).then(r => r.blob());
+        let blob = await fetch(postUploadForm.picture).then(r => r.blob());
+
         Alert.alertPromise("Uploading...", "Post uploaded", "Can't upload the post", () => {
             return new Promise((resolve, reject) => {
                 Promise.all([
                     dispatch(savePostFile({file: data.Audio[0], type: 'audio'})),
                     dispatch(savePostFile({file: blobToFile(blob, data.Image[0].name), type: 'image'}))
                 ]).then(() => {
-                    dispatch(uploadPost())
-                        .then(unwrapResult)
-                        .then(result => {
-                            if (result.data.done) {
-                                reset();
-                                resolve();
-                            } else {
-                                reject();
-                            }
-                        });
+                    postUpload({
+                        variables: {
+                            input: {
+                                owner: currentUserId,
+                                title: postUploadForm.title,
+                                description: postUploadForm.description,
+                                audio: postUploadForm.uploadedAudioName,
+                                image: postUploadForm.uploadedPictureName,
+                                commentsAllowed: postUploadForm.commentsAllowed,
+                                downloadsAllowed: postUploadForm.downloadsAllowed,
+                            },
+                        },
+                    })
+                    .then(result => {
+                        console.log(result)
+                        if (result.data.done) {
+                            reset();
+                            resolve();
+                        } else {
+                            reject();
+                        }
+                    });
                 });
             }); 
         }, { theme });  
@@ -70,10 +78,6 @@ const PostUploadForm = (props)=> {
             dispatch(setAudio(URL.createObjectURL(file)));
         }
     };
-
-    useEffect(() => {
-        //console.log('TODO: clear me');
-    }, [])
 
 
     return(          
@@ -112,7 +116,7 @@ const PostUploadForm = (props)=> {
             />
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
-                    {imageTitle}
+                    {postUploadForm.imageTitle}
                     <input type="file" hidden 
                         onInput={e => handlePicture(e.target.files[0] || null)}
                         {...register("Image", {
@@ -123,7 +127,7 @@ const PostUploadForm = (props)=> {
             </FormGroup>
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
-                    {audioTitle}
+                    {postUploadForm.audioTitle}
                     <input type="file" hidden 
                         onInput={e => handleAudio(e.target.files[0] || null)}
                         {...register("Audio", {
@@ -136,7 +140,7 @@ const PostUploadForm = (props)=> {
                 <FormControlLabel
                     control={
                         <Checkbox color="primary" {...register("AllowComments", {})} 
-                            checked={commentsAllowed} 
+                            checked={postUploadForm.commentsAllowed} 
                             onChange={(e) => dispatch(setCommentsAllowed(e.target.checked))}
                         />
                     }
@@ -147,7 +151,7 @@ const PostUploadForm = (props)=> {
                 <FormControlLabel
                     control={
                         <Checkbox color="primary" {...register("AllowDownloads", {})}
-                            checked={downloadsAllowed} 
+                            checked={postUploadForm.downloadsAllowed} 
                             onChange={(e) => dispatch(setDownloadsAllowed(e.target.checked))}
                         />
                     }

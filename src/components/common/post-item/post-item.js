@@ -19,8 +19,8 @@ import { setIsShowing as setConfirmModalIsShowing }    from '../../modals/confir
 import { setActionType, setItemId, setText, setTitle } from '../../containers/confirm-container/confirmContainerSlice';
 
 
-import changeLikes from './functions/changeLikes';
-import changeSaves from './functions/changeSaves';
+import { useMutation } from '@apollo/client';
+import { POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from '../../../graphql/posts';
 
 
 
@@ -46,9 +46,15 @@ const PostItem = (props) => {
     
 
     // handle likes
+    const [switchLike, {}] = useMutation(POST_SWITCH_LIKE_MUTATION);
     const onLikesChanged = async(e, value) => {
-        changeLikes(addons, base, isLiked, currentUser, dispatch); 
         setIsLiked(!isLiked);
+        switchLike({
+            variables: {
+                userId: currentUser._id,
+                postId: base._id
+            },
+        });
     }
 
     // switch loop
@@ -126,10 +132,18 @@ const PostItem = (props) => {
         }
     }
 
+    const [switchInSaved, {}] = useMutation(POST_SWITCH_IN_SAVED_MUTATION);
     // add to saved or remove from saved
-    const switchInSaved = async() => {
+    const switchPostInSaved = async() => {
         setIsSaved(!isSaved);
-        changeSaves(base, isSaved, currentUser, theme, dispatch);
+        switchInSaved({
+            variables: {
+                input: {
+                    userId: currentUser._id,
+                    postId: base._id
+                }
+            }
+        })
     }
         
     // init
@@ -139,55 +153,6 @@ const PostItem = (props) => {
             base.savedBy.find(savedById => savedById === currentUser?._id) ? setIsSaved(true) : setIsSaved(false);
         }
     }, [base.likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, base._id, base.savedBy]);
-
-    /*
-    // socket
-    useEffect(() => {
-        userSocket.on(`post-${base._id}-was-liked`, (data) => {
-            if (data.sender === currentUser._id) setIsLiked(true);
-            dispatch(updateLikesSocket({
-                userId: data.sender,
-                postId: base._id,
-            }));
-        });
-        userSocket.on(`post-${base._id}-was-unliked`, (data) => {
-            if (data.sender === currentUser._id) setIsLiked(false);
-            dispatch(updateLikesSocket({
-                userId: data.sender,
-                postId: base._id,
-            }));
-        });
-        userSocket.on(`post-${base._id}-was-saved`, (data) => {
-            if (data.sender === currentUser._id) setIsSaved(true);
-            dispatch(updateSavesSocket({
-                userId: data.sender,
-                postId: base._id,
-            }));
-        });
-        userSocket.on(`post-${base._id}-was-unsaved`, (data) => {
-            if (data.sender === currentUser._id) setIsSaved(false);
-            dispatch(updateSavesSocket({
-                userId: data.sender,
-                postId: base._id,
-            }));
-        });
-        userSocket.on(`post-${base._id}-was-commented`, (data) => {
-            dispatch(updateCommentsSocket(data));
-        });
-        userSocket.on(`post-${base._id}-was-uncommented`, (data) => {
-            dispatch(updateCommentsSocket(data));
-        });
-
-        return () => {
-            userSocket.off(`post-${base._id}-was-liked`);
-            userSocket.off(`post-${base._id}-was-unliked`);
-            userSocket.off(`post-${base._id}-was-saved`);
-            userSocket.off(`post-${base._id}-was-unsaved`);
-            userSocket.off(`post-${base._id}-was-commented`);
-            userSocket.off(`post-${base._id}-was-uncommented`);
-        };
-    }, [base._id, dispatch, currentUser?._id]);
-    */
 
     // for post upload form visualization
     useEffect(() => {}, [addons.commentsAllowed, addons.downloadsAllowed])
@@ -268,7 +233,7 @@ const PostItem = (props) => {
                                         <span>
                                             <IconButton 
                                                 aria-label="bookmark" 
-                                                onClick={switchInSaved} 
+                                                onClick={switchPostInSaved} 
                                                 sx={{ color: 'white' }}
                                                 disabled={currentUser && currentUser._id !== "" ? false : true}
                                             >

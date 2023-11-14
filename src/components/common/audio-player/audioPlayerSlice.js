@@ -44,40 +44,6 @@ const audioPlayerSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(switchPostLike.fulfilled, (state, { meta }) => {
-                if (state.currentTrack) {
-                    const track = JSON.parse(JSON.stringify(current(state.currentTrack)));
-                    const postId = meta.arg.postId;
-                    const userId = meta.arg.userId;
-    
-                    if (track.base._id === postId) {
-                        if (track.base.likedBy.indexOf(userId) === -1) {
-                            track.base.likedBy.push(userId);
-                        } else {
-                            track.base.likedBy = track.base.likedBy.filter(id => id !== userId);
-                        }
-                    }
-    
-                    state.currentTrack = track;
-                }
-            })
-            .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
-                if (state.currentTrack) {
-                    const track = JSON.parse(JSON.stringify(current(state.currentTrack)));
-                    const postId = meta.arg.postId;
-                    const userId = meta.arg.userId;
-
-                    if (track.base._id === postId) {
-                        if (track.base.savedBy.indexOf(userId) === -1) {
-                            track.base.savedBy.push(userId);
-                        } else {
-                            track.base.savedBy = track.base.savedBy.filter(id => id !== userId);
-                        }
-                    }
-
-                    state.currentTrack = track;
-                }
-            })
             .addCase(createComment.fulfilled, (state, action) => {
                 if (state.currentTrack) {
                     console.log(action.payload.data.comment)

@@ -25,6 +25,8 @@ export const CORE_POST_FIELDS = gql`
     }
 `;
 
+
+// Q
 export const POST_QUERY = gql`
     ${CORE_POST_FIELDS}
     query post($_id: String!) {
@@ -88,3 +90,41 @@ export const POSTS_BY_IDS_QUERY = gql`
     }
 `;
 
+
+// M
+export const POST_CREATE_MUTATION = gql`
+    ${CORE_POST_FIELDS}
+    mutation postCreate($input: AddPostInput!) {
+        postCreate(input: $input) {
+            ...CorePostFields
+        }
+    }
+`;
+
+export const POST_DELETE_BY_ID_MUTATION = gql`
+    ${CORE_POST_FIELDS}
+    mutation postDeleteById($_id: ID!) {
+        postDeleteById(_id: $_id) {
+            _id
+            title
+        }
+    }
+`;
+
+export const POST_SWITCH_LIKE_MUTATION = gql`
+    ${CORE_POST_FIELDS}
+    mutation postSwitchLike($input: SwitchLikeOrPostInSavedInput!) {
+        postSwitchLike(input: $input) {
+            ...CorePostFields
+        }
+    }
+`;
+
+export const POST_SWITCH_IN_SAVED_MUTATION = gql`
+    ${CORE_POST_FIELDS}
+    mutation postSwicthInSaved($input: SwitchLikeOrPostInSavedInput!) {
+        postSwicthInSaved(input: $input) {
+            ...CorePostFields
+        }
+    }
+`;

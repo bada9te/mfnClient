@@ -84,48 +84,6 @@ const battlesContainerSlice = createSlice({
                 battlesContainerSlice.caseReducers.socketAddVote(state, { payload: meta.arg });
             })
 
-            // add or remove like
-            .addCase(switchPostLike.fulfilled, (state, { meta }) => {
-                const battles = JSON.parse(JSON.stringify(current(state.battles)));
-                const postId = meta.arg.postId;
-                const userId = meta.arg.userId;
-
-                battles.forEach(battle => {
-                    if (battle.post1?._id === postId || battle.post2?._id === postId) {
-                        let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
-
-                        if (battle[postNumberStr].likedBy.indexOf(userId) === -1) {
-                            battle[postNumberStr].likedBy.push(userId);
-                        } else {
-                            battle[postNumberStr].likedBy = battle[postNumberStr].likedBy.filter(id => id !== userId);
-                        }
-                    }
-                });
-                
-                state.battles = battles;
-            })
-            
-            // switch in saved
-            .addCase(switchPostInSaved.fulfilled, (state, { meta }) => {
-                const battles = JSON.parse(JSON.stringify(current(state.battles)));
-                const postId = meta.arg.postId;
-                const userId = meta.arg.userId;
-
-                battles.forEach(battle => {
-                    if (battle.post1?._id === postId || battle.post2?._id === postId) {
-                        let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
-
-                        if (battle[postNumberStr].savedBy.indexOf(userId) === -1) {
-                            battle[postNumberStr].savedBy.push(userId);
-                        } else {
-                            battle[postNumberStr].savedBy = battle[postNumberStr].savedBy.filter(id => id !== userId);
-                        }
-                    }
-                });
-                
-                state.battles = battles;
-            })
-
             // comment added
             .addCase(createComment.fulfilled, (state, action) => {
                 const battles = JSON.parse(JSON.stringify(current(state.battles)));
