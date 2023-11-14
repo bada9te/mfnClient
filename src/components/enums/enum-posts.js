@@ -3,9 +3,8 @@ import getTimeSince from "../../common-functions/getTimeSince";
 import { useSelector } from "react-redux";
 
 const EnumPosts = props => {
-    const {except, profileLinkAccessable} = props;
+    const {except, profileLinkAccessable, posts} = props;
     const locations = useSelector(state => state.base.locations);
-    const posts = useSelector(state => state.postsContainer.posts);
 
     return (
         <>

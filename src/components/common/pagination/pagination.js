@@ -1,22 +1,17 @@
 import { Pagination, Box } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { setActivePage } from "./paginationSlice";
 
 
 const PaginationTree = props => {
-    const dispatch = useDispatch();
-    const activePage = useSelector(state => state?.pagination?.activePage);
-    const maxPage = useSelector(state => state?.pagination?.maxPage);
-    const handlePageChange = (e, pageNumber) => {
-        dispatch(setActivePage(pageNumber))
-    }
+    const { maxPage, activePage, handlePageChange } = props;
+
+    const handleChangePageEvent = (event, newPage) => {
+        handlePageChange(newPage);
+    };
  
     return (
-        <>
-            <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                <Pagination count={maxPage} page={activePage} onChange={handlePageChange} color="primary"/>
-            </Box>
-        </>
+        <Box sx={{display: 'flex', justifyContent: 'center'}}>
+            <Pagination count={maxPage} page={activePage} onChange={handleChangePageEvent} color="primary"/>
+        </Box>
     );
 }
 
