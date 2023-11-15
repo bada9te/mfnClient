@@ -1,9 +1,9 @@
+import { useReactiveVar } from "@apollo/client";
 import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { useSelector } from "react-redux";
+import { confirmContainerState } from "./reactive";
 
 const ConfirmContainer = props => {
-    const text = useSelector(state => state.confirmContainer.text);
-    const title = useSelector(state => state.confirmContainer.title);
+    const { text, title } = useReactiveVar(confirmContainerState);
 
     return (
         <>

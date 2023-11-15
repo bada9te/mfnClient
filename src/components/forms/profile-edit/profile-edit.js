@@ -6,13 +6,13 @@ import EmailImage    from "../../../images/icons/email.png"
 import PasswordImage from "../../../images/icons/password.png"
 import TextImage     from "../../../images/icons/text.png"
 import ClearImage     from "../../../images/icons/logo_clear.png"
-import { setIsShowing as setConfirmModalIsShowing } from "../../../components/modals/confirm-modal/confirmModalSlice";
-import { setActionType, setText, setTitle } from "../../../components/containers/confirm-container/confirmContainerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePartOfUser } from "../../baseSlice";
 import { prepareToRestore } from "../account-restore-request/accountRestoreRequestFormSlice";
 import { unwrapResult }     from "@reduxjs/toolkit";
 import { Delete } from "@mui/icons-material";
+import { confirmContainerState } from "../../containers/confirm-container/reactive";
+import { confirmModalState } from "../../modals/confirm-modal/reactive";
 
 
 const FormProfileEdit = (props) => {
@@ -103,10 +103,13 @@ const FormProfileEdit = (props) => {
     }
 
     const handleAccountDelete = async() => {
-        dispatch(setConfirmModalIsShowing(true));
-        dispatch(setActionType("delete-account"));
-        dispatch(setText("By confirming this, you agree that your account will be removed without any ability to restore."));
-        dispatch(setTitle("Confirm account deletion"));
+        confirmModalState({ ...confirmModalState(), isShowing: true });
+        confirmContainerState({ 
+            ...confirmContainerState(), 
+            actionType: "delete-account", 
+            text: "By confirming this, you agree that your account will be removed without any ability to restore.",
+            title: "Confirm account deletion",
+        })
     } 
 
     return (

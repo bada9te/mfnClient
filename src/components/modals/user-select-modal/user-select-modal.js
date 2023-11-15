@@ -1,22 +1,21 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsShowing } from "./userSelectModalSlice";
 import UserSelectContainer from "../../containers/user-select-container/user-select-container";
+import { useReactiveVar } from "@apollo/client";
+import { userSelectModalState } from "./reactive";
 
 
 const UserSelectModal = props => {
-    const dispatch = useDispatch();
-    const isShowing = useSelector(state => state.userSelectModal.isShowing);
+    const userSelectModal = useReactiveVar(userSelectModalState);
     
 
     const handleClose = () => {
-        dispatch(setIsShowing(false));
+        userSelectModalState({...userSelectModal, isShowing: false});
     }
     
 
     return (
-        <Dialog open={isShowing} scroll='paper' fullWidth maxWidth='sm'>
+        <Dialog open={userSelectModal.isShowing} scroll='paper' fullWidth maxWidth='sm'>
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     Select user
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>

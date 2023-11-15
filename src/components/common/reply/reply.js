@@ -1,10 +1,10 @@
 import { Card, CardHeader, Avatar, CardContent } from "@mui/material";
 import getTimeSince from "../../../common-functions/getTimeSince";
 import { useDispatch, useSelector } from "react-redux";
-import { setReplyingTo } from "../../containers/comments-container/commentsContainerSlice";
 import CommentDropDown from "../comment/comment-dropdown/comment-dropdown";
-import { setReportingItemId } from "../../forms/report/reportFormSlice";
-import { setIsShowing as setReportModalIsShowing } from "../../modals/report-modal/reportModalSlice";
+import { reportFormState } from "../../forms/report/reactive";
+import { reportModalState } from "../../modals/report-modal/reactive";
+import { commentsContainerState } from "../../containers/comments-container/reactive";
 
 
 const Reply = props => {
@@ -13,16 +13,16 @@ const Reply = props => {
     const locations = useSelector(state => state.base.locations);
     
     const handleSelect = () => {
-        dispatch(setReplyingTo({
-            commentId: id,
-            commentOwnerNick: item.owner.nick,
-        }));
+        commentsContainerState({
+            ...commentsContainerState(),
+            replyingTo: [id, item.owner.nick]
+        })
     }
 
     // report comment
     const handleReportComment = () => {
-        dispatch(setReportingItemId(id));
-        dispatch(setReportModalIsShowing(true));
+        reportFormState({...reportFormState(), reportingItemId: id});
+        reportModalState({ ...reportModalState(), isShowing: true });
     }
 
     return (

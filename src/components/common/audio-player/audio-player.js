@@ -1,14 +1,15 @@
 import { memo, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Box, Drawer, IconButton, Slider, Stack, Typography } from '@mui/material';
-import { setControlsLocked, setIsMuted, setIsPlaying, setIsShowing, setLoop } from './audioPlayerSlice';
-import { setValue } from '../../bars/bottom/bottom-bar/bottomBarSlice';
 import { FastRewind, Loop, Pause, PlayArrow, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material';
 import { SpinnerLinear } from '../spinner/Spinner';
 import PostItem from '../post-item/post-item';
 import audioAnalyzer from './audiowave/analyzer';
 import WaveForm from './audiowave/waveform';
 import PostItemUnavailable from '../post-item/post-item-unavailable';
+import { useReactiveVar } from '@apollo/client';
+import { audioPlayerState } from './reactive';
+import { bottomBarState } from '../../bars/bottom/bottom-bar/reactive';
 
 const getTime = (t) => {
     var minute = Math.floor(t / 60); // get minute(integer) from time
@@ -19,14 +20,10 @@ const getTime = (t) => {
 }
 
 const CustomAudioPlayer = (props) => {
-    const isShowing = useSelector(state => state.audioPlayer.isShowing);
-    const isPlaying = useSelector(state => state.audioPlayer.isPlaying);
-    const isMuted = useSelector(state => state.audioPlayer.isMuted);
-    const src = useSelector(state => state.audioPlayer.src);
-    const loop = useSelector(state => state.audioPlayer.loop);
-    const controlsLocked = useSelector(state => state.audioPlayer.controlsLocked);
-    const isLoading = useSelector(state => state.audioPlayer.isLoading);
-    const currentTrack = useSelector(state => state.audioPlayer.currentTrack);
+    const audioPlayer = useReactiveVar(audioPlayerState);
+    const { isShowing, isPlaying, isMuted, src, loop, controlsLocked, isLoading, currentTrack } = audioPlayer;
+    const bottomBar = useReactiveVar(bottomBarState);
+
     const dispatch = useDispatch();
 
     const [volume, setVolume] = useState(50);
@@ -41,8 +38,8 @@ const CustomAudioPlayer = (props) => {
     // HANDLERS ---------------------->
     // show dialog
     const handleAudioPlayerClose = () => {
-        dispatch(setValue(''));
-        dispatch(setIsShowing(false));
+        bottomBarState({ ...bottomBar, value: '' });
+        audioPlayerState({...audioPlayer, isShowing: false});
     };
     // volume
     const handleVolumeChange = (event, vol) => {
@@ -51,7 +48,7 @@ const CustomAudioPlayer = (props) => {
     };
     // play/pause
     const handlePlayPause = () => {
-        dispatch(setIsPlaying(!isPlaying));
+        audioPlayerState({ ...audioPlayer, isPlaying: !isPlaying });
         if (!isPlaying === false) {
             containerRef.current.pause();
         } else {
@@ -60,12 +57,12 @@ const CustomAudioPlayer = (props) => {
     };
     // mute / unmute
     const handleMuteUnmute = () => {
-        dispatch(setIsMuted(!isMuted));
+        audioPlayerState({ ...audioPlayer, isMuted: !isMuted });
         containerRef.current.muted = !isMuted === false ? false : true;
     }
     // switch loop
     const handleSwitchLoop = () => {
-        dispatch(setLoop(!loop));
+        audioPlayerState({ ...audioPlayer, loop: !loop });
         containerRef.current.loop = !loop === false ? false : true;
     }
     //rewind to start
@@ -113,25 +110,22 @@ const CustomAudioPlayer = (props) => {
     // main effect
     useEffect(() => {
         let container = containerRef.current;
-        dispatch(setControlsLocked(true));
-        dispatch(setIsPlaying(false));
+        audioPlayerState({ ...audioPlayer, controlsLocked: true, isPlaying: false });
 
         if (container) {
-            dispatch(setControlsLocked(false));
-            dispatch(setIsPlaying(true));
+            audioPlayerState({ ...audioPlayer, controlsLocked: false, isPlaying: true });
             container.addEventListener("loadeddata", () => {
                 setDuration(getTime(containerRef.current.duration));
                 container.removeEventListener("loadeddata", this);
             });
             container.addEventListener("timeupdate", () => {
-                
                 setProgress(container.currentTime / container.duration * 100);
                 setTime(getTime(container.currentTime));
                 container.removeEventListener("timeupdate", this);
             });
             container.addEventListener("ended", () => {
                 handleRewind();
-                dispatch(setIsPlaying(false));
+                audioPlayerState({ ...audioPlayer, isPlaying: false });
             });
             container.play();
             audioAnalyzer(containerRef, analyzerData, setAnalyzerData)

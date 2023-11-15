@@ -1,30 +1,31 @@
 import { memo, useEffect } from "react";
-import { Box, BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { MusicNote, PersonSearch, AddCircle, Radio } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-import { setShowLB, setShowRB, setValue } from "./bottomBarSlice";
-import { setIsShowing as setAudioPlayerIsShowing } from "../../../common/audio-player/audioPlayerSlice";
-import { SpinnerLinear } from "../../../common/spinner/Spinner";
+import { useSelector } from "react-redux";
+import { useReactiveVar } from "@apollo/client";
+import { audioPlayerState } from "../../../common/audio-player/reactive";
+import { bottomBarState } from "./reactive";
 
 
 const BottomBar = (props) => {
     const navigate= useNavigate();
     const location = useLocation();
-    const dispatch = useDispatch();
 
     const user = useSelector(state => state.base.user);
-    const value = useSelector(state => state.bottomBar.value);
-    const isLoading = useSelector(state => state.audioPlayer.isLoading);
+    
+    const bottomBar = useReactiveVar(bottomBarState);
+    const audioPlayer = useReactiveVar(audioPlayerState);
 
-    const handleShowRB = () => dispatch(setShowRB(true));
-    const handleShowLB = () => dispatch(setShowLB(true));
+    const handleShowRB = () => bottomBarState({ ...bottomBar, showRB: true });
+    const handleShowLB = () => bottomBarState({ ...bottomBar, showLB: true });
+
     const handleShowAudioPlayer = () => {
-        dispatch(setAudioPlayerIsShowing(true));
+        audioPlayerState({...audioPlayer, isShowing: true});
     }
 
     const handleChange = (event, newValue) => {
-        dispatch(setValue(newValue));
+        bottomBarState({ ...bottomBar, value: newValue });
         switch (newValue) {
             case 'tracks': 
                 handleShowLB();
@@ -44,15 +45,15 @@ const BottomBar = (props) => {
     };
 
     useEffect(() => {
-        dispatch(setValue(''));
-    }, [location.pathname, dispatch])
+        bottomBarState({ ...bottomBar, value: '' });
+    }, [location.pathname])
 
 
     return (
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
             <BottomNavigation
                 showLabels
-                value={value === '' ? location.pathname : value}
+                value={bottomBar.value === '' ? location.pathname : bottomBar.value}
                 onChange={handleChange}
                 >
                 <BottomNavigationAction value="tracks" label="Tracks" icon={<MusicNote />} />

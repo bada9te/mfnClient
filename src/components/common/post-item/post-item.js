@@ -1,82 +1,91 @@
 import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
-//import userSocket from '../../../socket/user/socket-user';
 
 import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, CardActions, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp, CheckCircle, HowToVote }                   from "@mui/icons-material";
 import PostItemDropDown             from './post-item-dropdown/post-item-dropdown';
-import { useDispatch, useSelector } from "react-redux";
-//import { updateCommentsSocket, updateLikesSocket, updateSavesSocket } from "../../containers/posts-container/postsContainerSlice";
-import { fetchComments }                                              from "../../containers/comments-container/commentsContainerSlice";
-import { setIsShowing as setCommentsModalIsShowing }                  from "../../modals/comments-modal/commentsModalSlice";
-import { setCurrentTrack, setIsMuted, setIsPlaying, setLoop, setSrc } from "../audio-player/audioPlayerSlice";
-import { setIsShowing as setUserSelectModalIsShowing } from '../../modals/user-select-modal/userSelectModalSlice';
-import { setSelectType, setSharedItem }                from '../../containers/user-select-container/userSelectContainerSlice';
-import { setReportingItemId }                          from '../../forms/report/reportFormSlice';
-import { setIsShowing as setReportModalIsShowing }     from '../../modals/report-modal/reportModalSlice';
-import { setIsShowing as setConfirmModalIsShowing }    from '../../modals/confirm-modal/confirmModalSlice';
-import { setActionType, setItemId, setText, setTitle } from '../../containers/confirm-container/confirmContainerSlice';
+import { useSelector } from "react-redux";
 
-
-import { useMutation } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import { POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from '../../../graphql/posts';
+import { audioPlayerState } from '../audio-player/reactive';
+import { userSelectContainerState } from '../../containers/user-select-container/reactive';
+import { userSelectModalState } from '../../modals/user-select-modal/reactive';
+import { reportFormState } from '../../forms/report/reactive';
+import { reportModalState } from '../../modals/report-modal/reactive';
+import { confirmContainerState } from '../../containers/confirm-container/reactive';
+import { confirmModalState } from '../../modals/confirm-modal/reactive';
+import { commentsModalState } from '../../modals/comments-modal/reactive';
+import { commentsContainerState } from '../../containers/comments-container/reactive';
 
 
 
 const PostItem = (props) => {
-    const {
-        base, addons
-    } = props;
+    const { base, addons } = props;
     const [isLiked, setIsLiked] = useState(false);
-    const [isSaved, setIsSaved] = useState(false)
+    const [isSaved, setIsSaved] = useState(false);
 
-    const dispatch = useDispatch();
+    const [likedBy, setLikedBy] = useState(base.likedBy);
+    const [savedBy, setSavedBy] = useState(base.savedBy);
+
+    //const dispatch = useDispatch();
     const currentUser = useSelector(state => state?.base?.user);
-    const currentAudio = useSelector(state => state.audioPlayer.src);
-    const isPlaying = useSelector(state => state.audioPlayer.isPlaying);
-    const isMuted = useSelector(state => state.audioPlayer.isMuted);
-    const volume = useSelector(state => state.audioPlayer.volume);
-    const loop = useSelector(state => state.audioPlayer.loop);
-    const controlsLocked = useSelector(state => state.audioPlayer.controlsLocked);
-    const theme = useSelector(state => state.base.theme);
+    const audioPlayer = useReactiveVar(audioPlayerState);
+
 
     // nav
     const navigate = useNavigate();
     
+    const [switchLike, {}] = useMutation(POST_SWITCH_LIKE_MUTATION);
+    const [switchInSaved, {}] = useMutation(POST_SWITCH_IN_SAVED_MUTATION);
 
     // handle likes
-    const [switchLike, {}] = useMutation(POST_SWITCH_LIKE_MUTATION);
     const onLikesChanged = async(e, value) => {
-        setIsLiked(!isLiked);
-        switchLike({
+        await switchLike({
             variables: {
-                userId: currentUser._id,
-                postId: base._id
+                input: {
+                    userId: currentUser._id,
+                    postId: base._id
+                },
             },
+        }).then(({data}) => {
+            setLikedBy(data.postSwitchLike.likedBy);
+        });
+    }
+    
+    // add to saved or remove from saved
+    const switchPostInSaved = async(e, value) => {
+        await switchInSaved({
+            variables: {
+                input: {
+                    userId: currentUser._id,
+                    postId: base._id
+                }
+            }
+        }).then(({ data }) => {
+            setSavedBy(data.postSwicthInSaved.savedBy);
         });
     }
 
     // switch loop
     const switchLoop = () => {
-        dispatch(setLoop(!loop));
+        audioPlayerState({...audioPlayer, loop: !audioPlayer.loop});
     }
 
     // play aduio
     const playAudio = () => {
-        dispatch(setSrc(base.audio));
-        dispatch(setIsPlaying(true));
-        dispatch(setCurrentTrack(props));
+        audioPlayerState({ ...audioPlayer, src: base.audio, isPlaying: true, currentTrack: props, controlsLocked: false });
     }
 
     // pause audio
     const pauseAudio = () => {
-        dispatch(setIsPlaying(false));
+        audioPlayerState({ ...audioPlayer, isPlaying: false });
     }
 
     // mute unmute
     const handleMuteUnmute = () => {
-        dispatch(setIsMuted(!isMuted));
+        audioPlayerState({ ...audioPlayer, isMuted: !audioPlayer.isMuted });
     }
     
     // handle audio download
@@ -95,64 +104,49 @@ const PostItem = (props) => {
     // open user select modal to share
     const shareTrack = () => {
         if (addons.status !== "upload") {
-            dispatch(setSharedItem(base._id));
-            dispatch(setSelectType('postShare'));
-            dispatch(setUserSelectModalIsShowing(true));
+            userSelectContainerState({ ...userSelectContainerState(), sharedItem: base._id, selectType: 'postShare' });
+            userSelectModalState({ ...userSelectModalState(), isShowing: true });
         }
     }
 
     // report track
     const reportTrack = () => {
         if (addons.status !== "upload") {
-            dispatch(setReportingItemId(base._id));
-            dispatch(setReportModalIsShowing(true));
+            reportFormState({ ...reportFormState(), reportingItemId: base._id });
+            reportModalState({ ...reportModalState(), isShowing: false });
         }
     }
 
     // delete post
     const deleteTrack = () => {
         if (addons.status !== "upload") {
-            dispatch(setConfirmModalIsShowing(true));
-            dispatch(setActionType("delete-post"));
-            dispatch(setItemId(base._id));
-            dispatch(setText("By confirming this, you agree that your post will be removed without any ability to restore."));
-            dispatch(setTitle("Confirm track deletion"));
+            confirmModalState({ ...confirmModalState(), isShowing: true });
+            confirmContainerState({
+                ...confirmContainerState(),
+                actionType: "delete-post",
+                itemId: base._id,
+                text: "By confirming this, you agree that your post will be removed without any ability to restore.",
+                title: "Confirm track deletion",
+            });
         }
     }
 
     // comments modal
     const switchShowCommentsModal = () => {
         if (addons.status !== "upload") {
-            dispatch(setCommentsModalIsShowing(true));
-            dispatch(fetchComments({
-                postId: base._id,
-                postOwnerId: base.owner._id,
-                commentsIds: base.comments,
-            }));
+            commentsModalState({ ...commentsModalState(), isShowing: true });
+            commentsContainerState({ ...commentsContainerState(), commentsIds: base.comments });
         }
     }
 
-    const [switchInSaved, {}] = useMutation(POST_SWITCH_IN_SAVED_MUTATION);
-    // add to saved or remove from saved
-    const switchPostInSaved = async() => {
-        setIsSaved(!isSaved);
-        switchInSaved({
-            variables: {
-                input: {
-                    userId: currentUser._id,
-                    postId: base._id
-                }
-            }
-        })
-    }
         
     // init
     useEffect(() => {
         if (currentUser && currentUser._id !== "") {
-            base.likedBy.find(likedById => likedById === currentUser?._id) ? setIsLiked(true) : setIsLiked(false);
-            base.savedBy.find(savedById => savedById === currentUser?._id) ? setIsSaved(true) : setIsSaved(false);
+            likedBy.find(item => item._id === currentUser?._id) ? setIsLiked(true) : setIsLiked(false);
+            savedBy.find(item => item._id === currentUser?._id) ? setIsSaved(true) : setIsSaved(false);
         }
-    }, [base.likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, base._id, base.savedBy]);
+    }, [likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, base._id, savedBy]);
 
     // for post upload form visualization
     useEffect(() => {}, [addons.commentsAllowed, addons.downloadsAllowed])
@@ -241,7 +235,7 @@ const PostItem = (props) => {
                                             </IconButton>
                                         </span>
                                     </Tooltip>
-                                    <Typography sx={{ fontSize: 12 }}>{base.savedBy.length}</Typography>
+                                    <Typography sx={{ fontSize: 12 }}>{savedBy.length}</Typography>
                                 </Box>
                                 {
                                     addons.commentsAllowed
@@ -277,7 +271,7 @@ const PostItem = (props) => {
                                             </IconButton>
                                         </span>
                                     </Tooltip>
-                                    <Typography sx={{ fontSize: 12 }}>{base.likedBy.length}</Typography>
+                                    <Typography sx={{ fontSize: 12 }}>{likedBy.length}</Typography>
                                 </Box>
                             </Box>
                         </Box>
@@ -299,7 +293,7 @@ const PostItem = (props) => {
                         <>
                             {
                                 (() => {
-                                    if (currentAudio === base.audio && isPlaying) {
+                                    if (audioPlayer.src === base.audio && audioPlayer.isPlaying) {
                                         return (
                                             <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
                                                 
@@ -308,7 +302,7 @@ const PostItem = (props) => {
                                                         startIcon={<Pause/>}
                                                         sx={{ borderRadius: 0 }}
                                                         variant="contained" size="small" onClick={pauseAudio} 
-                                                        disabled={controlsLocked ? true : false}
+                                                        disabled={audioPlayer.controlsLocked ? true : false}
                                                     >
                                                         Pause
                                                     </Button>
@@ -316,29 +310,29 @@ const PostItem = (props) => {
                                                     <Button 
                                                         startIcon={<Loop/>}
                                                         sx={{ 
-                                                            backgroundColor: loop ? '#1BA39C' : '', 
-                                                            color: loop ? 'white' : '',
+                                                            backgroundColor: audioPlayer.loop ? '#1BA39C' : '', 
+                                                            color: audioPlayer.loop ? 'white' : '',
                                                             borderTopRightRadius: 50,
                                                             pr: 2
                                                         }} 
                                                         variant="contained" size="small" onClick={switchLoop} 
-                                                        disabled={controlsLocked ? true : false}
+                                                        disabled={audioPlayer.controlsLocked ? true : false}
                                                     >
                                                         Loop 
                                                     </Button>
                                                 </ButtonGroup>
                                                 <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
                                                     <Button 
-                                                        startIcon={ isMuted || volume === 0 ? <VolumeOff/> : <VolumeUp/> }
+                                                        startIcon={ audioPlayer.isMuted || audioPlayer.volume === 0 ? <VolumeOff/> : <VolumeUp/> }
                                                         sx={{ 
-                                                            backgroundColor: isMuted || volume === 0 ? '#f44336' : '',
-                                                            color: isMuted ? 'white' : '',
+                                                            backgroundColor: audioPlayer.isMuted || audioPlayer.volume === 0 ? '#f44336' : '',
+                                                            color: audioPlayer.isMuted ? 'white' : '',
                                                             borderTopLeftRadius: 50,
                                                             borderBottomLeftRadius: 0,
                                                             pl: 2
                                                         }} 
                                                         variant="contained" size="small" onClick={handleMuteUnmute} 
-                                                        disabled={controlsLocked ? true : false}
+                                                        disabled={audioPlayer.controlsLocked ? true : false}
                                                     >
                                                         Mute
                                                     </Button>

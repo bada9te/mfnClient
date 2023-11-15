@@ -4,14 +4,16 @@ import * as Alert from "../../alerts/alerts";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { httpCreateReport } from "../../../requests/reports";
-import { setIsShowing as setReportModalIsShowing } from "../../modals/report-modal/reportModalSlice";
+import { reportModalState } from "../../modals/report-modal/reactive";
+import { useReactiveVar } from "@apollo/client";
+import { reportFormState } from "./reactive";
 
 
 
 const ReportForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [value, setValue] = useState("");
-    const reportingItemId = useSelector(state => state.reportForm.reportingItemId);
+    const { reportingItemId } = useReactiveVar(reportFormState);
     const currentUser = useSelector(state => state.base.user);
     const theme = useSelector(state => state.base.theme);
     const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const ReportForm = (props) => {
                     ...(currentUser._id !== "" && {reportOwner: currentUser._id})
                 }).then(result => {
                     if (result.data.done) {
-                        dispatch(setReportModalIsShowing(false));
+                        reportModalState({ ...reportModalState(), isShowing: false });
                         resolve();
                     } else {
                         reject();

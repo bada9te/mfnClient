@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 
 const EnumComments = props => {
+    const { comments } = props;
     const locations = useSelector(state => state.base.locations);
-    const comments = useSelector(state => state.commentsContainer.commentsData);
 
     return (
         <>

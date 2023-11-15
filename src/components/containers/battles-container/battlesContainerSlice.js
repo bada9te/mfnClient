@@ -1,6 +1,5 @@
 import { httpGetAllBattlesByStatus, httpMakeVote } from "../../../requests/battles";
-import { createComment } from "../comments-container/commentsContainerSlice";
-import { switchPostInSaved, switchPostLike } from "../posts-container/postsContainerSlice";
+
 
 const { createSlice, createAsyncThunk, current } = require("@reduxjs/toolkit")
 
@@ -82,46 +81,6 @@ const battlesContainerSlice = createSlice({
             // votes
             .addCase(makeVote.fulfilled, (state, { meta }) => {
                 battlesContainerSlice.caseReducers.socketAddVote(state, { payload: meta.arg });
-            })
-
-            // comment added
-            .addCase(createComment.fulfilled, (state, action) => {
-                const battles = JSON.parse(JSON.stringify(current(state.battles)));
-
-                
-                const comment = action.payload.data.comment;
-                const commentId = comment._id;
-                const postId = comment.post;
-
-                //console.log('New comment', commentId)
-
-                battles.forEach(battle => {
-                    if (battle.post1?._id === postId || battle.post2?._id === postId) {
-                        let postNumberStr = battle.post1._id === postId ? "post1" : "post2";
-
-                        // comment is not a reply
-                        if (!comment?.isReply) {
-                            if (battle[postNumberStr].comments.indexOf(commentId) === -1) {
-                                battle[postNumberStr].comments.push(commentId);
-                            } else {
-                                battle[postNumberStr].comments = battle[postNumberStr].comments.filter(id => id !== commentId);
-                            }
-                        } 
-                        // comment is a reply
-                        else {
-                            const isReplyTo = comment.isReplyTo;
-                            battle[postNumberStr].comments = battle[postNumberStr].comments.map(item => {
-                                if (item._id === isReplyTo) {
-                                    item.replies.push(commentId);
-                                    return item;
-                                }
-                                return item;
-                            });
-                        }
-                    }
-                });
-                
-                state.battles = battles;
             })
     }
 });

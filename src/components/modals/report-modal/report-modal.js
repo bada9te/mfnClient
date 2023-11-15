@@ -1,19 +1,19 @@
+import { useReactiveVar } from "@apollo/client";
 import { Close } from "@mui/icons-material";
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux"
 import ReportForm from "../../forms/report/report";
-import { setIsShowing } from "./reportModalSlice";
+import { reportModalState } from "./reactive";
+
 
 const ReportsModal = props => {
-    const isShowing = useSelector(state => state.reportModal.isShowing);
-    const dispatch = useDispatch();
+    const reportModal = useReactiveVar(reportModalState);
 
     const handleClose = () => {
-        dispatch(setIsShowing(false));
+        reportModalState({...reportModal, isShowing: false});
     }
 
     return (
-        <Dialog open={isShowing} scroll='paper' fullWidth maxWidth='sm'>
+        <Dialog open={reportModal.isShowing} scroll='paper' fullWidth maxWidth='sm'>
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     Report
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>

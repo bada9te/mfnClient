@@ -1,45 +1,21 @@
 import AddCommentForm from "../../forms/add-comment/add-comment";
-import { useEffect } from "react";
-import userSocket from "../../../socket/user/socket-user";
 
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import CommentsContainer from "../../containers/comments-container/comments-container";
-import { useDispatch, useSelector } from "react-redux";
-import { addComment, removeComment } from "../../containers/comments-container/commentsContainerSlice";
-import { setIsShowing } from "./commentsModalSlice";
+import { useReactiveVar } from "@apollo/client";
+import { commentsModalState } from "./reactive";
 
 
 const CommentsModal = props => {
-    const dispatch = useDispatch();
-    const postId = useSelector(state => state.commentsContainer.postId);
-    const isShowing = useSelector(state => state.commentsModal.isShowing);
+    const commentsModal = useReactiveVar(commentsModalState);
     
-
     const handleClose = () => {
-        dispatch(setIsShowing(false));
+        commentsModalState({ ...commentsModal, isShowing: false });
     }
 
-    // socket
-    useEffect(() => {
-        userSocket.on(`post-${postId}-was-commented`, (data) => {
-            addComment(data.isReplyTo, data.comment);
-        });
-
-        userSocket.on(`post-${postId}-was-uncommented`, (data) => {
-            removeComment(data.comment);
-        });
-
-        return () => {
-            userSocket.off(`post-${postId}-was-commented`);
-            userSocket.off(`post-${postId}-was-uncommented`);
-        };
-    }, [postId]);
-
-    
-
     return (
-        <Dialog open={isShowing} scroll='paper' fullWidth maxWidth='sm' sx={{zIndex: 9}}>
+        <Dialog open={commentsModal.isShowing} scroll='paper' fullWidth maxWidth='sm' sx={{zIndex: 9}}>
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     Comments
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>

@@ -3,15 +3,15 @@ import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, Car
 import PlaylistDropdown from "./playlist-dropdown/playlist-dropdown";
 import EnumPlaylistTracks from "../../enums/enum-playlist-tracks";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectType, setSharedItem } from "../../containers/user-select-container/userSelectContainerSlice";
-import { setIsShowing as setUserSelectModalIsShowing } from "../../modals/user-select-modal/userSelectModalSlice";
-import { setReportingItemId } from "../../forms/report/reportFormSlice";
-import { setIsShowing as setReportModalIsShowing } from "../../modals/report-modal/reportModalSlice";
-import { setIsShowing as setConfirmModalIsShowing } from "../../modals/confirm-modal/confirmModalSlice";
-import { setActionType, setItemId, setText, setTitle } from "../../containers/confirm-container/confirmContainerSlice";
 import { setSelectingFor } from "../../containers/post-select-container/postSelectContainerSlice";
 import { setIsShowing as setPostSelectModalIsShowing } from "../../modals/post-select-modal/postSelectModalSlice";
 import { setTargetPlaylist } from "../../containers/playlists-container/playlistsContainerSlice";
+import { reportFormState } from "../../forms/report/reactive";
+import { userSelectModalState } from "../../modals/user-select-modal/reactive";
+import { userSelectContainerState } from "../../containers/user-select-container/reactive";
+import { confirmContainerState } from "../../containers/confirm-container/reactive";
+import { confirmModalState } from "../../modals/confirm-modal/reactive";
+import { reportModalState } from "../../modals/report-modal/reactive";
 
 const Playlist = (props) => {
     const { playlist } = props;
@@ -21,24 +21,26 @@ const Playlist = (props) => {
 
      // open user select modal to share
      const sharePlaylist = () => {
-        dispatch(setSharedItem(playlist._id));
-        dispatch(setSelectType('playlistShare'));
-        dispatch(setUserSelectModalIsShowing(true));
+        userSelectContainerState({...userSelectContainerState(), sharedItem: playlist._id, selectType: 'playlistShare'})
+        userSelectModalState({...userSelectModalState(), isShowing: true});
     }
 
     // report playlist
     const reportPlaylist = () => {
-        dispatch(setReportingItemId(playlist._id));
-        dispatch(setReportModalIsShowing(true));
+        reportFormState({...reportFormState(), reportingItemId: playlist._id});
+        reportModalState({ ...reportModalState(), isShowing: true });
     }
 
     // delete playlist
     const deletePlaylist = () => {
-        dispatch(setConfirmModalIsShowing(true));
-        dispatch(setActionType("delete-playlist"));
-        dispatch(setItemId(playlist._id));
-        dispatch(setText("By confirming this, you agree that your playlist will be removed without any ability to restore."));
-        dispatch(setTitle("Confirm playlist deletion"));
+        confirmModalState({ ...confirmModalState(), isShowing: true });
+        confirmContainerState({
+            ...confirmContainerState(),
+            actionType: "delete-playlist",
+            itemId: playlist._id,
+            text: "By confirming this, you agree that your playlist will be removed without any ability to restore.",
+            title: "Confirm playlist deletion",
+        });
     }
 
     // add track to playlist

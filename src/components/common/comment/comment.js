@@ -4,13 +4,13 @@ import { Accordion, AccordionDetails, AccordionSummary, Avatar, Card, CardHeader
 import './comment.scss';
 import { ExpandMore } from "@mui/icons-material";
 import Reply from "../reply/reply";
-import { useDispatch, useSelector } from "react-redux";
-import { setReplyingTo } from "../../containers/comments-container/commentsContainerSlice";
+import { useSelector } from "react-redux";
 import CommentDropDown from "./comment-dropdown/comment-dropdown";
-import { setReportingItemId } from "../../forms/report/reportFormSlice";
-import { setIsShowing as setReportsModalIsShowing } from "../../modals/report-modal/reportModalSlice";
-import { setIsShowing } from "../../modals/confirm-modal/confirmModalSlice";
-import { setActionType, setItemId, setText, setTitle } from "../../containers/confirm-container/confirmContainerSlice";
+import { reportFormState } from "../../forms/report/reactive";
+import { confirmContainerState } from "../../containers/confirm-container/reactive";
+import { confirmModalState } from "../../modals/confirm-modal/reactive";
+import { reportModalState } from "../../modals/report-modal/reactive";
+import { commentsContainerState } from "../../containers/comments-container/reactive";
 
 
 
@@ -18,29 +18,29 @@ const Comment = (props) => {
     const {createdAt, user, text, replies, id} = props;
     const currentUserId = useSelector(state => state.base.user._id)
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-
 
     const handleCommentSelection = () => {
-        dispatch(setReplyingTo({
-            commentId: id,
-            commentOwnerNick: user[1]
-        }));
+        commentsContainerState({
+            ...commentsContainerState(),
+            replyingTo: [id, user[1]]
+        });
     }
 
     const handleCommentRemoving = async() => {
-        dispatch(setIsShowing(true));
-        dispatch(setActionType("delete-comment"));
-        dispatch(setItemId(id));
-        dispatch(setText("By confirming this, you agree that your comment will be removed without any ability to restore."));
-        dispatch(setTitle("Confirm comment deletion"));
+        confirmModalState({ ...confirmModalState(), isShowing: true, });
+        confirmContainerState({
+            ...confirmContainerState(),
+            actionType: "delete-comment",
+            itemId: id,
+            text: "By confirming this, you agree that your comment will be removed without any ability to restore.",
+            title: "Confirm comment deletion",
+        });
     }
 
     // report comment
     const handleReportComment = () => {
-        dispatch(setReportingItemId(id));
-        dispatch(setReportsModalIsShowing(true));
+        reportFormState({...reportFormState(), reportingItemId: id});
+        reportModalState({ ...reportModalState(), isShowing: true });
     }
 
 

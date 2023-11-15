@@ -11,14 +11,16 @@ import userSocket from '../../../../socket/user/socket-user';
 import StyledBadge from "./styled-badge/styled-badge";
 import { fetchUnreadNotifications } from '../../../containers/notifications-container/notificationsContainerSlice';
 import PropTypes from 'prop-types';
+import { useReactiveVar } from '@apollo/client';
+import { audioPlayerState } from '../../../common/audio-player/reactive';
+import { bottomBarState } from '../../bottom/bottom-bar/reactive';
 
 
 function HideOnScroll(props) {
     const { children, window } = props;
+    const {showRB: rightBarIsShwoing, showLB: leftBarIsShowing} = useReactiveVar(bottomBarState);
+    const {isShowing: audioPlayerIsShowing} = useReactiveVar(audioPlayerState);
 
-    const leftBarIsShowing = useSelector(state => state.bottomBar.showLB);
-    const rightBarIsShwoing = useSelector(state => state.bottomBar.showRB);
-    const audioPlayerIsShowing = useSelector(state => state.audioPlayer.isShowing);
     // Note that you normally won't need to set the window ref as useScrollTrigger
     // will default to window.
     // This is only being set here because the demo is in an iframe.

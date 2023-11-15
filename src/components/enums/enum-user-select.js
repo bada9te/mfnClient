@@ -2,9 +2,8 @@ import { useSelector } from "react-redux";
 import UserSelectItem from "../common/user-select-item/user-select-item";
 
 const EnumUserSelect = props => {
-    const { userSelectionHandler } = props;
+    const { userSelectionHandler, users } = props;
     const locations = useSelector(state => state.base.locations);
-    const users = useSelector(state => state.userSelectContainer.users);
 
     return (
         <>

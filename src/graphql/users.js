@@ -22,6 +22,15 @@ export const USERS_BY_NICKNAME_QUERY = gql`
     }
 `;
 
+export const USERS_BY_IDS_QUERY = gql`
+    ${CORE_USER_FIELDS}
+    query usersByIds($ids: [ID!]!) {
+        usersByIds(ids: $ids) {
+            ...CoreUserFileds
+        }
+    }
+`;
+
 // M
 export const USER_DELETE_BY_ID_MUTATION = gql`
     mutation userDeleteById($_id: ID!) {

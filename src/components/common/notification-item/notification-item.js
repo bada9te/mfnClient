@@ -3,9 +3,10 @@ import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Card, CardHeader, IconButton, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchComments } from "../../containers/comments-container/commentsContainerSlice";
+import { commentsContainerState } from "../../containers/comments-container/reactive";
 import { deleteNotification, markNotificationAsRead } from "../../containers/notifications-container/notificationsContainerSlice";
-import { setIsShowing as setCommentsModalIsShowing } from "../../modals/comments-modal/commentsModalSlice";
+import { commentsModalState } from "../../modals/comments-modal/reactive";
+
 
 const NotificationItem = props => {
     const {id, user, text, post, comment, createdAt, page} = props;
@@ -21,12 +22,13 @@ const NotificationItem = props => {
     }
 
     const handleOpenComment = (commentId) => {
-        setCommentsModalIsShowing(true);
-        fetchComments({
-            commentsIds: [commentId],
-            postOwnerId: post.owner._id,
+        commentsModalState({ ...commentsModalState(), isShowing: false });
+        commentsContainerState({ 
+            ...commentsContainerState(), 
+            commentsIds: [commentId], 
             postId: post._id,
-        });
+            postOwnerId: post.owner._id,
+        })
     }
 
     const handleOpenPost = (trackId, ownerId) => {

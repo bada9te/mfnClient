@@ -3,9 +3,11 @@ import * as Alert from "../../alerts/alerts";
 import { Box, TextField, IconButton } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { createComment } from "../../containers/comments-container/commentsContainerSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import userSocket from "../../../socket/user/socket-user";
+import { useMutation, useReactiveVar } from "@apollo/client";
+import { commentsContainerState } from "../../containers/comments-container/reactive";
+import { COMMENT_CREATE_MUTATION } from "../../../graphql/comments";
 
 
 
@@ -14,9 +16,9 @@ const AddCommentForm = (props) => {
     const { register, handleSubmit, reset } = useForm();
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state?.base?.user);
-    const postId = useSelector(state => state.commentsContainer.postId);
-    const replyingTo = useSelector(state => state.commentsContainer.replyingTo);
-    const postOwnerId = useSelector(state => state.commentsContainer.postOwnerId);
+    const [createComment] = useMutation(COMMENT_CREATE_MUTATION);
+
+    const { postId, replyingTo, postOwnerId } = useReactiveVar(commentsContainerState);
     const theme = useSelector(state => state.base.theme);
 
 
@@ -34,23 +36,16 @@ const AddCommentForm = (props) => {
 
         Alert.alertPromise("Creating comment...", "Comment added", "Can't add a comment", () => {
             return new Promise((resolve, reject) => {
-                dispatch(createComment({
-                    replyingId: replyingTo[0],
-                    comment: commentData,
-                    currentUser: currentUser,
-                }))
-                .then(unwrapResult)
+                createComment({
+                    variables: {
+                        input: {
+                            ...commentData
+                        },
+                    },
+                })
                 .then(result => {
-                    if (result.data.done) {
-                        userSocket.emit("post-add-comment", {
-                            sender: currentUser,
-                            post: postId,
-                            comment: result.data.comment._id,
-                            receiver: replyingTo[0] === null ? postOwnerId : replyingTo[0],
-                            text: `${currentUser.nick} ${replyingTo[0] === null ? "Commented your post" : "Answered on your comment"}.`,
-                            selfAction: currentUser._id === postOwnerId,
-                            isReply: replyingTo[0] === null ? false : true,
-                        }); 
+                    if (true) {
+                        console.log(result)
         
                         reset();
                         resolve();

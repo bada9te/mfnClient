@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit"
 import { httpGetPostsByTitle, httpGetUserSavedPosts } from "../../../requests/posts";
-import { createComment } from "../comments-container/commentsContainerSlice";
-import { switchPostInSaved, switchPostLike } from "../posts-container/postsContainerSlice";
+
 
 const initialState = {
     isMine: true,
@@ -80,23 +79,6 @@ const postSelectContainerSlice = createSlice({
             .addCase(fetchSavedPosts.fulfilled, (state, action) => {
                 state.posts = action.payload.data.posts;
                 state.isLoading = false;
-            })
-
-            // comment added
-            .addCase(createComment.fulfilled, (state, action) => {
-                const posts = JSON.parse(JSON.stringify(current(state.posts)));
-                const commentId = action.payload.data.comment._id;
-                //console.log('New comment', commentId)
-                posts.forEach(item => {
-                    if (item._id === action.payload.data.comment.post) {
-                        if (item.comments.indexOf(commentId) === -1) {
-                            item.comments.push(commentId);
-                        } else {
-                            item.comments = item.comments.filter(id => id !== commentId);
-                        }
-                    }
-                });
-                state.posts = posts;
             })
     }
 })

@@ -1,42 +1,39 @@
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { USERS_BY_IDS_QUERY } from "../../../graphql/users";
 import userSocket from "../../../socket/user/socket-user";
 import EnumUserSelect from "../../enums/enum-user-select";
-import { setIsShowing } from "../../modals/user-select-modal/userSelectModalSlice";
-import { fetchUsers } from "./userSelectContainerSlice";
+import { userSelectModalState } from "../../modals/user-select-modal/reactive";
+import { userSelectContainerState } from "./reactive";
 
 
 
 const UserSelectContainer = props => {
-    const users = useSelector(state => state.userSelectContainer.users);
-    const selectType = useSelector(state => state.userSelectContainer.selectType);
-    const sharedItemId = useSelector(state => state.userSelectContainer.sharedItem);
-    const currentUserId = useSelector(state => state.base.user._id);
-    const dispatch = useDispatch();
+
+    const { data } = useQuery(USERS_BY_IDS_QUERY);
+    const { selectType, sharedItem: sharedItemId } = useReactiveVar(userSelectContainerState);
+    const userSelectModal = useReactiveVar(userSelectModalState);
+
+    const currentUser = useSelector(state => state.base.user);
 
     const handleUserSelect = (userId) => {
         if (selectType === 'postShare') {
             userSocket.emit("post-share", {
                 receiver: userId,
-                sender: currentUserId,
+                sender: currentUser._id,
                 post: sharedItemId,
                 text: `Hey! Check this track!`,
             });
         }
-        dispatch(setIsShowing(false));
+        userSelectModalState({ ...userSelectModal, isShowing: false })
     }
-
-    // fetch
-    useEffect(() => {
-        dispatch(fetchUsers());
-    }, [dispatch])
     
 
     return (
         <>
             {
-                !users || users.length === 0 
+                !data?.usersByIds || data?.usersByIds.length === 0 
                 ?
                 <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
                     <Typography>
@@ -45,7 +42,7 @@ const UserSelectContainer = props => {
                 </Box>
                 :
                 <Stack>
-                    <EnumUserSelect userSelectionHandler={handleUserSelect}/>
+                    <EnumUserSelect userSelectionHandler={handleUserSelect} users={data.usersByIds}/>
                 </Stack>
             }
         </>
