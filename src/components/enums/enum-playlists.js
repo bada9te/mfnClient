@@ -3,7 +3,7 @@ import getTimeSince from "../../common-functions/getTimeSince";
 import Playlist from "../common/playlist/playlist";
 
 const EnumPlaylists = (props) => {
-    const playlists = useSelector(state => state.playlistsContainer.playlists);
+    const { playlists } = props;
     const locations = useSelector(state => state.base.locations);
 
     return (

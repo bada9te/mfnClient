@@ -34,11 +34,20 @@ const ProfileCard = (props) => {
 
 
     const switchSubscriptionOnUserHandler = async(actionType) => {
-        await switchSubscriptionOnUser()
-            .then(({ data }) => {
-                const { user1: ownerOfTheProfile, user2: actionEmitter } = data.userSwitchSubscription;
+        Alert.alertPromise("Pending...", "Success", "Sth went wrong", () => {
+            return new Promise(async(resolve, reject) => {
+                await switchSubscriptionOnUser()
+                    .then(({ data }) => {
+                        const { user1: ownerOfTheProfile, user2: actionEmitter } = data.userSwitchSubscription;
+                        baseState({ ...baseState(), user: actionEmitter });
+                        resolve();
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
+            });
+        });
                 
-                baseState({ ...baseState(), user: actionEmitter });
                 /*
                 if (result.data.done) {
                     console.log(result.data)
@@ -55,7 +64,6 @@ const ProfileCard = (props) => {
                 }
                 */
                
-        });
     }
     
     return (

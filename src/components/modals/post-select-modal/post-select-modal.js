@@ -1,40 +1,45 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
 import { Close, Send } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchByTitle, fetchSavedPosts, setQuery } from "../../containers/post-select-container/postSelectContainerSlice";
 import PostSelectContainer from "../../containers/post-select-container/post-select-container";
-import { setIsShowing } from "./postSelectModalSlice";
+import { useReactiveVar } from "@apollo/client";
+import { postSelectContainerState } from "../../containers/post-select-container/reactive";
+import { postSelectModalState } from "./reactive";
 
 
 const PostSelectModal = props => {
-    const query = useSelector(state => state.postSelectContainer.query);
-    const isMine = useSelector(state => state.postSelectContainer.isMine);
-    const isShowing = useSelector(state => state.postSelectModal.isShowing);
-    const selectingFor = useSelector(state => state.postSelectContainer.selectingFor);
-    const dispatch = useDispatch();
+    const { isMine, selectingFor } = useReactiveVar(postSelectContainerState);
+    const { isShowing } = useReactiveVar(postSelectModalState);
+    const [query, setQuery] = useState("");
 
 
     useEffect(() => {
         const timer = setTimeout(() => {
             if (query !== "") {
-                dispatch(fetchByTitle())
+                postSelectContainerState({ 
+                    ...postSelectContainerState(), 
+                    query, 
+                });
             }
         }, 750);
 
         return () => {
             clearTimeout(timer);
         }
-    }, [query, dispatch]);
+    }, [query]);
+
+
+    const handleClose = () => {
+        postSelectModalState({...postSelectModalState(), isShowing: false})
+    }
 
 
     return (
         <>
-            <Dialog open={isShowing} onClose={() => dispatch(setIsShowing(false))} 
-            fullWidth fullScreen>
+            <Dialog open={isShowing} onClose={handleClose} fullWidth fullScreen>
                 <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     {isMine ? "Select your track" : "Select opponent's track"}
-                    <IconButton sx={{ ml: 'auto' }} onClick={() => dispatch(setIsShowing(false))}>
+                    <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
                         <Close />
                     </IconButton>
                 </DialogTitle>
@@ -48,7 +53,7 @@ const PostSelectModal = props => {
                     &&
                     <DialogActions>
                         <TextField margin="normal" required fullWidth id="title" label="Track name" 
-                            onInput={(e) => dispatch(setQuery(e.target.value))}
+                            onInput={(e) => setQuery(e.target.value)}
                             InputProps={{
                                 endAdornment: 
                                     <IconButton type="submit">

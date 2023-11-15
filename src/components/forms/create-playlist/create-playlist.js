@@ -4,12 +4,14 @@ import { Box, TextField, Button, FormGroup, FormControlLabel, Checkbox } from "@
 import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { createPlaylist, setPublicAccess, setTitle } from "./createPlaylistFormSlice";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 
 const CreatePlaylistForm = props => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const theme = useSelector(state => state.base.theme);
+    const { theme } = useReactiveVar(baseState);
     const publicAccess = useSelector(state => state.createPlaylistForm.publicAccess);
     const dispatch = useDispatch();
 

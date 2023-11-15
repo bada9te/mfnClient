@@ -2,20 +2,22 @@ import { Add, ExpandMore } from "@mui/icons-material";
 import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails, Box, Stack } from "@mui/material";
 import PlaylistDropdown from "./playlist-dropdown/playlist-dropdown";
 import EnumPlaylistTracks from "../../enums/enum-playlist-tracks";
-import { useDispatch, useSelector } from "react-redux";
-import { setSelectingFor } from "../../containers/post-select-container/postSelectContainerSlice";
-import { setIsShowing as setPostSelectModalIsShowing } from "../../modals/post-select-modal/postSelectModalSlice";
-import { setTargetPlaylist } from "../../containers/playlists-container/playlistsContainerSlice";
+import { useDispatch } from "react-redux";
 import { reportFormState } from "../../forms/report/reactive";
 import { userSelectModalState } from "../../modals/user-select-modal/reactive";
 import { userSelectContainerState } from "../../containers/user-select-container/reactive";
 import { confirmContainerState } from "../../containers/confirm-container/reactive";
 import { confirmModalState } from "../../modals/confirm-modal/reactive";
 import { reportModalState } from "../../modals/report-modal/reactive";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
+import { playlistsContainerState } from "../../containers/playlists-container/reactive";
+import { postSelectContainerState } from "../../containers/post-select-container/reactive";
+import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 
 const Playlist = (props) => {
     const { playlist } = props;
-    const currentUserId = useSelector(state => state.base.user._id);
+    const { user: currentUser } = useReactiveVar(baseState);
     const dispatch = useDispatch();
 
 
@@ -45,9 +47,9 @@ const Playlist = (props) => {
 
     // add track to playlist
     const handleTrackAdding = () => {
-        dispatch(setTargetPlaylist(playlist._id))
-        dispatch(setSelectingFor("playlist"));
-        dispatch(setPostSelectModalIsShowing(true));
+        playlistsContainerState({ ...playlistsContainerState(), targetPlaylist: playlist._id });
+        postSelectContainerState({ ...postSelectContainerState(), selectingFor: "playlist" });
+        postSelectModalState({ ...postSelectModalState(), isShowing: true });
     }
 
     return (
@@ -61,7 +63,7 @@ const Playlist = (props) => {
                 action={
                     <>
                         { 
-                            currentUserId === playlist.owner._id 
+                            currentUser._id === playlist.owner._id 
                             && 
                             <Button startIcon={<Add/>} onClick={handleTrackAdding}>Add track</Button> 
                         }

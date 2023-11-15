@@ -1,17 +1,17 @@
 import { CreateNewFolder, Explore, Topic } from "@mui/icons-material";
 import { Box, CardActions, CardContent, Stack, Tab, Tabs, Typography } from "@mui/material";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { useCallback } from "react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
 import PaginationTree from "../../common/pagination/pagination";
-import { setMaxPage } from "../../common/pagination/paginationSlice";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumPlaylists from "../../enums/enum-playlists";
 import CreatePlaylistForm from "../../forms/create-playlist/create-playlist";
 import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
-import { fetchCurrentUserPlaylists, fetchPublicAvailablePlaylists, setPage } from "./playlistsContainerSlice";
 import newPlaylistBG from "../../../images/bgs/newPlaylistFormBG.png"
+import { playlistsContainerState } from "./reactive";
+import { useLazyQuery, useReactiveVar } from "@apollo/client";
+import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from "../../../graphql/playlists";
+import { baseState } from "../../baseReactive";
+import defineMaxPage from "../../../common-functions/defineMaxPage";
 
 
 function TabPanel(props) {
@@ -35,14 +35,29 @@ function TabPanel(props) {
 }
 
 const PlaylistsEnumWithPagination = () => {
-    const playlists = useSelector(state => state.playlistsContainer.playlists)
+    const playlistsContainer = useReactiveVar(playlistsContainerState);
+
+    const handlePageChange = page => {
+        playlistsContainerState({...playlistsContainerState(), activePage: page})
+    }
+
     return (
         <>
             <Stack spacing={2} sx={{my: 3, mx: {sx: 0, md: 2}}}>
-                <EnumPlaylists/>
+                <EnumPlaylists playlists={playlistsContainer.playlists}/>
             </Stack>
             {
-                playlists?.length > 0 ? <Box sx={{mb: 10}}><PaginationTree/></Box> : null
+                playlistsContainer.playlists.length > 0 
+                ? 
+                <Box sx={{mb: 10}}>
+                    <PaginationTree 
+                        maxPage={playlistsContainer.maxPage} 
+                        activePage={playlistsContainer.activePage} 
+                        handlePageChange={handlePageChange}
+                    />
+                </Box> 
+                : 
+                null
             }
         </>
     );
@@ -51,14 +66,12 @@ const PlaylistsEnumWithPagination = () => {
 
 
 const PlaylistsContainer = (props) => {
-    const isLoading = useSelector(state => state.playlistsContainer.isLoading);
-    const currentUser = useSelector(state => state.base.user);
-    const playlists = useSelector(state => state.playlistsContainer.playlists)
-    const activePage = useSelector(state => state?.pagination?.activePage) 
+    const playlistsContainer = useReactiveVar(playlistsContainerState);
+    const { user: currentUser } = useReactiveVar(baseState);
 
-       
 
-    const dispatch = useDispatch();
+    const [getCurrentUserPlaylists] = useLazyQuery(PLAYLISTS_BY_OWNER_ID_QUERY);
+    const [getPublicAvailablePlaylists] = useLazyQuery(PLAYLISTS_PUBLIC_AWAILABLE_QUERY);
 
     // used to know the page number
     const [status, setStatus] = useState(0);
@@ -66,36 +79,63 @@ const PlaylistsContainer = (props) => {
     // on tab switch
     const handleTabSwitch = (event, key) => {
         setStatus(key);
+
+        const setPagename = (name) => {
+            playlistsContainerState({ ...playlistsContainerState(), page: name })
+        }
+
         if (key === 0) {
-            dispatch(setPage("Explore"));
+            setPagename("Explore");
         } else if (key === 1) {
-            dispatch(setPage("My playlists"));
+            setPagename("My playlists");
         } else if (key === 2) {
-            dispatch(setPage("Create new"))
+            setPagename("Create new");
         }
     }
 
-    // set max page in pagination tree
-    const dispatchDocumentsCount = useCallback((result) => {
-        if (result.data.done) {
-            let count = result.data.count;
-            count = Math.ceil(count / 12);
-            dispatch(setMaxPage(count));
-        }
-    }, [dispatch]);
+
+    const setPlaylistsAndCount = useCallback((result, at) => {
+        playlistsContainerState({
+            ...playlistsContainerState(), 
+            playlists: result.data[at].playlists,
+            maxPage: defineMaxPage(result.data[at].count, playlistsContainer.maxCountPerPage),
+        });
+    }, [playlistsContainer.maxCountPerPage]);
 
     // main effect 
     useEffect(() => {
-        if (status === 1 && currentUser?._id !== "") {
-            dispatch(fetchCurrentUserPlaylists(activePage));
-        } else if (status === 0) {
-            dispatch(fetchPublicAvailablePlaylists(activePage))
-                .then(unwrapResult)
-                .then(result => {
-                    dispatchDocumentsCount(result);
-                });
+        const fetchPlaylists = async() => {
+            try {
+                let { activePage, maxCountPerPage } = playlistsContainer;
+                let result;
+                let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
+
+                if (status === 1 && currentUser?._id !== "") {
+                    result = await getCurrentUserPlaylists({
+                        variables: {
+                            owner: currentUser._id,
+                            offset,
+                            limit: maxCountPerPage,
+                        }
+                    });
+                    setPlaylistsAndCount(result, "playlistsByOwnerId"); 
+                } else if (status === 0) {
+                    result = await getPublicAvailablePlaylists({
+                        variables: {
+                            offset,
+                            limit: maxCountPerPage,
+                        }
+                    });
+                    setPlaylistsAndCount(result, "playlistsPublicAvailable");
+                }
+            } catch (error) {
+                playlistsContainerState({ ...playlistsContainerState(), error });
+            } finally {
+                playlistsContainerState({ ...playlistsContainerState(), isLoading: false });
+            }
         }
-    }, [dispatch, currentUser?._id, status, activePage, dispatchDocumentsCount]);
+        fetchPlaylists();
+    }, [currentUser?._id, status, playlistsContainer, getCurrentUserPlaylists, getPublicAvailablePlaylists, setPlaylistsAndCount]);
 
 
     return (
@@ -111,11 +151,11 @@ const PlaylistsContainer = (props) => {
             <TabPanel value={status} index={0}>
                 {
                     (() => {
-                        if (isLoading) {
+                        if (playlistsContainer.isLoading) {
                             return (<SpinnerLinear/>);
                         }
 
-                        if (playlists && playlists.length > 0) {
+                        if (playlistsContainer.playlists && playlistsContainer.playlists.length > 0) {
                             return (
                                 <PlaylistsEnumWithPagination/>
                             );
@@ -141,11 +181,11 @@ const PlaylistsContainer = (props) => {
                             );
                         }
 
-                        if (isLoading) {
+                        if (playlistsContainer.isLoading) {
                             return (<SpinnerLinear/>);
                         }
 
-                        if (playlists && playlists.length > 0) {
+                        if (playlistsContainer.playlists && playlistsContainer.playlists.length > 0) {
                             return (
                                 <PlaylistsEnumWithPagination/>
                             );

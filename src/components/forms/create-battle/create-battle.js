@@ -5,9 +5,9 @@ import { Box, TextField, Button, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createBattle, setTitle } from "./createBattleFormSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { setIsMine } from "../../containers/post-select-container/postSelectContainerSlice";
-import { setIsShowing as setPostSelectModalIsShowing} from "../../modals/post-select-modal/postSelectModalSlice";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
+import { postSelectContainerState } from "../../containers/post-select-container/reactive";
+import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 
 
 
@@ -31,8 +31,8 @@ const CreateBattleForm = props => {
 
     
     const handleOpenPostSelectModal = (isMine) => {
-        dispatch(setIsMine(isMine));
-        dispatch(setPostSelectModalIsShowing(true));
+        postSelectContainerState({ ...postSelectContainerState(), isMine });
+        postSelectModalState({ ...postSelectModalState(), isShowing: true });
     }
 
 
