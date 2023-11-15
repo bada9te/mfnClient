@@ -1,9 +1,10 @@
+import { useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Alert from "../../components/alerts/alerts";
-import { logoutUser } from "../../components/baseSlice";
+import { baseState } from "../../components/baseReactive";
 import { SpinnerCircular } from "../../components/common/spinner/Spinner";
 import { httpLogOut } from "../../requests/auth";
 
@@ -11,8 +12,7 @@ import { httpLogOut } from "../../requests/auth";
 const Logout = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const currentUser = useSelector(state => state.base.user);
-    const theme = useSelector(state => state.base.theme);
+    const { user: currentUser, theme } = useReactiveVar(baseState);
     
     useEffect(() => {
         let timeout = null;
@@ -20,7 +20,9 @@ const Logout = (props) => {
             localStorage.removeItem("mfnCurrentUser");
             localStorage.removeItem("mfnCurrentToken");
             httpLogOut().then(() => {
-                dispatch(logoutUser());
+
+                baseState({ ...baseState(), user: {} });
+                
                 timeout = setTimeout(() => {
                     Alert.alertSuccess("Logged out", { theme });
                     navigate('/login')

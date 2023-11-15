@@ -6,13 +6,14 @@ import { useSelector } from "react-redux";
 import { useReactiveVar } from "@apollo/client";
 import { audioPlayerState } from "../../../common/audio-player/reactive";
 import { bottomBarState } from "./reactive";
+import { baseState } from "../../../baseReactive";
 
 
 const BottomBar = (props) => {
     const navigate= useNavigate();
     const location = useLocation();
 
-    const user = useSelector(state => state.base.user);
+    const { user } = useReactiveVar(baseState);
     
     const bottomBar = useReactiveVar(bottomBarState);
     const audioPlayer = useReactiveVar(audioPlayerState);

@@ -113,7 +113,7 @@ const PostItem = (props) => {
     const reportTrack = () => {
         if (addons.status !== "upload") {
             reportFormState({ ...reportFormState(), reportingItemId: base._id });
-            reportModalState({ ...reportModalState(), isShowing: false });
+            reportModalState({ ...reportModalState(), isShowing: true });
         }
     }
 

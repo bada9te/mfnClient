@@ -4,6 +4,8 @@ import ThemeSwitcher from "../../../../common/theme-switcher/theme-switcher";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import StyledBadge from "../styled-badge/styled-badge";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../../../baseReactive";
 
 
 
@@ -12,7 +14,7 @@ const TopBarUserMenu = props => {
     const items = ['Profile', 'Notifications', 'Edit profile', 'Saved posts', 'Support', 'Logout'];
     const itemsNL = ['Login', 'Support'];
     const navigate = useNavigate();
-    const currentUser = useSelector(state => state?.base?.user);
+    const { user: currentUser } = useReactiveVar(baseState);
     const notifications = useSelector(state => state.notificationsContainer.notifications);
 
 

@@ -1,41 +1,45 @@
-import { useEffect } from 'react';
 import * as Alert from "../../../alerts/alerts";
 import { SpinnerLinear } from "../../spinner/Spinner";
 import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
-import "./profile-card.scss";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserById, handleSubscribtion, setIsLoading, setProfileOwner } from './profileCardSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
-import userSocket from '../../../../socket/user/socket-user';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ProfileDefaultBGImage from "../../../../images/bgs/profileDefaultBG.png";
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '../../../../graphql/users';
+import { baseState } from "../../../baseReactive";
 
 
 const ProfileCard = (props) => {
     const { id, bgRadius } = props;
-    const dispatch = useDispatch();
-    const currentUser = useSelector(state => state?.base?.user);
-    const locations = useSelector(state => state?.base?.locations);
-    const profileCardIsLoading = useSelector(state => state.profileCard.isLoading);
-    const profileOwner = useSelector(state => state.profileCard.profileOwner);
-    const theme = useSelector(state => state.base.theme);
+    const { user: currentUser, theme, locations } = useReactiveVar(baseState);
+
     const navigate = useNavigate();
 
+    const { data: userData, loading: userLoading } = useQuery(USER_QUERY, { 
+        variables: { 
+            _id: id,
+        },
+    });
+    const [switchSubscriptionOnUser, { data: subscribeData, loading: subscribeLoading }] = useMutation(USER_SWITCH_SUBSCRIPTION_MUTATION, { 
+        variables: {
+            input: {
+                subscriberId: currentUser?._id,
+                userId: id,
+            }
+        },
+        refetchQueries: [
+            { query: USER_QUERY, variables: { _id: id } }
+        ],
+    });
 
-    useEffect(() => {
-        if (id !== currentUser?._id) {
-            dispatch(fetchUserById(id));
-        } else {
-            dispatch(setProfileOwner(currentUser));
-            dispatch(setIsLoading(false));
-        }
-    }, [id, dispatch, currentUser]);
 
-
-    const switchSubscriptionOnUser = async(actionType) => {
-        dispatch(handleSubscribtion({subscriberId: currentUser._id, profileOwnerId: profileOwner.id}))
-            .then(unwrapResult)
-            .then(result => {
+    const switchSubscriptionOnUserHandler = async(actionType) => {
+        await switchSubscriptionOnUser()
+            .then(({ data }) => {
+                const { user1: ownerOfTheProfile, user2: actionEmitter } = data.userSwitchSubscription;
+                
+                baseState({ ...baseState(), user: actionEmitter });
+                /*
                 if (result.data.done) {
                     console.log(result.data)
                     Alert.alertSuccess("Success");
@@ -46,16 +50,18 @@ const ProfileCard = (props) => {
                             text: `${currentUser.nick} has just subscribed on you`,
                         });
                     }
-            } else {
-                Alert.alertError("Sth went wrong");
-            }
+                } else {
+                    Alert.alertError("Sth went wrong");
+                }
+                */
+               
         });
     }
     
     return (
         <>
             {
-                profileCardIsLoading
+                userLoading
                 ?
                 <Box sx={{minHeight: '200px'}}>
                     <SpinnerLinear/>
@@ -63,7 +69,7 @@ const ProfileCard = (props) => {
                 :
                 <Box sx={{
                     boxShadow: 10,  
-                    backgroundImage: profileOwner?.background ? `url(${locations?.images}/${profileOwner?.background})` : `url(${ProfileDefaultBGImage})`, 
+                    backgroundImage: userData?.user.background ? `url(${locations?.images}/${userData?.user.background})` : `url(${ProfileDefaultBGImage})`, 
                     backgroundRepeat: 'no-repeat', 
                     backgroundSize: 'cover', 
                     objectFit: 'contain', 
@@ -94,29 +100,29 @@ const ProfileCard = (props) => {
                             flexWrap="wrap"
                         >
                             <Avatar 
-                                alt={profileOwner.nick} 
+                                alt={userData?.user.nick} 
                                 sx={{boxShadow: 3, fontSize: 100}} 
-                                src={profileOwner?.avatar !== "" ? `${locations?.images}/${profileOwner?.avatar}` : "NULL"}
+                                src={userData?.user?.avatar !== "" ? `${locations?.images}/${userData?.user?.avatar}` : "NULL"}
                                 style={{objectFit: 'contain', width: '35vw', height: '35vw', maxHeight: '160px', maxWidth: '160px'}}
                                 
                                 >
                             </Avatar>
                             <Box>
-                                <Typography variant='h4'>{profileOwner?.nick}</Typography>
-                                <Typography variant='h6'>{profileOwner?.description}</Typography>
+                                <Typography variant='h4'>{userData?.user?.nick}</Typography>
+                                <Typography variant='h6'>{userData?.user?.description}</Typography>
                             </Box>
                             <Box>
-                                <Typography>Following {profileOwner?.subscribedOn?.length || 0}</Typography>
-                                <Typography>Subscribers {profileOwner?.subscribers?.length}</Typography>
+                                <Typography>Following {userData?.user?.subscribedOn?.length || 0}</Typography>
+                                <Typography>Subscribers {userData?.user?.subscribers?.length}</Typography>
                                 {
                                     (() => {
-                                        if (currentUser?._id !== profileOwner.id && currentUser._id !== "" && currentUser) {
-                                            if (currentUser?.subscribedOn.includes(profileOwner.id)) {
+                                        if (currentUser?._id !== userData?.user._id && currentUser._id !== "") {
+                                            if (currentUser?.subscribedOn.map(i => i._id).includes(userData?.user._id)) {
                                                 return (
                                                     <Button 
-                                                        sx={{ mt: 1.5 }} 
+                                                        sx={{ mt: 1.5, width: '120px' }} 
                                                         variant="contained"
-                                                        onClick={() => switchSubscriptionOnUser('unsubscribe')}
+                                                        onClick={() => switchSubscriptionOnUserHandler('unsubscribe')}
                                                     >
                                                         Unsubscribe
                                                     </Button>
@@ -124,9 +130,9 @@ const ProfileCard = (props) => {
                                             } else {
                                                 return (
                                                     <Button 
-                                                        sx={{ mt: 1.5 }} 
+                                                        sx={{ mt: 1.5, width: '120px' }} 
                                                         variant="contained"
-                                                        onClick={() => switchSubscriptionOnUser('subscribe')}
+                                                        onClick={() => switchSubscriptionOnUserHandler('subscribe')}
                                                     >
                                                         Subscribe
                                                     </Button>

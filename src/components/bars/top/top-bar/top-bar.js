@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import { useReactiveVar } from '@apollo/client';
 import { audioPlayerState } from '../../../common/audio-player/reactive';
 import { bottomBarState } from '../../bottom/bottom-bar/reactive';
+import { baseState } from '../../../baseReactive';
 
 
 function HideOnScroll(props) {
@@ -47,8 +48,7 @@ function HideOnScroll(props) {
 
 
 const Topbar = (props) => {
-    const user = useSelector(state => state?.base?.user);
-    const locations = useSelector(state => state?.base?.locations);
+    const { user, locations } = useReactiveVar(baseState);
     const notifications = useSelector(state => state.notificationsContainer.notifications);
     const dispatch = useDispatch();
 

@@ -3,24 +3,28 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists } from './pages/pages';
 import { useEffect, useState } from 'react';
 import { store } from './redux/store';
-import { id } from './components/baseSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { useSelector } from 'react-redux';
 //import * as Alert from './components/alerts/alerts';
 import { fetchUnreadNotifications } from './components/containers/notifications-container/notificationsContainerSlice';
 import './requests/setupAxios';
+import { useLazyQuery, useReactiveVar } from '@apollo/client';
+import { baseState } from './components/baseReactive';
+import { USER_QUERY } from './graphql/users';
 
 
 
 function App() {
   const navigate = useNavigate();
-  const themeStyle = useSelector(state => state.base.theme);
   const location = useLocation();
-  
   const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
-
+  const { 
+    theme: themeStyle,
+    user 
+  } = useReactiveVar(baseState);
+  const [getUserById, { data, loading }] = useLazyQuery(USER_QUERY);
+  
   // theme setup
   const theme = createTheme({
     palette: {
@@ -34,21 +38,16 @@ function App() {
     },
   });
 
-  
   useEffect(() => {
-    if (store.getState().base.user?._id === "") {
-      let currentUserId = localStorage.getItem('mfnCurrentUser') ? JSON.parse(localStorage.getItem('mfnCurrentUser')).id : null;
-      
+    if (user._id === "") {
+      let currentUserId = localStorage.getItem('mfnCurrentUser') ? JSON.parse(localStorage.getItem('mfnCurrentUser'))._id : null;
       if (currentUserId) {
-        //console.log(currentUserId)
-        store.dispatch(id(currentUserId))
-          .then(unwrapResult)
-          .then(result => {
-            if (!result.data.done) {
-              navigate('/login');
-            } else {
-              store.dispatch(fetchUnreadNotifications());
-            }
+        getUserById({ variables: { _id: currentUserId } })
+          .then(({data}) => {
+            baseState({ ...baseState(), user: data.user });
+          })
+          .catch(error => {
+            navigate('/login');
           });
       } else if (location.pathname !== '/' && !regAllowed.test(location.pathname)) {
         navigate('/login');

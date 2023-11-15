@@ -7,19 +7,20 @@ import PasswordImage from "../../../images/icons/password.png"
 import TextImage     from "../../../images/icons/text.png"
 import ClearImage     from "../../../images/icons/logo_clear.png"
 import { useDispatch, useSelector } from "react-redux";
-import { updatePartOfUser } from "../../baseSlice";
 import { prepareToRestore } from "../account-restore-request/accountRestoreRequestFormSlice";
 import { unwrapResult }     from "@reduxjs/toolkit";
 import { Delete } from "@mui/icons-material";
 import { confirmContainerState } from "../../containers/confirm-container/reactive";
 import { confirmModalState } from "../../modals/confirm-modal/reactive";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 const FormProfileEdit = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { title, current } = props;
-    const currentUser = useSelector(state => state?.base?.user);
-    const theme = useSelector(state => state.base.theme);
+    const { user: currentUser, theme } = useReactiveVar(baseState);
+
     const dispatch = useDispatch();
 
     // form submit
@@ -99,7 +100,13 @@ const FormProfileEdit = (props) => {
     }
 
     const dispatchUser = (what, value) => {
-        dispatch(updatePartOfUser({what, value}));
+        baseState({
+            ...baseState(),
+            user: {
+                ...currentUser,
+                [what]: value,
+            },
+        });
     }
 
     const handleAccountDelete = async() => {

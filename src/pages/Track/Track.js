@@ -8,13 +8,10 @@ import BaseContentContainer from "../../components/containers/base-content-conta
 
 const Track = (props) => {
     const location = useLocation();
-    const inspectingPost = useSelector(item => item.trackContainer.inspectingPost);
 
     return (
         <BaseContentContainer>
-            <Typography variant="h4" sx={{ m: 3, textAlign: 'center' }}>"{inspectingPost?.title}" by {inspectingPost?.owner.nick}</Typography>
             <TrackContainer trackId={location.state.trackId}/>
-            <Typography variant="h4" sx={{ mt: 4, textAlign: 'center' }}>More tracks from {inspectingPost?.owner.nick}:</Typography>
             <PostsContainer id={location.state.ownerId} except={[location.state.trackId]} profileLinkAccessable={true}/>
         </BaseContentContainer>
     );

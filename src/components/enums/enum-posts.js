@@ -1,10 +1,11 @@
 import PostItem from "../common/post-item/post-item";
 import getTimeSince from "../../common-functions/getTimeSince";
-import { useSelector } from "react-redux";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../baseReactive";
 
 const EnumPosts = props => {
     const {except, profileLinkAccessable, posts} = props;
-    const locations = useSelector(state => state.base.locations);
+    const { locations } = useReactiveVar(baseState);
 
     return (
         <>

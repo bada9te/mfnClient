@@ -1,12 +1,13 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
 import { Report, Download, Share, MoreVert, Delete } from "@mui/icons-material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../../baseReactive";
 
 const PostItemDropDown = props => {
     const { owner, handlers, downloadsAllowed } = props;
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const currentUser = useSelector(state => state.base.user);
+    const { user: currentUser } = useReactiveVar(baseState);
 
     // click
     const handleClick = (i) => {

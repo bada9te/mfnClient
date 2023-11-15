@@ -1,32 +1,34 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
-import { login } from "../../baseSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { unwrapResult } from '@reduxjs/toolkit';
 import { toast } from "react-toastify";
 import toastsConfig from "../../alerts/toasts-config";
+import { httpLogin } from "../../../requests/auth";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 
 const LoginForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const theme = useSelector(state => state.base.theme);
+    const { theme } = useReactiveVar(baseState);
     
     
     const onSubmit = async(data) => {
         // show process
         const id = toast.loading("Logging in...", { ...toastsConfig({ theme }) });
         // update store
-        dispatch(login(data))
-            .then(unwrapResult)
+        await httpLogin(data)
             .then((result) => {
                 if (result.data.done) {
                     if (result.data.user.verified) {
+                        baseState({
+                            ...baseState(),
+                            user: result.data.user
+                        });
                         localStorage.setItem('mfnCurrentUser', JSON.stringify({
-                            id: result.data.user._id, 
+                            _id: result.data.user._id, 
                             email: result.data.user.email, 
                             theme: 'light',
                         }));

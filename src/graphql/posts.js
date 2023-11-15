@@ -31,8 +31,8 @@ export const CORE_POST_FIELDS = gql`
 // Q
 export const POST_QUERY = gql`
     ${CORE_POST_FIELDS}
-    query post($_id: String!) {
-        getPostById(_id: $_id) {
+    query post($_id: ID!) {
+        post(_id: $_id) {
             ...CorePostFields
         }
     }

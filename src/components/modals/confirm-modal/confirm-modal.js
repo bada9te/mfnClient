@@ -4,9 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import Slide from '@mui/material/Slide';
 import * as Alert from "../../alerts/alerts";
-import { useDispatch, useSelector } from 'react-redux';
 import ConfirmContainer from '../../containers/confirm-container/confirm-container';
-import { useNavigate } from 'react-router-dom';
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { POST_DELETE_BY_ID_MUTATION } from '../../../graphql/posts';
 import { COMMENT_DELETE_BY_ID_MUTATION } from '../../../graphql/comments';
@@ -21,7 +19,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ConfirmModal = (props) => {
     const confirmModal = useReactiveVar(confirmModalState);
     const { actionType, itemId } = useReactiveVar(confirmContainerState);
-    const dispatch = useDispatch();
 
     const [deleteTrack] = useMutation(POST_DELETE_BY_ID_MUTATION);
     const [deleteComment] = useMutation(COMMENT_DELETE_BY_ID_MUTATION);

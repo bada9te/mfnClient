@@ -1,21 +1,21 @@
+import { useReactiveVar } from "@apollo/client";
 import { FormControlLabel, Switch } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { setTheme } from "../../baseSlice";
+import { baseState } from "../../baseReactive";
+
 
 const ThemeSwitcher = props => {
-    const dispatch = useDispatch();
-    const theme = useSelector(state => state?.base?.theme);
-    const currentUserId = useSelector(state => state?.base?.user?._id);
+    const { user: currentUser, theme } = useReactiveVar(baseState);
 
     const changeTheme = (e) => {
-        dispatch(setTheme(e.target.checked ? 'dark' : 'light'));
-        localStorage.setItem('mfnCurrentUser', JSON.stringify({id: currentUserId, theme: e.target.checked ? 'dark' : 'light'})); 
+        baseState({
+            ...baseState(),
+            theme: e.target.checked ? 'dark' : 'light',
+        });
+        localStorage.setItem('mfnCurrentUser', JSON.stringify({id: currentUser._id, theme: e.target.checked ? 'dark' : 'light'})); 
     }
 
     return (
-        <>
-            <FormControlLabel control={<Switch checked={theme === 'dark'} onChange={changeTheme} />} label="Dark mode" />
-        </>
+        <FormControlLabel control={<Switch checked={theme === 'dark'} onChange={changeTheme} />} label="Dark mode" />
     );
 }
 

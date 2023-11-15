@@ -1,8 +1,6 @@
-import baseSlice                      from "../components/baseSlice";
 import paginationSlice                from "../components/common/pagination/paginationSlice";
 import postsContainerSlice            from "../components/containers/posts-container/postsContainerSlice";
 import battlesContainerSlice          from "../components/containers/battles-container/battlesContainerSlice";
-import trackContainerSlice            from "../components/containers/track-container/trackContainerSlice";
 import leftBarPostsSlice              from "../components/bars/left/left-bar-posts/leftBarPostsSlice";
 import rightBarUsersSlice             from "../components/bars/right/right-bar-users/rightBarUsersSlice";
 import postSelectContainerSlice       from "../components/containers/post-select-container/postSelectContainerSlice";
@@ -10,7 +8,6 @@ import postSelectModalSlice           from "../components/modals/post-select-mod
 import imageCropperModalSlice         from "../components/modals/image-cropper-modal/imageCropperModalSlice";
 import postUploadFormSlice            from "../components/forms/post-upload/postUploadFormSlice";
 import profileCardFormSlice           from "../components/forms/profile-card/profileCardFormSlice";
-import profileCardSlice               from "../components/common/profile/profile-card/profileCardSlice";
 import notificationsContainerSlice    from "../components/containers/notifications-container/notificationsContainerSlice";
 import createBattleFormSlice          from "../components/forms/create-battle/createBattleFormSlice";
 import accountRestoreFormSlice        from "../components/forms/account-restore/accountRestoreFormSlice";
@@ -24,16 +21,13 @@ import { configureStore } from "@reduxjs/toolkit";
 const store = configureStore({
     reducer: {
         // common 
-        base:                   baseSlice, 
         leftBarPosts:           leftBarPostsSlice,
         rightBarUsers:          rightBarUsersSlice,
         pagination:             paginationSlice,
-        profileCard:            profileCardSlice,
         
         // containers
         postsContainer:         postsContainerSlice,
         battlesContainer:       battlesContainerSlice,
-        trackContainer:         trackContainerSlice,
         postSelectContainer:    postSelectContainerSlice,
         notificationsContainer: notificationsContainerSlice,
         playlistsContainer:     playlistsContainerSlice,

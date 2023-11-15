@@ -4,23 +4,25 @@ import { useNavigate } from "react-router-dom";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePartOfUser } from "../../baseSlice";
 import { setImageType, setIsShowing } from "../../modals/image-cropper-modal/imageCropperModalSlice";
 import { setPicture } from "./profileCardFormSlice";
 import { toast } from "react-toastify";
 import toastsConfig from "../../alerts/toasts-config";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 const ProfileCardForm = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const currentUser = useSelector(state => state?.base?.user);
+
+    const { user: currentUser, theme } = useReactiveVar(baseState);
+
     const cropModalIsShowing = useSelector(state => state.imageCropperModal.isShowing);
     const picture = useSelector(state => state.profileCardForm.picture);
     const imageType = useSelector(state => state.imageCropperModal.imageType);
     const avatarTitle = useSelector(state => state.profileCardForm.avatarTitle);
     const backgroundTitle = useSelector(state => state.profileCardForm.backgroundTitle);
-    const theme = useSelector(state => state.base.theme);
 
 
     const cropImageFile = (img, what) => {
@@ -79,9 +81,14 @@ const ProfileCardForm = (props) => {
         }
     }
 
-
     const dispatchUser = (what, value) => {
-        dispatch(updatePartOfUser({what, value}))
+        baseState({
+            ...baseState(),
+            user: {
+                ...currentUser,
+                [what]: value,
+            },
+        });
     }
     
 

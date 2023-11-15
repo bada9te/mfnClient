@@ -1,31 +1,29 @@
-import { useEffect } from "react";
 import ProfileCard from "../../common/profile/profile-card/profile-card";
 import PostItem from "../../common/post-item/post-item";
 import getTimeSince from "../../../common-functions/getTimeSince";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchInspectingPost } from "./trackContainerSlice";
+import { useSelector } from "react-redux";
 import { Box, Stack } from "@mui/material";
+import { useQuery } from "@apollo/client";
+import { POST_QUERY } from "../../../graphql/posts";
 
 
 const TrackContainer = (props) => {
-    const {trackId} = props;
-
-    const dispatch = useDispatch();
-    const postData = useSelector(state => state?.trackContainer?.inspectingPost);
-    const isLoading = useSelector(state => state?.trackContainer?.isLoading)
+    const { trackId } = props;
     const locations = useSelector(state => state?.base?.locations);
 
+    const { data, loading } = useQuery(POST_QUERY, {
+        variables: {
+            _id: trackId,
+        },
+    });
 
-    useEffect(() => {
-        dispatch(fetchInspectingPost(trackId))
-    }, [trackId, dispatch]);
 
     return (
         <>
             {
                 (() => {
-                    if (isLoading || !postData) {
+                    if (loading || !data?.post) {
                         return (
                             <Box sx={{mt: 3, mb: 5, minHeight: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                 <SpinnerCircular/>
@@ -44,27 +42,27 @@ const TrackContainer = (props) => {
                             }} flexWrap="wrap" spacing={2} direction="row" useFlexGap>
                                 <PostItem 
                                     base={{
-                                        ...postData, 
-                                        ownerAvatar: `${locations?.images}/${postData.owner.avatar}`,
-                                        createdAt: getTimeSince(new Date(postData.createdAt)) + ' ago',
-                                        img: `${locations?.images}/${postData.image}`,
-                                        audio: `${locations?.audios}/${postData.audio}`,
+                                        ...data.post, 
+                                        ownerAvatar: `${locations?.images}/${data.post.owner.avatar}`,
+                                        createdAt: getTimeSince(new Date(data.post.createdAt)) + ' ago',
+                                        img: `${locations?.images}/${data.post.image}`,
+                                        audio: `${locations?.audios}/${data.post.audio}`,
                                     }}
                                     addons={{
-                                        commentsAllowed: postData.commentsAllowed,
-                                        downloadsAllowed: postData.downloadsAllowed,
+                                        commentsAllowed: data.post.commentsAllowed,
+                                        downloadsAllowed: data.post.downloadsAllowed,
                                         status: null,
                                         profileLinkAccessable: true,
                                     }}
-                                    id={postData._id}
+                                    id={data.post._id}
                                     user={[
-                                        postData.owner._id, 
-                                        postData.owner.nick, 
-                                        `${locations?.images}/${postData.owner.avatar}`,
+                                        data.post.owner._id, 
+                                        data.post.owner.nick, 
+                                        `${locations?.images}/${data.post.owner.avatar}`,
                                     ]}
                                 />
                                 
-                                <ProfileCard id={postData.owner._id} bgRadius={5}/>
+                                <ProfileCard id={data.post.owner._id} bgRadius={5}/>
                             </Stack>
                         );
                     }

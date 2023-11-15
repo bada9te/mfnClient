@@ -10,12 +10,15 @@ import { userSelectContainerState } from "./reactive";
 
 
 const UserSelectContainer = props => {
-
-    const { data } = useQuery(USERS_BY_IDS_QUERY);
+    const currentUser = useSelector(state => state.base.user);
     const { selectType, sharedItem: sharedItemId } = useReactiveVar(userSelectContainerState);
+    const { data } = useQuery(USERS_BY_IDS_QUERY, {
+        variables: {
+            ids: currentUser.subscribedOn,
+        },
+    });
     const userSelectModal = useReactiveVar(userSelectModalState);
 
-    const currentUser = useSelector(state => state.base.user);
 
     const handleUserSelect = (userId) => {
         if (selectType === 'postShare') {
