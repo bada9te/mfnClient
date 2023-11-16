@@ -1,5 +1,3 @@
-import leftBarPostsSlice              from "../components/bars/left/left-bar-posts/leftBarPostsSlice";
-import rightBarUsersSlice             from "../components/bars/right/right-bar-users/rightBarUsersSlice";
 import imageCropperModalSlice         from "../components/modals/image-cropper-modal/imageCropperModalSlice";
 import postUploadFormSlice            from "../components/forms/post-upload/postUploadFormSlice";
 import profileCardFormSlice           from "../components/forms/profile-card/profileCardFormSlice";
@@ -13,11 +11,6 @@ import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
     reducer: {
-        // common 
-        leftBarPosts:           leftBarPostsSlice,
-        rightBarUsers:          rightBarUsersSlice,
-        
-        
         // forms
         createBattleForm:          createBattleFormSlice,
         postUploadForm:            postUploadFormSlice,

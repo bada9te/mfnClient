@@ -1,18 +1,17 @@
 import { Box, IconButton, Drawer, Typography, TextField } from "@mui/material"
 import { Close } from "@mui/icons-material";
 import LeftBarPostsContainer from "../../../containers/leftbar-posts-container/leftbar-posts-container";
-import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuery } from "./leftBarPostsSlice";
 import { useReactiveVar } from "@apollo/client";
 import { bottomBarState } from "../../bottom/bottom-bar/reactive";
+import { useState } from "react";
 
 
 const LeftBarPosts = (props) => {
-    const dispatch = useDispatch();
+    const [searchQuery, setSearchQuery] = useState("");
     const bottomBar = useReactiveVar(bottomBarState);
 
     const handleInput = (query) => {
-        dispatch(setSearchQuery(query));
+        setSearchQuery(query);
     }
     
     const closeLB = () => {
@@ -51,7 +50,7 @@ const LeftBarPosts = (props) => {
                 </Box>
             </Box>
             
-            <LeftBarPostsContainer/>
+            <LeftBarPostsContainer searchQuery={searchQuery}/>
         </Drawer>
     );
 }

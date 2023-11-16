@@ -2,15 +2,13 @@ import { useEffect } from "react";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, List, Typography } from "@mui/material";
 import EnumLeftBarPosts from "../../enums/enum-leftbar-posts";
-import { useSelector } from "react-redux";
 import { useLazyQuery } from "@apollo/client";
 import { POSTS_BY_TITLE_QUERY } from "../../../graphql/posts";
 
 
 
 const LeftBarPostsContainer = props => {
-    const searchQuery = useSelector(state => state.leftBarPosts.searchQuery);
-
+    const { searchQuery } = props;
     const [getPostsByTitle, { data, loading }] = useLazyQuery(POSTS_BY_TITLE_QUERY);
 
     useEffect(() => {

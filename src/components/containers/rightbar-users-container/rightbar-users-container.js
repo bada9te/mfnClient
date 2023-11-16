@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, List, Typography } from "@mui/material";
 import EnumRightbarUsers from "../../enums/enum-rightbar-users";
-import { useSelector } from "react-redux";
 import { useLazyQuery } from "@apollo/client";
 import { USERS_BY_NICKNAME_QUERY } from "../../../graphql/users";
 
 
 
 const RightBarUsersContainer = props => {
-    const searchQuery = useSelector(state => state.rightBarUsers.searchQuery);
+    const { searchQuery } = props;
     const [getUsersByNickname, { data, loading }] = useLazyQuery(USERS_BY_NICKNAME_QUERY);
 
     useEffect(() => {

@@ -1,9 +1,10 @@
-import { useSelector } from "react-redux";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../baseReactive";
 import RightBarUsersItem from "../common/right-bar-users-item/right-bar-users-item";
 
 const EnumRightbarUsers = props => {
     const { users } = props;
-    const locations = useSelector(state => state.base.locations);
+    const { locations } = useReactiveVar(baseState);
 
     return (
         <>

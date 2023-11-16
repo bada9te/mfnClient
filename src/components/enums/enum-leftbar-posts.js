@@ -1,9 +1,10 @@
 import LeftBarPostsItem from "../common/left-bar-posts-item/left-bar-posts-item";
-import { useSelector } from "react-redux";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../baseReactive";
 
 const EnumLeftBarPosts = props => {
     const { posts } = props;
-    const locations = useSelector(state => state.base.locations);
+    const { locations } = useReactiveVar(baseState);
 
     return (
         <>
