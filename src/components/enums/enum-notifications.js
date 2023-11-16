@@ -1,20 +1,19 @@
+import { useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 import getTimeSince from "../../common-functions/getTimeSince";
+import { baseState } from "../baseReactive";
 import NotificationItem from "../common/notification-item/notification-item";
 import { SpinnerLinear } from "../common/spinner/Spinner";
 
 const EnumNotifications = props => {
-    const notifications = useSelector(state => state.notificationsContainer.notifications);
-    const locations = useSelector(state => state.base.locations);
-    const isLoading = useSelector(state => state.notificationsContainer.isLoading);
-    const page = useSelector(state => state.notificationsContainer.page);
+    const { notifications, loading } = props;
+    const { locations }  = useReactiveVar(baseState);
 
     return (
         <>
             {
                 (() => {
-                    if (isLoading) {
+                    if (loading) {
                         return (
                             <SpinnerLinear/>
                         );
@@ -43,7 +42,7 @@ const EnumNotifications = props => {
                                                     comment={notification.comment}
                                                     post={notification.post}
                                                     createdAt={getTimeSince(new Date(notification.createdAt)) + ' ago'}
-                                                    page={page}
+                                                    checked={notification.checked}
                                                 />
                                             );
                                         })

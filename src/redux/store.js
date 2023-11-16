@@ -3,7 +3,6 @@ import rightBarUsersSlice             from "../components/bars/right/right-bar-u
 import imageCropperModalSlice         from "../components/modals/image-cropper-modal/imageCropperModalSlice";
 import postUploadFormSlice            from "../components/forms/post-upload/postUploadFormSlice";
 import profileCardFormSlice           from "../components/forms/profile-card/profileCardFormSlice";
-import notificationsContainerSlice    from "../components/containers/notifications-container/notificationsContainerSlice";
 import createBattleFormSlice          from "../components/forms/create-battle/createBattleFormSlice";
 import accountRestoreFormSlice        from "../components/forms/account-restore/accountRestoreFormSlice";
 import accountRestoreRequestFormSlice from "../components/forms/account-restore-request/accountRestoreRequestFormSlice";
@@ -18,8 +17,6 @@ const store = configureStore({
         leftBarPosts:           leftBarPostsSlice,
         rightBarUsers:          rightBarUsersSlice,
         
-        // containers
-        notificationsContainer: notificationsContainerSlice,
         
         // forms
         createBattleForm:          createBattleFormSlice,

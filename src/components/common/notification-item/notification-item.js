@@ -1,24 +1,20 @@
-
 import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Card, CardHeader, IconButton, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { commentsContainerState } from "../../containers/comments-container/reactive";
-import { deleteNotification, markNotificationAsRead } from "../../containers/notifications-container/notificationsContainerSlice";
 import { commentsModalState } from "../../modals/comments-modal/reactive";
 
 
 const NotificationItem = props => {
-    const {id, user, text, post, comment, createdAt, page} = props;
-    const dispatch = useDispatch();
+    const {id, user, text, post, comment, createdAt, checked} = props;
     const navigate = useNavigate();
 
     const handleDelete = () => {
-        dispatch(deleteNotification(id));
+        //dispatch(deleteNotification(id));
     }
 
     const hadleMarkAsRead = () => {
-        dispatch(markNotificationAsRead(id));
+        //dispatch(markNotificationAsRead(id));
     }
 
     const handleOpenComment = (commentId) => {
@@ -50,7 +46,7 @@ const NotificationItem = props => {
                     title={user[1]}
                     subheader={createdAt}
                     action={
-                        page === "Unread"
+                        !checked
                         ?
                         <IconButton onClick={hadleMarkAsRead}>
                             <TaskAlt/>
@@ -78,7 +74,7 @@ const NotificationItem = props => {
                                 } else if (comment !== null) {
                                     return (
                                         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                                            <Typography>{post.title}, by {post.owner.nick}</Typography>
+                                            <Typography>{comment.text}</Typography>
                                             <Box sx={{display: 'flex', alignItems: 'center'}}>
                                                 <Button variant="outlined" onClick={handleOpenComment}>Show related comment</Button>
                                                 <Button variant="outlined" onClick={() => handleOpenPost(post._id, post.owner._id)}>Open related post</Button>

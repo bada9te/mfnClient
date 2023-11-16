@@ -6,15 +6,14 @@ import { Menu as MenuIcon } from '@mui/icons-material';
 import TopBarUserMenu from './top-bar-user-menu/top-bar-user-menu';
 import TopBarLeftMenuMin from './top-bar-left-menu-min/top-bar-left-menu-min';
 import TopBarLeftMenu from './top-bar-left-menu/top-bar-left-menu';
-import { useDispatch, useSelector } from "react-redux";
 import userSocket from '../../../../socket/user/socket-user';
 import StyledBadge from "./styled-badge/styled-badge";
-import { fetchUnreadNotifications } from '../../../containers/notifications-container/notificationsContainerSlice';
 import PropTypes from 'prop-types';
-import { useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 import { audioPlayerState } from '../../../common/audio-player/reactive';
 import { bottomBarState } from '../../bottom/bottom-bar/reactive';
 import { baseState } from '../../../baseReactive';
+import { NOTIFICATIONS_QUERY } from '../../../../graphql/notifications';
 
 
 function HideOnScroll(props) {
@@ -49,9 +48,15 @@ function HideOnScroll(props) {
 
 const Topbar = (props) => {
     const { user, locations } = useReactiveVar(baseState);
-    const notifications = useSelector(state => state.notificationsContainer.notifications);
-    const dispatch = useDispatch();
+    //const notifications = useSelector(state => state.notificationsContainer.notifications);
 
+    const [getUnreadNotifications, { data }] = useLazyQuery(NOTIFICATIONS_QUERY, {
+        variables: {
+            receiverId: user._id,
+            checked: false,
+        },
+        pollInterval: 15000
+    });
 
     const pages = ['Feed', 'Battles', 'Playlists'];
     const navigate = useNavigate();
@@ -95,17 +100,20 @@ const Topbar = (props) => {
     // current user socket notifications
     useEffect(() => {
         if (user && user._id !== "") {
+            getUnreadNotifications()
+
+
             userSocket.on(`subscribed-on-${user._id}`, (data) => {
-                dispatch(fetchUnreadNotifications());
+                //dispatch(fetchUnreadNotifications());
             });
             userSocket.on(`user-${user._id}-post-was-liked`, (data) => {
-                dispatch(fetchUnreadNotifications());
+                //dispatch(fetchUnreadNotifications());
             });
             userSocket.on(`user-${user._id}-post-was-saved`, (data) => {
-                dispatch(fetchUnreadNotifications());
+                //dispatch(fetchUnreadNotifications());
             });
             userSocket.on(`post-shared-to-${user._id}`, (data) => {
-                dispatch(fetchUnreadNotifications());
+                //dispatch(fetchUnreadNotifications());
             });
     
             return () => {
@@ -115,7 +123,7 @@ const Topbar = (props) => {
                 userSocket.off(`post-shared-to-${user._id}`);
             };
         }
-    });
+    }, [user]);
 
     
 
@@ -191,7 +199,7 @@ const Topbar = (props) => {
                                             { user && user?._id !== "" ? user?.nick : "Login" }
                                         </Typography>
                                         {
-                                            notifications.length > 0 && notifications.find(i => i.checked === false)
+                                            data?.notifications.length > 0
                                             ?
                                             <StyledBadge
                                                 overlap="circular"
@@ -230,7 +238,10 @@ const Topbar = (props) => {
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
                                 >
-                                    <TopBarUserMenu handleCloseUserMenu={handleCloseUserMenu}/>
+                                    <TopBarUserMenu 
+                                        handleCloseUserMenu={handleCloseUserMenu}
+                                        notifications={data?.notifications || []}
+                                    />
                                 </Menu>
                             </Box>
                         </Toolbar>

@@ -1,14 +1,11 @@
 import { Box, Button, Tab, Tabs } from "@mui/material";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import EnumNotifications from "../../enums/enum-notifications";
-import { deleteManyNotifications, fetchReadNotifications, fetchUnreadNotifications, markManyNotificationsAsRead, setPage } from "./notificationsContainerSlice";
 import * as Alert from "../../alerts/alerts";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
-import { useReactiveVar } from "@apollo/client";
+import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { NOTIFICATIONS_QUERY } from "../../../graphql/notifications";
 
 
 function TabPanel(props) {
@@ -36,27 +33,25 @@ function TabPanel(props) {
 
 const NotificationsContainer = props => {
     const [status, setStatus] = useState(0);
+
     const { user: currentUser, theme } = useReactiveVar(baseState);
-    const page = useSelector(state => state.notificationsContainer.page);
-    const notifications = useSelector(state => state.notificationsContainer.notifications);
-    const isLoading = useSelector(state => state.notificationsContainer.isLoading);
-
-    const dispatch = useDispatch();
-
+    const [getNotifications, { data, loading }] = useLazyQuery(NOTIFICATIONS_QUERY, {
+        variables: {
+            receiverId: currentUser._id,
+            checked: status === 0 ? false : true,
+        },
+        pollInterval: 15000,
+    });
 
     const handleTabSwitch = (event, key) => {
         setStatus(key);
-        if (key === 0) {
-            dispatch(setPage("Unread"));
-        } else if (key === 1) {
-            dispatch(setPage("Read"));
-        }
     }
 
     const handleDeleteAllClick = () => {
-        if (notifications && notifications.length > 0) {
+        if (data?.notifications && data?.notifications.length > 0) {
             Alert.alertPromise('Pending...', 'Notifications removed', 'Error occured', () => {
                 return new Promise((resolve, reject) => {
+                    /*
                     dispatch(deleteManyNotifications(notifications.map(i => i._id)))
                         .then(unwrapResult)
                         .then(result => {
@@ -65,16 +60,18 @@ const NotificationsContainer = props => {
                             } else {
                                 reject();
                             }
-                        });
+                        });*/
+                    resolve();
                 });
             }, {theme});
         }
     }
 
     const handleReadAllClick = () => {
-        if (notifications && notifications.length > 0) {
+        if (data?.notifications && data?.notifications.length > 0) {
             Alert.alertPromise('Pending...', 'Notifications marked as read', 'Error occured', () => {
                 return new Promise((resolve, reject) => {
+                    /*
                     dispatch(markManyNotificationsAsRead(notifications.map(i => i._id)))
                         .then(unwrapResult)
                         .then(result => {
@@ -84,18 +81,20 @@ const NotificationsContainer = props => {
                                 reject();
                             }
                         });
+                        */
+                    resolve();
                 });
             }, {theme});
         }
     }
 
-    
     useEffect(() => {
-        if (currentUser._id) {
-            if (page === "Unread") dispatch(fetchUnreadNotifications());
-            else if (page === "Read") dispatch(fetchReadNotifications());
+        if (currentUser._id !== "") {
+            getNotifications()
         }
-    }, [dispatch, currentUser._id, page]);
+    }, [currentUser._id]);
+
+    
 
     return (
         <Box sx={{width: '100%', height: '100vh'}}>
@@ -107,13 +106,13 @@ const NotificationsContainer = props => {
             </Box>
 
             <TabPanel value={status} index={0}>
-                { !isLoading && <Button fullWidth onClick={handleReadAllClick}>Mark all notifications as read</Button> }
-                <EnumNotifications/>
+                { !loading && <Button fullWidth onClick={handleReadAllClick}>Mark all notifications as read</Button> }
+                <EnumNotifications notifications={data?.notifications || []} loading={loading}/>
             </TabPanel>
         
             <TabPanel value={status} index={1}>
-                { !isLoading && <Button fullWidth onClick={handleDeleteAllClick}>Delete all read notifications</Button> }
-                <EnumNotifications/>
+                { !loading && <Button fullWidth onClick={handleDeleteAllClick}>Delete all read notifications</Button> }
+                <EnumNotifications notifications={data?.notifications || []} loading={loading}/>
             </TabPanel>
         </Box>
     );

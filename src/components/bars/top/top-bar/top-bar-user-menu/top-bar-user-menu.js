@@ -10,13 +10,11 @@ import { baseState } from "../../../../baseReactive";
 
 
 const TopBarUserMenu = props => {
-    const {handleCloseUserMenu} = props;
+    const {handleCloseUserMenu, notifications} = props;
     const items = ['Profile', 'Notifications', 'Edit profile', 'Saved posts', 'Support', 'Logout'];
     const itemsNL = ['Login', 'Support'];
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
-    const notifications = useSelector(state => state.notificationsContainer.notifications);
-
 
     const handleNavigate = (where) => {
         handleCloseUserMenu();
