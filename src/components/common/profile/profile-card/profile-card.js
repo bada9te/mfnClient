@@ -46,24 +46,22 @@ const ProfileCard = (props) => {
                         reject(err);
                     });
             });
-        });
-                
-                /*
-                if (result.data.done) {
-                    console.log(result.data)
-                    Alert.alertSuccess("Success");
-                    if (actionType === 'subscribe') {
-                        userSocket.emit("user-was-subscribed", {
-                            receiver: profileOwner.id,
-                            sender: currentUser._id,
-                            text: `${currentUser.nick} has just subscribed on you`,
-                        });
-                    }
-                } else {
-                    Alert.alertError("Sth went wrong");
-                }
-                */
-               
+        });  
+        /*
+        if (result.data.done) {
+            console.log(result.data)
+            Alert.alertSuccess("Success");
+            if (actionType === 'subscribe') {
+                userSocket.emit("user-was-subscribed", {
+                    receiver: profileOwner.id,
+                    sender: currentUser._id,
+                    text: `${currentUser.nick} has just subscribed on you`,
+                });
+            }
+        } else {
+            Alert.alertError("Sth went wrong");
+        }
+        */   
     }
     
     return (

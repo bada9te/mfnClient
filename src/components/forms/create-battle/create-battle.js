@@ -8,6 +8,8 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 
@@ -26,7 +28,7 @@ const CreateBattleForm = props => {
     const title = useSelector(state => state.createBattleForm.title);
     const post1 = useSelector(state => state.createBattleForm.post1);
     const post2 = useSelector(state => state.createBattleForm.post2);
-    const theme = useSelector(state => state.base.theme);
+    const { theme } = useReactiveVar(baseState);
     const dispatch = useDispatch();
 
     

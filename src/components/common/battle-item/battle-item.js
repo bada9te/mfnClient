@@ -4,7 +4,7 @@ import { Card, CardActions, CardContent, Typography, Box, Stack, Avatar } from '
 import battleImg from '../../../images/icons/battle-disk.png';
 import userSocket from '../../../socket/user/socket-user';
 import { useDispatch } from 'react-redux';
-import { removeFromInProgress, socketAddVote } from '../../containers/battles-container/battlesContainerSlice';
+
 
 
 const BattleItem = (props) => {
@@ -23,7 +23,7 @@ const BattleItem = (props) => {
                     clearInterval(interval);
                 }
             } else {
-                dispatch(removeFromInProgress(id));
+                //dispatch(removeFromInProgress(id));
             }
         }
     });
@@ -31,7 +31,7 @@ const BattleItem = (props) => {
     useEffect(() => {
         userSocket.on(`battle-${id}-voted`, (data) => {
             //console.log(data);
-            dispatch(socketAddVote(data));
+            //dispatch(socketAddVote(data));
         });
 
         return () => {

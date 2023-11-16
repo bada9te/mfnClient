@@ -1,7 +1,6 @@
 import { Grid, Paper } from "@mui/material"
 
 const BaseContentContainer = props => {
-
     const {left, right} = props;
 
     return (

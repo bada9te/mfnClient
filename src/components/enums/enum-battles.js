@@ -5,12 +5,13 @@ import { useSelector } from "react-redux";
 import { SpinnerLinear } from "../common/spinner/Spinner";
 import { Box, Typography } from "@mui/material";
 import PostItemUnavailable from "../common/post-item/post-item-unavailable";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../baseReactive";
 
 
 const PostFromData = (props) => {
-    const { data, battleId, makeBattleVote, votedBy } = props;
-    const page = useSelector(state => state.battlesContainer.page);
-    const locations = useSelector(state => state.base.locations);
+    const { data, battleId, makeBattleVote, votedBy, finished } = props;
+    const { locations } = useReactiveVar(baseState);
 
     return (
         <>
@@ -27,7 +28,7 @@ const PostFromData = (props) => {
                     }}
 
                     addons={{
-                        status: page === "In Progress" ? "voting" : null,
+                        status: !finished ? "voting" : null,
                         profileLinkAccessable: true,
                         commentsAllowed: data.commentsAllowed,
                         downloadsAllowed: data.downloadsAllowed,
@@ -46,20 +47,17 @@ const PostFromData = (props) => {
 
 
 const EnumBattles = props => {
-    const { makeBattleVote } = props;
-    const battles = useSelector(state => state.battlesContainer.battles);
-    const isLoading = useSelector(state => state.battlesContainer.isLoading);
-
+    const { makeBattleVote, battles, loading } = props;
 
     return (
         <>
             {
                 (() => {
-                    if (isLoading) {
+                    if (loading) {
                         return (
                             <SpinnerLinear/>
                         );
-                    } else if (battles.length === 0) {
+                    } else if (battles?.length === 0) {
                         return (
                             <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
                                 <Typography>
@@ -80,6 +78,7 @@ const EnumBattles = props => {
                                             battleId={item?._id} 
                                             makeBattleVote={makeBattleVote}
                                             votedBy={item?.votedBy}
+                                            finished={item?.finished}
                                         />
                                     }
                                     post2={
@@ -88,14 +87,13 @@ const EnumBattles = props => {
                                             battleId={item?._id} 
                                             makeBattleVote={makeBattleVote}
                                             votedBy={item?.votedBy}
+                                            finished={item?.finished}
                                         />
                                     }
                                     createdAt={item.createdAt}
                                     willFinishAt={item.willFinishAt}
                                     post1Score={item.post1Score}
                                     post2Score={item.post2Score}
-                                    //bg1={`${locations?.images}/${item.post1.image}`}
-                                    //bg2={`${locations?.images}/${item.post2.image}`}
                                     winner={item?.winner}
                                     finished={item?.finished}
                                 />

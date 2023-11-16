@@ -1,0 +1,51 @@
+import { gql } from "@apollo/client";
+import { CORE_POST_FIELDS } from "./posts";
+
+
+export const CORE_BATTLE_FIELDS = gql`
+    ${CORE_POST_FIELDS}
+    fragment CoreBattleFields on Battle {
+        _id
+        title
+        post1 {
+            ...CorePostFields
+        }
+        post2 {
+            ...CorePostFields
+        }
+        winner {
+            _id
+        }
+        createdAt
+        willFinishAt
+        finished
+        votedBy {
+            _id
+        }
+        post1Score
+        post2Score
+    }
+`;
+
+// Q
+export const BATTLES_BY_STATUS_QUERY = gql`
+    ${CORE_BATTLE_FIELDS}
+    query battlesByStatus($status: String!, $offset: Int!, $limit: Int!) {
+        battlesByStatus(status: $status, offset: $offset, limit: $limit) {
+            battles {
+                ...CoreBattleFields
+            }
+            count
+        }
+    }
+`;
+
+// M
+export const BATTLE_MAKE_VOTE_MUTATION = gql`
+    ${CORE_BATTLE_FIELDS}
+    mutation battleMakeVote($input: MakeBattleVoteInput!) {
+        battleMakeVote(input: $input) {
+            ...CoreBattleFields
+        }
+    }
+`;

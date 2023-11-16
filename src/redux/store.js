@@ -1,4 +1,3 @@
-import battlesContainerSlice          from "../components/containers/battles-container/battlesContainerSlice";
 import leftBarPostsSlice              from "../components/bars/left/left-bar-posts/leftBarPostsSlice";
 import rightBarUsersSlice             from "../components/bars/right/right-bar-users/rightBarUsersSlice";
 import imageCropperModalSlice         from "../components/modals/image-cropper-modal/imageCropperModalSlice";
@@ -20,7 +19,6 @@ const store = configureStore({
         rightBarUsers:          rightBarUsersSlice,
         
         // containers
-        battlesContainer:       battlesContainerSlice,
         notificationsContainer: notificationsContainerSlice,
         
         // forms

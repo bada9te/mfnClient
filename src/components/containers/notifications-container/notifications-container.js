@@ -7,6 +7,8 @@ import EnumNotifications from "../../enums/enum-notifications";
 import { deleteManyNotifications, fetchReadNotifications, fetchUnreadNotifications, markManyNotificationsAsRead, setPage } from "./notificationsContainerSlice";
 import * as Alert from "../../alerts/alerts";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 function TabPanel(props) {
@@ -34,11 +36,11 @@ function TabPanel(props) {
 
 const NotificationsContainer = props => {
     const [status, setStatus] = useState(0);
-    const currentUserId = useSelector(state => state.base.user._id);
+    const { user: currentUser, theme } = useReactiveVar(baseState);
     const page = useSelector(state => state.notificationsContainer.page);
     const notifications = useSelector(state => state.notificationsContainer.notifications);
     const isLoading = useSelector(state => state.notificationsContainer.isLoading);
-    const theme = useSelector(state => state.base.theme);
+
     const dispatch = useDispatch();
 
 
@@ -89,11 +91,11 @@ const NotificationsContainer = props => {
 
     
     useEffect(() => {
-        if (currentUserId) {
+        if (currentUser._id) {
             if (page === "Unread") dispatch(fetchUnreadNotifications());
             else if (page === "Read") dispatch(fetchReadNotifications());
         }
-    }, [dispatch, currentUserId, page]);
+    }, [dispatch, currentUser._id, page]);
 
     return (
         <Box sx={{width: '100%', height: '100vh'}}>

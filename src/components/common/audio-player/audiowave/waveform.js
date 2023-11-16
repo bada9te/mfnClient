@@ -1,10 +1,12 @@
+import { useReactiveVar } from "@apollo/client";
 import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { baseState } from "../../../baseReactive";
 import animateBars from "./animateBars";
 
 // Component to render the waveform
 const WaveForm = ({ analyzerData }) => {
-    const theme = useSelector(state => state.base.theme);
+    const { theme } = useReactiveVar(baseState);
 
     // Ref for the canvas element
     const canvasRef = useRef(null);

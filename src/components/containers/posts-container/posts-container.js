@@ -1,10 +1,8 @@
 import { useCallback, useEffect } from 'react';
 import { SpinnerLinear } from '../../common/spinner/Spinner';
 import PaginationTree from '../../common/pagination/pagination';
-
 import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
-import { useDispatch } from 'react-redux';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../graphql/posts';
 import defineMaxPage from '../../../common-functions/defineMaxPage';
@@ -15,22 +13,12 @@ import { postsContainerState } from './reactive';
 
 const PostsContainer = (props) => {
     const {id, profileLinkAccessable, savedOnly, except} = props;
-
-    const dispatch = useDispatch();
     const { user: currentUser } = useReactiveVar(baseState);
-    const { 
-        activePage, 
-        maxCountPerPage, 
-        maxPage, 
-        isLoading,
-        posts
-    } = useReactiveVar(postsContainerState);
-
+    const { activePage, maxCountPerPage, maxPage, isLoading, posts } = useReactiveVar(postsContainerState);
 
     const [getSavedOnlyPosts] = useLazyQuery(POSTS_SAVED_BY_USER_QUERY);
     const [getAllPosts] = useLazyQuery(POSTS_QUERY);
     const [getOwnerPosts] = useLazyQuery(POSTS_BY_OWNER_QUERY);
-    
     
     const handlePageChange = page => {
         postsContainerState({...postsContainerState(), activePage: page});
@@ -88,7 +76,7 @@ const PostsContainer = (props) => {
         }
 
         fetchData();
-    }, [savedOnly, id, currentUser?._id, activePage, getAllPosts, getOwnerPosts, getSavedOnlyPosts, dispatch, maxCountPerPage, setPostsAndCount]);
+    }, [savedOnly, id, currentUser?._id, activePage, getAllPosts, getOwnerPosts, getSavedOnlyPosts, maxCountPerPage, setPostsAndCount]);
 
     
     
