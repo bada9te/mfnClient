@@ -8,60 +8,60 @@ import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 import { httpSaveFile } from "../../../requests/files";
 import { postUploadFormState } from "./reactive";
+import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
+import { useSnackbar } from "notistack";
 
 
 
 const PostUploadForm = (props)=> {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    
-    const { user: currentUser, theme } = useReactiveVar(baseState);
+    const { user: currentUser } = useReactiveVar(baseState);
+    const { isShowing: cropModalIsShowing } = useReactiveVar(imageCropperModalState);
     const postUploadForm = useReactiveVar(postUploadFormState);
+    const { enqueueSnackbar } = useSnackbar();
+ 
 
-
-    const [postUpload, { data, loading, error }] = useMutation(POST_CREATE_MUTATION);
+    const [postUpload] = useMutation(POST_CREATE_MUTATION);
 
 
     // form submit
     const onSubmit = async(data) => {
         let blob = await fetch(postUploadForm.picture).then(r => r.blob());
 
-        Alert.alertPromise("Uploading...", "Post uploaded", "Can't upload the post", () => {
-            return new Promise(async(resolve, reject) => {
-                Promise.all([
-                    await httpSaveFile(data.Audio[0])
-                        .then((data) => {
-                            postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.file.filename });
-                        }),
-                    await httpSaveFile(blobToFile(blob, data.Image[0].name))
-                        .then((data) => {
-                            postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.file.filename });
-                        }),
-                ]).then(() => {
-                    postUpload({
-                        variables: {
-                            input: {
-                                owner: currentUser._id,
-                                title: postUploadForm.title,
-                                description: postUploadForm.description,
-                                audio: postUploadForm.uploadedAudioName,
-                                image: postUploadForm.uploadedPictureName,
-                                commentsAllowed: postUploadForm.commentsAllowed,
-                                downloadsAllowed: postUploadForm.downloadsAllowed,
-                            },
-                        },
-                    })
-                    .then(result => {
-                        console.log(result)
-                        if (result.data.done) {
-                            reset();
-                            resolve();
-                        } else {
-                            reject();
-                        }
-                    });
-                });
-            }); 
-        }, { theme });  
+        enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
+        
+        Promise.all([
+            await httpSaveFile(data.Audio[0])
+                .then(({data}) => {
+                    postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.file.filename });
+                }),
+            await httpSaveFile(blobToFile(blob, data.Image[0].name))
+                .then(({data}) => {
+                    postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.file.filename });
+                }),
+        ]).then(async() => {
+            await postUpload({
+                variables: {
+                    input: {
+                        owner: currentUser._id,
+                        title: postUploadForm.title,
+                        description: postUploadForm.description,
+                        audio: postUploadForm.uploadedAudioName,
+                        image: postUploadForm.uploadedPictureName,
+                        commentsAllowed: postUploadForm.commentsAllowed,
+                        downloadsAllowed: postUploadForm.downloadsAllowed,
+                    },
+                },
+            })
+            .then(({data}) => {
+                if (data?.postCreate._id) {
+                    reset();
+                    enqueueSnackbar("Post uploaded", { autoHideDuration: 1500, variant: 'success' });
+                } else {
+                    enqueueSnackbar("Can't upload new post", { variant: 'error' });
+                }
+            });
+        })
     }
 
     
@@ -84,8 +84,26 @@ const PostUploadForm = (props)=> {
         postUploadFormState({ ...postUploadFormState(), [what]: value })
     }
 
+    const handleImageCropModalClose = async(value, picture) => {
+        imageCropperModalState({...imageCropperModalState(), isShowing: value});
+        let blob = await fetch(picture).then(r => r.blob());
+        postUploadFormState({ ...postUploadFormState(), picture: URL.createObjectURL(blobToFile(blob)) });
+    }
 
-    return(          
+
+    return(     
+        <>
+        {
+            cropModalIsShowing 
+            ? 
+            <ImageCropperModal 
+                show={cropModalIsShowing} 
+                handleImageCropModalClose={handleImageCropModalClose} 
+                image={postUploadForm.picture} 
+            />
+            :
+            null
+        }     
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{margin: 1}}>
             <TextField
                 margin="normal"
@@ -121,7 +139,7 @@ const PostUploadForm = (props)=> {
             />
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
-                    {postUploadForm.imageTitle}
+                    {`${postUploadForm.imageTitle.slice(0, 30)}`}
                     <input type="file" hidden 
                         onInput={e => handlePicture(e.target.files[0] || null)}
                         {...register("Image", {
@@ -132,7 +150,7 @@ const PostUploadForm = (props)=> {
             </FormGroup>
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
-                    {postUploadForm.audioTitle}
+                    {`${postUploadForm.audioTitle.slice(0, 30)}`}
                     <input type="file" hidden 
                         onInput={e => handleAudio(e.target.files[0] || null)}
                         {...register("Audio", {
@@ -173,6 +191,7 @@ const PostUploadForm = (props)=> {
                 Upload
             </Button>
         </Box>
+    </>
     );
 }
 

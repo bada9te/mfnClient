@@ -8,6 +8,7 @@ import './requests/setupAxios';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { USER_QUERY } from './graphql/users';
+import { SnackbarProvider } from 'notistack';
 
 
 
@@ -55,31 +56,33 @@ function App() {
 
   return (
       <ThemeProvider theme={theme}>
-        <Routes>
-          {/* ACCOUNT MGMT */}
-          <Route path='/login'     element={<Login/>}/>
-          <Route path='/logout'    element={<Logout/>}/>
-          <Route path='/register'  element={<Register/>}/>
-          <Route path='/account-verify/:userId/:actionId'                      element={<AccountVerify/>}/>
-          <Route path='/account-restore/:userId/:actionId/:verifyToken/:type'  element={<AccountRestore/>}/>
-          <Route path='/account-restore/email-check'                           element={<AccountRestoreEmailCheck/>}/>
+        <SnackbarProvider maxSnack={5}>
+          <Routes>
+            {/* ACCOUNT MGMT */}
+            <Route path='/login'     element={<Login/>}/>
+            <Route path='/logout'    element={<Logout/>}/>
+            <Route path='/register'  element={<Register/>}/>
+            <Route path='/account-verify/:userId/:actionId'                      element={<AccountVerify/>}/>
+            <Route path='/account-restore/:userId/:actionId/:verifyToken/:type'  element={<AccountRestore/>}/>
+            <Route path='/account-restore/email-check'                           element={<AccountRestoreEmailCheck/>}/>
 
-          {/* APP */}
-          <Route path='/'                element={<Container/>}>
-            <Route path='/'                element={<MainPage/>}/>
-            <Route path='/saved'           element={<SavedPosts/>}/>
-            <Route path='/profile/:id'     element={<Profile/>}/>
-            <Route path='/profile-edit'    element={<ProfileEdit/>}/>
-            <Route path='/battles'         element={<Battles/>}/>
-            <Route path='/post-upload'     element={<PostUpload/>}/>
-            <Route path='/track/:id'       element={<Track/>}/>
-            <Route path='/support'         element={<Support/>}/>
-            <Route path='/f.a.q'           element={<FAQ/>}/>
-            <Route path='/notifications'   element={<Notifications/>}/>
-            <Route path='/playlists'       element={<Playlists/>}/>
-            <Route path='/*'               element={<NotFound404/>}/>
-          </Route>
-        </Routes>
+            {/* APP */}
+            <Route path='/'                element={<Container/>}>
+              <Route path='/'                element={<MainPage/>}/>
+              <Route path='/saved'           element={<SavedPosts/>}/>
+              <Route path='/profile/:id'     element={<Profile/>}/>
+              <Route path='/profile-edit'    element={<ProfileEdit/>}/>
+              <Route path='/battles'         element={<Battles/>}/>
+              <Route path='/post-upload'     element={<PostUpload/>}/>
+              <Route path='/track/:id'       element={<Track/>}/>
+              <Route path='/support'         element={<Support/>}/>
+              <Route path='/f.a.q'           element={<FAQ/>}/>
+              <Route path='/notifications'   element={<Notifications/>}/>
+              <Route path='/playlists'       element={<Playlists/>}/>
+              <Route path='/*'               element={<NotFound404/>}/>
+            </Route>
+          </Routes>
+        </SnackbarProvider>
       </ThemeProvider>
   );
 }

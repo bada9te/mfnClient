@@ -5,11 +5,6 @@ export const CORE_POST_FIELDS = gql`
         _id
         title
         description
-        owner {
-            _id
-            avatar
-            nick
-        }
         savedBy {
             _id
         }
@@ -34,6 +29,11 @@ export const POST_QUERY = gql`
     query post($_id: ID!) {
         post(_id: $_id) {
             ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
         }
     }
 `;
@@ -44,6 +44,11 @@ export const POSTS_QUERY = gql`
         posts(offset: $offset, limit: $limit) {
             posts {
                 ...CorePostFields
+                owner {
+                    _id
+                    avatar
+                    nick
+                }
             }
             count
         }
@@ -56,6 +61,11 @@ export const POSTS_BY_OWNER_QUERY = gql`
         postsByOwner(owner: $owner, offset: $offset, limit: $limit) {
             posts {
                 ...CorePostFields
+                owner {
+                    _id
+                    avatar
+                    nick
+                }
             }
             count
         }
@@ -68,6 +78,11 @@ export const POSTS_SAVED_BY_USER_QUERY = gql`
         postsSavedByUser(user: $user, offset: $offset, limit: $limit) {
             posts {
                 ...CorePostFields
+                owner {
+                    _id
+                    avatar
+                    nick
+                }
             }
             count
         }
@@ -79,6 +94,11 @@ export const POSTS_BY_TITLE_QUERY = gql`
     query postsByTitle($input: PostsByTitleInput!) {
         postsByTitle(input: $input) {
             ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
         }
     }
 `;
@@ -88,6 +108,11 @@ export const POSTS_BY_IDS_QUERY = gql`
     query postsByIds($ids: [ID!]!) {
         postsByIds(ids: $ids) {
             ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
         }
     }
 `;

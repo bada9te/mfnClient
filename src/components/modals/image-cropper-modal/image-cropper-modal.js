@@ -1,8 +1,9 @@
+import { useReactiveVar } from "@apollo/client";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Box } from "@mui/material";
 import { useState, useCallback } from "react";
 import Cropper from 'react-easy-crop';
-import { useSelector } from "react-redux";
 import getCroppedImg from './cropImage';
+import { imageCropperModalState } from "./reactive";
 
 
 const ImageCropperModal = props => {
@@ -11,8 +12,7 @@ const ImageCropperModal = props => {
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-    const imageType = useSelector(state => state.imageCropperModal.imageType);
-    const isShowing = useSelector(state => state.imageCropperModal.isShowing);
+    const { imageType, isShowing } = useReactiveVar(imageCropperModalState);
     
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {

@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
-import { toast } from "react-toastify";
-import toastsConfig from "../../alerts/toasts-config";
 import { httpLogin } from "../../../requests/auth";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { useSnackbar } from "notistack";
 
 
 
@@ -13,11 +12,11 @@ const LoginForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const { theme } = useReactiveVar(baseState);
-    
-    
+    const { enqueueSnackbar } = useSnackbar();
+     
     const onSubmit = async(data) => {
         // show process
-        const id = toast.loading("Logging in...", { ...toastsConfig({ theme }) });
+        enqueueSnackbar("Logging in...", { autoHideDuration: 1500 })
         // update store
         await httpLogin(data)
             .then((result) => {
@@ -34,36 +33,16 @@ const LoginForm = (props) => {
                         }));
                         localStorage.setItem('mfnCurrentToken', JSON.stringify(result.data.token))
                         navigate('/');
-                        toast.update(id, { 
-                            render: "Successfully logged in", 
-                            type: "success", 
-                            isLoading: false, 
-                            ...toastsConfig({ theme }) 
-                        });
+                        enqueueSnackbar("Successfully logged in", { variant: "success", autoHideDuration: 1500 });
                     } else {
-                        toast.update(id, { 
-                            render: "Pls verify your account via email", 
-                            type: "warning", 
-                            isLoading: false, 
-                            ...toastsConfig({ theme }) 
-                        });
+                        enqueueSnackbar("Pls verify your account via email", { variant: "warning" });
                     }
                 } else {
-                    toast.update(id, { 
-                        render: "Can't log in", 
-                        type: "error", 
-                        isLoading: false, 
-                        ...toastsConfig({ theme }) 
-                    });
+                    enqueueSnackbar("Can't perform login", { variant: "error" });
                 }
             })
             .catch((err) => {
-                toast.update(id, { 
-                    render: err.message, 
-                    type: "error", 
-                    isLoading: false, 
-                    ...toastsConfig({ theme }) 
-                });
+                enqueueSnackbar(err.message, { variant: "error" });
             });
     };
 

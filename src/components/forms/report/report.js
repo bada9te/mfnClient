@@ -12,7 +12,7 @@ import { baseState } from "../../baseReactive";
 
 const ReportForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [value, setValue] = useState("");
+    const [ value, setValue ] = useState("");
     const { reportingItemId } = useReactiveVar(reportFormState);
     const { user: currentUser, theme } = useReactiveVar(baseState);
 

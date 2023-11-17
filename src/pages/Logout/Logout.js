@@ -1,7 +1,6 @@
 import { useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Alert from "../../components/alerts/alerts";
 import { baseState } from "../../components/baseReactive";
@@ -11,7 +10,6 @@ import { httpLogOut } from "../../requests/auth";
 
 const Logout = (props) => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const { user: currentUser, theme } = useReactiveVar(baseState);
     
     useEffect(() => {
@@ -32,7 +30,7 @@ const Logout = (props) => {
             navigate('/');
         }
         return () => clearTimeout(timeout);
-    }, [currentUser?._id, dispatch, navigate, theme]);
+    }, [currentUser?._id, navigate, theme]);
     
     return (
         <>
