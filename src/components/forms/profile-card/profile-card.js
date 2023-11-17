@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { setImageType, setIsShowing } from "../../modals/image-cropper-modal/imageCropperModalSlice";
 import { setPicture } from "./profileCardFormSlice";
 import { toast } from "react-toastify";
 import toastsConfig from "../../alerts/toasts-config";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 
 
 const ProfileCardForm = (props) => {
@@ -26,8 +26,7 @@ const ProfileCardForm = (props) => {
 
 
     const cropImageFile = (img, what) => {
-        dispatch(setIsShowing(true));
-        dispatch(setImageType(what));
+        imageCropperModalState({...imageCropperModalState(), isShowing: true, imageType: what})
         dispatch(setPicture(URL.createObjectURL(img)));
     };
 
@@ -40,7 +39,7 @@ const ProfileCardForm = (props) => {
 
     // handler
     const handleImageCropModalClose = async(value, picture) => {
-        dispatch(setIsShowing(value));
+        imageCropperModalState({...imageCropperModalState(), isShowing: value});
 
         if (picture != null) { 
             const id = toast.loading("Updating profile...");

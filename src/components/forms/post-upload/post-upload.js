@@ -2,11 +2,13 @@ import { useForm } from "react-hook-form";
 import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
 import * as Alert from "../../alerts/alerts";
 import { useDispatch, useSelector } from "react-redux";
-import { savePostFile, setAudio, setAudioTitle, setCommentsAllowed, setDescription, setDownloadsAllowed, setImageTitle, setPicture, setTitle } from "./postUploadFormSlice";
-import { setImageType, setIsShowing as setCropModalIsShowing } from "../../modals/image-cropper-modal/imageCropperModalSlice";
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { POST_CREATE_MUTATION } from "../../../graphql/posts";
 import blobToFile from "../../../common-functions/blobToFile";
+import { baseState } from "../../baseReactive";
+import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
+import { httpSaveFile } from "../../../requests/files";
+import { postUploadFormState } from "./reactive";
 
 
 
@@ -14,9 +16,8 @@ const PostUploadForm = (props)=> {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     
     const dispatch = useDispatch();
-    const currentUserId = useSelector(state => state.base.user._id);
-    const theme = useSelector(state => state.base.theme);
-    const postUploadForm = useSelector(state => state.postUploadForm);
+    const { user: currentUser, theme } = useReactiveVar(baseState);
+    const postUploadForm = useReactiveVar(postUploadFormState);
 
 
     const [postUpload, { data, loading, error }] = useMutation(POST_CREATE_MUTATION);
@@ -27,15 +28,21 @@ const PostUploadForm = (props)=> {
         let blob = await fetch(postUploadForm.picture).then(r => r.blob());
 
         Alert.alertPromise("Uploading...", "Post uploaded", "Can't upload the post", () => {
-            return new Promise((resolve, reject) => {
+            return new Promise(async(resolve, reject) => {
                 Promise.all([
-                    dispatch(savePostFile({file: data.Audio[0], type: 'audio'})),
-                    dispatch(savePostFile({file: blobToFile(blob, data.Image[0].name), type: 'image'}))
+                    await httpSaveFile(data.Audio[0])
+                        .then((data) => {
+                            postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.file.filename });
+                        }),
+                    await httpSaveFile(blobToFile(blob, data.Image[0].name))
+                        .then((data) => {
+                            postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.file.filename });
+                        }),
                 ]).then(() => {
                     postUpload({
                         variables: {
                             input: {
-                                owner: currentUserId,
+                                owner: currentUser._id,
                                 title: postUploadForm.title,
                                 description: postUploadForm.description,
                                 audio: postUploadForm.uploadedAudioName,
@@ -64,20 +71,20 @@ const PostUploadForm = (props)=> {
     // handlers
     const handlePicture = (file) => { 
         if (file !== null) {
-            dispatch(setImageTitle(file.name));
-            dispatch(setPicture(URL.createObjectURL(file)));
-            dispatch(setImageType("background"));
-            dispatch(setCropModalIsShowing(true));
+            postUploadFormState({ ...postUploadFormState(), imageTitle: file.name, picture: URL.createObjectURL(file) });
+            imageCropperModalState({ ...imageCropperModalState(), imageType: "background", isShowing: true });
         }
     };
 
     const handleAudio = (file) => { 
         if (file !== null) {
-            dispatch(setAudioTitle(file.name));
-            dispatch(setAudioTitle(file.name));
-            dispatch(setAudio(URL.createObjectURL(file)));
+            postUploadFormState({ ...postUploadFormState(), audioTitle: file.name, audio: URL.createObjectURL(file) });
         }
     };
+
+    const updateState = (what, value) => {
+        postUploadFormState({ ...postUploadFormState(), [what]: value })
+    }
 
 
     return(          
@@ -91,7 +98,7 @@ const PostUploadForm = (props)=> {
                 name="title"
                 error={Boolean(errors.Title)}
                 helperText={errors.Title && "Title must be from 4 to 10 characters"}
-                onInput={(e) => dispatch(setTitle(e.target.value))}
+                onInput={(e) => updateState("title", e.target.value)}
                 {...register("Title", {
                     maxLength: 10,
                     minLength: 4,
@@ -107,7 +114,7 @@ const PostUploadForm = (props)=> {
                 name="description"
                 error={Boolean(errors.ShortDesc)}
                 helperText={errors.ShortDesc && "Short description must be from 4 to 20 characters"}
-                onInput={(e) => dispatch(setDescription(e.target.value))}
+                onInput={(e) => updateState("description", e.target.value)}
                 {...register("ShortDesc", {
                     maxLength: 40,
                     minLength: 4,
@@ -141,7 +148,7 @@ const PostUploadForm = (props)=> {
                     control={
                         <Checkbox color="primary" {...register("AllowComments", {})} 
                             checked={postUploadForm.commentsAllowed} 
-                            onChange={(e) => dispatch(setCommentsAllowed(e.target.checked))}
+                            onChange={(e) => updateState("commentsAllowed", e.target.checked)}
                         />
                     }
                     label="Allow comments"
@@ -152,7 +159,7 @@ const PostUploadForm = (props)=> {
                     control={
                         <Checkbox color="primary" {...register("AllowDownloads", {})}
                             checked={postUploadForm.downloadsAllowed} 
-                            onChange={(e) => dispatch(setDownloadsAllowed(e.target.checked))}
+                            onChange={(e) => updateState("downloadsAllowed", e.target.checked)}
                         />
                     }
                     label="Allow downloads"

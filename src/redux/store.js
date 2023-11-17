@@ -1,5 +1,3 @@
-import imageCropperModalSlice         from "../components/modals/image-cropper-modal/imageCropperModalSlice";
-import postUploadFormSlice            from "../components/forms/post-upload/postUploadFormSlice";
 import profileCardFormSlice           from "../components/forms/profile-card/profileCardFormSlice";
 import createBattleFormSlice          from "../components/forms/create-battle/createBattleFormSlice";
 import accountRestoreFormSlice        from "../components/forms/account-restore/accountRestoreFormSlice";
@@ -13,15 +11,11 @@ const store = configureStore({
     reducer: {
         // forms
         createBattleForm:          createBattleFormSlice,
-        postUploadForm:            postUploadFormSlice,
         profileCardForm:           profileCardFormSlice,
         accountRestoreForm:        accountRestoreFormSlice,
         accountRestoreRequestForm: accountRestoreRequestFormSlice,
         accountVerifyForm:         accountVerifyFormSlice,
         createPlaylistForm:        createPlaylistFormSlice,
-
-        // modals
-        imageCropperModal:      imageCropperModalSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
     devTools: process.env.REACT_APP_VERSION_TYPE === "production" ? false : true,

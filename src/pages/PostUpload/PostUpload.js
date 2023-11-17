@@ -3,30 +3,30 @@ import PostItem from "../../components/common/post-item/post-item";
 import ImageCropperModal from "../../components/modals/image-cropper-modal/image-cropper-modal";
 import { Typography, CardContent, Box } from "@mui/material";
 import ImageRightFormContainer from "../../components/containers/image-right-form-container/image-right-form.container";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsShowing as setCropModalIsShowing } from "../../components/modals/image-cropper-modal/imageCropperModalSlice";
-import { setPicture } from "../../components/forms/post-upload/postUploadFormSlice";
 import newPostFormBG from '../../images/bgs/newPostFormBG.png';
 import BaseContentContainer from "../../components/containers/base-content-container/base-content-container";
+import { imageCropperModalState } from "../../components/modals/image-cropper-modal/reactive";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../components/baseReactive";
+import { postUploadFormState } from "../../components/forms/post-upload/reactive";
 
 
 const PostUpload = (props) => {
-    const currentUser = useSelector(state => state?.base?.user);
-    const locations = useSelector(state => state?.base?.locations);
-    const isShowing = useSelector(state => state.imageCropperModal.isShowing);
-    const audio = useSelector(state => state.postUploadForm.audio);
-    const title = useSelector(state => state.postUploadForm.title);
-    const description = useSelector(state => state.postUploadForm.description);
-    const picture = useSelector(state => state.postUploadForm.picture);
-    const commentsAllowed = useSelector(state => state.postUploadForm.commentsAllowed);
-    const downloadsAllowed = useSelector(state => state.postUploadForm.downloadsAllowed);
-    const dispatch = useDispatch();
-
+    const { user: currentUser, locations } = useReactiveVar(baseState);
+    const { 
+        isShowing, 
+        audio, 
+        title, 
+        description, 
+        picture, 
+        commentsAllowed, 
+        downloadsAllowed 
+    } = useReactiveVar(postUploadFormState);
 
     const handleImageCropModalClose = (value, picture) => {
-        dispatch(setCropModalIsShowing(value));
+        imageCropperModalState({ ...imageCropperModalState(), isShowing: value })
         if (picture !== null) {
-            dispatch(setPicture(picture));
+            postUploadFormState({ ...postUploadFormState(), picture });
         }
     }
 
