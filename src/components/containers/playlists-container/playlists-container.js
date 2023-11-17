@@ -66,7 +66,7 @@ const PlaylistsEnumWithPagination = () => {
 
 
 const PlaylistsContainer = (props) => {
-    const playlistsContainer = useReactiveVar(playlistsContainerState);
+    const { maxCountPerPage, activePage, playlists, isLoading } = useReactiveVar(playlistsContainerState);
     const { user: currentUser } = useReactiveVar(baseState);
 
 
@@ -98,15 +98,15 @@ const PlaylistsContainer = (props) => {
         playlistsContainerState({
             ...playlistsContainerState(), 
             playlists: result.data[at].playlists,
-            maxPage: defineMaxPage(result.data[at].count, playlistsContainer.maxCountPerPage),
+            maxPage: defineMaxPage(result.data[at].count, maxCountPerPage),
         });
-    }, [playlistsContainer.maxCountPerPage]);
+    }, [maxCountPerPage]);
 
     // main effect 
     useEffect(() => {
+        console.log(11)
         const fetchPlaylists = async() => {
             try {
-                let { activePage, maxCountPerPage } = playlistsContainer;
                 let result;
                 let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
 
@@ -135,7 +135,7 @@ const PlaylistsContainer = (props) => {
             }
         }
         fetchPlaylists();
-    }, [currentUser?._id, status, playlistsContainer, getCurrentUserPlaylists, getPublicAvailablePlaylists, setPlaylistsAndCount]);
+    }, [currentUser?._id, status, getCurrentUserPlaylists, getPublicAvailablePlaylists, setPlaylistsAndCount]);
 
 
     return (
@@ -151,11 +151,11 @@ const PlaylistsContainer = (props) => {
             <TabPanel value={status} index={0}>
                 {
                     (() => {
-                        if (playlistsContainer.isLoading) {
+                        if (isLoading) {
                             return (<SpinnerLinear/>);
                         }
 
-                        if (playlistsContainer.playlists && playlistsContainer.playlists.length > 0) {
+                        if (playlists && playlists.length > 0) {
                             return (
                                 <PlaylistsEnumWithPagination/>
                             );
@@ -181,11 +181,11 @@ const PlaylistsContainer = (props) => {
                             );
                         }
 
-                        if (playlistsContainer.isLoading) {
+                        if (isLoading) {
                             return (<SpinnerLinear/>);
                         }
 
-                        if (playlistsContainer.playlists && playlistsContainer.playlists.length > 0) {
+                        if (playlists && playlists.length > 0) {
                             return (
                                 <PlaylistsEnumWithPagination/>
                             );

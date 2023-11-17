@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import { Box, TextField, Button } from "@mui/material";
-import { useSelector } from "react-redux";
 import * as Alert from "../../alerts/alerts";
 import { httpCreateSupportRequest } from "../../../requests/support-requests";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 const FormSupportContact = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const currentUser = useSelector(state => state?.base?.user);
+    const { user: currentUser } = useReactiveVar(baseState);
 
     const onSubmit = async(data) => {
         const supportRequestData = {

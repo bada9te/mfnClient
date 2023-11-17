@@ -3,23 +3,22 @@ import './AccountRestore.scss'
 import AccountRestoreForm from '../../components/forms/account-restore/account-restore'
 import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { cancelAccountRestoring, checkUserVerifyTokenById } from '../../components/forms/account-restore/accountRestoreFormSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
+import { useEffect, useState } from 'react';
 import * as Alert from "../../components/alerts/alerts";
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 import newPasswordBG from '../../images/bgs/newPasswordFormBG.png';
+import { useReactiveVar } from '@apollo/client';
+import { baseState } from '../../components/baseReactive';
 
 
 const AccountRestore = (props)=> {
     const { userId, actionId, verifyToken, type } = useParams();
-    const actionIsValid = useSelector(state => state.accountRestoreForm.actionIsValid);
-    const theme = useSelector(state => state.base.theme);
-    const dispatch = useDispatch();
+    const [actionIsValid, setActionIsValid] = useState(false);
+    const { theme } = useReactiveVar(baseState);
     const navigate = useNavigate();
 
     const cancelAccountRestore = () => {
+        /*
         dispatch(cancelAccountRestoring({
             userId,
             actionId,
@@ -35,16 +34,21 @@ const AccountRestore = (props)=> {
                 Alert.alertError('Unexpected error', { theme });
             }
         });
+        */
+        console.log("CANCEL ACC RESTORE!")
     }
 
     useEffect(() => {
+        /*
         dispatch(checkUserVerifyTokenById({
             userId,
             actionId,
             verifyToken,
             type,
         }));
-    }, [userId, verifyToken, actionId, dispatch, type])
+        */
+        console.log("CHECK USER VERIFY TOK BY ID!")
+    }, [userId, verifyToken, actionId, type])
 
     return(
         <LogRegVerContainer bg={newPasswordBG}>

@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
 import * as Alert from "../../alerts/alerts";
-import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { POST_CREATE_MUTATION } from "../../../graphql/posts";
 import blobToFile from "../../../common-functions/blobToFile";
@@ -15,7 +14,6 @@ import { postUploadFormState } from "./reactive";
 const PostUploadForm = (props)=> {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     
-    const dispatch = useDispatch();
     const { user: currentUser, theme } = useReactiveVar(baseState);
     const postUploadForm = useReactiveVar(postUploadFormState);
 

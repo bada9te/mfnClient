@@ -2,14 +2,13 @@ import { useForm } from "react-hook-form";
 import PostItem from "../../common/post-item/post-item";
 import * as Alert from "../../alerts/alerts";
 import { Box, TextField, Button, Stack } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { createBattle, setTitle } from "./createBattleFormSlice";
-import { unwrapResult } from "@reduxjs/toolkit";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { useState } from "react";
+import { createBattleFormState } from "./reactive";
 
 
 
@@ -25,11 +24,9 @@ const PostSelectHolder = props => {
 
 const CreateBattleForm = props => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const title = useSelector(state => state.createBattleForm.title);
-    const post1 = useSelector(state => state.createBattleForm.post1);
-    const post2 = useSelector(state => state.createBattleForm.post2);
+    const [title, setTitle] = useState("Battle's title");
+    const { post1, post2 } = useReactiveVar(createBattleFormState);
     const { theme } = useReactiveVar(baseState);
-    const dispatch = useDispatch();
 
     
     const handleOpenPostSelectModal = (isMine) => {
@@ -41,7 +38,7 @@ const CreateBattleForm = props => {
     const onSubmit = async(data) => {
         Alert.alertPromise("Creating battle...", "Battle was successfully created", "Can't create the battle", () => {
             return new Promise((resolve, reject) => {
-                dispatch(createBattle())
+                /*dispatch(createBattle())
                     .then(unwrapResult)
                     .then(result => {
                         if (result.data.done) {
@@ -51,6 +48,7 @@ const CreateBattleForm = props => {
                             reject();
                         }
                     });
+                    */
             })
         }, { theme });
     }
@@ -69,7 +67,7 @@ const CreateBattleForm = props => {
                     name="title"
                     error={Boolean(errors.Title)}
                     helperText={errors.Title && "Title must be from 4 to 10 characters"}
-                    onInput={(e) => dispatch(setTitle(e.target.value))}
+                    onInput={(e) => setTitle(e.target.value)}
                     {...register("Title", {
                         maxLength: 10,
                         minLength: 4,

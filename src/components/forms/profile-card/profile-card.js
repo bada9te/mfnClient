@@ -3,39 +3,29 @@ import { httpUpdateUser } from "../../../requests/users";
 import { useNavigate } from "react-router-dom";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { setPicture } from "./profileCardFormSlice";
 import { toast } from "react-toastify";
 import toastsConfig from "../../alerts/toasts-config";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
+import { useState } from "react";
+import blobToFile from "../../../common-functions/blobToFile";
 
 
 const ProfileCardForm = (props) => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [picture, setPicture] = useState(null);
+    const [avatarTitle, setAvatarTitle] = useState("Select image");
+    const [backgroundTitle, setBackgroundTitle] = useState("Select image");
 
     const { user: currentUser, theme } = useReactiveVar(baseState);
-
-    const cropModalIsShowing = useSelector(state => state.imageCropperModal.isShowing);
-    const picture = useSelector(state => state.profileCardForm.picture);
-    const imageType = useSelector(state => state.imageCropperModal.imageType);
-    const avatarTitle = useSelector(state => state.profileCardForm.avatarTitle);
-    const backgroundTitle = useSelector(state => state.profileCardForm.backgroundTitle);
-
+    const { isShwoing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
 
     const cropImageFile = (img, what) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: true, imageType: what})
-        dispatch(setPicture(URL.createObjectURL(img)));
+        setPicture(URL.createObjectURL(img));
     };
 
-    const blobToFile = (theBlob, fileName) => {
-        //A Blob() is almost a File() - it's just missing the two properties below which we will add
-        theBlob.lastModifiedDate = new Date();
-        theBlob.name = fileName;
-        return theBlob;
-    }
 
     // handler
     const handleImageCropModalClose = async(value, picture) => {

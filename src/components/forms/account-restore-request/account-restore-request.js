@@ -1,21 +1,20 @@
 import { Box, Button, TextField } from "@mui/material";
-import { unwrapResult } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { prepareToRestore } from "./accountRestoreRequestFormSlice";
 import * as Alert from "../../alerts/alerts";
 import { useNavigate } from "react-router-dom";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 const AccountRestoreRequestForm = (props)=> {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const theme = useSelector(state => state.base.theme);
+    const { theme } = useReactiveVar(baseState);
 
     const onSubmit = data => {
         Alert.alertPromise("Requesting...", "Check your email for next steps", "Account is not found", () => {
             return new Promise((resolve, reject) => {
+                /*
                 dispatch(prepareToRestore({email: data.Email, type: "password"}))
                     .then(unwrapResult)
                     .then(result => {
@@ -29,6 +28,8 @@ const AccountRestoreRequestForm = (props)=> {
                             }
                         }
                     });
+                */
+                console.log("PREPARE TO RESTORE!")
             });
         }, { theme });
     }

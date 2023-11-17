@@ -1,5 +1,4 @@
 import { memo, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Box, Drawer, IconButton, Slider, Stack, Typography } from '@mui/material';
 import { FastRewind, Loop, Pause, PlayArrow, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material';
 import { SpinnerLinear } from '../spinner/Spinner';
@@ -23,8 +22,6 @@ const CustomAudioPlayer = (props) => {
     const audioPlayer = useReactiveVar(audioPlayerState);
     const { isShowing, isPlaying, isMuted, src, loop, controlsLocked, isLoading, currentTrack } = audioPlayer;
     const bottomBar = useReactiveVar(bottomBarState);
-
-    const dispatch = useDispatch();
 
     const [volume, setVolume] = useState(50);
     const [progress, setProgress] = useState(0);
@@ -130,7 +127,7 @@ const CustomAudioPlayer = (props) => {
             container.play();
             audioAnalyzer(containerRef, analyzerData, setAnalyzerData)
         }
-    }, [src, dispatch]);
+    }, [src]);
 
 
     return (

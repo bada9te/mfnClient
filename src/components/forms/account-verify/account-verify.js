@@ -1,22 +1,21 @@
 import { Box, Button, TextField } from "@mui/material";
-import { unwrapResult } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import * as Alert from "../../alerts/alerts";
 import { useNavigate } from "react-router-dom";
-import { verifyAccount } from "./accountVerifyFormSlice";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 const AccountVerifyForm = (props)=> {
     const { userId, actionId } = props;
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const theme = useSelector(state => state.base.theme);
+    const theme = useReactiveVar(baseState);
 
     const onSubmit = data => {
         Alert.alertPromise("Verifying...", "Account verified", "Can't verify this account", () => {
             return new Promise((resolve, reject) => {
+                /*
                 dispatch(verifyAccount({
                     userId: userId,
                     actionId: actionId,
@@ -31,6 +30,8 @@ const AccountVerifyForm = (props)=> {
                         reject();
                     }
                 });
+                */
+               console.log("VERIFY");
             })
         }, { theme })
     }

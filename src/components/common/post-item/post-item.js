@@ -5,7 +5,6 @@ import { saveAs } from 'file-saver';
 import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, CardActions, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp, CheckCircle, HowToVote }                   from "@mui/icons-material";
 import PostItemDropDown             from './post-item-dropdown/post-item-dropdown';
-import { useSelector } from "react-redux";
 
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from '../../../graphql/posts';
@@ -18,6 +17,7 @@ import { confirmContainerState } from '../../containers/confirm-container/reacti
 import { confirmModalState } from '../../modals/confirm-modal/reactive';
 import { commentsModalState } from '../../modals/comments-modal/reactive';
 import { commentsContainerState } from '../../containers/comments-container/reactive';
+import { baseState } from '../../baseReactive';
 
 
 
@@ -29,10 +29,8 @@ const PostItem = (props) => {
     const [likedBy, setLikedBy] = useState(base.likedBy);
     const [savedBy, setSavedBy] = useState(base.savedBy);
 
-    //const dispatch = useDispatch();
-    const currentUser = useSelector(state => state?.base?.user);
+    const { user: currentUser } = useReactiveVar(baseState);
     const audioPlayer = useReactiveVar(audioPlayerState);
-
 
     // nav
     const navigate = useNavigate();

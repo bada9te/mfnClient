@@ -1,22 +1,20 @@
 import { Avatar, Box, CardContent, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import passwordImage from "../../images/icons/password.png"
 import AccountVerifyForm from "../../components/forms/account-verify/account-verify";
-import { checkUserVerifyById } from "../../components/forms/account-verify/accountVerifyFormSlice";
 import LogRegVerContainer from "../../components/containers/image-left-form-conatiner/image-left-form-container";
 import VerifyAccBG from '../../images/bgs/verifyFormBG.png';
 
 
 const AccountVerify = props => {
     const { userId, actionId } = useParams();
-    const actionIsValid = useSelector(state => state.accountVerifyForm.actionIsValid);
-    const dispatch = useDispatch();
+    const [ actionIsValid, setActionIsValid ] = useState(false);
 
     useEffect(() => {
-        dispatch(checkUserVerifyById(userId))
-    }, [userId, dispatch]);
+        console.log("NEED TO VERIFY FIRST!")
+        //dispatch(checkUserVerifyById(userId))
+    }, [userId]);
 
     return(
         <LogRegVerContainer bg={VerifyAccBG}>

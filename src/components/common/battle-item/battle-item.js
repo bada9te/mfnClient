@@ -3,14 +3,12 @@ import getTimeLeft from '../../../common-functions/getTimeLeft';
 import { Card, CardActions, CardContent, Typography, Box, Stack, Avatar } from '@mui/material';
 import battleImg from '../../../images/icons/battle-disk.png';
 import userSocket from '../../../socket/user/socket-user';
-import { useDispatch } from 'react-redux';
 
 
 
 const BattleItem = (props) => {
     const {id, post1, post2, createdAt, willFinishAt, title, post1Score, post2Score, bg1, bg2, winner, finished} = props;
     const [timeleft, setTimeLeft] = useState(new Date(willFinishAt).getTime() - new Date().getTime());
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!finished) {
@@ -37,7 +35,7 @@ const BattleItem = (props) => {
         return () => {
             userSocket.off(`battle-${id}-voted`);
         }
-    }, [dispatch, id]);
+    }, [id]);
 
 
     return (

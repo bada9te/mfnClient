@@ -6,8 +6,7 @@ import EmailImage    from "../../../images/icons/email.png"
 import PasswordImage from "../../../images/icons/password.png"
 import TextImage     from "../../../images/icons/text.png"
 import ClearImage     from "../../../images/icons/logo_clear.png"
-import { useDispatch, useSelector } from "react-redux";
-import { prepareToRestore } from "../account-restore-request/accountRestoreRequestFormSlice";
+import { useDispatch } from "react-redux";
 import { unwrapResult }     from "@reduxjs/toolkit";
 import { Delete } from "@mui/icons-material";
 import { confirmContainerState } from "../../containers/confirm-container/reactive";
@@ -57,6 +56,7 @@ const FormProfileEdit = (props) => {
             case "OldPassword":
                 Alert.alertPromise("Processing...", "Check your email for next steps", "Unexpected error", () => {
                     return new Promise((resolve, reject) => {
+                        /*
                         dispatch(prepareToRestore({email: currentUser.email, type: "password"}))
                             .then(unwrapResult)
                             .then(result => {
@@ -69,6 +69,8 @@ const FormProfileEdit = (props) => {
                                     }
                                 }
                             });
+                        */
+                       console.log("PREPARE TO RESTORE!")
                     });
                 }, { theme });
                 break;
@@ -78,6 +80,7 @@ const FormProfileEdit = (props) => {
                 } else {
                     Alert.alertPromise("Processing...", "Check your email for next steps", "Incorrect email", () => {
                         return new Promise((resolve, reject) => {
+                            /*
                             dispatch(prepareToRestore({email: data.OldEmail, type: "email"}))
                                 .then(unwrapResult)
                                 .then(result => {
@@ -90,6 +93,8 @@ const FormProfileEdit = (props) => {
                                         }
                                     }
                                 });
+                            */
+                            console.log("PREPARE TO RESTORE!")
                         });
                     }, { theme });
                 }

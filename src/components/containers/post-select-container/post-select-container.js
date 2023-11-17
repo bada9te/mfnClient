@@ -7,7 +7,7 @@ import { POSTS_BY_TITLE_QUERY } from "../../../graphql/posts";
 import { baseState } from "../../baseReactive";
 import PostItem from "../../common/post-item/post-item";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
-import { setPost1 as setBattlePost1, setPost2 as setBattlePost2 } from "../../forms/create-battle/createBattleFormSlice";
+import { createBattleFormState } from "../../forms/create-battle/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { playlistsContainerState } from "../playlists-container/reactive";
 import { postSelectContainerState } from "./reactive";
@@ -48,7 +48,7 @@ const PostSelectContainer = props => {
             
             dispatch(switchTrackInPlaylist(post));
         } else if (selectingFor === "battle") {
-            isMine ? dispatch(setBattlePost1(post)) : dispatch(setBattlePost2(post));
+            createBattleFormState({ ...createBattleFormState(), [isMine ? "post1" : "post2"]: post })    
         }
     }
 

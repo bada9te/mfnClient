@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import { Box, TextField, Button, MenuItem } from "@mui/material";
 import * as Alert from "../../alerts/alerts";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { httpCreateReport } from "../../../requests/reports";
 import { reportModalState } from "../../modals/report-modal/reactive";
 import { useReactiveVar } from "@apollo/client";
 import { reportFormState } from "./reactive";
+import { baseState } from "../../baseReactive";
 
 
 
@@ -14,9 +14,7 @@ const ReportForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [value, setValue] = useState("");
     const { reportingItemId } = useReactiveVar(reportFormState);
-    const currentUser = useSelector(state => state.base.user);
-    const theme = useSelector(state => state.base.theme);
-    const dispatch = useDispatch();
+    const { user: currentUser, theme } = useReactiveVar(baseState);
 
     const handleChange = (event) => {
         console.log(event.target)

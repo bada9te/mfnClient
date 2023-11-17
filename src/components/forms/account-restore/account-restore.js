@@ -2,7 +2,6 @@ import { Box, Button, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { restoreAccount } from "./accountRestoreFormSlice";
 import * as Alert from "../../alerts/alerts";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 const AccountRestoreForm = (props)=> {
     const { userId, actionId, verifyToken, type } = props;
     const { register, handleSubmit, getValues, formState: { errors } } = useForm();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const theme = useSelector(state => state.base.theme);
 
@@ -18,6 +16,7 @@ const AccountRestoreForm = (props)=> {
     const onSubmit = data => {
         Alert.alertPromise("Updating account...", "Password updated", "Unexpected error", () => {
             return new Promise((resolve, reject) => {
+                /* 
                 dispatch(restoreAccount({
                     userId,
                     actionId,
@@ -34,6 +33,8 @@ const AccountRestoreForm = (props)=> {
                         reject();
                     }
                 });
+                */
+                console.log("RESTORE");
             });
         }, { theme });
     }
