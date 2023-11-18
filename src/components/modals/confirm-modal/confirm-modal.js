@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import Slide from '@mui/material/Slide';
-import * as Alert from "../../alerts/alerts";
 import ConfirmContainer from '../../containers/confirm-container/confirm-container';
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { POST_DELETE_BY_ID_MUTATION } from '../../../graphql/posts';

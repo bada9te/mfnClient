@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import * as Alert from "../../alerts/alerts";
 import { Box, TextField, Button, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useState } from "react";
+import { useSnackbar } from "notistack";
 
 
 
@@ -11,13 +11,16 @@ const CreatePlaylistForm = props => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { theme } = useReactiveVar(baseState);
     const [publicAccess, setPublicAccess] = useState(true);
-    const [title, setTitle] = useState("Playlist's title")
+    const [title, setTitle] = useState("Playlist's title");
+    const { enqueueSnackbar } = useSnackbar();
 
 
     const onSubmit = async(data) => {
+        enqueueSnackbar("Creating playlist...", { autoHideDuration: 1500 });
+        /*
         Alert.alertPromise("Creating playlist...", "Playlist was successfully created", "Can't create the playlist", () => {
             return new Promise((resolve, reject) => {
-                /*dispatch(createPlaylist())
+                dispatch(createPlaylist())
                     .then(unwrapResult)
                     .then(result => {
                         if (result.data.done) {
@@ -27,9 +30,11 @@ const CreatePlaylistForm = props => {
                             reject();
                         }
                     });
-                */
+                
             })
         }, { theme });
+        */
+       console.log("CREATE PLAYLIST");
     }
 
     return (

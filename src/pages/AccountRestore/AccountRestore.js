@@ -4,7 +4,6 @@ import AccountRestoreForm from '../../components/forms/account-restore/account-r
 import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import * as Alert from "../../components/alerts/alerts";
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 import newPasswordBG from '../../images/bgs/newPasswordFormBG.png';
 import { useReactiveVar } from '@apollo/client';

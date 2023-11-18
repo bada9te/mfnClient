@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Box, TextField, Button } from "@mui/material";
-import * as Alert from "../../alerts/alerts";
 import { httpCreateSupportRequest } from "../../../requests/support-requests";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
@@ -17,6 +16,7 @@ const FormSupportContact = (props) => {
             message: data.Message,
         };
 
+        /*
         Alert.alertPromise("Sending support request...", "Successfully sent", "Sth went wrong", () => {
             return new Promise(async(resolve, reject) => {
                 const result = await httpCreateSupportRequest(supportRequestData);
@@ -27,7 +27,9 @@ const FormSupportContact = (props) => {
                     reject();
                 }
             })
-        })
+        })*/
+
+        console.log("CREATE S REQUEST")
     }
 
     return (

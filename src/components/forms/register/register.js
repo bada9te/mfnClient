@@ -2,45 +2,30 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { httpRegister } from "../../../requests/auth";
 import { Box, TextField, Button } from "@mui/material";
-import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import toastsConfig from "../../alerts/toasts-config";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
+import { useSnackbar } from "notistack";
+
 
 
 const RegisterForm = (props) => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
-    const theme = useSelector(state => state.base.theme);
+    const { theme } = useReactiveVar(baseState);
+    const { enqueueSnackbar } = useSnackbar();
     
     const onSubmit = async(data) => {
-        const id = toast.loading("Registering new user...", { theme });
-
         try {
             const result = await httpRegister(data);
     
             if (result.data.done) {
                 navigate('/login');
-                toast.update(id, { 
-                    render: "Account " + result.data.user.email + " was successfully created", 
-                    type: "success", 
-                    isLoading: false, 
-                    ...toastsConfig({ theme }) 
-                });
+                enqueueSnackbar("Account " + result.data.user.email + " was successfully created", { autoHideDuration: 3000, variant: "success" });
             } else {
-                toast.update(id, { 
-                    render: "Can't create the new account", 
-                    type: "error", 
-                    isLoading: false, 
-                    ...toastsConfig({ theme }) 
-                });
+                enqueueSnackbar("Can't create the new account", { autoHideDuration: 3000, variant: "error" });
             }
         } catch (error) {
-            toast.update(id, { 
-                render: error.response.data.error, 
-                type: "error", 
-                isLoading: false, 
-                ...toastsConfig({ theme }) 
-            });
+            enqueueSnackbar(error.response.data.error, { autoHideDuration: 3000, variant: "error" });
         }
     }
 

@@ -1,20 +1,23 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import * as Alert from "../../alerts/alerts";
 import { useNavigate } from "react-router-dom";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { useSnackbar } from "notistack";
 
 
 const AccountRestoreRequestForm = (props)=> {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const { theme } = useReactiveVar(baseState);
-
+    const { enqueueSnackbar } = useSnackbar();
+ 
     const onSubmit = data => {
+        enqueueSnackbar("Requesting...", { autoHideDuration: 1500 });
+        /*
         Alert.alertPromise("Requesting...", "Check your email for next steps", "Account is not found", () => {
             return new Promise((resolve, reject) => {
-                /*
+                
                 dispatch(prepareToRestore({email: data.Email, type: "password"}))
                     .then(unwrapResult)
                     .then(result => {
@@ -28,11 +31,12 @@ const AccountRestoreRequestForm = (props)=> {
                             }
                         }
                     });
-                */
-                console.log("PREPARE TO RESTORE!")
-            });
-        }, { theme });
-    }
+                
+                });
+            }, { theme });
+            */
+            console.log("PREPARE TO RESTORE!")
+        }
     
 
     return(

@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import PostItem from "../../common/post-item/post-item";
-import * as Alert from "../../alerts/alerts";
 import { Box, TextField, Button, Stack } from "@mui/material";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
@@ -9,6 +8,7 @@ import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useState } from "react";
 import { createBattleFormState } from "./reactive";
+import { useSnackbar } from "notistack";
 
 
 
@@ -27,6 +27,7 @@ const CreateBattleForm = props => {
     const [title, setTitle] = useState("Battle's title");
     const { post1, post2 } = useReactiveVar(createBattleFormState);
     const { theme } = useReactiveVar(baseState);
+    const { enqueueSnackbar } = useSnackbar();
 
     
     const handleOpenPostSelectModal = (isMine) => {
@@ -36,9 +37,11 @@ const CreateBattleForm = props => {
 
 
     const onSubmit = async(data) => {
+        enqueueSnackbar("Creating battle...", { autoHideDuration: 1500 });
+        /*
         Alert.alertPromise("Creating battle...", "Battle was successfully created", "Can't create the battle", () => {
             return new Promise((resolve, reject) => {
-                /*dispatch(createBattle())
+                dispatch(createBattle())
                     .then(unwrapResult)
                     .then(result => {
                         if (result.data.done) {
@@ -48,9 +51,10 @@ const CreateBattleForm = props => {
                             reject();
                         }
                     });
-                    */
+                    
             })
         }, { theme });
+        */
     }
 
     return (

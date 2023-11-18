@@ -1,17 +1,17 @@
-import * as Alert from "../../../alerts/alerts";
 import { SpinnerLinear } from "../../spinner/Spinner";
 import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ProfileDefaultBGImage from "../../../../images/bgs/profileDefaultBG.png";
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '../../../../graphql/users';
 import { baseState } from "../../../baseReactive";
+import { useSnackbar } from "notistack";
 
 
 const ProfileCard = (props) => {
     const { id, bgRadius } = props;
     const { user: currentUser, theme, locations } = useReactiveVar(baseState);
+    const { enqueueSnackbar } = useSnackbar();
 
     const navigate = useNavigate();
 
@@ -34,6 +34,8 @@ const ProfileCard = (props) => {
 
 
     const switchSubscriptionOnUserHandler = async(actionType) => {
+        enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
+        /*
         Alert.alertPromise("Pending...", "Success", "Sth went wrong", () => {
             return new Promise(async(resolve, reject) => {
                 await switchSubscriptionOnUser()
@@ -46,8 +48,8 @@ const ProfileCard = (props) => {
                         reject(err);
                     });
             });
-        });  
-        /*
+        });
+
         if (result.data.done) {
             console.log(result.data)
             Alert.alertSuccess("Success");

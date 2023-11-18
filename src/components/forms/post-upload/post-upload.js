@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
-import * as Alert from "../../alerts/alerts";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { POST_CREATE_MUTATION } from "../../../graphql/posts";
 import blobToFile from "../../../common-functions/blobToFile";

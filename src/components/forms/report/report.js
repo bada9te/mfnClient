@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Box, TextField, Button, MenuItem } from "@mui/material";
-import * as Alert from "../../alerts/alerts";
 import { useState } from "react";
 import { httpCreateReport } from "../../../requests/reports";
 import { reportModalState } from "../../modals/report-modal/reactive";
@@ -22,6 +21,7 @@ const ReportForm = (props) => {
     };
     
     const onSubmit = async(data) => {
+        /*
         Alert.alertPromise("Sending report...", "Report sent", "Can't send a report", () => {
             return new Promise(async(resolve, reject) => {
                 await httpCreateReport({
@@ -41,7 +41,8 @@ const ReportForm = (props) => {
                     reject();
                 });
             })
-        }, { theme })
+        }, { theme })*/
+        console.log("SEND REPORT")
     }
 
     return (

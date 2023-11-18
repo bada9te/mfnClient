@@ -1,11 +1,11 @@
 import { Box, Button, Tab, Tabs } from "@mui/material";
 import { useEffect, useState } from "react";
 import EnumNotifications from "../../enums/enum-notifications";
-import * as Alert from "../../alerts/alerts";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { NOTIFICATIONS_QUERY } from "../../../graphql/notifications";
+import { useSnackbar } from "notistack";
 
 
 function TabPanel(props) {
@@ -42,6 +42,7 @@ const NotificationsContainer = props => {
         },
         pollInterval: 15000,
     });
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleTabSwitch = (event, key) => {
         setStatus(key);
@@ -49,9 +50,11 @@ const NotificationsContainer = props => {
 
     const handleDeleteAllClick = () => {
         if (data?.notifications && data?.notifications.length > 0) {
+            enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
+            /*
             Alert.alertPromise('Pending...', 'Notifications removed', 'Error occured', () => {
                 return new Promise((resolve, reject) => {
-                    /*
+                    
                     dispatch(deleteManyNotifications(notifications.map(i => i._id)))
                         .then(unwrapResult)
                         .then(result => {
@@ -60,18 +63,21 @@ const NotificationsContainer = props => {
                             } else {
                                 reject();
                             }
-                        });*/
+                        });
                     resolve();
                 });
             }, {theme});
+            */
+            console.log("DELETE_ALL");
         }
     }
 
     const handleReadAllClick = () => {
         if (data?.notifications && data?.notifications.length > 0) {
+            enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
+            /*
             Alert.alertPromise('Pending...', 'Notifications marked as read', 'Error occured', () => {
                 return new Promise((resolve, reject) => {
-                    /*
                     dispatch(markManyNotificationsAsRead(notifications.map(i => i._id)))
                         .then(unwrapResult)
                         .then(result => {
@@ -81,10 +87,12 @@ const NotificationsContainer = props => {
                                 reject();
                             }
                         });
-                        */
+                        
                     resolve();
                 });
             }, {theme});
+            */
+            console.log("READ_ALL");
         }
     }
 

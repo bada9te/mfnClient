@@ -1,24 +1,24 @@
 import { useForm }        from "react-hook-form";
 import { httpUpdateUser } from "../../../requests/users";
-import * as Alert         from "../../alerts/alerts";
 import { Box, Card, CardContent, Typography, Button, TextField, Avatar } from "@mui/material";
 import EmailImage    from "../../../images/icons/email.png"
 import PasswordImage from "../../../images/icons/password.png"
 import TextImage     from "../../../images/icons/text.png"
 import ClearImage     from "../../../images/icons/logo_clear.png"
 import { useDispatch } from "react-redux";
-import { unwrapResult }     from "@reduxjs/toolkit";
 import { Delete } from "@mui/icons-material";
 import { confirmContainerState } from "../../containers/confirm-container/reactive";
 import { confirmModalState } from "../../modals/confirm-modal/reactive";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { useSnackbar } from "notistack";
 
 
 const FormProfileEdit = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { title, current } = props;
     const { user: currentUser, theme } = useReactiveVar(baseState);
+    const { enqueueSnackbar } = useSnackbar();
 
     const dispatch = useDispatch();
 
@@ -28,35 +28,32 @@ const FormProfileEdit = (props) => {
         const keys = Object.keys(data);
         switch (keys.at(keys.length - 1)) {
             case "NewNickname":
-                Alert.alertPromise("Updating nickname...", "Updated", "Can't update nickname", () => {
-                    return new Promise(async(resolve, reject) => {
-                        result = await httpUpdateUser(currentUser?._id, data.NewNickname, "nick");
-                        if (result) {
-                            dispatchUser("nick", data.NewNickname);
-                            resolve();
-                        } else {
-                            reject();
-                        }
-                    });
-                }, { theme });
+                enqueueSnackbar("Updating nickname...", { autoHideDuration: 1500 });
+                await httpUpdateUser(currentUser?._id, data.NewNickname, "nick")
+                    .then(() => {
+                        dispatchUser("nick", data.NewNickname);
+                        enqueueSnackbar("Nickname updated", { autoHideDuration: 1500 });
+                    })
+                    .catch(err => {
+                        enqueueSnackbar("Can't update the nickname", { autoHideDuration: 1500 });
+                    })
                 break;
             case "NewDescription":
-                Alert.alertPromise("Updating description...", "Updated", "Can't update description", () => {
-                    return new Promise(async(resolve, reject) => {
-                        result = await httpUpdateUser(currentUser?._id, data.NewDescription, "description");
-                        if (result) {
-                            dispatchUser("description", data.NewDescription);
-                            resolve();
-                        } else {
-                            reject();
-                        }
-                    });
-                }, { theme })
+                enqueueSnackbar("Updating description...", { autoHideDuration: 1500 });
+                await httpUpdateUser(currentUser?._id, data.NewDescription, "description")
+                    .then(() => {
+                        dispatchUser("description", data.NewDescription);
+                        enqueueSnackbar("Description updated", { autoHideDuration: 1500 });
+                    })
+                    .catch(err => {
+                        enqueueSnackbar("Can't update the description", { autoHideDuration: 1500 });
+                    })
                 break;
             case "OldPassword":
+                /*
                 Alert.alertPromise("Processing...", "Check your email for next steps", "Unexpected error", () => {
                     return new Promise((resolve, reject) => {
-                        /*
+                        
                         dispatch(prepareToRestore({email: currentUser.email, type: "password"}))
                             .then(unwrapResult)
                             .then(result => {
@@ -69,18 +66,19 @@ const FormProfileEdit = (props) => {
                                     }
                                 }
                             });
-                        */
-                       console.log("PREPARE TO RESTORE!")
-                    });
-                }, { theme });
+                        });
+                    }, { theme });
+                    */
+                console.log("PREPARE TO RESTORE!")
                 break;
             case "OldEmail":
                 if (data.OldEmail !== currentUser.email) {
-                    Alert.alertWarning('Emails did not match', { theme });
+                    //Alert.alertWarning('Emails did not match', { theme });
                 } else {
+                    /*
                     Alert.alertPromise("Processing...", "Check your email for next steps", "Incorrect email", () => {
                         return new Promise((resolve, reject) => {
-                            /*
+                            
                             dispatch(prepareToRestore({email: data.OldEmail, type: "email"}))
                                 .then(unwrapResult)
                                 .then(result => {
@@ -93,11 +91,12 @@ const FormProfileEdit = (props) => {
                                         }
                                     }
                                 });
-                            */
-                            console.log("PREPARE TO RESTORE!")
+                            
                         });
                     }, { theme });
+                    */
                 }
+                console.log("PREPARE TO RESTORE!");
                 break;
             default:
                 break;

@@ -1,8 +1,8 @@
 import { useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom";
-import * as Alert from "../../components/alerts/alerts";
 import { baseState } from "../../components/baseReactive";
 import { SpinnerCircular } from "../../components/common/spinner/Spinner";
 import { httpLogOut } from "../../requests/auth";
@@ -10,7 +10,8 @@ import { httpLogOut } from "../../requests/auth";
 
 const Logout = (props) => {
     const navigate = useNavigate();
-    const { user: currentUser, theme } = useReactiveVar(baseState);
+    const { user: currentUser } = useReactiveVar(baseState);
+    const { enqueueSnackbar } = useSnackbar();
     
     useEffect(() => {
         let timeout = null;
@@ -22,7 +23,7 @@ const Logout = (props) => {
                 baseState({ ...baseState(), user: {} });
                 
                 timeout = setTimeout(() => {
-                    Alert.alertSuccess("Logged out", { theme });
+                    enqueueSnackbar("Logged out", { autoHideDuration: 1500, variant: "success" });
                     navigate('/login')
                 }, 1000);
             });
@@ -30,7 +31,7 @@ const Logout = (props) => {
             navigate('/');
         }
         return () => clearTimeout(timeout);
-    }, [currentUser?._id, navigate, theme]);
+    }, [currentUser?._id, navigate, enqueueSnackbar]);
     
     return (
         <>

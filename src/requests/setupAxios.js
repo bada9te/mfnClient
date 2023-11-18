@@ -1,5 +1,4 @@
 import axios from "axios";
-import * as Alert from "../components/alerts/alerts";
 import { httpRefreshAccessToken } from "./auth";
 
 
@@ -25,7 +24,6 @@ axios.interceptors.response.use(
                 localStorage.removeItem("mfnCurrentUser");
                 localStorage.removeItem("mfnCurrentToken");
                 //navigate('/login');
-                Alert.alertWarning('Session expired, pls re-login');
                 
                 if (error.response && error.response.data) {
                     return Promise.reject(error.response.data)

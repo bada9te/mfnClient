@@ -3,13 +3,12 @@ import { httpUpdateUser } from "../../../requests/users";
 import { useNavigate } from "react-router-dom";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
-import { toast } from "react-toastify";
-import toastsConfig from "../../alerts/toasts-config";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 import { useState } from "react";
 import blobToFile from "../../../common-functions/blobToFile";
+import { useSnackbar } from "notistack";
 
 
 const ProfileCardForm = (props) => {
@@ -20,7 +19,8 @@ const ProfileCardForm = (props) => {
 
     const { user: currentUser, theme } = useReactiveVar(baseState);
     const { isShwoing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
-
+    const { enqueueSnackbar } = useSnackbar();
+ 
     const cropImageFile = (img, what) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: true, imageType: what})
         setPicture(URL.createObjectURL(img));
@@ -32,7 +32,7 @@ const ProfileCardForm = (props) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: value});
 
         if (picture != null) { 
-            const id = toast.loading("Updating profile...");
+            enqueueSnackbar("Updating profile...", { autoHideDuration: 1500 });
 
             // save image on server
             let blob = await fetch(picture).then(r => r.blob());
@@ -53,19 +53,9 @@ const ProfileCardForm = (props) => {
             navigate('/profile-edit');
 
             if (result.data.done) {
-                toast.update(id, {
-                    render: "Profile updated", 
-                    isLoading: false,
-                    type: "success",
-                    ...toastsConfig({ theme })
-                });
+                enqueueSnackbar("Profile updated", { autoHideDuration: 1500, variant: 'success' });
             } else {
-                toast.update(id, {
-                    render: "Profile not updated", 
-                    isLoading: false,
-                    type: "error",
-                    ...toastsConfig({ theme })
-                });
+                enqueueSnackbar("Can't update the profile", { autoHideDuration: 3000, variant: 'error' });
             }
         }
     }

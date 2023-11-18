@@ -1,18 +1,21 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import * as Alert from "../../alerts/alerts";
 import { useNavigate } from "react-router-dom";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { useSnackbar } from "notistack";
 
 
 const AccountVerifyForm = (props)=> {
     const { userId, actionId } = props;
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const theme = useReactiveVar(baseState);
+    const { theme } = useReactiveVar(baseState);
+    const { enqueueSnackbar } = useSnackbar();
 
     const onSubmit = data => {
+        enqueueSnackbar("Verifying...", { autoHideDuration: 1500 });
+        /*
         Alert.alertPromise("Verifying...", "Account verified", "Can't verify this account", () => {
             return new Promise((resolve, reject) => {
                 /*
@@ -30,10 +33,11 @@ const AccountVerifyForm = (props)=> {
                         reject();
                     }
                 });
-                */
-               console.log("VERIFY");
+                
             })
         }, { theme })
+        */
+       console.log("VERIFY");
     }
     
 
