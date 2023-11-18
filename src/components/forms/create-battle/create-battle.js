@@ -58,25 +58,6 @@ const CreateBattleForm = props => {
             .catch(err => {
                 enqueueSnackbar("Can't create the battle", { autoHideDuration: 3000, variant: 'error' });
             })
-        
-        /*
-        Alert.alertPromise("Creating battle...", "Battle was successfully created", "Can't create the battle", () => {
-            return new Promise((resolve, reject) => {
-                dispatch(createBattle())
-                    .then(unwrapResult)
-                    .then(result => {
-                        if (result.data.done) {
-                            reset();
-                            resolve();
-                        } else {
-                            reject();
-                        }
-                    });
-                    
-            })
-        }, { theme });
-        */
-        
     }
 
     return (
