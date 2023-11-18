@@ -4,7 +4,7 @@ import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../baseReactive";
 
 const EnumPosts = props => {
-    const {except, profileLinkAccessable, posts} = props;
+    const { except, profileLinkAccessable, posts } = props;
     const { locations } = useReactiveVar(baseState);
 
     return (
@@ -24,7 +24,7 @@ const EnumPosts = props => {
                             base={{
                                 ...item, 
                                 ownerAvatar: `${locations?.images}/${item.owner.avatar}`,
-                                createdAt: getTimeSince(new Date(item.createdAt)) + ' ago',
+                                createdAt: getTimeSince(new Date(+item.createdAt)) + ' ago',
                                 img: `${locations?.images}/${item.image}`,
                                 audio: `${locations?.audios}/${item.audio}`,
                             }}

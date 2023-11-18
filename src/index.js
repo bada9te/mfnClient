@@ -5,10 +5,6 @@ import App from './App';
 import './Scrollbar.scss';
 import { BrowserRouter } from 'react-router-dom';
 
-// popup notifications
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 // apollo
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
@@ -24,7 +20,6 @@ const client = new ApolloClient({
 // render
 root.render(
     <ApolloProvider client={client}>
-        <ToastContainer />
         <BrowserRouter>
             <App />
         </BrowserRouter> 

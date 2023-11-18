@@ -17,7 +17,7 @@ const ProfileCardForm = (props) => {
     const [avatarTitle, setAvatarTitle] = useState("Select image");
     const [backgroundTitle, setBackgroundTitle] = useState("Select image");
 
-    const { user: currentUser, theme } = useReactiveVar(baseState);
+    const { user: currentUser } = useReactiveVar(baseState);
     const { isShwoing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
     const { enqueueSnackbar } = useSnackbar();
  

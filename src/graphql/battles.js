@@ -9,9 +9,19 @@ export const CORE_BATTLE_FIELDS = gql`
         title
         post1 {
             ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
         }
         post2 {
             ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
         }
         winner {
             _id
@@ -46,6 +56,14 @@ export const BATTLE_MAKE_VOTE_MUTATION = gql`
     mutation battleMakeVote($input: MakeBattleVoteInput!) {
         battleMakeVote(input: $input) {
             ...CoreBattleFields
+        }
+    }
+`;
+
+export const BATTLE_CREATE_MUTATTION = gql`
+    mutation battleCreate($input: AddNewBattleByPostsIdsInput!) {
+        battleCreate(input: $input) {
+            _id
         }
     }
 `;

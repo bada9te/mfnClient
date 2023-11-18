@@ -12,6 +12,7 @@ const BattleItem = (props) => {
 
     useEffect(() => {
         if (!finished) {
+            //console.log(new Date(willFinishAt).getTime() - new Date().getTime())
             if (timeleft - 1000 > 0) { 
                 let interval = setInterval(() => {
                     setTimeLeft(timeleft - 1000);
@@ -24,7 +25,7 @@ const BattleItem = (props) => {
                 //dispatch(removeFromInProgress(id));
             }
         }
-    });
+    }, [timeleft]);
 
     useEffect(() => {
         userSocket.on(`battle-${id}-voted`, (data) => {

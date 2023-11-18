@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
 import getTimeSince from "../../../common-functions/getTimeSince";
 import { PLAYLIST_SWICTH_TRACK_MUTATION } from "../../../graphql/playlists";
 import { POSTS_BY_TITLE_QUERY } from "../../../graphql/posts";
@@ -19,7 +18,6 @@ const PostSelectContainer = props => {
     const { targetPlaylist } = useReactiveVar(playlistsContainerState);
     const { query, isMine, selectingFor } = useReactiveVar(postSelectContainerState);
 
-    const dispatch = useDispatch();
 
     const [switchTrackInPlaylist] = useMutation(PLAYLIST_SWICTH_TRACK_MUTATION);
     const { data, loading } = useQuery(POSTS_BY_TITLE_QUERY, {
@@ -46,7 +44,8 @@ const PostSelectContainer = props => {
                 },
             });
             
-            dispatch(switchTrackInPlaylist(post));
+            console.log("SWICTH_TRACK_IN_PLAYLIST")
+            //dispatch(switchTrackInPlaylist(post));
         } else if (selectingFor === "battle") {
             createBattleFormState({ ...createBattleFormState(), [isMine ? "post1" : "post2"]: post })    
         }
@@ -71,7 +70,7 @@ const PostSelectContainer = props => {
                                     base={{
                                         ...item, 
                                         ownerAvatar: `${locations?.images}/${item.owner.avatar}`,
-                                        createdAt: getTimeSince(new Date(item.createdAt)) + ' ago',
+                                        createdAt: getTimeSince(new Date(+item.createdAt)) + ' ago',
                                         img: `${locations?.images}/${item.image}`,
                                         audio: `${locations?.audios}/${item.audio}`,
                                     }}

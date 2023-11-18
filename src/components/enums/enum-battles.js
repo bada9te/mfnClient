@@ -1,7 +1,6 @@
 import BattleItem from "../common/battle-item/battle-item";
 import PostItem from "../common/post-item/post-item";
 import getTimeSince from "../../common-functions/getTimeSince";
-import { useSelector } from "react-redux";
 import { SpinnerLinear } from "../common/spinner/Spinner";
 import { Box, Typography } from "@mui/material";
 import PostItemUnavailable from "../common/post-item/post-item-unavailable";
@@ -22,7 +21,7 @@ const PostFromData = (props) => {
                     base={{
                         ...data, 
                         ownerAvatar: `${locations?.images}/${data.owner.avatar}`,
-                        createdAt: getTimeSince(new Date(data.createdAt)) + ' ago',
+                        createdAt: getTimeSince(new Date(+data.createdAt)) + ' ago',
                         img: `${locations?.images}/${data.image}`,
                         audio: `${locations?.audios}/${data.audio}`,
                     }}
@@ -90,8 +89,8 @@ const EnumBattles = props => {
                                             finished={item?.finished}
                                         />
                                     }
-                                    createdAt={item.createdAt}
-                                    willFinishAt={item.willFinishAt}
+                                    createdAt={+item.createdAt}
+                                    willFinishAt={+item.willFinishAt}
                                     post1Score={item.post1Score}
                                     post2Score={item.post2Score}
                                     winner={item?.winner}

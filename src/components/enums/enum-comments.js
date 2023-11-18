@@ -1,11 +1,12 @@
 import getTimeSince from "../../common-functions/getTimeSince";
 import Comment from "../common/comment/comment";
-import { useSelector } from "react-redux";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../baseReactive";
 
 
 const EnumComments = props => {
     const { comments } = props;
-    const locations = useSelector(state => state.base.locations);
+    const { locations } = useReactiveVar(baseState);
 
     return (
         <>

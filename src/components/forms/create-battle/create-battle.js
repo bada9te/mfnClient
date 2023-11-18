@@ -4,11 +4,12 @@ import { Box, TextField, Button, Stack } from "@mui/material";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useState } from "react";
 import { createBattleFormState } from "./reactive";
 import { useSnackbar } from "notistack";
+import { BATTLE_CREATE_MUTATTION } from "../../../graphql/battles";
 
 
 
@@ -24,11 +25,20 @@ const PostSelectHolder = props => {
 
 const CreateBattleForm = props => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const [title, setTitle] = useState("Battle's title");
+    const [ title, setTitle ] = useState("Battle's title");
     const { post1, post2 } = useReactiveVar(createBattleFormState);
     const { theme } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
 
+    const [createBattle] = useMutation(BATTLE_CREATE_MUTATTION, {
+        variables: {
+            input: {
+                title: title,
+                post1: post1.base._id,
+                post2: post2.base._id,
+            },
+        },
+    });
     
     const handleOpenPostSelectModal = (isMine) => {
         postSelectContainerState({ ...postSelectContainerState(), isMine });
@@ -38,6 +48,17 @@ const CreateBattleForm = props => {
 
     const onSubmit = async(data) => {
         enqueueSnackbar("Creating battle...", { autoHideDuration: 1500 });
+        
+        await createBattle()
+            .then(({data}) => {
+                console.log(data)
+                reset();
+                enqueueSnackbar("Battle created", {autoHideDuration: 1500, variant: 'success'});
+            })
+            .catch(err => {
+                enqueueSnackbar("Can't create the battle", { autoHideDuration: 3000, variant: 'error' });
+            })
+        
         /*
         Alert.alertPromise("Creating battle...", "Battle was successfully created", "Can't create the battle", () => {
             return new Promise((resolve, reject) => {
@@ -55,6 +76,7 @@ const CreateBattleForm = props => {
             })
         }, { theme });
         */
+        
     }
 
     return (
@@ -86,7 +108,7 @@ const CreateBattleForm = props => {
                         post1 != null 
                         ?
                         <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                            <PostItem base={post1.base} addons={{...post1.addons, status: null}} />
+                            <PostItem base={{...post1.base}} addons={{...post1.addons, status: null}} />
                         </Box>
                         :
                         <PostSelectHolder text="Select my track" handler={() => handleOpenPostSelectModal(true)}/>

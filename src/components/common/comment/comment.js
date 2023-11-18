@@ -4,19 +4,20 @@ import { Accordion, AccordionDetails, AccordionSummary, Avatar, Card, CardHeader
 import './comment.scss';
 import { ExpandMore } from "@mui/icons-material";
 import Reply from "../reply/reply";
-import { useSelector } from "react-redux";
 import CommentDropDown from "./comment-dropdown/comment-dropdown";
 import { reportFormState } from "../../forms/report/reactive";
 import { confirmContainerState } from "../../containers/confirm-container/reactive";
 import { confirmModalState } from "../../modals/confirm-modal/reactive";
 import { reportModalState } from "../../modals/report-modal/reactive";
 import { commentsContainerState } from "../../containers/comments-container/reactive";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../baseReactive";
 
 
 
 const Comment = (props) => {
     const {createdAt, user, text, replies, id} = props;
-    const currentUserId = useSelector(state => state.base.user._id)
+    const { user: currentUser } = useReactiveVar(baseState);
     const navigate = useNavigate();
 
     const handleCommentSelection = () => {
@@ -73,7 +74,7 @@ const Comment = (props) => {
                             handleReply={handleCommentSelection} 
                             handleDelete={handleCommentRemoving}
                             handleReport={handleReportComment}
-                            canBeDeleted={user[0] === currentUserId}
+                            canBeDeleted={user[0] === currentUser._id}
                         />
                         //<Button onClick={handleCommentSelection}>Reply</Button>
                     }
