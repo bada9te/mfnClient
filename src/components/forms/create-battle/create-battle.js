@@ -5,7 +5,6 @@ import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { baseState } from "../../baseReactive";
 import { useState } from "react";
 import { createBattleFormState } from "./reactive";
 import { useSnackbar } from "notistack";
@@ -27,7 +26,6 @@ const CreateBattleForm = props => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ title, setTitle ] = useState("Battle's title");
     const { post1, post2 } = useReactiveVar(createBattleFormState);
-    const { theme } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
 
     const [createBattle] = useMutation(BATTLE_CREATE_MUTATTION, {
