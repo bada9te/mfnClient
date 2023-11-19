@@ -1,48 +1,44 @@
 import { useForm } from "react-hook-form";
 import { Box, TextField, Button, MenuItem } from "@mui/material";
 import { useState } from "react";
-import { httpCreateReport } from "../../../requests/reports";
-import { reportModalState } from "../../modals/report-modal/reactive";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { reportFormState } from "./reactive";
 import { baseState } from "../../baseReactive";
-
+import { useSnackbar } from "notistack";
+import { REPORT_CREATE_MUTATION } from "../../../graphql/reports";
 
 
 const ReportForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [ value, setValue ] = useState("");
     const { reportingItemId } = useReactiveVar(reportFormState);
-    const { user: currentUser, theme } = useReactiveVar(baseState);
+    const { user: currentUser } = useReactiveVar(baseState);
+    const [ createReport ] = useMutation(REPORT_CREATE_MUTATION);
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleChange = (event) => {
-        console.log(event.target)
         setValue(event.target.value);
     };
     
     const onSubmit = async(data) => {
-        /*
-        Alert.alertPromise("Sending report...", "Report sent", "Can't send a report", () => {
-            return new Promise(async(resolve, reject) => {
-                await httpCreateReport({
+        enqueueSnackbar("Reporting...", { autoHideDuration: 1500 });
+
+        await createReport({
+            variables: {
+                input: {
                     contactReason: data.FoulType,
                     email: currentUser.email !== "" ? currentUser.email : "Not provided",
                     message: data.Message || "Not provided",
-                    reportedPost: reportingItemId, 
-                    ...(currentUser._id !== "" && {reportOwner: currentUser._id})
-                }).then(result => {
-                    if (result.data.done) {
-                        reportModalState({ ...reportModalState(), isShowing: false });
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                }).catch(_ => {
-                    reject();
-                });
-            })
-        }, { theme })*/
-        console.log("SEND REPORT")
+                    reportedPost: reportingItemId,
+                },
+            },
+        })
+        .then(({ data }) => {
+            enqueueSnackbar("Report was sent", { autoHideDuration: 1500, variant: 'success' })
+        })
+        .catch(err => {
+            enqueueSnackbar("Can't create the report", { autoHideDuration: 3000, variant: 'error' });
+        })
     }
 
     return (

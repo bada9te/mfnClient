@@ -1,35 +1,32 @@
 import { useForm } from "react-hook-form";
 import { Box, TextField, Button } from "@mui/material";
-import { httpCreateSupportRequest } from "../../../requests/support-requests";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { SUPPORT_CONTACT_CREATE_MUTATION } from "../../../graphql/support-contact";
+import { useSnackbar } from "notistack";
 
 
 const FormSupportContact = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { user: currentUser } = useReactiveVar(baseState);
+    const [createSupportRequest] = useMutation(SUPPORT_CONTACT_CREATE_MUTATION);
+    const { enqueueSnackbar } = useSnackbar();
 
     const onSubmit = async(data) => {
-        const supportRequestData = {
-            contactReason: data.ContactReason,
-            email: data.Email,
-            message: data.Message,
-        };
-
-        /*
-        Alert.alertPromise("Sending support request...", "Successfully sent", "Sth went wrong", () => {
-            return new Promise(async(resolve, reject) => {
-                const result = await httpCreateSupportRequest(supportRequestData);
-                if (result.data.done) {
-                    reset();
-                    resolve();
-                } else {
-                    reject();
+        enqueueSnackbar("Creating support request...", { autoHideDuration: 1500 });
+        await createSupportRequest({
+            variables: {
+                input: {
+                    contactReason: data.ContactReason,
+                    email: data.Email,
+                    message: data.Message,
                 }
-            })
-        })*/
-
-        console.log("CREATE S REQUEST")
+            }
+        }).then(({data}) => {
+            enqueueSnackbar("Support request created", { autoHideDuration: 1500, variant: 'success' });
+        }).catch(err => {
+            enqueueSnackbar("Can't create the request", { autoHideDuration: 3000, variant: 'error' });
+        })
     }
 
     return (
