@@ -48,14 +48,12 @@ const CreateBattleForm = props => {
         enqueueSnackbar("Creating battle...", { autoHideDuration: 1500 });
         
         await createBattle()
-            .then(({data}) => {
-                console.log(data)
+            .then(({ data }) => {
                 reset();
                 enqueueSnackbar("Battle created", {autoHideDuration: 1500, variant: 'success'});
-            })
-            .catch(err => {
+            }).catch(err => {
                 enqueueSnackbar("Can't create the battle", { autoHideDuration: 3000, variant: 'error' });
-            })
+            });
     }
 
     return (

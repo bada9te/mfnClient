@@ -47,6 +47,15 @@ export const PLAYLISTS_PUBLIC_AWAILABLE_QUERY = gql`
 
 
 // M
+export const PLAYLIST_CREATE_MUTATION = gql`
+    ${CORE_PLAYLIST_FIELDS}
+    mutation playlistCreate($input: CreatePlaylistInput!) {
+        playlistCreate(input: $input) {
+            ...CorePlaylistFields
+        }
+    }
+`;
+
 export const PLAYLIST_SWICTH_TRACK_MUTATION = gql`
     ${CORE_PLAYLIST_FIELDS}
     mutation playlistSwicthTrack($input: SwitchTrackInPlaylistInput!) {

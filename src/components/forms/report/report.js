@@ -22,7 +22,6 @@ const ReportForm = (props) => {
     
     const onSubmit = async(data) => {
         enqueueSnackbar("Reporting...", { autoHideDuration: 1500 });
-
         await createReport({
             variables: {
                 input: {
@@ -32,13 +31,11 @@ const ReportForm = (props) => {
                     reportedPost: reportingItemId,
                 },
             },
-        })
-        .then(({ data }) => {
+        }).then(({ data }) => {
             enqueueSnackbar("Report was sent", { autoHideDuration: 1500, variant: 'success' })
-        })
-        .catch(err => {
+        }).catch(err => {
             enqueueSnackbar("Can't create the report", { autoHideDuration: 3000, variant: 'error' });
-        })
+        });
     }
 
     return (

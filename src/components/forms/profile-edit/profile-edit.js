@@ -1,102 +1,96 @@
 import { useForm }        from "react-hook-form";
-import { httpUpdateUser } from "../../../requests/users";
 import { Box, Card, CardContent, Typography, Button, TextField, Avatar } from "@mui/material";
 import EmailImage    from "../../../images/icons/email.png"
 import PasswordImage from "../../../images/icons/password.png"
 import TextImage     from "../../../images/icons/text.png"
 import ClearImage     from "../../../images/icons/logo_clear.png"
-import { useDispatch } from "react-redux";
 import { Delete } from "@mui/icons-material";
 import { confirmContainerState } from "../../containers/confirm-container/reactive";
 import { confirmModalState } from "../../modals/confirm-modal/reactive";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
+import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION, USER_UPDATE_MUTATION } from "../../../graphql/users";
 
 
 const FormProfileEdit = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { title, current } = props;
-    const { user: currentUser, theme } = useReactiveVar(baseState);
+    const { user: currentUser } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
-
-    const dispatch = useDispatch();
+    const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
+    const [ prepareToRestore ] = useMutation(USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION);
 
     // form submit
     const onSubmit = async(data) => {
-        let result = null;
         const keys = Object.keys(data);
         switch (keys.at(keys.length - 1)) {
             case "NewNickname":
                 enqueueSnackbar("Updating nickname...", { autoHideDuration: 1500 });
-                await httpUpdateUser(currentUser?._id, data.NewNickname, "nick")
-                    .then(() => {
-                        dispatchUser("nick", data.NewNickname);
-                        enqueueSnackbar("Nickname updated", { autoHideDuration: 1500 });
-                    })
-                    .catch(err => {
-                        enqueueSnackbar("Can't update the nickname", { autoHideDuration: 1500 });
-                    })
+                await updateUser({
+                    variables: {
+                        input: {
+                            _id: currentUser._id,
+                            what: "nick",
+                            value: data.NewNickname,
+                        },
+                    },
+                }).then(() => {
+                    dispatchUser("nick", data.NewNickname);
+                    enqueueSnackbar("Nickname updated", { autoHideDuration: 1500 });
+                }).catch(err => {
+                    enqueueSnackbar("Can't update the nickname", { autoHideDuration: 1500 });
+                });
                 break;
             case "NewDescription":
                 enqueueSnackbar("Updating description...", { autoHideDuration: 1500 });
-                await httpUpdateUser(currentUser?._id, data.NewDescription, "description")
-                    .then(() => {
-                        dispatchUser("description", data.NewDescription);
-                        enqueueSnackbar("Description updated", { autoHideDuration: 1500 });
-                    })
-                    .catch(err => {
-                        enqueueSnackbar("Can't update the description", { autoHideDuration: 1500 });
-                    })
+                await updateUser({
+                    variables: {
+                        input: {
+                            _id: currentUser._id,
+                            what: "description",
+                            value: data.NewDescription,
+                        },
+                    },
+                }).then(() => {
+                    dispatchUser("description", data.NewDescription);
+                    enqueueSnackbar("Description updated", { autoHideDuration: 1500, variant: 'success' });
+                }).catch(err => {
+                    enqueueSnackbar("Can't update the description", { autoHideDuration: 3000, variant: 'error' });
+                });
                 break;
             case "OldPassword":
-                /*
-                Alert.alertPromise("Processing...", "Check your email for next steps", "Unexpected error", () => {
-                    return new Promise((resolve, reject) => {
-                        
-                        dispatch(prepareToRestore({email: currentUser.email, type: "password"}))
-                            .then(unwrapResult)
-                            .then(result => {
-                                if(result.data.done) {
-                                    const user = result.data.user;
-                                    if (user) {
-                                        resolve();
-                                    } else {
-                                        reject();
-                                    }
-                                }
-                            });
-                        });
-                    }, { theme });
-                    */
-                console.log("PREPARE TO RESTORE!")
+                enqueueSnackbar("Preparing to update password...", { autoHideDuration: 1500 });
+                await prepareToRestore({
+                    variables: {
+                        input: {
+                            email: currentUser.email,
+                            type: "password",
+                        },
+                    },
+                }).then(({ data }) => {
+                    enqueueSnackbar("Check your email for next steps", { autoHideDuration: 3000, variant: 'info' })
+                }).catch(err => {
+                    enqueueSnackbar("Can't update password", { autoHideDuration: 3000, variant: 'error' });
+                });
                 break;
             case "OldEmail":
                 if (data.OldEmail !== currentUser.email) {
-                    //Alert.alertWarning('Emails did not match', { theme });
+                    enqueueSnackbar("Provided email didn't match current email", { autoHideDuration: 3000, variant: 'error' });
                 } else {
-                    /*
-                    Alert.alertPromise("Processing...", "Check your email for next steps", "Incorrect email", () => {
-                        return new Promise((resolve, reject) => {
-                            
-                            dispatch(prepareToRestore({email: data.OldEmail, type: "email"}))
-                                .then(unwrapResult)
-                                .then(result => {
-                                    if(result.data.done) {
-                                        const user = result.data.user;
-                                        if (user) {
-                                            resolve();
-                                        } else {
-                                            reject();
-                                        }
-                                    }
-                                });
-                            
-                        });
-                    }, { theme });
-                    */
+                    await prepareToRestore({
+                        variables: {
+                            input: {
+                                email: currentUser.email,
+                                type: "email",
+                            },
+                        },
+                    }).then(({ data }) => {
+                        enqueueSnackbar("Check your email for next steps", { autoHideDuration: 3000, variant: 'info' });
+                    }).catch(err => {
+                        enqueueSnackbar("Can't update email", { autoHideDuration: 3000, variant: 'error' })
+                    });
                 }
-                console.log("PREPARE TO RESTORE!");
                 break;
             default:
                 break;
@@ -120,7 +114,7 @@ const FormProfileEdit = (props) => {
             actionType: "delete-account", 
             text: "By confirming this, you agree that your account will be removed without any ability to restore.",
             title: "Confirm account deletion",
-        })
+        });
     } 
 
     return (

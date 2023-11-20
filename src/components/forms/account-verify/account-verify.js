@@ -1,43 +1,34 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useReactiveVar } from "@apollo/client";
-import { baseState } from "../../baseReactive";
+import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
+import { USER_CONFIRM_ACCOUNT_MUTATION } from "../../../graphql/users";
 
 
 const AccountVerifyForm = (props)=> {
     const { userId, actionId } = props;
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const { theme } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
+    const [ confirmAccount ] = useMutation(USER_CONFIRM_ACCOUNT_MUTATION);
 
-    const onSubmit = data => {
+    const onSubmit = async(data) => {
         enqueueSnackbar("Verifying...", { autoHideDuration: 1500 });
-        /*
-        Alert.alertPromise("Verifying...", "Account verified", "Can't verify this account", () => {
-            return new Promise((resolve, reject) => {
-                /*
-                dispatch(verifyAccount({
-                    userId: userId,
-                    actionId: actionId,
+        await confirmAccount({
+            variables: {
+                input: {
+                    userId,
+                    actionId,
                     verifyToken: data.Code,
-                }))
-                .then(unwrapResult)
-                .then(result => {
-                    if (result.data.done && result.data.user?.verified) {
-                        navigate('/login');
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                });
-                
-            })
-        }, { theme })
-        */
-       console.log("VERIFY");
+                },
+            },
+        }).then(({ data }) => {
+            navigate('/login');
+            enqueueSnackbar("Action verified", { autoHideDuration: 1500, variant: 'success' });
+        }).catch(err => {
+            enqueueSnackbar("Can't verify action", { autoHideDuration: 3000, variant: 'error' });
+        });
     }
     
 

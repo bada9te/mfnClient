@@ -51,16 +51,13 @@ const PostUploadForm = (props)=> {
                         downloadsAllowed: postUploadForm.downloadsAllowed,
                     },
                 },
-            })
-            .then(({data}) => {
-                if (data?.postCreate._id) {
-                    reset();
-                    enqueueSnackbar("Post uploaded", { autoHideDuration: 1500, variant: 'success' });
-                } else {
-                    enqueueSnackbar("Can't upload new post", { variant: 'error' });
-                }
+            }).then(({ data }) => {
+                reset();
+                enqueueSnackbar("Post uploaded", { autoHideDuration: 1500, variant: 'success' });
+            }).catch(err => {
+                enqueueSnackbar("Can't upload new post", { variant: 'error' });
             });
-        })
+        });
     }
 
     

@@ -12,9 +12,9 @@ import { useSnackbar } from "notistack";
 
 const AddCommentForm = (props) => {
     const { register, handleSubmit, reset } = useForm();
-    const [createComment] = useMutation(COMMENT_CREATE_MUTATION);
+    const [ createComment ] = useMutation(COMMENT_CREATE_MUTATION);
     
-    const { user: currentUser, theme } = useReactiveVar(baseState);
+    const { user: currentUser } = useReactiveVar(baseState);
     const { postId, replyingTo, postOwnerId } = useReactiveVar(commentsContainerState);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -31,30 +31,18 @@ const AddCommentForm = (props) => {
         }
 
         enqueueSnackbar("Creating comment...", { autoHideDuration: 1500 });
-        /*
-        Alert.alertPromise("Creating comment...", "Comment added", "Can't add a comment", () => {
-            return new Promise((resolve, reject) => {
-                createComment({
-                    variables: {
-                        input: {
-                            ...commentData
-                        },
-                    },
-                })
-                .then(result => {
-                    if (true) {
-                        console.log(result)
-        
-                        reset();
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                });
-            });
-        }, { theme });
-        */
-        console.log("CREATE COMMENT")
+        createComment({
+            variables: {
+                input: {
+                    ...commentData
+                },
+            },
+        }).then(({data}) => {
+            reset();
+            enqueueSnackbar("Comment created", { autoHideDuration: 1500, variant: 'success' });
+        }).catch(err => {
+            enqueueSnackbar("Can't create the comment", { autoHideDuration: 3000, variant: 'error' });
+        });
     }
 
     return (

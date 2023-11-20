@@ -47,6 +47,14 @@ export const USERS_BY_IDS_QUERY = gql`
 `;
 
 // M
+export const USER_CREATE_ACCOUNT = gql`
+    mutation userCreate($input: AddUserInput!) {
+        userCreate(input: $input) {
+            email
+        }
+    }
+`;
+
 export const USER_DELETE_BY_ID_MUTATION = gql`
     mutation userDeleteById($_id: ID!) {
         userDeleteById(_id: $_id) {
@@ -77,6 +85,33 @@ export const USER_SWITCH_SUBSCRIPTION_MUTATION = gql`
                     _id
                 }
             }
+        }
+    }
+`;
+
+export const USER_UPDATE_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userUpdate($input: UpdateUserInput!) {
+        userUpdate(input: $input) {
+            ...CoreUserFileds
+        }
+    }
+`;
+
+export const USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION = gql`
+    mutation userPrepareAccountToRestore($input: PrepareAccountToRestoreInput!) {
+        userPrepareAccountToRestore(input: $input) {
+            user { _id }
+            action { _id }
+        }
+    }
+`;
+
+export const USER_CONFIRM_ACCOUNT_MUTATION = gql`
+    mutation userConfirmAccount($input: AccountConfirmInput!) {
+        userConfirmAccount(input: $input) {
+            user { _id }
+            action { _id }
         }
     }
 `;

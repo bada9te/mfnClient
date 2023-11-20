@@ -1,25 +1,24 @@
 import { httpSaveFile } from "../../../requests/files";
-import { httpUpdateUser } from "../../../requests/users";
-import { useNavigate } from "react-router-dom";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 import { useState } from "react";
 import blobToFile from "../../../common-functions/blobToFile";
 import { useSnackbar } from "notistack";
+import { USER_UPDATE_MUTATION } from "../../../graphql/users";
 
 
 const ProfileCardForm = (props) => {
-    const navigate = useNavigate();
     const [picture, setPicture] = useState(null);
-    const [avatarTitle, setAvatarTitle] = useState("Select image");
-    const [backgroundTitle, setBackgroundTitle] = useState("Select image");
+    const [avatarTitle,] = useState("Select image");
+    const [backgroundTitle,] = useState("Select image");
 
     const { user: currentUser } = useReactiveVar(baseState);
     const { isShwoing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
     const { enqueueSnackbar } = useSnackbar();
+    const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
  
     const cropImageFile = (img, what) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: true, imageType: what})
@@ -33,30 +32,26 @@ const ProfileCardForm = (props) => {
 
         if (picture != null) { 
             enqueueSnackbar("Updating profile...", { autoHideDuration: 1500 });
-
             // save image on server
             let blob = await fetch(picture).then(r => r.blob());
             let result = await httpSaveFile(blobToFile(blob, currentUser?.nick + `${imageType}.jpg`));
             
             // process image assigning
-            if (imageType === "avatar") {
-                //setAvatar(result.data.file.filename);
-                dispatchUser("avatar", result.data.file.filename);
-                // assign avatar to current user on server
-                result = await httpUpdateUser(currentUser?._id, result.data.file.filename, "avatar");
-            } else {
-                //setBackground(result.data.file.filename);
-                dispatchUser("background", result.data.file.filename);
-                // assign bg to current user on server
-                result = await httpUpdateUser(currentUser?._id, result.data.file.filename, "background");
-            }
-            navigate('/profile-edit');
-
-            if (result.data.done) {
+            await updateUser({
+                variables: {
+                    input: {
+                        _id: currentUser._id,
+                        what: imageType,
+                        value: result.data.file.filename,
+                    },
+                },
+            }).then(({ data }) => {
+                dispatchUser(imageType, result.data.file.filename);
                 enqueueSnackbar("Profile updated", { autoHideDuration: 1500, variant: 'success' });
-            } else {
+            }).catch(err => {
                 enqueueSnackbar("Can't update the profile", { autoHideDuration: 3000, variant: 'error' });
-            }
+            });
+            //navigate('/profile-edit');
         }
     }
 

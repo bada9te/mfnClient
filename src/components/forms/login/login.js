@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 import { httpLogin } from "../../../requests/auth";
-import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 
@@ -11,7 +10,6 @@ import { useSnackbar } from "notistack";
 const LoginForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const { theme } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
      
     const onSubmit = async(data) => {

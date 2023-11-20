@@ -1,32 +1,34 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { httpRegister } from "../../../requests/auth";
 import { Box, TextField, Button } from "@mui/material";
-import { useReactiveVar } from "@apollo/client";
-import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
+import { useMutation } from "@apollo/client";
+import { USER_CREATE_ACCOUNT } from "../../../graphql/users";
 
 
 
 const RegisterForm = (props) => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
-    const { theme } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
+    const [ createUser ] = useMutation(USER_CREATE_ACCOUNT);
     
     const onSubmit = async(data) => {
-        try {
-            const result = await httpRegister(data);
-    
-            if (result.data.done) {
-                navigate('/login');
-                enqueueSnackbar("Account " + result.data.user.email + " was successfully created", { autoHideDuration: 3000, variant: "success" });
-            } else {
-                enqueueSnackbar("Can't create the new account", { autoHideDuration: 3000, variant: "error" });
-            }
-        } catch (error) {
-            enqueueSnackbar(error.response.data.error, { autoHideDuration: 3000, variant: "error" });
-        }
+        enqueueSnackbar("Trying to register new account...", { autoHideDuration: 1500 });
+        await createUser({
+            variables: {
+                input: {
+                    email: data.Email,
+                    password: data.Password,
+                    nick: data.Nickname,
+                },
+            },
+        }).then(({ data }) => {
+            navigate('/login');
+            enqueueSnackbar("Account " + data.userCreate.email + " was successfully created", { autoHideDuration: 3000, variant: "success" });
+        }).catch(err => {
+            enqueueSnackbar("Can't create the new account", { autoHideDuration: 3000, variant: "error" });
+        });
     }
 
     return (
