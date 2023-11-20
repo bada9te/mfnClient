@@ -115,3 +115,12 @@ export const USER_CONFIRM_ACCOUNT_MUTATION = gql`
         }
     }
 `;
+
+export const USER_RESTORE_ACCOUNT_MUTATION = gql`
+    mutation userRestoreAccount($input: AccountRestoreInput!) {
+        userRestoreAccount(input: $input) {
+            user { _id }
+            action { _id }
+        }
+    }
+`;

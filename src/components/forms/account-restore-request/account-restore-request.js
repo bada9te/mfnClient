@@ -1,42 +1,33 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useReactiveVar } from "@apollo/client";
-import { baseState } from "../../baseReactive";
+import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
+import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION } from "../../../graphql/users";
 
 
 const AccountRestoreRequestForm = (props)=> {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const { theme } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
+    const [ makeAccountRestoreRequest ] = useMutation(USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION);
  
-    const onSubmit = data => {
+    const onSubmit = async(data) => {
         enqueueSnackbar("Requesting...", { autoHideDuration: 1500 });
-        /*
-        Alert.alertPromise("Requesting...", "Check your email for next steps", "Account is not found", () => {
-            return new Promise((resolve, reject) => {
-                
-                dispatch(prepareToRestore({email: data.Email, type: "password"}))
-                    .then(unwrapResult)
-                    .then(result => {
-                        if(result.data.done) {
-                            const user = result.data.user;
-                            if (user) {
-                                navigate('/login')
-                                resolve();
-                            } else {
-                                reject();
-                            }
-                        }
-                    });
-                
-                });
-            }, { theme });
-            */
-            console.log("PREPARE TO RESTORE!")
-        }
+        await makeAccountRestoreRequest({
+            variables: {
+                input: {
+                    email: data.Email,
+                    type: "password",
+                },
+            },
+        }).then(({ data }) => {
+            navigate('/login');
+            enqueueSnackbar("Check your email for next steps", { autoHideDuration: 3000, variant: 'info' });
+        }).catch(err => {
+            enqueueSnackbar("User was not found", { autoHideDuration: 3000, variant: 'error' });
+        });
+    }
     
 
     return(
