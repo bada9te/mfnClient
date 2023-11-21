@@ -28,17 +28,10 @@ const httpLogOut = async() => {
 }
 
 
-// refresh access token
-const httpRefreshAccessToken = async(id, email) => {
-    return await axios.post(`${API_URL}/users/refresh-access-token`, {
-        id, email,
-    });
-}
 
 
 export {
     httpLogin,
     httpRegister,
     httpLogOut,
-    httpRefreshAccessToken,
 }

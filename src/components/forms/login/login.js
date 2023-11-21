@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField, Button, ButtonGroup, Typography, FormGroup } from "@mui/material";
-import { Facebook, Google, Twitter } from "@mui/icons-material";
+import { Box, TextField, Button } from "@mui/material";
 import { httpLogin } from "../../../requests/auth";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
-
+import SocialMediaLogin from "../../common/social-media-login/social-media-login";
 
 
 const LoginForm = (props) => {
@@ -47,7 +46,7 @@ const LoginForm = (props) => {
 
     
     return (
-        <>
+        <>  
             <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{margin: 1}}>
                 <TextField
                     margin="normal"
@@ -92,14 +91,7 @@ const LoginForm = (props) => {
                     Sign In
                 </Button>
 
-                <FormGroup>
-                    <Typography sx={{ my: 1 }}>Sign in using social media</Typography>
-                    <ButtonGroup sx={{ my: 1, display: 'flex', justifyContent: 'center' }} variant='string' orientation="horizontal">
-                        <Button><Google/></Button>
-                        <Button><Twitter/></Button>
-                        <Button><Facebook/></Button>
-                    </ButtonGroup>
-                </FormGroup>
+                <SocialMediaLogin/>
             </Box>
         </>
     );

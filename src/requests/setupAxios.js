@@ -3,6 +3,7 @@ import { httpRefreshAccessToken } from "./auth";
 
 
 axios.defaults.withCredentials = true;
+/*
 axios.interceptors.response.use(
     async(response) => {
         return response;
@@ -34,6 +35,7 @@ axios.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+*/
 
 axios.interceptors.request.use(async(config) => {
     config.headers = {
