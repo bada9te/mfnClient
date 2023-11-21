@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, ButtonGroup, Typography, FormGroup } from "@mui/material";
+import { Facebook, Google, Twitter } from "@mui/icons-material";
 import { httpLogin } from "../../../requests/auth";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
@@ -90,6 +91,15 @@ const LoginForm = (props) => {
                 >
                     Sign In
                 </Button>
+
+                <FormGroup>
+                    <Typography sx={{ my: 1 }}>Sign in using social media</Typography>
+                    <ButtonGroup sx={{ my: 1, display: 'flex', justifyContent: 'center' }} variant='string' orientation="horizontal">
+                        <Button><Google/></Button>
+                        <Button><Twitter/></Button>
+                        <Button><Facebook/></Button>
+                    </ButtonGroup>
+                </FormGroup>
             </Box>
         </>
     );

@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, FormGroup, Typography, ButtonGroup } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useMutation } from "@apollo/client";
 import { USER_CREATE_ACCOUNT } from "../../../graphql/users";
+import { Facebook, Google, Twitter } from "@mui/icons-material";
 
 
 
@@ -111,6 +112,15 @@ const RegisterForm = (props) => {
                     >
                         Create account
                 </Button>
+
+                <FormGroup>
+                    <Typography sx={{ my: 1 }}>Use social media instead</Typography>
+                    <ButtonGroup sx={{ my: 1, display: 'flex', justifyContent: 'center' }} variant='string' orientation="horizontal">
+                        <Button><Google/></Button>
+                        <Button><Twitter/></Button>
+                        <Button><Facebook/></Button>
+                    </ButtonGroup>
+                </FormGroup>
             </Box>
         </>
     );

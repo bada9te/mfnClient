@@ -20,7 +20,7 @@ const Login = (props) => {
                     <Avatar src={loginImage} sx={{ m: 1, boxShadow: 5 }}/>
                 </Box>
                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 2, mb: 0}}>
-                    Login
+                    Sign in
                 </Typography>
                 <CardContent>
                     <LoginForm/>
