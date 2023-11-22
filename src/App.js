@@ -9,6 +9,7 @@ import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { USER_QUERY } from './graphql/users';
 import { SnackbarProvider } from 'notistack';
+import axios from 'axios';
 
 
 
@@ -38,21 +39,15 @@ function App() {
   });
 
   useEffect(() => {
-    if (user._id === "") {
-      let currentUserId = localStorage.getItem('mfnCurrentUser') ? JSON.parse(localStorage.getItem('mfnCurrentUser'))._id : null;
-      if (currentUserId) {
-        getUserById({ variables: { _id: currentUserId } })
-          .then(({data}) => {
-            baseState({ ...baseState(), user: data.user });
-          })
-          .catch(error => {
-            navigate('/login');
-          });
-      } else if (location.pathname !== '/' && !regAllowed.test(location.pathname)) {
-        navigate('/login');
-      }
-    }
-  }, [location.pathname, navigate, regAllowed]);
+    axios.get(`${process.env.REACT_APP_SERVER_BASE}/auth/current-user`, { withCredentials: true })
+      .then(({data}) => {
+        if (data.done) {
+          baseState({ ...baseState(), user: data.user });
+        } else {
+          navigate('/login');
+        }
+      });
+  }, [navigate]);
 
 
   return (
