@@ -19,7 +19,6 @@ const Logout = (props) => {
             localStorage.removeItem("mfnCurrentUser");
             localStorage.removeItem("mfnCurrentToken");
             httpLogOut().then(() => {
-
                 baseState({ ...baseState(), user: {} });
                 
                 timeout = setTimeout(() => {

@@ -1,7 +1,8 @@
 import axios from "axios";
 
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_BASE;
+const SERVER_BASE = process.env.REACT_APP_SERVER_BASE;
 
 // login
 const httpLogin = async(data) => {
@@ -24,7 +25,7 @@ const httpRegister = async(data) => {
 
 // log out
 const httpLogOut = async() => {
-    return await axios.post(`${API_URL}/users/logout`);
+    return await axios.post(`${SERVER_BASE}/logout`);
 }
 
 

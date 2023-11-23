@@ -14,8 +14,8 @@ export const baseState = makeVar({
     },
     theme: JSON.parse(localStorage.getItem('mfnCurrentUser'))?.theme || 'light',
     locations: {
-        images: `${process.env.REACT_APP_API_URL}/uploads/images`,
-        audios: `${process.env.REACT_APP_API_URL}/uploads/audios`,
-        others: `${process.env.REACT_APP_API_URL}/uploads/others`,
+        images: `${process.env.REACT_APP_SERVER_BASE}/uploads/images`,
+        audios: `${process.env.REACT_APP_SERVER_BASE}/uploads/audios`,
+        others: `${process.env.REACT_APP_SERVER_BASE}/uploads/others`,
     },
 });

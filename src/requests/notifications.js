@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_BASE;
 
 const httpCreateNotification = async(notification) => {
     const response = await axios.post(`${API_URL}/notifications/create`, { 
