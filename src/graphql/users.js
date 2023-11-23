@@ -47,14 +47,6 @@ export const USERS_BY_IDS_QUERY = gql`
 `;
 
 // M
-export const USER_CREATE_ACCOUNT = gql`
-    mutation userCreate($input: AddUserInput!) {
-        userCreate(input: $input) {
-            email
-        }
-    }
-`;
-
 export const USER_DELETE_BY_ID_MUTATION = gql`
     mutation userDeleteById($_id: ID!) {
         userDeleteById(_id: $_id) {

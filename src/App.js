@@ -3,9 +3,8 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists } from './pages/pages';
 import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { useLazyQuery, useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
-import { USER_QUERY } from './graphql/users';
 import { SnackbarProvider } from 'notistack';
 import axios from 'axios';
 
@@ -17,11 +16,8 @@ function App() {
   const location = useLocation();
   const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
-  const { 
-    theme: themeStyle,
-    user 
-  } = useReactiveVar(baseState);
-  const [getUserById, { data, loading }] = useLazyQuery(USER_QUERY);
+  const { theme: themeStyle } = useReactiveVar(baseState);
+
   
   // theme setup
   const theme = createTheme({
@@ -42,7 +38,7 @@ function App() {
         if (data.done) {
           baseState({ ...baseState(), user: data.user });
         } else {
-          navigate('/login');
+          //navigate('/login');
         }
       });
   }, [navigate]);

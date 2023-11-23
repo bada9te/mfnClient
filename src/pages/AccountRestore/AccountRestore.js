@@ -1,65 +1,72 @@
-import passwordImage from '../../images/icons/password.png'
-import './AccountRestore.scss'
+import passwordImage from '../../images/icons/password.png';
 import AccountRestoreForm from '../../components/forms/account-restore/account-restore'
 import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 import newPasswordBG from '../../images/bgs/newPasswordFormBG.png';
-import { useReactiveVar } from '@apollo/client';
-import { baseState } from '../../components/baseReactive';
+import { useMutation, useQuery } from '@apollo/client';
+import { MODERATION_ACTION_DELETE_MUTATION, MODERATION_ACTION_VALIDATE_QUERY } from '../../graphql/moderation-actions';
+import { useSnackbar } from 'notistack';
+import { SpinnerCircular } from '../../components/common/spinner/Spinner';
 
 
 const AccountRestore = (props)=> {
     const { userId, actionId, verifyToken, type } = useParams();
-    const [actionIsValid, setActionIsValid] = useState(false);
-    const { theme } = useReactiveVar(baseState);
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    const [ deleteModerationAction ] = useMutation(MODERATION_ACTION_DELETE_MUTATION, {
+        variables: {
+            input: {
+                userId,
+                actionId,
+                verifyToken,
+                type,
+            }
+        }
+    });
+    const { data, loading } = useQuery(MODERATION_ACTION_VALIDATE_QUERY, {
+        variables: {
+            input: {
+                userId,
+                actionId,
+                type,
+            }
+        }
+    });
 
     const cancelAccountRestore = () => {
-        /*
-        dispatch(cancelAccountRestoring({
-            userId,
-            actionId,
-            verifyToken,
-            type,
-        }))
-        .then(unwrapResult)
-        .then(result => {
-            if (result.data.done && result.data.action) {
-                Alert.alertSuccess('Action canceled', { theme });
+        deleteModerationAction()
+            .then(({ data }) => {
+                enqueueSnackbar('Action was canceled', { autoHideDuration: 3000, variant: 'info' });
                 navigate('/login');
-            } else {
-                Alert.alertError('Unexpected error', { theme });
-            }
-        });
-        */
-        console.log("CANCEL ACC RESTORE!")
+            }).catch(err => {
+                enqueueSnackbar('Unexpected error', { autoHideDuration: 3000, variant: 'error' });
+            });
     }
 
-    useEffect(() => {
-        /*
-        dispatch(checkUserVerifyTokenById({
-            userId,
-            actionId,
-            verifyToken,
-            type,
-        }));
-        */
-        console.log("CHECK USER VERIFY TOK BY ID!")
-    }, [userId, verifyToken, actionId, type])
 
     return(
         <LogRegVerContainer bg={newPasswordBG}>
             <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 0}}>
+                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
+                    <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
+                </Box>
                 {
                     (() => {
-                        if (actionIsValid) {
+                        if (loading) {
                             return (
                                 <>
-                                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
-                                    </Box>
+                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                        Validating...
+                                    </Typography>
+                                    <CardContent>
+                                        <SpinnerCircular/>
+                                    </CardContent>
+                                </>
+                            );
+                        } else if (data?.moderationActionValidate) {
+                            return (
+                                <>
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Your account is ready to be restored
                                     </Typography>
@@ -83,9 +90,6 @@ const AccountRestore = (props)=> {
                         } else {
                             return (
                                 <>
-                                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
-                                    </Box>
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Validation error
                                     </Typography>
@@ -103,26 +107,3 @@ const AccountRestore = (props)=> {
 }
 
 export default AccountRestore;
-
-
-/*
-        <>
-            <div className="container-fluid position-sticky">
-                <div className="row mb-5">
-                    <Topbar text="Account Restore" username="UserName" where="account-restore"/>
-                </div>
-                <div className="row mb-5">
-                    <h1 className='hs'><span className='first-first-letter'>C</span>hanging password of account</h1>
-                    <h2 className='hs'><span className='second-first-letter'>A</span>ccount name</h2>
-                </div>
-                
-                <div className='d-flex justify-content-center' >
-                    <img className='logo' src={logotup} style={{width: '19em', height:'19em', borderRadius: '50%'}}></img>
-                    <div className="container login-form-all" style={{border: '3px solid #d2d4d5', borderRadius: '10px', width:'340px', height:'330px'}}>
-                        <AccountRestoreForm/>
-                    </div>
-                    
-                </div>
-            </div>
-        </>
-*/

@@ -104,7 +104,6 @@ const PlaylistsContainer = (props) => {
 
     // main effect 
     useEffect(() => {
-        console.log(11)
         const fetchPlaylists = async() => {
             try {
                 let result;

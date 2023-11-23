@@ -4,22 +4,16 @@ import axios from "axios";
 const SERVER_BASE = process.env.REACT_APP_SERVER_BASE;
 
 // login
-const httpLogin = async(data) => {
+const httpLogin = async(email, password) => {
     return await axios.post(`${SERVER_BASE}/login`, {
-        email: data.Email,
-        password: data.Password,
-    }); 
+        email,
+        password,
+    }, {withCredentials: true}); 
 }
 
 // register
 const httpRegister = async(data) => {
-    return await axios.post(`${SERVER_BASE}/register`, {
-        email: data.Email,
-        password: data.Password,
-        nick: data.Nickname,
-        avatar: data.Avatar,
-        background: data.Background,
-    });
+    return await axios.post(`${SERVER_BASE}/register`, data);
 }
 
 // log out

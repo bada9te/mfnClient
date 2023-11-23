@@ -2,9 +2,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useMutation } from "@apollo/client";
-import { USER_CREATE_ACCOUNT } from "../../../graphql/users";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
+import { httpRegister } from "../../../requests/auth";
 
 
 
@@ -12,18 +11,13 @@ const RegisterForm = (props) => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
     const { enqueueSnackbar } = useSnackbar();
-    const [ createUser ] = useMutation(USER_CREATE_ACCOUNT);
     
     const onSubmit = async(data) => {
         enqueueSnackbar("Trying to register new account...", { autoHideDuration: 1500 });
-        await createUser({
-            variables: {
-                input: {
-                    email: data.Email,
-                    password: data.Password,
-                    nick: data.Nickname,
-                },
-            },
+        await httpRegister({
+            email: data.Email,
+            password: data.Password,
+            nick: data.Nickname
         }).then(({ data }) => {
             navigate('/login');
             enqueueSnackbar("Account " + data.userCreate.email + " was successfully created", { autoHideDuration: 3000, variant: "success" });

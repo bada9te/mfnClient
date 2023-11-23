@@ -16,24 +16,11 @@ const LoginForm = (props) => {
         // show process
         enqueueSnackbar("Logging in...", { autoHideDuration: 1500 })
         // update store
-        await httpLogin(data)
+        await httpLogin(data.Email, data.Password)
             .then(({ data }) => {
-                if (data.done) {
-                    if (data.user.verified) {
-                        baseState({
-                            ...baseState(),
-                            user: data.user
-                        });
-                        navigate('/');
-                        enqueueSnackbar("Successfully logged in", { variant: "success", autoHideDuration: 1500 });
-                    } else {
-                        enqueueSnackbar("Pls verify your account via email", { variant: "warning" });
-                    }
-                } else {
-                    enqueueSnackbar("Can't perform login", { variant: "error" });
-                }
-            })
-            .catch((err) => {
+                navigate('/');
+                enqueueSnackbar("Successfully logged in", { variant: "success", autoHideDuration: 1500 });
+            }).catch((err) => {
                 enqueueSnackbar(err.message, { variant: "error" });
             });
     };
