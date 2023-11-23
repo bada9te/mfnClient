@@ -3,8 +3,6 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists } from './pages/pages';
 import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
-//import * as Alert from './components/alerts/alerts';
-import './requests/setupAxios';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { USER_QUERY } from './graphql/users';

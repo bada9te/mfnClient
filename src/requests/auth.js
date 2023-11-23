@@ -1,12 +1,11 @@
 import axios from "axios";
 
 
-const API_URL = process.env.REACT_APP_SERVER_BASE;
 const SERVER_BASE = process.env.REACT_APP_SERVER_BASE;
 
 // login
 const httpLogin = async(data) => {
-    return await axios.post(`${API_URL}/users/login`, {
+    return await axios.post(`${SERVER_BASE}/login`, {
         email: data.Email,
         password: data.Password,
     }); 
@@ -14,7 +13,7 @@ const httpLogin = async(data) => {
 
 // register
 const httpRegister = async(data) => {
-    return await axios.post(`${API_URL}/users/register`, {
+    return await axios.post(`${SERVER_BASE}/register`, {
         email: data.Email,
         password: data.Password,
         nick: data.Nickname,

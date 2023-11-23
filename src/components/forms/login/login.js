@@ -17,19 +17,13 @@ const LoginForm = (props) => {
         enqueueSnackbar("Logging in...", { autoHideDuration: 1500 })
         // update store
         await httpLogin(data)
-            .then((result) => {
-                if (result.data.done) {
-                    if (result.data.user.verified) {
+            .then(({ data }) => {
+                if (data.done) {
+                    if (data.user.verified) {
                         baseState({
                             ...baseState(),
-                            user: result.data.user
+                            user: data.user
                         });
-                        localStorage.setItem('mfnCurrentUser', JSON.stringify({
-                            _id: result.data.user._id, 
-                            email: result.data.user.email, 
-                            theme: 'light',
-                        }));
-                        localStorage.setItem('mfnCurrentToken', JSON.stringify(result.data.token))
                         navigate('/');
                         enqueueSnackbar("Successfully logged in", { variant: "success", autoHideDuration: 1500 });
                     } else {

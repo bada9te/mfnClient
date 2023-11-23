@@ -2,7 +2,6 @@ import { memo, useEffect, useState } from 'react';
 import getTimeLeft from '../../../common-functions/getTimeLeft';
 import { Card, CardActions, CardContent, Typography, Box, Stack, Avatar } from '@mui/material';
 import battleImg from '../../../images/icons/battle-disk.png';
-import userSocket from '../../../socket/user/socket-user';
 
 
 
@@ -18,25 +17,12 @@ const BattleItem = (props) => {
                     setTimeLeft(timeleft - 1000);
                 }, 1000);
         
-                return () => {
-                    clearInterval(interval);
-                }
+                return () => { clearInterval(interval); }
             } else {
                 //dispatch(removeFromInProgress(id));
             }
         }
     }, [timeleft]);
-
-    useEffect(() => {
-        userSocket.on(`battle-${id}-voted`, (data) => {
-            //console.log(data);
-            //dispatch(socketAddVote(data));
-        });
-
-        return () => {
-            userSocket.off(`battle-${id}-voted`);
-        }
-    }, [id]);
 
 
     return (

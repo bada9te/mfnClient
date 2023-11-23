@@ -1,17 +1,16 @@
 import { AddCircle, Timelapse, Whatshot } from "@mui/icons-material";
 import { Box, Tabs, Tab, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import userSocket from "../../../socket/user/socket-user";
 import PaginationTree from "../../common/pagination/pagination";
 import EnumBattles from "../../enums/enum-battles";
 import CreateBattleForm from "../../forms/create-battle/create-battle";
 import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
 import newBattleFormBG from "../../../images/bgs/newBattleFormBG.png"
-import { useLazyQuery, useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { battlesContainerState } from "./reactive";
 import { BATTLES_BY_STATUS_QUERY, BATTLE_MAKE_VOTE_MUTATION } from "../../../graphql/battles";
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -39,8 +38,8 @@ const BattlesContainer = props => {
     const { activePage, maxCountPerPage } = useReactiveVar(battlesContainerState);
     const { user: currentUser } = useReactiveVar(baseState);
 
-    const [makeVote, { data: voteData, loading: voteLoading, error: voteError }] = useMutation(BATTLE_MAKE_VOTE_MUTATION);
-    const [getBattles, { data, loading, error, stopPolling }] = useLazyQuery(BATTLES_BY_STATUS_QUERY, {
+    const [ makeVote ] = useMutation(BATTLE_MAKE_VOTE_MUTATION);
+    const [ getBattles, { data, loading, stopPolling } ] = useLazyQuery(BATTLES_BY_STATUS_QUERY, {
         variables: {
             status: status === 0 ? "running" : "finished",
             offset: activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage,
@@ -56,11 +55,8 @@ const BattlesContainer = props => {
                     battleId, postNScore, voteCount, voterId
                 }
             }
-        }).then(() => {
-            userSocket.emit("battle-add-vote", {
-                battleId, postNScore, voteCount, voterId,
-            });
-        })
+        });
+        console.log('MAKE_VOTE');
     }
 
 

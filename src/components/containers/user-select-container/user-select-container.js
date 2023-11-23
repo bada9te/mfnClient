@@ -1,8 +1,7 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 import { USERS_BY_IDS_QUERY } from "../../../graphql/users";
-import userSocket from "../../../socket/user/socket-user";
+import { baseState } from "../../baseReactive";
 import EnumUserSelect from "../../enums/enum-user-select";
 import { userSelectModalState } from "../../modals/user-select-modal/reactive";
 import { userSelectContainerState } from "./reactive";
@@ -10,7 +9,7 @@ import { userSelectContainerState } from "./reactive";
 
 
 const UserSelectContainer = props => {
-    const currentUser = useSelector(state => state.base.user);
+    const { user: currentUser } = useReactiveVar(baseState);
     const { selectType, sharedItem: sharedItemId } = useReactiveVar(userSelectContainerState);
     const { data } = useQuery(USERS_BY_IDS_QUERY, {
         variables: {
@@ -22,12 +21,15 @@ const UserSelectContainer = props => {
 
     const handleUserSelect = (userId) => {
         if (selectType === 'postShare') {
+            console.log('POST_SHARE');
+            /*
             userSocket.emit("post-share", {
                 receiver: userId,
                 sender: currentUser._id,
                 post: sharedItemId,
                 text: `Hey! Check this track!`,
             });
+            */
         }
         userSelectModalState({ ...userSelectModal, isShowing: false })
     }

@@ -6,10 +6,9 @@ import { Menu as MenuIcon } from '@mui/icons-material';
 import TopBarUserMenu from './top-bar-user-menu/top-bar-user-menu';
 import TopBarLeftMenuMin from './top-bar-left-menu-min/top-bar-left-menu-min';
 import TopBarLeftMenu from './top-bar-left-menu/top-bar-left-menu';
-import userSocket from '../../../../socket/user/socket-user';
 import StyledBadge from "./styled-badge/styled-badge";
 import PropTypes from 'prop-types';
-import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { audioPlayerState } from '../../../common/audio-player/reactive';
 import { bottomBarState } from '../../bottom/bottom-bar/reactive';
 import { baseState } from '../../../baseReactive';
@@ -100,28 +99,7 @@ const Topbar = (props) => {
     // current user socket notifications
     useEffect(() => {
         if (user && user._id !== "") {
-            getUnreadNotifications()
-
-
-            userSocket.on(`subscribed-on-${user._id}`, (data) => {
-                //dispatch(fetchUnreadNotifications());
-            });
-            userSocket.on(`user-${user._id}-post-was-liked`, (data) => {
-                //dispatch(fetchUnreadNotifications());
-            });
-            userSocket.on(`user-${user._id}-post-was-saved`, (data) => {
-                //dispatch(fetchUnreadNotifications());
-            });
-            userSocket.on(`post-shared-to-${user._id}`, (data) => {
-                //dispatch(fetchUnreadNotifications());
-            });
-    
-            return () => {
-                userSocket.off(`subscribed-on-${user._id}`);
-                userSocket.off(`user-${user._id}-post-was-liked`);
-                userSocket.off(`user-${user._id}-post-was-saved`);
-                userSocket.off(`post-shared-to-${user._id}`);
-            };
+            getUnreadNotifications();
         }
     }, [user]);
 

@@ -16,8 +16,6 @@ const Logout = (props) => {
     useEffect(() => {
         let timeout = null;
         if (currentUser?._id !== "") {
-            localStorage.removeItem("mfnCurrentUser");
-            localStorage.removeItem("mfnCurrentToken");
             httpLogOut().then(() => {
                 baseState({ ...baseState(), user: {} });
                 
