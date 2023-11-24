@@ -32,8 +32,8 @@ const CreateBattleForm = props => {
         variables: {
             input: {
                 title: title,
-                post1: post1.base._id,
-                post2: post2.base._id,
+                post1: post1?.base._id,
+                post2: post2?.base._id,
             },
         },
     });

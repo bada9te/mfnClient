@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 import { httpLogin } from "../../../requests/auth";
-import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
 
@@ -19,9 +18,9 @@ const LoginForm = (props) => {
         await httpLogin(data.Email, data.Password)
             .then(({ data }) => {
                 navigate('/');
-                enqueueSnackbar("Successfully logged in", { variant: "success", autoHideDuration: 1500 });
+                enqueueSnackbar(`Successfully logged in as ${data.nick}`, { variant: "success", autoHideDuration: 3000 });
             }).catch((err) => {
-                enqueueSnackbar(err.message, { variant: "error" });
+                enqueueSnackbar(err.response.data, { variant: "error" });
             });
     };
 
