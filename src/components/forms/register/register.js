@@ -22,7 +22,7 @@ const RegisterForm = (props) => {
             navigate('/login');
             enqueueSnackbar("Account " + data.userCreate.email + " was successfully created", { autoHideDuration: 3000, variant: "success" });
         }).catch(err => {
-            enqueueSnackbar("Can't create the new account", { autoHideDuration: 3000, variant: "error" });
+            enqueueSnackbar(err.response.data, { autoHideDuration: 3000, variant: "error" });
         });
     }
 

@@ -116,7 +116,7 @@ const Topbar = (props) => {
                                 noWrap
                                 component="a"
                                 href="/"
-                                sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700, color: 'inherit', textDecoration: 'none', alignItems: 'center', }}
+                                sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontWeight: 400, color: 'inherit', textDecoration: 'none', alignItems: 'center' }}
                             >
                                 <Avatar alt="app logo" src={logoImg} sx={{mr: 1}}/>
                                 MUSIC FROM NOTHING
@@ -158,7 +158,7 @@ const Topbar = (props) => {
                                 noWrap
                                 component="a"
                                 href=""
-                                sx={{mr: 1,display: { xs: 'flex', md: 'none' },flexGrow: 1,fontFamily: 'monospace',fontWeight: 700,letterSpacing: '.3rem',color: 'inherit',textDecoration: 'none',}}
+                                sx={{mr: 1,display: { xs: 'flex', md: 'none' }, flexGrow: 1, fontWeight: 700,letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none' }}
                             >
                                 MFN
                             </Typography>
@@ -172,7 +172,7 @@ const Topbar = (props) => {
                                             variant="h6"
                                             noWrap
                                             component="span"
-                                            sx={{ mr: 1, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700, color: 'white', textDecoration: 'none', alignItems: 'center',}}
+                                            sx={{ mr: 1, display: { xs: 'none', md: 'flex' }, fontWeight: 400, color: 'white', textDecoration: 'none', alignItems: 'center',}}
                                         >
                                             { user && user?._id !== "" ? user?.nick : "Login" }
                                         </Typography>

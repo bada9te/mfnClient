@@ -24,7 +24,7 @@ const ReportsModal = props => {
                 <ReportForm/>
             </DialogContent>
             <DialogActions>
-                <Typography>Pls, provide more information in text message field, so that we can more easily understand what the violation is</Typography>
+                <Typography>Pls, provide more information in text message field, so that we can easier understand what the violation is</Typography>
             </DialogActions>
         </Dialog>
     );

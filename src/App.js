@@ -1,8 +1,7 @@
-import './App.scss';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists } from './pages/pages';
 import { useEffect, useState } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { SnackbarProvider } from 'notistack';
@@ -28,8 +27,11 @@ function App() {
         light: '#42a5f5',
         dark: '#257a76',
         contrastText: '#fff',
-      },
+      },      
     },
+    typography: {
+      fontFamily: "'Permanent Marker', cursive"
+    }
   });
 
   useEffect(() => {

@@ -9,7 +9,7 @@ import LogRegVerContainer from '../../components/containers/image-left-form-cona
 const Login = (props) => {
     const navigate = useNavigate();
     return (
-        <LogRegVerContainer bg={loginFormBG}>
+        <LogRegVerContainer bg={loginFormBG} text="Welcome back!">
             <Box sx={{ 
                 width: '30rem', 
                 height: 'fit-content', 
@@ -45,21 +45,9 @@ const Login = (props) => {
                 </CardActions>
             </Box>
         </LogRegVerContainer>
-            
-               
-                    
-          
-           
-        
     );
 }
 
 
 export default Login;
 
-
-/*
-            
-<Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh'}}>
-            </Box>
-            */

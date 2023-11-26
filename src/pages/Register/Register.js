@@ -2,7 +2,7 @@ import RegisterForm from '../../components/forms/register/register';
 import { useNavigate } from 'react-router-dom';
 import { Box, CardActions, CardContent, Typography, Avatar, Stack } from '@mui/material';
 import loginImage from '../../images/icons/logo.png';
-import registerFormBG from '../../images/bgs/registerFormBG.png';
+import registerFormBG from '../../images/bgs/loginFormBG.png';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 
 
@@ -10,7 +10,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     return (
-        <LogRegVerContainer bg={registerFormBG}>
+        <LogRegVerContainer bg={registerFormBG} text="Let’s get started!">
             <Box sx={{ 
                 width: '30rem', 
                 boxShadow: 0, 

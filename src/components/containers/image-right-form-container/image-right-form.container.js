@@ -44,7 +44,6 @@ const ImageRightFormContainer = (props) => {
                     <Typography sx={{
                         color: 'white',
                         fontSize: {xl: '10vh', lg: '4vw', md: 0},
-                        font: 'italic 1.2rem "Fira Sans", sans-serif',
                         textAlign: 'center'
                     }}>
                         {text}

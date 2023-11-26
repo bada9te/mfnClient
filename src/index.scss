@@ -1,25 +1,7 @@
-:root {
-  --outer_space: #292A2A;
-  --humming_bird: #CAF8F8;
-  --keppel: #36B2AC;
-  --eastern_blue: #1C94A4;
-
-  //--background_lighter: #ffffff;
-}
-
-[data-bs-theme="dark"] {
-  --background_lighter: #2b3136;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
-/*
-.MuiDrawer-paper {
-  width: 20% !important;
-}
-*/
 @media (max-width: 500px) {
   .MuiDrawer-paper {
     width: 100% !important;
