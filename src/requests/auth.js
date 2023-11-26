@@ -21,6 +21,15 @@ const httpLogOut = async() => {
     return await axios.post(`${SERVER_BASE}/logout`);
 }
 
+// update session user object
+const httpUpdateSessionUser = async(user) => {
+    return await axios.post(`${SERVER_BASE}/update-session-user`, user)
+}
+
+// get current user 
+const httpGetCurrentUser = async() => {
+    return await axios.get(`${SERVER_BASE}/current-user`, { withCredentials: true });
+}
 
 
 
@@ -28,4 +37,6 @@ export {
     httpLogin,
     httpRegister,
     httpLogOut,
+    httpUpdateSessionUser,
+    httpGetCurrentUser,
 }

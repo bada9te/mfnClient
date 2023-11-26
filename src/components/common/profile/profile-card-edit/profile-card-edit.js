@@ -1,13 +1,12 @@
 import './profile-card-edit.scss';
 import ProfileCardForm from '../../../forms/profile-card/profile-card';
 import { Avatar, Box, Stack, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useReactiveVar } from '@apollo/client';
+import { baseState } from '../../../baseReactive';
 
 
 const ProfileCardEdit = (props) => {
-    const currentUser = useSelector(state => state?.base?.user);
-    const locations = useSelector(state => state?.base?.locations);
-    const theme = useSelector(state => state?.base?.theme);
+    const { user: currentUser, locations, theme } = useReactiveVar(baseState);
 
     return (
         <>

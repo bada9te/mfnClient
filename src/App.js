@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { SnackbarProvider } from 'notistack';
-import axios from 'axios';
+import { httpGetCurrentUser } from './requests/auth';
 
 
 
@@ -33,7 +33,7 @@ function App() {
   });
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER_BASE}/auth/current-user`, { withCredentials: true })
+    httpGetCurrentUser()
       .then(({data}) => {
         if (data.done) {
           baseState({ ...baseState(), user: data.user });

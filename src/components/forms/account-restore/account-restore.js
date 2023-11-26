@@ -23,6 +23,7 @@ const AccountRestoreForm = (props)=> {
                     actionId,
                     verifyToken,
                     type,
+                    newValue: data.newValue
                 },
             },
         }).then(({ data }) => {

@@ -11,9 +11,9 @@ import { USER_UPDATE_MUTATION } from "../../../graphql/users";
 
 
 const ProfileCardForm = (props) => {
-    const [picture, setPicture] = useState(null);
-    const [avatarTitle,] = useState("Select image");
-    const [backgroundTitle,] = useState("Select image");
+    const [ picture, setPicture ] = useState(null);
+    const [ avatarTitle, ] = useState("Select image");
+    const [ backgroundTitle, ] = useState("Select image");
 
     const { user: currentUser } = useReactiveVar(baseState);
     const { isShwoing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
@@ -46,39 +46,22 @@ const ProfileCardForm = (props) => {
                     },
                 },
             }).then(({ data }) => {
-                dispatchUser(imageType, result.data.file.filename);
+                baseState({ ...baseState(), user: { ...baseState().user, ...data.userUpdate} });
                 enqueueSnackbar("Profile updated", { autoHideDuration: 1500, variant: 'success' });
             }).catch(err => {
                 enqueueSnackbar("Can't update the profile", { autoHideDuration: 3000, variant: 'error' });
             });
-            //navigate('/profile-edit');
         }
-    }
-
-    const dispatchUser = (what, value) => {
-        baseState({
-            ...baseState(),
-            user: {
-                ...currentUser,
-                [what]: value,
-            },
-        });
     }
     
 
     return (
         <>
-            {
-                cropModalIsShowing 
-                ? 
-                <ImageCropperModal 
-                    show={cropModalIsShowing} 
-                    handleImageCropModalClose={handleImageCropModalClose} 
-                    image={picture} 
-                />
-                :
-                null
-            }
+            <ImageCropperModal 
+                show={cropModalIsShowing} 
+                handleImageCropModalClose={handleImageCropModalClose} 
+                image={picture} 
+            />
             <Box component="form">
                 <FormGroup sx={{py: 1}}>
                     <Typography>Avatar:</Typography>
