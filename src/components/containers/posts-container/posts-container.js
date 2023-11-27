@@ -4,7 +4,7 @@ import PaginationTree from '../../common/pagination/pagination';
 import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
-import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../graphql/posts';
+import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../graphql-requests/posts';
 import defineMaxPage from '../../../common-functions/defineMaxPage';
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from './reactive';

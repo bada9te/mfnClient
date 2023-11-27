@@ -3,7 +3,7 @@ import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, List, Typography } from "@mui/material";
 import EnumLeftBarPosts from "../../enums/enum-leftbar-posts";
 import { useLazyQuery } from "@apollo/client";
-import { POSTS_BY_TITLE_QUERY } from "../../../graphql/posts";
+import { POSTS_BY_TITLE_QUERY } from "../../../graphql-requests/posts";
 
 
 

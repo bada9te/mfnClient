@@ -9,7 +9,7 @@ import newBattleFormBG from "../../../images/bgs/newBattleFormBG.png"
 import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { battlesContainerState } from "./reactive";
-import { BATTLES_BY_STATUS_QUERY, BATTLE_MAKE_VOTE_MUTATION } from "../../../graphql/battles";
+import { BATTLES_BY_STATUS_QUERY, BATTLE_MAKE_VOTE_MUTATION } from "../../../graphql-requests/battles";
 
 
 function TabPanel(props) {

@@ -4,7 +4,7 @@ import EnumNotifications from "../../enums/enum-notifications";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { NOTIFICATIONS_QUERY } from "../../../graphql/notifications";
+import { NOTIFICATIONS_QUERY } from "../../../graphql-requests/notifications";
 import { useSnackbar } from "notistack";
 
 

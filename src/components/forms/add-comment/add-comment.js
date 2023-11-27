@@ -3,7 +3,7 @@ import { Box, TextField, IconButton } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { commentsContainerState } from "../../containers/comments-container/reactive";
-import { COMMENT_CREATE_MUTATION } from "../../../graphql/comments";
+import { COMMENT_CREATE_MUTATION } from "../../../graphql-requests/comments";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 

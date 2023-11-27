@@ -5,7 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { SnackbarProvider } from 'notistack';
-import { httpGetCurrentUser } from './requests/auth';
+import { httpGetCurrentUser } from './http-requests/auth';
 
 
 
@@ -49,6 +49,7 @@ function App() {
   return (
       <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={5}>
+          
           <Routes>
             {/* ACCOUNT MGMT */}
             <Route path='/login'     element={<Login/>}/>

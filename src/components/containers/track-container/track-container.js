@@ -2,15 +2,15 @@ import ProfileCard from "../../common/profile/profile-card/profile-card";
 import PostItem from "../../common/post-item/post-item";
 import getTimeSince from "../../../common-functions/getTimeSince";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
-import { useSelector } from "react-redux";
 import { Box, Stack } from "@mui/material";
-import { useQuery } from "@apollo/client";
-import { POST_QUERY } from "../../../graphql/posts";
+import { useQuery, useReactiveVar } from "@apollo/client";
+import { POST_QUERY } from "../../../graphql-requests/posts";
+import { baseState } from "../../baseReactive";
 
 
 const TrackContainer = (props) => {
     const { trackId } = props;
-    const locations = useSelector(state => state?.base?.locations);
+    const { locations } = useReactiveVar(baseState);
 
     const { data, loading } = useQuery(POST_QUERY, {
         variables: {

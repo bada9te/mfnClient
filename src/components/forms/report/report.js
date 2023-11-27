@@ -5,7 +5,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { reportFormState } from "./reactive";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
-import { REPORT_CREATE_MUTATION } from "../../../graphql/reports";
+import { REPORT_CREATE_MUTATION } from "../../../graphql-requests/reports";
 
 
 const ReportForm = (props) => {

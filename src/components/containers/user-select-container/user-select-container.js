@@ -1,6 +1,6 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
-import { USERS_BY_IDS_QUERY } from "../../../graphql/users";
+import { USERS_BY_IDS_QUERY } from "../../../graphql-requests/users";
 import { baseState } from "../../baseReactive";
 import EnumUserSelect from "../../enums/enum-user-select";
 import { userSelectModalState } from "../../modals/user-select-modal/reactive";

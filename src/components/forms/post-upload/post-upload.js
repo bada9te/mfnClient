@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { POST_CREATE_MUTATION } from "../../../graphql/posts";
+import { POST_CREATE_MUTATION } from "../../../graphql-requests/posts";
 import blobToFile from "../../../common-functions/blobToFile";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
-import { httpSaveFile } from "../../../requests/files";
+import { httpSaveFile } from "../../../http-requests/files";
 import { postUploadFormState } from "./reactive";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { useSnackbar } from "notistack";
@@ -20,7 +20,19 @@ const PostUploadForm = (props)=> {
     const { enqueueSnackbar } = useSnackbar();
  
 
-    const [postUpload] = useMutation(POST_CREATE_MUTATION);
+    const [ postUpload ] = useMutation(POST_CREATE_MUTATION, {
+        variables: {
+            input: {
+                owner:            currentUser._id,
+                title:            postUploadForm.title,
+                description:      postUploadForm.description,
+                audio:            postUploadForm.uploadedAudioName,
+                image:            postUploadForm.uploadedPictureName,
+                commentsAllowed:  postUploadForm.commentsAllowed,
+                downloadsAllowed: postUploadForm.downloadsAllowed
+            },
+        },
+    });
 
 
     // form submit
@@ -29,35 +41,26 @@ const PostUploadForm = (props)=> {
 
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
         
-        Promise.all([
-            await httpSaveFile(data.Audio[0])
+        await Promise.all([
+            httpSaveFile(data.Audio[0])
                 .then(({data}) => {
+                    console.log(data.file.filename)
                     postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.file.filename });
                 }),
-            await httpSaveFile(blobToFile(blob, data.Image[0].name))
+            httpSaveFile(blobToFile(blob, data.Image[0].name))
                 .then(({data}) => {
+                    console.log(data.file.filename)
                     postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.file.filename });
                 }),
-        ]).then(async() => {
-            await postUpload({
-                variables: {
-                    input: {
-                        owner: currentUser._id,
-                        title: postUploadForm.title,
-                        description: postUploadForm.description,
-                        audio: postUploadForm.uploadedAudioName,
-                        image: postUploadForm.uploadedPictureName,
-                        commentsAllowed: postUploadForm.commentsAllowed,
-                        downloadsAllowed: postUploadForm.downloadsAllowed,
-                    },
-                },
-            }).then(({ data }) => {
+        ]);
+            console.log(postUploadForm)
+            await postUpload().then(({ data }) => {
                 reset();
                 enqueueSnackbar("Post uploaded", { autoHideDuration: 1500, variant: 'success' });
             }).catch(err => {
                 enqueueSnackbar("Can't upload new post", { variant: 'error' });
             });
-        });
+       
     }
 
     

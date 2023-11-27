@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { Box, TextField, Button } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { SUPPORT_CONTACT_CREATE_MUTATION } from "../../../graphql/support-contact";
+import { SUPPORT_CONTACT_CREATE_MUTATION } from "../../../graphql-requests/support-contact";
 import { useSnackbar } from "notistack";
 
 

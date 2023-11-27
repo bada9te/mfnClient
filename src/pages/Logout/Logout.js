@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import { baseState } from "../../components/baseReactive";
 import { SpinnerCircular } from "../../components/common/spinner/Spinner";
-import { httpLogOut } from "../../requests/auth";
+import { httpLogOut } from "../../http-requests/auth";
 
 
 const Logout = (props) => {

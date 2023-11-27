@@ -12,7 +12,7 @@ import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { audioPlayerState } from '../../../common/audio-player/reactive';
 import { bottomBarState } from '../../bottom/bottom-bar/reactive';
 import { baseState } from '../../../baseReactive';
-import { NOTIFICATIONS_QUERY } from '../../../../graphql/notifications';
+import { NOTIFICATIONS_QUERY } from '../../../../graphql-requests/notifications';
 
 
 function HideOnScroll(props) {

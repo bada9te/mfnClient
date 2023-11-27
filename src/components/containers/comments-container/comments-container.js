@@ -1,6 +1,6 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
-import { COMMENTS_BY_IDS_QUERY } from "../../../graphql/comments";
+import { COMMENTS_BY_IDS_QUERY } from "../../../graphql-requests/comments";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumComments from "../../enums/enum-comments";
 import { commentsContainerState } from "./reactive";

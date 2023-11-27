@@ -6,20 +6,17 @@ import './Scrollbar.scss';
 import { BrowserRouter } from 'react-router-dom';
 
 // apollo
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
+import APClient from './apollo/client';
+
 
 // root node
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-// ap-client
-const client = new ApolloClient({
-    link: new HttpLink({ uri: `${process.env.REACT_APP_SERVER_BASE}/graphql`, credentials: 'include' }),
-    cache: new InMemoryCache(),
-});
 
 // render
 root.render(
-    <ApolloProvider client={client}>
+    <ApolloProvider client={APClient}>
         <BrowserRouter>
             <App />
         </BrowserRouter> 

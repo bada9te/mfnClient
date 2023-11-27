@@ -1,4 +1,4 @@
-import { httpSaveFile } from "../../../requests/files";
+import { httpSaveFile } from "../../../http-requests/files";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
@@ -7,7 +7,7 @@ import { imageCropperModalState } from "../../modals/image-cropper-modal/reactiv
 import { useState } from "react";
 import blobToFile from "../../../common-functions/blobToFile";
 import { useSnackbar } from "notistack";
-import { USER_UPDATE_MUTATION } from "../../../graphql/users";
+import { USER_UPDATE_MUTATION } from "../../../graphql-requests/users";
 
 
 const ProfileCardForm = (props) => {
