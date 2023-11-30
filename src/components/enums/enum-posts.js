@@ -1,11 +1,7 @@
-import PostItem from "../common/post-item/post-item";
-import getTimeSince from "../../common-functions/getTimeSince";
-import { useReactiveVar } from "@apollo/client";
-import { baseState } from "../baseReactive";
+import PostGenerate from "../common/post-item/post-generate";
 
 const EnumPosts = props => {
     const { except, profileLinkAccessable, posts } = props;
-    const { locations } = useReactiveVar(baseState);
 
     return (
         <>
@@ -19,22 +15,7 @@ const EnumPosts = props => {
                 })
                 .map((item, key) => {
                     return (
-                        <PostItem 
-                            key={key}
-                            base={{
-                                ...item, 
-                                ownerAvatar: `${locations?.images}/${item.owner.avatar}`,
-                                createdAt: getTimeSince(new Date(+item.createdAt)) + ' ago',
-                                img: `${locations?.images}/${item.image}`,
-                                audio: `${locations?.audios}/${item.audio}`,
-                            }}
-                            addons={{
-                                commentsAllowed: item.commentsAllowed,
-                                downloadsAllowed: item.downloadsAllowed,
-                                status: null,
-                                profileLinkAccessable: profileLinkAccessable,
-                            }}
-                        />
+                        <PostGenerate key={key} item={item} addonsCorrections={{ profileLinkAccessable }}/>
                     );
                 })
             }

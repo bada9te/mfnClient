@@ -49,6 +49,10 @@ const PostItem = (props) => {
             },
         }).then(({data}) => {
             setLikedBy(data.postSwitchLike.likedBy);
+            if (data.postSwitchLike._id == audioPlayer.currentTrack?.base?._id) {
+                //audioPlayerState({...audioPlayer, currentTrack:  })
+                //console.log(audioPlayerState())
+            }
         });
     }
     

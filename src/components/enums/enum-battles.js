@@ -1,42 +1,25 @@
 import BattleItem from "../common/battle-item/battle-item";
-import PostItem from "../common/post-item/post-item";
-import getTimeSince from "../../common-functions/getTimeSince";
 import { SpinnerLinear } from "../common/spinner/Spinner";
 import { Box, Typography } from "@mui/material";
 import PostItemUnavailable from "../common/post-item/post-item-unavailable";
-import { useReactiveVar } from "@apollo/client";
-import { baseState } from "../baseReactive";
+import PostGenerate from "../common/post-item/post-generate";
 
 
 const PostFromData = (props) => {
     const { data, battleId, makeBattleVote, votedBy, finished } = props;
-    const { locations } = useReactiveVar(baseState);
 
     return (
         <>
             {
                 data?._id && data._id !== ""
                 ?
-                <PostItem
-                    base={{
-                        ...data, 
-                        ownerAvatar: `${locations?.images}/${data.owner.avatar}`,
-                        createdAt: getTimeSince(new Date(+data.createdAt)) + ' ago',
-                        img: `${locations?.images}/${data.image}`,
-                        audio: `${locations?.audios}/${data.audio}`,
-                    }}
-
-                    addons={{
-                        status: !finished ? "voting" : null,
-                        profileLinkAccessable: true,
-                        commentsAllowed: data.commentsAllowed,
-                        downloadsAllowed: data.downloadsAllowed,
-                        battleId: battleId,
-                        makeBattleVote: makeBattleVote,
-                        postNScore: "post1Score",
-                        votedBy: votedBy,
-                    }}
-                />
+                <PostGenerate item={data} addonsCorrections={{ 
+                    status: !finished ? "voting" : null,
+                    battleId,
+                    makeBattleVote,
+                    postNScore: "post1Score",
+                    votedBy,
+                }}/>
                 :
                 <PostItemUnavailable/>
             }

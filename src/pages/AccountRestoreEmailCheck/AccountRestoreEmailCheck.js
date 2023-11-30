@@ -10,7 +10,7 @@ const AccountRestoreEmailCheck = (props)=> {
     const navigate = useNavigate();
 
     return(
-        <LogRegVerContainer bg={VerifyEmailBG}>
+        <LogRegVerContainer bg={VerifyEmailBG} text="Restore access to account">
             <Box sx={{width: '30rem', height: 'fit-content'}}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     <Avatar src={emailImage} sx={{ m: 1, boxShadow: 5 }}/>
