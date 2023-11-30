@@ -49,13 +49,7 @@ const Topbar = (props) => {
     const { user, locations } = useReactiveVar(baseState);
     //const notifications = useSelector(state => state.notificationsContainer.notifications);
 
-    const [getUnreadNotifications, { data }] = useLazyQuery(NOTIFICATIONS_QUERY, {
-        variables: {
-            receiverId: user._id,
-            checked: false,
-        },
-        pollInterval: 15000
-    });
+    const [getUnreadNotifications, { data }] = useLazyQuery(NOTIFICATIONS_QUERY);
 
     const pages = ['Feed', 'Battles', 'Playlists'];
     const navigate = useNavigate();
@@ -99,7 +93,13 @@ const Topbar = (props) => {
     // current user socket notifications
     useEffect(() => {
         if (user && user._id !== "") {
-            getUnreadNotifications();
+            getUnreadNotifications({
+                variables: {
+                    receiverId: user._id,
+                    checked: false,
+                },
+                pollInterval: 15000
+            });
         }
     }, [user]);
 

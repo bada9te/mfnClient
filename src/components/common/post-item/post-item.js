@@ -40,6 +40,8 @@ const PostItem = (props) => {
 
     // handle likes
     const onLikesChanged = async(e, value) => {
+        if (addons.status === "upload") return;
+
         await switchLike({
             variables: {
                 input: {
@@ -54,6 +56,8 @@ const PostItem = (props) => {
     
     // add to saved or remove from saved
     const switchPostInSaved = async(e, value) => {
+        if (addons.status === "upload") return;
+        
         await switchInSaved({
             variables: {
                 input: {
