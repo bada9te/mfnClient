@@ -2,8 +2,8 @@ import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
 
-import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, CardActions, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
-import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp, CheckCircle, HowToVote }                   from "@mui/icons-material";
+import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
+import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp, CheckCircle, HowToVote } from "@mui/icons-material";
 import PostItemDropDown             from './post-item-dropdown/post-item-dropdown';
 
 import { useMutation, useReactiveVar } from '@apollo/client';
@@ -35,8 +35,8 @@ const PostItem = (props) => {
     // nav
     const navigate = useNavigate();
     
-    const [switchLike, {}] = useMutation(POST_SWITCH_LIKE_MUTATION);
-    const [switchInSaved, {}] = useMutation(POST_SWITCH_IN_SAVED_MUTATION);
+    const [ switchLike ] = useMutation(POST_SWITCH_LIKE_MUTATION);
+    const [ switchInSaved ] = useMutation(POST_SWITCH_IN_SAVED_MUTATION);
 
     // handle likes
     const onLikesChanged = async(e, value) => {
@@ -49,9 +49,9 @@ const PostItem = (props) => {
             },
         }).then(({data}) => {
             setLikedBy(data.postSwitchLike.likedBy);
-            if (data.postSwitchLike._id == audioPlayer.currentTrack?.base?._id) {
-                //audioPlayerState({...audioPlayer, currentTrack:  })
-                //console.log(audioPlayerState())
+            if (data.postSwitchLike._id === audioPlayer.currentTrack?._id) {
+                audioPlayerState({...audioPlayer, currentTrack: { ...audioPlayer.currentTrack, ...data.postSwitchLike } });
+                console.log('SET', audioPlayerState().currentTrack)
             }
         });
     }
@@ -67,6 +67,10 @@ const PostItem = (props) => {
             }
         }).then(({ data }) => {
             setSavedBy(data.postSwicthInSaved.savedBy);
+            if (data.postSwitchLike._id === audioPlayer.currentTrack?._id) {
+                audioPlayerState({...audioPlayer, currentTrack: { ...audioPlayer.currentTrack, ...data.postSwitchLike } });
+                console.log('SET', audioPlayerState().currentTrack)
+            }
         });
     }
 
@@ -77,7 +81,13 @@ const PostItem = (props) => {
 
     // play aduio
     const playAudio = () => {
-        audioPlayerState({ ...audioPlayer, src: base.audio, isPlaying: true, currentTrack: props, controlsLocked: false });
+        audioPlayerState({ 
+            ...audioPlayer, 
+            src: base.audio, 
+            isPlaying: true, 
+            currentTrack: { ...base, ...addons }, 
+            controlsLocked: false 
+        });
     }
 
     // pause audio
@@ -223,59 +233,71 @@ const PostItem = (props) => {
                                 <Typography variant='h5'>{base.title}</Typography>
                                 <Typography variant='p'>{base.description}</Typography>
                             </Box>
-                            <Box sx={{ display: 'flex' }}>
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <Tooltip title="Save">
-                                        <span>
-                                            <IconButton 
-                                                aria-label="bookmark" 
-                                                onClick={switchPostInSaved} 
-                                                sx={{ color: 'white' }}
-                                                disabled={currentUser && currentUser._id !== "" ? false : true}
-                                            >
-                                                { isSaved ? <Bookmark/> : <BookmarkBorder/> }
-                                            </IconButton>
-                                        </span>
-                                    </Tooltip>
-                                    <Typography sx={{ fontSize: 12 }}>{savedBy.length}</Typography>
-                                </Box>
-                                {
-                                    addons.commentsAllowed
-                                    ?
+                            {
+                                addons.status !== "in-player"
+                                ?
+                                <Box sx={{ display: 'flex' }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                        <Tooltip title="Comment out">
+                                        <Tooltip title="Save">
                                             <span>
                                                 <IconButton 
-                                                    aria-label="comment" 
-                                                    sx={{ color: 'white' }} 
-                                                    onClick={switchShowCommentsModal}
+                                                    aria-label="bookmark" 
+                                                    onClick={switchPostInSaved} 
+                                                    sx={{ color: 'white' }}
                                                     disabled={currentUser && currentUser._id !== "" ? false : true}
                                                 >
-                                                    <CommentOutlined />
+                                                    { isSaved ? <Bookmark/> : <BookmarkBorder/> }
                                                 </IconButton>
                                             </span>
                                         </Tooltip>
-                                        <Typography sx={{ fontSize: 12 }}>{base.comments.length}</Typography>
+                                        <Typography sx={{ fontSize: 12 }}>{savedBy.length}</Typography>
                                     </Box>
-                                    :
-                                    null
-                                }
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <Tooltip title="Like">
-                                        <span>
-                                            <IconButton 
-                                                aria-label="add to favorites" 
-                                                onClick={(e) => onLikesChanged(e, -isLiked)} 
-                                                sx={{ color: 'white' }}
-                                                disabled={currentUser && currentUser._id !== "" ? false : true}
-                                            >
-                                                { isLiked ? <Favorite/> : <FavoriteBorder/> }
-                                            </IconButton>
-                                        </span>
-                                    </Tooltip>
-                                    <Typography sx={{ fontSize: 12 }}>{likedBy.length}</Typography>
+                                    {
+                                        addons.commentsAllowed
+                                        ?
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                            <Tooltip title="Comment out">
+                                                <span>
+                                                    <IconButton 
+                                                        aria-label="comment" 
+                                                        sx={{ color: 'white' }} 
+                                                        onClick={switchShowCommentsModal}
+                                                        disabled={currentUser && currentUser._id !== "" ? false : true}
+                                                    >
+                                                        <CommentOutlined />
+                                                    </IconButton>
+                                                </span>
+                                            </Tooltip>
+                                            <Typography sx={{ fontSize: 12 }}>{base.comments.length}</Typography>
+                                        </Box>
+                                        :
+                                        null
+                                    }
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <Tooltip title="Like">
+                                            <span>
+                                                <IconButton 
+                                                    aria-label="add to favorites" 
+                                                    onClick={(e) => onLikesChanged(e, -isLiked)} 
+                                                    sx={{ color: 'white' }}
+                                                    disabled={currentUser && currentUser._id !== "" ? false : true}
+                                                >
+                                                    { isLiked ? <Favorite/> : <FavoriteBorder/> }
+                                                </IconButton>
+                                            </span>
+                                        </Tooltip>
+                                        <Typography sx={{ fontSize: 12 }}>{likedBy.length}</Typography>
+                                    </Box>
                                 </Box>
-                            </Box>
+                                :
+                                <Button 
+                                    variant="contained" 
+                                    sx={{ boxShadow: 10 }}
+                                    onClick={() => navigate(`/track/${base._id}`, {state: {trackId: base._id, ownerId: base.owner._id}})}
+                                >
+                                    Track details
+                                </Button>
+                            }
                         </Box>
                     </Box>
                 

@@ -7,6 +7,8 @@ const PostGenerate = (props) => {
     const { item, addonsCorrections, baseCorrections } = props;
     const { locations } = useReactiveVar(baseState);
 
+
+
     return (
         <PostItem 
             base={{

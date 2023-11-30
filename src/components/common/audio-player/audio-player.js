@@ -2,13 +2,13 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { Box, Drawer, IconButton, Slider, Stack, Typography } from '@mui/material';
 import { FastRewind, Loop, Pause, PlayArrow, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material';
 import { SpinnerLinear } from '../spinner/Spinner';
-import PostItem from '../post-item/post-item';
 import audioAnalyzer from './audiowave/analyzer';
 import WaveForm from './audiowave/waveform';
 import PostItemUnavailable from '../post-item/post-item-unavailable';
 import { useReactiveVar } from '@apollo/client';
 import { audioPlayerState } from './reactive';
 import { bottomBarState } from '../../bars/bottom/bottom-bar/reactive';
+import PostGenerate from '../post-item/post-generate';
 
 const getTime = (t) => {
     var minute = Math.floor(t / 60); // get minute(integer) from time
@@ -19,15 +19,14 @@ const getTime = (t) => {
 }
 
 const CustomAudioPlayer = (props) => {
-    const audioPlayer = useReactiveVar(audioPlayerState);
-    const { isShowing, isPlaying, isMuted, src, loop, controlsLocked, isLoading, currentTrack } = audioPlayer;
+    const { isShowing, isPlaying, isMuted, src, loop, controlsLocked, isLoading, currentTrack } = useReactiveVar(audioPlayerState);
     const bottomBar = useReactiveVar(bottomBarState);
 
-    const [volume, setVolume] = useState(50);
-    const [progress, setProgress] = useState(0);
-    const [time, setTime] = useState("00:00");
-    const [duration, setDuration] = useState("00:00");
-    const [analyzerData, setAnalyzerData] = useState(null);
+    const [ volume, setVolume ] = useState(50);
+    const [ progress, setProgress ] = useState(0);
+    const [ time, setTime ] = useState("00:00");
+    const [ duration, setDuration ] = useState("00:00");
+    const [ analyzerData, setAnalyzerData ] = useState(null);
     const containerRef = useRef();
     const waveformContainerRef = useRef();
 
@@ -36,7 +35,7 @@ const CustomAudioPlayer = (props) => {
     // show dialog
     const handleAudioPlayerClose = () => {
         bottomBarState({ ...bottomBar, value: '' });
-        audioPlayerState({...audioPlayer, isShowing: false});
+        audioPlayerState({...audioPlayerState(), isShowing: false});
     };
     // volume
     const handleVolumeChange = (event, vol) => {
@@ -45,7 +44,7 @@ const CustomAudioPlayer = (props) => {
     };
     // play/pause
     const handlePlayPause = () => {
-        audioPlayerState({ ...audioPlayer, isPlaying: !isPlaying });
+        audioPlayerState({ ...audioPlayerState(), isPlaying: !isPlaying });
         if (!isPlaying === false) {
             containerRef.current.pause();
         } else {
@@ -54,12 +53,12 @@ const CustomAudioPlayer = (props) => {
     };
     // mute / unmute
     const handleMuteUnmute = () => {
-        audioPlayerState({ ...audioPlayer, isMuted: !isMuted });
+        audioPlayerState({ ...audioPlayerState(), isMuted: !isMuted });
         containerRef.current.muted = !isMuted === false ? false : true;
     }
     // switch loop
     const handleSwitchLoop = () => {
-        audioPlayerState({ ...audioPlayer, loop: !loop });
+        audioPlayerState({ ...audioPlayerState(), loop: !loop });
         containerRef.current.loop = !loop === false ? false : true;
     }
     //rewind to start
@@ -107,10 +106,10 @@ const CustomAudioPlayer = (props) => {
     // main effect
     useEffect(() => {
         let container = containerRef.current;
-        audioPlayerState({ ...audioPlayer, controlsLocked: true, isPlaying: false });
+        audioPlayerState({ ...audioPlayerState(), controlsLocked: true, isPlaying: false });
 
         if (container) {
-            audioPlayerState({ ...audioPlayer, controlsLocked: false, isPlaying: true });
+            audioPlayerState({ ...audioPlayerState(), controlsLocked: false, isPlaying: true });
             container.addEventListener("loadeddata", () => {
                 setDuration(getTime(containerRef.current.duration));
                 container.removeEventListener("loadeddata", this);
@@ -122,7 +121,7 @@ const CustomAudioPlayer = (props) => {
             });
             container.addEventListener("ended", () => {
                 handleRewind();
-                audioPlayerState({ ...audioPlayer, isPlaying: false });
+                audioPlayerState({ ...audioPlayerState(), isPlaying: false });
             });
             container.play();
             audioAnalyzer(containerRef, analyzerData, setAnalyzerData)
@@ -152,7 +151,7 @@ const CustomAudioPlayer = (props) => {
                         {
                             currentTrack 
                             ? 
-                            <PostItem base={{...currentTrack.base}} addons={{...currentTrack.addons, status: "in-player"}}/> 
+                            <PostGenerate item={currentTrack} addonsCorrections={{ status: "in-player" }}/>
                             : 
                             <PostItemUnavailable status="in-player"/>
                         }
