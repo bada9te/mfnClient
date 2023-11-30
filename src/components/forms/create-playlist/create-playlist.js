@@ -28,6 +28,7 @@ const CreatePlaylistForm = props => {
                 },
             },
         }).then(({ data }) => {
+            reset();
             enqueueSnackbar("Playlist created", { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
             enqueueSnackbar("Can't create the playlist", { autoHideDuration: 3000, variant: 'error' });

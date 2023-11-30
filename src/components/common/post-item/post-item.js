@@ -40,6 +40,8 @@ const PostItem = (props) => {
 
     // handle likes
     const onLikesChanged = async(e, value) => {
+        if (addons.status === "upload") return;
+
         await switchLike({
             variables: {
                 input: {
@@ -49,15 +51,13 @@ const PostItem = (props) => {
             },
         }).then(({data}) => {
             setLikedBy(data.postSwitchLike.likedBy);
-            if (data.postSwitchLike._id === audioPlayer.currentTrack?._id) {
-                audioPlayerState({...audioPlayer, currentTrack: { ...audioPlayer.currentTrack, ...data.postSwitchLike } });
-                console.log('SET', audioPlayerState().currentTrack)
-            }
         });
     }
     
     // add to saved or remove from saved
     const switchPostInSaved = async(e, value) => {
+        if (addons.status === "upload") return;
+        
         await switchInSaved({
             variables: {
                 input: {
@@ -67,10 +67,6 @@ const PostItem = (props) => {
             }
         }).then(({ data }) => {
             setSavedBy(data.postSwicthInSaved.savedBy);
-            if (data.postSwitchLike._id === audioPlayer.currentTrack?._id) {
-                audioPlayerState({...audioPlayer, currentTrack: { ...audioPlayer.currentTrack, ...data.postSwitchLike } });
-                console.log('SET', audioPlayerState().currentTrack)
-            }
         });
     }
 

@@ -18,7 +18,7 @@ const httpRegister = async(data) => {
 
 // log out
 const httpLogOut = async() => {
-    return await axios.post(`${SERVER_BASE}/logout`);
+    return await axios.get(`${SERVER_BASE}/logout`, { withCredentials: true });
 }
 
 // update session user object
