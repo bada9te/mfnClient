@@ -1,6 +1,5 @@
 import { useReactiveVar } from "@apollo/client";
-import { useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useRef, useEffect, useCallback } from "react";
 import { baseState } from "../../../baseReactive";
 import animateBars from "./animateBars";
 
@@ -10,10 +9,10 @@ const WaveForm = ({ analyzerData }) => {
 
     // Ref for the canvas element
     const canvasRef = useRef(null);
-    const { dataArray, analyzer, bufferLength } = analyzerData;
-  
+    
     // Function to draw the waveform
-    const draw = (dataArray, analyzer, bufferLength, userTheme) => {
+    const draw = useCallback(() => {
+        const { dataArray, analyzer, bufferLength } = analyzerData;
         const canvas = canvasRef.current;
 
         // Make it visually fill the positioned parent
@@ -29,16 +28,16 @@ const WaveForm = ({ analyzerData }) => {
         const animate = () => {
             requestAnimationFrame(animate);
             canvas.width = canvas.width;
-            animateBars(analyzer, canvas, canvasCtx, dataArray, bufferLength, userTheme);
+            animateBars(analyzer, canvas, canvasCtx, dataArray, bufferLength, theme);
         };
     
         animate();
-    };
+    }, [analyzerData, theme]);
   
     // Effect to draw the waveform on mount and update
     useEffect(() => {
-      draw(dataArray, analyzer, bufferLength, theme);
-    }, [dataArray, analyzer, bufferLength, theme]);
+      draw();
+    }, [draw]);
   
     // Return the canvas element
     return (

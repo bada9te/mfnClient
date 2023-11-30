@@ -49,10 +49,6 @@ const PostItem = (props) => {
             },
         }).then(({data}) => {
             setLikedBy(data.postSwitchLike.likedBy);
-            if (data.postSwitchLike._id === audioPlayer.currentTrack?._id) {
-                audioPlayerState({...audioPlayer, currentTrack: { ...audioPlayer.currentTrack, ...data.postSwitchLike } });
-                console.log('SET', audioPlayerState().currentTrack)
-            }
         });
     }
     
@@ -67,10 +63,6 @@ const PostItem = (props) => {
             }
         }).then(({ data }) => {
             setSavedBy(data.postSwicthInSaved.savedBy);
-            if (data.postSwitchLike._id === audioPlayer.currentTrack?._id) {
-                audioPlayerState({...audioPlayer, currentTrack: { ...audioPlayer.currentTrack, ...data.postSwitchLike } });
-                console.log('SET', audioPlayerState().currentTrack)
-            }
         });
     }
 

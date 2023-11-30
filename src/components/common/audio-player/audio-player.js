@@ -18,7 +18,7 @@ const getTime = (t) => {
     return String(minute + ':' + second);
 }
 
-const CustomAudioPlayer = (props) => {
+const CustomAudioPlayer = () => {
     const { isShowing, isPlaying, isMuted, src, loop, controlsLocked, isLoading, currentTrack } = useReactiveVar(audioPlayerState);
     const bottomBar = useReactiveVar(bottomBarState);
 
@@ -151,7 +151,11 @@ const CustomAudioPlayer = (props) => {
                         {
                             currentTrack 
                             ? 
-                            <PostGenerate item={currentTrack} addonsCorrections={{ status: "in-player" }}/>
+                            <PostGenerate 
+                                item={currentTrack} 
+                                addonsCorrections={{ status: "in-player" }}
+                                baseCorrections={{ createdAt: currentTrack.createdAt }}
+                            />
                             : 
                             <PostItemUnavailable status="in-player"/>
                         }
