@@ -16,7 +16,7 @@ import { baseState } from "../../baseReactive";
 
 
 const Comment = (props) => {
-    const {createdAt, user, text, replies, id, post} = props;
+    const { createdAt, user, text, replies, id, post } = props;
     const { user: currentUser } = useReactiveVar(baseState);
     const navigate = useNavigate();
 
@@ -77,7 +77,6 @@ const Comment = (props) => {
                             handleReport={handleReportComment}
                             canBeDeleted={user[0] === currentUser._id}
                         />
-                        //<Button onClick={handleCommentSelection}>Reply</Button>
                     }
                 />
                  
@@ -97,6 +96,7 @@ const Comment = (props) => {
                                         id={id}
                                         item={item}
                                         goToProfile={goToProfile}
+                                        postId={post._id}
                                     />
                                 )
                             })
