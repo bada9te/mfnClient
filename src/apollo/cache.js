@@ -18,7 +18,10 @@ export default new InMemoryCache({
             },
         },
         User: {
-            keyFields: ['_id']
+            keyFields: ['_id'],
+        },
+        Playlist: {
+            keyFields: ['_id'],
         }
     }
 });

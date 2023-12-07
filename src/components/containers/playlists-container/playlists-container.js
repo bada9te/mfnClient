@@ -70,8 +70,8 @@ const PlaylistsContainer = (props) => {
     const { user: currentUser } = useReactiveVar(baseState);
 
 
-    const [getCurrentUserPlaylists] = useLazyQuery(PLAYLISTS_BY_OWNER_ID_QUERY);
-    const [getPublicAvailablePlaylists] = useLazyQuery(PLAYLISTS_PUBLIC_AWAILABLE_QUERY);
+    const [ getCurrentUserPlaylists ] = useLazyQuery(PLAYLISTS_BY_OWNER_ID_QUERY);
+    const [ getPublicAvailablePlaylists ] = useLazyQuery(PLAYLISTS_PUBLIC_AWAILABLE_QUERY, { pollInterval: 15000 });
 
     // used to know the page number
     const [status, setStatus] = useState(0);

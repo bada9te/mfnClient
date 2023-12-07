@@ -4,7 +4,8 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
-import { PLAYLIST_CREATE_MUTATION } from "../../../graphql-requests/playlists";
+import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLIST_CREATE_MUTATION } from "../../../graphql-requests/playlists";
+import { playlistsContainerState } from "../../containers/playlists-container/reactive";
 
 
 
@@ -14,11 +15,13 @@ const CreatePlaylistForm = props => {
     const [ title, setTitle ] = useState("Playlist's title");
     const { enqueueSnackbar } = useSnackbar();
     const { user: currentUser } = useReactiveVar(baseState);
+    const { maxCountPerPage, activePage } = useReactiveVar(playlistsContainerState);
     const [ createPlaylist ] = useMutation(PLAYLIST_CREATE_MUTATION);
 
 
     const onSubmit = async(data) => {
         enqueueSnackbar("Creating playlist...", { autoHideDuration: 1500 });
+        let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
         await createPlaylist({
             variables: {
                 input: {
@@ -27,9 +30,16 @@ const CreatePlaylistForm = props => {
                     public: publicAccess,
                 },
             },
+            refetchQueries: [
+                {
+                    query: PLAYLISTS_BY_OWNER_ID_QUERY, 
+                    variables: { owner: currentUser._id, offset, limit: maxCountPerPage, } 
+                }
+            ]
         }).then(({ data }) => {
             reset();
             enqueueSnackbar("Playlist created", { autoHideDuration: 1500, variant: 'success' });
+            playlistsContainerState({...playlistsContainerState(), page: "My playlists"});
         }).catch(err => {
             enqueueSnackbar("Can't create the playlist", { autoHideDuration: 3000, variant: 'error' });
         });

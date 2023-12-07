@@ -9,6 +9,7 @@ import { useState } from "react";
 import { createBattleFormState } from "./reactive";
 import { useSnackbar } from "notistack";
 import { BATTLE_CREATE_MUTATTION } from "../../../graphql-requests/battles";
+import { battlesContainerState } from "../../containers/battles-container/reactive";
 
 
 
@@ -28,7 +29,7 @@ const CreateBattleForm = props => {
     const { post1, post2 } = useReactiveVar(createBattleFormState);
     const { enqueueSnackbar } = useSnackbar();
 
-    const [createBattle] = useMutation(BATTLE_CREATE_MUTATTION, {
+    const [ createBattle ] = useMutation(BATTLE_CREATE_MUTATTION, {
         variables: {
             input: {
                 title: title,

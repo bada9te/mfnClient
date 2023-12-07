@@ -1,12 +1,13 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
 import { Report, Share, MoreVert, Delete } from "@mui/icons-material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useReactiveVar } from "@apollo/client";
+import { baseState } from "../../../baseReactive";
 
 const PlaylistDropdown = props => {
     const { owner, handlers } = props;
-    const [anchorElUser, setAnchorElUser] = useState(null);
-    const currentUserId = useSelector(state => state.base.user._id);
+    const [ anchorElUser, setAnchorElUser ] = useState(null);
+    const { user: currentUser } = useReactiveVar(baseState);
 
     // click
     const handleClick = (i) => {
@@ -44,7 +45,7 @@ const PlaylistDropdown = props => {
                 onClose={handleCloseUserMenu}
             >   
                 {
-                    currentUserId === owner._id
+                    currentUser._id === owner._id
                     &&
                     <MenuItem onClick={() => handleClick('Delete')}>
                         <Typography textAlign="center" display="flex" alignItems="center">
@@ -53,7 +54,7 @@ const PlaylistDropdown = props => {
                     </MenuItem>
                 }
                 
-                <MenuItem onClick={() => handleClick('Download')}>
+                <MenuItem onClick={() => handleClick('Share')}>
                     <Typography textAlign="center" display="flex" alignItems="center">
                         <Share sx={{mr: 1}}/>Share
                     </Typography>

@@ -2,7 +2,6 @@ import { Add, ExpandMore } from "@mui/icons-material";
 import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails, Box, Stack } from "@mui/material";
 import PlaylistDropdown from "./playlist-dropdown/playlist-dropdown";
 import EnumPlaylistTracks from "../../enums/enum-playlist-tracks";
-import { useDispatch } from "react-redux";
 import { reportFormState } from "../../forms/report/reactive";
 import { userSelectModalState } from "../../modals/user-select-modal/reactive";
 import { userSelectContainerState } from "../../containers/user-select-container/reactive";
@@ -18,7 +17,6 @@ import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 const Playlist = (props) => {
     const { playlist } = props;
     const { user: currentUser } = useReactiveVar(baseState);
-    const dispatch = useDispatch();
 
 
      // open user select modal to share
