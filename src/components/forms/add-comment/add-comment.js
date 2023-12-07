@@ -19,6 +19,7 @@ const AddCommentForm = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const onSubmit = async(data) => {
+        console.log(commentsContainerState())
         const commentData = {
             text: `@${replyingTo[1] === null ? '' : replyingTo[1]} ${data.Text}`,
             post: postId,

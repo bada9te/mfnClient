@@ -16,14 +16,15 @@ import { baseState } from "../../baseReactive";
 
 
 const Comment = (props) => {
-    const {createdAt, user, text, replies, id} = props;
+    const {createdAt, user, text, replies, id, post} = props;
     const { user: currentUser } = useReactiveVar(baseState);
     const navigate = useNavigate();
 
     const handleCommentSelection = () => {
         commentsContainerState({
             ...commentsContainerState(),
-            replyingTo: [id, user[1]]
+            replyingTo: [id, user[1]],
+            postId: post._id,
         });
     }
 
@@ -47,7 +48,7 @@ const Comment = (props) => {
 
     // open owner profile
     const goToProfile = (id) => {
-        navigate(`/app/profile/${id}`)
+        navigate(`/profile/${id}`)
     }
 
 
@@ -57,13 +58,13 @@ const Comment = (props) => {
     return (
         <>
 
-            <Card sx={{mb: 3, boxShadow: 1, marginBottom: 1}}>
+            <Card sx={{mb: 3, boxShadow: 1, marginBottom: 1, borderRadius: 5}}>
                 <CardHeader
-                    //onClick={handleCommentSelection}
                     avatar={
                         <Avatar 
+                            onClick={() => goToProfile(currentUser._id)}
                             src={user[2].endsWith('/') ? "NULL" : user[2]} 
-                            sx={{bgcolor: "gray", boxShadow: 3}} 
+                            sx={{bgcolor: "gray", boxShadow: 3, cursor: 'pointer'}} 
                             aria-label="recipe"
                         />
                     }
@@ -95,7 +96,7 @@ const Comment = (props) => {
                                         key={i}
                                         id={id}
                                         item={item}
-                                        //goToProfile={goToProfile}
+                                        goToProfile={goToProfile}
                                     />
                                 )
                             })

@@ -13,7 +13,7 @@ const ReportsModal = props => {
     }
 
     return (
-        <Dialog open={reportModal.isShowing} scroll='paper' fullWidth maxWidth='sm'>
+        <Dialog open={reportModal.isShowing} scroll='paper' fullWidth maxWidth='sm' PaperProps={{ sx: { borderRadius: 5 } }}>
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     Report
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>

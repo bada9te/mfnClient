@@ -15,7 +15,7 @@ const UserSelectModal = props => {
     
 
     return (
-        <Dialog open={userSelectModal.isShowing} scroll='paper' fullWidth maxWidth='sm'>
+        <Dialog open={userSelectModal.isShowing} scroll='paper' fullWidth maxWidth='sm' PaperProps={{ sx: { borderRadius: 5 } }}>
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     Select user
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>

@@ -60,6 +60,7 @@ const ConfirmModal = (props) => {
             keepMounted
             onClose={() => handleClose(false)}
             aria-describedby="alert-dialog-slide-description"
+            PaperProps={{ sx: { borderRadius: 5 } }}
         >
             <ConfirmContainer/>
             <DialogActions>

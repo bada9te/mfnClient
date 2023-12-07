@@ -22,9 +22,10 @@ const EnumComments = props => {
                                     item.owner.nick, 
                                     `${locations?.images}/${item.owner.avatar}`,
                                 ]}
-                                createdAt={getTimeSince(new Date(item.createdAt)) + ' ago'}
+                                createdAt={getTimeSince(new Date(+item.createdAt)) + ' ago'}
                                 text={item.text}
                                 replies={item.replies}
+                                post={item.post}
                             />
                         );
                     }

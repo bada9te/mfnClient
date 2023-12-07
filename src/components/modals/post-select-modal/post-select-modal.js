@@ -10,7 +10,7 @@ import { postSelectModalState } from "./reactive";
 const PostSelectModal = props => {
     const { isMine, selectingFor } = useReactiveVar(postSelectContainerState);
     const { isShowing } = useReactiveVar(postSelectModalState);
-    const [query, setQuery] = useState("");
+    const [ query, setQuery ] = useState("");
 
 
     useEffect(() => {

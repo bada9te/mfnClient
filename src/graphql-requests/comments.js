@@ -40,6 +40,7 @@ export const COMMENTS_BY_IDS_QUERY = gql`
 
 // M
 export const COMMENT_CREATE_MUTATION = gql`
+    ${CORE_COMMENT_FIELDS}
     mutation commentCreate($input: AddCommentInput!) {
         commentCreate(input: $input) {
             ...CoreCommentFields

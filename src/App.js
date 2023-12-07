@@ -29,9 +29,6 @@ function App() {
         contrastText: '#fff',
       },      
     },
-    typography: {
-      fontFamily: "'Permanent Marker', cursive"
-    }
   });
 
   useEffect(() => {
