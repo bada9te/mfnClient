@@ -17,7 +17,11 @@ const Reply = props => {
     const handleSelect = () => {
         commentsContainerState({
             ...commentsContainerState(),
-            replyingTo: [id, item.owner.nick],
+            replyingTo: {
+                commentId: id,
+                userId: item.owner._id,
+                userNick: item.owner.nick,
+            },
             postId,
         });
     }

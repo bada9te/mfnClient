@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Card, CardHeader, Typography } from "@mui/material";
 import './comment.scss';
@@ -28,7 +27,11 @@ const Comment = (props) => {
     const handleCommentSelection = () => {
         commentsContainerState({
             ...commentsContainerState(),
-            replyingTo: [id, owner.nick],
+            replyingTo: {
+                commentId: id,
+                userId: owner._id,
+                userNick: owner.nick,
+            },
             postId,
         });
     }
@@ -56,9 +59,6 @@ const Comment = (props) => {
         navigate(`/profile/${id}`)
     }
 
-
-
-    useEffect(() => {}, [replies])
 
     return (
         <>

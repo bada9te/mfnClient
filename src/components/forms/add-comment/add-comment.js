@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import { Box, TextField, IconButton } from "@mui/material";
-import { Send } from "@mui/icons-material";
+import { Box, TextField, IconButton, Tooltip } from "@mui/material";
+import { Reply, Send } from "@mui/icons-material";
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { commentsContainerState } from "../../containers/comments-container/reactive";
-import { COMMENTS_BY_IDS_QUERY, COMMENTS_BY_POST_ID, COMMENTS_REPLIES_BY_COMMENT_ID, COMMENT_CREATE_MUTATION } from "../../../graphql-requests/comments";
+import { commentsContainerState, replyingToNull } from "../../containers/comments-container/reactive";
+import { COMMENTS_BY_POST_ID, COMMENTS_REPLIES_BY_COMMENT_ID, COMMENT_CREATE_MUTATION } from "../../../graphql-requests/comments";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 
@@ -13,30 +13,28 @@ import { useSnackbar } from "notistack";
 const AddCommentForm = (props) => {
     const { register, handleSubmit, reset } = useForm();
     const [ createComment ] = useMutation(COMMENT_CREATE_MUTATION);
-    
     const { user: currentUser } = useReactiveVar(baseState);
-    const { postId, replyingTo, postOwnerId, commentsIds } = useReactiveVar(commentsContainerState);
-    
+    const { postId, replyingTo } = useReactiveVar(commentsContainerState);
     const { enqueueSnackbar } = useSnackbar();
+
+    const cancelReply = () => {
+        commentsContainerState({...commentsContainerState(), replyingTo: replyingToNull});
+    }
+
 
     const onSubmit = async(data) => {
         const commentData = {
-            text: `@${replyingTo[1] === null ? '' : replyingTo[1]} ${data.Text}`,
+            text: data.Text,
             post: postId,
             owner: currentUser?._id,
+            receiver: replyingTo.userId,
         }
-
-        const refetchQueriesArray = []
 
         commentData.isReply = false;
-        if (replyingTo[0] !== null) {
-            commentData.isReplyTo = replyingTo[0];
+        if (replyingTo.commentId !== null) {
+            commentData.isReplyTo = replyingTo.commentId;
             commentData.isReply = true;
-            refetchQueriesArray.push({ query: COMMENTS_REPLIES_BY_COMMENT_ID, variables: { _id: replyingTo[0] } })
-        } else {
-            refetchQueriesArray.push({ query: COMMENTS_BY_POST_ID, variables: { _id: postId } });
         }
-
 
         enqueueSnackbar("Creating comment...", { autoHideDuration: 1500 });
         createComment({
@@ -45,11 +43,35 @@ const AddCommentForm = (props) => {
                     ...commentData
                 },
             },
-            refetchQueries: refetchQueriesArray
+            update: (cache, { data }) => {
+                // updating replies
+                if (replyingTo.commentId !== null) {
+                    const cachedData = cache.readQuery({ query: COMMENTS_REPLIES_BY_COMMENT_ID, variables: { _id: replyingTo.commentId } });
+                    cache.writeQuery({
+                        query: COMMENTS_REPLIES_BY_COMMENT_ID,
+                        variables: { _id: replyingTo.commentId },
+                        data: {
+                            commentReplies: cachedData?.commentReplies ? [...cachedData.commentReplies, data.commentCreate] : [data.commentCreate]
+                        }
+                    });
+                } 
+                // updating main comments
+                else {
+                    const cachedData = cache.readQuery({ query: COMMENTS_BY_POST_ID, variables: { _id: postId } });
+                    cache.writeQuery({
+                        query: COMMENTS_BY_POST_ID,
+                        variables: { _id: postId },
+                        data: {
+                            commentsByPostId: [...cachedData.commentsByPostId, data.commentCreate]
+                        }
+                    });
+                }
+            }
         }).then(({data}) => {
             reset();
             enqueueSnackbar("Comment created", { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
+            console.error(err)
             enqueueSnackbar("Can't create the comment", { autoHideDuration: 3000, variant: 'error' });
         });
     }
@@ -62,7 +84,7 @@ const AddCommentForm = (props) => {
                     required
                     fullWidth
                     id="title"
-                    label={replyingTo[1] === null ? "Your comment text" : `Replying to ${replyingTo[1]}`}
+                    label={replyingTo.commentId === null ? "Your comment text" : `Replying to ${replyingTo.userNick}`}
                     {...register("Text", {
                         required: true,
                     })}
@@ -70,8 +92,17 @@ const AddCommentForm = (props) => {
                         endAdornment: 
                             <IconButton type="submit">
                                 <Send />
-                            </IconButton>
+                            </IconButton>,
+                        startAdornment: 
+                            replyingTo.commentId 
+                            && 
+                            <Tooltip title="Cancel reply">
+                                <IconButton type="submit" onClick={cancelReply}>
+                                    <Reply />
+                                </IconButton>
+                            </Tooltip>
                     }}
+                    
                 />
             </Box>
                 
