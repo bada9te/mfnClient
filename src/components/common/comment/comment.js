@@ -10,21 +10,26 @@ import { confirmContainerState } from "../../containers/confirm-container/reacti
 import { confirmModalState } from "../../modals/confirm-modal/reactive";
 import { reportModalState } from "../../modals/report-modal/reactive";
 import { commentsContainerState } from "../../containers/comments-container/reactive";
-import { useReactiveVar } from "@apollo/client";
+import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { COMMENTS_REPLIES_BY_COMMENT_ID } from "../../../graphql-requests/comments";
+import { SpinnerCircular } from "../spinner/Spinner";
 
 
 
 const Comment = (props) => {
-    const { createdAt, user, text, replies, id, post } = props;
-    const { user: currentUser } = useReactiveVar(baseState);
+    const { createdAt, owner, text, id, postId } = props;
+    const { user: currentUser, locations } = useReactiveVar(baseState);
+    const [ getReplies, { data: replies, loading } ] = useLazyQuery(COMMENTS_REPLIES_BY_COMMENT_ID, { variables: { _id: id } });
     const navigate = useNavigate();
+
+    const ownerAvatar = `${locations.images}/${owner.avatar}`;
 
     const handleCommentSelection = () => {
         commentsContainerState({
             ...commentsContainerState(),
-            replyingTo: [id, user[1]],
-            postId: post._id,
+            replyingTo: [id, owner.nick],
+            postId,
         });
     }
 
@@ -63,45 +68,59 @@ const Comment = (props) => {
                     avatar={
                         <Avatar 
                             onClick={() => goToProfile(currentUser._id)}
-                            src={user[2].endsWith('/') ? "NULL" : user[2]} 
+                            src={ownerAvatar.endsWith('/') ? "NULL" : ownerAvatar} 
                             sx={{bgcolor: "gray", boxShadow: 3, cursor: 'pointer'}} 
                             aria-label="recipe"
                         />
                     }
-                    title={user[1]}
+                    title={owner.nick}
                     subheader={createdAt}
                     action={
                         <CommentDropDown 
                             handleReply={handleCommentSelection} 
                             handleDelete={handleCommentRemoving}
                             handleReport={handleReportComment}
-                            canBeDeleted={user[0] === currentUser._id}
+                            canBeDeleted={owner._id === currentUser._id}
                         />
                     }
                 />
                  
                 <Accordion>
-                    <AccordionSummary expandIcon={<ExpandMore/>}>
+                    <AccordionSummary expandIcon={<ExpandMore/>} onClick={getReplies}>
                         <Typography>{text}</Typography>
                     </AccordionSummary>
 
                     <AccordionDetails>
                         {
-                            replies?.length > 0
-                            ?
-                            replies.map((item, i) => {
-                                return (
-                                    <Reply
-                                        key={i}
-                                        id={id}
-                                        item={item}
-                                        goToProfile={goToProfile}
-                                        postId={post._id}
-                                    />
-                                )
-                            })
-                            :
-                            'No replies yet'
+                            (() => {
+                                if (loading) {
+                                    return (
+                                        <SpinnerCircular/>
+                                    );
+                                } else if (replies?.commentReplies?.length > 0) {
+                                    return (
+                                        <>
+                                            {
+                                                replies.commentReplies.map((item, i) => {
+                                                    return (
+                                                        <Reply
+                                                            key={i}
+                                                            id={id}
+                                                            item={item}
+                                                            goToProfile={goToProfile}
+                                                            postId={postId}
+                                                        />
+                                                    )
+                                                })
+                                            }
+                                        </>
+                                    );
+                                } else {
+                                    return (
+                                        'No replies yet'
+                                    );
+                                }
+                            })()
                         }
                     </AccordionDetails>    
                 </Accordion>               

@@ -17,15 +17,11 @@ const EnumComments = props => {
                             <Comment 
                                 key={i}
                                 id={item._id}
-                                user={[
-                                    item.owner._id, 
-                                    item.owner.nick, 
-                                    `${locations?.images}/${item.owner.avatar}`,
-                                ]}
+                                owner={item.owner}
                                 createdAt={getTimeSince(new Date(+item.createdAt)) + ' ago'}
                                 text={item.text}
-                                replies={item.replies}
-                                post={item.post}
+                                isReply={false}
+                                postId={item.post._id}
                             />
                         );
                     }

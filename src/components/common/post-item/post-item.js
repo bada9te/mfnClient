@@ -143,7 +143,7 @@ const PostItem = (props) => {
     const switchShowCommentsModal = () => {
         if (addons.status !== "upload") {
             commentsModalState({ ...commentsModalState(), isShowing: true });
-            commentsContainerState({ ...commentsContainerState(), commentsIds: base.comments });
+            commentsContainerState({ ...commentsContainerState(), commentsIds: base.comments, postId: base._id });
         }
     }
 

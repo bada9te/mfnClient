@@ -38,6 +38,24 @@ export const COMMENTS_BY_IDS_QUERY = gql`
     }
 `;
 
+export const COMMENTS_REPLIES_BY_COMMENT_ID = gql`
+    ${CORE_COMMENT_FIELDS}
+    query commentReplies($_id: ID!) {
+        commentReplies(_id: $_id) {
+            ...CoreCommentFields
+        }
+    }
+`;
+
+export const COMMENTS_BY_POST_ID = gql`
+    ${CORE_COMMENT_FIELDS}
+    query commentsByPostId($_id: ID!) {
+        commentsByPostId(_id: $_id) {
+            ...CoreCommentFields
+        }
+    }
+`;
+
 // M
 export const COMMENT_CREATE_MUTATION = gql`
     ${CORE_COMMENT_FIELDS}

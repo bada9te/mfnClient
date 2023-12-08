@@ -1,18 +1,14 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
-import { COMMENTS_BY_IDS_QUERY } from "../../../graphql-requests/comments";
+import { COMMENTS_BY_IDS_QUERY, COMMENTS_BY_POST_ID } from "../../../graphql-requests/comments";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumComments from "../../enums/enum-comments";
 import { commentsContainerState } from "./reactive";
 
 
 const CommentsContainer = props => {
-    const { commentsIds } = useReactiveVar(commentsContainerState);
-    const { data, loading } = useQuery(COMMENTS_BY_IDS_QUERY, { 
-        variables: {
-            ids: commentsIds.map(i => i._id),
-        },
-    });
+    const { postId } = useReactiveVar(commentsContainerState);
+    const { data, loading } = useQuery(COMMENTS_BY_POST_ID, { variables: { _id: postId } });
 
     return (
         <>
@@ -22,7 +18,7 @@ const CommentsContainer = props => {
                         return (
                             <SpinnerLinear/>
                         );
-                    } else if (!data?.commentsByIds || data?.commentsByIds.length === 0) {
+                    } else if (!data?.commentsByPostId || data?.commentsByPostId.length === 0) {
                         return (
                             <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
                                 <Typography>
@@ -33,7 +29,7 @@ const CommentsContainer = props => {
                     } else {
                         return (
                             <Stack>
-                                <EnumComments comments={data.commentsByIds}/>
+                                <EnumComments comments={data.commentsByPostId}/>
                             </Stack>
                         );
                     }
