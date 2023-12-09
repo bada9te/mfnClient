@@ -21,11 +21,11 @@ const Logout = (props) => {
                 
                 timeout = setTimeout(() => {
                     enqueueSnackbar("Logged out", { autoHideDuration: 1500, variant: "success" });
-                    navigate('/login')
+                    navigate('/app/login')
                 }, 1000);
             });
         } else {
-            navigate('/');
+            navigate('/app/');
         }
         return () => clearTimeout(timeout);
     }, [currentUser?._id, navigate, enqueueSnackbar]);

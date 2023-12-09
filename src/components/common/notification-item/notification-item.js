@@ -28,7 +28,7 @@ const NotificationItem = props => {
     }
 
     const handleOpenPost = (trackId, ownerId) => {
-        navigate(`/track/${trackId}`, {state: {trackId: trackId, ownerId: ownerId}});
+        navigate(`/app/track/${trackId}`, {state: {trackId: trackId, ownerId: ownerId}});
     }
 
     return (

@@ -55,7 +55,7 @@ const RightBarUsersItem = (props) => {
                                     pl: 2
                                 }} 
                                 variant="contained" size="small"
-                                onClick={() => navigate(`/profile/${id}`)}
+                                onClick={() => navigate(`/app/profile/${id}`)}
                             >
                                 Open profile 
                             </Button>

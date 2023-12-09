@@ -30,14 +30,14 @@ const Login = (props) => {
                         <Typography 
                             fontSize={16} sx={{ cursor: 'pointer' }}
                             component="div" fontWeight="bold" 
-                            color="primary" onClick={() => navigate('/account-restore/email-check')}
+                            color="primary" onClick={() => navigate('/app/account-restore/email-check')}
                         >
                             Forgot password
                         </Typography>
                         <Typography 
                             fontSize={16} sx={{ cursor: 'pointer' }}
                             component="div" fontWeight="bold" 
-                            color="primary" onClick={() => navigate('/register')}
+                            color="primary" onClick={() => navigate('/app/register')}
                         >
                             Haven't registered yet
                         </Typography>

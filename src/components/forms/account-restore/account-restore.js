@@ -27,7 +27,7 @@ const AccountRestoreForm = (props)=> {
                 },
             },
         }).then(({ data }) => {
-            navigate('/login');
+            navigate('/app/login');
             enqueueSnackbar("Password successfully updated", { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
             enqueueSnackbar("Can't update account", { autoHideDuration: 3000, variant: 'error' });

@@ -105,7 +105,7 @@ const PostItem = (props) => {
     // open owner profile
     const goToProfile = () => {
         if (addons.profileLinkAccessable) {
-            navigate(`/profile/${base.owner._id}`)
+            navigate(`/app/profile/${base.owner._id}`)
         }
     }
 
@@ -288,7 +288,7 @@ const PostItem = (props) => {
                             <Button 
                                 variant="contained" 
                                 sx={{ boxShadow: 10 }}
-                                onClick={() => navigate(`/track/${base._id}`, {state: {trackId: base._id, ownerId: base.owner._id}})}
+                                onClick={() => navigate(`/app/track/${base._id}/${base.owner._id}`)}
                             >
                                 Track details
                             </Button>

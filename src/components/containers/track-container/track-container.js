@@ -1,16 +1,13 @@
 import ProfileCard from "../../common/profile/profile-card/profile-card";
-import PostItem from "../../common/post-item/post-item";
-import getTimeSince from "../../../common-functions/getTimeSince";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, Stack } from "@mui/material";
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { POST_QUERY } from "../../../graphql-requests/posts";
-import { baseState } from "../../baseReactive";
+import PostGenerate from "../../common/post-item/post-generate";
 
 
 const TrackContainer = (props) => {
     const { trackId } = props;
-    const { locations } = useReactiveVar(baseState);
 
     const { data, loading } = useQuery(POST_QUERY, {
         variables: {
@@ -40,27 +37,8 @@ const TrackContainer = (props) => {
                                 boxShadow: 15,
                                 borderRadius: 5
                             }} flexWrap="wrap" spacing={2} direction="row" useFlexGap>
-                                <PostItem 
-                                    base={{
-                                        ...data.post, 
-                                        ownerAvatar: `${locations?.images}/${data.post.owner.avatar}`,
-                                        createdAt: getTimeSince(new Date(data.post.createdAt)) + ' ago',
-                                        img: `${locations?.images}/${data.post.image}`,
-                                        audio: `${locations?.audios}/${data.post.audio}`,
-                                    }}
-                                    addons={{
-                                        commentsAllowed: data.post.commentsAllowed,
-                                        downloadsAllowed: data.post.downloadsAllowed,
-                                        status: null,
-                                        profileLinkAccessable: true,
-                                    }}
-                                    id={data.post._id}
-                                    user={[
-                                        data.post.owner._id, 
-                                        data.post.owner.nick, 
-                                        `${locations?.images}/${data.post.owner.avatar}`,
-                                    ]}
-                                />
+                                <PostGenerate item={data.post} />
+                                
                                 
                                 <ProfileCard id={data.post.owner._id} bgRadius={5}/>
                             </Stack>

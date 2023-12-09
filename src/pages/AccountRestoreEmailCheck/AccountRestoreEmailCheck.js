@@ -26,7 +26,7 @@ const AccountRestoreEmailCheck = (props)=> {
                         <Typography 
                             fontSize={16} sx={{ cursor: 'pointer' }}
                             component="div" fontWeight="bold" 
-                            color="primary" onClick={() => navigate('/login')}
+                            color="primary" onClick={() => navigate('/app/login')}
                         >
                             Back to login
                         </Typography>

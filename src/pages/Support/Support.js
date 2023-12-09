@@ -31,7 +31,7 @@ const Support = (props) => {
                             <Typography 
                                 fontSize={16} sx={{ cursor: 'pointer' }}
                                 component="div" fontWeight="bold" 
-                                color="primary" onClick={() => navigate('/f.a.q')}
+                                color="primary" onClick={() => navigate('/app/f.a.q')}
                             >
                                 Open F.A.Q page
                             </Typography>

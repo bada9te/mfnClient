@@ -38,7 +38,7 @@ const AccountRestore = (props)=> {
         deleteModerationAction()
             .then(({ data }) => {
                 enqueueSnackbar('Action was canceled', { autoHideDuration: 3000, variant: 'info' });
-                navigate('/login');
+                navigate('/app/login');
             }).catch(err => {
                 enqueueSnackbar('Unexpected error', { autoHideDuration: 3000, variant: 'error' });
             });

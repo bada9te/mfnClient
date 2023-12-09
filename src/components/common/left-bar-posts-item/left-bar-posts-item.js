@@ -50,7 +50,7 @@ const LeftBarPostsItem = (props) => {
                         startIcon={<Visibility/>}
                         sx={{ borderRadius: 0 }}
                         variant="contained" size="small" 
-                        onClick={() => navigate(`/track/${id}`, {state: {trackId: id, ownerId: user[0]}})}
+                        onClick={() => navigate(`/app/track/${id}/${user[0]}`)}
                     >
                         See track
                     </Button>
@@ -62,7 +62,7 @@ const LeftBarPostsItem = (props) => {
                             pr: 2
                         }} 
                         variant="contained" size="small"
-                        onClick={() => navigate(`/profile/${user[0]}`)}
+                        onClick={() => navigate(`/app/profile/${user[0]}`)}
                     >
                         Open profile 
                     </Button>

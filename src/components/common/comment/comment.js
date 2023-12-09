@@ -56,7 +56,7 @@ const Comment = (props) => {
 
     // open owner profile
     const goToProfile = (id) => {
-        navigate(`/profile/${id}`)
+        navigate(`/app/profile/${id}`)
     }
 
 

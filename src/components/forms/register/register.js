@@ -19,7 +19,7 @@ const RegisterForm = (props) => {
             password: data.Password,
             nick: data.Nickname
         }).then(({ data }) => {
-            navigate('/login');
+            navigate('/app/login');
             enqueueSnackbar("Account " + data.userCreate.email + " was successfully created", { autoHideDuration: 3000, variant: "success" });
         }).catch(err => {
             enqueueSnackbar(err.response.data, { autoHideDuration: 3000, variant: "error" });

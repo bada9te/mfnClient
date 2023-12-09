@@ -151,7 +151,7 @@ const ProfileCard = (props) => {
                                                 <Button 
                                                     sx={{ mt: 1.5 }} 
                                                     variant="contained"
-                                                    onClick={() => navigate('/login')}
+                                                    onClick={() => navigate('/app/login')}
                                                 >
                                                     Login to subscribe
                                                 </Button>

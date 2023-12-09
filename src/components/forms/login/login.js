@@ -17,7 +17,7 @@ const LoginForm = (props) => {
         // update store
         await httpLogin(data.Email, data.Password)
             .then(({ data }) => {
-                navigate('/');
+                navigate('/app/');
                 enqueueSnackbar(`Successfully logged in as ${data.nick}`, { variant: "success", autoHideDuration: 3000 });
             }).catch((err) => {
                 enqueueSnackbar(err.response.data, { variant: "error" });

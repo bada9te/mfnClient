@@ -56,7 +56,7 @@ const PostsContainer = (props) => {
                             offset,
                             limit: maxCountPerPage
                         }
-                    })
+                    });
                     setPostsAndCount(result, "postsByOwner");
                 } else {
                     result = await getAllPosts({

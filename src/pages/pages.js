@@ -17,8 +17,10 @@ import Notifications   from "./Notifications/Notifications";
 import AccountRestoreEmailCheck from "./AccountRestoreEmailCheck/AccountRestoreEmailCheck";
 import AccountVerify   from "./AccountVerify/AccountVerify";
 import Playlists       from "./Playlists/Playlists";
+import Welcome         from "./Welcome/Welcome";
 
 export {
+    Welcome,
     Container, 
     Login, 
     Logout, 

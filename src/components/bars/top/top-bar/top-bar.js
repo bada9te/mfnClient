@@ -58,13 +58,13 @@ const Topbar = (props) => {
         handleCloseNavMenu();
         switch (where) {
             case 'Feed': 
-                navigate('/');
+                navigate('/app');
                 break;
             case 'Battles':
-                navigate('/battles');
+                navigate('/app/battles');
                 break;
             case 'Playlists':
-                navigate('/playlists');
+                navigate('/app/playlists');
                 break;
             default: 
                 break;

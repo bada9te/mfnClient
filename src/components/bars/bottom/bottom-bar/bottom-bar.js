@@ -35,7 +35,7 @@ const BottomBar = (props) => {
                 handleShowRB();
                 break;
             case '/post-upload':
-                navigate('/post-upload');
+                navigate('/app/post-upload');
                 break;
             case 'audioPlayer': 
                 handleShowAudioPlayer();

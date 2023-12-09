@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists } from './pages/pages';
+import { Welcome, Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists } from './pages/pages';
 import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
@@ -48,28 +48,29 @@ function App() {
         <SnackbarProvider maxSnack={5}>
           
           <Routes>
-            {/* ACCOUNT MGMT */}
-            <Route path='/login'     element={<Login/>}/>
-            <Route path='/logout'    element={<Logout/>}/>
-            <Route path='/register'  element={<Register/>}/>
-            <Route path='/account-verify/:userId/:actionId'                      element={<AccountVerify/>}/>
-            <Route path='/account-restore/:userId/:actionId/:verifyToken/:type'  element={<AccountRestore/>}/>
-            <Route path='/account-restore/email-check'                           element={<AccountRestoreEmailCheck/>}/>
+            {/* WELCOME */}
+            <Route path='/' element={<Welcome/>}/>
 
             {/* APP */}
-            <Route path='/'                element={<Container/>}>
-              <Route path='/'                element={<MainPage/>}/>
-              <Route path='/saved'           element={<SavedPosts/>}/>
-              <Route path='/profile/:id'     element={<Profile/>}/>
-              <Route path='/profile-edit'    element={<ProfileEdit/>}/>
-              <Route path='/battles'         element={<Battles/>}/>
-              <Route path='/post-upload'     element={<PostUpload/>}/>
-              <Route path='/track/:id'       element={<Track/>}/>
-              <Route path='/support'         element={<Support/>}/>
-              <Route path='/f.a.q'           element={<FAQ/>}/>
-              <Route path='/notifications'   element={<Notifications/>}/>
-              <Route path='/playlists'       element={<Playlists/>}/>
-              <Route path='/*'               element={<NotFound404/>}/>
+            <Route path='/app'            element={<Container/>}>
+              <Route path='/app/login'     element={<Login/>}/>
+              <Route path='/app/logout'    element={<Logout/>}/>
+              <Route path='/app/register'  element={<Register/>}/>
+              <Route path='/app/account-verify/:userId/:actionId'                      element={<AccountVerify/>}/>
+              <Route path='/app/account-restore/:userId/:actionId/:verifyToken/:type'  element={<AccountRestore/>}/>
+              <Route path='/app/account-restore/email-check'                           element={<AccountRestoreEmailCheck/>}/>
+              <Route path='/app'             element={<MainPage/>}/>
+              <Route path='/app/saved'           element={<SavedPosts/>}/>
+              <Route path='/app/profile/:id'     element={<Profile/>}/>
+              <Route path='/app/profile-edit'    element={<ProfileEdit/>}/>
+              <Route path='/app/battles'         element={<Battles/>}/>
+              <Route path='/app/post-upload'     element={<PostUpload/>}/>
+              <Route path='/app/track/:id/:owner'element={<Track/>}/>
+              <Route path='/app/support'         element={<Support/>}/>
+              <Route path='/app/f.a.q'           element={<FAQ/>}/>
+              <Route path='/app/notifications'   element={<Notifications/>}/>
+              <Route path='/app/playlists'       element={<Playlists/>}/>
+              <Route path='/app/*'               element={<NotFound404/>}/>
             </Route>
           </Routes>
         </SnackbarProvider>

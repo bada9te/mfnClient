@@ -20,25 +20,25 @@ const TopBarUserMenu = props => {
         handleCloseUserMenu();
         switch (where) {
             case 'Profile':
-                navigate(`/profile/${currentUser?._id}`);
+                navigate(`/app/profile/${currentUser?._id}`);
                 break;
             case 'Notifications':
-                navigate(`/notifications/`);
+                navigate(`/app/notifications/`);
                 break;
             case 'Edit profile':
-                navigate('/profile-edit');
+                navigate('/app/profile-edit');
                 break;
             case 'Saved posts':
-                navigate('/saved');
+                navigate('/app/saved');
                 break;
             case 'Support':
-                navigate('/support');
+                navigate('/app/support');
                 break;
             case 'Logout':
-                navigate('/logout');
+                navigate('/app/logout');
                 break;
             case 'Login':
-                navigate('/login');
+                navigate('/app/login');
                 break;
             default:
                 break;

@@ -24,7 +24,7 @@ const AccountVerifyForm = (props)=> {
                 },
             },
         }).then(({ data }) => {
-            navigate('/login');
+            navigate('/app/login');
             enqueueSnackbar("Action verified", { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
             enqueueSnackbar("Can't verify action", { autoHideDuration: 3000, variant: 'error' });

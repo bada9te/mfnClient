@@ -22,7 +22,7 @@ const AccountRestoreRequestForm = (props)=> {
                 },
             },
         }).then(({ data }) => {
-            navigate('/login');
+            navigate('/app/login');
             enqueueSnackbar("Check your email for next steps", { autoHideDuration: 3000, variant: 'info' });
         }).catch(err => {
             enqueueSnackbar("User was not found", { autoHideDuration: 3000, variant: 'error' });
