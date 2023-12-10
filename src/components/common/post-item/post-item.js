@@ -211,19 +211,18 @@ const PostItem = (props) => {
                         })()
                     }
                     <Box sx={{
-                            position: 'absolute',
-                            bottom: 0,
-                            left: 0,
-                            width: '100%',
-                            bgcolor: 'rgba(0,0,0,0.3)',
-                            color: 'white',
-                            padding: '10px',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            backdropFilter: 'blur(5px)'
-                        }}
-                    >
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        width: '100%',
+                        bgcolor: 'rgba(0,0,0,0.3)',
+                        color: 'white',
+                        padding: '10px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        backdropFilter: 'blur(5px)'
+                    }}>
                         <Box>
                             <Typography variant='h5'>{base.title}</Typography>
                             <Typography variant='p'>{base.description}</Typography>
