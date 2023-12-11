@@ -43,7 +43,7 @@ const WelcomePageScroller = props => {
     };
 
     return (
-        <Box sx={{ maxWidth: '100%', flexGrow: 1 }}>
+        <Box sx={{ maxWidth: '100%', flexGrow: 1, boxShadow: 3 }}>
             <AutoPlaySwipeableViews
                 index={activeStep}
                 onChangeIndex={handleStepChange}
@@ -55,57 +55,53 @@ const WelcomePageScroller = props => {
                         <CardMedia
                             component="img"
                             sx={{
-                                aspectRatio: '21/7',
+                                aspectRatio: '16/6.5',
                             }}
                             image={step.imgPath}
                             alt="green iguana"
                         />
-                        <CardContent 
-                            sx={{
-                                position: 'absolute',
-                                bottom: 0,
-                                left: 0,
-                                display: 'flex', 
-                                justifyContent: 'center', 
-                                alignItems:'center', 
-                                flexWrap: 'wrap', 
-                                flexDirection: 'column',
-                                bgcolor: 'rgba(0,0,0,0.3)',
-                                backdropFilter: 'blur(5px)',
-                                width: '100%',
-                            }}>
-                            <Typography gutterBottom variant="h1" component="div" sx={{ color: 'white' }}>
-                                {images[activeStep].label}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ color: 'white' }}>
-                                Lizards are a widespread group of squamate reptiles, with over 6,000
-                                species, ranging across all continents except Antarctica
-                            </Typography>
-                        </CardContent>
+                            <CardContent 
+                                sx={{
+                                    display: 'flex', 
+                                    justifyContent: 'center', 
+                                    alignItems:'center', 
+                                    flexWrap: 'wrap', 
+                                    flexDirection: 'column',
+                                    width: '100%',
+                                }}>
+                                <Typography gutterBottom variant="h4" component="div">
+                                    {images[activeStep].label}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    Lizards are a widespread group of squamate reptiles, with over 6,000
+                                    species, ranging across all continents except Antarctica
+                                </Typography>
+                            </CardContent>
                         </CardActionArea>
                     </Card>
                 ))}
             </AutoPlaySwipeableViews>
 
             <MobileStepper
+                sx={{ flexGrow: 3 }}
                 steps={maxSteps}
                 position="static"
                 activeStep={activeStep}
                 nextButton={
-                <Button
-                    size="small"
-                    onClick={handleNext}
-                    disabled={activeStep === maxSteps - 1}
-                >
-                    Next
-                    <KeyboardArrowRight />
-                </Button>
+                    <Button
+                        size="small"
+                        onClick={handleNext}
+                        disabled={activeStep === maxSteps - 1}
+                    >
+                        Next
+                        <KeyboardArrowRight />
+                    </Button>
                 }
                 backButton={
-                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                    <KeyboardArrowLeft />
-                    Back
-                </Button>
+                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                        <KeyboardArrowLeft />
+                        Back
+                    </Button>
                 }
             />
         </Box>

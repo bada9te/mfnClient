@@ -1,19 +1,21 @@
-import { Box, Container, Paper, Typography } from "@mui/material"
-import TopBar from "../../components/bars/top/top-bar/top-bar";
+import { Box, Paper} from "@mui/material"
 import Footer from "../../components/common/footer/footer";
 import WelcomePageScroller from "../../components/common/welcome-page-scroller/welcome-page-scroller";
+import WelcomePageStart from "../../components/common/welcome-page-start/welcome-page-start";
+import WelcomePageBestTrackContainer from "../../components/containers/welcome-page-best-track-container/welcome-page-best-track-container";
+
 
 const Welcome = (props) => {
     
     return (
         <Paper>
-            <TopBar/>
-            <Box sx={{mt: 8}}>
+            <Box>
+                <WelcomePageStart/>
+
                 <WelcomePageScroller/>
                 
-                <Box sx={{ height: "75vh", backgroundColor: 'red' }}>
-                    
-                </Box>
+                <WelcomePageBestTrackContainer/>
+
                 <Box sx={{ height: "75vh", backgroundColor: 'yellow' }}>
                     
                 </Box>
