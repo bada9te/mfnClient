@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { POST_CREATE_MUTATION } from "../../../graphql-requests/posts";
+import { POSTS_BY_OWNER_QUERY, POST_CREATE_MUTATION } from "../../../graphql-requests/posts";
 import blobToFile from "../../../common-functions/blobToFile";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
@@ -9,6 +9,7 @@ import { httpSaveFile } from "../../../http-requests/files";
 import { postUploadFormState } from "./reactive";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { useSnackbar } from "notistack";
+import { postsContainerState } from "../../containers/posts-container/reactive";
 
 
 
@@ -17,6 +18,7 @@ const PostUploadForm = (props)=> {
     const { user: currentUser } = useReactiveVar(baseState);
     const { isShowing: cropModalIsShowing } = useReactiveVar(imageCropperModalState);
     const postUploadForm = useReactiveVar(postUploadFormState);
+    const { maxCountPerPage } = useReactiveVar(postsContainerState);
     const { enqueueSnackbar } = useSnackbar();
  
 
@@ -53,14 +55,25 @@ const PostUploadForm = (props)=> {
                     postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.file.filename });
                 }),
         ]);
-            console.log(postUploadForm)
-            await postUpload().then(({ data }) => {
-                reset();
-                enqueueSnackbar("Post uploaded", { autoHideDuration: 1500, variant: 'success' });
-            }).catch(err => {
-                enqueueSnackbar("Can't upload new post", { variant: 'error' });
-            });
-       
+
+        await postUpload({
+            update: (cache, { data }) => {
+                const cachedData = cache.readQuery({ 
+                    query: POSTS_BY_OWNER_QUERY, 
+                    variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage }
+                });
+                cache.writeQuery({
+                    query: POSTS_BY_OWNER_QUERY,
+                    variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage },
+                    data: { posts: cachedData?.posts ? [...cachedData.posts, data.postCreate] : [data.postCreate] }
+                });
+            }
+        }).then(() => {
+            reset();
+            enqueueSnackbar("Post uploaded", { autoHideDuration: 1500, variant: 'success' });
+        }).catch(err => {
+            enqueueSnackbar("Can't upload new post", { variant: 'error' });
+        });
     }
 
     

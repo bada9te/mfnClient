@@ -6,6 +6,7 @@ import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { SnackbarProvider } from 'notistack';
 import { httpGetCurrentUser } from './http-requests/auth';
+import { postsContainerState } from './components/containers/posts-container/reactive';
 
 
 
@@ -42,11 +43,15 @@ function App() {
       });
   }, [navigate]);
 
+  useEffect(() => {
+    console.log(location)
+    postsContainerState({...postsContainerState(), activePage: 1});
+  }, [location]);
+
 
   return (
       <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={5}>
-          
           <Routes>
             <Route path='/'            element={<Container/>}>
               <Route path='/' element={<Welcome/>}/>

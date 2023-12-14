@@ -12,25 +12,27 @@ import { postsContainerState } from './reactive';
 
 
 const PostsContainer = (props) => {
-    const {id, profileLinkAccessable, savedOnly, except} = props;
+    const { id, profileLinkAccessable, savedOnly, except } = props;
     const { user: currentUser } = useReactiveVar(baseState);
     const { activePage, maxCountPerPage, maxPage, isLoading, posts } = useReactiveVar(postsContainerState);
 
-    const [getSavedOnlyPosts] = useLazyQuery(POSTS_SAVED_BY_USER_QUERY);
-    const [getAllPosts] = useLazyQuery(POSTS_QUERY);
-    const [getOwnerPosts] = useLazyQuery(POSTS_BY_OWNER_QUERY);
+    const [ getSavedOnlyPosts ] = useLazyQuery(POSTS_SAVED_BY_USER_QUERY);
+    const [ getAllPosts] = useLazyQuery(POSTS_QUERY);
+    const [ getOwnerPosts ] = useLazyQuery(POSTS_BY_OWNER_QUERY);
     
     const handlePageChange = page => {
         postsContainerState({...postsContainerState(), activePage: page});
     }
 
     const setPostsAndCount = useCallback((result, at) => {
+        //console.log(result.data.postsByOwner)
         postsContainerState({
             ...postsContainerState(), 
             posts: result.data[at].posts,
             maxPage: defineMaxPage(result.data[at].count, maxCountPerPage),
         });
     }, [maxCountPerPage]);
+
 
     useEffect(() => {
         const fetchData = async() => {

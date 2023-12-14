@@ -43,7 +43,7 @@ const ImageRightFormContainer = (props) => {
                 <Box sx={{ display: {xs: 'none', md: 'flex'} }}>
                     <Typography sx={{
                         color: 'white',
-                        fontSize: {xl: '10vh', lg: '4vw', md: 0},
+                        fontSize: {xl: '8vh', lg: '4vw', md: 0},
                         textAlign: 'center'
                     }}>
                         {text}

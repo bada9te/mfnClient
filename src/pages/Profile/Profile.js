@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 const Profile = (props) => {
     const { id } = useParams();
 
+
     return (
         <BaseContentContainer>
             <ProfileCard id={id}/>

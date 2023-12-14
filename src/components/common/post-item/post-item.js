@@ -147,6 +147,13 @@ const PostItem = (props) => {
         }
     }
 
+    // open track details page
+    const openTrackDetailsPage = () => {
+        if (addons.status !== "upload") {
+            navigate(`/app/track/${base._id}/${base.owner._id}`)
+        }
+    }
+
         
     // init
     useEffect(() => {
@@ -287,7 +294,7 @@ const PostItem = (props) => {
                             <Button 
                                 variant="contained" 
                                 sx={{ boxShadow: 10 }}
-                                onClick={() => navigate(`/app/track/${base._id}/${base.owner._id}`)}
+                                onClick={openTrackDetailsPage}
                             >
                                 Track details
                             </Button>
