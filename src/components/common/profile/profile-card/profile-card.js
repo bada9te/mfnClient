@@ -20,56 +20,58 @@ const ProfileCard = (props) => {
             _id: id,
         },
     });
-    const [switchSubscriptionOnUser, { data: subscribeData, loading: subscribeLoading }] = useMutation(USER_SWITCH_SUBSCRIPTION_MUTATION, { 
+
+    const [ switchSubscriptionOnUser, { loading: subsLoading } ] = useMutation(USER_SWITCH_SUBSCRIPTION_MUTATION, { 
         variables: {
             input: {
                 subscriberId: currentUser?._id,
                 userId: id,
             }
         },
-        refetchQueries: [
-            { query: USER_QUERY, variables: { _id: id } }
-        ],
+        update: (cache, { data }) => {
+            cache.writeQuery({
+                query: USER_QUERY,
+                variables: { _id: id },
+                data: {
+                    user: data.userSwitchSubscription.user1
+                }
+            });
+            baseState({ 
+                ...baseState(), 
+                user: { 
+                    ...currentUser, 
+                    subscribedOn: { 
+                        ...data.userSwitchSubscription.user2.subscribedOn 
+                    } 
+                } 
+            });
+        }
     });
-
 
     const switchSubscriptionOnUserHandler = async(actionType) => {
         enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
-        /*
-        Alert.alertPromise("Pending...", "Success", "Sth went wrong", () => {
-            return new Promise(async(resolve, reject) => {
-                await switchSubscriptionOnUser()
-                    .then(({ data }) => {
-                        const { user1: ownerOfTheProfile, user2: actionEmitter } = data.userSwitchSubscription;
-                        baseState({ ...baseState(), user: actionEmitter });
-                        resolve();
-                    })
-                    .catch(err => {
-                        reject(err);
-                    });
-            });
-        });
 
-        if (result.data.done) {
-            console.log(result.data)
-            Alert.alertSuccess("Success");
-            if (actionType === 'subscribe') {
-                userSocket.emit("user-was-subscribed", {
-                    receiver: profileOwner.id,
-                    sender: currentUser._id,
-                    text: `${currentUser.nick} has just subscribed on you`,
-                });
-            }
-        } else {
-            Alert.alertError("Sth went wrong");
-        }
-        */   
+        switchSubscriptionOnUser()
+            .then(() => {
+                enqueueSnackbar("Success", { autoHideDuration: 1500, variant: 'success' });
+                /*
+                    if (actionType === 'subscribe') {
+                    userSocket.emit("user-was-subscribed", {
+                        receiver: profileOwner.id,
+                        sender: currentUser._id,
+                        text: `${currentUser.nick} has just subscribed on you`,
+                    });
+                }
+                */
+            }).catch(() => {
+                enqueueSnackbar("Can't perform this action", { autoHideDuration: 3000, variant: 'error' });
+            });
     }
     
     return (
         <>
             {
-                userLoading
+                userLoading || subsLoading
                 ?
                 <Box sx={{minHeight: '200px'}}>
                     <SpinnerLinear/>
@@ -125,7 +127,7 @@ const ProfileCard = (props) => {
                                 {
                                     (() => {
                                         if (currentUser?._id !== userData?.user._id && currentUser._id !== "") {
-                                            if (currentUser?.subscribedOn.map(i => i._id).includes(userData?.user._id)) {
+                                            if (userData?.user.subscribers.map(i => i._id).includes(currentUser._id)) {
                                                 return (
                                                     <Button 
                                                         sx={{ mt: 1.5, width: '120px' }} 

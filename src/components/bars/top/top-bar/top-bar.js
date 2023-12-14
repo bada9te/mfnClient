@@ -174,7 +174,7 @@ const Topbar = (props) => {
                                             component="span"
                                             sx={{ mr: 1, display: { xs: 'none', md: 'flex' }, fontWeight: 400, color: 'white', textDecoration: 'none', alignItems: 'center',}}
                                         >
-                                            { user && user?._id !== "" ? user?.nick : "Login" }
+                                            { user && user?._id !== "" ? user?.nick : "Log in" }
                                         </Typography>
                                         {
                                             data?.notifications.length > 0

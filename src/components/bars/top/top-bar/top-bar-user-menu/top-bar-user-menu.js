@@ -2,7 +2,6 @@ import { MenuItem, Typography } from "@mui/material";
 import { Person, Logout, ContactSupport, BookmarkAdded, Settings, Notifications, Login } from '@mui/icons-material';
 import ThemeSwitcher from "../../../../common/theme-switcher/theme-switcher";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import StyledBadge from "../styled-badge/styled-badge";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../../../baseReactive";
@@ -12,7 +11,7 @@ import { baseState } from "../../../../baseReactive";
 const TopBarUserMenu = props => {
     const {handleCloseUserMenu, notifications} = props;
     const items = ['Profile', 'Notifications', 'Edit profile', 'Saved posts', 'Support', 'Logout'];
-    const itemsNL = ['Login', 'Support'];
+    const itemsNL = ['Log in', 'Support'];
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
 
@@ -37,7 +36,7 @@ const TopBarUserMenu = props => {
             case 'Logout':
                 navigate('/app/logout');
                 break;
-            case 'Login':
+            case 'Log in':
                 navigate('/app/login');
                 break;
             default:
@@ -100,7 +99,7 @@ const TopBarUserMenu = props => {
                                         switch(item) {
                                             case 'Support':
                                                 return (<ContactSupport sx={{mr: 1}}/>);
-                                            case 'Login':
+                                            case 'Log in':
                                                 return (<Login sx={{mr: 1}}/>);
                                             default:
                                                 break;
