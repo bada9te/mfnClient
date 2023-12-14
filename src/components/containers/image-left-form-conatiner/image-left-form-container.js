@@ -25,7 +25,7 @@ const LogRegVerContainer = (props) => {
                 <Box sx={{ display: {xs: 'none', sm: 'flex'}, justifyContent: 'center', width: '100%'}} >
                     <Typography sx={{
                         color: 'white',
-                        fontSize: {xl: '10vh', lg: '6vw', md: '5vw', sm: '4vw'},
+                        fontSize: {xl: '8vh', lg: '6vw', md: '5vw', sm: '4vw'},
                         textAlign: 'center'
                     }}>
                         {text}

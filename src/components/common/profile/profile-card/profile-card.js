@@ -100,7 +100,7 @@ const ProfileCard = (props) => {
                                 color: theme !== 'light' ? 'white' : '#292A2A',
                                 m: 2, 
                                 p: 2, 
-                                borderRadius: 3,
+                                borderRadius: 5,
                                 boxShadow: 3
                             }}
                             direction="row" 

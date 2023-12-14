@@ -10,14 +10,15 @@ const Footer = props => {
           px: 2,
           mt: 'auto',
           backgroundColor: (theme) => theme.palette.primary.dark,
-          display: 'flex', alignItems: 'center', justifyContent: 'center'
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: 'white'
         }}
       >
         <Typography variant="body1" textAlign="center" sx={{mx: 1}}>
           Music From Nothing {new Date().getFullYear()} 
         </Typography>
-        <IconButton href="https://github.com/bada9te" target="_blank"><GitHub/></IconButton>
-        <IconButton><Instagram/></IconButton>
+        <IconButton href="https://github.com/bada9te" target="_blank" sx={{color: 'white'}}><GitHub/></IconButton>
+        <IconButton sx={{color: 'white'}}><Instagram/></IconButton>
       </Box>
     );
 }

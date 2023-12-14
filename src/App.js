@@ -30,6 +30,25 @@ function App() {
         contrastText: '#fff',
       },      
     },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: 25,
+            padding: 10
+          }
+        }
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            '& fieldset': {
+              borderRadius: 25
+            }
+          },
+        }
+      },
+    }
   });
 
   useEffect(() => {
@@ -42,11 +61,6 @@ function App() {
         }
       });
   }, [navigate]);
-
-  useEffect(() => {
-    console.log(location)
-    postsContainerState({...postsContainerState(), activePage: 1});
-  }, [location]);
 
 
   return (

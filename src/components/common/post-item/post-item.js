@@ -212,7 +212,7 @@ const PostItem = (props) => {
                                 );
                             } else {
                                 return (
-                                    <CardMedia component="img" height="160" width={{xs: '100%', md: '400px'}} image={base.img} alt="Paella dish"/>
+                                    <CardMedia component="img" height="160" width={{xs: '100%', md: '400px'}} image={base.img} alt={base.title}/>
                                 );
                             }
                         })()
@@ -338,6 +338,7 @@ const PostItem = (props) => {
                                                         backgroundColor: audioPlayer.loop ? '#1BA39C' : '', 
                                                         color: audioPlayer.loop ? 'white' : '',
                                                         borderTopRightRadius: 50,
+                                                        borderBottomRightRadius: 0,
                                                         pr: 2
                                                     }} 
                                                     variant="contained" size="small" onClick={switchLoop} 
@@ -354,6 +355,7 @@ const PostItem = (props) => {
                                                         color: audioPlayer.isMuted ? 'white' : '',
                                                         borderTopLeftRadius: 50,
                                                         borderBottomLeftRadius: 0,
+                                                        borderTopRightRadius: 0,
                                                         pl: 2
                                                     }} 
                                                     variant="contained" size="small" onClick={handleMuteUnmute} 
@@ -366,15 +368,16 @@ const PostItem = (props) => {
                                     );
                                 } else {
                                     return (
-                                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
+                                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }} >
                                             <Button 
                                                 startIcon={<PlayArrow/>}
                                                 sx={{ 
                                                     borderTopRightRadius: ["selecting", "voting"].includes(addons.status) && !addons?.votedBy?.includes(currentUser?._id) ? 0 : 50,
                                                     borderBottomRightRadius: 0,
                                                     borderTopLeftRadius: 0,
-                                                    pr: 2
+                                                    pr: 2,
                                                 }} 
+                                                disabled={!base.audio}
                                                 variant="contained" size="small" onClick={playAudio}
                                             >
                                                 Play

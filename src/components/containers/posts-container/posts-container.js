@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useLayoutEffect } from 'react';
 import { SpinnerLinear } from '../../common/spinner/Spinner';
 import PaginationTree from '../../common/pagination/pagination';
 import { Box, Stack, Typography } from '@mui/material';
@@ -8,14 +8,16 @@ import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '..
 import defineMaxPage from '../../../common-functions/defineMaxPage';
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from './reactive';
+import { useLocation } from 'react-router-dom';
 
 
 
 const PostsContainer = (props) => {
     const { id, profileLinkAccessable, savedOnly, except } = props;
+    const location = useLocation();
+
     const { user: currentUser } = useReactiveVar(baseState);
     const { activePage, maxCountPerPage, maxPage, isLoading, posts } = useReactiveVar(postsContainerState);
-
     const [ getSavedOnlyPosts ] = useLazyQuery(POSTS_SAVED_BY_USER_QUERY);
     const [ getAllPosts] = useLazyQuery(POSTS_QUERY);
     const [ getOwnerPosts ] = useLazyQuery(POSTS_BY_OWNER_QUERY);
@@ -32,6 +34,11 @@ const PostsContainer = (props) => {
             maxPage: defineMaxPage(result.data[at].count, maxCountPerPage),
         });
     }, [maxCountPerPage]);
+
+
+    useLayoutEffect(() => {
+        postsContainerState({...postsContainerState(), activePage: 1});
+    }, [location]);
 
 
     useEffect(() => {

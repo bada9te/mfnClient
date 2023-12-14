@@ -109,7 +109,7 @@ const Topbar = (props) => {
         
             <HideOnScroll {...props}>
                 <AppBar component="nav" sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Container maxWidth="xl" >
+                    <Container maxWidth="xxl" >
                         <Toolbar disableGutters>
                             <Typography
                                 variant="h6"

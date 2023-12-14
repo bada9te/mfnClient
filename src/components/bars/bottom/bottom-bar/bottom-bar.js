@@ -65,7 +65,7 @@ const BottomBar = (props) => {
                     :
                     null
                 }
-                <BottomNavigationAction value="audioPlayer" label="Player" icon={<Radio />} />
+                <BottomNavigationAction value="audioPlayer" label="Player" icon={<Radio />} disabled={!audioPlayer.isPlaying} />
                 <BottomNavigationAction value="people" label="People" icon={<PersonSearch />} />
             </BottomNavigation>
         </Paper>
