@@ -174,7 +174,8 @@ const PostItem = (props) => {
             width: {xs: '95%', sm: '375px', md: '400px'}, 
             boxShadow: 3, 
             borderRadius: addons.status === "in-player" ? 0 : 5,
-            
+            transition: '500ms', 
+            ":hover": { transform: 'scale(1.025)', boxShadow: 10 }
         }}>
             <CardHeader
                 avatar={

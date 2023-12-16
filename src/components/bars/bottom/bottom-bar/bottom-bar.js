@@ -2,7 +2,6 @@ import { memo, useEffect } from "react";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { MusicNote, PersonSearch, AddCircle, Radio } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from "react-redux";
 import { useReactiveVar } from "@apollo/client";
 import { audioPlayerState } from "../../../common/audio-player/reactive";
 import { bottomBarState } from "./reactive";
@@ -65,7 +64,7 @@ const BottomBar = (props) => {
                     :
                     null
                 }
-                <BottomNavigationAction value="audioPlayer" label="Player" icon={<Radio />} disabled={!audioPlayer.isPlaying} />
+                <BottomNavigationAction value="audioPlayer" label="Player" icon={<Radio />} disabled={!audioPlayer.src} />
                 <BottomNavigationAction value="people" label="People" icon={<PersonSearch />} />
             </BottomNavigation>
         </Paper>

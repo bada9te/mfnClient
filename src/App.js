@@ -35,7 +35,8 @@ function App() {
         styleOverrides: {
           root: {
             borderRadius: 25,
-            padding: 10
+            padding: 10,
+            transition: '500ms',
           }
         }
       },

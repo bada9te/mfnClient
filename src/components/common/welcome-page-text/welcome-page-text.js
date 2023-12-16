@@ -1,4 +1,4 @@
-import { Box, Typography, List, ListItem, Stack } from "@mui/material";
+import { Typography, Stack } from "@mui/material";
 import logoClear from "../../../images/icons/logo_clear.png"
 import WelcomePageCard from "../welcome-page-cards/card/card";
 

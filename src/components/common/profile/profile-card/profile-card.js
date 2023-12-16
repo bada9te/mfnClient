@@ -103,7 +103,9 @@ const ProfileCard = (props) => {
                                 m: 2, 
                                 p: 2, 
                                 borderRadius: 5,
-                                boxShadow: 3
+                                boxShadow: 3,
+                                transition: '500ms',
+                                ":hover": { transform: 'scale(1.025)', boxShadow: 10 }
                             }}
                             direction="row" 
                             useFlexGap
