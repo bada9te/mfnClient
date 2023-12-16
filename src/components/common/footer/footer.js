@@ -11,7 +11,8 @@ const Footer = props => {
           mt: 'auto',
           backgroundColor: (theme) => theme.palette.primary.dark,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: 'white'
+          color: 'white',
+          scrollSnapAlign: 'start',
         }}
       >
         <Typography variant="body1" textAlign="center" sx={{mx: 1}}>

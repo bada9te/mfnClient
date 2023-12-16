@@ -37,3 +37,13 @@ export const NOTIFICATIONS_QUERY = gql`
         }
     }
 `;
+
+
+// M
+export const CREATE_NOTIFICATION_MUTATION = gql`
+    mutation notificationCreate($input: CreateNotificationInput!) {
+        notificationCreate(input: $input) {
+            _id
+        }
+    }
+`;

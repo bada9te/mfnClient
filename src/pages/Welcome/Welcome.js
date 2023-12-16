@@ -7,9 +7,13 @@ import WelcomePageBestTrackContainer from "../../components/containers/welcome-p
 
 
 const Welcome = (props) => {
-    
     return (
-        <Paper>
+        <Paper sx={{ 
+            position: 'relative', 
+            height: 'calc(100vh - 120px)', 
+            overflow: 'auto', 
+            scrollSnapType: 'y mandatory',
+        }}>
             <WelcomePageStart/>
 
             <WelcomePageText/>

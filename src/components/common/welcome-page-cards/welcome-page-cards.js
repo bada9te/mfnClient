@@ -38,13 +38,13 @@ const WelcomePageCards = props => {
         <Stack 
             spacing={10} 
             sx={{ 
-                minHeight: 'calc(100vh - 50px)', 
+                minHeight: 'calc(100vh - 120px)', 
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center', 
                 flexDirection: 'column' ,
-                my: 5,
-                py: 5
+                scrollSnapAlign: 'start',
+                py: 10,
             }}
         >
             <Typography variant="h3" textAlign="center">Purpose of the platform and author information</Typography>
@@ -52,7 +52,7 @@ const WelcomePageCards = props => {
                 sx={{ 
                     display: 'flex', 
                     justifyContent: 'center', 
-                    alignItems: 'center' 
+                    alignItems: 'center', 
                 }}  
                 flexWrap="wrap"
                 spacing={3}

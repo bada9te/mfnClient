@@ -11,18 +11,21 @@ const WelcomePageStart = props => {
     const { user: currentUser } = useReactiveVar(baseState);
 
     return (
-        <Box sx={{ 
-            height: 'calc(100vh - 120px)', 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            flexWrap: 'wrap', 
-            flexDirection: 'column',
-            backgroundImage: `url(${WelcomePageStartBG})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            pb: 10
-        }}>
+        <Box
+            sx={{ 
+                height: 'calc(100vh - 120px)', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                flexWrap: 'wrap', 
+                flexDirection: 'column',
+                backgroundImage: `url(${WelcomePageStartBG})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                pb: 10,
+                scrollSnapAlign: 'start',
+            }}
+        >
             <Avatar src={AppLogoImg} alt="Music From Nothing" sx={{ height: '180px', width: '180px' }}/>
             <Typography textAlign="center" sx={{ py: 4 }} variant="h3">Welcome to Music From Nothing</Typography>
             <Stack spacing={3} direction="row" useFlexGap>

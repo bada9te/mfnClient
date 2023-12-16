@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import { POST_QUERY } from "../../../graphql-requests/posts";
 import PostGenerate from "../../common/post-item/post-generate";
@@ -11,13 +11,14 @@ const WelcomePageBestTrackContainer = props => {
     return (
         <Stack 
             sx={{ 
-                height: '95vh', 
+                height: 'calc(100vh - 120px)', 
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center',
                 backgroundImage: `url(${WelcomePageBestTrackBG})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
+                scrollSnapAlign: 'start',
             }} 
             spacing={5} 
             direction="column">

@@ -45,7 +45,7 @@ const BottomBar = (props) => {
     };
 
     useEffect(() => {
-        bottomBarState({ ...bottomBar, value: '' });
+        bottomBarState({ ...bottomBarState(), value: '' });
     }, [location.pathname])
 
 

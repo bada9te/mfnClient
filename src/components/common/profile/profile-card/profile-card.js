@@ -6,6 +6,7 @@ import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '../../../../graphql-requests/users';
 import { baseState } from "../../../baseReactive";
 import { useSnackbar } from "notistack";
+import { CREATE_NOTIFICATION_MUTATION } from "../../../../graphql-requests/notifications";
 
 
 const ProfileCard = (props) => {
@@ -19,6 +20,15 @@ const ProfileCard = (props) => {
         variables: { 
             _id: id,
         },
+    });
+    const [ createSubscriptionNotification ] = useMutation(CREATE_NOTIFICATION_MUTATION, {
+        variables: {
+            input: {
+                receiver: id,
+                sender: currentUser._id,
+                text: "Has just subscribed on you!",
+            }
+        } 
     });
 
     const [ switchSubscriptionOnUser, { loading: subsLoading } ] = useMutation(USER_SWITCH_SUBSCRIPTION_MUTATION, { 
@@ -54,15 +64,12 @@ const ProfileCard = (props) => {
         switchSubscriptionOnUser()
             .then(() => {
                 enqueueSnackbar("Success", { autoHideDuration: 1500, variant: 'success' });
-                /*
-                    if (actionType === 'subscribe') {
-                    userSocket.emit("user-was-subscribed", {
-                        receiver: profileOwner.id,
-                        sender: currentUser._id,
-                        text: `${currentUser.nick} has just subscribed on you`,
-                    });
+                
+                // notify user about new subscriber
+                if (actionType === 'subscribe') {
+                    createSubscriptionNotification();
                 }
-                */
+                
             }).catch(() => {
                 enqueueSnackbar("Can't perform this action", { autoHideDuration: 3000, variant: 'error' });
             });
