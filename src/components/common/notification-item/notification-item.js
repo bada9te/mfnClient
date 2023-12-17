@@ -1,20 +1,45 @@
+import { useMutation } from "@apollo/client";
 import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Card, CardHeader, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { DELETE_NOTIFICATION_MUTATION, MARK_NOTIFICATION_AS_READ_MUTATION } from "../../../graphql-requests/notifications";
 import { commentsContainerState } from "../../containers/comments-container/reactive";
 import { commentsModalState } from "../../modals/comments-modal/reactive";
-
+import { useSnackbar } from "notistack";
 
 const NotificationItem = props => {
     const {id, user, text, post, comment, createdAt, checked} = props;
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    const [ notificationDelete ] = useMutation(DELETE_NOTIFICATION_MUTATION, {
+        variables: {
+            _id: id,
+        }
+    });
+    const [ notificationMarkAsRead ] = useMutation(MARK_NOTIFICATION_AS_READ_MUTATION, {
+        variables: {
+            _id: id,
+        }
+    });
 
     const handleDelete = () => {
-        //dispatch(deleteNotification(id));
+        enqueueSnackbar("Deleting notification...", { autoHideDuration: 1500 });
+        notificationDelete()
+            .then(() => {
+                enqueueSnackbar("Notification removed.", { autoHideDuration: 1500, variant: 'success' });
+            }).catch(() => {
+                enqueueSnackbar("Can't delete notification.", { autoHideDuration: 3000, variant: 'error' });
+            });
     }
 
     const hadleMarkAsRead = () => {
-        //dispatch(markNotificationAsRead(id));
+        enqueueSnackbar("Marking notification as read...", { autoHideDuration: 1500 });
+        notificationMarkAsRead()
+            .then(() => {
+                enqueueSnackbar("Notification marked as read.", { autoHideDuration: 1500, variant: 'success' });
+            }).catch(() => {
+                enqueueSnackbar("Can't mark notification as read.", { autoHideDuration: 3000, variant: 'error' });
+            });
     }
 
     const handleOpenComment = (commentId) => {
@@ -24,7 +49,7 @@ const NotificationItem = props => {
             commentsIds: [commentId], 
             postId: post._id,
             postOwnerId: post.owner._id,
-        })
+        });
     }
 
     const handleOpenPost = (trackId, ownerId) => {

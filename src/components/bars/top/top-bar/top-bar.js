@@ -49,7 +49,7 @@ const Topbar = (props) => {
     const { user, locations } = useReactiveVar(baseState);
     //const notifications = useSelector(state => state.notificationsContainer.notifications);
 
-    const [getUnreadNotifications, { data }] = useLazyQuery(NOTIFICATIONS_QUERY);
+    const [ getUnreadNotifications, { data } ] = useLazyQuery(NOTIFICATIONS_QUERY);
 
     const pages = ['Feed', 'Battles', 'Playlists'];
     const navigate = useNavigate();
@@ -101,7 +101,7 @@ const Topbar = (props) => {
                 pollInterval: 15000
             });
         }
-    }, [user]);
+    }, [user, getUnreadNotifications]);
 
     
 

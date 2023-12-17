@@ -47,3 +47,36 @@ export const CREATE_NOTIFICATION_MUTATION = gql`
         }
     }
 `;
+
+export const DELETE_NOTIFICATION_MUTATION = gql`
+    mutation notificationDeleteById($_id: ID!) {
+        notificationDeleteById(_id: $_id) {
+            _id
+        }
+    }
+`;
+
+export const DELETE_NOTIFICATIONS_MUTATION = gql`
+    mutation notificationsDeleteByIds($ids: [ID!]!) {
+        notificationsDeleteByIds(ids: $ids) {
+            _id
+        }
+    }
+`;
+
+export const MARK_NOTIFICATION_AS_READ_MUTATION = gql`
+    mutation notificationMarkAsReadById($_id: ID!) {
+        notificationMarkAsReadById(_id: $_id) {
+            _id
+        }
+    }
+`;
+
+export const MARK_NOTIFICATIONS_AS_READ_MUTATION = gql`
+    mutation notificationsMarkAsReadByIds($ids: [ID!]!) {
+        notificationsMarkAsReadByIds(ids: $ids) {
+            _id
+        }
+    }
+`;
+

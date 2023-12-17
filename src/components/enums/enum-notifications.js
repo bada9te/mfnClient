@@ -41,7 +41,7 @@ const EnumNotifications = props => {
                                                     text={notification.text}
                                                     comment={notification.comment}
                                                     post={notification.post}
-                                                    createdAt={getTimeSince(new Date(notification.createdAt)) + ' ago'}
+                                                    createdAt={getTimeSince(new Date(+notification.createdAt)) + ' ago'}
                                                     checked={notification.checked}
                                                 />
                                             );

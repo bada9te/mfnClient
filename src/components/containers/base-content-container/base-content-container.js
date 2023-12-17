@@ -4,7 +4,7 @@ const BaseContentContainer = props => {
     const {left, right} = props;
 
     return (
-        <Grid container component="main" sx={{height: 'calc(100vh - 120px)'}}>
+        <Grid container component="main" sx={{ height: 'calc(100vh - 110px)', position: 'relative', overflow: 'auto' }}>
             <Grid item xs={0} sm={0} md={3} lg={2.5} xl={2}>
                 {left}
             </Grid>

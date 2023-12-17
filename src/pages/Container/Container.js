@@ -19,7 +19,7 @@ import PostSelectModal from "../../components/modals/post-select-modal/post-sele
 const Container = (props) => {
 
     return (
-        <Box sx={{ display: 'flex', pb: 7 }}>
+        <Box sx={{ display: 'flex' }}>
             <CssBaseline />
 
             {/* MODALS */}
@@ -30,11 +30,11 @@ const Container = (props) => {
             <PostSelectModal/>
 
             {/* BARS */}
-            <Topbar text="Music From Nothing" username="UserName" where="feed"/>
             <LeftBarPosts/>
             <RightBarUsers/>
 
             {/* PAGES OUTLET */}
+            <Topbar text="Music From Nothing" username="UserName" where="feed"/>
             <Box sx={{width: '100%', pt: 8}}>
                 <Outlet/>
             </Box>

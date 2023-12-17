@@ -3,7 +3,7 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 const LogRegVerContainer = (props) => {
     const { bg, text } = props;
     return (
-        <Grid container component="main" sx={{  height: '100vh' }}>
+        <Grid container component="main" sx={{  height: 'calc(100vh - 110px)', position: 'relative', overflow: 'auto' }}>
             <Grid
                 item
                 xs={false}
