@@ -23,7 +23,7 @@ const WelcomePageBestTrackContainer = props => {
             spacing={5} 
             direction="column">
             <Typography variant="h3" textAlign="center">Best track of the week</Typography>
-            { loading ? <PostItemUnavailable/> : <PostGenerate item={data.post}/> }
+            { !loading && data?.post ?  <PostGenerate item={data.post}/> : <PostItemUnavailable/>}
         </Stack>
     );
 }

@@ -20,6 +20,7 @@ const LoginForm = (props) => {
                 navigate('/app/');
                 enqueueSnackbar(`Successfully logged in as ${data.nick}`, { variant: "success", autoHideDuration: 3000 });
             }).catch((err) => {
+                console.log(err)
                 enqueueSnackbar(err.response.data, { variant: "error" });
             });
     };

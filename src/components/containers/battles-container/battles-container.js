@@ -69,7 +69,7 @@ const BattlesContainer = props => {
         if (status < 2) {
             getBattles();
         }
-    }, [status]);
+    }, [status, getBattles, stopPolling]);
 
 
     return (

@@ -9,7 +9,6 @@ import { useState } from "react";
 import { createBattleFormState } from "./reactive";
 import { useSnackbar } from "notistack";
 import { BATTLE_CREATE_MUTATTION } from "../../../graphql-requests/battles";
-import { battlesContainerState } from "../../containers/battles-container/reactive";
 
 
 

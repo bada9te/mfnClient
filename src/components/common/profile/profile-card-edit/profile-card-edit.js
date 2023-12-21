@@ -45,7 +45,7 @@ const ProfileCardEdit = (props) => {
                     >
                         <Avatar
                             alt={currentUser?.nick} 
-                            sx={{boxShadow: 3, fontSize: 100, boxShadow: 5}} 
+                            sx={{fontSize: 100, boxShadow: 5}} 
                             src={currentUser?.avatar !== "" ? `${locations?.images}/${currentUser?.avatar}` : "NULL"}
                             style={{objectFit: 'contain', width: '35vw', height: '35vw', maxHeight: '160px', maxWidth: '160px'}}
                             >

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useReactiveVar } from "@apollo/client";
 import { useRef, useEffect, useCallback } from "react";
 import { baseState } from "../../../baseReactive";
@@ -53,3 +54,4 @@ const WaveForm = ({ analyzerData }) => {
 };
   
 export default WaveForm;
+/* eslint-disable */

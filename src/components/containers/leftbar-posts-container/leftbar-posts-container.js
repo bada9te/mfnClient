@@ -9,7 +9,7 @@ import { POSTS_BY_TITLE_QUERY } from "../../../graphql-requests/posts";
 
 const LeftBarPostsContainer = props => {
     const { searchQuery } = props;
-    const [getPostsByTitle, { data, loading }] = useLazyQuery(POSTS_BY_TITLE_QUERY);
+    const [ getPostsByTitle, { data, loading } ] = useLazyQuery(POSTS_BY_TITLE_QUERY);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -29,7 +29,7 @@ const LeftBarPostsContainer = props => {
         return () => {
             clearTimeout(timer);
         }
-    }, [searchQuery]);
+    }, [searchQuery, getPostsByTitle]);
 
 
     return (

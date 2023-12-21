@@ -34,7 +34,7 @@ function TabPanel(props) {
 const NotificationsContainer = props => {
     const [status, setStatus] = useState(0);
 
-    const { user: currentUser, theme } = useReactiveVar(baseState);
+    const { user: currentUser } = useReactiveVar(baseState);
     const [getNotifications, { data, loading }] = useLazyQuery(NOTIFICATIONS_QUERY, {
         variables: {
             receiverId: currentUser._id,
@@ -100,7 +100,7 @@ const NotificationsContainer = props => {
         if (currentUser._id !== "") {
             getNotifications()
         }
-    }, [currentUser._id]);
+    }, [currentUser._id, getNotifications]);
 
     
 

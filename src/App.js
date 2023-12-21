@@ -1,20 +1,19 @@
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Welcome, Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists } from './pages/pages';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { SnackbarProvider } from 'notistack';
 import { httpGetCurrentUser } from './http-requests/auth';
-import { postsContainerState } from './components/containers/posts-container/reactive';
 
 
 
 
 function App() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
+  //const location = useLocation();
+  //const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
   const { theme: themeStyle } = useReactiveVar(baseState);
 

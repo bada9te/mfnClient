@@ -1,12 +1,9 @@
 import getTimeSince from "../../common-functions/getTimeSince";
 import Comment from "../common/comment/comment";
-import { useReactiveVar } from "@apollo/client";
-import { baseState } from "../baseReactive";
 
 
 const EnumComments = props => {
     const { comments } = props;
-    const { locations } = useReactiveVar(baseState);
 
     return (
         <>

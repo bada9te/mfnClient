@@ -6,7 +6,20 @@ import battleImg from '../../../images/icons/battle-disk.png';
 
 
 const BattleItem = (props) => {
-    const {id, post1, post2, createdAt, willFinishAt, title, post1Score, post2Score, bg1, bg2, winner, finished} = props;
+    const {
+        //id, 
+        post1, 
+        post2, 
+        //createdAt, 
+        willFinishAt, 
+        title, 
+        post1Score, 
+        post2Score, 
+        //bg1, 
+        //bg2, 
+        winner, 
+        finished
+    } = props;
     const [timeleft, setTimeLeft] = useState(new Date(willFinishAt).getTime() - new Date().getTime());
 
     useEffect(() => {
@@ -22,7 +35,7 @@ const BattleItem = (props) => {
                 //dispatch(removeFromInProgress(id));
             }
         }
-    }, [timeleft]);
+    }, [timeleft, finished]);
 
 
     return (
