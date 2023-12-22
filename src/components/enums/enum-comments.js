@@ -1,4 +1,4 @@
-import getTimeSince from "../../common-functions/getTimeSince";
+import getTimeSince from "../../common-functions/getTimeSince/getTimeSince";
 import Comment from "../common/comment/comment";
 
 

@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react';
-import getTimeLeft from '../../../common-functions/getTimeLeft';
+import getTimeLeft from '../../../common-functions/getTimeLeft/getTimeLeft';
 import { Card, CardActions, CardContent, Typography, Box, Stack, Avatar } from '@mui/material';
 import battleImg from '../../../images/icons/battle-disk.png';
 

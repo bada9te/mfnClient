@@ -1,5 +1,5 @@
 import { Card, CardHeader, Avatar, CardContent } from "@mui/material";
-import getTimeSince from "../../../common-functions/getTimeSince";
+import getTimeSince from "../../../common-functions/getTimeSince/getTimeSince";
 import CommentDropDown from "../comment/comment-dropdown/comment-dropdown";
 import { reportFormState } from "../../forms/report/reactive";
 import { reportModalState } from "../../modals/report-modal/reactive";

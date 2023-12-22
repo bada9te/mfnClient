@@ -5,7 +5,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 import { useState } from "react";
-import blobToFile from "../../../common-functions/blobToFile";
+import blobToFile from "../../../common-functions/blobToFIle/blobToFile";
 import { useSnackbar } from "notistack";
 import { USER_UPDATE_MUTATION } from "../../../graphql-requests/users";
 

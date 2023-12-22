@@ -11,7 +11,7 @@ import { playlistsContainerState } from "./reactive";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from "../../../graphql-requests/playlists";
 import { baseState } from "../../baseReactive";
-import defineMaxPage from "../../../common-functions/defineMaxPage";
+import defineMaxPage from "../../../common-functions/defineMaxPage/defineMaxPage";
 
 
 function TabPanel(props) {

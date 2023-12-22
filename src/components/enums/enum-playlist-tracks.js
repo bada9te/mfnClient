@@ -1,5 +1,5 @@
 import PostItem from "../common/post-item/post-item";
-import getTimeSince from "../../common-functions/getTimeSince";
+import getTimeSince from "../../common-functions/getTimeSince/getTimeSince";
 import { useSelector } from "react-redux";
 
 

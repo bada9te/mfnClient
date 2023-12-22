@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
-import getTimeSince from "../../../common-functions/getTimeSince";
+import getTimeSince from "../../../common-functions/getTimeSince/getTimeSince";
 import { PLAYLIST_SWICTH_TRACK_MUTATION } from "../../../graphql-requests/playlists";
 import { POSTS_BY_TITLE_QUERY } from "../../../graphql-requests/posts";
 import { baseState } from "../../baseReactive";

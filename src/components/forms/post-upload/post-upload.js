@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { POSTS_BY_OWNER_QUERY, POST_CREATE_MUTATION } from "../../../graphql-requests/posts";
-import blobToFile from "../../../common-functions/blobToFile";
+import blobToFile from "../../../common-functions/blobToFIle/blobToFile";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 import { httpSaveFile } from "../../../http-requests/files";
