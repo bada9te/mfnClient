@@ -1,9 +1,10 @@
 import LoginForm from '../../components/forms/login/login';
-import { CardActions, CardContent, Typography, Box, Avatar, Stack } from '@mui/material';
+import { CardActions, CardContent, Typography, Box, Avatar, Stack, Button } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import loginImage from '../../images/icons/logo.png';
 import loginFormBG from '../../images/bgs/loginFormBG.png';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
+import { HowToReg, LockReset } from '@mui/icons-material';
 
 
 const Login = (props) => {
@@ -27,20 +28,20 @@ const Login = (props) => {
                 </CardContent>
                 <CardActions>
                     <Stack direction="column" spacing={0.75} mx={2} mb={2}>
-                        <Typography 
-                            fontSize={16} sx={{ cursor: 'pointer' }}
-                            component="div" fontWeight="bold" 
-                            color="primary" onClick={() => navigate('/app/account-restore/email-check')}
-                        >
+                        <Button 
+                            sx={{ width: 'fit-content' }}
+                            startIcon={<LockReset/>}
+                            variant='outlined' 
+                            onClick={() => navigate('/app/account-restore/email-check')}>
                             Forgot password
-                        </Typography>
-                        <Typography 
-                            fontSize={16} sx={{ cursor: 'pointer' }}
-                            component="div" fontWeight="bold" 
-                            color="primary" onClick={() => navigate('/app/register')}
-                        >
+                        </Button>
+                        <Button 
+                            sx={{ width: 'fit-content' }}
+                            startIcon={<HowToReg/>}
+                            variant='outlined' 
+                            onClick={() => navigate('/app/register')}>
                             Haven't registered yet
-                        </Typography>
+                        </Button>
                     </Stack>
                 </CardActions>
             </Box>

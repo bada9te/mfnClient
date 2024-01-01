@@ -35,7 +35,13 @@ function App() {
           root: {
             borderRadius: 25,
             padding: 10,
+            paddingLeft: 20,
+            paddingRight: 20,
+            paddingBottom: 5,
             transition: '500ms',
+          },
+          startIcon: {
+            marginBottom: 5
           }
         }
       },
@@ -43,8 +49,9 @@ function App() {
         styleOverrides: {
           root: {
             '& fieldset': {
-              borderRadius: 25
-            }
+              borderRadius: 25,
+              marginBottom: 4
+            },
           },
         }
       },

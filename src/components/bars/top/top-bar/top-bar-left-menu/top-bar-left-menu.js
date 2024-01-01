@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
 import { PlaylistPlay, QueueMusic, TrackChanges } from '@mui/icons-material';
 
 
@@ -8,7 +8,7 @@ const TopBarLeftMenu = props => {
 
 
     return (
-        <>
+        <ButtonGroup variant='string'>
             {pages.map((page, key) => (
                 <Button
                     key={key}
@@ -21,7 +21,7 @@ const TopBarLeftMenu = props => {
                     {page}
                 </Button>
             ))}
-        </>
+        </ButtonGroup>
     );
 }
 

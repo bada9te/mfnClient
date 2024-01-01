@@ -1,9 +1,10 @@
 import emailImage from '../../images/icons/email.png'
-import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
+import { Avatar, Box, CardActions, CardContent, Typography, Stack, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AccountRestoreRequestForm from '../../components/forms/account-restore-request/account-restore-request';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 import VerifyEmailBG from '../../images/bgs/emailCheckFormBG.png';
+import { Login } from '@mui/icons-material';
 
 
 const AccountRestoreEmailCheck = (props)=> {
@@ -23,13 +24,13 @@ const AccountRestoreEmailCheck = (props)=> {
                 </CardContent>
                 <CardActions>
                     <Stack direction="column" spacing={0.75} mx={2} mb={2}>
-                        <Typography 
-                            fontSize={16} sx={{ cursor: 'pointer' }}
-                            component="div" fontWeight="bold" 
-                            color="primary" onClick={() => navigate('/app/login')}
-                        >
+                        <Button 
+                            sx={{ width: 'fit-content' }}
+                            startIcon={<Login/>}
+                            variant='outlined' 
+                            onClick={() => navigate('/app/login')}>
                             Back to login
-                        </Typography>
+                        </Button>
                     </Stack>
                 </CardActions>
             </Box>

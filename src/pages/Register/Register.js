@@ -1,9 +1,10 @@
 import RegisterForm from '../../components/forms/register/register';
 import { useNavigate } from 'react-router-dom';
-import { Box, CardActions, CardContent, Typography, Avatar, Stack } from '@mui/material';
+import { Box, CardActions, CardContent, Typography, Avatar, Stack, Button } from '@mui/material';
 import loginImage from '../../images/icons/logo.png';
 import registerFormBG from '../../images/bgs/loginFormBG.png';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
+import { Login } from '@mui/icons-material';
 
 
 const Register = () => {
@@ -26,13 +27,13 @@ const Register = () => {
                 </CardContent>
                 <CardActions>
                     <Stack direction="column" spacing={0.75} mx={2} mb={2}>
-                        <Typography 
-                            fontSize={16} sx={{ cursor: 'pointer' }}
-                            component="div" fontWeight="bold" 
-                            color="primary" onClick={() => navigate('/app/login')}
-                        >
+                        <Button 
+                            sx={{ width: 'fit-content' }}
+                            startIcon={<Login/>}
+                            variant='outlined' 
+                            onClick={() => navigate('/app/login')}>
                             Already registered
-                        </Typography>
+                        </Button>
                     </Stack>
                 </CardActions> 
             </Box>
