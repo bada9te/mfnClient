@@ -106,76 +106,99 @@ const Topbar = (props) => {
     
 
     return (
-        
-            <HideOnScroll {...props}>
-                <AppBar component="nav" sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Container maxWidth="xxl" >
-                        <Toolbar disableGutters>
-                            <Typography
-                                variant="h6"
-                                noWrap
-                                component="a"
-                                href="/"
-                                sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontWeight: 400, color: 'inherit', textDecoration: 'none', alignItems: 'center' }}
-                            >
-                                <Avatar alt="app logo" src={logoImg} sx={{mr: 1}}/>
-                                MUSIC FROM NOTHING
-                            </Typography>
+        <HideOnScroll {...props}>
+            <AppBar component="nav" sx={{height: 64, zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Container maxWidth="xxl" >
+                    <Toolbar disableGutters>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{ 
+                                mt: 0.5,
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' }, 
+                                fontWeight: 400, 
+                                color: 'inherit', 
+                                textDecoration: 'none', 
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <Avatar alt="app logo" src={logoImg} sx={{mr: 1}}/>
+                            MUSIC FROM NOTHING
+                        </Typography>
 
-                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                                <IconButton
-                                    size="large"
-                                    aria-label="account of current user"
-                                    aria-controls="menu-appbar"
-                                    aria-haspopup="true"
-                                    onClick={handleOpenNavMenu}
-                                    color="inherit"
-                                >
-                                <MenuIcon />
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorElNav}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'left',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    }}
-                                    open={Boolean(anchorElNav)}
-                                    onClose={handleCloseNavMenu}
-                                    sx={{ display: { xs: 'block', md: 'none' } }}
-                                >
-                                    <TopBarLeftMenuMin pages={pages} handleNavigate={handleNavigate}/>
-                                </Menu>
-                            </Box>
-                            
-                            <Typography
-                                variant="h6"
-                                noWrap
-                                component="a"
-                                href=""
-                                sx={{mr: 1,display: { xs: 'flex', md: 'none' }, flexGrow: 1, fontWeight: 700,letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none' }}
+                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
                             >
-                                MFN
-                            </Typography>
-                            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                                <TopBarLeftMenu pages={pages} handleNavigate={handleNavigate}/>
-                            </Box>
-                            <Box sx={{ flexGrow: 0 }}>
-                                <Tooltip title="Open settings">
-                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, borderRadius: 7.5 }}>
-                                        <Typography
-                                            variant="h6"
-                                            noWrap
-                                            component="span"
-                                            sx={{ mr: 1, display: { xs: 'none', md: 'flex' }, fontWeight: 400, color: 'white', textDecoration: 'none', alignItems: 'center',}}
-                                        >
-                                            { user && user?._id !== "" ? user?.nick : "Log in" }
-                                        </Typography>
+                            <MenuIcon />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
+                                sx={{ display: { xs: 'block', md: 'none' } }}
+                            >
+                                <TopBarLeftMenuMin pages={pages} handleNavigate={handleNavigate}/>
+                            </Menu>
+                        </Box>
+                        
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href=""
+                            sx={{mr: 1,display: { xs: 'flex', md: 'none' }, flexGrow: 1, fontWeight: 700,letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none' }}
+                        >
+                            MFN
+                        </Typography>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                            <TopBarLeftMenu pages={pages} handleNavigate={handleNavigate}/>
+                        </Box>
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton 
+                                    onClick={handleOpenUserMenu} 
+                                    sx={{ 
+                                        pl: 2, 
+                                        borderRadius: 7.5,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        noWrap
+                                        component="span"
+                                        sx={{ 
+                                            mt: 0.5,
+                                            mr: 1, 
+                                            display: { xs: 'none', md: 'flex' }, 
+                                            fontWeight: 400, 
+                                            color: 'white', 
+                                            textDecoration: 'none', 
+                                        }}
+                                    >
+                                        { user && user?._id !== "" ? user?.nick : "Log in" }
+                                    </Typography>
                                         {
                                             data?.notifications.length > 0
                                             ?
@@ -197,36 +220,35 @@ const Topbar = (props) => {
                                                 src={user?.avatar !== "" ? `${locations?.images}/${user?.avatar}` : "NULL"} 
                                             />
                                         }
-                                    </IconButton>
-                                </Tooltip>
+                                </IconButton>
+                            </Tooltip>
 
-                                <Menu
-                                    sx={{ mt: '45px' }}
-                                    id="menu-appbar"
-                                    anchorEl={anchorElUser}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={Boolean(anchorElUser)}
-                                    onClose={handleCloseUserMenu}
-                                >
-                                    <TopBarUserMenu 
-                                        handleCloseUserMenu={handleCloseUserMenu}
-                                        notifications={data?.notifications || []}
-                                    />
-                                </Menu>
-                            </Box>
-                        </Toolbar>
-                    </Container>
-                </AppBar>
-            </HideOnScroll>
-        
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                <TopBarUserMenu 
+                                    handleCloseUserMenu={handleCloseUserMenu}
+                                    notifications={data?.notifications || []}
+                                />
+                            </Menu>
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </HideOnScroll>
     );
 }
 

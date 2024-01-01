@@ -14,9 +14,9 @@ const WelcomePageStart = props => {
         <Box
             sx={{ 
                 height: 'calc(100vh - 120px)', 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
                 flexWrap: 'wrap', 
                 flexDirection: 'column',
                 backgroundImage: `url(${WelcomePageStartBG})`,
@@ -26,10 +26,10 @@ const WelcomePageStart = props => {
                 scrollSnapAlign: 'start',
             }}
         >
-            <Avatar src={AppLogoImg} alt="Music From Nothing" sx={{ height: '180px', width: '180px' }}/>
-            <Typography textAlign="center" sx={{ py: 4 }} variant="h3">Welcome to Music From Nothing</Typography>
-            <Stack spacing={3} direction="row" useFlexGap>
-                <Button variant="contained" endIcon={<PlayArrow/>} onClick={() => navigate('/app')}>Explore the world of custom music</Button>
+            <Avatar src={AppLogoImg} alt="Music From Nothing" sx={{ height: { xs: '35vw', sm: '25vw', md: '12vw' }, width: { xs: '35vw', sm: '25vw', md: '12vw' } }}/>
+            <Typography textAlign="center" sx={{ py: 4, fontSize: {xs: '25px', sm: '32.5px', md: '40px'} }} variant='h3'>Welcome to Music From Nothing</Typography>
+            <Stack spacing={3} sx={{ flexDirection: { sm: "column", md: "row" } }} useFlexGap>
+                <Button variant="contained" endIcon={<PlayArrow/>} onClick={() => navigate('/app')}>Explore custom music</Button>
                 {
                     !currentUser._id 
                     && 

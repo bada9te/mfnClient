@@ -17,6 +17,15 @@ export default new InMemoryCache({
                 }
             },
         },
+        PostsWithCount: {
+            fields: {
+                posts: {
+                    merge(_, incoming) {
+                        return incoming
+                    }
+                }
+            }
+        },
         User: {
             keyFields: ['_id'],
         },

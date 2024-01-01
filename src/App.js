@@ -42,6 +42,9 @@ function App() {
           },
           startIcon: {
             marginBottom: 5
+          },
+          endIcon: {
+            marginBottom: 5
           }
         }
       },
