@@ -49,7 +49,7 @@ const PostsContainer = (props) => {
                 let result;
                 let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
                 
-                if (savedOnly) {
+                if (savedOnly && currentUser._id !== "") {
                     result = await getSavedOnlyPosts({
                         variables: {
                             user: currentUser?._id,

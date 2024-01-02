@@ -43,12 +43,12 @@ const PlaylistsEnumWithPagination = () => {
 
     return (
         <>
-            <Stack spacing={2} sx={{my: 3, mx: {sx: 0, md: 2}}}>
+            <Stack spacing={2} sx={{my: 3, mx: {sx: 0, md: 2}, px: 1 }}>
                 <EnumPlaylists playlists={playlistsContainer.playlists}/>
             </Stack>
             {
                 playlistsContainer.playlists.length > 0 
-                ? 
+                && 
                 <Box sx={{mb: 10}}>
                     <PaginationTree 
                         maxPage={playlistsContainer.maxPage} 
@@ -56,8 +56,6 @@ const PlaylistsEnumWithPagination = () => {
                         handlePageChange={handlePageChange}
                     />
                 </Box> 
-                : 
-                null
             }
         </>
     );

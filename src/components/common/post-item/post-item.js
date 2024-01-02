@@ -7,7 +7,7 @@ import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, Pl
 import PostItemDropDown             from './post-item-dropdown/post-item-dropdown';
 
 import { useMutation, useReactiveVar } from '@apollo/client';
-import { POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from '../../../graphql-requests/posts';
+import { POSTS_SAVED_BY_USER_QUERY, POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from '../../../graphql-requests/posts';
 import { audioPlayerState } from '../audio-player/reactive';
 import { userSelectContainerState } from '../../containers/user-select-container/reactive';
 import { userSelectModalState } from '../../modals/user-select-modal/reactive';
@@ -18,6 +18,7 @@ import { confirmModalState } from '../../modals/confirm-modal/reactive';
 import { commentsModalState } from '../../modals/comments-modal/reactive';
 import { commentsContainerState } from '../../containers/comments-container/reactive';
 import { baseState } from '../../baseReactive';
+import { postsContainerState } from '../../containers/posts-container/reactive';
 
 
 
@@ -31,6 +32,7 @@ const PostItem = (props) => {
 
     const { user: currentUser } = useReactiveVar(baseState);
     const audioPlayer = useReactiveVar(audioPlayerState);
+    const { maxCountPerPage } = useReactiveVar(postsContainerState);
 
     // nav
     const navigate = useNavigate();
@@ -59,6 +61,36 @@ const PostItem = (props) => {
         if (addons.status === "upload") return;
         
         await switchInSaved({
+            update: (cache, { data }) => {
+                const postData = data.postSwicthInSaved;
+                let cachedData = cache.readQuery({ 
+                    query: POSTS_SAVED_BY_USER_QUERY, 
+                    variables: { user: currentUser._id, offset: 0, limit: maxCountPerPage } 
+                });
+
+                let savedPosts = [];
+                if (cachedData) {
+                    savedPosts = JSON.parse(JSON.stringify(cachedData.postsSavedByUser.posts));
+                }
+                const itemExists = savedPosts.map(i => i._id).includes(postData._id);
+
+                if (itemExists) {
+                    savedPosts = savedPosts.filter(i => i._id !== postData._id);
+                } else {
+                    savedPosts.push(postData);
+                }
+
+                cache.writeQuery({
+                    query: POSTS_SAVED_BY_USER_QUERY, 
+                    variables: { user: currentUser._id, offset: 0, limit: maxCountPerPage },
+                    data: {
+                        postsSavedByUser: {
+                            posts: savedPosts,
+                            count: savedPosts.length,
+                        }
+                    }
+                })
+            },
             variables: {
                 input: {
                     userId: currentUser._id,

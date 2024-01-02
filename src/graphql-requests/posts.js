@@ -152,6 +152,11 @@ export const POST_SWITCH_IN_SAVED_MUTATION = gql`
     mutation postSwicthInSaved($input: SwitchLikeOrPostInSavedInput!) {
         postSwicthInSaved(input: $input) {
             ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
         }
     }
 `;

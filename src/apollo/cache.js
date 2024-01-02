@@ -23,7 +23,7 @@ export default new InMemoryCache({
                     merge(_, incoming) {
                         return incoming
                     }
-                }
+                },
             }
         },
         User: {

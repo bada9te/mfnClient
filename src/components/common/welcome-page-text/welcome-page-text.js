@@ -46,7 +46,6 @@ const WelcomePageText = props => {
                 justifyContent: 'center', 
                 alignItems: 'center', 
                 flexDirection: { sm: 'column', lg: 'row' },
-                my: 5,
                 py: 5,
                 scrollSnapAlign: 'start',
             }}
