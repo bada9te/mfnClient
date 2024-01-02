@@ -13,6 +13,7 @@ import UserSelectModal from "../../components/modals/user-select-modal/user-sele
 import CommentsModal from "../../components/modals/comments-modal/comments-modal";
 import ReportsModal from "../../components/modals/report-modal/report-modal";
 import PostSelectModal from "../../components/modals/post-select-modal/post-select-modal";
+import LanguageSelectModal from "../../components/modals/language-select-modal/language-select-modal";
 
 
 
@@ -28,6 +29,7 @@ const Container = (props) => {
             <CommentsModal/>
             <ReportsModal/>
             <PostSelectModal/>
+            <LanguageSelectModal/>
 
             {/* BARS */}
             <LeftBarPosts/>

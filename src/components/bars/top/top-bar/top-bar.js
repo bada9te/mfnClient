@@ -13,7 +13,6 @@ import { audioPlayerState } from '../../../common/audio-player/reactive';
 import { bottomBarState } from '../../bottom/bottom-bar/reactive';
 import { baseState } from '../../../baseReactive';
 import { NOTIFICATIONS_QUERY } from '../../../../graphql-requests/notifications';
-import TranslationDropdown from '../../../common/translation-dropdown/translation-dropdown';
 
 
 function HideOnScroll(props) {
@@ -173,8 +172,6 @@ const Topbar = (props) => {
                             <TopBarLeftMenu pages={pages} handleNavigate={handleNavigate}/>
                         </Box>
                         <Box sx={{ flexGrow: 0 }}>
-                            <TranslationDropdown/>
-
                             <Tooltip title="Open settings">
                                 <IconButton 
                                     onClick={handleOpenUserMenu} 
@@ -190,7 +187,7 @@ const Topbar = (props) => {
                                         noWrap
                                         component="span"
                                         sx={{ 
-                                            mt: 0.5,
+                                            
                                             mr: 1, 
                                             display: { xs: 'none', md: 'flex' }, 
                                             fontWeight: 400, 

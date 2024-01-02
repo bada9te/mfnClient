@@ -1,17 +1,18 @@
 import { Menu, MenuItem, Typography } from "@mui/material";
-import { Person, Logout, ContactSupport, BookmarkAdded, Settings, Notifications, Login } from '@mui/icons-material';
+import { Person, Logout, ContactSupport, BookmarkAdded, Settings, Notifications, Login, Language } from '@mui/icons-material';
 import ThemeSwitcher from "../../../../common/theme-switcher/theme-switcher";
 import { useNavigate } from "react-router-dom";
 import StyledBadge from "../styled-badge/styled-badge";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../../../baseReactive";
+import { languageSelectModalState } from "../../../../modals/language-select-modal/reactive";
 
 
 
 const TopBarUserMenu = props => {
     const { handleCloseUserMenu, notifications, anchorElUser } = props;
-    const items = ['Profile', 'Notifications', 'Edit profile', 'Saved posts', 'Support', 'Logout'];
-    const itemsNL = ['Log in', 'Support'];
+    const items = ['Profile', 'Notifications', 'Edit profile', 'Saved posts', 'Support', 'Language', 'Logout'];
+    const itemsNL = ['Log in', 'Support', 'Language'];
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
 
@@ -38,6 +39,9 @@ const TopBarUserMenu = props => {
                 break;
             case 'Log in':
                 navigate('/app/login');
+                break;
+            case 'Language': 
+                languageSelectModalState({ isShowing: true });
                 break;
             default:
                 break;
@@ -92,6 +96,8 @@ const TopBarUserMenu = props => {
                                                 return (<BookmarkAdded sx={{mr: 1}}/>);
                                             case 'Support':
                                                 return (<ContactSupport sx={{mr: 1}}/>);
+                                            case 'Language':
+                                                return (<Language sx={{mr: 1}}/>);
                                             case 'Logout':
                                                 return (<Logout sx={{mr: 1}}/>);
                                             default:
@@ -114,6 +120,8 @@ const TopBarUserMenu = props => {
                                         switch(item) {
                                             case 'Support':
                                                 return (<ContactSupport sx={{mr: 1}}/>);
+                                            case 'Language':
+                                                return (<Language sx={{mr: 1}}/>);
                                             case 'Log in':
                                                 return (<Login sx={{mr: 1}}/>);
                                             default:
