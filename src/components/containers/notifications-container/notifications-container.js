@@ -2,9 +2,9 @@ import { Box, Button, Tab, Tabs } from "@mui/material";
 import { useEffect, useState } from "react";
 import EnumNotifications from "../../enums/enum-notifications";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
-import { useLazyQuery, useReactiveVar } from "@apollo/client";
+import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { NOTIFICATIONS_QUERY } from "../../../graphql-requests/notifications";
+import { DELETE_NOTIFICATIONS_MUTATION, MARK_NOTIFICATIONS_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "../../../graphql-requests/notifications";
 import { useSnackbar } from "notistack";
 
 
@@ -29,70 +29,46 @@ function TabPanel(props) {
 }
 
 
-
-
 const NotificationsContainer = props => {
     const [status, setStatus] = useState(0);
 
     const { user: currentUser } = useReactiveVar(baseState);
-    const [getNotifications, { data, loading }] = useLazyQuery(NOTIFICATIONS_QUERY, {
+    const [ getNotifications, { data, loading } ] = useLazyQuery(NOTIFICATIONS_QUERY, {
         variables: {
             receiverId: currentUser._id,
             checked: status === 0 ? false : true,
         },
         pollInterval: 15000,
     });
+    const [ deleteNotificationsByIds ] = useMutation(DELETE_NOTIFICATIONS_MUTATION);
+    const [ markNotificationsAsReadByIds ] = useMutation(MARK_NOTIFICATIONS_AS_READ_MUTATION);
     const { enqueueSnackbar } = useSnackbar();
 
     const handleTabSwitch = (event, key) => {
         setStatus(key);
     }
 
-    const handleDeleteAllClick = () => {
+    const handleDeleteAllClick = async() => {
         if (data?.notifications && data?.notifications.length > 0) {
             enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
-            /*
-            Alert.alertPromise('Pending...', 'Notifications removed', 'Error occured', () => {
-                return new Promise((resolve, reject) => {
-                    
-                    dispatch(deleteManyNotifications(notifications.map(i => i._id)))
-                        .then(unwrapResult)
-                        .then(result => {
-                            if (result.data.done) {
-                                resolve();
-                            } else {
-                                reject();
-                            }
-                        });
-                    resolve();
+            await deleteNotificationsByIds({ variables: { ids: data.notifications.map(i => i._id) } })
+                .then(() => {
+                    enqueueSnackbar("Cleared all notifications.", { autoHideDuration: 1500, variant: 'success' });
+                }).catch(() => {
+                    enqueueSnackbar("An error occured.", { autoHideDuration: 3000, variant: 'error' });
                 });
-            }, {theme});
-            */
-            console.log("DELETE_ALL");
         }
     }
 
-    const handleReadAllClick = () => {
+    const handleReadAllClick = async() => {
         if (data?.notifications && data?.notifications.length > 0) {
             enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
-            /*
-            Alert.alertPromise('Pending...', 'Notifications marked as read', 'Error occured', () => {
-                return new Promise((resolve, reject) => {
-                    dispatch(markManyNotificationsAsRead(notifications.map(i => i._id)))
-                        .then(unwrapResult)
-                        .then(result => {
-                            if (result.data.done) {
-                                resolve();
-                            } else {
-                                reject();
-                            }
-                        });
-                        
-                    resolve();
+            await markNotificationsAsReadByIds({ variables: { ids: data.notifications.map(i => i._id) } })
+                .then(() => {
+                    enqueueSnackbar("Success.", { autoHideDuration: 1500, variant: 'success' });
+                }).catch(() => {
+                    enqueueSnackbar("An error occured.", { autoHideDuration: 3000, variant: 'error' });
                 });
-            }, {theme});
-            */
-            console.log("READ_ALL");
         }
     }
 
@@ -119,7 +95,7 @@ const NotificationsContainer = props => {
             </TabPanel>
         
             <TabPanel value={status} index={1}>
-                { !loading && <Button fullWidth onClick={handleDeleteAllClick}>Delete all read notifications</Button> }
+                { !loading && <Button fullWidth onClick={handleDeleteAllClick}>Delete all notifications</Button> }
                 <EnumNotifications notifications={data?.notifications || []} loading={loading}/>
             </TabPanel>
         </Box>
