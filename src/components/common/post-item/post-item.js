@@ -175,7 +175,7 @@ const PostItem = (props) => {
             boxShadow: 3, 
             borderRadius: addons.status === "in-player" ? 0 : 5,
             transition: '500ms', 
-            ":hover": { transform: 'scale(1.025)', boxShadow: 10 }
+            ":hover": { transform: addons.status === "in-player" ? 0 : 'scale(1.025)', boxShadow: 10 }
         }}>
             <CardHeader
                 avatar={
@@ -202,118 +202,101 @@ const PostItem = (props) => {
                     />
                 }
             />
-                <Box sx={{ position: 'relative' }}>
-                    {
-                        (() => {
-                            if (base.img?.endsWith('/') || !base.img) {
-                                return (
-                                    <Skeleton variant="rectangular" height={160} sx={{
-                                        width: {xs: '100%', md: '400px'}
-                                    }} />
-                                );
-                            } else {
-                                return (
-                                    <CardMedia component="img" height="160" width={{xs: '100%', md: '400px'}} image={base.img} alt={base.title}/>
-                                );
-                            }
-                        })()
-                    }
-                    <Box sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: '100%',
-                        bgcolor: 'rgba(0,0,0,0.3)',
-                        color: 'white',
-                        padding: '10px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        backdropFilter: 'blur(5px)'
-                    }}>
-                        <Box>
-                            <Typography variant='h5'>{base.title}</Typography>
-                            <Typography variant='p'>{base.description}</Typography>
-                        </Box>
-                        {
-                            addons.status !== "in-player"
-                            ?
-                            <Box sx={{ display: 'flex' }}>
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <Tooltip title="Save">
-                                        <span>
-                                            <IconButton 
-                                                aria-label="bookmark" 
-                                                onClick={switchPostInSaved} 
-                                                sx={{ color: 'white' }}
-                                                disabled={currentUser && currentUser._id !== "" ? false : true}
-                                            >
-                                                { isSaved ? <Bookmark/> : <BookmarkBorder/> }
-                                            </IconButton>
-                                        </span>
-                                    </Tooltip>
-                                    <Typography sx={{ fontSize: 12 }}>{savedBy.length}</Typography>
-                                </Box>
-                                {
-                                    addons.commentsAllowed
-                                    ?
-                                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                        <Tooltip title="Comment out">
-                                            <span>
-                                                <IconButton 
-                                                    aria-label="comment" 
-                                                    sx={{ color: 'white' }} 
-                                                    onClick={switchShowCommentsModal}
-                                                    disabled={currentUser && currentUser._id !== "" ? false : true}
-                                                >
-                                                    <CommentOutlined />
-                                                </IconButton>
-                                            </span>
-                                        </Tooltip>
-                                        <Typography sx={{ fontSize: 12 }}>{base.comments.length}</Typography>
-                                    </Box>
-                                    :
-                                    null
-                                }
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <Tooltip title="Like">
-                                        <span>
-                                            <IconButton 
-                                                aria-label="add to favorites" 
-                                                onClick={(e) => onLikesChanged(e, -isLiked)} 
-                                                sx={{ color: 'white' }}
-                                                disabled={currentUser && currentUser._id !== "" ? false : true}
-                                            >
-                                                { isLiked ? <Favorite/> : <FavoriteBorder/> }
-                                            </IconButton>
-                                        </span>
-                                    </Tooltip>
-                                    <Typography sx={{ fontSize: 12 }}>{likedBy.length}</Typography>
-                                </Box>
-                            </Box>
-                            :
-                            <Button 
-                                variant="contained" 
-                                sx={{ boxShadow: 10 }}
-                                onClick={openTrackDetailsPage}
-                            >
-                                Track details
-                            </Button>
-                        }
+
+            {/* ################################# BLURED PANEL ################################# */}
+            <Box sx={{ position: 'relative' }}>
+                {
+                    base.img?.endsWith('/') || !base.img
+                    ?
+                    <Skeleton variant="rectangular" height={160} sx={{ width: {xs: '100%', md: '400px'} }}/>
+                    :
+                    <CardMedia component="img" height="160" width={{xs: '100%', md: '400px'}} image={base.img} alt={base.title}/>
+                }
+                <Box sx={{
+                    position: 'absolute', bottom: 0, left: 0,
+                    width: '100%',
+                    bgcolor: 'rgba(0,0,0,0.3)', color: 'white',
+                    padding: '10px',
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    backdropFilter: 'blur(5px)'
+                }}>
+                    <Box>
+                        <Typography variant='h5'>{base.title}</Typography>
+                        <Typography variant='p'>{base.description}</Typography>
                     </Box>
+
+                    {/* ################################# LIKE SAVE COMMENT ################################# */}
+                    {
+                        addons.status !== "in-player"
+                        ?
+                        <Box sx={{ display: 'flex' }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <Tooltip title="Save">
+                                    <span>
+                                        <IconButton 
+                                            aria-label="bookmark" 
+                                            onClick={switchPostInSaved} 
+                                            sx={{ color: 'white' }}
+                                            disabled={currentUser && currentUser._id !== "" ? false : true}
+                                        >
+                                            { isSaved ? <Bookmark/> : <BookmarkBorder/> }
+                                        </IconButton>
+                                    </span>
+                                </Tooltip>
+                                <Typography sx={{ fontSize: 12 }}>{savedBy.length}</Typography>
+                            </Box>
+                            {
+                                addons.commentsAllowed
+                                ?
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    <Tooltip title="Comment out">
+                                        <span>
+                                            <IconButton 
+                                                aria-label="comment" 
+                                                sx={{ color: 'white' }} 
+                                                onClick={switchShowCommentsModal}
+                                                disabled={currentUser && currentUser._id !== "" ? false : true}
+                                            >
+                                                <CommentOutlined />
+                                            </IconButton>
+                                        </span>
+                                    </Tooltip>
+                                    <Typography sx={{ fontSize: 12 }}>{base.comments.length}</Typography>
+                                </Box>
+                                :
+                                null
+                            }
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <Tooltip title="Like">
+                                    <span>
+                                        <IconButton 
+                                            aria-label="add to favorites" 
+                                            onClick={(e) => onLikesChanged(e, -isLiked)} 
+                                            sx={{ color: 'white' }}
+                                            disabled={currentUser && currentUser._id !== "" ? false : true}
+                                        >
+                                            { isLiked ? <Favorite/> : <FavoriteBorder/> }
+                                        </IconButton>
+                                    </span>
+                                </Tooltip>
+                                <Typography sx={{ fontSize: 12 }}>{likedBy.length}</Typography>
+                            </Box>
+                        </Box>
+                        :
+                        <Button variant="contained" sx={{ boxShadow: 10 }} onClick={openTrackDetailsPage}>
+                            Track details
+                        </Button>
+                    }
                 </Box>
+            </Box>
             
-            
+            {/* ################################# POST ACTION BUTTONS ################################# */}
             {
                 addons.status !== "in-player"
                 &&
                 <CardContent sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    m: 0, 
-                    p: 0, 
-                    paddingBottom: 0, 
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    m: 0, p: 0, paddingBottom: 0, 
                     "&:last-child": { paddingBottom: 0 }
                 }}>
                     <>
@@ -340,10 +323,9 @@ const PostItem = (props) => {
                                                         color: audioPlayer.loop ? 'white' : '',
                                                         borderTopRightRadius: 50,
                                                         borderBottomRightRadius: 0,
-                                                        pr: 2
                                                     }} 
                                                     variant="contained" size="small" onClick={switchLoop} 
-                                                    disabled={audioPlayer.controlsLocked ? true : false}
+                                                    disabled={ audioPlayer.controlsLocked ? true : false }
                                                 >
                                                     Loop 
                                                 </Button>
@@ -357,7 +339,6 @@ const PostItem = (props) => {
                                                         borderTopLeftRadius: 50,
                                                         borderBottomLeftRadius: 0,
                                                         borderTopRightRadius: 0,
-                                                        pl: 2
                                                     }} 
                                                     variant="contained" size="small" onClick={handleMuteUnmute} 
                                                     disabled={audioPlayer.controlsLocked ? true : false}
@@ -374,9 +355,7 @@ const PostItem = (props) => {
                                                 startIcon={<PlayArrow/>}
                                                 sx={{ 
                                                     borderTopRightRadius: ["selecting", "voting"].includes(addons.status) && !addons?.votedBy?.includes(currentUser?._id) ? 0 : 50,
-                                                    borderBottomRightRadius: 0,
-                                                    borderTopLeftRadius: 0,
-                                                    pr: 2,
+                                                    borderBottomRightRadius: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 25,
                                                 }} 
                                                 disabled={!base.audio}
                                                 variant="contained" size="small" onClick={playAudio}
@@ -391,12 +370,7 @@ const PostItem = (props) => {
                                                                 size="small" 
                                                                 onClick={() => addons.selectPost({base, addons})}
                                                                 startIcon={<CheckCircle/>}
-                                                                sx={{ 
-                                                                    borderTopRightRadius: 50,
-                                                                    borderBottomRightRadius: 0,
-                                                                    pr: 2,
-                                                                    backgroundColor: '#36B2AC'
-                                                                }}
+                                                                sx={{ borderTopRightRadius: 50, borderBottomRightRadius: 0, borderBottomLeftRadius: 25, backgroundColor: '#36B2AC' }}
                                                             >
                                                                 Select
                                                             </Button>
@@ -407,12 +381,7 @@ const PostItem = (props) => {
                                                                 size="small" 
                                                                 onClick={() => addons.makeBattleVote(addons.battleId, addons.postNScore, 1, currentUser?._id)}
                                                                 startIcon={<HowToVote/>}
-                                                                sx={{ 
-                                                                    borderTopRightRadius: 50,
-                                                                    borderBottomRightRadius: 0,
-                                                                    pr: 2,
-                                                                    backgroundColor: '#36B2AC'
-                                                                }}
+                                                                sx={{ borderTopRightRadius: 50, borderBottomRightRadius: 0, borderBottomLeftRadius: 25, backgroundColor: '#36B2AC' }}
                                                             >
                                                                 Vote (+1)
                                                             </Button>
@@ -432,6 +401,4 @@ const PostItem = (props) => {
     );
 }
 
-
 export default memo(PostItem);
-

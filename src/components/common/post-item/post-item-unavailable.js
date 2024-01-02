@@ -53,8 +53,9 @@ const PostItemUnavailable = (props) => {
                                         startIcon={<Search/>}
                                         sx={{ 
                                             borderTopRightRadius: 50,
-                                            borderBottomLeftRadius: 0,
-                                            pr: 2
+                                            borderBottomLeftRadius: 25,
+                                            borderTopLeftRadius: 0,
+                                            borderBottomRightRadius: 0,
                                         }} 
                                         size="small"
                                         variant="contained"  
