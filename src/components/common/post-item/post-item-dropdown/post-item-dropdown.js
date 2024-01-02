@@ -6,7 +6,7 @@ import { baseState } from "../../../baseReactive";
 
 const PostItemDropDown = props => {
     const { owner, handlers, downloadsAllowed } = props;
-    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [ anchorElUser, setAnchorElUser ] = useState(null);
     const { user: currentUser } = useReactiveVar(baseState);
 
     // click

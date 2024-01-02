@@ -13,6 +13,7 @@ import { audioPlayerState } from '../../../common/audio-player/reactive';
 import { bottomBarState } from '../../bottom/bottom-bar/reactive';
 import { baseState } from '../../../baseReactive';
 import { NOTIFICATIONS_QUERY } from '../../../../graphql-requests/notifications';
+import TranslationDropdown from '../../../common/translation-dropdown/translation-dropdown';
 
 
 function HideOnScroll(props) {
@@ -47,8 +48,6 @@ function HideOnScroll(props) {
 
 const Topbar = (props) => {
     const { user, locations } = useReactiveVar(baseState);
-    //const notifications = useSelector(state => state.notificationsContainer.notifications);
-
     const [ getUnreadNotifications, { data } ] = useLazyQuery(NOTIFICATIONS_QUERY);
 
     const pages = ['Feed', 'Battles', 'Playlists'];
@@ -174,6 +173,8 @@ const Topbar = (props) => {
                             <TopBarLeftMenu pages={pages} handleNavigate={handleNavigate}/>
                         </Box>
                         <Box sx={{ flexGrow: 0 }}>
+                            <TranslationDropdown/>
+
                             <Tooltip title="Open settings">
                                 <IconButton 
                                     onClick={handleOpenUserMenu} 
@@ -223,27 +224,11 @@ const Topbar = (props) => {
                                 </IconButton>
                             </Tooltip>
 
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                <TopBarUserMenu 
-                                    handleCloseUserMenu={handleCloseUserMenu}
-                                    notifications={data?.notifications || []}
-                                />
-                            </Menu>
+                            <TopBarUserMenu 
+                                handleCloseUserMenu={handleCloseUserMenu}
+                                notifications={data?.notifications || []}
+                                anchorElUser={anchorElUser}
+                            />
                         </Box>
                     </Toolbar>
                 </Container>

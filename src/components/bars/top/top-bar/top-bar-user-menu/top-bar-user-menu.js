@@ -1,4 +1,4 @@
-import { MenuItem, Typography } from "@mui/material";
+import { Menu, MenuItem, Typography } from "@mui/material";
 import { Person, Logout, ContactSupport, BookmarkAdded, Settings, Notifications, Login } from '@mui/icons-material';
 import ThemeSwitcher from "../../../../common/theme-switcher/theme-switcher";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { baseState } from "../../../../baseReactive";
 
 
 const TopBarUserMenu = props => {
-    const {handleCloseUserMenu, notifications} = props;
+    const { handleCloseUserMenu, notifications, anchorElUser } = props;
     const items = ['Profile', 'Notifications', 'Edit profile', 'Saved posts', 'Support', 'Logout'];
     const itemsNL = ['Log in', 'Support'];
     const navigate = useNavigate();
@@ -46,7 +46,22 @@ const TopBarUserMenu = props => {
 
 
     return (
-        <>
+        <Menu
+            sx={{ mt: '45px' }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+        >
             {
                 currentUser && currentUser._id !== ""
                 ?
@@ -117,8 +132,7 @@ const TopBarUserMenu = props => {
                     <ThemeSwitcher/>
                 </Typography>
             </MenuItem>
-            
-        </>
+        </Menu>
     );
 }
 
