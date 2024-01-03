@@ -1,8 +1,12 @@
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
 import { GitHub, Instagram } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 const WelcomePageCard = props => {
     const { item } = props;
+    const { t } = useTranslation("common");
+
+
     return (
         <Card sx={{ 
             width: {xs: '95%', sm: '375px', md: '400px'}, 
@@ -14,9 +18,9 @@ const WelcomePageCard = props => {
             <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>
                 <Avatar src={item.iconUrl} alt={item.title} sx={{ m: 1, boxShadow: 5 }}/>
             </Box>
-            <CardHeader title={item.title}/>
+            <CardHeader title={t(`welcome.card.${item.id}.title`)}/>
             <CardContent>
-                <Typography>{item.description}</Typography>
+                <Typography>{t(`welcome.card.${item.id}.description`)}</Typography>
             </CardContent>
             {
                 (item?.github || item?.instagram)

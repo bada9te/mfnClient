@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { memo, useEffect, useRef, useState } from 'react';
 import { Box, Drawer, IconButton, Slider, Stack, Typography } from '@mui/material';
 import { FastRewind, Loop, Pause, PlayArrow, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material';

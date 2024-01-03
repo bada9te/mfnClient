@@ -4,12 +4,13 @@ import { Box, List, Typography } from "@mui/material";
 import EnumLeftBarPosts from "../../enums/enum-leftbar-posts";
 import { useLazyQuery } from "@apollo/client";
 import { POSTS_BY_TITLE_QUERY } from "../../../graphql-requests/posts";
-
+import { useTranslation } from "react-i18next";
 
 
 const LeftBarPostsContainer = props => {
     const { searchQuery } = props;
     const [ getPostsByTitle, { data, loading } ] = useLazyQuery(POSTS_BY_TITLE_QUERY);
+    const { t } = useTranslation("common");
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -50,7 +51,7 @@ const LeftBarPostsContainer = props => {
                             return (
                                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                                     <Typography>
-                                        Start typing track name to search
+                                        {t('leftbar.info_text')}
                                     </Typography>
                                 </Box>
                             );

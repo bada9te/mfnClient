@@ -2,6 +2,7 @@ import { useReactiveVar } from "@apollo/client";
 import { Close, Language } from "@mui/icons-material";
 import { Dialog, DialogContent, DialogTitle, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { languageSelectModalState } from "./reactive";
+import { baseState } from "../../baseReactive";
 
 
 const LanguageSelectModal = props => {
@@ -9,6 +10,12 @@ const LanguageSelectModal = props => {
 
     const handleClose = () => {
         languageSelectModalState({ isShowing: false });
+    }
+
+    const selectLanguage = (language) => {
+        baseState({ ...baseState(), language });
+        localStorage.setItem(process.env.REACT_APP_LANGUAGE_VAR_NAME, JSON.stringify({ language }));
+        handleClose();
     }
 
     return (
@@ -22,7 +29,7 @@ const LanguageSelectModal = props => {
             <DialogContent dividers={true}>
                 <List>
                     <ListItem disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => selectLanguage("en")}>
                             <ListItemIcon>
                                 <Language/>
                             </ListItemIcon>
@@ -30,7 +37,7 @@ const LanguageSelectModal = props => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => selectLanguage("ua")}>
                             <ListItemIcon>
                                 <Language/>
                             </ListItemIcon>
@@ -38,7 +45,7 @@ const LanguageSelectModal = props => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => selectLanguage("ru")}>
                             <ListItemIcon>
                                 <Language/>
                             </ListItemIcon>

@@ -5,10 +5,12 @@ import WelcomePageStartBG from "../../../images/bgs/welcomePageStart.png";
 import { useNavigate } from "react-router-dom";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
+import { useTranslation } from "react-i18next";
 
 const WelcomePageStart = props => {
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
+    const { t } = useTranslation("common");
 
     return (
         <Box
@@ -27,9 +29,9 @@ const WelcomePageStart = props => {
             }}
         >
             <Avatar src={AppLogoImg} alt="Music From Nothing" sx={{ height: { xs: '35vw', sm: '25vw', md: '12vw' }, width: { xs: '35vw', sm: '25vw', md: '12vw' } }}/>
-            <Typography textAlign="center" sx={{ py: 4, fontSize: {xs: '25px', sm: '32.5px', md: '40px'} }} variant='h3'>Welcome to Music From Nothing</Typography>
+            <Typography textAlign="center" sx={{ py: 4, fontSize: {xs: '25px', sm: '32.5px', md: '40px'} }} variant='h3'>{t('welcome.hello')} Music From Nothing</Typography>
             <Stack spacing={3} sx={{ flexDirection: { sm: "column", md: "row" } }} useFlexGap>
-                <Button variant="contained" endIcon={<PlayArrow/>} onClick={() => navigate('/app')}>Explore custom music</Button>
+                <Button variant="contained" endIcon={<PlayArrow/>} onClick={() => navigate('/app')}>{t('welcome.explore_btn')}</Button>
                 {
                     !currentUser._id 
                     && 

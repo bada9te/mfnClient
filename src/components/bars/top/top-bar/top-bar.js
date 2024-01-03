@@ -13,6 +13,7 @@ import { audioPlayerState } from '../../../common/audio-player/reactive';
 import { bottomBarState } from '../../bottom/bottom-bar/reactive';
 import { baseState } from '../../../baseReactive';
 import { NOTIFICATIONS_QUERY } from '../../../../graphql-requests/notifications';
+import { useTranslation } from 'react-i18next';
 
 
 function HideOnScroll(props) {
@@ -48,7 +49,8 @@ function HideOnScroll(props) {
 const Topbar = (props) => {
     const { user, locations } = useReactiveVar(baseState);
     const [ getUnreadNotifications, { data } ] = useLazyQuery(NOTIFICATIONS_QUERY);
-
+    const { t } = useTranslation("common");
+ 
     const pages = ['Feed', 'Battles', 'Playlists'];
     const navigate = useNavigate();
 
@@ -125,7 +127,7 @@ const Topbar = (props) => {
                             }}
                         >
                             <Avatar alt="app logo" src={logoImg} sx={{mr: 1}}/>
-                            MUSIC FROM NOTHING
+                            {t("topbar.title")}
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

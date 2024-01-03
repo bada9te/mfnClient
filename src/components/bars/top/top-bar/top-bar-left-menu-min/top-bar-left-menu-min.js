@@ -1,9 +1,11 @@
 import { MenuItem, Typography } from "@mui/material";
 import { PlaylistPlay, QueueMusic, TrackChanges } from '@mui/icons-material';
+import { useTranslation } from "react-i18next";
 
 
 const TopBarLeftMenuMin = props => {
     const {handleNavigate, pages} = props;
+    const { t } = useTranslation("common");
 
     return (
         <>
@@ -15,7 +17,7 @@ const TopBarLeftMenuMin = props => {
                                 {item === "Feed" ? <QueueMusic sx={{mr: 1}}/> : null}
                                 {item === "Battles" ? <TrackChanges sx={{mr: 1}}/> : null}
                                 {item === "Playlists" ? <PlaylistPlay sx={{mr: 1}}/> : null}
-                                {item}
+                                {t(`topbar.${item.toLowerCase()}`)}
                             </Typography>
                         </MenuItem>
                     );

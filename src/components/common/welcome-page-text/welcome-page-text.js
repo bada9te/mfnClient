@@ -1,34 +1,29 @@
 import { Typography, Stack } from "@mui/material";
 import logoClear from "../../../images/icons/logo_clear.png"
 import WelcomePageCard from "../welcome-page-cards/card/card";
+import { useTranslation } from "react-i18next";
 
 const cardsData = [
     {
-        title: '🎵 Create',
-        description: "Start from scratch, crafting melodies, harmonies, and rhythms.",
+        id: 'explore',
+        title: '🎵 Explore',
+        description: "Explore the world of custom music, share, like and comment amazing audio posts.",
         iconUrl: logoClear,
     },
     {
-        title: '🎹 Arrange',
-        description: "Easily arrange sections, experiment with transitions, and bring your composition to life.",
-        iconUrl: logoClear,
-    },
-    {
-        title: '🔊 Produce',
-        description: "Fine-tune every detail, add effects, and explore sonic possibilities.",
-        iconUrl: logoClear,
-    },
-    {
+        id: 'anywhere',
         title: '🌐 Anywhere',
-        description: "Anytime: Accessible on desktop, tablet, or mobile – your creativity knows no bounds.",
+        description: "Anytime: Accessible on desktop, tablet, or mobile – fun knows no bounds.",
         iconUrl: logoClear,
     },
     {
+        id: 'community',
         title: '🤝 Community',
         description: "Connect, collaborate, and be inspired by like-minded creators.",
         iconUrl: logoClear,
     },
     {
+        id: 'start',
         title: '🚀 Lets get started',
         description: `Join "Music from Nothing" today and let the music begin!`,
         iconUrl: logoClear,
@@ -38,10 +33,12 @@ const cardsData = [
 
 
 const WelcomePageText = props => {
+    const { t } = useTranslation("common");
+
     return (
         <Stack  
             sx={{ 
-                height: 'calc(100vh-120px)', 
+                height: { xs: 'fit-content', md: 'calc(100vh - 100px)' }, 
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center', 
@@ -52,7 +49,7 @@ const WelcomePageText = props => {
         >
             <Stack sx={{ m: 5, mx: 10 }} spacing={5}>
                 <Typography variant="h3" textAlign="center">
-                    Welcome to "Music from Nothing" – where creativity knows no bounds! 🎶
+                    {t('welcome.text')}
                 </Typography>
                 <Typography textAlign="center">
                     Compose, arrange, and produce your unique tunes effortlessly with our innovative web app. Whether you're a seasoned musician or a curious beginner, break barriers and unleash your creativity in a limitless musical playground.

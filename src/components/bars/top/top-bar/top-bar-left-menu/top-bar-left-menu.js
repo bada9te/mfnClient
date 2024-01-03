@@ -1,11 +1,12 @@
 import { Button, ButtonGroup } from "@mui/material";
 import { PlaylistPlay, QueueMusic, TrackChanges } from '@mui/icons-material';
+import { useTranslation } from "react-i18next";
 
 
 
 const TopBarLeftMenu = props => {
-    const {handleNavigate, pages} = props;
-
+    const { handleNavigate, pages } = props;
+    const { t } = useTranslation("common");
 
     return (
         <ButtonGroup variant='string'>
@@ -22,7 +23,7 @@ const TopBarLeftMenu = props => {
                         </>
                     }
                 >
-                    {page}
+                    {t(`topbar.${page.toLowerCase()}`)} 
                 </Button>
             ))}
         </ButtonGroup>

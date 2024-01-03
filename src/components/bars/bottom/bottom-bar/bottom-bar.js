@@ -6,6 +6,7 @@ import { useReactiveVar } from "@apollo/client";
 import { audioPlayerState } from "../../../common/audio-player/reactive";
 import { bottomBarState } from "./reactive";
 import { baseState } from "../../../baseReactive";
+import { useTranslation } from "react-i18next";
 
 
 const BottomBar = (props) => {
@@ -16,6 +17,8 @@ const BottomBar = (props) => {
     
     const bottomBar = useReactiveVar(bottomBarState);
     const audioPlayer = useReactiveVar(audioPlayerState);
+
+    const { t } = useTranslation("common");
 
     const handleShowRB = () => bottomBarState({ ...bottomBar, showRB: true });
     const handleShowLB = () => bottomBarState({ ...bottomBar, showLB: true });
@@ -56,16 +59,16 @@ const BottomBar = (props) => {
                 value={bottomBar.value === '' ? location.pathname : bottomBar.value}
                 onChange={handleChange}
                 >
-                <BottomNavigationAction value="tracks" label="Tracks" icon={<MusicNote />} />
+                <BottomNavigationAction value="tracks" label={t('bottombar.tracks')} icon={<MusicNote />} />
                 {
                     user && user._id !== "" 
                     ?
-                    <BottomNavigationAction value="/post-upload" label="New post" icon={<AddCircle />} />
+                    <BottomNavigationAction value="/post-upload" label={t('bottombar.new_post')}  icon={<AddCircle />} />
                     :
                     null
                 }
-                <BottomNavigationAction value="audioPlayer" label="Player" icon={<Radio />} disabled={!audioPlayer.src} />
-                <BottomNavigationAction value="people" label="People" icon={<PersonSearch />} />
+                <BottomNavigationAction value="audioPlayer" label={t('bottombar.player')} icon={<Radio />} disabled={!audioPlayer.src} />
+                <BottomNavigationAction value="people" label={t('bottombar.people')} icon={<PersonSearch />} />
             </BottomNavigation>
         </Paper>
         

@@ -1,30 +1,35 @@
-
 import { Stack, Typography } from "@mui/material";
 import logoClear from "../../../images/icons/logo_clear.png"
 import WelcomePageCard from "./card/card";
+import { useTranslation } from "react-i18next";
 
 const cardsData = [
     {
+        id: "listening",
         title: 'Listening to music',
         description: 'Listen to music and have fun!',
         iconUrl: logoClear
     },
     {
+        id: "musical",
         title: 'Musical creations sharing',
         description: 'Share users tracks inside the platform.',
         iconUrl: logoClear
     },
     {
+        id: "musician",
         title: "Musician's profiling",
         description: 'The platform provides amazing user profiles which you can customize to your own likes :)',
         iconUrl: logoClear
     },
     {
+        id: "just",
         title: 'Just for entertaiment and self-study \\*_*/',
         description: 'This platform was developed by a single person and actually in development.',
         iconUrl: logoClear
     },
     {
+        id: "about",
         title: 'About the author',
         description: 'Hi there! I am so happy to see u on my first huge web-project. I am a casual 3rd year student of National University "Zaporizhzhia Polytechnic", Zaporizhzhia, Ukraine. There is no modern web-development classes in my uni however, so I decided to do some self-education stuff.',
         iconUrl: logoClear,
@@ -34,6 +39,8 @@ const cardsData = [
 ];
 
 const WelcomePageCards = props => {
+    const { t } = useTranslation("common");
+
     return (
         <Stack 
             spacing={10} 
@@ -47,7 +54,7 @@ const WelcomePageCards = props => {
                 py: 10,
             }}
         >
-            <Typography variant="h3" textAlign="center">Purpose of the platform and author information</Typography>
+            <Typography variant="h3" textAlign="center">{t('welcome.purpose')}</Typography>
             <Stack 
                 sx={{ 
                     display: 'flex', 

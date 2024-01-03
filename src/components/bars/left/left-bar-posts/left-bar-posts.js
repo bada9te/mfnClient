@@ -4,11 +4,13 @@ import LeftBarPostsContainer from "../../../containers/leftbar-posts-container/l
 import { useReactiveVar } from "@apollo/client";
 import { bottomBarState } from "../../bottom/bottom-bar/reactive";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 
 const LeftBarPosts = (props) => {
     const [searchQuery, setSearchQuery] = useState("");
     const bottomBar = useReactiveVar(bottomBarState);
+    const { t } = useTranslation("common");
 
     const handleInput = (query) => {
         setSearchQuery(query);
@@ -32,7 +34,7 @@ const LeftBarPosts = (props) => {
                 boxShadow: 5
             }}>
                 <Box sx={{p: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <Typography variant="h6">Search for tracks</Typography>
+                    <Typography variant="h6">{t('leftbar.header')}</Typography>
                     <IconButton onClick={closeLB}>
                         <Close/>
                     </IconButton>
@@ -42,7 +44,7 @@ const LeftBarPosts = (props) => {
                         margin="normal"
                         fullWidth
                         id="track-title"
-                        label="Track title"
+                        label={t('leftbar.label')}
                         name="track-title"
                         type="text"
                         onInput={(e) => handleInput(e.target.value)}

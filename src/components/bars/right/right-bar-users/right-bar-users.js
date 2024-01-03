@@ -4,11 +4,13 @@ import RightBarUsersContainer from "../../../containers/rightbar-users-container
 import { useReactiveVar } from "@apollo/client";
 import { bottomBarState } from "../../bottom/bottom-bar/reactive";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 
 const RightBarUsers = (props) => {
     const [searchQuery, setSearchQuery] = useState("");
     const bottomBar = useReactiveVar(bottomBarState);
+    const { t } = useTranslation("common");
 
     const handleInput = (query) => {
         setSearchQuery(query);
@@ -33,7 +35,7 @@ const RightBarUsers = (props) => {
                 }}
             >
                 <Box sx={{p: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <Typography variant="h6">Search for users</Typography>
+                    <Typography variant="h6">{t('rightbar.header')}</Typography>
                     <IconButton onClick={closeRB}>
                         <Close/>
                     </IconButton>
@@ -43,7 +45,7 @@ const RightBarUsers = (props) => {
                         margin="normal"
                         fullWidth
                         id="user-nickname"
-                        label="Nickname"
+                        label={t('rightbar.label')}
                         name="nickname"
                         type="text"
                         onInput={(e) => handleInput(e.target.value)}

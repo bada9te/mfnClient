@@ -6,6 +6,7 @@ import StyledBadge from "../styled-badge/styled-badge";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../../../baseReactive";
 import { languageSelectModalState } from "../../../../modals/language-select-modal/reactive";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -15,6 +16,7 @@ const TopBarUserMenu = props => {
     const itemsNL = ['Log in', 'Support', 'Language'];
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
+    const { t } = useTranslation("common");
 
     const handleNavigate = (where) => {
         handleCloseUserMenu();
@@ -105,7 +107,7 @@ const TopBarUserMenu = props => {
                                         } 
                                     })()
                                 }
-                                {item}
+                                {t(`topbar.${item.toLowerCase()}`)}
                             </Typography>
                         </MenuItem>
                     );
@@ -129,7 +131,7 @@ const TopBarUserMenu = props => {
                                         } 
                                     })()
                                 }
-                                {item}
+                                {t(`topbar.${item.toLowerCase()}`)}
                             </Typography>
                         </MenuItem>
                     );
