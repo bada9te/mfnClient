@@ -9,6 +9,7 @@ import { useState } from "react";
 import { createBattleFormState } from "./reactive";
 import { useSnackbar } from "notistack";
 import { BATTLE_CREATE_MUTATTION } from "../../../graphql-requests/battles";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -27,6 +28,7 @@ const CreateBattleForm = props => {
     const [ title, setTitle ] = useState("Battle's title");
     const { post1, post2 } = useReactiveVar(createBattleFormState);
     const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation("common");
 
     const [ createBattle ] = useMutation(BATTLE_CREATE_MUTATTION, {
         variables: {
@@ -66,7 +68,7 @@ const CreateBattleForm = props => {
                     required
                     fullWidth
                     id="title"
-                    label="Title"
+                    label={t('battles.create.form.title')}
                     name="title"
                     error={Boolean(errors.Title)}
                     helperText={errors.Title && "Title must be from 4 to 10 characters"}
@@ -88,7 +90,7 @@ const CreateBattleForm = props => {
                             <PostItem base={{...post1.base}} addons={{...post1.addons, status: null}} />
                         </Box>
                         :
-                        <PostSelectHolder text="Select my track" handler={() => handleOpenPostSelectModal(true)}/>
+                        <PostSelectHolder text={t('battles.create.select_my_track')} handler={() => handleOpenPostSelectModal(true)}/>
                     }
                 </>
                 <>
@@ -99,7 +101,7 @@ const CreateBattleForm = props => {
                             <PostItem base={post2.base} addons={{...post2.addons, status: null}}/>
                         </Box>
                         :
-                        <PostSelectHolder text="Select opponent track" handler={() => handleOpenPostSelectModal(false)}/>
+                        <PostSelectHolder text={t('battles.create.select_oponnents_track')} handler={() => handleOpenPostSelectModal(false)}/>
                     }
                 </>
             </Stack>
@@ -111,7 +113,7 @@ const CreateBattleForm = props => {
                     variant="contained"
                     sx={{ mt: 1, mb: 2, boxShadow: 10 }}
                 >
-                    Create battle
+                    {t('battles.create.form.submit')}
                 </Button>
             </Box>
         </Box>

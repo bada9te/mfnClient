@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useSnackbar } from "notistack";
 import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLIST_CREATE_MUTATION } from "../../../graphql-requests/playlists";
 import { playlistsContainerState } from "../../containers/playlists-container/reactive";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -17,7 +18,7 @@ const CreatePlaylistForm = props => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { maxCountPerPage, activePage } = useReactiveVar(playlistsContainerState);
     const [ createPlaylist ] = useMutation(PLAYLIST_CREATE_MUTATION);
-
+    const { t } = useTranslation("common");
 
     const onSubmit = async(data) => {
         enqueueSnackbar("Creating playlist...", { autoHideDuration: 1500 });
@@ -52,7 +53,7 @@ const CreatePlaylistForm = props => {
                 required
                 fullWidth
                 id="title"
-                label="Title"
+                label={t('playlists.create.form.title')}
                 name="title"
                 error={Boolean(errors.Title)}
                 helperText={errors.Title && "Title must be from 4 to 10 characters"}
@@ -72,7 +73,7 @@ const CreatePlaylistForm = props => {
                             onChange={(e) => setPublicAccess(e.target.checked)}
                         />
                     }
-                    label="Make playlist public"
+                    label={t('playlists.create.form.make_public')}
                 />
             </FormGroup>
 

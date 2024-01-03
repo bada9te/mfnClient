@@ -63,6 +63,26 @@
     "upload.form.submit": "Upload",
     "upload.post.title": "Track title",
     "upload.post.description": "Track description",
-    "upload.post.createdAt": "now"
+    "upload.post.createdAt": "now",
 
+    "battles.head.in_progress": "In progress",
+    "battles.head.finished": "Finished",
+    "battles.head.create_new": "Create new",
+    "battles.create.main_text": "Ready for a challenge?",
+    "battles.create.title": "Create battle",
+    "battles.create.login_required": "Please login to create a new one",
+    "battles.create.form.title": "Title",
+    "battles.create.form.submit": "Create battle",
+    "battles.create.select_my_track": "Select my track",
+    "battles.create.select_oponnents_track": "Select opponent's track",
+
+    "playlists.head.explore": "Explore",
+    "playlists.head.my_playlists": "My playlists",
+    "playlists.head.create_new": "Create new",
+    "playlists.create.main_text": "New playlist? Beautiful :)",
+    "playlists.create.title": "Create playlist",
+    "playlists.create.form.title": "Title",
+    "playlists.create.form.make_public": "Make playlist public",
+    "playlists.create.notice": "Notice, public playlists are visible to all users",
+    "playlists.create.login_required": "Please login to create a new one"
 }

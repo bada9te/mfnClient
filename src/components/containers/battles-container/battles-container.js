@@ -10,6 +10,7 @@ import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { battlesContainerState } from "./reactive";
 import { BATTLES_BY_STATUS_QUERY, BATTLE_MAKE_VOTE_MUTATION } from "../../../graphql-requests/battles";
+import { useTranslation } from "react-i18next";
 
 
 function TabPanel(props) {
@@ -37,6 +38,7 @@ const BattlesContainer = props => {
     const [status, setStatus] = useState(0);
     const { activePage, maxCountPerPage } = useReactiveVar(battlesContainerState);
     const { user: currentUser } = useReactiveVar(baseState);
+    const { t } = useTranslation("common");
 
     const [ makeVote ] = useMutation(BATTLE_MAKE_VOTE_MUTATION);
     const [ getBattles, { data, loading, stopPolling } ] = useLazyQuery(BATTLES_BY_STATUS_QUERY, {
@@ -76,9 +78,9 @@ const BattlesContainer = props => {
         <Box height={'100%'}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
-                    <Tab icon={<Whatshot/>} label={"In progress"} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
-                    <Tab icon={<Timelapse/>} label={"Finished"} id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
-                    <Tab icon={<AddCircle/>}label="Create new" id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
+                    <Tab icon={<Whatshot/>}  label={t('battles.head.in_progress')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
+                    <Tab icon={<Timelapse/>} label={t('battles.head.finished')}    id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
+                    <Tab icon={<AddCircle/>} label={t('battles.head.create_new')}  id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
                 </Tabs>
             </Box>
 
@@ -93,24 +95,21 @@ const BattlesContainer = props => {
             </TabPanel>
 
             <TabPanel value={status} index={2}>
-                <ImageRightFormContainer bg={newBattleFormBG} text="Ready for a challenge?">
+                <ImageRightFormContainer bg={newBattleFormBG} text={t('battles.create.main_text')}>
                     <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
                         {
                             currentUser && currentUser._id !== ""
                             ?
-                            <Box sx={{ mb: 3 }}>
-                                <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                    Create battle
-                                </Typography>
-                                <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                    Create battle using form below:
+                            <Box sx={{ my: 3 }}>
+                                <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, pb: 1.5}}>
+                                    {t('battles.create.title')}
                                 </Typography>
                                 <CreateBattleForm/>
                             </Box>
                             :
                             <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
                                 <Typography>
-                                    Please login to create a new one
+                                    {t('battles.create.login_required')}
                                 </Typography>
                             </Box>
                         }

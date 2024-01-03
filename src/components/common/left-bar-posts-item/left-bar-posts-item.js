@@ -59,6 +59,7 @@ const LeftBarPostsItem = (props) => {
                         startIcon={<Person2/>}
                         sx={{ 
                             borderTopRightRadius: 50,
+                            borderBottomRightRadius: 0,
                             pr: 2
                         }} 
                         variant="contained" size="small"

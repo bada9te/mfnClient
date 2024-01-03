@@ -12,6 +12,7 @@ import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from "../../../graphql-requests/playlists";
 import { baseState } from "../../baseReactive";
 import defineMaxPage from "../../../common-functions/defineMaxPage/defineMaxPage";
+import { useTranslation } from "react-i18next";
 
 
 function TabPanel(props) {
@@ -73,6 +74,8 @@ const PlaylistsContainer = (props) => {
 
     // used to know the page number
     const [status, setStatus] = useState(0);
+
+    const { t } = useTranslation("common");
 
     // on tab switch
     const handleTabSwitch = (event, key) => {
@@ -139,9 +142,9 @@ const PlaylistsContainer = (props) => {
         <Box sx={{width: '100%'}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} centered variant="fullWidth">
-                    <Tab icon={<Explore/>} label="Explore" id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
-                    <Tab icon={<Topic/>}label="My playlists" id="simple-tab-1" aria-controls="simple-tabpanel-1" />
-                    <Tab icon={<CreateNewFolder/>} label="Create new" id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
+                    <Tab icon={<Explore/>}         label={t('playlists.head.explore')}      id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
+                    <Tab icon={<Topic/>}           label={t('playlists.head.my_playlists')} id="simple-tab-1" aria-controls="simple-tabpanel-1" />
+                    <Tab icon={<CreateNewFolder/>} label={t('playlists.head.create_new')}   id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
                 </Tabs>
             </Box>
 
@@ -198,30 +201,27 @@ const PlaylistsContainer = (props) => {
             </TabPanel>
 
             <TabPanel value={status} index={2}>
-                <ImageRightFormContainer bg={newPlaylistBG} text="New playlist? Beautiful :)">
+                <ImageRightFormContainer bg={newPlaylistBG} text={t('playlists.create.main_text')}>
                     {
                         currentUser && currentUser._id !== ""
                         ?
                         <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5}}>
                             <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                Create playlist
-                            </Typography>
-                            <Typography gutterBottom variant="h6" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                Create playlist using form below:
+                                {t('playlists.create.title')}
                             </Typography>
                             <CardContent>
                                 <CreatePlaylistForm/>
                             </CardContent>
                             <CardActions>
                                 <Box sx={{mx: 2, mb: 2}}>
-                                    <Typography>Notice, public playlists are visible to all users</Typography>
+                                    <Typography>{t('playlists.create.notice')}</Typography>
                                 </Box>
                             </CardActions>
                         </Box>
                         :
                         <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
                             <Typography>
-                                Please login to create a new one
+                                {t('playlists.create.login_required')}
                             </Typography>
                         </Box>
                     }
