@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { baseState } from "../../components/baseReactive";
 import { SpinnerCircular } from "../../components/common/spinner/Spinner";
 import { httpLogOut } from "../../http-requests/auth";
+import { useTranslation } from "react-i18next";
 
 
 const Logout = (props) => {
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation("common");
     
     useEffect(() => {
         let timeout = null;
@@ -34,7 +36,7 @@ const Logout = (props) => {
         <>
             <Box sx={{ width: '100%', minHeight: '100vh', py: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Stack direction="column" spacing={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Typography variant="h4" sx={{my: 2}}>Logging out</Typography>
+                    <Typography variant="h4" sx={{my: 2}}>{t('logout.text')}</Typography>
                     <SpinnerCircular/>
                 </Stack>
             </Box>

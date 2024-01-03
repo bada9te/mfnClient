@@ -5,13 +5,14 @@ import loginImage from '../../images/icons/logo.png';
 import registerFormBG from '../../images/bgs/loginFormBG.png';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 import { Login } from '@mui/icons-material';
-
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation("common");
 
     return (
-        <LogRegVerContainer bg={registerFormBG} text="Let’s get started!">
+        <LogRegVerContainer bg={registerFormBG} text={t('register.main_text')}>
             <Box sx={{ 
                 width: '30rem', 
                 boxShadow: 0, 
@@ -20,7 +21,7 @@ const Register = () => {
                     <Avatar src={loginImage} sx={{ m: 1, boxShadow: 5 }}/>
                 </Box>
                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 2, mb: 0}}>
-                    Register
+                    {t('register.title')}
                 </Typography>
                 <CardContent>
                     <RegisterForm/>
@@ -32,7 +33,7 @@ const Register = () => {
                             startIcon={<Login/>}
                             variant='outlined' 
                             onClick={() => navigate('/app/login')}>
-                            Already registered
+                            {t('register.already_registered')}
                         </Button>
                     </Stack>
                 </CardActions> 

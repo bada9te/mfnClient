@@ -5,12 +5,15 @@ import loginImage from '../../images/icons/logo.png';
 import loginFormBG from '../../images/bgs/loginFormBG.png';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 import { HowToReg, LockReset } from '@mui/icons-material';
+import { useTranslation } from "react-i18next";
 
 
 const Login = (props) => {
     const navigate = useNavigate();
+    const { t } = useTranslation("common");
+
     return (
-        <LogRegVerContainer bg={loginFormBG} text="Welcome back!">
+        <LogRegVerContainer bg={loginFormBG} text={t('login.main_text')}>
             <Box sx={{ 
                 width: '30rem', 
                 height: 'fit-content', 
@@ -21,7 +24,7 @@ const Login = (props) => {
                     <Avatar src={loginImage} sx={{ m: 1, boxShadow: 5 }}/>
                 </Box>
                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 2, mb: 0}}>
-                    Sign in
+                    {t('login.title')}
                 </Typography>
                 <CardContent>
                     <LoginForm/>
@@ -33,14 +36,14 @@ const Login = (props) => {
                             startIcon={<LockReset/>}
                             variant='outlined' 
                             onClick={() => navigate('/app/account-restore/email-check')}>
-                            Forgot password
+                            {t('login.forgot_password')}
                         </Button>
                         <Button 
                             sx={{ width: 'fit-content' }}
                             startIcon={<HowToReg/>}
                             variant='outlined' 
                             onClick={() => navigate('/app/register')}>
-                            Haven't registered yet
+                            {t('login.havent_registered_yet')}
                         </Button>
                     </Stack>
                 </CardActions>

@@ -4,6 +4,7 @@ import { Box, TextField, Button } from "@mui/material";
 import { useSnackbar } from "notistack";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
 import { httpRegister } from "../../../http-requests/auth";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -11,7 +12,8 @@ const RegisterForm = (props) => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
     const { enqueueSnackbar } = useSnackbar();
-    
+    const { t } = useTranslation("common");
+
     const onSubmit = async(data) => {
         enqueueSnackbar("Trying to register new account...", { autoHideDuration: 1500 });
         await httpRegister({
@@ -35,12 +37,12 @@ const RegisterForm = (props) => {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label={t('register.form.email')}
                         name="email"
                         autoComplete="email"
                         autoFocus
                         error={Boolean(errors.Email)}
-                        helperText={errors.Email && "Email address is not valid"}
+                        helperText={errors.Email && t('register.form.error.email')}
                         {...register("Email", {
                             required: "Pls provide your email address",
                             pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -51,10 +53,10 @@ const RegisterForm = (props) => {
                         required
                         fullWidth
                         id="nickname"
-                        label="Nickname"
+                        label={t('register.form.nick')}
                         name="nickname"
                         error={Boolean(errors.Nickname)}
-                        helperText={errors.Nickname && "Nickname must be from 4 to 20 characters"}
+                        helperText={errors.Nickname && t('register.form.error.nick')}
                         {...register("Nickname", {
                             minLength: 4,
                             maxLength: 20,
@@ -66,11 +68,11 @@ const RegisterForm = (props) => {
                         required
                         fullWidth
                         id="password"
-                        label="Password"
+                        label={t('register.form.password')}
                         name="password"
                         type="password"
                         error={Boolean(errors.Password)}
-                        helperText={errors.Password && "Password must be from 8 to 20 characters"}
+                        helperText={errors.Password && t('register.form.error.password')}
                         {...register("Password", {
                             maxLength: 20,
                             minLength: 8,
@@ -82,17 +84,17 @@ const RegisterForm = (props) => {
                         required
                         fullWidth
                         id="confirm-password"
-                        label="Confirm password"
+                        label={t('register.form.repeat_password')}
                         name="password"
                         type="password"
                         error={Boolean(errors.ConfirmPassword)}
-                        helperText={errors.ConfirmPassword && "Confirmination password is not valid"}
+                        helperText={errors.ConfirmPassword && t('register.form.error.repeat_password')}
                         {...register("ConfirmPassword", {
                             required: "Please confirm password!",
                             validate: {
                                 matchesPreviousPassword: (value) => {
                                     const { Password } = getValues();
-                                    return Password === value || "Passwords should match!";
+                                    return Password === value || t('register.form.error.passwords_should_match');
                                 }
                             }
                         })}
@@ -104,7 +106,7 @@ const RegisterForm = (props) => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2, boxShadow: 10 }}
                     >
-                        Create account
+                        {t('register.form.submit')}
                 </Button>
 
                 <SocialMediaLogin/>

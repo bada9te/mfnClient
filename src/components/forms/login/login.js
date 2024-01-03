@@ -4,12 +4,14 @@ import { Box, TextField, Button } from "@mui/material";
 import { httpLogin } from "../../../http-requests/auth";
 import { useSnackbar } from "notistack";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
+import { useTranslation } from "react-i18next";
 
 
 const LoginForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation("common");
      
     const onSubmit = async(data) => {
         // show process
@@ -33,12 +35,12 @@ const LoginForm = (props) => {
                     required
                     fullWidth
                     id="email"
-                    label="Email Address"
+                    label={t('login.form.email')}
                     name="email"
                     autoComplete="email"
                     autoFocus
                     error={Boolean(errors.Email)}
-                    helperText={errors.Email && "Email address is not valid"}
+                    helperText={errors.Email && t('login.form.error.email')}
                     {...register("Email", {
                         required: true,
                         pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -50,11 +52,11 @@ const LoginForm = (props) => {
                     required
                     fullWidth
                     id="password"
-                    label="Password"
+                    label={t('login.form.password')}
                     name="password"
                     type="password"
                     error={Boolean(errors.Password)}
-                    helperText={errors.Password && "Password is not valid"}
+                    helperText={errors.Password && t('login.form.error.password')}
                     {...register("Password", {
                         maxLength: 20,
                         minLength: 8,
@@ -68,7 +70,7 @@ const LoginForm = (props) => {
                     variant="contained"
                     sx={{ mt: 3, mb: 2, boxShadow: 10 }}
                 >
-                    Sign In
+                    {t('login.form.submit')}
                 </Button>
 
                 <SocialMediaLogin/>

@@ -226,7 +226,6 @@ const PlaylistsContainer = (props) => {
                         </Box>
                     }
                 </ImageRightFormContainer>
-                
             </TabPanel>
         </Box>
     );

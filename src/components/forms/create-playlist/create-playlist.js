@@ -56,7 +56,7 @@ const CreatePlaylistForm = props => {
                 label={t('playlists.create.form.title')}
                 name="title"
                 error={Boolean(errors.Title)}
-                helperText={errors.Title && "Title must be from 4 to 10 characters"}
+                helperText={errors.Title && t('playlists.create.form.error.title')}
                 onInput={(e) => setTitle(e.target.value)}
                 {...register("Title", {
                     maxLength: 10,
@@ -83,7 +83,7 @@ const CreatePlaylistForm = props => {
                 variant="contained"
                 sx={{ mt: 1, mb: 2, boxShadow: 10 }}
             >
-                Create playlist
+                {t('playlists.create.form.submit')}
             </Button>
         </Box>
     );
