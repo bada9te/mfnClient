@@ -9,6 +9,7 @@ import { imageCropperModalState } from "../../components/modals/image-cropper-mo
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../components/baseReactive";
 import { postUploadFormState } from "../../components/forms/post-upload/reactive";
+import { useTranslation } from "react-i18next";
 
 
 const PostUpload = (props) => {
@@ -22,6 +23,7 @@ const PostUpload = (props) => {
         commentsAllowed, 
         downloadsAllowed 
     } = useReactiveVar(postUploadFormState);
+    const { t } = useTranslation("common");
 
     const handleImageCropModalClose = (value, picture) => {
         imageCropperModalState({ ...imageCropperModalState(), isShowing: value })
@@ -33,7 +35,7 @@ const PostUpload = (props) => {
 
     return (
         <BaseContentContainer>
-            <ImageRightFormContainer bg={newPostFormBG} text="Uploading sth new? Fascinating!">
+            <ImageRightFormContainer bg={newPostFormBG} text={t('upload.main_text')}>
                 {
                     isShowing
                     ? 
@@ -48,7 +50,7 @@ const PostUpload = (props) => {
                 }
                     <Box sx={{width: '40rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
                         <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', py: 3, mb: 0}}>
-                            Your new post
+                            {t('upload.title')}
                         </Typography>
 
                         <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -60,9 +62,9 @@ const PostUpload = (props) => {
                                             nick: currentUser?.nick,
                                         },
                                         ownerAvatar: `${locations?.images}/${currentUser?.avatar}`,
-                                        createdAt: 'now',
-                                        title,
-                                        description,
+                                        createdAt: t('upload.post.createdAt'),
+                                        title: title ? title : t('upload.post.title'),
+                                        description: description ? description : t('upload.post.description'),
                                         img: picture,
                                         audio,
                                         likedBy: [],

@@ -10,6 +10,7 @@ import { postUploadFormState } from "./reactive";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { useSnackbar } from "notistack";
 import { postsContainerState } from "../../containers/posts-container/reactive";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -20,7 +21,7 @@ const PostUploadForm = (props)=> {
     const postUploadForm = useReactiveVar(postUploadFormState);
     const { maxCountPerPage } = useReactiveVar(postsContainerState);
     const { enqueueSnackbar } = useSnackbar();
- 
+    const { t } = useTranslation("common");
 
     const [ postUpload ] = useMutation(POST_CREATE_MUTATION, {
         variables: {
@@ -150,7 +151,7 @@ const PostUploadForm = (props)=> {
                 required
                 fullWidth
                 id="title"
-                label="Title"
+                label={t('upload.form.title')}
                 name="title"
                 error={Boolean(errors.Title)}
                 helperText={errors.Title && "Title must be from 4 to 10 characters"}
@@ -166,7 +167,7 @@ const PostUploadForm = (props)=> {
                 required
                 fullWidth
                 id="description"
-                label="Short description"
+                label={t('upload.form.description')}
                 name="description"
                 error={Boolean(errors.ShortDesc)}
                 helperText={errors.ShortDesc && "Short description must be from 4 to 20 characters"}
@@ -179,7 +180,7 @@ const PostUploadForm = (props)=> {
             />
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
-                    {`${postUploadForm.imageTitle.slice(0, 30)}`}
+                    {postUploadForm.imageTitle ? `${postUploadForm.imageTitle.slice(0, 30)}` : t('upload.form.image_text')}
                     <input type="file" hidden 
                         onInput={e => handlePicture(e.target.files[0] || null)}
                         {...register("Image", {
@@ -190,7 +191,7 @@ const PostUploadForm = (props)=> {
             </FormGroup>
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
-                    {`${postUploadForm.audioTitle.slice(0, 30)}`}
+                    {postUploadForm.audioTitle ? `${postUploadForm.audioTitle.slice(0, 30)}` : t('upload.form.audio_text')}
                     <input type="file" hidden 
                         onInput={e => handleAudio(e.target.files[0] || null)}
                         {...register("Audio", {
@@ -207,7 +208,7 @@ const PostUploadForm = (props)=> {
                             onChange={(e) => updateState("commentsAllowed", e.target.checked)}
                         />
                     }
-                    label="Allow comments"
+                    label={t('upload.form.allow_comments')}
                 />
             </FormGroup>
             <FormGroup>
@@ -218,7 +219,7 @@ const PostUploadForm = (props)=> {
                             onChange={(e) => updateState("downloadsAllowed", e.target.checked)}
                         />
                     }
-                    label="Allow downloads"
+                    label={t('upload.form.allow_downloads')}
                 />
             </FormGroup>
 
@@ -228,7 +229,7 @@ const PostUploadForm = (props)=> {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, boxShadow: 10 }}
             >
-                Upload
+                {t('upload.form.submit')}
             </Button>
         </Box>
     </>

@@ -1,4 +1,54 @@
 {
-    "topbar.title": "abc",
-    "topbar.feed": "feed"
+  "topbar.title": "MUSIC FROM NOTHING",
+  "topbar.feed": "Лента",
+  "topbar.battles": "Музыкальные сражения",
+  "topbar.playlists": "Плейлисты",
+  "topbar.profile": "Профиль",
+  "topbar.notifications": "Уведомления",
+  "topbar.edit profile": "Редактировать профиль",
+  "topbar.saved posts": "Сохраненные треки",
+  "topbar.support": "Поддержка",
+  "topbar.language": "Язык",
+  "topbar.logout": "Выйти",
+  "topbar.log in": "Войти",
+  "topbar.dark_mode": "Темный режим",
+
+  "bottombar.tracks": "Треки",
+  "bottombar.new_post": "Новый пост",
+  "bottombar.player": "Игрок",
+  "bottombar.people": "Пользователи",
+
+  "leftbar.header": "Поиск треков",
+  "leftbar.label": "Название трека",
+  "leftbar.info_text": "Начните вводить название трека для поиска",
+
+  "rightbar.header": "Поиск пользователей",
+  "rightbar.label": "Имя профиля",
+  "rightbar.info_text": "Ввведите имя профиля для поиска",
+
+  "welcome.hello": "Добро пожаловать в",
+  "welcome.explore_btn": "Исследуйте кастомную музыку",
+  "welcome.purpose": "Назначение платформы и информация об авторе",
+  "welcome.best_track": "Лучший трек недели",
+  "welcome.text": "Добро пожаловать в «Music from Nothing» – где творчество не знает границ! 🎶",
+
+  "welcome.card.listening.title": "Слушайте музыку",
+  "welcome.card.listening.description": "Слушайте музыку и получайте максимум удовольствия!",
+  "welcome.card.musical.title": "Обмен музыкальными творениями",
+  "welcome.card.musical.description": "Делитесь треками пользователей внутри платформы.",
+  "welcome.card.musician.title": "Профиль музыканта",
+  "welcome.card.musician.description": "Наша платформа предоставляет потрясающие профили пользователей, которые вы сможете настроить по своему вкусу! :)",
+  "welcome.card.just.title": "Для обучения и развлечения \\*_*/",
+  "welcome.card.just.description": "Эта платформа была разработана одним человеком и фактически находится в разработке.",
+  "welcome.card.about.title": "Об авторе",
+  "welcome.card.about.description": "Всем привет! Я так рад видеть тебя на моем первом огромном веб-проекте. Я студент 3 курса Национального университета «Запорожская политехника», Запорожье, Украина. Однако в моем университете нет современных курсов по веб-разработке, поэтому я решил заняться самообразованием.",
+
+  "welcome.card.explore.title": "🎵 Изучай",
+  "welcome.card.explore.description": "«Исследуйте мир пользовательской музыки, делитесь, ставьте лайки и комментируйте потрясающие аудиозаписи.",
+  "welcome.card.anywhere.title": "🌐 Везде",
+  "welcome.card.anywhere.description": "В любое время: доступно на компьютере, планшете или мобильном устройстве — веселье не знает границ.",
+  "welcome.card.community.title": "🤝 Дружное сообщество",
+  "welcome.card.community.description": "Общайтесь, сотрудничайте и вдохновляйтесь творцами-единомышленниками.",
+  "welcome.card.start.title": "🚀 Давай начнем!",
+  "welcome.card.start.description": "Присоединяйся к ''Music from Nothing'' сегодня и пусть мир музыки оживет!"
 }

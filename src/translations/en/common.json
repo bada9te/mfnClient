@@ -50,5 +50,19 @@
     "welcome.card.community.title": "🤝 Community",
     "welcome.card.community.description": "Connect, collaborate, and be inspired by like-minded creators.",
     "welcome.card.start.title": "🚀 Lets get started",
-    "welcome.card.start.description": "Join ''Music from Nothing'' today and let the music begin!"
+    "welcome.card.start.description": "Join ''Music from Nothing'' today and let the music begin!",
+
+    "upload.main_text": "Uploading sth new? Fascinating!",
+    "upload.title": "Your new post",
+    "upload.form.title": "Title",
+    "upload.form.description": "Short description",
+    "upload.form.image_text": "Upload image",
+    "upload.form.audio_text": "Upload audio",
+    "upload.form.allow_comments": "Allow comments",
+    "upload.form.allow_downloads": "Allow downloads",
+    "upload.form.submit": "Upload",
+    "upload.post.title": "Track title",
+    "upload.post.description": "Track description",
+    "upload.post.createdAt": "now"
+
 }
