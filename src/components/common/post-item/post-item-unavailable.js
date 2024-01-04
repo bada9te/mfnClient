@@ -10,7 +10,6 @@ const PostItemUnavailable = (props) => {
     const { status, text, selectHandler } = props;
 
     return (
-        <>
             <Card sx={{width: {xs: '95%', sm: '375px', md: '400px'}, boxShadow: 5, borderRadius: 5}}>
                 <CardHeader
                     avatar={
@@ -69,7 +68,6 @@ const PostItemUnavailable = (props) => {
                     })()
                 }
             </Card>
-        </>
     );
 }
 

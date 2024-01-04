@@ -11,18 +11,7 @@ import APClient from './apollo/client';
 
 // localization
 import { I18nextProvider } from "react-i18next";
-import i18next from "i18next";
-import enlan from "./translations/en/common.json";
-
-i18next.init({
-    interpolation: { escapeValue: false },
-    lng: 'en',                              
-    resources: {
-        en: {
-            common: enlan
-        },
-    },
-});
+import i18next from "./translations/i18next";
 
 
 // root node

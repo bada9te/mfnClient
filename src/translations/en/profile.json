@@ -1,0 +1,15 @@
+{
+    "profile.edit.avatar": "Avatar",
+    "profile.edit.background": "Background",
+    "profile.edit.select_image": "Select image",
+    "profile.edit.nick": "Nickname",
+    "profile.edit.description": "Description",
+    "profile.edit.password": "Password",
+    "profile.edit.email": "Email",
+    "profile.edit.danger": "Danger Zone",
+    "profile.edit.change_nickname": "Change nickname",
+    "profile.edit.change_description": "Change description",
+    "profile.edit.change_email": "Change email",
+    "profile.edit.change_password": "Change password",
+    "profile.edit.delete_account": "Delete account"
+}

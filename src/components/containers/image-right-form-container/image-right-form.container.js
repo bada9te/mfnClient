@@ -5,7 +5,7 @@ const ImageRightFormContainer = (props) => {
     const { bg, text } = props;
 
     return (
-        <Grid container component="main" sx={{ height: '100vh', position: 'relative', overflow: 'auto' }}>
+        <Grid container component="main" sx={{ height: '100vh', position: 'relative' }}>
             <Grid 
                 item 
                 xs={12} 

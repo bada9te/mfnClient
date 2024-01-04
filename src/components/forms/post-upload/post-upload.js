@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup } from "@mui/material";
+import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup, Typography } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POST_CREATE_MUTATION } from "../../../graphql-requests/posts";
 import blobToFile from "../../../common-functions/blobToFIle/blobToFile";
@@ -11,7 +11,6 @@ import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-mo
 import { useSnackbar } from "notistack";
 import { postsContainerState } from "../../containers/posts-container/reactive";
 import { useTranslation } from "react-i18next";
-
 
 
 const PostUploadForm = (props)=> {
@@ -47,12 +46,12 @@ const PostUploadForm = (props)=> {
         await Promise.all([
             httpSaveFile(data.Audio[0])
                 .then(({data}) => {
-                    console.log(data.file.filename)
+                    //console.log(data.file.filename)
                     postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.file.filename });
                 }),
             httpSaveFile(blobToFile(blob, data.Image[0].name))
                 .then(({data}) => {
-                    console.log(data.file.filename)
+                    //console.log(data.file.filename)
                     postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.file.filename });
                 }),
         ]);
@@ -188,6 +187,7 @@ const PostUploadForm = (props)=> {
                         })} 
                     />
                 </Button>
+                { errors.Image && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.form.error.image')}</Typography> }
             </FormGroup>
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
@@ -199,6 +199,7 @@ const PostUploadForm = (props)=> {
                         })} 
                     />
                 </Button>
+                { errors.Audio && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.form.error.audio')}</Typography> }
             </FormGroup>
             <FormGroup>
                 <FormControlLabel

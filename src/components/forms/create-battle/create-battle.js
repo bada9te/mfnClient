@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import PostItem from "../../common/post-item/post-item";
-import { Box, TextField, Button, Stack } from "@mui/material";
+import { Box, TextField, Button, Stack, Typography } from "@mui/material";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
@@ -11,16 +11,6 @@ import { useSnackbar } from "notistack";
 import { BATTLE_CREATE_MUTATTION } from "../../../graphql-requests/battles";
 import { useTranslation } from "react-i18next";
 
-
-
-const PostSelectHolder = props => {
-    const {text, handler} = props;
-    return (
-        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <PostItemUnavailable status="battle-form" text={text} selectHandler={handler}/>
-        </Box>
-    );
-}
 
 
 const CreateBattleForm = props => {
@@ -60,9 +50,7 @@ const CreateBattleForm = props => {
 
     return (
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{p: 0, m: 0}}>
-            <Box sx={{
-                px: 2
-            }}>
+            <Box sx={{ px: 2 }}>
                 <TextField
                     margin="normal"
                     required
@@ -81,29 +69,63 @@ const CreateBattleForm = props => {
                 />
             </Box>
             
-            <Stack spacing={3} flexWrap sx={{ my: 3 }}>
+            <Stack direction="column" spacing={2} sx={{ my: 3, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <>
                     {
                         post1 != null 
                         ?
-                        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                            <PostItem base={{...post1.base}} addons={{...post1.addons, status: null}} />
-                        </Box>
+                        <PostItem base={{...post1.base}} addons={{...post1.addons, status: null}} />
                         :
-                        <PostSelectHolder text={t('battles.create.select_my_track')} handler={() => handleOpenPostSelectModal(true)}/>
+                        <Stack direction="column" spacing={2} sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <PostItemUnavailable 
+                                status="battle-form" 
+                                text={t('battles.create.select_my_track')} 
+                                selectHandler={() => handleOpenPostSelectModal(true)}
+                                innerRef={
+                                    {...register("MyTrack", {
+                                        required: true,
+                                    })}
+                                }
+                            />
+                            { 
+                                errors.MyTrack 
+                                && 
+                                <Typography sx={{ color: '#f44336', fontSize: 12, width: '100%', pl: 3 }}>
+                                    {t('battles.create.form.error.post1')}
+                                </Typography> 
+                            }
+                        </Stack>
                     }
                 </>
+
                 <>
                     {
-                        post2 != null 
+                        post1 != null 
                         ?
-                        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                            <PostItem base={post2.base} addons={{...post2.addons, status: null}}/>
-                        </Box>
+                        <PostItem base={{...post1.base}} addons={{...post1.addons, status: null}} />
                         :
-                        <PostSelectHolder text={t('battles.create.select_oponnents_track')} handler={() => handleOpenPostSelectModal(false)}/>
+                        <Stack direction="column" spacing={2} sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <PostItemUnavailable 
+                                status="battle-form" 
+                                text={t('battles.create.select_my_track')} 
+                                selectHandler={() => handleOpenPostSelectModal(false)}
+                                innerRef={
+                                    {...register("MyTrack", {
+                                        required: true,
+                                    })}
+                                }
+                            />
+                            { 
+                                errors.MyTrack 
+                                && 
+                                <Typography sx={{ color: '#f44336', fontSize: 12, width: '100%', pl: 3 }}>
+                                    {t('battles.create.form.error.post1')}
+                                </Typography> 
+                            }
+                        </Stack>
                     }
                 </>
+                
             </Stack>
             
             <Box sx={{mx: 2}}>

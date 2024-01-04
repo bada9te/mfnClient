@@ -1,0 +1,28 @@
+{
+    "topbar.title": "MUSIC FROM NOTHING",
+    "topbar.feed": "Feed",
+    "topbar.battles": "Battles",
+    "topbar.playlists": "Playlists",
+    "topbar.profile": "Profile",
+    "topbar.notifications": "Notifications",
+    "topbar.edit profile": "Edit profile",
+    "topbar.saved posts": "Saved posts",
+    "topbar.support": "Support",
+    "topbar.language": "Language",
+    "topbar.logout": "Logout",
+    "topbar.log in": "Log in",
+    "topbar.dark_mode": "Dark mode",
+
+    "bottombar.tracks": "Tracks",
+    "bottombar.new_post": "New post",
+    "bottombar.player": "Player",
+    "bottombar.people": "People",
+
+    "leftbar.header": "Search for tracks",
+    "leftbar.label": "Track title",
+    "leftbar.info_text": "Start typing track name to search",
+
+    "rightbar.header": "Search for users",
+    "rightbar.label": "Nickname",
+    "rightbar.info_text": "Start typing nickname to search"
+}

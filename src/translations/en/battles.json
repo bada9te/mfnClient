@@ -1,0 +1,16 @@
+{
+    "battles.head.in_progress": "In progress",
+    "battles.head.finished": "Finished",
+    "battles.head.create_new": "Create new",
+    "battles.create.main_text": "Ready for a challenge?",
+    "battles.create.title": "Create battle",
+    "battles.create.login_required": "Please login to create a new one",
+    "battles.create.form.title": "Title",
+    "battles.create.form.error.title": "Title must be from 4 to 10 characters",
+    "battles.create.form.error.post1": "Pls, select your track",
+    "battles.create.form.error.post2": "Pls, select opponent's track",
+    "battles.create.form.submit": "Create battle",
+    "battles.create.select_my_track": "Select my track",
+    "battles.create.select_oponnents_track": "Select opponent's track",
+    "battles.not_found": "No battles found"
+}

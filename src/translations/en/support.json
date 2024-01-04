@@ -1,0 +1,13 @@
+{
+    "support.main_text": "Feel yourself free to contact us!",
+    "support.title": "Contact us",
+    "support.form.contact_reason": "Contact reason",
+    "support.form.error.contact_reason": "Contact reason is not specified",
+    "support.form.email": "Email address",
+    "support.form.error.email": "Email address is not valid",
+    "support.form.message": "Describe your problem in details",
+    "support.form.error.message": "Message is not valid",
+    "support.form.submit": "Confirm",
+    "support.notice": "Please, be polite with the project administration. Visit the F.A.Q page before filling in this form.",
+    "support.open_f.a.q": "Open F.A.Q page"
+}
