@@ -63,11 +63,7 @@ const Playlist = (props) => {
                 subheader={playlist.createdAt}
                 action={
                     <>
-                        { 
-                            currentUser._id === playlist.owner._id 
-                            && 
-                            <Button startIcon={<Add/>} onClick={handleTrackAdding}>{t('playlist.add_track')}</Button> 
-                        }
+                        { currentUser._id === playlist.owner._id && <Button startIcon={<Add/>} onClick={handleTrackAdding}>{t('playlist.add_track')}</Button> }
                         <PlaylistDropdown 
                             owner={playlist.owner} 
                             handlers={{

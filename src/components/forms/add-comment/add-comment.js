@@ -6,7 +6,7 @@ import { commentsContainerState, replyingToNull } from "../../containers/comment
 import { COMMENTS_BY_POST_ID, COMMENTS_REPLIES_BY_COMMENT_ID, COMMENT_CREATE_MUTATION } from "../../../graphql-requests/comments";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
-
+import { useTranslation } from "react-i18next";
 
 
 
@@ -16,11 +16,11 @@ const AddCommentForm = (props) => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { postId, replyingTo } = useReactiveVar(commentsContainerState);
     const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation("comments");
 
     const cancelReply = () => {
         commentsContainerState({...commentsContainerState(), replyingTo: replyingToNull});
     }
-
 
     const onSubmit = async(data) => {
         const commentData = {
@@ -44,6 +44,12 @@ const AddCommentForm = (props) => {
                 },
             },
             update: (cache, { data }) => {
+                const commentData = JSON.parse(JSON.stringify(data.commentCreate));
+                commentData.owner = {
+                    _id: currentUser._id,
+                    avatar: currentUser.avatar,
+                    nick: currentUser.nick,
+                };
                 // updating replies
                 if (replyingTo.commentId !== null) {
                     const cachedData = cache.readQuery({ query: COMMENTS_REPLIES_BY_COMMENT_ID, variables: { _id: replyingTo.commentId } });
@@ -51,7 +57,7 @@ const AddCommentForm = (props) => {
                         query: COMMENTS_REPLIES_BY_COMMENT_ID,
                         variables: { _id: replyingTo.commentId },
                         data: {
-                            commentReplies: cachedData?.commentReplies ? [...cachedData.commentReplies, data.commentCreate] : [data.commentCreate]
+                            commentReplies: cachedData?.commentReplies ? [...cachedData.commentReplies, commentData] : [commentData]
                         }
                     });
                 } 
@@ -62,7 +68,7 @@ const AddCommentForm = (props) => {
                         query: COMMENTS_BY_POST_ID,
                         variables: { _id: postId },
                         data: {
-                            commentsByPostId: [...cachedData.commentsByPostId, data.commentCreate]
+                            commentsByPostId: [...cachedData.commentsByPostId, commentData]
                         }
                     });
                 }
@@ -71,7 +77,7 @@ const AddCommentForm = (props) => {
             reset();
             enqueueSnackbar("Comment created", { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
-            console.error(err)
+            //console.error(err)
             enqueueSnackbar("Can't create the comment", { autoHideDuration: 3000, variant: 'error' });
         });
     }
@@ -84,7 +90,7 @@ const AddCommentForm = (props) => {
                     required
                     fullWidth
                     id="title"
-                    label={replyingTo.commentId === null ? "Your comment text" : `Replying to ${replyingTo.userNick}`}
+                    label={replyingTo.commentId === null ? t('comments.modal.form.text') : `${t('comments.modal.form.reply_to')} ${replyingTo.userNick}`}
                     {...register("Text", {
                         required: true,
                     })}

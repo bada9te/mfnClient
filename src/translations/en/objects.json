@@ -16,5 +16,12 @@
     "post.select": "Select",
     "post.vote+1": "Vote (+1)",
 
-    "posts.not_found": "No tracks yet"
+    "playlist.add_track": "Add track",
+    "playlist.delete": "Delete",
+    "playlist.share": "Share",
+    "playlist.report": "Report",
+
+    "comment.delete": "Delete",
+    "comment.reply": "Reply",
+    "comment.report": "Report"
 }

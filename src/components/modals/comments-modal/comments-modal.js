@@ -5,10 +5,12 @@ import { Close } from "@mui/icons-material";
 import CommentsContainer from "../../containers/comments-container/comments-container";
 import { useReactiveVar } from "@apollo/client";
 import { commentsModalState } from "./reactive";
+import { useTranslation } from "react-i18next";
 
 
 const CommentsModal = props => {
     const commentsModal = useReactiveVar(commentsModalState);
+    const { t } = useTranslation("comments");
     
     const handleClose = () => {
         commentsModalState({ ...commentsModal, isShowing: false });
@@ -24,7 +26,7 @@ const CommentsModal = props => {
             PaperProps={{ sx: { borderRadius: 5 } }}
         >
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    Comments
+                    {t('comments.modal.title')}
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
                         <Close />
                     </IconButton>

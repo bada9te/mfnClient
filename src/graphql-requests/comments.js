@@ -4,11 +4,6 @@ import { gql } from "@apollo/client";
 export const CORE_COMMENT_FIELDS = gql`
     fragment CoreCommentFields on Comment {
         _id
-        owner {
-            _id
-            avatar
-            nick
-        }
         text
         isReply
         replies {
@@ -33,7 +28,12 @@ export const COMMENTS_BY_IDS_QUERY = gql`
     ${CORE_COMMENT_FIELDS}
     query commentsByIds($ids: [ID!]!) {
         commentsByIds(ids: $ids) {
-            ...CoreCommentFields    
+            ...CoreCommentFields 
+            owner {
+                _id
+                avatar
+                nick
+            }   
         }
     }
 `;
@@ -43,6 +43,11 @@ export const COMMENTS_REPLIES_BY_COMMENT_ID = gql`
     query commentReplies($_id: ID!) {
         commentReplies(_id: $_id) {
             ...CoreCommentFields
+            owner {
+                _id
+                avatar
+                nick
+            }
         }
     }
 `;
@@ -52,6 +57,11 @@ export const COMMENTS_BY_POST_ID = gql`
     query commentsByPostId($_id: ID!) {
         commentsByPostId(_id: $_id) {
             ...CoreCommentFields
+            owner {
+                _id
+                avatar
+                nick
+            }
         }
     }
 `;

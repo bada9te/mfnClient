@@ -59,7 +59,6 @@ const PostUploadForm = (props)=> {
         await postUpload({
             update: (cache, { data }) => {
                 const postData = JSON.parse(JSON.stringify(data.postCreate));
-                console.log(currentUser)
                 postData.owner = {
                     _id: currentUser._id,
                     avatar: currentUser.avatar,

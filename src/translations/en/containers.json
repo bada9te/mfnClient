@@ -1,0 +1,8 @@
+{
+    "posts.not_found": "No tracks yet",
+    "battles.not_found": "No battles found",
+    "playlists.login_required": "Please login to create a new one",
+    "playlists.no_tracks": "No tracks in this playlist",
+    "comments.not_found": "No comments yet",
+    "select.user.not_found": "Not subscribed on users yet"
+}
