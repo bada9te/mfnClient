@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 
 const SocialMediaLogin = (props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("login");
     return (
         <FormGroup>
             <Typography sx={{ my: 1 }}>{t('login.social')}</Typography>

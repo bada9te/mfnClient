@@ -7,12 +7,14 @@ import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '../../../../graph
 import { baseState } from "../../../baseReactive";
 import { useSnackbar } from "notistack";
 import { CREATE_NOTIFICATION_MUTATION } from "../../../../graphql-requests/notifications";
+import { useTranslation } from "react-i18next";
 
 
 const ProfileCard = (props) => {
     const { id, bgRadius } = props;
     const { user: currentUser, theme, locations } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation("profile");
 
     const navigate = useNavigate();
 
@@ -131,8 +133,8 @@ const ProfileCard = (props) => {
                                 <Typography variant='h6'>{userData?.user?.description}</Typography>
                             </Box>
                             <Box>
-                                <Typography>Following {userData?.user?.subscribedOn?.length || 0}</Typography>
-                                <Typography>Subscribers {userData?.user?.subscribers?.length}</Typography>
+                                <Typography>{t('profile.following')} {userData?.user?.subscribedOn?.length || 0}</Typography>
+                                <Typography>{t('profile.subscribers')} {userData?.user?.subscribers?.length}</Typography>
                                 {
                                     (() => {
                                         if (currentUser?._id !== userData?.user._id && currentUser._id !== "") {

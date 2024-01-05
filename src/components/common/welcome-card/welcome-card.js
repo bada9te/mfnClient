@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 const WelcomePageCard = props => {
     const { item } = props;
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("welcome");
 
 
     return (

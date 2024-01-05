@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 const RightBarUsersContainer = props => {
     const { searchQuery } = props;
     const [getUsersByNickname, { data, loading }] = useLazyQuery(USERS_BY_NICKNAME_QUERY);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("bars");
 
     useEffect(() => {
         const timer = setTimeout(() => {

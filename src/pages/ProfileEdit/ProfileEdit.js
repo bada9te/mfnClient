@@ -5,7 +5,6 @@ import BaseContentContainer from "../../components/containers/base-content-conta
 
 
 const ProfileEdit = (props) => {
-
     return (
         <BaseContentContainer>
             <ProfileCardEdit id='0'/>
@@ -14,16 +13,16 @@ const ProfileEdit = (props) => {
                     <FormProfileEdit title="Nickname" />
                 </Box>
                 <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
-                    <FormProfileEdit title="Description" current="aaaaaaaa" />
+                    <FormProfileEdit title="Description" />
                 </Box>
                 <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
                     <FormProfileEdit title="Password" />
                 </Box>
                 <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
-                    <FormProfileEdit title="Email" current="Current email" />
+                    <FormProfileEdit title="Email" />
                 </Box>
                 <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
-                    <FormProfileEdit title="Danger Zone" />
+                    <FormProfileEdit title="Danger_zone" />
                 </Box>
             </Stack>
         </BaseContentContainer>

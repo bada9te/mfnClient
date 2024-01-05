@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const ThemeSwitcher = props => {
     const { theme } = useReactiveVar(baseState);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("bars");
 
     const changeTheme = (e) => {
         baseState({

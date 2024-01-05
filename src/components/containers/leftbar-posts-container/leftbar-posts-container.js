@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const LeftBarPostsContainer = props => {
     const { searchQuery } = props;
     const [ getPostsByTitle, { data, loading } ] = useLazyQuery(POSTS_BY_TITLE_QUERY);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("bars");
 
     useEffect(() => {
         const timer = setTimeout(() => {

@@ -18,7 +18,7 @@ const BottomBar = (props) => {
     const bottomBar = useReactiveVar(bottomBarState);
     const audioPlayer = useReactiveVar(audioPlayerState);
 
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("bars");
 
     const handleShowRB = () => bottomBarState({ ...bottomBar, showRB: true });
     const handleShowLB = () => bottomBarState({ ...bottomBar, showLB: true });

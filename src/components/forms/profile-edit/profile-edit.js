@@ -11,15 +11,17 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION, USER_UPDATE_MUTATION } from "../../../graphql-requests/users";
+import { useTranslation } from "react-i18next";
 
 
 const FormProfileEdit = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { title, current } = props;
+    const { title } = props;
     const { user: currentUser } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
     const [ prepareToRestore ] = useMutation(USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION);
+    const { t } = useTranslation("profile");
 
     // form submit
     const onSubmit = async(data) => {
@@ -118,28 +120,80 @@ const FormProfileEdit = (props) => {
     } 
 
     return (
-        <>
             <Card sx={{ width: '20rem', height: 'fit-content', boxShadow: 3, borderRadius: 5 }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     { title === "Password"    ? <Avatar src={PasswordImage} alt="password" sx={{ m: 1, boxShadow: 5 }}/>  : null }
                     { title === "Nickname"    ? <Avatar src={TextImage} alt="nickname" sx={{ m: 1, boxShadow: 5 }}/> : null }
                     { title === "Description" ? <Avatar src={TextImage} alt="description" sx={{ m: 1, boxShadow: 5 }}/> : null }
                     { title === "Email"       ? <Avatar src={EmailImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/> : null }
-                    { title === "Danger Zone" ? <Avatar src={ClearImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/> : null }
+                    { title === "Danger_zone" ? <Avatar src={ClearImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/> : null }
                 </Box>
                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 2, mb: 0}}>
-                    { title }
+                    {t(`profile.edit.${title.toLowerCase()}`)}
                 </Typography>
                 <CardContent>
                     <Box component="form" sx={{mx: 2}} onSubmit={handleSubmit(onSubmit)}>
-                        { title === "Password"    ? <Password    register={register} errors={errors}/> : null }
-                        { title === "Nickname"    ? <Nickname    register={register} errors={errors}/> : null }
-                        { title === "Description" ? <Description register={register} errors={errors} current={current}/> : null }
-                        { title === "Email"       ? <Email       register={register} errors={errors} current={current}/> : null }
-                        { title === "Danger Zone" ? <DangerZone  register={register} errors={errors} handleAccountDelete={handleAccountDelete}/> : null }
+                        { 
+                            title === "Password" 
+                            &&  
+                            <TextField margin="normal" required fullWidth id="password" label="Password" name="password" type="password"
+                                error={Boolean(errors.OldPassword)}
+                                helperText={errors.OldPassword && "Password must be from 4 to 20 characters"}
+                                {...register("OldPassword", {
+                                    maxLength: 20,
+                                    minLength: 8,
+                                    required: true,
+                                })} 
+                            />
+                        }
+                        { 
+                            title === "Nickname"
+                            &&
+                            <TextField margin="normal" required fullWidth id="nickname"label="Nickname" name="nickname" type="text"
+                                error={Boolean(errors.NewNickname)}
+                                helperText={errors.NewNickname && "Nickname must be from 4 to 20 characters"}
+                                {...register("NewNickname", {
+                                    maxLength: 20,
+                                    minLength: 4,
+                                    required: true,
+                                })} 
+                            />
+                        }
+                        { 
+                            title === "Description"
+                            &&
+                            <TextField margin="normal" required fullWidth id="newDescription" label="Description" name="newDescription" type="text"
+                                error={Boolean(errors.NewDescription)}
+                                helperText={errors.NewNickname && "Description must be from 4 to 20 characters"}
+                                {...register("NewDescription", {
+                                    maxLength: 20,
+                                    minLength: 4,
+                                    required: true,
+                                })} 
+                            />
+                        }
+                        { 
+                            title === "Email"
+                            &&
+                            <TextField margin="normal" required fullWidth id="oldEmail" label={t('profile.edit.current_email')} name="oldEmail" type="text"
+                                error={Boolean(errors.OldEmail)}
+                                helperText={errors.OldEmail && "Email is not valid"}
+                                {...register("OldEmail", {
+                                    required: true,
+                                    pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                })}
+                            />
+                        }
+                        { 
+                            title === "Danger_zone" 
+                            &&
+                            <Button color="error" variant="contained" startIcon={<Delete/>} onClick={handleAccountDelete} fullWidth>
+                                Delete account
+                            </Button>
+                        }
 
                         {
-                            title !== "Danger Zone" 
+                            title !== "Danger_zone" 
                             &&
                             <Button
                                 type="submit"
@@ -153,124 +207,9 @@ const FormProfileEdit = (props) => {
                     </Box>
                 </CardContent>
             </Card>
-        </>
     );
 }
 
-
-const Password = (props) => {
-    const {register, errors} = props;
-    return (
-        <>
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="password"
-                label="Password"
-                name="password"
-                type="password"
-                error={Boolean(errors.OldPassword)}
-                helperText={errors.OldPassword && "Password must be from 4 to 20 characters"}
-                {...register("OldPassword", {
-                    maxLength: 20,
-                    minLength: 8,
-                    required: true,
-                })} 
-            />
-        </>
-    );
-}
-
-
-const Nickname = (props) => {
-    const {register, errors} = props;
-    return (
-        <>
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="nickname"
-                label="Nickname"
-                name="nickname"
-                type="text"
-                error={Boolean(errors.NewNickname)}
-                helperText={errors.NewNickname && "Nickname must be from 4 to 20 characters"}
-                {...register("NewNickname", {
-                    maxLength: 20,
-                    minLength: 4,
-                    required: true,
-                })} 
-            />
-        </>
-    );
-}
-
-
-const Description = (props) => {
-    const {register, errors} = props;
-    return(
-        <>
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="newDescription"
-                label="Description"
-                name="newDescription"
-                type="text"
-                error={Boolean(errors.NewDescription)}
-                helperText={errors.NewNickname && "Description must be from 4 to 20 characters"}
-                {...register("NewDescription", {
-                    maxLength: 20,
-                    minLength: 4,
-                    required: true,
-                })} 
-            />
-        </>
-    );
-}
-
-
-const Email = (props) => {
-    const {register, errors, current} = props;
-    return (
-        <>
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="oldEmail"
-                label={current}
-                name="oldEmail"
-                type="text"
-                error={Boolean(errors.OldEmail)}
-                helperText={errors.OldEmail && "Email is not valid"}
-                {...register("OldEmail", {
-                    required: true,
-                    pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                })}
-            />
-        </>
-    );
-}
-
-const DangerZone = (props) => {
-    const {handleAccountDelete} = props;
-
-    return (
-        <Button 
-            color="error" 
-            variant="contained" 
-            startIcon={<Delete/>} 
-            onClick={handleAccountDelete}
-            fullWidth
-        >
-            Delete account
-        </Button>
-    );
-}
 
 
 export default FormProfileEdit;

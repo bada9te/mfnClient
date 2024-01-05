@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const TopBarLeftMenuMin = props => {
     const {handleNavigate, pages} = props;
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("bars");
 
     return (
         <>

@@ -11,7 +11,7 @@ const LoginForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("login");
      
     const onSubmit = async(data) => {
         // show process

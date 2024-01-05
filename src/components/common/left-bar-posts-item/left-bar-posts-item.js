@@ -1,11 +1,13 @@
 import { Person2, Visibility } from '@mui/icons-material';
 import { Card, Avatar, CardMedia, CardActions, CardHeader, Skeleton, ButtonGroup, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 
 const LeftBarPostsItem = (props) => {
     const {id, title, description, user, image} = props;
     const navigate = useNavigate();
+    const { t } = useTranslation("bars");
 
     return (
         <Card sx={{
@@ -52,7 +54,7 @@ const LeftBarPostsItem = (props) => {
                         variant="contained" size="small" 
                         onClick={() => navigate(`/app/track/${id}/${user[0]}`)}
                     >
-                        See track
+                        {t('leftbar.item.see_track')}
                     </Button>
 
                     <Button
@@ -65,7 +67,7 @@ const LeftBarPostsItem = (props) => {
                         variant="contained" size="small"
                         onClick={() => navigate(`/app/profile/${user[0]}`)}
                     >
-                        Open profile 
+                        {t('leftbar.item.open_profile')} 
                     </Button>
                 </ButtonGroup>
             </CardActions>

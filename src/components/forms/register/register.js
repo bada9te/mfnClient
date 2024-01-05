@@ -12,7 +12,7 @@ const RegisterForm = (props) => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("register");
 
     const onSubmit = async(data) => {
         enqueueSnackbar("Trying to register new account...", { autoHideDuration: 1500 });

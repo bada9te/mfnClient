@@ -18,7 +18,7 @@ const CreateBattleForm = props => {
     const [ title, setTitle ] = useState("Battle's title");
     const { post1, post2 } = useReactiveVar(createBattleFormState);
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("battles");
 
     const [ createBattle ] = useMutation(BATTLE_CREATE_MUTATTION, {
         variables: {

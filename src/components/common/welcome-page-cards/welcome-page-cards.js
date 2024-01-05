@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import logoClear from "../../../images/icons/logo_clear.png"
-import WelcomePageCard from "./card/card";
+import WelcomePageCard from "../welcome-card/welcome-card";
 import { useTranslation } from "react-i18next";
 
 const cardsData = [
@@ -39,7 +39,7 @@ const cardsData = [
 ];
 
 const WelcomePageCards = props => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("welcome");
 
     return (
         <Stack 

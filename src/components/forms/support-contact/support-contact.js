@@ -12,7 +12,7 @@ const FormSupportContact = (props) => {
     const { user: currentUser } = useReactiveVar(baseState);
     const [createSupportRequest] = useMutation(SUPPORT_CONTACT_CREATE_MUTATION);
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("support");
 
     const onSubmit = async(data) => {
         enqueueSnackbar("Creating support request...", { autoHideDuration: 1500 });

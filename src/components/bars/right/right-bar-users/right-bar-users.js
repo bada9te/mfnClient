@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const RightBarUsers = (props) => {
     const [searchQuery, setSearchQuery] = useState("");
     const bottomBar = useReactiveVar(bottomBarState);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("bars");
 
     const handleInput = (query) => {
         setSearchQuery(query);

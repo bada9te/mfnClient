@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const WelcomePageStart = props => {
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("welcome");
 
     return (
         <Box
@@ -41,14 +41,14 @@ const WelcomePageStart = props => {
                             endIcon={<Login/>} 
                             onClick={() => navigate('/app/login')}
                         >
-                            Log in
+                            {t('welcome.log_in')}
                         </Button> 
                         <Button 
                             variant="contained" 
                             endIcon={<VpnKey/>} 
                             onClick={() => navigate('/app/register')}
                         >
-                            Register
+                            {t('welcome.register')}
                         </Button> 
                     </ButtonGroup>
                 }

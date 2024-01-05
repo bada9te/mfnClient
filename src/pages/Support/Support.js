@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 
 const Support = (props) => {
     const navigate = useNavigate();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("support");
 
     return (
         <BaseContentContainer>

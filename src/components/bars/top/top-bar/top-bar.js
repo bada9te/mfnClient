@@ -49,7 +49,7 @@ function HideOnScroll(props) {
 const Topbar = (props) => {
     const { user, locations } = useReactiveVar(baseState);
     const [ getUnreadNotifications, { data } ] = useLazyQuery(NOTIFICATIONS_QUERY);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("bars");
  
     const pages = ['Feed', 'Battles', 'Playlists'];
     const navigate = useNavigate();
@@ -197,7 +197,7 @@ const Topbar = (props) => {
                                             textDecoration: 'none', 
                                         }}
                                     >
-                                        { user && user?._id !== "" ? user?.nick : "Log in" }
+                                        { user && user?._id !== "" ? user?.nick : t('topbar.log_in') }
                                     </Typography>
                                         {
                                             data?.notifications.length > 0

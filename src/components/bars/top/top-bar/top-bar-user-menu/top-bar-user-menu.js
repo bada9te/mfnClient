@@ -12,11 +12,11 @@ import { useTranslation } from "react-i18next";
 
 const TopBarUserMenu = props => {
     const { handleCloseUserMenu, notifications, anchorElUser } = props;
-    const items = ['Profile', 'Notifications', 'Edit profile', 'Saved posts', 'Support', 'Language', 'Logout'];
-    const itemsNL = ['Log in', 'Support', 'Language'];
+    const items = ['Profile', 'Notifications', 'Edit_profile', 'Saved_posts', 'Support', 'Language', 'Logout'];
+    const itemsNL = ['Log_in', 'Support', 'Language'];
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("bars");
 
     const handleNavigate = (where) => {
         handleCloseUserMenu();
@@ -27,10 +27,10 @@ const TopBarUserMenu = props => {
             case 'Notifications':
                 navigate(`/app/notifications/`);
                 break;
-            case 'Edit profile':
+            case 'Edit_profile':
                 navigate('/app/profile-edit');
                 break;
-            case 'Saved posts':
+            case 'Saved_posts':
                 navigate('/app/saved');
                 break;
             case 'Support':
@@ -39,7 +39,7 @@ const TopBarUserMenu = props => {
             case 'Logout':
                 navigate('/app/logout');
                 break;
-            case 'Log in':
+            case 'Log_in':
                 navigate('/app/login');
                 break;
             case 'Language': 
@@ -92,9 +92,9 @@ const TopBarUserMenu = props => {
                                                         </StyledBadge>
                                                     );
                                                 return (<Notifications sx={{mr: 1}}/>);
-                                            case 'Edit profile':
+                                            case 'Edit_profile':
                                                 return (<Settings sx={{mr: 1}}/>);
-                                            case 'Saved posts':
+                                            case 'Saved_posts':
                                                 return (<BookmarkAdded sx={{mr: 1}}/>);
                                             case 'Support':
                                                 return (<ContactSupport sx={{mr: 1}}/>);
@@ -124,7 +124,7 @@ const TopBarUserMenu = props => {
                                                 return (<ContactSupport sx={{mr: 1}}/>);
                                             case 'Language':
                                                 return (<Language sx={{mr: 1}}/>);
-                                            case 'Log in':
+                                            case 'Log_in':
                                                 return (<Login sx={{mr: 1}}/>);
                                             default:
                                                 break;

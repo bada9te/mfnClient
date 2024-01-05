@@ -8,6 +8,7 @@ import { useState } from "react";
 import blobToFile from "../../../common-functions/blobToFIle/blobToFile";
 import { useSnackbar } from "notistack";
 import { USER_UPDATE_MUTATION } from "../../../graphql-requests/users";
+import { useTranslation } from "react-i18next";
 
 
 const ProfileCardForm = (props) => {
@@ -19,6 +20,7 @@ const ProfileCardForm = (props) => {
     const { isShwoing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
+    const { t } = useTranslation("profile");
  
     const cropImageFile = (img, what) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: true, imageType: what})
@@ -64,7 +66,7 @@ const ProfileCardForm = (props) => {
             />
             <Box component="form">
                 <FormGroup sx={{py: 1}}>
-                    <Typography>Avatar:</Typography>
+                    <Typography>{t('profile.edit.avatar')}</Typography>
                     <Button variant="outlined" component="label">
                         {avatarTitle}
                         <input type="file" hidden 
@@ -73,7 +75,7 @@ const ProfileCardForm = (props) => {
                     </Button>
                 </FormGroup>
                 <FormGroup sx={{py: 1}}>
-                    <Typography>Background:</Typography>
+                    <Typography>{t('profile.edit.background')}</Typography>
                     <Button variant="outlined" component="label">
                         {backgroundTitle}
                         <input type="file" hidden 

@@ -1,11 +1,12 @@
 import { Person2 } from '@mui/icons-material';
 import { Card, CardActions, CardMedia, CardHeader, Avatar, Skeleton, Button, ButtonGroup, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import { useTranslation } from "react-i18next";
 
 const RightBarUsersItem = (props) => {
     const {id, avatar, background, nickname, description} = props;
     const navigate = useNavigate();
+    const { t } = useTranslation("bars");
 
     return (
         <>
@@ -57,7 +58,7 @@ const RightBarUsersItem = (props) => {
                                 variant="contained" size="small"
                                 onClick={() => navigate(`/app/profile/${id}`)}
                             >
-                                Open profile 
+                                {t('rightbar.item.open_profile')}
                             </Button>
                         </ButtonGroup>
                     </Box>
