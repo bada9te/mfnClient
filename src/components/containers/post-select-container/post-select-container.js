@@ -31,21 +31,21 @@ const PostSelectContainer = props => {
     });
 
     
-    const handlePostSelection = (post) => {
+    const handlePostSelection = async(post) => {
         postSelectModalState({ ...postSelectModalState(), isShowing: false });
 
         if (selectingFor === "playlist") {
-            switchTrackInPlaylist({
+            await switchTrackInPlaylist({
                 variables: {
                     input: {
-                        trackId: post._id,
+                        trackId: post.base._id,
                         playlistId: targetPlaylist,
                     },
                 },
             });
             
-            console.log("SWICTH_TRACK_IN_PLAYLIST")
-            //dispatch(switchTrackInPlaylist(post));
+            
+            
         } else if (selectingFor === "battle") {
             createBattleFormState({ ...createBattleFormState(), [isMine ? "post1" : "post2"]: post })    
         }

@@ -18,7 +18,7 @@ const CreatePlaylistForm = props => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { maxCountPerPage, activePage } = useReactiveVar(playlistsContainerState);
     const [ createPlaylist ] = useMutation(PLAYLIST_CREATE_MUTATION);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("playlists");
 
     const onSubmit = async(data) => {
         enqueueSnackbar("Creating playlist...", { autoHideDuration: 1500 });

@@ -119,7 +119,7 @@ const CreateBattleForm = props => {
                                 errors.MyTrack 
                                 && 
                                 <Typography sx={{ color: '#f44336', fontSize: 12, width: '100%', pl: 3 }}>
-                                    {t('battles.create.form.error.post1')}
+                                    {t('battles.create.form.error.post2')}
                                 </Typography> 
                             }
                         </Stack>

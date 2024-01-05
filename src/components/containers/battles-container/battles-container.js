@@ -38,7 +38,7 @@ const BattlesContainer = props => {
     const [status, setStatus] = useState(0);
     const { activePage, maxCountPerPage } = useReactiveVar(battlesContainerState);
     const { user: currentUser } = useReactiveVar(baseState);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("battles");
 
     const [ makeVote ] = useMutation(BATTLE_MAKE_VOTE_MUTATION);
     const [ getBattles, { data, loading, stopPolling } ] = useLazyQuery(BATTLES_BY_STATUS_QUERY, {

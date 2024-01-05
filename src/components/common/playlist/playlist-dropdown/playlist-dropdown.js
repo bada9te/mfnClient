@@ -3,11 +3,13 @@ import { Report, Share, MoreVert, Delete } from "@mui/icons-material";
 import { useState } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../../baseReactive";
+import { useTranslation } from "react-i18next";
 
 const PlaylistDropdown = props => {
     const { owner, handlers } = props;
     const [ anchorElUser, setAnchorElUser ] = useState(null);
     const { user: currentUser } = useReactiveVar(baseState);
+    const { t } = useTranslation("playlists");
 
     // click
     const handleClick = (i) => {
@@ -49,20 +51,20 @@ const PlaylistDropdown = props => {
                     &&
                     <MenuItem onClick={() => handleClick('Delete')}>
                         <Typography textAlign="center" display="flex" alignItems="center">
-                            <Delete sx={{mr: 1}}/>Delete
+                            <Delete sx={{mr: 1}}/>{t('playlist.delete')}
                         </Typography>
                     </MenuItem>
                 }
                 
                 <MenuItem onClick={() => handleClick('Share')}>
                     <Typography textAlign="center" display="flex" alignItems="center">
-                        <Share sx={{mr: 1}}/>Share
+                        <Share sx={{mr: 1}}/>{t('playlist.share')}
                     </Typography>
                 </MenuItem>
                 
                 <MenuItem onClick={() => handleClick('Report')}>
                     <Typography textAlign="center" display="flex" alignItems="center">
-                        <Report sx={{mr: 1}}/>Report
+                        <Report sx={{mr: 1}}/>{t('playlist.report')}
                     </Typography>
                 </MenuItem>
             </Menu>

@@ -1,5 +1,5 @@
 import { Add, ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails, Box, Stack } from "@mui/material";
+import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails, Stack } from "@mui/material";
 import PlaylistDropdown from "./playlist-dropdown/playlist-dropdown";
 import EnumPlaylistTracks from "../../enums/enum-playlist-tracks";
 import { reportFormState } from "../../forms/report/reactive";
@@ -13,10 +13,13 @@ import { baseState } from "../../baseReactive";
 import { playlistsContainerState } from "../../containers/playlists-container/reactive";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
+import { useTranslation } from "react-i18next";
+
 
 const Playlist = (props) => {
     const { playlist } = props;
     const { user: currentUser } = useReactiveVar(baseState);
+    const { t } = useTranslation("playlists");
 
 
      // open user select modal to share
@@ -63,7 +66,7 @@ const Playlist = (props) => {
                         { 
                             currentUser._id === playlist.owner._id 
                             && 
-                            <Button startIcon={<Add/>} onClick={handleTrackAdding}>Add track</Button> 
+                            <Button startIcon={<Add/>} onClick={handleTrackAdding}>{t('playlist.add_track')}</Button> 
                         }
                         <PlaylistDropdown 
                             owner={playlist.owner} 
@@ -76,29 +79,23 @@ const Playlist = (props) => {
                     </>
                 }
             />
-            <CardContent sx={{p: {xs: 0, md: 2}}}>
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMore/>}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
+            <CardContent sx={{ ":last-child": { p: 0 } }}>
+                <Accordion sx={{boxShadow: 0}}>
+                    <AccordionSummary expandIcon={<ExpandMore/>} aria-controls="panel1a-content" id="panel1a-header">
                         <Typography>{playlist.title}</Typography>
                     </AccordionSummary>
-                    <AccordionDetails sx={{p: {xs: 0, md: 2}}}>
+                    <AccordionDetails sx={{p: {xs: 0, md: 2}, mb: { xs: 2, md: 0 }}}>
                         {
                             (() => {
                                 if (playlist.tracks.length === 0) {
                                     return (
-                                        <Typography>No tracks in this playlist</Typography>
+                                        <Typography>{t('playlist.no_tracks')}</Typography>
                                     );
                                 } else {
                                     return (
-                                        <Box sx={{ width: '100%' }}>
-                                            <Stack spacing={4} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}} direction="row" useFlexGap flexWrap="wrap">
-                                                <EnumPlaylistTracks tracks={playlist.tracks}/>
-                                            </Stack>
-                                        </Box>
+                                        <Stack spacing={4} sx={{width: '100%', display: 'flex', justifyContent: 'space-around', alignItems: 'center'}} direction="row" useFlexGap flexWrap="wrap">
+                                            <EnumPlaylistTracks tracks={playlist.tracks}/>
+                                        </Stack>
                                     );
                                 }
                             })()

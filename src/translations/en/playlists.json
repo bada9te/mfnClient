@@ -2,6 +2,8 @@
     "playlists.head.explore": "Explore",
     "playlists.head.my_playlists": "My playlists",
     "playlists.head.create_new": "Create new",
+    "playlists.not_found": "No playlists yet",
+    "playlists.login_to_operate": "Login to operate with your playlists",
     "playlists.create.main_text": "New playlist? Beautiful :)",
     "playlists.create.title": "Create playlist",
     "playlists.create.form.title": "Title",
@@ -14,5 +16,6 @@
     "playlist.add_track": "Add track",
     "playlist.delete": "Delete",
     "playlist.share": "Share",
-    "playlist.report": "Report"
+    "playlist.report": "Report",
+    "playlist.no_tracks": "No tracks in this playlist"
 }

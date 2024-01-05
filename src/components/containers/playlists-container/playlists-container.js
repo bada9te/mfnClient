@@ -75,7 +75,7 @@ const PlaylistsContainer = (props) => {
     // used to know the page number
     const [status, setStatus] = useState(0);
 
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("playlists");
 
     // on tab switch
     const handleTabSwitch = (event, key) => {
@@ -162,7 +162,7 @@ const PlaylistsContainer = (props) => {
                         } else {
                             return (
                                 <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Typography sx={{textAlign: 'center'}}>No playlists yet</Typography>
+                                    <Typography sx={{textAlign: 'center'}}>{t('playlists.not_found')}</Typography>
                                 </Box>
                             );
                         }
@@ -176,7 +176,7 @@ const PlaylistsContainer = (props) => {
                         if (!currentUser || currentUser._id === "") {
                             return (
                                 <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Typography sx={{textAlign: 'center'}}>Login to operate with your playlists</Typography>
+                                    <Typography sx={{textAlign: 'center'}}>{t('playlists.login_to_operate')}</Typography>
                                 </Box>
                             );
                         }
@@ -192,7 +192,7 @@ const PlaylistsContainer = (props) => {
                         } else {
                             return (
                                 <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Typography sx={{textAlign: 'center'}}>No playlists yet</Typography>
+                                    <Typography sx={{textAlign: 'center'}}>{t('playlists.not_found')}</Typography>
                                 </Box>
                             );
                         }

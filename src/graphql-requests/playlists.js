@@ -13,6 +13,11 @@ export const CORE_PLAYLIST_FIELDS = gql`
         title
         tracks {
             ...CorePostFields
+            owner {
+                _id
+                nick
+                avatar        
+            }
         }
         public
         createdAt
