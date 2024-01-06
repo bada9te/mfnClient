@@ -11,16 +11,16 @@ const LoginForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("login");
+    const { t } = useTranslation("forms");
      
     const onSubmit = async(data) => {
         // show process
-        enqueueSnackbar("Logging in...", { autoHideDuration: 1500 })
+        enqueueSnackbar(t('login.snack.pending'), { autoHideDuration: 1500 })
         // update store
         await httpLogin(data.Email, data.Password)
             .then(({ data }) => {
                 navigate('/app/');
-                enqueueSnackbar(`Successfully logged in as ${data.nick}`, { variant: "success", autoHideDuration: 3000 });
+                enqueueSnackbar(`${t('login.snack.success')} ${data.nick}`, { variant: "success", autoHideDuration: 3000 });
             }).catch((err) => {
                 enqueueSnackbar(err.response.data, { variant: "error" });
             });
@@ -35,12 +35,12 @@ const LoginForm = (props) => {
                     required
                     fullWidth
                     id="email"
-                    label={t('login.form.email')}
+                    label={t('login.email')}
                     name="email"
                     autoComplete="email"
                     autoFocus
                     error={Boolean(errors.Email)}
-                    helperText={errors.Email && t('login.form.error.email')}
+                    helperText={errors.Email && t('login.error.email')}
                     {...register("Email", {
                         required: true,
                         pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -52,11 +52,11 @@ const LoginForm = (props) => {
                     required
                     fullWidth
                     id="password"
-                    label={t('login.form.password')}
+                    label={t('login.password')}
                     name="password"
                     type="password"
                     error={Boolean(errors.Password)}
-                    helperText={errors.Password && t('login.form.error.password')}
+                    helperText={errors.Password && t('login.error.password')}
                     {...register("Password", {
                         maxLength: 20,
                         minLength: 8,
@@ -70,7 +70,7 @@ const LoginForm = (props) => {
                     variant="contained"
                     sx={{ mt: 3, mb: 2, boxShadow: 10 }}
                 >
-                    {t('login.form.submit')}
+                    {t('login.submit')}
                 </Button>
 
                 <SocialMediaLogin/>

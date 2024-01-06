@@ -20,7 +20,7 @@ const PostUploadForm = (props)=> {
     const postUploadForm = useReactiveVar(postUploadFormState);
     const { maxCountPerPage } = useReactiveVar(postsContainerState);
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("forms");
 
     const [ postUpload ] = useMutation(POST_CREATE_MUTATION, {
         variables: {
@@ -41,7 +41,7 @@ const PostUploadForm = (props)=> {
     const onSubmit = async(data) => {
         let blob = await fetch(postUploadForm.picture).then(r => r.blob());
 
-        enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('upload.snack.pending'), { autoHideDuration: 1500 });
         
         await Promise.all([
             httpSaveFile(data.Audio[0])
@@ -97,9 +97,9 @@ const PostUploadForm = (props)=> {
             }
         }).then(() => {
             reset();
-            enqueueSnackbar("Post uploaded", { autoHideDuration: 1500, variant: 'success' });
+            enqueueSnackbar(t('upload.snack.success'), { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
-            enqueueSnackbar("Can't upload new post", { variant: 'error' });
+            enqueueSnackbar(t('upload.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
 
@@ -134,14 +134,12 @@ const PostUploadForm = (props)=> {
         <>
         {
             cropModalIsShowing 
-            ? 
+            &&
             <ImageCropperModal 
                 show={cropModalIsShowing} 
                 handleImageCropModalClose={handleImageCropModalClose} 
                 image={postUploadForm.picture} 
             />
-            :
-            null
         }     
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{margin: 1}}>
             <TextField
@@ -149,10 +147,10 @@ const PostUploadForm = (props)=> {
                 required
                 fullWidth
                 id="title"
-                label={t('upload.form.title')}
+                label={t('upload.title')}
                 name="title"
                 error={Boolean(errors.Title)}
-                helperText={errors.Title && "Title must be from 4 to 10 characters"}
+                helperText={errors.Title && t('upload.error.title')}
                 onInput={(e) => updateState("title", e.target.value)}
                 {...register("Title", {
                     maxLength: 10,
@@ -165,10 +163,10 @@ const PostUploadForm = (props)=> {
                 required
                 fullWidth
                 id="description"
-                label={t('upload.form.description')}
+                label={t('upload.description')}
                 name="description"
                 error={Boolean(errors.ShortDesc)}
-                helperText={errors.ShortDesc && "Short description must be from 4 to 20 characters"}
+                helperText={errors.ShortDesc && t('upload.error.description')}
                 onInput={(e) => updateState("description", e.target.value)}
                 {...register("ShortDesc", {
                     maxLength: 40,
@@ -178,7 +176,7 @@ const PostUploadForm = (props)=> {
             />
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
-                    {postUploadForm.imageTitle ? `${postUploadForm.imageTitle.slice(0, 30)}` : t('upload.form.image_text')}
+                    {postUploadForm.imageTitle ? `${postUploadForm.imageTitle.slice(0, 30)}` : t('upload.image_text')}
                     <input type="file" hidden 
                         onInput={e => handlePicture(e.target.files[0] || null)}
                         {...register("Image", {
@@ -186,11 +184,11 @@ const PostUploadForm = (props)=> {
                         })} 
                     />
                 </Button>
-                { errors.Image && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.form.error.image')}</Typography> }
+                { errors.Image && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.error.image')}</Typography> }
             </FormGroup>
             <FormGroup sx={{my: 2}}>
                 <Button variant="outlined" component="label">
-                    {postUploadForm.audioTitle ? `${postUploadForm.audioTitle.slice(0, 30)}` : t('upload.form.audio_text')}
+                    {postUploadForm.audioTitle ? `${postUploadForm.audioTitle.slice(0, 30)}` : t('upload.audio_text')}
                     <input type="file" hidden 
                         onInput={e => handleAudio(e.target.files[0] || null)}
                         {...register("Audio", {
@@ -198,7 +196,7 @@ const PostUploadForm = (props)=> {
                         })} 
                     />
                 </Button>
-                { errors.Audio && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.form.error.audio')}</Typography> }
+                { errors.Audio && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.error.audio')}</Typography> }
             </FormGroup>
             <FormGroup>
                 <FormControlLabel
@@ -208,7 +206,7 @@ const PostUploadForm = (props)=> {
                             onChange={(e) => updateState("commentsAllowed", e.target.checked)}
                         />
                     }
-                    label={t('upload.form.allow_comments')}
+                    label={t('upload.allow_comments')}
                 />
             </FormGroup>
             <FormGroup>
@@ -219,7 +217,7 @@ const PostUploadForm = (props)=> {
                             onChange={(e) => updateState("downloadsAllowed", e.target.checked)}
                         />
                     }
-                    label={t('upload.form.allow_downloads')}
+                    label={t('upload.allow_downloads')}
                 />
             </FormGroup>
 
@@ -229,7 +227,7 @@ const PostUploadForm = (props)=> {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, boxShadow: 10 }}
             >
-                {t('upload.form.submit')}
+                {t('upload.submit')}
             </Button>
         </Box>
     </>

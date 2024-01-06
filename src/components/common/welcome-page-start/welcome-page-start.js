@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const WelcomePageStart = props => {
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
-    const { t } = useTranslation("welcome");
+    const { t } = useTranslation("pages");
 
     return (
         <Box

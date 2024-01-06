@@ -33,7 +33,7 @@ const cardsData = [
 
 
 const WelcomePageText = props => {
-    const { t } = useTranslation("welcome");
+    const { t } = useTranslation("pages");
 
     return (
         <Stack  

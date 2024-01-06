@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 const WelcomePageBestTrackContainer = props => {
     const { data, loading } = useQuery(POST_QUERY, { variables: { _id: '652146115bf7efe9bfb0b8a6' } });
-    const { t } = useTranslation("welcome");
+    const { t } = useTranslation("pages");
 
 
     return (

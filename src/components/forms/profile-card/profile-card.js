@@ -13,14 +13,12 @@ import { useTranslation } from "react-i18next";
 
 const ProfileCardForm = (props) => {
     const [ picture, setPicture ] = useState(null);
-    const [ avatarTitle, ] = useState("Select image");
-    const [ backgroundTitle, ] = useState("Select image");
 
     const { user: currentUser } = useReactiveVar(baseState);
     const { isShwoing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
-    const { t } = useTranslation("profile");
+    const { t } = useTranslation("forms");
  
     const cropImageFile = (img, what) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: true, imageType: what})
@@ -33,7 +31,7 @@ const ProfileCardForm = (props) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: value});
 
         if (picture != null) { 
-            enqueueSnackbar("Updating profile...", { autoHideDuration: 1500 });
+            enqueueSnackbar(t('profile.snack.default.pending'), { autoHideDuration: 1500 });
             // save image on server
             let blob = await fetch(picture).then(r => r.blob());
             let result = await httpSaveFile(blobToFile(blob, currentUser?.nick + `${imageType}.jpg`));
@@ -41,17 +39,13 @@ const ProfileCardForm = (props) => {
             // process image assigning
             await updateUser({
                 variables: {
-                    input: {
-                        _id: currentUser._id,
-                        what: imageType,
-                        value: result.data.file.filename,
-                    },
+                    input: { _id: currentUser._id, what: imageType, value: result.data.file.filename },
                 },
             }).then(({ data }) => {
                 baseState({ ...baseState(), user: { ...baseState().user, ...data.userUpdate} });
-                enqueueSnackbar("Profile updated", { autoHideDuration: 1500, variant: 'success' });
+                enqueueSnackbar(t('profile.snack.default.success'), { autoHideDuration: 1500, variant: 'success' });
             }).catch(err => {
-                enqueueSnackbar("Can't update the profile", { autoHideDuration: 3000, variant: 'error' });
+                enqueueSnackbar(t('profile.snack.default.error'), { autoHideDuration: 3000, variant: 'error' });
             });
         }
     }
@@ -66,25 +60,24 @@ const ProfileCardForm = (props) => {
             />
             <Box component="form">
                 <FormGroup sx={{py: 1}}>
-                    <Typography>{t('profile.edit.avatar')}</Typography>
+                    <Typography>{t('profile.avatar')}</Typography>
                     <Button variant="outlined" component="label">
-                        {avatarTitle}
+                        {t('profile.select_avatar')}
                         <input type="file" hidden 
                             onInput={e => cropImageFile(e.target.files[0], 'avatar')}
                         />
                     </Button>
                 </FormGroup>
                 <FormGroup sx={{py: 1}}>
-                    <Typography>{t('profile.edit.background')}</Typography>
+                    <Typography>{t('profile.background')}</Typography>
                     <Button variant="outlined" component="label">
-                        {backgroundTitle}
+                        {t('profile.select_background')}
                         <input type="file" hidden 
                             onInput={e => cropImageFile(e.target.files[0], 'background')}
                         />
                     </Button>
                 </FormGroup>
             </Box>
-            
         </>
     );
 }

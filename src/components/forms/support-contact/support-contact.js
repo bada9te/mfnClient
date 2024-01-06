@@ -12,10 +12,10 @@ const FormSupportContact = (props) => {
     const { user: currentUser } = useReactiveVar(baseState);
     const [createSupportRequest] = useMutation(SUPPORT_CONTACT_CREATE_MUTATION);
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("support");
+    const { t } = useTranslation("forms");
 
     const onSubmit = async(data) => {
-        enqueueSnackbar("Creating support request...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('support.snack.pending'), { autoHideDuration: 1500 });
         await createSupportRequest({
             variables: {
                 input: {
@@ -26,9 +26,9 @@ const FormSupportContact = (props) => {
             }
         }).then(({data}) => {
             reset();
-            enqueueSnackbar("Support request created", { autoHideDuration: 1500, variant: 'success' });
+            enqueueSnackbar(t('support.snack.success'), { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
-            enqueueSnackbar("Can't create the request", { autoHideDuration: 3000, variant: 'error' });
+            enqueueSnackbar(t('support.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
 
@@ -40,11 +40,11 @@ const FormSupportContact = (props) => {
                     required
                     fullWidth
                     id="contactReason"
-                    label={t('support.form.contact_reason')}
+                    label={t('support.contact_reason')}
                     name="contactReason"
                     autoFocus
                     error={Boolean(errors.ContactReason)}
-                    helperText={errors.ContactReason && t('support.form.error.contact_reason')}
+                    helperText={errors.ContactReason && t('support.error.contact_reason')}
                     {...register("ContactReason", {
                         required: true,
                     })} 
@@ -55,12 +55,12 @@ const FormSupportContact = (props) => {
                     required
                     fullWidth
                     id="email"
-                    label={t('support.form.email')}
+                    label={t('support.email')}
                     name="email"
                     autoComplete="email"
                     autoFocus
                     error={Boolean(errors.Email)}
-                    helperText={errors.Email && t('support.form.error.email')}
+                    helperText={errors.Email && t('support.error.email')}
                     {...register("Email", {
                         required: true,
                         pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -72,11 +72,11 @@ const FormSupportContact = (props) => {
                     required
                     fullWidth
                     id="message"
-                    label={t('support.form.message')}
+                    label={t('support.message')}
                     name="message"
                     autoComplete="email"
                     error={Boolean(errors.Message)}
-                    helperText={errors.Message && t('support.form.error.message')}
+                    helperText={errors.Message && t('support.error.message')}
                     {...register("Message", {
                         required: true,
                         minLength: 20,
@@ -89,7 +89,7 @@ const FormSupportContact = (props) => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2, boxShadow: 10 }}
                     >
-                        {t('support.form.submit')}
+                        {t('support.submit')}
                 </Button>
             </Box>
         </>

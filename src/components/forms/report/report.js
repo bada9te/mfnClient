@@ -6,6 +6,7 @@ import { reportFormState } from "./reactive";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 import { REPORT_CREATE_MUTATION } from "../../../graphql-requests/reports";
+import { useTranslation } from "react-i18next";
 
 
 const ReportForm = (props) => {
@@ -15,13 +16,14 @@ const ReportForm = (props) => {
     const { user: currentUser } = useReactiveVar(baseState);
     const [ createReport ] = useMutation(REPORT_CREATE_MUTATION);
     const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation("forms");
 
     const handleChange = (event) => {
         setValue(event.target.value);
     };
     
     const onSubmit = async(data) => {
-        enqueueSnackbar("Reporting...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('report.snack.pending'), { autoHideDuration: 1500 });
         await createReport({
             variables: {
                 input: {
@@ -32,9 +34,9 @@ const ReportForm = (props) => {
                 },
             },
         }).then(({ data }) => {
-            enqueueSnackbar("Report was sent", { autoHideDuration: 1500, variant: 'success' })
+            enqueueSnackbar(t('report.snack.success'), { autoHideDuration: 1500, variant: 'success' })
         }).catch(err => {
-            enqueueSnackbar("Can't create the report", { autoHideDuration: 3000, variant: 'error' });
+            enqueueSnackbar(t('report.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
 
@@ -45,11 +47,11 @@ const ReportForm = (props) => {
                     select
                     fullWidth
                     defaultValue={value}
-                    label="Select"
+                    label={t('report.foul_type')}
                     onChange={handleChange}
                     
                     error={Boolean(errors.FoulType)}
-                    helperText={errors.FoulType && "This option is required"}
+                    helperText={errors.FoulType && t('report.error.foul_type')}
                     {...register("FoulType", {
                         required: true,
                     })}
@@ -64,7 +66,7 @@ const ReportForm = (props) => {
                     margin="normal"
                     fullWidth
                     id="message"
-                    label="Describe the foul in details (optional)"
+                    label={t('report.message')}
                     name="message"
                     error={Boolean(errors.Message)}
                     helperText={errors.Message && errors.Message.type === "minLength" && <span>Min length must be 10</span>}
@@ -79,7 +81,7 @@ const ReportForm = (props) => {
                     variant="contained"
                     sx={{ mt: 3, mb: 2, boxShadow: 10 }}
                 >
-                    Report
+                    {t('report.submit')}
                 </Button>
             </Box>
         </>

@@ -21,76 +21,63 @@ const FormProfileEdit = (props) => {
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
     const [ prepareToRestore ] = useMutation(USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION);
-    const { t } = useTranslation("profile");
+    const { t } = useTranslation("forms");
 
     // form submit
     const onSubmit = async(data) => {
         const keys = Object.keys(data);
         switch (keys.at(keys.length - 1)) {
             case "NewNickname":
-                enqueueSnackbar("Updating nickname...", { autoHideDuration: 1500 });
+                enqueueSnackbar(t('profile.snack.nick.pending'), { autoHideDuration: 1500 });
                 await updateUser({
                     variables: {
-                        input: {
-                            _id: currentUser._id,
-                            what: "nick",
-                            value: data.NewNickname,
-                        },
+                        input: { _id: currentUser._id, what: "nick", value: data.NewNickname },
                     },
                 }).then(() => {
                     dispatchUser("nick", data.NewNickname);
-                    enqueueSnackbar("Nickname updated", { autoHideDuration: 1500 });
+                    enqueueSnackbar(t('profile.snack.nick.success'), { autoHideDuration: 1500 });
                 }).catch(err => {
-                    enqueueSnackbar("Can't update the nickname", { autoHideDuration: 1500 });
+                    enqueueSnackbar(t('profile.snack.nick.error'), { autoHideDuration: 1500 });
                 });
                 break;
             case "NewDescription":
-                enqueueSnackbar("Updating description...", { autoHideDuration: 1500 });
+                enqueueSnackbar(t('profile.snack.description.pending'), { autoHideDuration: 1500 });
                 await updateUser({
                     variables: {
-                        input: {
-                            _id: currentUser._id,
-                            what: "description",
-                            value: data.NewDescription,
-                        },
+                        input: { _id: currentUser._id, what: "description", value: data.NewDescription,},
                     },
                 }).then(() => {
                     dispatchUser("description", data.NewDescription);
-                    enqueueSnackbar("Description updated", { autoHideDuration: 1500, variant: 'success' });
+                    enqueueSnackbar(t('profile.snack.description.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(err => {
-                    enqueueSnackbar("Can't update the description", { autoHideDuration: 3000, variant: 'error' });
+                    enqueueSnackbar(t('profile.snack.description.error'), { autoHideDuration: 3000, variant: 'error' });
                 });
                 break;
             case "OldPassword":
-                enqueueSnackbar("Preparing to update password...", { autoHideDuration: 1500 });
+                enqueueSnackbar(t('profile.snack.password.pending'), { autoHideDuration: 1500 });
                 await prepareToRestore({
                     variables: {
-                        input: {
-                            email: currentUser.email,
-                            type: "password",
-                        },
+                        input: { email: currentUser.email, type: "password" },
                     },
                 }).then(({ data }) => {
-                    enqueueSnackbar("Check your email for next steps", { autoHideDuration: 3000, variant: 'info' })
+                    enqueueSnackbar(t('profile.snack.password.success'), { autoHideDuration: 3000, variant: 'info' })
                 }).catch(err => {
-                    enqueueSnackbar("Can't update password", { autoHideDuration: 3000, variant: 'error' });
+                    enqueueSnackbar(t('profile.snack.password.error'), { autoHideDuration: 3000, variant: 'error' });
                 });
                 break;
             case "OldEmail":
+                enqueueSnackbar(t('profile.snack.email.pending'), { autoHideDuration: 1500 });
                 if (data.OldEmail !== currentUser.email) {
-                    enqueueSnackbar("Provided email didn't match current email", { autoHideDuration: 3000, variant: 'error' });
+                    enqueueSnackbar(t('profile.snack.email.error_match'), { autoHideDuration: 3000, variant: 'error' });
                 } else {
                     await prepareToRestore({
                         variables: {
-                            input: {
-                                email: currentUser.email,
-                                type: "email",
-                            },
+                            input: { email: currentUser.email, type: "email" },
                         },
                     }).then(({ data }) => {
-                        enqueueSnackbar("Check your email for next steps", { autoHideDuration: 3000, variant: 'info' });
+                        enqueueSnackbar(t('profile.snack.email.success'), { autoHideDuration: 3000, variant: 'info' });
                     }).catch(err => {
-                        enqueueSnackbar("Can't update email", { autoHideDuration: 3000, variant: 'error' })
+                        enqueueSnackbar(t('profile.snack.email.error'), { autoHideDuration: 3000, variant: 'error' })
                     });
                 }
                 break;
@@ -129,16 +116,16 @@ const FormProfileEdit = (props) => {
                     { title === "Danger_zone" ? <Avatar src={ClearImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/> : null }
                 </Box>
                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 2, mb: 0}}>
-                    {t(`profile.edit.${title.toLowerCase()}`)}
+                    {t(`profile.${title.toLowerCase()}`)}
                 </Typography>
                 <CardContent>
                     <Box component="form" sx={{mx: 2}} onSubmit={handleSubmit(onSubmit)}>
                         { 
                             title === "Password" 
                             &&  
-                            <TextField margin="normal" required fullWidth id="password" label="Password" name="password" type="password"
+                            <TextField margin="normal" required fullWidth id="password" label={t('profile.current_password')} name="password" type="password"
                                 error={Boolean(errors.OldPassword)}
-                                helperText={errors.OldPassword && "Password must be from 4 to 20 characters"}
+                                helperText={errors.OldPassword && t('profile.error.passwor')}
                                 {...register("OldPassword", {
                                     maxLength: 20,
                                     minLength: 8,
@@ -149,9 +136,9 @@ const FormProfileEdit = (props) => {
                         { 
                             title === "Nickname"
                             &&
-                            <TextField margin="normal" required fullWidth id="nickname"label="Nickname" name="nickname" type="text"
+                            <TextField margin="normal" required fullWidth id="nickname"label={t('profile.nickname')} name="nickname" type="text"
                                 error={Boolean(errors.NewNickname)}
-                                helperText={errors.NewNickname && "Nickname must be from 4 to 20 characters"}
+                                helperText={errors.NewNickname && t('profile.error.nickname')}
                                 {...register("NewNickname", {
                                     maxLength: 20,
                                     minLength: 4,
@@ -162,9 +149,9 @@ const FormProfileEdit = (props) => {
                         { 
                             title === "Description"
                             &&
-                            <TextField margin="normal" required fullWidth id="newDescription" label="Description" name="newDescription" type="text"
+                            <TextField margin="normal" required fullWidth id="newDescription" label={t('profile.description')} name="newDescription" type="text"
                                 error={Boolean(errors.NewDescription)}
-                                helperText={errors.NewNickname && "Description must be from 4 to 20 characters"}
+                                helperText={errors.NewNickname && t('profile.error.description"')}
                                 {...register("NewDescription", {
                                     maxLength: 20,
                                     minLength: 4,
@@ -175,9 +162,9 @@ const FormProfileEdit = (props) => {
                         { 
                             title === "Email"
                             &&
-                            <TextField margin="normal" required fullWidth id="oldEmail" label={t('profile.edit.current_email')} name="oldEmail" type="text"
+                            <TextField margin="normal" required fullWidth id="oldEmail" label={t('profile.current_email')} name="oldEmail" type="text"
                                 error={Boolean(errors.OldEmail)}
-                                helperText={errors.OldEmail && "Email is not valid"}
+                                helperText={errors.OldEmail && t('profile.error.email')}
                                 {...register("OldEmail", {
                                     required: true,
                                     pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,

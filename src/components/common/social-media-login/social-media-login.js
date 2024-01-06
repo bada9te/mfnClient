@@ -1,14 +1,11 @@
 import { Google, Twitter, Facebook } from "@mui/icons-material";
-import { FormGroup, Typography, ButtonGroup, Button } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { FormGroup, ButtonGroup, Button } from "@mui/material";
 
 
 
 const SocialMediaLogin = (props) => {
-    const { t } = useTranslation("login");
     return (
         <FormGroup>
-            <Typography sx={{ my: 1 }}>{t('login.social')}</Typography>
             <ButtonGroup sx={{ my: 1, display: 'flex', justifyContent: 'center' }} variant='string' orientation="horizontal">
                 <Button href={process.env.REACT_APP_GOOGLE_AUTH}><Google/></Button>
                 <Button href={process.env.REACT_APP_TWITTER_AUTH}><Twitter/></Button>
