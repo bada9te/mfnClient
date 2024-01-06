@@ -11,15 +11,13 @@ const EnumRightbarUsers = props => {
             {
                 users.map((item, key) => {
                     return (
-                        <div key={key}>
-                            <RightBarUsersItem
-                                id={item._id}
-                                avatar={`${locations?.images}/${item.avatar}`}
-                                background={`${locations?.images}/${item.background}`}
-                                nickname={item.nick}
-                                description={item.description}
-                            />
-                        </div>
+                        <RightBarUsersItem
+                            key={key}
+                            id={item._id}
+                            avatar={`${locations?.images}/${item.avatar}`}
+                            nickname={item.nick}
+                            description={item.description}
+                        />
                     );
                 })
             }

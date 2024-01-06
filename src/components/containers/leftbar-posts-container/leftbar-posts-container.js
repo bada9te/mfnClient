@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const LeftBarPostsContainer = props => {
     const { searchQuery } = props;
     const [ getPostsByTitle, { data, loading } ] = useLazyQuery(POSTS_BY_TITLE_QUERY);
-    const { t } = useTranslation("bars");
+    const { t } = useTranslation("containers");
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -51,7 +51,7 @@ const LeftBarPostsContainer = props => {
                             return (
                                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                                     <Typography>
-                                        {t('leftbar.info_text')}
+                                        {t('leftbar.posts.info_text')}
                                     </Typography>
                                 </Box>
                             );

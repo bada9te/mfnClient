@@ -1,5 +1,6 @@
 import { ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import BaseContentContainer from "../../components/containers/base-content-container/base-content-container";
 
 
 
@@ -8,7 +9,7 @@ const FAQ = (props) => {
 
 
     return (
-        <Box sx={{m: 2, mt: 3}}>
+        <BaseContentContainer>
             <Accordion>
                 <AccordionSummary expandIcon={<ExpandMore/>}>
                     <Typography>Who we are?</Typography>
@@ -62,7 +63,7 @@ const FAQ = (props) => {
                     {text}
                 </AccordionDetails>    
             </Accordion>    
-        </Box>
+        </BaseContentContainer>
     );
 }
 

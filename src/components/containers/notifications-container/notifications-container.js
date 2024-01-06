@@ -6,6 +6,7 @@ import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { DELETE_NOTIFICATIONS_MUTATION, MARK_NOTIFICATIONS_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "../../../graphql-requests/notifications";
 import { useSnackbar } from "notistack";
+import { useTranslation } from "react-i18next";
 
 
 function TabPanel(props) {
@@ -43,6 +44,7 @@ const NotificationsContainer = props => {
     const [ deleteNotificationsByIds ] = useMutation(DELETE_NOTIFICATIONS_MUTATION);
     const [ markNotificationsAsReadByIds ] = useMutation(MARK_NOTIFICATIONS_AS_READ_MUTATION);
     const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation("containers");
 
     const handleTabSwitch = (event, key) => {
         setStatus(key);
@@ -50,24 +52,24 @@ const NotificationsContainer = props => {
 
     const handleDeleteAllClick = async() => {
         if (data?.notifications && data?.notifications.length > 0) {
-            enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
+            enqueueSnackbar(t('notifications.snack.pending'), { autoHideDuration: 1500 });
             await deleteNotificationsByIds({ variables: { ids: data.notifications.map(i => i._id) } })
                 .then(() => {
-                    enqueueSnackbar("Cleared all notifications.", { autoHideDuration: 1500, variant: 'success' });
+                    enqueueSnackbar(t('notifications.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(() => {
-                    enqueueSnackbar("An error occured.", { autoHideDuration: 3000, variant: 'error' });
+                    enqueueSnackbar(t('notifications.snack.error'), { autoHideDuration: 3000, variant: 'error' });
                 });
         }
     }
 
     const handleReadAllClick = async() => {
         if (data?.notifications && data?.notifications.length > 0) {
-            enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
+            enqueueSnackbar(t('notifications.snack.pending'), { autoHideDuration: 1500 });
             await markNotificationsAsReadByIds({ variables: { ids: data.notifications.map(i => i._id) } })
                 .then(() => {
-                    enqueueSnackbar("Success.", { autoHideDuration: 1500, variant: 'success' });
+                    enqueueSnackbar(t('notifications.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(() => {
-                    enqueueSnackbar("An error occured.", { autoHideDuration: 3000, variant: 'error' });
+                    enqueueSnackbar(t('notifications.snack.error'), { autoHideDuration: 3000, variant: 'error' });
                 });
         }
     }
@@ -84,18 +86,18 @@ const NotificationsContainer = props => {
         <Box sx={{width: '100%', height: '100vh'}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
-                    <Tab icon={<MarkAsUnread/>} label="Unread" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
-                    <Tab icon={<Checklist/>} label="Read" id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
+                    <Tab icon={<MarkAsUnread/>} label={t('notifications.unread')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
+                    <Tab icon={<Checklist/>} label={t('notifications.read')} id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
                 </Tabs>
             </Box>
 
             <TabPanel value={status} index={0}>
-                { !loading && <Button fullWidth onClick={handleReadAllClick}>Mark all notifications as read</Button> }
+                { !loading && <Button fullWidth onClick={handleReadAllClick}>{t('notifications.mark_as_read')}</Button> }
                 <EnumNotifications notifications={data?.notifications || []} loading={loading}/>
             </TabPanel>
         
             <TabPanel value={status} index={1}>
-                { !loading && <Button fullWidth onClick={handleDeleteAllClick}>Delete all notifications</Button> }
+                { !loading && <Button fullWidth onClick={handleDeleteAllClick}>{t('notifications.delete_all')}</Button> }
                 <EnumNotifications notifications={data?.notifications || []} loading={loading}/>
             </TabPanel>
         </Box>
