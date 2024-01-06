@@ -34,17 +34,17 @@ function App() {
         styleOverrides: {
           root: {
             borderRadius: 25,
-            padding: 10,
+            padding: 8.5,
             paddingLeft: 20,
             paddingRight: 20,
             paddingBottom: 5,
             transition: '500ms',
           },
           startIcon: {
-            marginBottom: 5
+            marginBottom: 1
           },
           endIcon: {
-            marginBottom: 5
+            marginBottom: 1
           }
         }
       },

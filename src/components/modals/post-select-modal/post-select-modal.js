@@ -35,36 +35,34 @@ const PostSelectModal = props => {
 
 
     return (
-        <>
-            <Dialog open={isShowing} onClose={handleClose} fullWidth fullScreen>
-                <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    {isMine ? "Select your track" : "Select opponent's track"}
-                    <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
-                        <Close />
-                    </IconButton>
-                </DialogTitle>
+        <Dialog open={isShowing} onClose={handleClose} fullWidth fullScreen>
+            <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                {isMine ? "Select your track" : "Select opponent's track"}
+                <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
+                    <Close />
+                </IconButton>
+            </DialogTitle>
 
-                <DialogContent dividers={true} sx={{p: 0}}>
-                    <PostSelectContainer/>
-                </DialogContent>
+            <DialogContent dividers={true} sx={{p: 0}}>
+                <PostSelectContainer/>
+            </DialogContent>
 
-                {
-                    selectingFor === "battle"
-                    &&
-                    <DialogActions>
-                        <TextField margin="normal" required fullWidth id="title" label="Track name" 
-                            onInput={(e) => setQuery(e.target.value)}
-                            InputProps={{
-                                endAdornment: 
-                                    <IconButton type="submit">
-                                        <Send />
-                                    </IconButton>
-                            }}
-                        />
-                    </DialogActions>
-                }
-            </Dialog>
-        </>
+            {
+                selectingFor === "battle"
+                &&
+                <DialogActions>
+                    <TextField margin="normal" required fullWidth id="title" label="Track name" 
+                        onInput={(e) => setQuery(e.target.value)}
+                        InputProps={{
+                            endAdornment: 
+                                <IconButton type="submit">
+                                    <Send />
+                                </IconButton>
+                        }}
+                    />
+                </DialogActions>
+            }
+        </Dialog>
     );
 }
 

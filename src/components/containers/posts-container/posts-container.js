@@ -113,7 +113,7 @@ const PostsContainer = (props) => {
                                     width: '100%', 
                                     py: 4, 
                                     display: 'flex', 
-                                    justifyContent: 'space-around', 
+                                    justifyContent: 'space-around',
                                     alignItems: 'center',
                                 }} 
                                 direction="row" 

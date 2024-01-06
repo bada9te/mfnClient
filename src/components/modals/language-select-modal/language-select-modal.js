@@ -1,6 +1,6 @@
 import { useReactiveVar } from "@apollo/client";
 import { Close, Language } from "@mui/icons-material";
-import { Dialog, DialogContent, DialogTitle, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from "@mui/material";
 import { languageSelectModalState } from "./reactive";
 import { baseState } from "../../baseReactive";
 
@@ -18,8 +18,19 @@ const LanguageSelectModal = props => {
         handleClose();
     }
 
+    const theme = useTheme();
+    const fullscreen = useMediaQuery(theme.breakpoints.down('md'));
+
+
     return (
-        <Dialog open={isShowing} scroll='paper' fullWidth maxWidth='sm' PaperProps={{ sx: { borderRadius: 5 } }}>
+        <Dialog 
+            open={isShowing} 
+            scroll='paper' 
+            fullWidth 
+            maxWidth='sm' 
+            PaperProps={{ sx: { borderRadius: {sm: 0, md: 5} } }}
+            fullScreen={Boolean(fullscreen)}
+        >
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     Select language
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
