@@ -18,7 +18,7 @@ const CreateBattleForm = props => {
     const [ title, setTitle ] = useState("Battle's title");
     const { post1, post2 } = useReactiveVar(createBattleFormState);
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("battles");
+    const { t } = useTranslation("forms");
 
     const [ createBattle ] = useMutation(BATTLE_CREATE_MUTATTION, {
         variables: {
@@ -37,14 +37,14 @@ const CreateBattleForm = props => {
 
 
     const onSubmit = async(data) => {
-        enqueueSnackbar("Creating battle...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('battle.snack.pending'), { autoHideDuration: 1500 });
         
         await createBattle()
             .then(({ data }) => {
                 reset();
-                enqueueSnackbar("Battle created", {autoHideDuration: 1500, variant: 'success'});
+                enqueueSnackbar(t('battle.snack.success'), {autoHideDuration: 1500, variant: 'success'});
             }).catch(err => {
-                enqueueSnackbar("Can't create the battle", { autoHideDuration: 3000, variant: 'error' });
+                enqueueSnackbar(t('battle.snack.error'), { autoHideDuration: 3000, variant: 'error' });
             });
     }
 
@@ -56,10 +56,10 @@ const CreateBattleForm = props => {
                     required
                     fullWidth
                     id="title"
-                    label={t('battles.create.form.title')}
+                    label={t('battle.title')}
                     name="title"
                     error={Boolean(errors.Title)}
-                    helperText={errors.Title && t('battles.create.form.error.title')}
+                    helperText={errors.Title && t('battle.error.title')}
                     onInput={(e) => setTitle(e.target.value)}
                     {...register("Title", {
                         maxLength: 10,
@@ -79,7 +79,7 @@ const CreateBattleForm = props => {
                         <Stack direction="column" spacing={2} sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <PostItemUnavailable 
                                 status="battle-form" 
-                                text={t('battles.create.select_my_track')} 
+                                text={t('battle.select_my_track')} 
                                 selectHandler={() => handleOpenPostSelectModal(true)}
                                 innerRef={
                                     {...register("MyTrack", {
@@ -91,7 +91,7 @@ const CreateBattleForm = props => {
                                 errors.MyTrack 
                                 && 
                                 <Typography sx={{ color: '#f44336', fontSize: 12, width: '100%', pl: 3 }}>
-                                    {t('battles.create.form.error.post1')}
+                                    {t('battle.error.post1')}
                                 </Typography> 
                             }
                         </Stack>
@@ -107,7 +107,7 @@ const CreateBattleForm = props => {
                         <Stack direction="column" spacing={2} sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <PostItemUnavailable 
                                 status="battle-form" 
-                                text={t('battles.create.select_my_track')} 
+                                text={t('battle.select_opponents_track')} 
                                 selectHandler={() => handleOpenPostSelectModal(false)}
                                 innerRef={
                                     {...register("MyTrack", {
@@ -119,7 +119,7 @@ const CreateBattleForm = props => {
                                 errors.MyTrack 
                                 && 
                                 <Typography sx={{ color: '#f44336', fontSize: 12, width: '100%', pl: 3 }}>
-                                    {t('battles.create.form.error.post2')}
+                                    {t('battle.error.post2')}
                                 </Typography> 
                             }
                         </Stack>

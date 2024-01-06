@@ -36,7 +36,7 @@ const AddCommentForm = (props) => {
             commentData.isReply = true;
         }
 
-        enqueueSnackbar("Creating comment...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('report.snack.pending'), { autoHideDuration: 1500 });
         createComment({
             variables: {
                 input: {
@@ -75,10 +75,10 @@ const AddCommentForm = (props) => {
             }
         }).then(({data}) => {
             reset();
-            enqueueSnackbar("Comment created", { autoHideDuration: 1500, variant: 'success' });
+            enqueueSnackbar(t('report.snack.success'), { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
             //console.error(err)
-            enqueueSnackbar("Can't create the comment", { autoHideDuration: 3000, variant: 'error' });
+            enqueueSnackbar(t('report.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
 
@@ -90,7 +90,7 @@ const AddCommentForm = (props) => {
                     required
                     fullWidth
                     id="title"
-                    label={replyingTo.commentId === null ? t('comments.modal.form.text') : `${t('comments.modal.form.reply_to')} ${replyingTo.userNick}`}
+                    label={replyingTo.commentId === null ? t('comment.text') : `${t('comment.reply_to')} ${replyingTo.userNick}`}
                     {...register("Text", {
                         required: true,
                     })}
@@ -102,7 +102,7 @@ const AddCommentForm = (props) => {
                         startAdornment: 
                             replyingTo.commentId 
                             && 
-                            <Tooltip title="Cancel reply">
+                            <Tooltip title={t('comment.cancel_reply')}>
                                 <IconButton type="submit" onClick={cancelReply}>
                                     <Reply />
                                 </IconButton>

@@ -18,10 +18,10 @@ const CreatePlaylistForm = props => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { maxCountPerPage, activePage } = useReactiveVar(playlistsContainerState);
     const [ createPlaylist ] = useMutation(PLAYLIST_CREATE_MUTATION);
-    const { t } = useTranslation("playlists");
+    const { t } = useTranslation("forms");
 
     const onSubmit = async(data) => {
-        enqueueSnackbar("Creating playlist...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('playlist.snack.pending'), { autoHideDuration: 1500 });
         let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
         await createPlaylist({
             variables: {
@@ -39,10 +39,10 @@ const CreatePlaylistForm = props => {
             ]
         }).then(({ data }) => {
             reset();
-            enqueueSnackbar("Playlist created", { autoHideDuration: 1500, variant: 'success' });
+            enqueueSnackbar(t('playlist.snack.success'), { autoHideDuration: 1500, variant: 'success' });
             playlistsContainerState({...playlistsContainerState(), page: "My playlists"});
         }).catch(err => {
-            enqueueSnackbar("Can't create the playlist", { autoHideDuration: 3000, variant: 'error' });
+            enqueueSnackbar(t('playlist.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
 
@@ -53,10 +53,10 @@ const CreatePlaylistForm = props => {
                 required
                 fullWidth
                 id="title"
-                label={t('playlists.create.form.title')}
+                label={t('playlist.title')}
                 name="title"
                 error={Boolean(errors.Title)}
-                helperText={errors.Title && t('playlists.create.form.error.title')}
+                helperText={errors.Title && t('playlists.error.title')}
                 onInput={(e) => setTitle(e.target.value)}
                 {...register("Title", {
                     maxLength: 10,
@@ -73,7 +73,7 @@ const CreatePlaylistForm = props => {
                             onChange={(e) => setPublicAccess(e.target.checked)}
                         />
                     }
-                    label={t('playlists.create.form.make_public')}
+                    label={t('playlist.make_public')}
                 />
             </FormGroup>
 
@@ -83,7 +83,7 @@ const CreatePlaylistForm = props => {
                 variant="contained"
                 sx={{ mt: 1, mb: 2, boxShadow: 10 }}
             >
-                {t('playlists.create.form.submit')}
+                {t('playlist.submit')}
             </Button>
         </Box>
     );
