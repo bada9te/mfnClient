@@ -1,8 +1,34 @@
 {
     "posts.not_found": "No tracks yet",
-    "battles.not_found": "No battles found",
-    "playlists.login_required": "Please login to create a new one",
-    "playlists.no_tracks": "No tracks in this playlist",
+
     "comments.not_found": "No comments yet",
-    "select.user.not_found": "Not subscribed on users yet"
+
+    "select.user.not_found": "Not subscribed on users yet",
+    "select.user.snack.pending": "Sharing selected track...",
+    "select.user.snack.success": "Track was sent!",
+    "select.user.snack.error": "Can't share this track",
+
+    "select.post.info_text": "Start typing track name to search",
+
+    "battles.not_found": "No battles found",
+    "battles.in_progress": "In progress",
+    "battles.finished": "Finished",
+    "battles.create_new": "Create new",
+    "battles.create.main_text": "Ready for a challenge?",
+    "battles.create.login_required": "Please login to create a new one",
+    "battles.create.title": "Create battle",
+    "battles.create.select_my_track": "Select my track",
+    "battles.create.select_oponnents_track": "Select opponent's track",
+
+    "playlists.explore": "Explore",
+    "playlists.my_playlists": "My playlists",
+    "playlists.create_new": "Create new",
+    "playlists.not_found": "No playlists yet",
+    "playlists.login_to_operate": "Login to operate with your playlists",
+    "playlists.create.main_text": "New playlist? Beautiful :)",
+    "playlists.create.title": "Create playlist",
+    "playlists.create.notice": "Notice, public playlists are visible to all users",
+    "playlists.create.login_required": "Please login to create a new one",
+
+    "rightbar.users.info_text": "Start typing nickname to search"
 }

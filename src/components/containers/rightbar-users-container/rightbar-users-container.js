@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 const RightBarUsersContainer = props => {
     const { searchQuery } = props;
     const [getUsersByNickname, { data, loading }] = useLazyQuery(USERS_BY_NICKNAME_QUERY);
-    const { t } = useTranslation("bars");
+    const { t } = useTranslation("containers");
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -48,7 +48,7 @@ const RightBarUsersContainer = props => {
                         return (
                             <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                                 <Typography>
-                                    {t('rightbar.info_text')}
+                                    {t('rightbar.users.info_text')}
                                 </Typography>
                             </Box>
                         );

@@ -9,6 +9,7 @@ import defineMaxPage from '../../../common-functions/defineMaxPage/defineMaxPage
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from './reactive';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -21,6 +22,7 @@ const PostsContainer = (props) => {
     const [ getSavedOnlyPosts ] = useLazyQuery(POSTS_SAVED_BY_USER_QUERY);
     const [ getAllPosts] = useLazyQuery(POSTS_QUERY);
     const [ getOwnerPosts ] = useLazyQuery(POSTS_BY_OWNER_QUERY);
+    const { t } = useTranslation("containers");
     
     const handlePageChange = page => {
         postsContainerState({...postsContainerState(), activePage: page});
@@ -100,7 +102,7 @@ const PostsContainer = (props) => {
                     } else if (posts.length === 0) {
                         return (
                             <Box sx={{mt: 3, mb: 5, minHeight: '78vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Typography sx={{textAlign: 'center'}}>No tracks yet</Typography>
+                                <Typography sx={{textAlign: 'center'}}>{t('posts.not_found')}</Typography>
                             </Box>
                         );
                     } else {

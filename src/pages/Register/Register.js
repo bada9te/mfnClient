@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 const Register = () => {
     const navigate = useNavigate();
-    const { t } = useTranslation("register");
+    const { t } = useTranslation("pages");
 
     return (
         <LogRegVerContainer bg={registerFormBG} text={t('register.main_text')}>

@@ -36,15 +36,6 @@
 
     "logout.text": "Logging out",
 
-    "playlists.head.explore": "Explore",
-    "playlists.head.my_playlists": "My playlists",
-    "playlists.head.create_new": "Create new",
-    "playlists.not_found": "No playlists yet",
-    "playlists.login_to_operate": "Login to operate with your playlists",
-    "playlists.create.main_text": "New playlist? Beautiful :)",
-    "playlists.create.title": "Create playlist",
-    "playlists.create.notice": "Notice, public playlists are visible to all users",
-
     "profile.subscribe": "Follow",
     "profile.unsubscribe": "Unsubscribe",
     "profile.following": "Following",
@@ -60,16 +51,6 @@
     "support.title": "Contact us",
     "support.notice": "Please, be polite with the project administration. Visit the F.A.Q page before filling in this form.",
     "support.open_f.a.q": "Open F.A.Q page",
-
-    "battles.head.in_progress": "In progress",
-    "battles.head.finished": "Finished",
-    "battles.head.create_new": "Create new",
-    "battles.create.main_text": "Ready for a challenge?",
-    "battles.create.title": "Create battle",
-    "battles.create.login_required": "Please login to create a new one",
-    "battles.create.select_my_track": "Select my track",
-    "battles.create.select_oponnents_track": "Select opponent's track",
-    "battles.not_found": "No battles found",
 
     "register.main_text": "Let’s get started!",
     "register.title": "Register",

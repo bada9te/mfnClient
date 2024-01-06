@@ -39,7 +39,6 @@ const TrackContainer = (props) => {
                             }} flexWrap="wrap" spacing={2} direction="row" useFlexGap>
                                 <PostGenerate item={data.post} />
                                 
-                                
                                 <ProfileCard id={data.post.owner._id} bgRadius={5}/>
                             </Stack>
                         );

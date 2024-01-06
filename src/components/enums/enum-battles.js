@@ -1,6 +1,4 @@
 import BattleItem from "../common/battle-item/battle-item";
-import { SpinnerLinear } from "../common/spinner/Spinner";
-import { Box, Typography } from "@mui/material";
 import PostItemUnavailable from "../common/post-item/post-item-unavailable";
 import PostGenerate from "../common/post-item/post-generate";
 
@@ -29,60 +27,44 @@ const PostFromData = (props) => {
 
 
 const EnumBattles = props => {
-    const { makeBattleVote, battles, loading } = props;
+    const { makeBattleVote, battles } = props;
 
     return (
         <>
             {
-                (() => {
-                    if (loading) {
-                        return (
-                            <SpinnerLinear/>
-                        );
-                    } else if (battles?.length === 0) {
-                        return (
-                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
-                                <Typography>
-                                    No battles found
-                                </Typography>
-                            </Box>
-                        );
-                    } else {
-                        return battles.map((item, key) => {
-                            return (  
-                                <BattleItem 
-                                    key={key}
-                                    id={item._id}
-                                    title={item.title}
-                                    post1={
-                                        <PostFromData 
-                                            data={item?.post1} 
-                                            battleId={item?._id} 
-                                            makeBattleVote={makeBattleVote}
-                                            votedBy={item?.votedBy}
-                                            finished={item?.finished}
-                                        />
-                                    }
-                                    post2={
-                                        <PostFromData 
-                                            data={item?.post2} 
-                                            battleId={item?._id} 
-                                            makeBattleVote={makeBattleVote}
-                                            votedBy={item?.votedBy}
-                                            finished={item?.finished}
-                                        />
-                                    }
-                                    createdAt={+item.createdAt}
-                                    willFinishAt={+item.willFinishAt}
-                                    post1Score={item.post1Score}
-                                    post2Score={item.post2Score}
-                                    winner={item?.winner}
+                battles.map((item, key) => {
+                    return (  
+                        <BattleItem 
+                            key={key}
+                            id={item._id}
+                            title={item.title}
+                            post1={
+                                <PostFromData 
+                                    data={item?.post1} 
+                                    battleId={item?._id} 
+                                    makeBattleVote={makeBattleVote}
+                                    votedBy={item?.votedBy}
                                     finished={item?.finished}
                                 />
-                            );
-                        })
-                    }
-                })()
+                            }
+                            post2={
+                                <PostFromData 
+                                    data={item?.post2} 
+                                    battleId={item?._id} 
+                                    makeBattleVote={makeBattleVote}
+                                    votedBy={item?.votedBy}
+                                    finished={item?.finished}
+                                />
+                            }
+                            createdAt={+item.createdAt}
+                            willFinishAt={+item.willFinishAt}
+                            post1Score={item.post1Score}
+                            post2Score={item.post2Score}
+                            winner={item?.winner}
+                            finished={item?.finished}
+                        />
+                    );
+                })
             }
         </>
     );

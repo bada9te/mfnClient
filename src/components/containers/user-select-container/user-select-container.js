@@ -7,8 +7,8 @@ import { baseState } from "../../baseReactive";
 import EnumUserSelect from "../../enums/enum-user-select";
 import { userSelectModalState } from "../../modals/user-select-modal/reactive";
 import { userSelectContainerState } from "./reactive";
-
-
+import { useTranslation } from "react-i18next";
+ 
 
 const UserSelectContainer = props => {
     const { user: currentUser } = useReactiveVar(baseState);
@@ -19,13 +19,13 @@ const UserSelectContainer = props => {
         },
     });
     const [ createPostShareNotification ] = useMutation(CREATE_NOTIFICATION_MUTATION)
-        
     const userSelectModal = useReactiveVar(userSelectModalState);
+    const { t } = useTranslation("containers");
 
 
     const handleUserSelect = (userId) => {
         if (selectType === 'postShare') {
-            enqueueSnackbar("Sharing selected track...", { autoHideDuration: 1500 });
+            enqueueSnackbar(t('select.user.snack.pending'), { autoHideDuration: 1500 });
             createPostShareNotification({
                 variables: {
                     input: {
@@ -36,9 +36,9 @@ const UserSelectContainer = props => {
                     }
                 }
             }).then(() => {
-                enqueueSnackbar("Track was sent!", { autoHideDuration: 1500, variant: 'success' });
+                enqueueSnackbar(t('select.user.snack.success'), { autoHideDuration: 1500, variant: 'success' });
             }).catch(() => {
-                enqueueSnackbar("Can't share this track.", { autoHideDuration: 3000, variant: 'error' });
+                enqueueSnackbar(t('select.user.snack.error'), { autoHideDuration: 3000, variant: 'error' });
             });
         }
         userSelectModalState({ ...userSelectModal, isShowing: false })
@@ -52,7 +52,7 @@ const UserSelectContainer = props => {
                 ?
                 <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
                     <Typography>
-                        No subscribed on users yet
+                        {t('select.user.not_found')}
                     </Typography>
                 </Box>
                 :

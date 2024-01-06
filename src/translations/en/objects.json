@@ -20,6 +20,7 @@
     "playlist.delete": "Delete",
     "playlist.share": "Share",
     "playlist.report": "Report",
+    "playlist.no_tracks": "No tracks in this playlist",
 
     "comment.delete": "Delete",
     "comment.reply": "Reply",

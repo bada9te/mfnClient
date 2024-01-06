@@ -10,6 +10,7 @@ import { createBattleFormState } from "../../forms/create-battle/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { playlistsContainerState } from "../playlists-container/reactive";
 import { postSelectContainerState } from "./reactive";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -17,7 +18,7 @@ const PostSelectContainer = props => {
     const { locations, user: currentUser } = useReactiveVar(baseState);
     const { targetPlaylist } = useReactiveVar(playlistsContainerState);
     const { query, isMine, selectingFor } = useReactiveVar(postSelectContainerState);
-
+    const { t } = useTranslation("containers");
 
     const [switchTrackInPlaylist] = useMutation(PLAYLIST_SWICTH_TRACK_MUTATION);
     const { data, loading } = useQuery(POSTS_BY_TITLE_QUERY, {
@@ -86,7 +87,7 @@ const PostSelectContainer = props => {
                     } else {
                         return (
                             <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}} >
-                                <Typography>Start typing track name to search.</Typography>
+                                <Typography>{t('select.post.info_text')}</Typography>
                             </Box>
                         );
                     }

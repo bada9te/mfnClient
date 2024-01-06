@@ -75,7 +75,7 @@ const PlaylistsContainer = (props) => {
     // used to know the page number
     const [status, setStatus] = useState(0);
 
-    const { t } = useTranslation("playlists");
+    const { t } = useTranslation("containers");
 
     // on tab switch
     const handleTabSwitch = (event, key) => {
@@ -142,9 +142,9 @@ const PlaylistsContainer = (props) => {
         <Box sx={{width: '100%'}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} centered variant="fullWidth">
-                    <Tab icon={<Explore/>}         label={t('playlists.head.explore')}      id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
-                    <Tab icon={<Topic/>}           label={t('playlists.head.my_playlists')} id="simple-tab-1" aria-controls="simple-tabpanel-1" />
-                    <Tab icon={<CreateNewFolder/>} label={t('playlists.head.create_new')}   id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
+                    <Tab icon={<Explore/>}         label={t('playlists.explore')}      id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
+                    <Tab icon={<Topic/>}           label={t('playlists.my_playlists')} id="simple-tab-1" aria-controls="simple-tabpanel-1" />
+                    <Tab icon={<CreateNewFolder/>} label={t('playlists.create_new')}   id="simple-tab-2" aria-controls="simple-tabpanel-2"/>
                 </Tabs>
             </Box>
 
