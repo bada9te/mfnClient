@@ -16,7 +16,7 @@ const AddCommentForm = (props) => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { postId, replyingTo } = useReactiveVar(commentsContainerState);
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("comments");
+    const { t } = useTranslation("forms");
 
     const cancelReply = () => {
         commentsContainerState({...commentsContainerState(), replyingTo: replyingToNull});

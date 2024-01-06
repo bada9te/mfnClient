@@ -119,5 +119,34 @@
     "report.submit": "Report",
     "report.snack.pending": "Reporting...",
     "report.snack.success": "Report was sent",
-    "report.snack.error": "Can't create the report"
+    "report.snack.error": "Can't create the report",
+
+    "account_verify.code": "Code",
+    "account_verify.error.code": "Code is not valid",
+    "account_verify.submit": "Verify",
+    "account_verify.snack.pending": "Verifying...",
+    "account_verify.snack.success": "Verified",
+    "account_verify.snack.error": "Can't verify",
+
+    "account_restore_request.email": "Account email address",
+    "account_restore_request.error.email": "Email address is not valid",
+    "account_restore_request.submit": "Send the special link",
+    "account_restore_request.snack.pending": "Requesting...",
+    "account_restore_request.snack.success": "Check your email for next steps",
+    "account_restore_request.snack.error": "User was not found",
+
+    "account_restore.password": "New password",
+    "account_restore.error.password": "Password is not valid",
+    "account_restore.confirm_password": "Confirm password",
+    "account_restore.error.confirm_password": "Confirmination password is not valid",
+    "account_restore.error.please_confirm_password": "Please confirm password!",
+    "account_restore.error.passwords_should_match": "Passwords should match!",
+    "account_restore.email": "Email address",
+    "account_restore.error.email": "Email address is not valid",
+    "account_restore.confirm_email": "Confirm email address",
+    "account_restore.error.emails_should_match": "Emails should match!",
+    "account_restore.submit": "Confirm",
+    "account_restore.snack.pending": "Updating account...",
+    "account_restore.snack.success": "Password successfully updated",
+    "account_restore.snack.error": "Can't update account"
 }

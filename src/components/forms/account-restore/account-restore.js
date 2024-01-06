@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { USER_RESTORE_ACCOUNT_MUTATION } from "../../../graphql-requests/users";
+import { useTranslation } from "react-i18next";
 
 
 const AccountRestoreForm = (props)=> {
@@ -12,10 +13,10 @@ const AccountRestoreForm = (props)=> {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const [ restoreAccount ] = useMutation(USER_RESTORE_ACCOUNT_MUTATION);
-
+    const { t } = useTranslation("forms");
 
     const onSubmit = async(data) => {
-        enqueueSnackbar("Updating account...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('account_restore.snack.pending'), { autoHideDuration: 1500 });
         await restoreAccount({
             variables: {
                 input: {
@@ -28,9 +29,9 @@ const AccountRestoreForm = (props)=> {
             },
         }).then(({ data }) => {
             navigate('/app/login');
-            enqueueSnackbar("Password successfully updated", { autoHideDuration: 1500, variant: 'success' });
+            enqueueSnackbar(t('account_restore.snack.success'), { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
-            enqueueSnackbar("Can't update account", { autoHideDuration: 3000, variant: 'error' });
+            enqueueSnackbar(t('account_restore.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
     
@@ -47,11 +48,11 @@ const AccountRestoreForm = (props)=> {
                                     required
                                     fullWidth
                                     id="password"
-                                    label="New password"
+                                    label={t('account_restore.password')}
                                     name="password"
                                     type="password"
                                     error={Boolean(errors.Password)}
-                                    helperText={errors.Password && "Password is not valid"}
+                                    helperText={errors.Password && t('account_restore.error.password')}
                                     {...register("newValue", {
                                         maxLength: 20,
                                         minLength: 8,
@@ -63,17 +64,17 @@ const AccountRestoreForm = (props)=> {
                                     required
                                     fullWidth
                                     id="confirm-password"
-                                    label="Confirm password"
+                                    label={t('account_restore.confirm_password')}
                                     name="password"
                                     type="password"
                                     error={Boolean(errors.ConfirmPassword)}
-                                    helperText={errors.ConfirmPassword && "Confirmination password is not valid"}
+                                    helperText={errors.ConfirmPassword && t('account_restore.error.confirm_password')}
                                     {...register("ConfirmPassword", {
-                                        required: "Please confirm password!",
+                                        required: t('account_restore.error.please_confirm_password'),
                                         validate: {
                                             matchesPreviousPassword: (value) => {
                                                 const { newValue } = getValues();
-                                                return newValue === value || "Passwords should match!";
+                                                return newValue === value || t('account_restore.error.passwords_should_match');
                                             }
                                         }
                                     })}
@@ -88,12 +89,12 @@ const AccountRestoreForm = (props)=> {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    label={t('account_restore.email')}
                                     name="email"
                                     autoComplete="email"
                                     autoFocus
                                     error={Boolean(errors.Email)}
-                                    helperText={errors.Email && "Email address is not valid"}
+                                    helperText={errors.Email && t('account_restore.error.email')}
                                     {...register("newValue", {
                                         required: true,
                                         pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -104,19 +105,19 @@ const AccountRestoreForm = (props)=> {
                                     required
                                     fullWidth
                                     id="confirm-email"
-                                    label="Confirm email address"
+                                    label={t('account_restore.confirm_email')}
                                     name="email"
                                     autoComplete="email"
                                     autoFocus
                                     error={Boolean(errors.Email)}
-                                    helperText={errors.Email && "Email address is not valid"}
+                                    helperText={errors.Email && t('account_restore.error.email')}
                                     {...register("Email", {
                                         required: true,
                                         pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                         validate: {
                                             matchesPreviousPassword: (value) => {
                                                 const { newValue } = getValues();
-                                                return newValue === value || "Emails should match!";
+                                                return newValue === value || t('account_restore.error.emails_should_match');
                                             }
                                         }
                                     })}
@@ -126,13 +127,8 @@ const AccountRestoreForm = (props)=> {
                     }
                 })()
             }
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2, boxShadow: 10 }}
-            >
-                Confirm
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, boxShadow: 10 }}>
+                {t('account_restore.submit')}
             </Button>
         </Box>    
     );

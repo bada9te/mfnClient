@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION } from "../../../graphql-requests/users";
+import { useTranslation } from "react-i18next";
 
 
 const AccountRestoreRequestForm = (props)=> {
@@ -11,9 +12,10 @@ const AccountRestoreRequestForm = (props)=> {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const [ makeAccountRestoreRequest ] = useMutation(USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION);
- 
+    const { t } = useTranslation("forms");
+
     const onSubmit = async(data) => {
-        enqueueSnackbar("Requesting...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('account_restore_request.snack.pending'), { autoHideDuration: 1500 });
         await makeAccountRestoreRequest({
             variables: {
                 input: {
@@ -23,9 +25,9 @@ const AccountRestoreRequestForm = (props)=> {
             },
         }).then(({ data }) => {
             navigate('/app/login');
-            enqueueSnackbar("Check your email for next steps", { autoHideDuration: 3000, variant: 'info' });
+            enqueueSnackbar(t('account_restore_request.snack.success'), { autoHideDuration: 3000, variant: 'info' });
         }).catch(err => {
-            enqueueSnackbar("User was not found", { autoHideDuration: 3000, variant: 'error' });
+            enqueueSnackbar(t('account_restore_request.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
     
@@ -38,24 +40,19 @@ const AccountRestoreRequestForm = (props)=> {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t('account_restore_request.email')}
                 name="email"
                 autoComplete="email"
                 autoFocus
                 error={Boolean(errors.Email)}
-                helperText={errors.Email && "Email address is not valid"}
+                helperText={errors.Email && t('account_restore_request.error.email')}
                 {...register("Email", {
                     required: true,
                     pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 })}
             />
-            <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2, boxShadow: 10 }}
-                >
-                    Send the special link
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, boxShadow: 10 }}>
+                {t('account_restore_request.submit')}
             </Button>
         </Box>    
         </>

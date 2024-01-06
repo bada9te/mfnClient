@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { USER_CONFIRM_ACCOUNT_MUTATION } from "../../../graphql-requests/users";
+import { useTranslation } from "react-i18next";
+
 
 
 const AccountVerifyForm = (props)=> {
@@ -12,9 +14,10 @@ const AccountVerifyForm = (props)=> {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const [ confirmAccount ] = useMutation(USER_CONFIRM_ACCOUNT_MUTATION);
+    const { t } = useTranslation("forms");
 
     const onSubmit = async(data) => {
-        enqueueSnackbar("Verifying...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('account_verify.snack.pending'), { autoHideDuration: 1500 });
         await confirmAccount({
             variables: {
                 input: {
@@ -25,9 +28,9 @@ const AccountVerifyForm = (props)=> {
             },
         }).then(({ data }) => {
             navigate('/app/login');
-            enqueueSnackbar("Action verified", { autoHideDuration: 1500, variant: 'success' });
+            enqueueSnackbar(t('account_verify.snack.success'), { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
-            enqueueSnackbar("Can't verify action", { autoHideDuration: 3000, variant: 'error' });
+            enqueueSnackbar(t('account_verify.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
     
@@ -40,10 +43,10 @@ const AccountVerifyForm = (props)=> {
                 required
                 fullWidth
                 id="code"
-                label="Code"
+                label={t('account_verify.code')}
                 name="code"
-                error={Boolean(errors.Nickname)}
-                helperText={errors.Nickname && "Code is not valid"}
+                error={Boolean(errors.Code)}
+                helperText={errors.Code && t('account_verify.error.code')}
                 {...register("Code", {
                     maxLength: 20,
                     required: true,
@@ -55,7 +58,7 @@ const AccountVerifyForm = (props)=> {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, boxShadow: 10 }}
             >
-                Verify
+                {t('account_verify.submit')}
             </Button>
         </Box>    
         </>
