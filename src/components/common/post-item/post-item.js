@@ -20,6 +20,7 @@ import { commentsContainerState } from '../../containers/comments-container/reac
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from '../../containers/posts-container/reactive';
 import { useTranslation } from "react-i18next";
+import PostItemTags from './post-item-tags/post-item-tags';
 
 
 const PostItem = (props) => {
@@ -197,11 +198,7 @@ const PostItem = (props) => {
         }
     }, [likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, base._id, savedBy]);
 
-    // for post upload form visualization
-    useEffect(() => {}, [addons.commentsAllowed, addons.downloadsAllowed])
-
-
-
+    
 
     return (
         <Card sx={{
@@ -309,6 +306,8 @@ const PostItem = (props) => {
                     }
                 </Box>
             </Box>
+
+            <PostItemTags/>
             
             {/* ################################# POST ACTION BUTTONS ################################# */}
             {
@@ -324,7 +323,6 @@ const PostItem = (props) => {
                             if (audioPlayer.src === base.audio && audioPlayer.isPlaying) {
                                 return (
                                     <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
-                                        
                                         <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
                                             <Button startIcon={<Pause/>} sx={{ borderRadius: 0 }} variant="contained" size="small" onClick={pauseAudio} disabled={audioPlayer.controlsLocked ? true : false}>
                                                 {t('post.pause')}

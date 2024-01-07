@@ -14,16 +14,8 @@ import { useTranslation } from "react-i18next";
 
 const PostUpload = (props) => {
     const { user: currentUser, locations } = useReactiveVar(baseState);
-    const { 
-        isShowing, 
-        audio, 
-        title, 
-        description, 
-        picture, 
-        commentsAllowed, 
-        downloadsAllowed 
-    } = useReactiveVar(postUploadFormState);
-    const { t } = useTranslation("common");
+    const { isShowing, audio, title, description,  picture, commentsAllowed, downloadsAllowed } = useReactiveVar(postUploadFormState);
+    const { t } = useTranslation("pages");
 
     const handleImageCropModalClose = (value, picture) => {
         imageCropperModalState({ ...imageCropperModalState(), isShowing: value })
@@ -38,15 +30,13 @@ const PostUpload = (props) => {
             <ImageRightFormContainer bg={newPostFormBG} text={t('upload.main_text')}>
                 {
                     isShowing
-                    ? 
+                    &&
                     <ImageCropperModal 
                         show={isShowing} 
                         handleImageCropModalClose={handleImageCropModalClose} 
                         image={picture} 
                         what={'post-image'}
                     />
-                    :
-                    null
                 }
                     <Box sx={{width: '40rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
                         <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', py: 3, mb: 0}}>

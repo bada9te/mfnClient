@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup, Typography } from "@mui/material";
+import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup, Typography, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POST_CREATE_MUTATION } from "../../../graphql-requests/posts";
 import blobToFile from "../../../common-functions/blobToFIle/blobToFile";
@@ -11,6 +11,7 @@ import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-mo
 import { useSnackbar } from "notistack";
 import { postsContainerState } from "../../containers/posts-container/reactive";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 
 const PostUploadForm = (props)=> {
@@ -21,6 +22,9 @@ const PostUploadForm = (props)=> {
     const { maxCountPerPage } = useReactiveVar(postsContainerState);
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
+
+    const genres = ["Country", "Pop", "Classical", "Funk", "Soul music", "Hip hop", "Rock", "Electronic music", "Latin", "Jazz", "Blues", "Folk", "Metal"]
+    const [ selectedGenre, setSelectedGenre ] = useState(genres[0]);
 
     const [ postUpload ] = useMutation(POST_CREATE_MUTATION, {
         variables: {
@@ -197,6 +201,20 @@ const PostUploadForm = (props)=> {
                     />
                 </Button>
                 { errors.Audio && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.error.audio')}</Typography> }
+            </FormGroup>
+            <FormGroup sx={{my: 2, mt: 4}}>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Music genre</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={selectedGenre}
+                        label="Music genre"
+                        onChange={(e) => setSelectedGenre(e.target.value)}
+                    >
+                        { genres.map((genre, key) => (<MenuItem key={key} value={genre}>{genre}</MenuItem>)) }
+                    </Select>
+                </FormControl>
             </FormGroup>
             <FormGroup>
                 <FormControlLabel
