@@ -19,7 +19,7 @@ import { commentsModalState } from '../../modals/comments-modal/reactive';
 import { commentsContainerState } from '../../containers/comments-container/reactive';
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from '../../containers/posts-container/reactive';
-
+import { useTranslation } from "react-i18next";
 
 
 const PostItem = (props) => {
@@ -33,6 +33,8 @@ const PostItem = (props) => {
     const { user: currentUser } = useReactiveVar(baseState);
     const audioPlayer = useReactiveVar(audioPlayerState);
     const { maxCountPerPage } = useReactiveVar(postsContainerState);
+
+    const { t } = useTranslation("objects");
 
     // nav
     const navigate = useNavigate();
@@ -225,12 +227,7 @@ const PostItem = (props) => {
                     <PostItemDropDown 
                         owner={base.owner._id}
                         downloadsAllowed={addons.downloadsAllowed} 
-                        handlers={{
-                            audioDownload,
-                            shareTrack,
-                            reportTrack,
-                            deleteTrack,
-                        }}
+                        handlers={{ audioDownload, shareTrack, reportTrack, deleteTrack }}
                     />
                 }
             />
@@ -244,14 +241,7 @@ const PostItem = (props) => {
                     :
                     <CardMedia component="img" height="160" width={{xs: '100%', md: '400px'}} image={base.img} alt={base.title}/>
                 }
-                <Box sx={{
-                    position: 'absolute', bottom: 0, left: 0,
-                    width: '100%',
-                    bgcolor: 'rgba(0,0,0,0.3)', color: 'white',
-                    padding: '10px',
-                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    backdropFilter: 'blur(5px)'
-                }}>
+                <Box sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', bgcolor: 'rgba(0,0,0,0.3)', color: 'white', padding: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(5px)' }}>
                     <Box>
                         <Typography variant='h5'>{base.title}</Typography>
                         <Typography variant='p'>{base.description}</Typography>
@@ -263,7 +253,7 @@ const PostItem = (props) => {
                         ?
                         <Box sx={{ display: 'flex' }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <Tooltip title="Save">
+                                <Tooltip title={t('post.save')}>
                                     <span>
                                         <IconButton 
                                             aria-label="bookmark" 
@@ -279,9 +269,9 @@ const PostItem = (props) => {
                             </Box>
                             {
                                 addons.commentsAllowed
-                                ?
+                                &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <Tooltip title="Comment out">
+                                    <Tooltip title={t('post.comment')}>
                                         <span>
                                             <IconButton 
                                                 aria-label="comment" 
@@ -295,11 +285,9 @@ const PostItem = (props) => {
                                     </Tooltip>
                                     <Typography sx={{ fontSize: 12 }}>{base.comments.length}</Typography>
                                 </Box>
-                                :
-                                null
                             }
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <Tooltip title="Like">
+                                <Tooltip title={t('post.like')}>
                                     <span>
                                         <IconButton 
                                             aria-label="add to favorites" 
@@ -316,7 +304,7 @@ const PostItem = (props) => {
                         </Box>
                         :
                         <Button variant="contained" sx={{ boxShadow: 10 }} onClick={openTrackDetailsPage}>
-                            Track details
+                            {t('post.track_details')}
                         </Button>
                     }
                 </Box>
@@ -331,102 +319,85 @@ const PostItem = (props) => {
                     m: 0, p: 0, paddingBottom: 0, 
                     "&:last-child": { paddingBottom: 0 }
                 }}>
-                    <>
-                        {
-                            (() => {
-                                if (audioPlayer.src === base.audio && audioPlayer.isPlaying) {
-                                    return (
-                                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
-                                            
-                                            <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
-                                                <Button 
-                                                    startIcon={<Pause/>}
-                                                    sx={{ borderRadius: 0 }}
-                                                    variant="contained" size="small" onClick={pauseAudio} 
-                                                    disabled={audioPlayer.controlsLocked ? true : false}
-                                                >
-                                                    Pause
-                                                </Button>
-
-                                                <Button 
-                                                    startIcon={<Loop/>}
-                                                    sx={{ 
-                                                        backgroundColor: audioPlayer.loop ? '#1BA39C' : '', 
-                                                        color: audioPlayer.loop ? 'white' : '',
-                                                        borderTopRightRadius: 50,
-                                                        borderBottomRightRadius: 0,
-                                                    }} 
-                                                    variant="contained" size="small" onClick={switchLoop} 
-                                                    disabled={ audioPlayer.controlsLocked ? true : false }
-                                                >
-                                                    Loop 
-                                                </Button>
-                                            </ButtonGroup>
-                                            <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
-                                                <Button 
-                                                    startIcon={ audioPlayer.isMuted || audioPlayer.volume === 0 ? <VolumeOff/> : <VolumeUp/> }
-                                                    sx={{ 
-                                                        backgroundColor: audioPlayer.isMuted || audioPlayer.volume === 0 ? '#f44336' : '',
-                                                        color: audioPlayer.isMuted ? 'white' : '',
-                                                        borderTopLeftRadius: 50,
-                                                        borderBottomLeftRadius: 0,
-                                                        borderTopRightRadius: 0,
-                                                    }} 
-                                                    variant="contained" size="small" onClick={handleMuteUnmute} 
-                                                    disabled={audioPlayer.controlsLocked ? true : false}
-                                                >
-                                                    Mute
-                                                </Button>
-                                            </ButtonGroup>
-                                        </Box>
-                                    );
-                                } else {
-                                    return (
-                                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }} >
-                                            <Button 
-                                                startIcon={<PlayArrow/>}
-                                                sx={{ 
-                                                    borderTopRightRadius: ["selecting", "voting"].includes(addons.status) && !addons?.votedBy?.includes(currentUser?._id) ? 0 : 50,
-                                                    borderBottomRightRadius: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 25,
-                                                }} 
-                                                disabled={!base.audio}
-                                                variant="contained" size="small" onClick={playAudio}
-                                            >
-                                                Play
+                    {
+                        (() => {
+                            if (audioPlayer.src === base.audio && audioPlayer.isPlaying) {
+                                return (
+                                    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
+                                        
+                                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
+                                            <Button startIcon={<Pause/>} sx={{ borderRadius: 0 }} variant="contained" size="small" onClick={pauseAudio} disabled={audioPlayer.controlsLocked ? true : false}>
+                                                {t('post.pause')}
                                             </Button>
-                                            {
-                                                (() => {
-                                                    if (addons.status === "selecting") {
-                                                        return (
-                                                            <Button 
-                                                                size="small" 
-                                                                onClick={() => addons.selectPost({base, addons})}
-                                                                startIcon={<CheckCircle/>}
-                                                                sx={{ borderTopRightRadius: 50, borderBottomRightRadius: 0, borderBottomLeftRadius: 25, backgroundColor: '#36B2AC' }}
-                                                            >
-                                                                Select
-                                                            </Button>
-                                                        );
-                                                    } else if (addons.status === "voting" && !addons.votedBy.includes(currentUser?._id)) {
-                                                        return (
-                                                            <Button 
-                                                                size="small" 
-                                                                onClick={() => addons.makeBattleVote(addons.battleId, addons.postNScore, 1, currentUser?._id)}
-                                                                startIcon={<HowToVote/>}
-                                                                sx={{ borderTopRightRadius: 50, borderBottomRightRadius: 0, borderBottomLeftRadius: 25, backgroundColor: '#36B2AC' }}
-                                                            >
-                                                                Vote (+1)
-                                                            </Button>
-                                                        );
-                                                    }
-                                                })()
-                                            }
+
+                                            <Button 
+                                                startIcon={<Loop/>}
+                                                sx={{ 
+                                                    backgroundColor: audioPlayer.loop ? '#1BA39C' : '', 
+                                                    color: audioPlayer.loop ? 'white' : '',
+                                                    borderTopRightRadius: 50,
+                                                    borderBottomRightRadius: 0,
+                                                }} 
+                                                variant="contained" size="small" onClick={switchLoop} 
+                                                disabled={ audioPlayer.controlsLocked ? true : false }
+                                            >
+                                                {t('post.loop')} 
+                                            </Button>
                                         </ButtonGroup>
-                                    );
-                                }
-                            })()
-                        }
-                    </>
+                                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
+                                            <Button 
+                                                startIcon={ audioPlayer.isMuted || audioPlayer.volume === 0 ? <VolumeOff/> : <VolumeUp/> }
+                                                sx={{ 
+                                                    backgroundColor: audioPlayer.isMuted || audioPlayer.volume === 0 ? '#f44336' : '',
+                                                    color: audioPlayer.isMuted ? 'white' : '',
+                                                    borderTopLeftRadius: 50,
+                                                    borderBottomLeftRadius: 0,
+                                                    borderTopRightRadius: 0,
+                                                }} 
+                                                variant="contained" size="small" onClick={handleMuteUnmute} 
+                                                disabled={audioPlayer.controlsLocked ? true : false}
+                                            >
+                                                {t('post.mute')}
+                                            </Button>
+                                        </ButtonGroup>
+                                    </Box>
+                                );
+                            } else {
+                                return (
+                                    <ButtonGroup variant="contained" sx={{ boxShadow: 0 }} >
+                                        <Button 
+                                            startIcon={<PlayArrow/>}
+                                            sx={{ 
+                                                borderTopRightRadius: ["selecting", "voting"].includes(addons.status) && !addons?.votedBy?.includes(currentUser?._id) ? 0 : 50,
+                                                borderBottomRightRadius: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 25,
+                                            }} 
+                                            disabled={!base.audio}
+                                            variant="contained" size="small" onClick={playAudio}
+                                        >
+                                            {t('post.play')}
+                                        </Button>
+                                        {
+                                            (() => {
+                                                if (addons.status === "selecting") {
+                                                    return (
+                                                        <Button size="small" onClick={() => addons.selectPost({base, addons})} startIcon={<CheckCircle/>} sx={{ borderTopRightRadius: 50, borderBottomRightRadius: 0, borderBottomLeftRadius: 25, backgroundColor: '#36B2AC' }}>
+                                                            {t('post.select')}
+                                                        </Button>
+                                                    );
+                                                } else if (addons.status === "voting" && !addons.votedBy.includes(currentUser?._id)) {
+                                                    return (
+                                                        <Button size="small" onClick={() => addons.makeBattleVote(addons.battleId, addons.postNScore, 1, currentUser?._id)} startIcon={<HowToVote/>} sx={{ borderTopRightRadius: 50, borderBottomRightRadius: 0, borderBottomLeftRadius: 25, backgroundColor: '#36B2AC' }}>
+                                                            {t('post.vote+1')}
+                                                        </Button>
+                                                    );
+                                                }
+                                            })()
+                                        }
+                                    </ButtonGroup>
+                                );
+                            }
+                        })()
+                    }
                 </CardContent>
             }
         </Card>

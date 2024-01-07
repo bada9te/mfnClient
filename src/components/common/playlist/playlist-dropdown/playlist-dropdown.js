@@ -9,7 +9,7 @@ const PlaylistDropdown = props => {
     const { owner, handlers } = props;
     const [ anchorElUser, setAnchorElUser ] = useState(null);
     const { user: currentUser } = useReactiveVar(baseState);
-    const { t } = useTranslation("playlists");
+    const { t } = useTranslation("objects");
 
     // click
     const handleClick = (i) => {

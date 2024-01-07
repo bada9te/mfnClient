@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 const Playlist = (props) => {
     const { playlist } = props;
     const { user: currentUser } = useReactiveVar(baseState);
-    const { t } = useTranslation("playlists");
+    const { t } = useTranslation("objects");
 
 
      // open user select modal to share
@@ -66,11 +66,7 @@ const Playlist = (props) => {
                         { currentUser._id === playlist.owner._id && <Button startIcon={<Add/>} onClick={handleTrackAdding}>{t('playlist.add_track')}</Button> }
                         <PlaylistDropdown 
                             owner={playlist.owner} 
-                            handlers={{
-                                sharePlaylist,
-                                reportPlaylist,
-                                deletePlaylist
-                            }}
+                            handlers={{ sharePlaylist, reportPlaylist, deletePlaylist }}
                         />
                     </>
                 }

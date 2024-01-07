@@ -1,13 +1,12 @@
 import { memo } from 'react';
 import { Card, CardHeader, CardContent, Typography, Skeleton, Button } from "@mui/material";
 import { Search } from '@mui/icons-material';
-
-
-
+import { useTranslation } from 'react-i18next';
 
 
 const PostItemUnavailable = (props) => {
     const { status, text, selectHandler } = props;
+    const { t } = useTranslation("objects");
 
     return (
             <Card sx={{width: {xs: '95%', sm: '375px', md: '400px'}, boxShadow: 5, borderRadius: 5}}>
@@ -24,16 +23,8 @@ const PostItemUnavailable = (props) => {
                     (() => {
                         if (status !== "in-player" && status !== "battle-form") {
                             return (
-                                <CardContent sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    m: 1, 
-                                    p: 0, 
-                                    paddingBottom: 0, 
-                                    "&:last-child": { paddingBottom: 0 }
-                                }}>
-                                    <Typography sx={{textAlign: 'center', width: '100%'}}>Track is unavailable</Typography> 
+                                <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', m: 1, p: 0, paddingBottom: 0, "&:last-child": { paddingBottom: 0 }}}>
+                                    <Typography sx={{textAlign: 'center', width: '100%'}}>{t('post.unavailable')}</Typography> 
                                 </CardContent>
                             );
                         } else if (status === "battle-form") {

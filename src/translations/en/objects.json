@@ -15,6 +15,7 @@
     "post.open_profile": "Open profile",
     "post.select": "Select",
     "post.vote+1": "Vote (+1)",
+    "post.unavailable": "Track is unavailable",
 
     "playlist.add_track": "Add track",
     "playlist.delete": "Delete",
