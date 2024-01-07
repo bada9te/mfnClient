@@ -14,7 +14,7 @@ const ProfileCard = (props) => {
     const { id, bgRadius } = props;
     const { user: currentUser, theme, locations } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("profile");
+    const { t } = useTranslation("objects");
 
     const navigate = useNavigate();
 
@@ -61,19 +61,16 @@ const ProfileCard = (props) => {
     });
 
     const switchSubscriptionOnUserHandler = async(actionType) => {
-        enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
+        enqueueSnackbar(t('profile.snack.pending'), { autoHideDuration: 1500 });
 
         switchSubscriptionOnUser()
             .then(() => {
-                enqueueSnackbar("Success", { autoHideDuration: 1500, variant: 'success' });
+                enqueueSnackbar(t('profile.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 
                 // notify user about new subscriber
-                if (actionType === 'subscribe') {
-                    createSubscriptionNotification();
-                }
-                
+                if (actionType === 'subscribe') createSubscriptionNotification();
             }).catch(() => {
-                enqueueSnackbar("Can't perform this action", { autoHideDuration: 3000, variant: 'error' });
+                enqueueSnackbar(t('profile.snack.error'), { autoHideDuration: 3000, variant: 'error' });
             });
     }
     
@@ -95,12 +92,7 @@ const ProfileCard = (props) => {
                     backgroundColor: theme !== 'light' ? '#1e1e1e' : 'white', 
                     borderRadius: bgRadius ? bgRadius : 0,
                 }}>
-                    <Box sx={{
-                        display: 'flex', 
-                        justifyContent: 'center', 
-                        alignItems: 'center',
-                        boxShadow: 0,
-                    }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: 0 }}>
                         <Stack 
                             spacing={3} 
                             sx={{
@@ -125,9 +117,7 @@ const ProfileCard = (props) => {
                                 sx={{boxShadow: 3, fontSize: 100}} 
                                 src={userData?.user?.avatar !== "" ? `${locations?.images}/${userData?.user?.avatar}` : "NULL"}
                                 style={{objectFit: 'contain', width: '35vw', height: '35vw', maxHeight: '160px', maxWidth: '160px'}}
-                                
-                                >
-                            </Avatar>
+                            />
                             <Box>
                                 <Typography variant='h4'>{userData?.user?.nick}</Typography>
                                 <Typography variant='h6'>{userData?.user?.description}</Typography>
@@ -140,33 +130,21 @@ const ProfileCard = (props) => {
                                         if (currentUser?._id !== userData?.user._id && currentUser._id !== "") {
                                             if (userData?.user.subscribers.map(i => i._id).includes(currentUser._id)) {
                                                 return (
-                                                    <Button 
-                                                        sx={{ mt: 1.5, width: '120px' }} 
-                                                        variant="contained"
-                                                        onClick={() => switchSubscriptionOnUserHandler('unsubscribe')}
-                                                    >
-                                                        Unsubscribe
+                                                    <Button sx={{ mt: 1.5, width: '120px' }} variant="contained" onClick={() => switchSubscriptionOnUserHandler('unsubscribe')}>
+                                                        {t('profile.unsubscribe')}
                                                     </Button>
                                                 )
                                             } else {
                                                 return (
-                                                    <Button 
-                                                        sx={{ mt: 1.5, width: '120px' }} 
-                                                        variant="contained"
-                                                        onClick={() => switchSubscriptionOnUserHandler('subscribe')}
-                                                    >
-                                                        Subscribe
+                                                    <Button sx={{ mt: 1.5, width: '120px' }} variant="contained" onClick={() => switchSubscriptionOnUserHandler('subscribe')}>
+                                                        {t('profile.subscribe')}
                                                     </Button>
                                                 )
                                             }
                                         } else if (currentUser._id === "") {
                                             return (
-                                                <Button 
-                                                    sx={{ mt: 1.5 }} 
-                                                    variant="contained"
-                                                    onClick={() => navigate('/app/login')}
-                                                >
-                                                    Login to subscribe
+                                                <Button sx={{ mt: 1.5 }} variant="contained" onClick={() => navigate('/app/login')}>
+                                                    {t('profile.login_to_subscribe')}
                                                 </Button>
                                             );
                                         }

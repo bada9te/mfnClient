@@ -13,7 +13,7 @@ import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { COMMENTS_REPLIES_BY_COMMENT_ID } from "../../../graphql-requests/comments";
 import { SpinnerCircular } from "../spinner/Spinner";
-
+import { useTranslation } from "react-i18next";
 
 
 const Comment = (props) => {
@@ -21,6 +21,7 @@ const Comment = (props) => {
     const { user: currentUser, locations } = useReactiveVar(baseState);
     const [ getReplies, { data: replies, loading } ] = useLazyQuery(COMMENTS_REPLIES_BY_COMMENT_ID, { variables: { _id: id } });
     const navigate = useNavigate();
+    const { t } = useTranslation("objects");
 
     const ownerAvatar = `${locations.images}/${owner.avatar}`;
 
@@ -103,22 +104,14 @@ const Comment = (props) => {
                                             {
                                                 replies.commentReplies.map((item, i) => {
                                                     return (
-                                                        <Reply
-                                                            key={i}
-                                                            id={id}
-                                                            item={item}
-                                                            goToProfile={goToProfile}
-                                                            postId={postId}
-                                                        />
-                                                    )
+                                                        <Reply key={i} id={id} item={item} goToProfile={goToProfile} postId={postId}/>
+                                                    );
                                                 })
                                             }
                                         </>
                                     );
                                 } else {
-                                    return (
-                                        'No replies yet'
-                                    );
+                                    return (t('comment.no_replies'));
                                 }
                             })()
                         }

@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const LeftBarPostsItem = (props) => {
     const {id, title, description, user, image} = props;
     const navigate = useNavigate();
-    const { t } = useTranslation("bars");
+    const { t } = useTranslation("objects");
 
     return (
         <Card sx={{
@@ -54,7 +54,7 @@ const LeftBarPostsItem = (props) => {
                         variant="contained" size="small" 
                         onClick={() => navigate(`/app/track/${id}/${user[0]}`)}
                     >
-                        {t('leftbar.item.see_track')}
+                        {t('leftbar_item.open_profile')}
                     </Button>
 
                     <Button
@@ -67,7 +67,7 @@ const LeftBarPostsItem = (props) => {
                         variant="contained" size="small"
                         onClick={() => navigate(`/app/profile/${user[0]}`)}
                     >
-                        {t('leftbar.item.open_profile')} 
+                        {t('leftbar_item.see_track')} 
                     </Button>
                 </ButtonGroup>
             </CardActions>

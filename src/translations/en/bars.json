@@ -21,11 +21,8 @@
     "leftbar.header": "Search for tracks",
     "leftbar.label": "Track title",
     "leftbar.info_text": "Start typing track name to search",
-    "leftbar.item.open_profile": "Open profile",
-    "leftbar.item.see_track": "See track",
 
     "rightbar.header": "Search for users",
     "rightbar.label": "Nickname",
-    "rightbar.info_text": "Start typing nickname to search",
-    "rightbar.item.open_profile": "Open profile"
+    "rightbar.info_text": "Start typing nickname to search"
 }

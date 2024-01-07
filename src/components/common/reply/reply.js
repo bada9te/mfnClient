@@ -66,9 +66,7 @@ const Reply = props => {
                 }
             />
 
-            <CardContent>
-                {item.text}
-            </CardContent>
+            <CardContent>{item.text}</CardContent>
         </Card>
     );
 }

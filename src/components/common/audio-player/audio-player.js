@@ -131,104 +131,93 @@ const CustomAudioPlayer = () => {
 
 
     return (
-        <>
-            <Drawer
-                anchor={'bottom'}
-                open={isShowing}
-                onClose={handleAudioPlayerClose}
-                hidden={false}
-                ModalProps={{
-                    keepMounted: true,
-                }}
-                sx={{
-                    ".MuiDrawer-paper": {
-                        borderRadius: '20px 20px 0 0',
-                    },
-                }}
-            >
-                { isLoading && <SpinnerLinear/> }
-                <Stack direction="row" flexWrap="wrap" sx={{display: 'flex', justifyContent: 'space-around', m: 0, p: 0}}>
-                    <Box sx={{display: 'flex', justifyContent: 'center', width: { xs: '100%', md: 'auto' }}}>
-                        {
-                            currentTrack 
-                            ? 
-                            <PostGenerate 
-                                item={currentTrack} 
-                                addonsCorrections={{ status: "in-player" }}
-                                baseCorrections={{ createdAt: currentTrack.createdAt }}
-                            />
-                            : 
-                            <PostItemUnavailable status="in-player"/>
-                        }
-                    </Box>
-                    
-                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'flex-end', flexGrow: 4}}>
-                        <Box sx={{ width: '100%' }}>
-                            <Box ref={waveformContainerRef} sx={{width: '100%', height: '120px'}}>
-                                {analyzerData && <WaveForm analyzerData={analyzerData} />}
-                            </Box>
-                            <Box sx={{display: 'flex', alignItems: 'center', mx: 1}}>
-                                <audio src={src} ref={containerRef} crossOrigin="anonymous"></audio>
-                                {
-                                    containerRef.current
-                                    ?
-                                    <>
-                                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: '100%', mt: 1, mx: 2}}>
-                                            <Box sx={{mr: 1.5}}>
-                                                <Typography noWrap>{time}</Typography>
-                                            </Box>
-                                            <Slider 
-                                                sx={{my: 1.5}} 
-                                                aria-label="Progress" 
-                                                value={progress || 0}
-                                                onChange={rewindOnProgressBar} 
-                                                disabled={controlsLocked ? true : false} 
-                                            />
-                                            <Box sx={{ml: 1.5}}>
-                                                <Typography noWrap>{duration}</Typography>
-                                            </Box>
-                                        </Box>
-                                    </>
-                                    :
-                                    null
-                                }
-                            </Box>
-                            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: 1}}>  
-                                <Box sx={{mx: 1.5}}>
-                                    <IconButton onClick={handlePlayPause} disabled={controlsLocked ? true : false}>
-                                        { isPlaying ? <Pause/> : <PlayArrow/> }
-                                    </IconButton>
-                                    <IconButton onClick={handleRewind} disabled={controlsLocked ? true : false}>
-                                        <FastRewind/> 
-                                    </IconButton>
-                                    <IconButton onClick={handleSwitchLoop} disabled={controlsLocked ? true : false}>
-                                        <Loop sx={{color: loop ? '#1BA39C' : ''}}/>
-                                    </IconButton>
+        <Drawer
+            anchor={'bottom'}
+            open={isShowing}
+            onClose={handleAudioPlayerClose}
+            hidden={false}
+            ModalProps={{
+                keepMounted: true,
+            }}
+            sx={{
+                ".MuiDrawer-paper": {
+                    borderRadius: '20px 20px 0 0',
+                },
+            }}
+        >
+            { isLoading && <SpinnerLinear/> }
+            <Stack direction="row" flexWrap="wrap" sx={{display: 'flex', justifyContent: 'space-around', m: 0, p: 0}}>
+                <Box sx={{display: 'flex', justifyContent: 'center', width: { xs: '100%', md: 'auto' }}}>
+                    {
+                        currentTrack 
+                        ? 
+                        <PostGenerate item={currentTrack} addonsCorrections={{ status: "in-player" }} baseCorrections={{ createdAt: currentTrack.createdAt }}/>
+                        : 
+                        <PostItemUnavailable status="in-player"/>
+                    }
+                </Box>
+                
+                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'flex-end', flexGrow: 4}}>
+                    <Box sx={{ width: '100%' }}>
+                        <Box ref={waveformContainerRef} sx={{width: '100%', height: '120px'}}>
+                            {analyzerData && <WaveForm analyzerData={analyzerData} />}
+                        </Box>
+                        <Box sx={{display: 'flex', alignItems: 'center', mx: 1}}>
+                            <audio src={src} ref={containerRef} crossOrigin="anonymous"></audio>
+                            {
+                                containerRef.current
+                                &&
+                                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: '100%', mt: 1, mx: 2}}>
+                                    <Box sx={{mr: 1.5}}>
+                                        <Typography noWrap>{time}</Typography>
+                                    </Box>
+                                    <Slider 
+                                        sx={{my: 1.5}} 
+                                        aria-label="Progress" 
+                                        value={progress || 0}
+                                        onChange={rewindOnProgressBar} 
+                                        disabled={controlsLocked ? true : false} 
+                                    />
+                                    <Box sx={{ml: 1.5}}>
+                                        <Typography noWrap>{duration}</Typography>
+                                    </Box>
                                 </Box>
-                                
-                                <Box sx={{display: 'flex', alignItems: 'center', mx: 1.5}}>
-                                    <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
-                                        { isMuted ? <VolumeOff/> : <VolumeDown/>}
-                                    </IconButton>
-                                        <Slider 
-                                            sx={{width: '100px'}} 
-                                            aria-label="Volume" 
-                                            value={volume} 
-                                            onChange={handleVolumeChange}
-                                            valueLabelDisplay="auto"
-                                            disabled={controlsLocked ? true : false} 
-                                        />
-                                    <IconButton onClick={(e) => handleVolumeChange(e, 100)} disabled={controlsLocked ? true : false}>
-                                        <VolumeUp/>
-                                    </IconButton>
-                                </Box>
+                            }
+                        </Box>
+                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: 1}}>  
+                            <Box sx={{mx: 1.5}}>
+                                <IconButton onClick={handlePlayPause} disabled={controlsLocked ? true : false}>
+                                    { isPlaying ? <Pause/> : <PlayArrow/> }
+                                </IconButton>
+                                <IconButton onClick={handleRewind} disabled={controlsLocked ? true : false}>
+                                    <FastRewind/> 
+                                </IconButton>
+                                <IconButton onClick={handleSwitchLoop} disabled={controlsLocked ? true : false}>
+                                    <Loop sx={{color: loop ? '#1BA39C' : ''}}/>
+                                </IconButton>
+                            </Box>
+                            
+                            <Box sx={{display: 'flex', alignItems: 'center', mx: 1.5}}>
+                                <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
+                                    { isMuted ? <VolumeOff/> : <VolumeDown/>}
+                                </IconButton>
+                                    <Slider 
+                                        sx={{width: '100px'}} 
+                                        aria-label="Volume" 
+                                        value={volume} 
+                                        onChange={handleVolumeChange}
+                                        valueLabelDisplay="auto"
+                                        disabled={controlsLocked ? true : false} 
+                                    />
+                                <IconButton onClick={(e) => handleVolumeChange(e, 100)} disabled={controlsLocked ? true : false}>
+                                    <VolumeUp/>
+                                </IconButton>
                             </Box>
                         </Box>
                     </Box>
-
-                </Stack>
-            </Drawer>
-        </> 
+                </Box>
+            </Stack>
+        </Drawer> 
     );
 }
 
