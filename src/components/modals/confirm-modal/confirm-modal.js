@@ -10,6 +10,8 @@ import { COMMENT_DELETE_BY_ID_MUTATION } from '../../../graphql-requests/comment
 import { USER_DELETE_BY_ID_MUTATION } from '../../../graphql-requests/users';
 import { confirmModalState } from './reactive';
 import { confirmContainerState } from '../../containers/confirm-container/reactive';
+import { useTranslation } from 'react-i18next';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -19,9 +21,10 @@ const ConfirmModal = (props) => {
     const confirmModal = useReactiveVar(confirmModalState);
     const { actionType, itemId } = useReactiveVar(confirmContainerState);
 
-    const [deleteTrack] = useMutation(POST_DELETE_BY_ID_MUTATION);
-    const [deleteComment] = useMutation(COMMENT_DELETE_BY_ID_MUTATION);
-    const [deleteUser] = useMutation(USER_DELETE_BY_ID_MUTATION);
+    const [ deleteTrack ] = useMutation(POST_DELETE_BY_ID_MUTATION);
+    const [ deleteComment ] = useMutation(COMMENT_DELETE_BY_ID_MUTATION);
+    const [ deleteUser ] = useMutation(USER_DELETE_BY_ID_MUTATION);
+    const { t } = useTranslation("modals")
 
     const handleClose = (confirmed) => {
         confirmModalState({ ...confirmModal, isShowing: false });
@@ -64,8 +67,8 @@ const ConfirmModal = (props) => {
         >
             <ConfirmContainer/>
             <DialogActions>
-                <Button onClick={() => handleClose(false)}>Cancel</Button>
-                <Button onClick={() => handleClose(true)}>I confirm</Button>
+                <Button onClick={() => handleClose(false)}>{t('confirm.cancel')}</Button>
+                <Button onClick={() => handleClose(true)}>{t('confirm.ok')}</Button>
             </DialogActions>
         </Dialog>
     );

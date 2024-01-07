@@ -3,10 +3,12 @@ import { Close, Language } from "@mui/icons-material";
 import { Dialog, DialogContent, DialogTitle, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from "@mui/material";
 import { languageSelectModalState } from "./reactive";
 import { baseState } from "../../baseReactive";
+import { useTranslation } from "react-i18next";
 
 
 const LanguageSelectModal = props => {
     const { isShowing } = useReactiveVar(languageSelectModalState);
+    const { t } = useTranslation("modals"); 
 
     const handleClose = () => {
         languageSelectModalState({ isShowing: false });
@@ -32,7 +34,7 @@ const LanguageSelectModal = props => {
             fullScreen={Boolean(fullscreen)}
         >
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    Select language
+                    {t('select.language.title')}
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
                         <Close />
                     </IconButton>

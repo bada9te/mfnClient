@@ -5,13 +5,14 @@ import PostSelectContainer from "../../containers/post-select-container/post-sel
 import { useReactiveVar } from "@apollo/client";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "./reactive";
+import { useTranslation } from "react-i18next";
 
 
 const PostSelectModal = props => {
     const { isMine, selectingFor } = useReactiveVar(postSelectContainerState);
     const { isShowing } = useReactiveVar(postSelectModalState);
     const [ query, setQuery ] = useState("");
-
+    const { t } = useTranslation("modals");
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -37,7 +38,7 @@ const PostSelectModal = props => {
     return (
         <Dialog open={isShowing} onClose={handleClose} fullWidth fullScreen>
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                {isMine ? "Select your track" : "Select opponent's track"}
+                {isMine ? t('select.post.mine') : t('select.post.opponent')}
                 <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
                     <Close />
                 </IconButton>
@@ -51,7 +52,7 @@ const PostSelectModal = props => {
                 selectingFor === "battle"
                 &&
                 <DialogActions>
-                    <TextField margin="normal" required fullWidth id="title" label="Track name" 
+                    <TextField margin="normal" required fullWidth id="title" label={t('select.post.query')} 
                         onInput={(e) => setQuery(e.target.value)}
                         InputProps={{
                             endAdornment: 

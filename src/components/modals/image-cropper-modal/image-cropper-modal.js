@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import Cropper from 'react-easy-crop';
 import getCroppedImg from './cropImage';
 import { imageCropperModalState } from "./reactive";
+import { useTranslation } from "react-i18next";
 
 
 const ImageCropperModal = props => {
@@ -13,7 +14,7 @@ const ImageCropperModal = props => {
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const { imageType, isShowing } = useReactiveVar(imageCropperModalState);
-    
+    const { t } = useTranslation("modals");
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels)
@@ -36,7 +37,7 @@ const ImageCropperModal = props => {
             aria-labelledby="dialog-title"
             aria-describedby="dialog-description"
         >
-            <DialogTitle id="dialog-title">Cropping</DialogTitle>
+            <DialogTitle id="dialog-title">{t('crop.title')}</DialogTitle>
 
             <DialogContent dividers={true} sx={{p: 0}}>
             <Box sx={{width: '100%', height: '100%', position: 'relative'}}>
@@ -54,8 +55,8 @@ const ImageCropperModal = props => {
             </DialogContent>
 
             <DialogActions>
-                <Button onClick={() => handleImageCropModalClose(false, null)}>Cancel</Button>
-                <Button onClick={handleImageCropping}>Crop</Button>
+                <Button onClick={() => handleImageCropModalClose(false, null)}>{t('crop.cancel')}</Button>
+                <Button onClick={handleImageCropping}>{t('crop.ok')}</Button>
             </DialogActions>
         </Dialog>
     );

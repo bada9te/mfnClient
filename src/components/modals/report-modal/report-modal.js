@@ -3,10 +3,12 @@ import { Close } from "@mui/icons-material";
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import ReportForm from "../../forms/report/report";
 import { reportModalState } from "./reactive";
+import { useTranslation } from "react-i18next";
 
 
 const ReportsModal = props => {
     const reportModal = useReactiveVar(reportModalState);
+    const { t } = useTranslation("modals");
 
     const handleClose = () => {
         reportModalState({...reportModal, isShowing: false});
@@ -25,7 +27,7 @@ const ReportsModal = props => {
             fullScreen={Boolean(fullscreen)}
         >
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    Report
+                    {t('report.title')}
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
                         <Close />
                     </IconButton>
@@ -34,7 +36,7 @@ const ReportsModal = props => {
                 <ReportForm/>
             </DialogContent>
             <DialogActions>
-                <Typography>Pls, provide more information in text message field, so that we can easier understand what the violation is</Typography>
+                <Typography>{t('report.info_text')}</Typography>
             </DialogActions>
         </Dialog>
     );

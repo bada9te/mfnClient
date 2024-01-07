@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 const CommentsModal = props => {
     const commentsModal = useReactiveVar(commentsModalState);
-    const { t } = useTranslation("comments");
+    const { t } = useTranslation("modals");
     
     const handleClose = () => {
         commentsModalState({ ...commentsModal, isShowing: false });
@@ -30,7 +30,7 @@ const CommentsModal = props => {
             PaperProps={{ sx: { borderRadius: {sm: 0, md: 5} } }}
         >
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    {t('comments.modal.title')}
+                    {t('comments.title')}
                     <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
                         <Close />
                     </IconButton>

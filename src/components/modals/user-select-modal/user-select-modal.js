@@ -3,12 +3,13 @@ import { Close } from "@mui/icons-material";
 import UserSelectContainer from "../../containers/user-select-container/user-select-container";
 import { useReactiveVar } from "@apollo/client";
 import { userSelectModalState } from "./reactive";
+import { useTranslation } from "react-i18next";
 
 
 const UserSelectModal = props => {
     const userSelectModal = useReactiveVar(userSelectModalState);
+    const { t } = useTranslation("modals");
     
-
     const handleClose = () => {
         userSelectModalState({...userSelectModal, isShowing: false});
     }
@@ -25,11 +26,11 @@ const UserSelectModal = props => {
             fullScreen={Boolean(fullscreen)}
         >
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    Select user
-                    <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
-                        <Close />
-                    </IconButton>
-                </DialogTitle>
+                {t('select.user.title')}
+                <IconButton sx={{ ml: 'auto' }} onClick={handleClose}>
+                    <Close />
+                </IconButton>
+            </DialogTitle>
             <DialogContent dividers={true}>
                 <UserSelectContainer/>
             </DialogContent>
