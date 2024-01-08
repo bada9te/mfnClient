@@ -25,7 +25,7 @@ const AccountVerify = props => {
 
     return(
         <LogRegVerContainer bg={VerifyAccBG} text="Account verification">
-            <Box sx={{width: '30rem', height: 'fit-content'}}>
+            <Box sx={{ width: '30rem', height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
                 </Box>

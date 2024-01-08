@@ -16,7 +16,7 @@ const ImageRightFormContainer = (props) => {
                 component={Paper} 
                 elevation={2} 
                 square 
-                sx={{boxShadow: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
             >
                 {props.children}
             </Grid>

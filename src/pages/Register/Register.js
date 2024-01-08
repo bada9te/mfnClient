@@ -13,10 +13,7 @@ const Register = () => {
 
     return (
         <LogRegVerContainer bg={registerFormBG} text={t('register.main_text')}>
-            <Box sx={{ 
-                width: '30rem', 
-                boxShadow: 0, 
-            }}>
+            <Box sx={{ width: '30rem', height: '100%', display: 'flex', justifyContent: 'start', flexDirection: 'column' }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     <Avatar src={loginImage} sx={{ m: 1, boxShadow: 5 }}/>
                 </Box>

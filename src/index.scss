@@ -1,6 +1,11 @@
 body {
-  background-image: url('../src/images/bgs/bg.png');
   background-size: cover;
+  background:
+      conic-gradient(from -45deg at calc(100%/3) calc(100%/3), #1c94a4 90deg, #0000 0),
+      conic-gradient(from -135deg at calc(100%/3) calc(2*100%/3), #1c94a4 90deg, #60f6ec 0 135deg, #0000 0),
+      conic-gradient(from 135deg at calc(2*100%/3) calc(2*100%/3), #1c94a4 90deg, #60f6ec 0 135deg, #0000 0),
+      conic-gradient(from 45deg at calc(2*100%/3) calc(100%/3), #1c94a4 90deg, #60f6ec 0 135deg, #0000 0,#1c94a4 0 225deg,#60f6ec 0);
+  background-size: 96px 96px;
 }
 
 html {

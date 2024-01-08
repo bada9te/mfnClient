@@ -20,7 +20,6 @@ import { commentsContainerState } from '../../containers/comments-container/reac
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from '../../containers/posts-container/reactive';
 import { useTranslation } from "react-i18next";
-import PostItemTags from './post-item-tags/post-item-tags';
 
 
 const PostItem = (props) => {
@@ -306,8 +305,6 @@ const PostItem = (props) => {
                     }
                 </Box>
             </Box>
-
-            <PostItemTags/>
             
             {/* ################################# POST ACTION BUTTONS ################################# */}
             {
