@@ -18,12 +18,18 @@ export default new InMemoryCache({
             },
         },
         PostsWithCount: {
+            keyFields: ['posts'],
             fields: {
                 posts: {
                     merge(_, incoming) {
                         return incoming
                     }
                 },
+                count: {
+                    merge(_, incoming) {
+                        return incoming
+                    }
+                }
             }
         },
         User: {

@@ -73,31 +73,35 @@ const PostUploadForm = (props)=> {
                     query: POSTS_BY_OWNER_QUERY, 
                     variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage }
                 });
-                cache.writeQuery({
-                    query: POSTS_BY_OWNER_QUERY,
-                    variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage },
-                    data: { 
-                        postsByOwner: {
-                            posts: cachedData?.postsByOwner.posts ? [...cachedData.postsByOwner.posts, postData] : [postData],
-                            count: cachedData?.postsByOwner.posts ? cachedData?.postsByOwner.posts.length + 1 : 1,
+                if (cachedData) {
+                    cache.writeQuery({
+                        query: POSTS_BY_OWNER_QUERY,
+                        variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage },
+                        data: { 
+                            postsByOwner: {
+                                posts: cachedData?.postsByOwner.posts ? [...cachedData.postsByOwner.posts, postData] : [postData],
+                                count: cachedData?.postsByOwner.posts ? cachedData?.postsByOwner.posts.length + 1 : 1,
+                            }
                         }
-                    }
-                });
+                    });
+                }
 
                 cachedData = cache.readQuery({
                     query: POSTS_QUERY,
                     variables: { offset: 0, limit: maxCountPerPage }
                 });
-                cache.writeQuery({
-                    query: POSTS_QUERY,
-                    variables: { offset: 0, limit: maxCountPerPage },
-                    data: { 
-                        posts: {
-                            posts: cachedData?.posts.posts ? [...cachedData.posts.posts, postData] : [postData],
-                            count: cachedData?.posts.posts ? cachedData?.posts.posts.length + 1 : 1,
+                if (cachedData) {
+                    cache.writeQuery({
+                        query: POSTS_QUERY,
+                        variables: { offset: 0, limit: maxCountPerPage },
+                        data: { 
+                            posts: {
+                                posts: cachedData?.posts.posts ? [...cachedData.posts.posts, postData] : [postData],
+                                count: cachedData?.posts.posts ? cachedData?.posts.posts.length + 1 : 1,
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         }).then(() => {
             reset();
@@ -145,7 +149,7 @@ const PostUploadForm = (props)=> {
                 image={postUploadForm.picture} 
             />
         }     
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{margin: 1}}>
+        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{m: 1}}>
             <TextField
                 margin="normal"
                 required

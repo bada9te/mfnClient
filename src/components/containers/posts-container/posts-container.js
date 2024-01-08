@@ -40,7 +40,8 @@ const PostsContainer = (props) => {
 
     useLayoutEffect(() => {
         postsContainerState({...postsContainerState(), activePage: 1});
-    }, [location]);
+        //console.log(postsContainerState())
+    }, [location.key, location]);
 
 
     useEffect(() => {

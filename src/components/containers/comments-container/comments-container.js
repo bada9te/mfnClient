@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const CommentsContainer = props => {
     const { postId } = useReactiveVar(commentsContainerState);
     const { data, loading } = useQuery(COMMENTS_BY_POST_ID, { variables: { _id: postId } });
-    const { t } = useTranslation("comments");
+    const { t } = useTranslation("containers");
 
     return (
         <>
