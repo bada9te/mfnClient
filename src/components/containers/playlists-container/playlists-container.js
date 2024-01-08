@@ -161,7 +161,7 @@ const PlaylistsContainer = (props) => {
                             );
                         } else {
                             return (
-                                <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                <Box sx={{minHeight: 'calc(100vh - 215px)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                     <Typography sx={{textAlign: 'center'}}>{t('playlists.not_found')}</Typography>
                                 </Box>
                             );
@@ -175,7 +175,7 @@ const PlaylistsContainer = (props) => {
                     (() => {
                         if (!currentUser || currentUser._id === "") {
                             return (
-                                <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                <Box sx={{minHeight: 'calc(100vh - 215px)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                     <Typography sx={{textAlign: 'center'}}>{t('playlists.login_to_operate')}</Typography>
                                 </Box>
                             );
@@ -191,7 +191,7 @@ const PlaylistsContainer = (props) => {
                             );
                         } else {
                             return (
-                                <Box sx={{minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                <Box sx={{minHeight: 'calc(100vh - 215px)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                     <Typography sx={{textAlign: 'center'}}>{t('playlists.not_found')}</Typography>
                                 </Box>
                             );
@@ -205,21 +205,23 @@ const PlaylistsContainer = (props) => {
                     {
                         currentUser && currentUser._id !== ""
                         ?
-                        <Box sx={{width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5}}>
-                            <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                                {t('playlists.create.title')}
-                            </Typography>
-                            <CardContent>
-                                <CreatePlaylistForm/>
-                            </CardContent>
-                            <CardActions>
-                                <Box sx={{mx: 2, mb: 2}}>
-                                    <Typography>{t('playlists.create.notice')}</Typography>
-                                </Box>
-                            </CardActions>
+                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)', width: '100%'}}>
+                            <Box sx={{ width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5 }}>
+                                <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                                    {t('playlists.create.title')}
+                                </Typography>
+                                <CardContent>
+                                    <CreatePlaylistForm/>
+                                </CardContent>
+                                <CardActions>
+                                    <Box sx={{mx: 2, mb: 2}}>
+                                        <Typography>{t('playlists.create.notice')}</Typography>
+                                    </Box>
+                                </CardActions>
+                            </Box>
                         </Box>
                         :
-                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
+                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)'}}>
                             <Typography>
                                 {t('playlists.create.login_required')}
                             </Typography>

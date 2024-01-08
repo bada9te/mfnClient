@@ -16,30 +16,36 @@ const Support = (props) => {
     return (
         <BaseContentContainer>
             <ImageRightFormContainer bg={supportFromBG} text={t('support.main_text')}>
-                <Box sx={{boxShadow: 0, maxWidth: 700, borderRadius: 5}}>
-                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                        <Avatar src={supportContactImage} sx={{ m: 1, boxShadow: 5 }}/>
+                <Box sx={{height: 'calc(100vh - 132px)'}}>
+                    <Box sx={{ 
+                        boxShadow: 0, maxWidth: 700, borderRadius: 5, 
+                        display: 'flex', justifyContent: 'center', alignItems:'center', flexDirection: 'column',
+                        height: 'calc(100vh - 132px)'
+                    }}>
+                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2 }}>
+                            <Avatar src={supportContactImage} sx={{ m: 1, boxShadow: 5 }}/>
+                        </Box>
+                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
+                            {t('support.title')}
+                        </Typography>
+                        <CardContent>
+                            <FormSupportContact/>
+                        </CardContent>
+                        <CardActions>
+                            <Stack direction="column" spacing={2} mx={2} mb={2}>
+                                <Typography >
+                                    {t('support.notice')}
+                                </Typography>
+                                <Button 
+                                    sx={{ width: 'fit-content' }}
+                                    startIcon={<Quiz/>}
+                                    variant='outlined' 
+                                    onClick={() => navigate('/app/f.a.q')}>
+                                    {t('support.open_f.a.q')}
+                                </Button>
+                            </Stack>
+                        </CardActions>
                     </Box>
-                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
-                        {t('support.title')}
-                    </Typography>
-                    <CardContent>
-                        <FormSupportContact/>
-                    </CardContent>
-                    <CardActions>
-                        <Stack direction="column" spacing={2} mx={2} mb={2}>
-                            <Typography >
-                                {t('support.notice')}
-                            </Typography>
-                            <Button 
-                                sx={{ width: 'fit-content' }}
-                                startIcon={<Quiz/>}
-                                variant='outlined' 
-                                onClick={() => navigate('/app/f.a.q')}>
-                                {t('support.open_f.a.q')}
-                            </Button>
-                        </Stack>
-                    </CardActions>
                 </Box>
             </ImageRightFormContainer>    
         </BaseContentContainer>

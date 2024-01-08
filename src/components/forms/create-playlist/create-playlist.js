@@ -56,7 +56,7 @@ const CreatePlaylistForm = props => {
                 label={t('playlist.title')}
                 name="title"
                 error={Boolean(errors.Title)}
-                helperText={errors.Title && t('playlists.error.title')}
+                helperText={errors.Title && t('playlist.error.title')}
                 onInput={(e) => setTitle(e.target.value)}
                 {...register("Title", {
                     maxLength: 10,

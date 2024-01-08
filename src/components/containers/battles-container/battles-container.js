@@ -28,7 +28,7 @@ const TabContent = (props) => {
                         );
                     } else if (battles?.length === 0) {
                         return (
-                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)'}}>
                                 <Typography>
                                     {t('battles.not_found')}
                                 </Typography>
@@ -141,7 +141,7 @@ const BattlesContainer = props => {
                                 <CreateBattleForm/>
                             </Box>
                             :
-                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75vh'}}>
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)'}}>
                                 <Typography>
                                     {t('battles.create.login_required')}
                                 </Typography>
