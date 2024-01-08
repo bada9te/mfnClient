@@ -16,13 +16,12 @@ const CreatePlaylistForm = props => {
     const [ title, setTitle ] = useState("Playlist's title");
     const { enqueueSnackbar } = useSnackbar();
     const { user: currentUser } = useReactiveVar(baseState);
-    const { maxCountPerPage, activePage } = useReactiveVar(playlistsContainerState);
+    const { maxCountPerPage } = useReactiveVar(playlistsContainerState);
     const [ createPlaylist ] = useMutation(PLAYLIST_CREATE_MUTATION);
     const { t } = useTranslation("forms");
 
     const onSubmit = async(data) => {
         enqueueSnackbar(t('playlist.snack.pending'), { autoHideDuration: 1500 });
-        let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
         await createPlaylist({
             variables: {
                 input: {
@@ -31,12 +30,33 @@ const CreatePlaylistForm = props => {
                     public: publicAccess,
                 },
             },
-            refetchQueries: [
-                {
+            update: (cache, { data }) => {
+                const cachedData = cache.readQuery({
                     query: PLAYLISTS_BY_OWNER_ID_QUERY, 
-                    variables: { owner: currentUser._id, offset, limit: maxCountPerPage, } 
+                    variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage } 
+                });
+
+                // function to update array of playlists
+                const updatePlaylists = (cachedArray, playlist) => {
+                    const cachedPlaylists = JSON.parse(JSON.stringify(cachedArray));
+                    if (cachedPlaylists.length >= maxCountPerPage) {
+                        cachedPlaylists.pop();
+                    }
+                    cachedPlaylists.unshift(playlist);
+                    return cachedPlaylists;
+                };
+
+                if (cachedData) {
+                    const playlists = updatePlaylists(cachedData.playlistsByOwnerId.playlists);
+                    cache.writeQuery({
+                        query: PLAYLISTS_BY_OWNER_ID_QUERY,
+                        variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage },
+                        data: {
+                            playlistsByOwnerId: { playlists, count: playlists.length + 1 }
+                        }
+                    });
                 }
-            ]
+            }
         }).then(({ data }) => {
             reset();
             enqueueSnackbar(t('playlist.snack.success'), { autoHideDuration: 1500, variant: 'success' });
