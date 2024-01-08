@@ -12,6 +12,7 @@ import { useSnackbar } from "notistack";
 import { postsContainerState } from "../../containers/posts-container/reactive";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const PostUploadForm = (props)=> {
@@ -22,6 +23,7 @@ const PostUploadForm = (props)=> {
     const { maxCountPerPage } = useReactiveVar(postsContainerState);
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
+    const navigate = useNavigate();
 
     const genres = ["Country", "Pop", "Classical", "Funk", "Soul music", "Hip hop", "Rock", "Electronic music", "Latin", "Jazz", "Blues", "Folk", "Metal"]
     const [ selectedGenre, setSelectedGenre ] = useState(genres[0]);
@@ -68,20 +70,29 @@ const PostUploadForm = (props)=> {
                     avatar: currentUser.avatar,
                     nick: currentUser.nick,
                 };
+
+                // function to update array of posts
+                const updatePosts = (cachedArray, post) => {
+                    let cachedPosts = JSON.parse(JSON.stringify(cachedArray));
+                    if (cachedPosts.length >= maxCountPerPage) {
+                        cachedPosts.pop();
+                    }
+                    cachedPosts.unshift(post);
+                    return cachedPosts;
+                };
+
                 // update owner posts query
                 let cachedData = cache.readQuery({ 
                     query: POSTS_BY_OWNER_QUERY, 
                     variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage }
                 });
                 if (cachedData) {
+                    const posts = updatePosts(cachedData.postsByOwner.posts, postData);
                     cache.writeQuery({
                         query: POSTS_BY_OWNER_QUERY,
                         variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage },
                         data: { 
-                            postsByOwner: {
-                                posts: cachedData?.postsByOwner.posts ? [...cachedData.postsByOwner.posts, postData] : [postData],
-                                count: cachedData?.postsByOwner.posts ? cachedData?.postsByOwner.posts.length + 1 : 1,
-                            }
+                            postsByOwner: { posts, count: posts.length + 1 }
                         }
                     });
                 }
@@ -91,14 +102,12 @@ const PostUploadForm = (props)=> {
                     variables: { offset: 0, limit: maxCountPerPage }
                 });
                 if (cachedData) {
+                    const posts = updatePosts(cachedData.posts.posts, postData);
                     cache.writeQuery({
                         query: POSTS_QUERY,
                         variables: { offset: 0, limit: maxCountPerPage },
                         data: { 
-                            posts: {
-                                posts: cachedData?.posts.posts ? [...cachedData.posts.posts, postData] : [postData],
-                                count: cachedData?.posts.posts ? cachedData?.posts.posts.length + 1 : 1,
-                            }
+                            posts: { posts, count: posts.length + 1 }
                         }
                     });
                 }
@@ -106,6 +115,8 @@ const PostUploadForm = (props)=> {
         }).then(() => {
             reset();
             enqueueSnackbar(t('upload.snack.success'), { autoHideDuration: 1500, variant: 'success' });
+            postUploadFormState({...postUploadFormState(), imageTitle: null, audioTitle: null, picture: null, audio: null});
+            navigate(`/app/profile/${currentUser._id}`)
         }).catch(err => {
             enqueueSnackbar(t('upload.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
