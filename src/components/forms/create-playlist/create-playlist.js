@@ -67,7 +67,7 @@ const CreatePlaylistForm = props => {
     }
 
     return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ p: 2, borderRadius: 5, boxShadow: 10 }}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ py: 1, px: 2, borderRadius: 5, boxShadow: 10 }}>
             <TextField
                 margin="normal"
                 required

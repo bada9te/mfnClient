@@ -1,4 +1,4 @@
-import { Box, IconButton, Drawer, Typography, TextField } from "@mui/material"
+import { Box, IconButton, Drawer, Typography, TextField, Paper } from "@mui/material"
 import { Close } from "@mui/icons-material";
 import LeftBarPostsContainer from "../../../containers/leftbar-posts-container/leftbar-posts-container";
 import { useReactiveVar } from "@apollo/client";
@@ -21,18 +21,9 @@ const LeftBarPosts = (props) => {
     }
 
     return (
-        <Drawer
-            anchor="left"
-            open={bottomBar.showLB}
-            onClose={closeLB}
-            keepMounted
-            elevation={3}
-        >
-            <Box sx={{
-                pt: '70px',
-                zIndex: 1,
-                boxShadow: 5
-            }}>
+        <Drawer anchor="left" open={bottomBar.showLB} onClose={closeLB} keepMounted elevation={3} 
+        PaperProps={{ sx: { background: 'none' } }}>
+            <Paper sx={{ pt: '70px', zIndex: 1, boxShadow: 5 }} elevation={3}>
                 <Box sx={{p: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Typography variant="h6">{t('leftbar.header')}</Typography>
                     <IconButton onClick={closeLB}>
@@ -50,7 +41,7 @@ const LeftBarPosts = (props) => {
                         onInput={(e) => handleInput(e.target.value)}
                     />
                 </Box>
-            </Box>
+            </Paper>
             
             <LeftBarPostsContainer searchQuery={searchQuery}/>
         </Drawer>

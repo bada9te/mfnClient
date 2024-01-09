@@ -13,6 +13,9 @@ const Welcome = (props) => {
             height: 'calc(100vh - 120px)', 
             overflow: 'auto', 
             scrollSnapType: 'y mandatory',
+            background: 'rgba(255,255,255,0.2)',
+            backdropFilter: 'blur(5px)',
+            color: 'white',
         }}>
             <WelcomePageStart/>
 

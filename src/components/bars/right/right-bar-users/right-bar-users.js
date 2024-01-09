@@ -1,4 +1,4 @@
-import { Box, Drawer, IconButton, TextField, Typography } from "@mui/material";
+import { Box, Drawer, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import RightBarUsersContainer from "../../../containers/rightbar-users-container/rightbar-users-container";
 import { useReactiveVar } from "@apollo/client";
@@ -21,19 +21,8 @@ const RightBarUsers = (props) => {
     }
 
     return (
-        <Drawer
-            anchor="right"
-            open={bottomBar.showRB}
-            onClose={closeRB}
-            keepMounted
-            elevation={3}
-        >
-            <Box sx={{
-                pt: '70px',
-                zIndex: 1,
-                boxShadow: 5
-                }}
-            >
+        <Drawer anchor="right" open={bottomBar.showRB} onClose={closeRB} keepMounted elevation={3} PaperProps={{ sx: { background: 'none' } }}>
+            <Paper sx={{ pt: '70px', zIndex: 1, boxShadow: 5 }} elevation={3}>
                 <Box sx={{p: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Typography variant="h6">{t('rightbar.header')}</Typography>
                     <IconButton onClick={closeRB}>
@@ -51,8 +40,7 @@ const RightBarUsers = (props) => {
                         onInput={(e) => handleInput(e.target.value)}
                     />
                 </Box>
-            </Box>
-            
+            </Paper>
             <RightBarUsersContainer searchQuery={searchQuery}/>
         </Drawer>
     );

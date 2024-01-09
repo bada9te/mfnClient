@@ -25,18 +25,18 @@ const Login = (props) => {
                     <LoginForm/>
                 </CardContent>
                 <CardActions>
-                    <Stack direction="column" spacing={0.75} mx={2} mb={2}>
+                    <Stack direction="column" spacing={2} mx={2} mb={2}>
                         <Button 
-                            sx={{ width: 'fit-content' }}
+                            sx={{ width: 'fit-content', boxShadow: 10 }}
                             startIcon={<LockReset/>}
-                            variant='outlined' 
+                            variant='contained' 
                             onClick={() => navigate('/app/account-restore/email-check')}>
                             {t('login.forgot_password')}
                         </Button>
                         <Button 
-                            sx={{ width: 'fit-content' }}
+                            sx={{ width: 'fit-content', boxShadow: 10 }}
                             startIcon={<HowToReg/>}
-                            variant='outlined' 
+                            variant='contained' 
                             onClick={() => navigate('/app/register')}>
                             {t('login.havent_registered_yet')}
                         </Button>

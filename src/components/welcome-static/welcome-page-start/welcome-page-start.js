@@ -24,6 +24,7 @@ const WelcomePageStart = props => {
                 backgroundImage: `url(${WelcomePageStartBG})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
+                backdropFilter: 'blur(5px)',
                 pb: 10,
                 scrollSnapAlign: 'start',
             }}

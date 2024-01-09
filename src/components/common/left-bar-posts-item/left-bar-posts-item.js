@@ -10,11 +10,7 @@ const LeftBarPostsItem = (props) => {
     const { t } = useTranslation("objects");
 
     return (
-        <Card sx={{
-            mb: 1, 
-            boxShadow: 5, 
-            borderRadius: 5
-            }}>
+        <Card sx={{ mb: 1, boxShadow: 10, borderRadius: 5 }}>
             <CardHeader
                 avatar={
                     <Avatar 

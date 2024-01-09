@@ -100,7 +100,7 @@ function App() {
         <SnackbarProvider maxSnack={5}>
           <Routes>
             <Route path='/'            element={<Container/>}>
-              <Route path='/' element={<Welcome/>}/>
+              <Route path='/'              element={<Welcome/>}/>
               <Route path='/app/login'     element={<Login/>}/>
               <Route path='/app/logout'    element={<Logout/>}/>
               <Route path='/app/register'  element={<Register/>}/>

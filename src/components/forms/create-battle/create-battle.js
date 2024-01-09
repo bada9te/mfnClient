@@ -49,7 +49,7 @@ const CreateBattleForm = props => {
     }
 
     return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{p: 2, boxShadow: 10, borderRadius: 5}}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{py: 1, px: 2, boxShadow: 10, borderRadius: 5}}>
             <Box sx={{ px: 2 }}>
                 <TextField
                     margin="normal"

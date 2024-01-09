@@ -54,7 +54,9 @@ const LogRegVerContainer = (props) => {
                         display: 'flex',
                         justifyContent: 'center',
                         overflowY: 'auto', 
-                        height: '100%'
+                        height: '100%',
+                        color: 'white',
+                        background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(5px)'
                     }}
                 >
                     {props.children}

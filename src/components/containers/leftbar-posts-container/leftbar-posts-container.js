@@ -34,7 +34,7 @@ const LeftBarPostsContainer = props => {
 
 
     return (
-            <List sx={{overflow: 'auto', position: 'relative', height: '100%', px: 0.5}}>
+            <List sx={{overflow: 'auto', position: 'relative', height: '100%', px: 0.5, background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(5px)', color: 'white'}}>
                 {
                     (() => {
                         if (loading && searchQuery !== "") {

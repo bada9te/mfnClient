@@ -24,11 +24,11 @@ const Register = () => {
                     <RegisterForm/>
                 </CardContent>
                 <CardActions>
-                    <Stack direction="column" spacing={0.75} mx={2} mb={2}>
+                    <Stack direction="column" spacing={2} mx={2} mb={2}>
                         <Button 
-                            sx={{ width: 'fit-content' }}
+                            sx={{ width: 'fit-content', boxShadow: 10 }}
                             startIcon={<Login/>}
-                            variant='outlined' 
+                            variant='contained' 
                             onClick={() => navigate('/app/login')}>
                             {t('register.already_registered')}
                         </Button>

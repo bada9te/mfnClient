@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField, Button } from "@mui/material";
+import { TextField, Button, Paper } from "@mui/material";
 import { useSnackbar } from "notistack";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
 import { httpRegister } from "../../../http-requests/auth";
@@ -29,7 +29,7 @@ const RegisterForm = (props) => {
     }
 
     return (
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{margin: 1}}>
+        <Paper component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ py: 1, px: 2, borderRadius: 5, boxShadow: 10 }}>
             <TextField
                 margin="normal"
                 required
@@ -107,7 +107,7 @@ const RegisterForm = (props) => {
                 {t('register.submit')}
         </Button>
         <SocialMediaLogin/>
-    </Box>
+    </Paper>
     );
 }
 
