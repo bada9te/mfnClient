@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import PostItem from "../../common/post-item/post-item";
-import { Box, TextField, Button, Stack, Typography } from "@mui/material";
+import { Box, TextField, Button, Stack, Typography, Card } from "@mui/material";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
@@ -49,7 +49,7 @@ const CreateBattleForm = props => {
     }
 
     return (
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{p: 0, m: 0}}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{p: 2, boxShadow: 10, borderRadius: 5}}>
             <Box sx={{ px: 2 }}>
                 <TextField
                     margin="normal"
@@ -135,10 +135,10 @@ const CreateBattleForm = props => {
                     variant="contained"
                     sx={{ mt: 1, mb: 2, boxShadow: 10 }}
                 >
-                    {t('battles.create.form.submit')}
+                    {t('battle.submit')}
                 </Button>
             </Box>
-        </Box>
+        </Card>
     );
 }
 

@@ -109,10 +109,10 @@ const PostsContainer = (props) => {
                     } else {
                         return (
                             <Stack 
-                                spacing={4} 
+                                spacing={2} 
                                 sx={{
                                     width: '100%', 
-                                    py: 4, 
+                                    py: 1.5, 
                                     display: 'flex', 
                                     justifyContent: 'space-around',
                                     alignItems: 'center',
@@ -135,7 +135,7 @@ const PostsContainer = (props) => {
             {
                 posts.length > 0 && !isLoading
                 &&
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 10}}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', my: 5}}>
                     <PaginationTree maxPage={maxPage} activePage={activePage} handlePageChange={handlePageChange}/>
                 </Box>
             }

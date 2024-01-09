@@ -1,5 +1,5 @@
 import { AddCircle, Timelapse, Whatshot } from "@mui/icons-material";
-import { Box, Tabs, Tab, Typography } from "@mui/material";
+import { Box, Tabs, Tab, Typography, CardContent } from "@mui/material";
 import { useState, useEffect } from "react";
 import PaginationTree from "../../common/pagination/pagination";
 import EnumBattles from "../../enums/enum-battles";
@@ -138,7 +138,9 @@ const BattlesContainer = props => {
                                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, pb: 1.5}}>
                                     {t('battles.create.title')}
                                 </Typography>
-                                <CreateBattleForm/>
+                                <CardContent>
+                                    <CreateBattleForm/>
+                                </CardContent>
                             </Box>
                             :
                             <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)'}}>

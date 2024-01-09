@@ -13,7 +13,7 @@ const Logout = (props) => {
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("pages");
     
     useEffect(() => {
         let timeout = null;

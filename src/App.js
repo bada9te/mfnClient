@@ -53,11 +53,33 @@ function App() {
           root: {
             '& fieldset': {
               borderRadius: 25,
-              marginBottom: 4
+              marginBottom: 4,
             },
           },
         }
       },
+      MuiTab: {
+        styleOverrides: {
+          root: {
+            color: 'white',
+            "&.Mui-selected": {
+              color: 'white',
+            }
+          },
+        }
+      },
+      MuiPaginationItem: {
+        styleOverrides: {
+          root: {
+            color: 'white',
+          }
+        }
+      },
+      MuiPaper: {
+        defaultProps: {
+          elevation: 3
+        }
+      }
     }
   });
 

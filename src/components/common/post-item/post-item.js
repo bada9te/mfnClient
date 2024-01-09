@@ -202,9 +202,9 @@ const PostItem = (props) => {
     return (
         <Card sx={{
             width: {xs: '95%', sm: '375px', md: '400px'}, 
-            boxShadow: 5, 
+            boxShadow: 10, 
             borderRadius: addons.status === "in-player" ? 0 : 5,
-            transition: '500ms', 
+            transition: '500ms',
         }}>
             <CardHeader
                 avatar={

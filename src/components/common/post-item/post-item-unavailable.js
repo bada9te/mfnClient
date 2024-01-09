@@ -9,7 +9,7 @@ const PostItemUnavailable = (props) => {
     const { t } = useTranslation("objects");
 
     return (
-            <Card sx={{width: {xs: '95%', sm: '375px', md: '400px'}, boxShadow: 5, borderRadius: 5}}>
+            <Card sx={{width: {xs: '95%', sm: '375px', md: '400px'}, boxShadow: 10, borderRadius: 5}}>
                 <CardHeader
                     avatar={
                         <Skeleton variant="circular" width={40} height={40} />

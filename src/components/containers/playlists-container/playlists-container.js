@@ -202,11 +202,17 @@ const PlaylistsContainer = (props) => {
 
             <TabPanel value={status} index={2}>
                 <ImageRightFormContainer bg={newPlaylistBG} text={t('playlists.create.main_text')}>
-                    {
-                        currentUser && currentUser._id !== ""
-                        ?
-                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)', width: '100%'}}>
-                            <Box sx={{ width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5 }}>
+                    <Box sx={{
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center', 
+                        height: 'calc(100vh - 215px)', 
+                        width: '100%',
+                    }}>
+                        {
+                            currentUser && currentUser._id !== ""
+                            ?
+                            <Box sx={{ width: '30rem', height: 'max-content', boxShadow: 0, borderRadius: 5, background: 'none' }}>
                                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                                     {t('playlists.create.title')}
                                 </Typography>
@@ -219,14 +225,12 @@ const PlaylistsContainer = (props) => {
                                     </Box>
                                 </CardActions>
                             </Box>
-                        </Box>
-                        :
-                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)'}}>
+                            :
                             <Typography>
                                 {t('playlists.create.login_required')}
                             </Typography>
-                        </Box>
-                    }
+                        }
+                    </Box>
                 </ImageRightFormContainer>
             </TabPanel>
         </Box>

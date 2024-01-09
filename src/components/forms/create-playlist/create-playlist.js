@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Box, TextField, Button, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
+import { TextField, Button, FormGroup, FormControlLabel, Checkbox, Card } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useState } from "react";
@@ -67,7 +67,7 @@ const CreatePlaylistForm = props => {
     }
 
     return (
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ p: 2, borderRadius: 5, boxShadow: 10 }}>
             <TextField
                 margin="normal"
                 required
@@ -105,7 +105,7 @@ const CreatePlaylistForm = props => {
             >
                 {t('playlist.submit')}
             </Button>
-        </Box>
+        </Card>
     );
 }
 

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { FormControlLabel, Button, Box, TextField, Checkbox, FormGroup, Typography, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { FormControlLabel, Button, TextField, Checkbox, FormGroup, Typography, FormControl, InputLabel, Select, MenuItem, Card } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POST_CREATE_MUTATION } from "../../../graphql-requests/posts";
 import blobToFile from "../../../common-functions/blobToFIle/blobToFile";
@@ -160,7 +160,7 @@ const PostUploadForm = (props)=> {
                 image={postUploadForm.picture} 
             />
         }     
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{m: 1}}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ borderRadius: 5, boxShadow: 10, p: 2 }}>
             <TextField
                 margin="normal"
                 required
@@ -262,7 +262,7 @@ const PostUploadForm = (props)=> {
             >
                 {t('upload.submit')}
             </Button>
-        </Box>
+        </Card>
     </>
     );
 }

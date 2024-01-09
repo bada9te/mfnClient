@@ -33,7 +33,6 @@ const PlaylistDropdown = props => {
         <>
             <Menu
                 sx={{ mt: '45px' }}
-                id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                     vertical: 'top',
