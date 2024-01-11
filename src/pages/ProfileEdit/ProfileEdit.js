@@ -1,30 +1,49 @@
 import ProfileCardEdit from "../../components/common/profile/profile-card-edit/profile-card-edit";
 import FormProfileEdit from "../../components/forms/profile-edit/profile-edit";
-import { Box, Stack } from "@mui/material";
+import { Avatar, Box, CardContent, CardHeader, Paper, Stack } from "@mui/material";
 import BaseContentContainer from "../../components/containers/base-content-container/base-content-container";
-
+import EmailImage    from "../../images/icons/email.png"
+import PasswordImage from "../../images/icons/password.png"
+import TextImage     from "../../images/icons/text.png"
+import ClearImage     from "../../images/icons/logo_clear.png"
 
 const ProfileEdit = (props) => {
     return (
         <BaseContentContainer>
             <ProfileCardEdit id='0'/>
-            <Stack direction="row" sx={{display:"flex", justifyContent: "space-around", alignItems: "center", width: "100%", my: 3, mb: 10}} spacing={0} flexWrap="wrap">
-                <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
-                    <FormProfileEdit title="Nickname" />
-                </Box>
-                <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
-                    <FormProfileEdit title="Description" />
-                </Box>
-                <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
-                    <FormProfileEdit title="Password" />
-                </Box>
-                <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
-                    <FormProfileEdit title="Email" />
-                </Box>
-                <Box sx={{display:"flex", justifyContent: "center", alignItems: "center", m: 2}}>
-                    <FormProfileEdit title="Danger_zone" />
-                </Box>
-            </Stack>
+            <Paper sx={{ height: 'fit-content', boxShadow: 10, borderRadius: 5, m: 2 }}>
+                <CardContent>
+                    <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>
+                        <Avatar src={TextImage} alt="Basic information" sx={{ m: 1, boxShadow: 5 }}/>
+                    </Box>
+                    <CardHeader title="Basic information"/>
+                    <FormProfileEdit part={1} />
+                </CardContent>
+            </Paper>
+
+            <Paper sx={{ height: 'fit-content', boxShadow: 10, borderRadius: 5, m: 2 }}>
+                <CardContent>
+                    <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>
+                        <Avatar src={PasswordImage} alt="Password" sx={{ m: 1, boxShadow: 5 }}/>
+                        <Avatar src={EmailImage} alt="Email" sx={{ m: 1, boxShadow: 5 }}/>
+                    </Box>
+                    <CardHeader title="Password and email"/>
+                    <Stack spacing={2} >
+                        <FormProfileEdit part={2} />
+                        <FormProfileEdit part={3} />
+                    </Stack>
+                </CardContent>
+            </Paper>
+
+            <Paper sx={{ height: 'fit-content', boxShadow: 10, borderRadius: 5, m: 2 }}>
+                <CardContent>
+                    <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>
+                        <Avatar src={ClearImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/>
+                    </Box>
+                    <CardHeader title="Social connections"/>
+                    <FormProfileEdit part={4} />
+                </CardContent>
+            </Paper>
         </BaseContentContainer>
     );
 }

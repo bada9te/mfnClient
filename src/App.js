@@ -27,7 +27,7 @@ function App() {
         light: '#42a5f5',
         dark: '#257a76',
         contrastText: '#fff',
-      },      
+      },    
     },
     components: {
       MuiButton: {
@@ -87,7 +87,7 @@ function App() {
     httpGetCurrentUser()
       .then(({data}) => {
         if (data.done) {
-          baseState({ ...baseState(), user: data.user });
+          baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
         } else {
           //navigate('/login');
         }

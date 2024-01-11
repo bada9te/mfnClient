@@ -6,7 +6,18 @@ const languageVAR = process.env.REACT_APP_LANGUAGE_VAR_NAME;
 export const baseState = makeVar({
     user: {
         _id:          '',
-        email:        '',
+        local: {
+            email:    '',
+        },
+        facebook: {
+            email:    '',
+        },
+        twitter: {
+            email:    '',
+        },
+        google: {
+            email:    '',
+        },
         nickname:     '',
         description:  '',
         aboutMe:      '',

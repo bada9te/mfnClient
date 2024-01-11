@@ -1,12 +1,14 @@
 import { useForm }        from "react-hook-form";
-import { Box, Card, CardContent, Typography, Button, TextField, Avatar } from "@mui/material";
+import { Box, Button, TextField, FormGroup, ButtonGroup } from "@mui/material";
+/*
 import EmailImage    from "../../../images/icons/email.png"
 import PasswordImage from "../../../images/icons/password.png"
 import TextImage     from "../../../images/icons/text.png"
 import ClearImage     from "../../../images/icons/logo_clear.png"
-import { Delete } from "@mui/icons-material";
-import { confirmContainerState } from "../../containers/confirm-container/reactive";
-import { confirmModalState } from "../../modals/confirm-modal/reactive";
+*/
+import { Email, Facebook, Google, Save, Twitter } from "@mui/icons-material";
+//import { confirmContainerState } from "../../containers/confirm-container/reactive";
+//import { confirmModalState } from "../../modals/confirm-modal/reactive";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
@@ -14,9 +16,16 @@ import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION, USER_UPDATE_MUTATION } from "
 import { useTranslation } from "react-i18next";
 
 
+const SubmitBtn = props => {
+    return (
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 1, boxShadow: 10 }} startIcon={props.icon}>
+            {props.text}
+        </Button>
+    );
+}
+
 const FormProfileEdit = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { title } = props;
     const { user: currentUser } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
@@ -57,7 +66,7 @@ const FormProfileEdit = (props) => {
                 enqueueSnackbar(t('profile.snack.password.pending'), { autoHideDuration: 1500 });
                 await prepareToRestore({
                     variables: {
-                        input: { email: currentUser.email, type: "password" },
+                        input: { email: currentUser.base.email, type: "password" },
                     },
                 }).then(({ data }) => {
                     enqueueSnackbar(t('profile.snack.password.success'), { autoHideDuration: 3000, variant: 'info' })
@@ -67,12 +76,12 @@ const FormProfileEdit = (props) => {
                 break;
             case "OldEmail":
                 enqueueSnackbar(t('profile.snack.email.pending'), { autoHideDuration: 1500 });
-                if (data.OldEmail !== currentUser.email) {
+                if (data.OldEmail !== currentUser.base.email) {
                     enqueueSnackbar(t('profile.snack.email.error_match'), { autoHideDuration: 3000, variant: 'error' });
                 } else {
                     await prepareToRestore({
                         variables: {
-                            input: { email: currentUser.email, type: "email" },
+                            input: { email: currentUser.base.email, type: "email" },
                         },
                     }).then(({ data }) => {
                         enqueueSnackbar(t('profile.snack.email.success'), { autoHideDuration: 3000, variant: 'info' });
@@ -96,6 +105,7 @@ const FormProfileEdit = (props) => {
         });
     }
 
+    /*
     const handleAccountDelete = async() => {
         confirmModalState({ ...confirmModalState(), isShowing: true });
         confirmContainerState({ 
@@ -105,98 +115,87 @@ const FormProfileEdit = (props) => {
             title: "Confirm account deletion",
         });
     } 
+    */
 
     return (
-            <Card sx={{ width: '20rem', height: 'fit-content', boxShadow: 3, borderRadius: 5 }}>
-                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                    { title === "Password"    ? <Avatar src={PasswordImage} alt="password" sx={{ m: 1, boxShadow: 5 }}/>  : null }
-                    { title === "Nickname"    ? <Avatar src={TextImage} alt="nickname" sx={{ m: 1, boxShadow: 5 }}/> : null }
-                    { title === "Description" ? <Avatar src={TextImage} alt="description" sx={{ m: 1, boxShadow: 5 }}/> : null }
-                    { title === "Email"       ? <Avatar src={EmailImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/> : null }
-                    { title === "Danger_zone" ? <Avatar src={ClearImage} alt="email" sx={{ m: 1, boxShadow: 5 }}/> : null }
-                </Box>
-                <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 2, mb: 0}}>
-                    {t(`profile.${title.toLowerCase()}`)}
-                </Typography>
-                <CardContent>
-                    <Box component="form" sx={{mx: 2}} onSubmit={handleSubmit(onSubmit)}>
-                        { 
-                            title === "Password" 
-                            &&  
-                            <TextField margin="normal" required fullWidth id="password" label={t('profile.current_password')} name="password" type="password"
-                                error={Boolean(errors.OldPassword)}
-                                helperText={errors.OldPassword && t('profile.error.passwor')}
-                                {...register("OldPassword", {
-                                    maxLength: 20,
-                                    minLength: 8,
-                                    required: true,
-                                })} 
-                            />
-                        }
-                        { 
-                            title === "Nickname"
-                            &&
-                            <TextField margin="normal" required fullWidth id="nickname"label={t('profile.nickname')} name="nickname" type="text"
-                                error={Boolean(errors.NewNickname)}
-                                helperText={errors.NewNickname && t('profile.error.nickname')}
-                                {...register("NewNickname", {
-                                    maxLength: 20,
-                                    minLength: 4,
-                                    required: true,
-                                })} 
-                            />
-                        }
-                        { 
-                            title === "Description"
-                            &&
-                            <TextField margin="normal" required fullWidth id="newDescription" label={t('profile.description')} name="newDescription" type="text"
-                                error={Boolean(errors.NewDescription)}
-                                helperText={errors.NewNickname && t('profile.error.description"')}
-                                {...register("NewDescription", {
-                                    maxLength: 20,
-                                    minLength: 4,
-                                    required: true,
-                                })} 
-                            />
-                        }
-                        { 
-                            title === "Email"
-                            &&
-                            <TextField margin="normal" required fullWidth id="oldEmail" label={t('profile.current_email')} name="oldEmail" type="text"
-                                error={Boolean(errors.OldEmail)}
-                                helperText={errors.OldEmail && t('profile.error.email')}
-                                {...register("OldEmail", {
-                                    required: true,
-                                    pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                })}
-                            />
-                        }
-                        { 
-                            title === "Danger_zone" 
-                            &&
-                            <Button color="error" variant="contained" startIcon={<Delete/>} onClick={handleAccountDelete} fullWidth>
-                                Delete account
-                            </Button>
-                        }
-
-                        {
-                            title !== "Danger_zone" 
-                            &&
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 1, boxShadow: 10 }}
-                            >
-                                Change { title.toLowerCase() }
-                            </Button>
-                        }
-                    </Box>
-                </CardContent>
-            </Card>
+        <Box component="form" sx={{mx: 1}} onSubmit={handleSubmit(onSubmit)}>
+        {
+            (() => {
+                switch(props.part) {
+                    case 1:
+                        return (
+                            <>
+                                <TextField margin="normal" required fullWidth id="nickname"label={t('profile.nickname')} name="nickname" type="text"
+                                    error={Boolean(errors.NewNickname)}
+                                    helperText={errors.NewNickname && t('profile.error.nickname')}
+                                    {...register("NewNickname", {
+                                        maxLength: 20,
+                                        minLength: 4,
+                                        required: true,
+                                    })} 
+                                />
+                                <TextField margin="normal" required fullWidth id="newDescription" label={t('profile.description')} name="newDescription" type="text"
+                                    error={Boolean(errors.NewDescription)}
+                                    helperText={errors.NewNickname && t('profile.error.description"')}
+                                    {...register("NewDescription", {
+                                        maxLength: 20,
+                                        minLength: 4,
+                                        required: true,
+                                    })} 
+                                />
+                                <SubmitBtn text="Save changes" icon={<Save/>}/>
+                            </>
+                        );
+                    case 2: 
+                        return (
+                            <>
+                                <FormGroup sx={{display: 'flex', flexWrap: 'wrap', direction: 'row'}}>
+                                    <TextField fullWidth margin="normal" required id="password" label={t('profile.current_password')} name="password" type="password"
+                                        error={Boolean(errors.OldPassword)}
+                                        helperText={errors.OldPassword && t('profile.error.passwor')}
+                                        {...register("OldPassword", {
+                                            maxLength: 20,
+                                            minLength: 8,
+                                            required: true,
+                                        })}
+                                    />
+                                </FormGroup>
+                                <SubmitBtn text="Request password restore email" icon={<Email/>}/>
+                            </>
+                        );
+                    case 3: 
+                        return (
+                            <>
+                                <TextField margin="normal" required fullWidth id="oldEmail" label={t('profile.current_email')} name="oldEmail" type="text"
+                                    error={Boolean(errors.OldEmail)}
+                                    helperText={errors.OldEmail && t('profile.error.email')}
+                                    {...register("OldEmail", {
+                                        required: true,
+                                        pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                    })}
+                                />
+                                <SubmitBtn text="Request an email" icon={<Email/>}/>
+                            </>
+                        );
+                    case 4: 
+                        return (
+                            <ButtonGroup>
+                                <Button variant="contained" startIcon={<Google/>}>{currentUser.google.email !== '' ? "Unlink" : "Connect"}</Button>
+                                <Button variant="contained" startIcon={<Twitter/>}>{currentUser.twitter.email !== '' ? "Unlink" : "Connect"}</Button>
+                                <Button variant="contained" startIcon={<Facebook/>}>{currentUser.facebook.email !== '' ? "Unlink" : "Connect"}</Button>
+                            </ButtonGroup>
+                        );
+                    default:
+                        break;
+                }
+            })()
+        }
+        </Box>
     );
 }
 
 
 
 export default FormProfileEdit;
+
+
