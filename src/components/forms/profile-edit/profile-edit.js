@@ -1,5 +1,5 @@
 import { useForm }        from "react-hook-form";
-import { Box, Button, TextField, FormGroup, ButtonGroup } from "@mui/material";
+import { Box, Button, TextField, FormGroup, Stack } from "@mui/material";
 /*
 import EmailImage    from "../../../images/icons/email.png"
 import PasswordImage from "../../../images/icons/password.png"
@@ -179,11 +179,17 @@ const FormProfileEdit = (props) => {
                         );
                     case 4: 
                         return (
-                            <ButtonGroup>
-                                <Button variant="contained" startIcon={<Google/>}>{currentUser.google.email !== '' ? "Unlink" : "Connect"}</Button>
-                                <Button variant="contained" startIcon={<Twitter/>}>{currentUser.twitter.email !== '' ? "Unlink" : "Connect"}</Button>
-                                <Button variant="contained" startIcon={<Facebook/>}>{currentUser.facebook.email !== '' ? "Unlink" : "Connect"}</Button>
-                            </ButtonGroup>
+                            <Stack useFlexGap flexWrap="wrap" spacing={2}>
+                                <Button variant="contained" startIcon={<Google/>} sx={{ backgroundColor: '#db373b', ':hover': { backgroundColor: '#912326' } }} >
+                                    { currentUser.google.email   !== '' ? `Unlink ${currentUser.google.email}`   : "Connect" }
+                                </Button>
+                                <Button variant="contained" startIcon={<Twitter/>} sx={{ backgroundColor: '#009ae4', ':hover': { backgroundColor: '#016391' } }}>
+                                    { currentUser.twitter.email  !== '' ? `Unlink ${currentUser.twitter.email}`  : "Connect" }
+                                </Button>
+                                <Button variant="contained" startIcon={<Facebook/>} sx={{ backgroundColor: '#0872f8', ':hover': { backgroundColor: '#034aa3' } }}>
+                                    { currentUser.facebook.email !== '' ? `Unlink ${currentUser.facebook.email}` : "Connect" }
+                                </Button>
+                            </Stack>
                         );
                     default:
                         break;
@@ -197,5 +203,3 @@ const FormProfileEdit = (props) => {
 
 
 export default FormProfileEdit;
-
-
