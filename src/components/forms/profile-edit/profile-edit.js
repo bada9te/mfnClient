@@ -1,12 +1,12 @@
 import { useForm }        from "react-hook-form";
-import { Box, Button, TextField, FormGroup, Stack } from "@mui/material";
+import { Box, Button, TextField, FormGroup } from "@mui/material";
 /*
 import EmailImage    from "../../../images/icons/email.png"
 import PasswordImage from "../../../images/icons/password.png"
 import TextImage     from "../../../images/icons/text.png"
 import ClearImage     from "../../../images/icons/logo_clear.png"
 */
-import { Email, Facebook, Google, Save, Twitter } from "@mui/icons-material";
+import { Email, Save } from "@mui/icons-material";
 //import { confirmContainerState } from "../../containers/confirm-container/reactive";
 //import { confirmModalState } from "../../modals/confirm-modal/reactive";
 import { useMutation, useReactiveVar } from "@apollo/client";
@@ -14,6 +14,7 @@ import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION, USER_UPDATE_MUTATION } from "../../../graphql-requests/users";
 import { useTranslation } from "react-i18next";
+import ProfileEditPartSocial from "./profile-edit-social";
 
 
 const SubmitBtn = props => {
@@ -178,19 +179,7 @@ const FormProfileEdit = (props) => {
                             </>
                         );
                     case 4: 
-                        return (
-                            <Stack useFlexGap flexWrap="wrap" spacing={2}>
-                                <Button variant="contained" startIcon={<Google/>} sx={{ backgroundColor: '#db373b', ':hover': { backgroundColor: '#912326' } }} >
-                                    { currentUser.google.email   !== '' ? `Unlink ${currentUser.google.email}`   : "Connect" }
-                                </Button>
-                                <Button variant="contained" startIcon={<Twitter/>} sx={{ backgroundColor: '#009ae4', ':hover': { backgroundColor: '#016391' } }}>
-                                    { currentUser.twitter.email  !== '' ? `Unlink ${currentUser.twitter.email}`  : "Connect" }
-                                </Button>
-                                <Button variant="contained" startIcon={<Facebook/>} sx={{ backgroundColor: '#0872f8', ':hover': { backgroundColor: '#034aa3' } }}>
-                                    { currentUser.facebook.email !== '' ? `Unlink ${currentUser.facebook.email}` : "Connect" }
-                                </Button>
-                            </Stack>
-                        );
+                        return (<ProfileEditPartSocial/>);
                     default:
                         break;
                 }
