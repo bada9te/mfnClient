@@ -4,7 +4,7 @@ import PostGenerate from "../common/post-item/post-generate";
 
 
 const PostFromData = (props) => {
-    const { data, battleId, makeBattleVote, votedBy, finished } = props;
+    const { data, battleId, makeBattleVote, votedBy, finished, postNScore } = props;
 
     return (
         <>
@@ -15,7 +15,7 @@ const PostFromData = (props) => {
                     status: !finished ? "voting" : null,
                     battleId,
                     makeBattleVote,
-                    postNScore: "post1Score",
+                    postNScore,
                     votedBy,
                 }}/>
                 :
@@ -45,6 +45,7 @@ const EnumBattles = props => {
                                     makeBattleVote={makeBattleVote}
                                     votedBy={item?.votedBy}
                                     finished={item?.finished}
+                                    postNScore="post1Score"
                                 />
                             }
                             post2={
@@ -54,6 +55,7 @@ const EnumBattles = props => {
                                     makeBattleVote={makeBattleVote}
                                     votedBy={item?.votedBy}
                                     finished={item?.finished}
+                                    postNScore="post2Score"
                                 />
                             }
                             createdAt={+item.createdAt}
