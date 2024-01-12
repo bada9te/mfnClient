@@ -57,7 +57,7 @@ const Playlist = (props) => {
         <Card sx={{borderRadius: 5, boxShadow: 10}}>
             <CardHeader
                 avatar={
-                    <Avatar src={playlist.ownerAvatar}/>
+                    <Avatar src={playlist.ownerAvatar.endsWith('/') ? "NULL" : playlist.ownerAvatar} alt={playlist.owner.nick}/>
                 }
                 title={playlist.owner.nick}
                 subheader={playlist.createdAt}

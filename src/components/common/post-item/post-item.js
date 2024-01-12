@@ -70,28 +70,27 @@ const PostItem = (props) => {
                     variables: { user: currentUser._id, offset: 0, limit: maxCountPerPage } 
                 });
 
-                let savedPosts = [];
                 if (cachedData) {
-                    savedPosts = JSON.parse(JSON.stringify(cachedData.postsSavedByUser.posts));
-                }
-                const itemExists = savedPosts.map(i => i._id).includes(postData._id);
-
-                if (itemExists) {
-                    savedPosts = savedPosts.filter(i => i._id !== postData._id);
-                } else {
-                    savedPosts.push(postData);
-                }
-
-                cache.writeQuery({
-                    query: POSTS_SAVED_BY_USER_QUERY, 
-                    variables: { user: currentUser._id, offset: 0, limit: maxCountPerPage },
-                    data: {
-                        postsSavedByUser: {
-                            posts: savedPosts,
-                            count: savedPosts.length,
-                        }
+                    let savedPosts = JSON.parse(JSON.stringify(cachedData.postsSavedByUser.posts));
+                    const itemExists = savedPosts.map(i => i._id).includes(postData._id);
+    
+                    if (itemExists) {
+                        savedPosts = savedPosts.filter(i => i._id !== postData._id);
+                    } else {
+                        savedPosts.push(postData);
                     }
-                })
+
+                    cache.writeQuery({
+                        query: POSTS_SAVED_BY_USER_QUERY, 
+                        variables: { user: currentUser._id, offset: 0, limit: maxCountPerPage },
+                        data: {
+                            postsSavedByUser: {
+                                posts: savedPosts,
+                                count: savedPosts.length,
+                            }
+                        }
+                    });
+                }
             },
             variables: {
                 input: {
@@ -363,7 +362,7 @@ const PostItem = (props) => {
                                             startIcon={<PlayArrow/>}
                                             sx={{ 
                                                 borderTopRightRadius: ["selecting", "voting"].includes(addons.status) && !addons?.votedBy?.includes(currentUser?._id) ? 0 : 50,
-                                                borderBottomRightRadius: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 25,
+                                                borderBottomRightRadius: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0,
                                             }} 
                                             disabled={!base.audio}
                                             variant="contained" size="small" onClick={playAudio}

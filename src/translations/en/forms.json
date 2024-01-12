@@ -103,7 +103,7 @@
     "battle.error.post2": "Pls, select opponent's track",
     "battle.submit": "Create battle",
     "battle.snack.pending": "Creating battle...",
-    "battle.snack.success": "Battle created",
+    "battle.snack.success": "Battle created, it'll be on page in 15 sec.",
     "battle.snack.error": "Can't create the battle",
 
     "comment.text": "Your comment text",

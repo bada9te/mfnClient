@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import PostItem from "../../common/post-item/post-item";
-import { Box, TextField, Button, Stack, Typography, Card } from "@mui/material";
+import { Box, TextField, Button, Stack, Typography, Paper, FormGroup } from "@mui/material";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
@@ -45,11 +45,11 @@ const CreateBattleForm = props => {
                 enqueueSnackbar(t('battle.snack.success'), {autoHideDuration: 1500, variant: 'success'});
             }).catch(err => {
                 enqueueSnackbar(t('battle.snack.error'), { autoHideDuration: 3000, variant: 'error' });
-            });
+            }); 
     }
 
     return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{py: 1, px: 2, boxShadow: 10, borderRadius: 5}}>
+        <Paper component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{py: 1, px: 2, boxShadow: 10, borderRadius: 5}}>
             <Box sx={{ px: 2 }}>
                 <TextField
                     margin="normal"
@@ -70,7 +70,7 @@ const CreateBattleForm = props => {
             </Box>
             
             <Stack direction="column" spacing={2} sx={{ my: 3, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <>
+                <FormGroup>
                     {
                         post1 != null 
                         ?
@@ -81,11 +81,6 @@ const CreateBattleForm = props => {
                                 status="battle-form" 
                                 text={t('battle.select_my_track')} 
                                 selectHandler={() => handleOpenPostSelectModal(true)}
-                                innerRef={
-                                    {...register("MyTrack", {
-                                        required: true,
-                                    })}
-                                }
                             />
                             { 
                                 errors.MyTrack 
@@ -96,27 +91,22 @@ const CreateBattleForm = props => {
                             }
                         </Stack>
                     }
-                </>
+                </FormGroup>
 
-                <>
+                <FormGroup>
                     {
-                        post1 != null 
+                        post2 != null 
                         ?
-                        <PostItem base={{...post1.base}} addons={{...post1.addons, status: null}} />
+                        <PostItem base={{...post2.base}} addons={{...post2.addons, status: null}} />
                         :
                         <Stack direction="column" spacing={2} sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <PostItemUnavailable 
                                 status="battle-form" 
                                 text={t('battle.select_opponents_track')} 
                                 selectHandler={() => handleOpenPostSelectModal(false)}
-                                innerRef={
-                                    {...register("MyTrack", {
-                                        required: true,
-                                    })}
-                                }
                             />
                             { 
-                                errors.MyTrack 
+                                errors.OpponentsTrack 
                                 && 
                                 <Typography sx={{ color: '#f44336', fontSize: 12, width: '100%', pl: 3 }}>
                                     {t('battle.error.post2')}
@@ -124,21 +114,18 @@ const CreateBattleForm = props => {
                             }
                         </Stack>
                     }
-                </>
-                
+                </FormGroup>
             </Stack>
             
-            <Box sx={{mx: 2}}>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 1, mb: 2, boxShadow: 10 }}
-                >
-                    {t('battle.submit')}
-                </Button>
-            </Box>
-        </Card>
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 1, mb: 2, boxShadow: 10 }}
+            >
+                {t('battle.submit')}
+            </Button>
+        </Paper>
     );
 }
 
