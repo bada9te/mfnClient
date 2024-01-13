@@ -67,7 +67,7 @@ const FormProfileEdit = (props) => {
                 enqueueSnackbar(t('profile.snack.password.pending'), { autoHideDuration: 1500 });
                 await prepareToRestore({
                     variables: {
-                        input: { email: currentUser.base.email, type: "password" },
+                        input: { email: currentUser.local.email, type: "password" },
                     },
                 }).then(({ data }) => {
                     enqueueSnackbar(t('profile.snack.password.success'), { autoHideDuration: 3000, variant: 'info' })
@@ -77,12 +77,12 @@ const FormProfileEdit = (props) => {
                 break;
             case "OldEmail":
                 enqueueSnackbar(t('profile.snack.email.pending'), { autoHideDuration: 1500 });
-                if (data.OldEmail !== currentUser.base.email) {
+                if (data.OldEmail !== currentUser.local.email) {
                     enqueueSnackbar(t('profile.snack.email.error_match'), { autoHideDuration: 3000, variant: 'error' });
                 } else {
                     await prepareToRestore({
                         variables: {
-                            input: { email: currentUser.base.email, type: "email" },
+                            input: { email: currentUser.local.email, type: "email" },
                         },
                     }).then(({ data }) => {
                         enqueueSnackbar(t('profile.snack.email.success'), { autoHideDuration: 3000, variant: 'info' });

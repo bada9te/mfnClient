@@ -1,6 +1,6 @@
 import passwordImage from '../../images/icons/password.png';
 import AccountRestoreForm from '../../components/forms/account-restore/account-restore'
-import { Avatar, Box, CardActions, CardContent, Typography, Stack } from '@mui/material';
+import { Avatar, Box, CardActions, CardContent, Typography, Stack, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 import newPasswordBG from '../../images/bgs/newPasswordFormBG.png';
@@ -8,6 +8,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { MODERATION_ACTION_DELETE_MUTATION, MODERATION_ACTION_VALIDATE_QUERY } from '../../graphql-requests/moderation-actions';
 import { useSnackbar } from 'notistack';
 import { SpinnerCircular } from '../../components/common/spinner/Spinner';
+import { Cancel } from '@mui/icons-material';
 
 
 const AccountRestore = (props)=> {
@@ -59,7 +60,7 @@ const AccountRestore = (props)=> {
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Validating...
                                     </Typography>
-                                    <CardContent>
+                                    <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
                                         <SpinnerCircular/>
                                     </CardContent>
                                 </>
@@ -76,13 +77,14 @@ const AccountRestore = (props)=> {
 
                                     <CardActions>
                                         <Stack direction="column" spacing={0.75} mx={1.5} mb={1.5}>
-                                            <Typography 
-                                                fontSize={16} sx={{ cursor: 'pointer' }}
-                                                component="div" fontWeight="bold" 
-                                                color="primary" onClick={cancelAccountRestore}
+                                            <Button 
+                                                sx={{ width: 'fit-content', boxShadow: 10 }}
+                                                startIcon={<Cancel/>}
+                                                variant='contained' 
+                                                onClick={cancelAccountRestore}
                                             >
                                                 Cancel account restore action
-                                            </Typography>
+                                            </Button>
                                         </Stack>
                                     </CardActions>
                                 </>

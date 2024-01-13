@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Button, Paper, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
@@ -37,7 +37,7 @@ const AccountRestoreForm = (props)=> {
     
 
     return(
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{margin: 1}}>
+        <Paper component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{py: 1, px: 2, boxShadow: 10, borderRadius: 5}}>
             {
                 (() => {
                     if (type === "password") {
@@ -130,7 +130,7 @@ const AccountRestoreForm = (props)=> {
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, boxShadow: 10 }}>
                 {t('account_restore.submit')}
             </Button>
-        </Box>    
+        </Paper>    
     );
 }
 

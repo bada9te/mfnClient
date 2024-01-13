@@ -15,7 +15,7 @@ const PostFromData = (props) => {
                 data?._id && data._id !== ""
                 ?
                 <PostGenerate item={data} addonsCorrections={{ 
-                    status: !finished && !votedBy.map(i => i._id).includes(currentUser._id) ? "voting" : null,
+                    status: !finished && !votedBy.map(i => i._id).includes(currentUser._id) && currentUser._id.length ? "voting" : null,
                     battleId, makeBattleVote, postNScore, votedBy,
                 }}/>
                 :

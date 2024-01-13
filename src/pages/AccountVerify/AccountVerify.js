@@ -37,7 +37,7 @@ const AccountVerify = props => {
                                     <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
                                         Validating...
                                     </Typography>
-                                    <CardContent>
+                                    <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
                                         <SpinnerCircular/>
                                     </CardContent>
                                 </>

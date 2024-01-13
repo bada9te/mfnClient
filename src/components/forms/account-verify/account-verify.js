@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Button, Paper, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
@@ -36,8 +36,7 @@ const AccountVerifyForm = (props)=> {
     
 
     return(
-        <>
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{margin: 1}}>
+        <Paper component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{py: 1, px: 2, boxShadow: 10, borderRadius: 5}}>
             <TextField
                 margin="normal"
                 required
@@ -60,8 +59,7 @@ const AccountVerifyForm = (props)=> {
             >
                 {t('account_verify.submit')}
             </Button>
-        </Box>    
-        </>
+        </Paper>    
     );
 }
 

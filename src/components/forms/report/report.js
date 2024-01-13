@@ -28,7 +28,7 @@ const ReportForm = (props) => {
             variables: {
                 input: {
                     contactReason: data.FoulType,
-                    email: currentUser.base.email !== "" ? currentUser.base.email : "Not provided",
+                    email: currentUser.local?.email !== "" ? currentUser.local.email : "Not provided",
                     message: data.Message || "Not provided",
                     reportedPost: reportingItemId,
                 },

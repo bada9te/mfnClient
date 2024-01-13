@@ -55,11 +55,15 @@ const PlaylistDropdown = props => {
                     </MenuItem>
                 }
                 
-                <MenuItem onClick={() => handleClick('Share')}>
-                    <Typography textAlign="center" display="flex" alignItems="center">
-                        <Share sx={{mr: 1}}/>{t('playlist.share')}
-                    </Typography>
-                </MenuItem>
+                {
+                    currentUser._id.length > 0
+                    &&
+                    <MenuItem onClick={() => handleClick('Share')}>
+                        <Typography textAlign="center" display="flex" alignItems="center">
+                            <Share sx={{mr: 1}}/>{t('playlist.share')}
+                        </Typography>
+                    </MenuItem>
+                }
                 
                 <MenuItem onClick={() => handleClick('Report')}>
                     <Typography textAlign="center" display="flex" alignItems="center">
