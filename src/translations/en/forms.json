@@ -147,6 +147,6 @@
     "account_restore.error.emails_should_match": "Emails should match!",
     "account_restore.submit": "Confirm",
     "account_restore.snack.pending": "Updating account...",
-    "account_restore.snack.success": "Password successfully updated",
+    "account_restore.snack.success": "Account successfully updated",
     "account_restore.snack.error": "Can't update account"
 }

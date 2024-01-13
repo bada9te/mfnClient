@@ -14,6 +14,7 @@ const Logout = (props) => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("pages");
+
     
     useEffect(() => {
         let timeout = null;
@@ -24,6 +25,7 @@ const Logout = (props) => {
                 timeout = setTimeout(() => {
                     enqueueSnackbar("Logged out", { autoHideDuration: 1500, variant: "success" });
                     navigate('/app/login')
+                    window.location.reload();
                 }, 1000);
             });
         } else {

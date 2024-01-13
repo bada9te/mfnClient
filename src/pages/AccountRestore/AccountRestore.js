@@ -30,6 +30,7 @@ const AccountRestore = (props)=> {
             input: {
                 userId,
                 actionId,
+                verifyToken,
                 type,
             }
         }
@@ -47,7 +48,7 @@ const AccountRestore = (props)=> {
 
 
     return(
-        <LogRegVerContainer bg={newPasswordBG} text="New password">
+        <LogRegVerContainer bg={newPasswordBG} text={`New ${type}`}>
             <Box sx={{ width: '30rem', height: '100%', boxShadow: 0, display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
