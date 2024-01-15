@@ -13,27 +13,26 @@ import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from ".
 import { baseState } from "../../baseReactive";
 import defineMaxPage from "../../../common-functions/defineMaxPage/defineMaxPage";
 import { useTranslation } from "react-i18next";
+import InfoImage from "../../common/info-image/info-image";
+import PlaylistsLogo from "../../../images/icons/logo_playlist.png";
 
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
     return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-            <Box sx={{ p: 0 }}>
-                {children}
-            </Box>
-        )}
-      </div>
+        <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+            {value === index && (
+                <Box sx={{ p: 0 }}>
+                    {children}
+                </Box>
+            )}
+        </div>
     );
 }
+
+
+
 
 const PlaylistsEnumWithPagination = () => {
     const playlistsContainer = useReactiveVar(playlistsContainerState);
@@ -156,15 +155,9 @@ const PlaylistsContainer = (props) => {
                         }
 
                         if (playlists && playlists.length > 0) {
-                            return (
-                                <PlaylistsEnumWithPagination/>
-                            );
+                            return (<PlaylistsEnumWithPagination/>);
                         } else {
-                            return (
-                                <Box sx={{minHeight: 'calc(100vh - 215px)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Typography sx={{textAlign: 'center'}}>{t('playlists.not_found')}</Typography>
-                                </Box>
-                            );
+                            return (<InfoImage text={t('playlists.not_found')} src={PlaylistsLogo}/>);
                         }
                     })()
                 }
@@ -174,11 +167,7 @@ const PlaylistsContainer = (props) => {
                 {
                     (() => {
                         if (!currentUser || currentUser._id === "") {
-                            return (
-                                <Box sx={{minHeight: 'calc(100vh - 215px)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Typography sx={{textAlign: 'center'}}>{t('playlists.login_to_operate')}</Typography>
-                                </Box>
-                            );
+                            return (<InfoImage text={t('playlists.login_to_operate')} src={PlaylistsLogo}/>);
                         }
 
                         if (isLoading) {
@@ -186,15 +175,9 @@ const PlaylistsContainer = (props) => {
                         }
 
                         if (playlists && playlists.length > 0) {
-                            return (
-                                <PlaylistsEnumWithPagination/>
-                            );
+                            return (<PlaylistsEnumWithPagination/>);
                         } else {
-                            return (
-                                <Box sx={{minHeight: 'calc(100vh - 215px)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Typography sx={{textAlign: 'center'}}>{t('playlists.not_found')}</Typography>
-                                </Box>
-                            );
+                            return (<InfoImage text={t('playlists.not_found')} src={PlaylistsLogo}/>);
                         }
                     })()
                 }
@@ -226,9 +209,7 @@ const PlaylistsContainer = (props) => {
                                 </CardActions>
                             </Box>
                             :
-                            <Typography>
-                                {t('playlists.create.login_required')}
-                            </Typography>
+                            <InfoImage text={t('playlists.create.login_required')} src={PlaylistsLogo}/>   
                         }
                     </Box>
                 </ImageRightFormContainer>

@@ -29,23 +29,21 @@ function App() {
         contrastText: '#fff',
       },    
     },
+    typography: {
+      fontFamily: ['Poppins','static'].join(','),
+      fontWeightRegular: 600,
+    },
     components: {
       MuiButton: {
         styleOverrides: {
           root: {
             borderRadius: 25,
-            padding: 8.5,
+            padding: 7.5,
             paddingLeft: 20,
             paddingRight: 20,
-            paddingBottom: 5,
             transition: '500ms',
+            fontWeight: 800,
           },
-          startIcon: {
-            marginBottom: 1
-          },
-          endIcon: {
-            marginBottom: 1
-          }
         }
       },
       MuiInputBase: {
@@ -79,7 +77,8 @@ function App() {
         defaultProps: {
           elevation: 3
         }
-      }
+      },
+      
     }
   });
 

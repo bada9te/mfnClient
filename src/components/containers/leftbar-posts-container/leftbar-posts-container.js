@@ -34,31 +34,29 @@ const LeftBarPostsContainer = props => {
 
 
     return (
-            <List sx={{overflow: 'auto', position: 'relative', height: '100%', px: 0.5, background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(5px)', color: 'white'}}>
-                {
-                    (() => {
-                        if (loading && searchQuery !== "") {
-                            return (
-                                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
-                                    <SpinnerCircular/>
-                                </Box>
-                            );
-                        } else if (data?.postsByTitle && data?.postsByTitle.length > 0) {
-                            return (
-                                <EnumLeftBarPosts posts={data.postsByTitle}/>
-                            );
-                        } else {
-                            return (
-                                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
-                                    <Typography>
-                                        {t('leftbar.posts.info_text')}
-                                    </Typography>
-                                </Box>
-                            );
-                        }
-                    })()
-                }
-            </List>
+        <List sx={{overflow: 'auto', position: 'relative', height: '100%', px: 0.5, background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(5px)', color: 'white'}}>
+            {
+                (() => {
+                    if (loading && searchQuery !== "") {
+                        return (
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+                                <SpinnerCircular/>
+                            </Box>
+                        );
+                    } else if (data?.postsByTitle && data?.postsByTitle.length > 0) {
+                        return (
+                            <EnumLeftBarPosts posts={data.postsByTitle}/>
+                        );
+                    } else {
+                        return (
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', flexDirection: 'column', gap: 2}}>
+                                <Typography>{t('leftbar.posts.info_text')}</Typography>
+                            </Box>
+                        );
+                    }
+                })()
+            }
+        </List>
     );
 }
 

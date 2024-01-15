@@ -12,6 +12,8 @@ import { battlesContainerState } from "./reactive";
 import { BATTLES_BY_STATUS_QUERY, BATTLE_MAKE_VOTE_MUTATION } from "../../../graphql-requests/battles";
 import { useTranslation } from "react-i18next";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
+import InfoImage from "../../common/info-image/info-image";
+import BattlesLogo from "../../../images/icons/battle-disk.png";
 
 
 const TabContent = (props) => {
@@ -28,11 +30,7 @@ const TabContent = (props) => {
                         );
                     } else if (battles?.length === 0) {
                         return (
-                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)'}}>
-                                <Typography>
-                                    {t('battles.not_found')}
-                                </Typography>
-                            </Box>
+                            <InfoImage text={t('battles.not_found')} src={BattlesLogo}/>
                         );
                     } else {
                         return (
@@ -143,11 +141,7 @@ const BattlesContainer = props => {
                                 </CardContent>
                             </Box>
                             :
-                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 215px)'}}>
-                                <Typography>
-                                    {t('battles.create.login_required')}
-                                </Typography>
-                            </Box>
+                            <InfoImage text={t('battles.create.login_required')} src={BattlesLogo}/>
                         }
                     </Box>
                 </ImageRightFormContainer>

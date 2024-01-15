@@ -116,23 +116,22 @@ const Topbar = (props) => {
             }}>
                 <Container maxWidth="xxl" >
                     <Toolbar disableGutters>
+                        <Avatar alt="app logo" src={logoImg} sx={{mr: 1, display: { xs: 'none', md: 'flex' }}}/>
                         <Typography
                             variant="h6"
                             noWrap
                             component="a"
                             href="/"
                             sx={{ 
-                                mt: 0.5,
                                 mr: 2,
                                 display: { xs: 'none', md: 'flex' }, 
-                                fontWeight: 400, 
+                                fontWeight: 600, 
                                 color: 'inherit', 
                                 textDecoration: 'none', 
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}
                         >
-                            <Avatar alt="app logo" src={logoImg} sx={{mr: 1}}/>
                             {t("topbar.title")}
                         </Typography>
 
@@ -172,7 +171,7 @@ const Topbar = (props) => {
                             noWrap
                             component="a"
                             href=""
-                            sx={{mr: 1,display: { xs: 'flex', md: 'none' }, flexGrow: 1, fontWeight: 700,letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none' }}
+                            sx={{mr: 1,display: { xs: 'flex', md: 'none' }, flexGrow: 1, fontWeight: 600, letterSpacing: '.1rem', color: 'inherit', textDecoration: 'none' }}
                         >
                             MFN
                         </Typography>
@@ -181,51 +180,44 @@ const Topbar = (props) => {
                         </Box>
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
-                                <IconButton 
-                                    onClick={handleOpenUserMenu} 
-                                    sx={{ 
-                                        pl: 2, 
-                                        borderRadius: 7.5,
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}
-                                >
+                                <IconButton  onClick={handleOpenUserMenu} sx={{ borderRadius: 7.5 }}>
+                                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                     <Typography
                                         variant="h6"
                                         noWrap
                                         component="span"
                                         sx={{ 
-                                            
                                             mr: 1, 
                                             display: { xs: 'none', md: 'flex' }, 
-                                            fontWeight: 400, 
+                                            fontWeight: 600, 
                                             color: 'white', 
                                             textDecoration: 'none', 
                                         }}
                                     >
                                         { user && user?._id !== "" ? user?.nick : t('topbar.log_in') }
                                     </Typography>
-                                        {
-                                            data?.notifications.length > 0
-                                            ?
-                                            <StyledBadge
-                                                overlap="circular"
-                                                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                                                variant="dot"
-                                                >
-                                                <Avatar 
-                                                    sx={{ boxShadow: 5 }}
-                                                    alt={user?.nick} 
-                                                    src={user?.avatar !== "" ? `${locations?.images}/${user?.avatar}` : "NULL"} 
-                                                />
-                                            </StyledBadge>
-                                            :
+                                    {
+                                        data?.notifications.length > 0
+                                        ?
+                                        <StyledBadge
+                                            overlap="circular"
+                                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                            variant="dot"
+                                            >
                                             <Avatar 
                                                 sx={{ boxShadow: 5 }}
                                                 alt={user?.nick} 
                                                 src={user?.avatar !== "" ? `${locations?.images}/${user?.avatar}` : "NULL"} 
                                             />
-                                        }
+                                        </StyledBadge>
+                                        :
+                                        <Avatar 
+                                            sx={{ boxShadow: 5 }}
+                                            alt={user?.nick} 
+                                            src={user?.avatar !== "" ? `${locations?.images}/${user?.avatar}` : "NULL"} 
+                                        />
+                                    }
+                                    </Box>
                                 </IconButton>
                             </Tooltip>
 

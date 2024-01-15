@@ -1,5 +1,5 @@
 import { Add, ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails, Stack } from "@mui/material";
+import { Accordion, AccordionSummary, Button, Typography, Card, CardContent, CardHeader, Avatar, AccordionDetails, Stack, Box } from "@mui/material";
 import PlaylistDropdown from "./playlist-dropdown/playlist-dropdown";
 import EnumPlaylistTracks from "../../enums/enum-playlist-tracks";
 import { reportFormState } from "../../forms/report/reactive";
@@ -14,6 +14,7 @@ import { playlistsContainerState } from "../../containers/playlists-container/re
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { useTranslation } from "react-i18next";
+import PlaylistLogo from "../../../images/icons/logo_playlist.png"
 
 
 const Playlist = (props) => {
@@ -74,14 +75,17 @@ const Playlist = (props) => {
             <CardContent sx={{ ":last-child": { p: 0 } }}>
                 <Accordion sx={{boxShadow: 0}}>
                     <AccordionSummary expandIcon={<ExpandMore/>} aria-controls="panel1a-content" id="panel1a-header">
-                        <Typography>{playlist.title}</Typography>
+                        <Typography>{playlist.title} - {playlist.tracks.length} track(s)</Typography>
                     </AccordionSummary>
                     <AccordionDetails sx={{p: {xs: 0, md: 2}, mb: { xs: 2, md: 0 }}}>
                         {
                             (() => {
                                 if (playlist.tracks.length === 0) {
                                     return (
-                                        <Typography>{t('playlist.no_tracks')}</Typography>
+                                        <Box sx={{p: 2, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', flexDirection: 'column', gap: 2}}>
+                                            <Avatar sx={{width: 100, height: 100, boxShadow: 10}} src={PlaylistLogo} alt="Playlist logo"/>
+                                            <Typography>{t('playlist.no_tracks')}</Typography>
+                                        </Box>
                                     );
                                 } else {
                                     return (

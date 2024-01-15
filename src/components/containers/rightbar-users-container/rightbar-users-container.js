@@ -7,7 +7,6 @@ import { USERS_BY_NICKNAME_QUERY } from "../../../graphql-requests/users";
 import { useTranslation } from "react-i18next";
 
 
-
 const RightBarUsersContainer = props => {
     const { searchQuery } = props;
     const [getUsersByNickname, { data, loading }] = useLazyQuery(USERS_BY_NICKNAME_QUERY);
@@ -46,10 +45,8 @@ const RightBarUsersContainer = props => {
                         );
                     } else {
                         return (
-                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
-                                <Typography>
-                                    {t('rightbar.users.info_text')}
-                                </Typography>
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', flexDirection: 'column', gap: 2}}>
+                                <Typography>{t('rightbar.users.info_text')}</Typography>
                             </Box>
                         );
                     }
