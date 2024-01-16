@@ -30,7 +30,7 @@ const WelcomePageStart = props => {
             }}
         >
             <Avatar src={AppLogoImg} alt="Music From Nothing" sx={{ height: { xs: '35vw', sm: '25vw', md: '12vw' }, width: { xs: '35vw', sm: '25vw', md: '12vw' } }}/>
-            <Typography textAlign="center" sx={{ py: 4, fontSize: {xs: '25px', sm: '32.5px', md: '40px'} }} variant='h3'>{t('welcome.hello')} Music From Nothing</Typography>
+            <Typography textAlign="center" sx={{ py: 4, fontSize: {xs: '40px', sm: '45px', md: '55px'} }} variant='h3'>{t('welcome.hello')} Music From Nothing</Typography>
             <Stack spacing={3} sx={{ flexDirection: { sm: "column", md: "row" } }} useFlexGap>
                 <Button variant="contained" endIcon={<PlayArrow/>} onClick={() => navigate('/app')}>{t('welcome.explore_btn')}</Button>
                 {

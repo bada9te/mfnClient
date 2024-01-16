@@ -14,7 +14,7 @@ const WelcomePageBestTrackContainer = props => {
     
     useEffect(() => {
         const date = new Date();
-        date.setDate(date.getDate() - 7);
+        date.setDate(date.getDate() - 14);
         
         fetchMostpopularTracks({ variables: { date } });
     }, [fetchMostpopularTracks]);
@@ -22,7 +22,7 @@ const WelcomePageBestTrackContainer = props => {
     return (
         <Stack 
             sx={{ 
-                height: 'calc(100vh - 120px)', 
+                height: { xs: 'fit-content', md: 'calc(100vh - 120px)' }, 
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center',
@@ -30,11 +30,32 @@ const WelcomePageBestTrackContainer = props => {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 scrollSnapAlign: 'start',
+                py: 10
             }} 
             spacing={5} 
             direction="column">
             <Typography variant="h3" textAlign="center">{t('welcome.best_track')}</Typography>
-            { !loading && data?.postsMostPopular ? <EnumPosts posts={data.postsMostPopular} profileLinkAccessable/> : <PostItemUnavailable/>}
+            { 
+                !loading && data?.postsMostPopular 
+                ? 
+                <Stack 
+                    spacing={2} 
+                    sx={{
+                        width: '100%', 
+                        py: 1.5, 
+                        display: 'flex', 
+                        justifyContent: 'space-around',
+                        alignItems: 'center',
+                    }} 
+                    direction="row" 
+                    useFlexGap 
+                    flexWrap="wrap"
+                >
+                    <EnumPosts posts={data.postsMostPopular} profileLinkAccessable/> 
+                </Stack>
+                : 
+                <PostItemUnavailable/>
+            }
         </Stack>
     );
 }
