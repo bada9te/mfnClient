@@ -117,6 +117,20 @@ export const POSTS_BY_IDS_QUERY = gql`
     }
 `;
 
+export const POSTS_MOST_POPULAR_BY_STARTDATE_QUERY = gql`
+    ${CORE_POST_FIELDS}
+    query postsMostPopular($date: Date!) {
+        postsMostPopular(date: $date) {
+            ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
+        }
+    }
+`;
+
 
 // M
 export const POST_CREATE_MUTATION = gql`

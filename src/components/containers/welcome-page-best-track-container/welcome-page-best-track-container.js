@@ -1,16 +1,23 @@
 import { Stack, Typography } from "@mui/material";
-import { useQuery } from "@apollo/client";
-import { POST_QUERY } from "../../../graphql-requests/posts";
-import PostGenerate from "../../common/post-item/post-generate";
+import { useLazyQuery } from "@apollo/client";
+import { POSTS_MOST_POPULAR_BY_STARTDATE_QUERY } from "../../../graphql-requests/posts";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import WelcomePageBestTrackBG from "../../../images/bgs/welcomePageBestTrack.png"
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
+import EnumPosts from "../../enums/enum-posts";
 
 
 const WelcomePageBestTrackContainer = props => {
-    const { data, loading } = useQuery(POST_QUERY, { variables: { _id: '652146115bf7efe9bfb0b8a6' } });
+    const [ fetchMostpopularTracks, { data, loading }] = useLazyQuery(POSTS_MOST_POPULAR_BY_STARTDATE_QUERY);
     const { t } = useTranslation("pages");
-
+    
+    useEffect(() => {
+        const date = new Date();
+        date.setDate(date.getDate() - 7);
+        
+        fetchMostpopularTracks({ variables: { date } });
+    }, [fetchMostpopularTracks]);
 
     return (
         <Stack 
@@ -27,7 +34,7 @@ const WelcomePageBestTrackContainer = props => {
             spacing={5} 
             direction="column">
             <Typography variant="h3" textAlign="center">{t('welcome.best_track')}</Typography>
-            { !loading && data?.post ? <PostGenerate item={data.post}/> : <PostItemUnavailable/>}
+            { !loading && data?.postsMostPopular ? <EnumPosts posts={data.postsMostPopular} profileLinkAccessable/> : <PostItemUnavailable/>}
         </Stack>
     );
 }
