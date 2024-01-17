@@ -2,7 +2,7 @@ import ProfileCard from "../../common/profile/profile-card/profile-card";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, Stack } from "@mui/material";
 import { useQuery } from "@apollo/client";
-import { POST_QUERY } from "../../../graphql-requests/posts";
+import { POST_QUERY } from "../../../utils/graphql-requests/posts";
 import PostGenerate from "../../common/post-item/post-generate";
 
 

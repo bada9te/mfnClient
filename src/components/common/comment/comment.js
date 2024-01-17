@@ -11,7 +11,7 @@ import { reportModalState } from "../../modals/report-modal/reactive";
 import { commentsContainerState } from "../../containers/comments-container/reactive";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { COMMENTS_REPLIES_BY_COMMENT_ID } from "../../../graphql-requests/comments";
+import { COMMENTS_REPLIES_BY_COMMENT_ID } from "../../../utils/graphql-requests/comments";
 import { SpinnerCircular } from "../spinner/Spinner";
 import { useTranslation } from "react-i18next";
 

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
-import { USER_CONFIRM_ACCOUNT_MUTATION } from "../../../graphql-requests/users";
+import { USER_CONFIRM_ACCOUNT_MUTATION } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
 
 

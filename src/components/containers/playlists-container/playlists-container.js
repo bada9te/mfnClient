@@ -9,9 +9,9 @@ import ImageRightFormContainer from "../image-right-form-container/image-right-f
 import newPlaylistBG from "../../../images/bgs/newPlaylistFormBG.png"
 import { playlistsContainerState } from "./reactive";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
-import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from "../../../graphql-requests/playlists";
+import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from "../../../utils/graphql-requests/playlists";
 import { baseState } from "../../baseReactive";
-import defineMaxPage from "../../../common-functions/defineMaxPage/defineMaxPage";
+import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
 import { useTranslation } from "react-i18next";
 import InfoImage from "../../common/info-image/info-image";
 import PlaylistsLogo from "../../../images/icons/logo_playlist.png";

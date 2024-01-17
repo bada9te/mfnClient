@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
-import { CREATE_NOTIFICATION_MUTATION } from "../../../graphql-requests/notifications";
-import { USERS_BY_IDS_QUERY } from "../../../graphql-requests/users";
+import { CREATE_NOTIFICATION_MUTATION } from "../../../utils/graphql-requests/notifications";
+import { USERS_BY_IDS_QUERY } from "../../../utils/graphql-requests/users";
 import { baseState } from "../../baseReactive";
 import EnumUserSelect from "../../enums/enum-user-select";
 import { userSelectModalState } from "../../modals/user-select-modal/reactive";

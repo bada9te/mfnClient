@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.scss';
+import './styles/index.scss';
 import App from './App';
-import './Scrollbar.scss';
+import './styles/Scrollbar.scss';
 import { BrowserRouter } from 'react-router-dom';
 
 // apollo
 import { ApolloProvider } from '@apollo/client';
-import APClient from './apollo/client';
+import APClient from './utils/apollo/client';
 
 // localization
 import { I18nextProvider } from "react-i18next";

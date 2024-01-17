@@ -7,7 +7,7 @@ import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, Pl
 import PostItemDropDown             from './post-item-dropdown/post-item-dropdown';
 
 import { useMutation, useReactiveVar } from '@apollo/client';
-import { POSTS_SAVED_BY_USER_QUERY, POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from '../../../graphql-requests/posts';
+import { POSTS_SAVED_BY_USER_QUERY, POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from '../../../utils/graphql-requests/posts';
 import { audioPlayerState } from '../audio-player/reactive';
 import { userSelectContainerState } from '../../containers/user-select-container/reactive';
 import { userSelectModalState } from '../../modals/user-select-modal/reactive';

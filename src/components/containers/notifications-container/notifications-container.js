@@ -4,7 +4,7 @@ import EnumNotifications from "../../enums/enum-notifications";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
 import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { DELETE_NOTIFICATIONS_MUTATION, MARK_NOTIFICATIONS_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "../../../graphql-requests/notifications";
+import { DELETE_NOTIFICATIONS_MUTATION, MARK_NOTIFICATIONS_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "../../../utils/graphql-requests/notifications";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 

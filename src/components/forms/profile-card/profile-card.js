@@ -1,13 +1,13 @@
-import { httpSaveFile } from "../../../http-requests/files";
+import { httpSaveFile } from "../../../utils/http-requests/files";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 import { useState } from "react";
-import blobToFile from "../../../common-functions/blobToFIle/blobToFile";
+import blobToFile from "../../../utils/common-functions/blobToFile";
 import { useSnackbar } from "notistack";
-import { USER_UPDATE_MUTATION } from "../../../graphql-requests/users";
+import { USER_UPDATE_MUTATION } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
 
 

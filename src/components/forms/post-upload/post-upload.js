@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { FormControlLabel, Button, TextField, Checkbox, FormGroup, Typography, FormControl, InputLabel, Select, MenuItem, Card } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POST_CREATE_MUTATION } from "../../../graphql-requests/posts";
-import blobToFile from "../../../common-functions/blobToFIle/blobToFile";
+import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POST_CREATE_MUTATION } from "../../../utils/graphql-requests/posts";
+import blobToFile from "../../../utils/common-functions/blobToFile";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
-import { httpSaveFile } from "../../../http-requests/files";
+import { httpSaveFile } from "../../../utils/http-requests/files";
 import { postUploadFormState } from "./reactive";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { useSnackbar } from "notistack";

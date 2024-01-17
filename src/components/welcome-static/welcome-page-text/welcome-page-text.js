@@ -47,7 +47,7 @@ const WelcomePageText = props => {
                 scrollSnapAlign: 'start',
             }}
         >
-            <Stack sx={{ m: 5, mx: 10 }} spacing={5}>
+            <Stack sx={{ p: {sm: 5, md: 0}, mb: 4 }} spacing={5}>
                 <Typography variant="h3" textAlign="center">
                     {t('welcome.text')}
                 </Typography>
@@ -59,7 +59,7 @@ const WelcomePageText = props => {
                 sx={{ 
                     display: 'flex', 
                     justifyContent: 'center', 
-                    alignItems: 'center' 
+                    alignItems: 'center',
                 }}  
                 flexWrap="wrap"
                 spacing={3}

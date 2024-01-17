@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button, Paper } from "@mui/material";
 import { useSnackbar } from "notistack";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
-import { httpRegister } from "../../../http-requests/auth";
+import { httpRegister } from "../../../utils/http-requests/auth";
 import { useTranslation } from "react-i18next";
 
 

@@ -4,7 +4,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
-import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLIST_CREATE_MUTATION } from "../../../graphql-requests/playlists";
+import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLIST_CREATE_MUTATION } from "../../../utils/graphql-requests/playlists";
 import { playlistsContainerState } from "../../containers/playlists-container/reactive";
 import { useTranslation } from "react-i18next";
 

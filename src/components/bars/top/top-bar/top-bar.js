@@ -12,7 +12,7 @@ import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { audioPlayerState } from '../../../common/audio-player/reactive';
 import { bottomBarState } from '../../bottom/bottom-bar/reactive';
 import { baseState } from '../../../baseReactive';
-import { NOTIFICATIONS_QUERY } from '../../../../graphql-requests/notifications';
+import { NOTIFICATIONS_QUERY } from '../../../../utils/graphql-requests/notifications';
 import { useTranslation } from 'react-i18next';
 
 

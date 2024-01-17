@@ -1,5 +1,5 @@
 import PostItem from "../common/post-item/post-item";
-import getTimeSince from "../../common-functions/getTimeSince/getTimeSince";
+import getTimeSince from "../../utils/common-functions/getTimeSince";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../baseReactive";
 

@@ -3,7 +3,7 @@ import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, List, Typography } from "@mui/material";
 import EnumRightbarUsers from "../../enums/enum-rightbar-users";
 import { useLazyQuery } from "@apollo/client";
-import { USERS_BY_NICKNAME_QUERY } from "../../../graphql-requests/users";
+import { USERS_BY_NICKNAME_QUERY } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
 
 

@@ -3,7 +3,7 @@ import { Box, TextField, IconButton, Tooltip } from "@mui/material";
 import { Reply, Send } from "@mui/icons-material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { commentsContainerState, replyingToNull } from "../../containers/comments-container/reactive";
-import { COMMENTS_BY_POST_ID, COMMENTS_REPLIES_BY_COMMENT_ID, COMMENT_CREATE_MUTATION } from "../../../graphql-requests/comments";
+import { COMMENTS_BY_POST_ID, COMMENTS_REPLIES_BY_COMMENT_ID, COMMENT_CREATE_MUTATION } from "../../../utils/graphql-requests/comments";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";

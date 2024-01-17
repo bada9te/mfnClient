@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import { useLazyQuery } from "@apollo/client";
-import { POSTS_MOST_POPULAR_BY_STARTDATE_QUERY } from "../../../graphql-requests/posts";
+import { POSTS_MOST_POPULAR_BY_STARTDATE_QUERY } from "../../../utils/graphql-requests/posts";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import WelcomePageBestTrackBG from "../../../images/bgs/welcomePageBestTrack.png"
 import { useTranslation } from "react-i18next";

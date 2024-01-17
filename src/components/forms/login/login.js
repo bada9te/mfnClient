@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Paper } from "@mui/material";
-import { httpLogin } from "../../../http-requests/auth";
+import { httpLogin } from "../../../utils/http-requests/auth";
 import { useSnackbar } from "notistack";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
 import { useTranslation } from "react-i18next";

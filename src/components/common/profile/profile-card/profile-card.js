@@ -3,10 +3,10 @@ import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import ProfileDefaultBGImage from "../../../../images/bgs/profileDefaultBG.png";
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '../../../../graphql-requests/users';
+import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '../../../../utils/graphql-requests/users';
 import { baseState } from "../../../baseReactive";
 import { useSnackbar } from "notistack";
-import { CREATE_NOTIFICATION_MUTATION } from "../../../../graphql-requests/notifications";
+import { CREATE_NOTIFICATION_MUTATION } from "../../../../utils/graphql-requests/notifications";
 import { useTranslation } from "react-i18next";
 
 

@@ -12,7 +12,7 @@ import { Email, Save } from "@mui/icons-material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
-import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION, USER_UPDATE_MUTATION } from "../../../graphql-requests/users";
+import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION, USER_UPDATE_MUTATION } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
 import ProfileEditPartSocial from "./profile-edit-social";
 

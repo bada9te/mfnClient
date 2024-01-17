@@ -8,7 +8,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { useState } from "react";
 import { createBattleFormState } from "./reactive";
 import { useSnackbar } from "notistack";
-import { BATTLE_CREATE_MUTATTION } from "../../../graphql-requests/battles";
+import { BATTLE_CREATE_MUTATTION } from "../../../utils/graphql-requests/battles";
 import { useTranslation } from "react-i18next";
 
 
