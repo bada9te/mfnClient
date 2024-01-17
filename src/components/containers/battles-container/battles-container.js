@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import InfoImage from "../../common/info-image/info-image";
 import BattlesLogo from "../../../images/icons/battle-disk.png";
+import TabPanel from "../../common/tab-panel/tab-panel";
 
 
 const TabContent = (props) => {
@@ -47,27 +48,6 @@ const TabContent = (props) => {
 }
 
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-            <Box sx={{ p: 0 }}>
-                {children}
-            </Box>
-        )}
-      </div>
-    );
-}
-
-
 const BattlesContainer = props => {
     const [status, setStatus] = useState(0);
     const { activePage, maxCountPerPage } = useReactiveVar(battlesContainerState);
@@ -92,7 +72,7 @@ const BattlesContainer = props => {
                 }
             }
         });
-        console.log('MAKE_VOTE');
+        //console.log('MAKE_VOTE');
     }
 
 

@@ -9,6 +9,7 @@ export const postUploadFormState = makeVar({
     audio: null,
     uploadedPictureName: "",
     uploadedAudioName: "",
+    category: "",
     commentsAllowed: true,
     downloadsAllowed: true,
 });

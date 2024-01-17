@@ -7,27 +7,8 @@ import { baseState } from "../../baseReactive";
 import { DELETE_NOTIFICATIONS_MUTATION, MARK_NOTIFICATIONS_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "../../../utils/graphql-requests/notifications";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
+import TabPanel from "../../common/tab-panel/tab-panel";
 
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-            <Box sx={{ p: 0 }}>
-                {children}
-            </Box>
-        )}
-      </div>
-    );
-}
 
 
 const NotificationsContainer = props => {

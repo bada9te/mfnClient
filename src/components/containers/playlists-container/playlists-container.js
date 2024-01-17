@@ -15,22 +15,7 @@ import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
 import { useTranslation } from "react-i18next";
 import InfoImage from "../../common/info-image/info-image";
 import PlaylistsLogo from "../../../images/icons/logo_playlist.png";
-
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-        <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
-            {value === index && (
-                <Box sx={{ p: 0 }}>
-                    {children}
-                </Box>
-            )}
-        </div>
-    );
-}
-
+import TabPanel from "../../common/tab-panel/tab-panel";
 
 
 

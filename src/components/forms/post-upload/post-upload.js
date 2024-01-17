@@ -37,7 +37,8 @@ const PostUploadForm = (props)=> {
                 audio:            postUploadForm.uploadedAudioName,
                 image:            postUploadForm.uploadedPictureName,
                 commentsAllowed:  postUploadForm.commentsAllowed,
-                downloadsAllowed: postUploadForm.downloadsAllowed
+                downloadsAllowed: postUploadForm.downloadsAllowed,
+                category:         selectedGenre,
             },
         },
     });

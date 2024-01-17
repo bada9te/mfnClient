@@ -51,7 +51,7 @@ const Topbar = (props) => {
     const [ getUnreadNotifications, { data } ] = useLazyQuery(NOTIFICATIONS_QUERY);
     const { t } = useTranslation("bars");
  
-    const pages = ['Feed', 'Battles', 'Playlists'];
+    const pages = ['Feed', 'Battles', 'Playlists', 'Categories'];
     const navigate = useNavigate();
 
     const handleNavigate = (where) => {
@@ -65,6 +65,9 @@ const Topbar = (props) => {
                 break;
             case 'Playlists':
                 navigate('/app/playlists');
+                break;
+            case 'Categories':
+                navigate('/app/categories');
                 break;
             default: 
                 break;

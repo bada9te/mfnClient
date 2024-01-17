@@ -39,6 +39,9 @@
     "notifications.delete_all": "Delete all notifications",
     "notifications.snack.pending": "Pending...",
     "notifications.snack.success": "Success",
-    "notifications.snack.error": "An error occured"
+    "notifications.snack.error": "An error occured",
+
+    "categories.select": "Select the category",
+    "categories.selected": "Category tracks"
 }
     

@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 
 const PostsContainer = (props) => {
-    const { id, profileLinkAccessable, savedOnly, except } = props;
+    const { id, profileLinkAccessable, savedOnly, except, category } = props;
     const location = useLocation();
 
     const { user: currentUser } = useReactiveVar(baseState);
@@ -70,6 +70,9 @@ const PostsContainer = (props) => {
                         }
                     });
                     setPostsAndCount(result, "postsByOwner");
+                } else if (category) {
+                    // fetch posts by category
+                    result = [];
                 } else {
                     result = await getAllPosts({
                         variables: {
@@ -88,7 +91,7 @@ const PostsContainer = (props) => {
         }
 
         fetchData();
-    }, [savedOnly, id, currentUser?._id, activePage, getAllPosts, getOwnerPosts, getSavedOnlyPosts, maxCountPerPage, setPostsAndCount]);
+    }, [savedOnly, id, category, currentUser?._id, activePage, getAllPosts, getOwnerPosts, getSavedOnlyPosts, maxCountPerPage, setPostsAndCount]);
 
     
     

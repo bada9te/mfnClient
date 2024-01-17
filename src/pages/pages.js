@@ -18,6 +18,7 @@ import AccountRestoreEmailCheck from "./AccountRestoreEmailCheck/AccountRestoreE
 import AccountVerify   from "./AccountVerify/AccountVerify";
 import Playlists       from "./Playlists/Playlists";
 import Welcome         from "./Welcome/Welcome";
+import Categories      from "./Categories/Categories";
 
 export {
     Welcome,
@@ -40,6 +41,7 @@ export {
     AccountRestoreEmailCheck,
     AccountVerify,
     Playlists,
+    Categories,
 };
 
 
