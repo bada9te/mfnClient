@@ -1,10 +1,8 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { Avatar, Box, Card, CardHeader } from "@mui/material";
 import LogoClear from "../../../images/icons/logo_clear.png";
 
 const CategoryCard = props => {
     const { title, color } = props;
-    const { t } = useTranslation("objects");
 
 
     return (
