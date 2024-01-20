@@ -2,11 +2,11 @@ import { Avatar, Box, Card, CardHeader } from "@mui/material";
 import LogoClear from "../../../images/icons/logo_clear.png";
 
 const CategoryCard = props => {
-    const { title, color } = props;
+    const { title, color, handleClick } = props;
 
 
     return (
-        <Card sx={{ 
+        <Card onClick={handleClick} sx={{ 
             width: {xs: '95%', sm: '375px', md: '400px'}, 
             boxShadow: 5, 
             borderRadius: 5,

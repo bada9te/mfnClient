@@ -4,7 +4,7 @@ import PaginationTree from '../../common/pagination/pagination';
 import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
-import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../utils/graphql-requests/posts';
+import { POSTS_BY_CATEGORY_QUERY, POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../utils/graphql-requests/posts';
 import defineMaxPage from '../../../utils/common-functions/defineMaxPage';
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from './reactive';
@@ -22,6 +22,7 @@ const PostsContainer = (props) => {
     const [ getSavedOnlyPosts ] = useLazyQuery(POSTS_SAVED_BY_USER_QUERY);
     const [ getAllPosts] = useLazyQuery(POSTS_QUERY);
     const [ getOwnerPosts ] = useLazyQuery(POSTS_BY_OWNER_QUERY);
+    const [ getPostsByCategory ] = useLazyQuery(POSTS_BY_CATEGORY_QUERY);
     const { t } = useTranslation("containers");
     
     const handlePageChange = page => {
@@ -53,6 +54,7 @@ const PostsContainer = (props) => {
                 let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
                 
                 if (savedOnly && currentUser._id !== "") {
+                    // fetch saved by user
                     result = await getSavedOnlyPosts({
                         variables: {
                             user: currentUser?._id,
@@ -62,6 +64,7 @@ const PostsContainer = (props) => {
                     })
                     setPostsAndCount(result, "postsSavedByUser");
                 } else if (id) {
+                    // fetch by owner
                     result = await getOwnerPosts({
                         variables: {
                             owner: id,
@@ -72,8 +75,15 @@ const PostsContainer = (props) => {
                     setPostsAndCount(result, "postsByOwner");
                 } else if (category) {
                     // fetch posts by category
-                    result = [];
+                    result = await getPostsByCategory({
+                        variables: {
+                            category,
+                            offset,
+                            limit: maxCountPerPage
+                        }
+                    });
                 } else {
+                    // fetch all
                     result = await getAllPosts({
                         variables: {
                             offset,
@@ -91,7 +101,7 @@ const PostsContainer = (props) => {
         }
 
         fetchData();
-    }, [savedOnly, id, category, currentUser?._id, activePage, getAllPosts, getOwnerPosts, getSavedOnlyPosts, maxCountPerPage, setPostsAndCount]);
+    }, [savedOnly, id, category, currentUser?._id, activePage, getAllPosts, getOwnerPosts, getSavedOnlyPosts, getPostsByCategory, maxCountPerPage, setPostsAndCount]);
 
     
     

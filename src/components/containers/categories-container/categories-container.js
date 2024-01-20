@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next";
 import TabPanel from "../../common/tab-panel/tab-panel";
 import EnumCategories from "../../enums/enum-categories";
+import PostsContainer from "../posts-container/posts-container";
 
 
 
@@ -27,6 +28,10 @@ const CategoriesContainer = props => {
     ];
     const { t } = useTranslation("containers");
 
+    const handleCategoryClick = (category) => {
+        setCategory(category);
+        setStatus(1);
+    }
 
     const handleTabSwitch = (event, key) => {
         setStatus(key);
@@ -37,7 +42,7 @@ const CategoriesContainer = props => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                     <Tab icon={<Category/>}  label={t('categories.select')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
-                    <Tab icon={<QueueMusic/>} label={t('categories.selected')} id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
+                    <Tab icon={<QueueMusic/>} label={category || t('categories.selected')} id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
                 </Tabs>
             </Box>
 
@@ -55,12 +60,12 @@ const CategoriesContainer = props => {
                     useFlexGap 
                     flexWrap="wrap" 
                 >
-                    <EnumCategories categories={genres}/>
+                    <EnumCategories categories={genres} handleClick={handleCategoryClick}/>
                 </Stack>
             </TabPanel>
         
             <TabPanel value={status} index={1}>
-                
+                <PostsContainer category={category} profileLinkAccessable={true}/>
             </TabPanel>
         </Box>
     );

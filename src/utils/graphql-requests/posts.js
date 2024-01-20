@@ -131,6 +131,20 @@ export const POSTS_MOST_POPULAR_BY_STARTDATE_QUERY = gql`
     }
 `;
 
+export const POSTS_BY_CATEGORY_QUERY = gql`
+    ${CORE_POST_FIELDS}
+    query postsByCategory($category: String!, $offset: Int!, $limit: Int!) {
+        postsByCategory(category: $category, offset: $offset, limit: $limit) {
+            ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
+        }
+    }
+`;
+
 
 // M
 export const POST_CREATE_MUTATION = gql`
