@@ -13,9 +13,10 @@ import { postsContainerState } from "../../containers/posts-container/reactive";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import getFileExtension from "../../../utils/common-functions/getFileExtension";
 
 
-const PostUploadForm = (props)=> {
+const PostUploadForm = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { user: currentUser } = useReactiveVar(baseState);
     const { isShowing: cropModalIsShowing } = useReactiveVar(imageCropperModalState);
@@ -27,6 +28,9 @@ const PostUploadForm = (props)=> {
 
     const genres = ["Country", "Pop", "Classical", "Funk", "Soul music", "Hip hop", "Rock", "Electronic music", "Latin", "Jazz", "Blues", "Folk", "Metal"]
     const [ selectedGenre, setSelectedGenre ] = useState(genres[0]);
+
+    const supportedImageExtensions = ['.jpg', '.jpeg', '.png'];
+    const supportedAudioExtensions = ['.wav', '.mp3'];
 
     const [ postUpload ] = useMutation(POST_CREATE_MUTATION, {
         variables: {
@@ -128,6 +132,10 @@ const PostUploadForm = (props)=> {
     // handlers
     const handlePicture = (file) => { 
         if (file !== null) {
+            if (!supportedImageExtensions.includes(getFileExtension(file.name))) {
+                enqueueSnackbar(t('upload.snack.error.image_not_supported'), { autoHideDuration: 3000, variant: 'error' });
+                return;
+            }
             postUploadFormState({ ...postUploadFormState(), imageTitle: file.name, picture: URL.createObjectURL(file) });
             imageCropperModalState({ ...imageCropperModalState(), imageType: "background", isShowing: true });
         }
@@ -135,6 +143,10 @@ const PostUploadForm = (props)=> {
 
     const handleAudio = (file) => { 
         if (file !== null) {
+            if (!supportedAudioExtensions.includes(getFileExtension(file.name))) {
+                enqueueSnackbar(t('upload.snack.error.audio_not_supported'), { autoHideDuration: 3000, variant: 'error' });
+                return;
+            }
             postUploadFormState({ ...postUploadFormState(), audioTitle: file.name, audio: URL.createObjectURL(file) });
         }
     };
@@ -204,6 +216,7 @@ const PostUploadForm = (props)=> {
                         })} 
                     />
                 </Button>
+                <Typography sx={{p: 1}} fontSize={14}>{supportedImageExtensions.join(', ')}</Typography>
                 { errors.Image && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.error.image')}</Typography> }
             </FormGroup>
             <FormGroup sx={{my: 2}}>
@@ -216,6 +229,7 @@ const PostUploadForm = (props)=> {
                         })} 
                     />
                 </Button>
+                <Typography sx={{p: 1}} fontSize={14}>{supportedAudioExtensions.join(', ')}</Typography>
                 { errors.Audio && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.error.audio')}</Typography> }
             </FormGroup>
             <FormGroup sx={{my: 2, mt: 4}}>

@@ -29,6 +29,8 @@
     "upload.snack.pending": "Uploading...",
     "upload.snack.success": "Post uploaded",
     "upload.snack.error": "Can't upload new post",
+    "upload.snack.error.image_not_supported": "Image type is not acceptable",
+    "upload.snack.error.audio_not_supported": "Audio type is not acceptable",
 
     "register.email": "Email address",
     "register.error.email": "Email address is not valid",
