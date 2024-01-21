@@ -82,6 +82,7 @@ const PostsContainer = (props) => {
                             limit: maxCountPerPage
                         }
                     });
+                    setPostsAndCount(result, "postsByCategory");
                 } else {
                     // fetch all
                     result = await getAllPosts({

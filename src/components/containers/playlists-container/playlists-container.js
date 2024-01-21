@@ -54,7 +54,7 @@ const PlaylistsContainer = (props) => {
 
 
     const [ getCurrentUserPlaylists ] = useLazyQuery(PLAYLISTS_BY_OWNER_ID_QUERY);
-    const [ getPublicAvailablePlaylists ] = useLazyQuery(PLAYLISTS_PUBLIC_AWAILABLE_QUERY, { pollInterval: 15000 });
+    const [ getPublicAvailablePlaylists ] = useLazyQuery(PLAYLISTS_PUBLIC_AWAILABLE_QUERY);
 
     // used to know the page number
     const [status, setStatus] = useState(0);
@@ -100,7 +100,7 @@ const PlaylistsContainer = (props) => {
                             owner: currentUser._id,
                             offset,
                             limit: maxCountPerPage,
-                        }
+                        },
                     });
                     setPlaylistsAndCount(result, "playlistsByOwnerId"); 
                 } else if (status === 0) {
@@ -108,7 +108,7 @@ const PlaylistsContainer = (props) => {
                         variables: {
                             offset,
                             limit: maxCountPerPage,
-                        }
+                        },
                     });
                     setPlaylistsAndCount(result, "playlistsPublicAvailable");
                 }

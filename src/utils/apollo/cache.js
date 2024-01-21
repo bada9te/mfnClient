@@ -32,14 +32,37 @@ export default new InMemoryCache({
                 }
             }
         },
+        PlaylistsWithCount: {
+            keyFields: ['playlists'],
+            fields: {
+                playlists: {
+                    merge(_, incoming) {
+                        return incoming
+                    }
+                },
+                count: {
+                    merge(_, incoming) {
+                        return incoming
+                    }
+                }
+            }
+        },
         User: {
             keyFields: ['_id'],
         },
         Playlist: {
             keyFields: ['_id'],
+            fields: {
+                tracks: {
+                    merge(_, incoming) {
+                        return incoming
+                    }
+                }
+            }
         },
         Comment: {
             keyFields: ['_id']
-        }
+        },
+        
     }
 });

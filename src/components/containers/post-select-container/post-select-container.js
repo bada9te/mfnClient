@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
 import getTimeSince from "../../../utils/common-functions/getTimeSince";
-import { PLAYLIST_SWICTH_TRACK_MUTATION } from "../../../utils/graphql-requests/playlists";
+import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLIST_SWICTH_TRACK_MUTATION } from "../../../utils/graphql-requests/playlists";
 import { POSTS_BY_TITLE_QUERY } from "../../../utils/graphql-requests/posts";
 import { baseState } from "../../baseReactive";
 import PostItem from "../../common/post-item/post-item";
@@ -11,12 +11,14 @@ import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { playlistsContainerState } from "../playlists-container/reactive";
 import { postSelectContainerState } from "./reactive";
 import { useTranslation } from "react-i18next";
+import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
+import { enqueueSnackbar } from "notistack";
 
 
 
 const PostSelectContainer = props => {
     const { locations, user: currentUser } = useReactiveVar(baseState);
-    const { targetPlaylist } = useReactiveVar(playlistsContainerState);
+    const { targetPlaylist, maxCountPerPage, activePage } = useReactiveVar(playlistsContainerState);
     const { query, isMine, selectingFor } = useReactiveVar(postSelectContainerState);
     const { t } = useTranslation("containers");
 
@@ -36,6 +38,7 @@ const PostSelectContainer = props => {
         postSelectModalState({ ...postSelectModalState(), isShowing: false });
 
         if (selectingFor === "playlist") {
+            enqueueSnackbar("Updating playlist...", { autoHideDuration: 1500 });
             await switchTrackInPlaylist({
                 variables: {
                     input: {
@@ -43,10 +46,47 @@ const PostSelectContainer = props => {
                         playlistId: targetPlaylist,
                     },
                 },
+                update: (cache, { data }) => {
+                    let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
+                    
+                    const cachedData = cache.readQuery({ query: PLAYLISTS_BY_OWNER_ID_QUERY, 
+                        variables: {
+                            owner: currentUser._id,
+                            offset,
+                            limit: maxCountPerPage,
+                        }
+                    });
+
+                    let playlists = JSON.parse(JSON.stringify(cachedData.playlistsByOwnerId.playlists));
+                    playlists.forEach(playlist => {
+                        if (playlist._id === data.playlistSwicthTrack._id) {
+                            playlist.tracks = data.playlistSwicthTrack.tracks;
+                        }
+                    });
+                    
+                    cache.writeQuery({ query: PLAYLISTS_BY_OWNER_ID_QUERY, 
+                        variables: {
+                            owner: currentUser._id,
+                            offset,
+                            limit: maxCountPerPage,
+                        },
+                        data: {
+                            playlistsByOwnerId: {
+                                playlists,
+                                count: playlists.length,
+                            }
+                        }
+                    });
+
+                    playlistsContainerState({...playlistsContainerState(), playlists,
+                        maxPage: defineMaxPage(playlists.length, maxCountPerPage),
+                    });
+                }
+            }).then(() => {
+                enqueueSnackbar(t('select.post.snack.playlist.success'), { autoHideDuration: 1500, variant: 'success' });
+            }).catch(() => {
+                enqueueSnackbar(t('select.post.snack.playlist.error'), { autoHideDuration: 3000, variant: 'error' });
             });
-            
-            
-            
         } else if (selectingFor === "battle") {
             createBattleFormState({ ...createBattleFormState(), [isMine ? "post1" : "post2"]: post })    
         }

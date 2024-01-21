@@ -9,6 +9,8 @@
     "select.user.snack.error": "Can't share this track",
 
     "select.post.info_text": "Start typing track name to search",
+    "select.post.snack.playlist.success": "Playlist updated",
+    "select.post.snack.playlist.error": "Can't update this playlist",
 
     "battles.not_found": "No battles found",
     "battles.in_progress": "In progress",
@@ -29,6 +31,7 @@
     "playlists.create.title": "Create playlist",
     "playlists.create.notice": "Notice, public playlists are visible to all users",
     "playlists.create.login_required": "Please login to create a new one",
+    
 
     "rightbar.users.info_text": "Start typing nickname to search",
     "leftbar.posts.info_text": "Start typing track name to search",
