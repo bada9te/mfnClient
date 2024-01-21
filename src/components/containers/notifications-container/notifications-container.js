@@ -73,12 +73,12 @@ const NotificationsContainer = props => {
             </Box>
 
             <TabPanel value={status} index={0}>
-                { !loading && <Button fullWidth onClick={handleReadAllClick}>{t('notifications.mark_as_read')}</Button> }
+                { !loading && <Button sx={{ borderRadius: 0 }} variant="contained" fullWidth onClick={handleReadAllClick}>{t('notifications.mark_as_read')}</Button> }
                 <EnumNotifications notifications={data?.notifications || []} loading={loading}/>
             </TabPanel>
         
             <TabPanel value={status} index={1}>
-                { !loading && <Button fullWidth onClick={handleDeleteAllClick}>{t('notifications.delete_all')}</Button> }
+                { !loading && <Button sx={{ borderRadius: 0 }} variant="contained" fullWidth onClick={handleDeleteAllClick}>{t('notifications.delete_all')}</Button> }
                 <EnumNotifications notifications={data?.notifications || []} loading={loading}/>
             </TabPanel>
         </Box>

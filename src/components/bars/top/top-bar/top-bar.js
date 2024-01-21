@@ -169,6 +169,7 @@ const Topbar = (props) => {
                             </Menu>
                         </Box>
                         
+                        <Avatar alt="app logo" src={logoImg} sx={{mr: 1, display: { xs: 'flex', md: 'none' }}}/>
                         <Typography
                             variant="h6"
                             noWrap
