@@ -56,40 +56,25 @@ const PostsContainer = (props) => {
                 if (savedOnly && currentUser._id !== "") {
                     // fetch saved by user
                     result = await getSavedOnlyPosts({
-                        variables: {
-                            user: currentUser?._id,
-                            offset,
-                            limit: maxCountPerPage
-                        }
+                        variables: { user: currentUser?._id, offset, limit: maxCountPerPage }
                     })
                     setPostsAndCount(result, "postsSavedByUser");
                 } else if (id) {
                     // fetch by owner
                     result = await getOwnerPosts({
-                        variables: {
-                            owner: id,
-                            offset,
-                            limit: maxCountPerPage
-                        }
+                        variables: { owner: id, offset, limit: maxCountPerPage }
                     });
                     setPostsAndCount(result, "postsByOwner");
                 } else if (category) {
                     // fetch posts by category
                     result = await getPostsByCategory({
-                        variables: {
-                            category,
-                            offset,
-                            limit: maxCountPerPage
-                        }
+                        variables: { category, offset, limit: maxCountPerPage }
                     });
                     setPostsAndCount(result, "postsByCategory");
                 } else {
                     // fetch all
                     result = await getAllPosts({
-                        variables: {
-                            offset,
-                            limit: maxCountPerPage
-                        }
+                        variables: { offset, limit: maxCountPerPage }
                     });
                     setPostsAndCount(result, "posts");
                 }

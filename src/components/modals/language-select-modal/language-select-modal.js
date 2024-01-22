@@ -8,13 +8,14 @@ import { useTranslation } from "react-i18next";
 
 const LanguageSelectModal = props => {
     const { isShowing } = useReactiveVar(languageSelectModalState);
-    const { t } = useTranslation("modals"); 
+    const { t, i18n } = useTranslation("modals"); 
 
     const handleClose = () => {
         languageSelectModalState({ isShowing: false });
     }
 
     const selectLanguage = (language) => {
+        i18n.changeLanguage(language);
         baseState({ ...baseState(), language });
         localStorage.setItem(process.env.REACT_APP_LANGUAGE_VAR_NAME, JSON.stringify({ language }));
         handleClose();
@@ -67,7 +68,6 @@ const LanguageSelectModal = props => {
                     </ListItem>
                 </List>
             </DialogContent>
-            
         </Dialog>
     );
 }
