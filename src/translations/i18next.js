@@ -1,9 +1,10 @@
 import i18next from "i18next";
+import getCurrentLanguageFromLS from "../utils/common-functions/getCurrentLanguageFromLS";
 
 
 i18next.init({
     interpolation: { escapeValue: false },
-    lng: JSON.parse(localStorage.getItem(process.env.REACT_APP_LANGUAGE_VAR_NAME))?.language || 'en',                              
+    lng: getCurrentLanguageFromLS(),                             
     resources: {
         en: {
             bars:       require("./en/bars.json"),

@@ -40,7 +40,7 @@ const CategoriesContainer = props => {
     return (
         <Box height={'100%'}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
-                <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
+                <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth" TabIndicatorProps={{ sx: { backgroundColor: 'white' } }}>
                     <Tab icon={<Category/>}  label={t('categories.select')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
                     <Tab icon={<QueueMusic/>} label={category || t('categories.selected')} id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
                 </Tabs>

@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+import getCurrentLanguageFromLS from "../common-functions/getCurrentLanguageFromLS";
 
 const muiTheme = (mode) => {
     // theme setup
@@ -13,7 +14,7 @@ const muiTheme = (mode) => {
             },    
         },
         typography: {
-            fontFamily: ['Poppins','static'].join(','),
+            fontFamily: getCurrentLanguageFromLS() === 'en' ? ['Poppins','static'].join(',') : ['Open Sans', 'sans-serif'].join(','),
             fontWeightRegular: 600,
         },
         components: {
@@ -33,8 +34,8 @@ const muiTheme = (mode) => {
                 styleOverrides: {
                     root: {
                         '& fieldset': {
-                        borderRadius: 25,
-                        marginBottom: 4,
+                            borderRadius: 25,
+                            marginBottom: 4,
                         },
                     },
                 }
@@ -44,8 +45,8 @@ const muiTheme = (mode) => {
                     root: {
                         color: 'white',
                         "&.Mui-selected": {
-                        color: 'white',
-                        }
+                            color: 'white',
+                        },           
                     },
                 }
             },
