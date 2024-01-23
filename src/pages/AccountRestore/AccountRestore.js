@@ -9,10 +9,12 @@ import { MODERATION_ACTION_DELETE_MUTATION, MODERATION_ACTION_VALIDATE_QUERY } f
 import { useSnackbar } from 'notistack';
 import { SpinnerCircular } from '../../components/common/spinner/Spinner';
 import { Cancel } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 
 const AccountRestore = (props)=> {
     const { userId, actionId, verifyToken, type } = useParams();
+    const { t } = useTranslation("pages");
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const [ deleteModerationAction ] = useMutation(MODERATION_ACTION_DELETE_MUTATION, {
@@ -39,16 +41,16 @@ const AccountRestore = (props)=> {
     const cancelAccountRestore = () => {
         deleteModerationAction()
             .then(({ data }) => {
-                enqueueSnackbar('Action was canceled', { autoHideDuration: 3000, variant: 'info' });
+                enqueueSnackbar(t('account_restore.snack.success'), { autoHideDuration: 3000, variant: 'info' });
                 navigate('/app/login');
             }).catch(err => {
-                enqueueSnackbar('Unexpected error', { autoHideDuration: 3000, variant: 'error' });
+                enqueueSnackbar(t('account_restore.snack.error'), { autoHideDuration: 3000, variant: 'error' });
             });
     }
 
 
     return(
-        <LogRegVerContainer bg={newPasswordBG} text={`New ${type}`}>
+        <LogRegVerContainer bg={newPasswordBG} text={`${t('account_restore.main_text')} ${type}`}>
             <Box sx={{ width: '30rem', height: '100%', boxShadow: 0, display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
@@ -59,7 +61,7 @@ const AccountRestore = (props)=> {
                             return (
                                 <>
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        Validating...
+                                        {t('account_restore.validating')}
                                     </Typography>
                                     <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
                                         <SpinnerCircular/>
@@ -70,7 +72,7 @@ const AccountRestore = (props)=> {
                             return (
                                 <>
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        Your account is ready to be restored
+                                        {t('account_restore.ready_to_restore')}
                                     </Typography>
                                     <CardContent>
                                         <AccountRestoreForm userId={userId} actionId={actionId} verifyToken={verifyToken} type={type}/>
@@ -84,7 +86,7 @@ const AccountRestore = (props)=> {
                                                 variant='contained' 
                                                 onClick={cancelAccountRestore}
                                             >
-                                                Cancel account restore action
+                                                {t('account_restore.cancel')}
                                             </Button>
                                         </Stack>
                                     </CardActions>
@@ -94,10 +96,10 @@ const AccountRestore = (props)=> {
                             return (
                                 <>
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        Validation error
+                                        {t('account_restore.error.validation')}
                                     </Typography>
                                     <CardContent>
-                                        <Typography textAlign={'center'}>This action is not valid</Typography>
+                                        <Typography textAlign={'center'}>{t('account_restore.error.text')}</Typography>
                                     </CardContent>
                                 </>
                             );

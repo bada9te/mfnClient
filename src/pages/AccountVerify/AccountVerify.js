@@ -7,10 +7,12 @@ import VerifyAccBG from '../../images/bgs/verifyFormBG.png';
 import { MODERATION_ACTION_VALIDATE_QUERY } from "../../utils/graphql-requests/moderation-actions";
 import { useQuery } from "@apollo/client";
 import { SpinnerCircular } from "../../components/common/spinner/Spinner";
+import { useTranslation } from "react-i18next";
 
 
 const AccountVerify = props => {
     const { userId, actionId } = useParams();
+    const { t } = useTranslation("pages");
     
     const { data, loading } = useQuery(MODERATION_ACTION_VALIDATE_QUERY, {
         variables: {
@@ -24,7 +26,7 @@ const AccountVerify = props => {
 
 
     return(
-        <LogRegVerContainer bg={VerifyAccBG} text="Account verification">
+        <LogRegVerContainer bg={VerifyAccBG} text={t('verify.main_text')}>
             <Box sx={{ width: '30rem', height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
@@ -35,7 +37,7 @@ const AccountVerify = props => {
                             return (
                                 <>
                                     <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        Validating...
+                                        {t('verify.validating')}
                                     </Typography>
                                     <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
                                         <SpinnerCircular/>
@@ -47,7 +49,7 @@ const AccountVerify = props => {
                             return (
                                 <>
                                     <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        Verify your account 
+                                        {t('verify.verify_text')} 
                                     </Typography>
                                     <CardContent>
                                         <AccountVerifyForm userId={userId} actionId={actionId}/>
@@ -58,10 +60,10 @@ const AccountVerify = props => {
                             return (
                                 <>
                                     <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        Validation error
+                                        {t('verify.error')}
                                     </Typography>
                                     <CardContent>
-                                        <Typography textAlign={'center'}>This action is not valid</Typography>
+                                        <Typography textAlign={'center'}>{t('This action is not valid')}</Typography>
                                     </CardContent>
                                 </>
                             );

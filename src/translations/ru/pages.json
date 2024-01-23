@@ -1,0 +1,72 @@
+{
+    "welcome.hello": "Добро пожаловать в",
+    "welcome.explore_btn": "Исследовать уникальную музыку",
+    "welcome.purpose": "Цель платформы и информация об авторе",
+    "welcome.best_track": "Лучшие треки недели",
+    "welcome.text": "Добро пожаловать в ''Музыку из Ничего'' – где творчество не знает границ! 🎶",
+    "welcome.log_in": "Войти",
+    "welcome.register": "Зарегистрироваться",
+
+    "welcome.card.listening.title": "Прослушивание музыки",
+    "welcome.card.listening.description": "Слушайте музыку и получайте удовольствие!",
+    "welcome.card.musical.title": "Обмен музыкальными творениями",
+    "welcome.card.musical.description": "Делитесь треками пользователей внутри платформы.",
+    "welcome.card.musician.title": "Профили музыкантов",
+    "welcome.card.musician.description": "Платформа предоставляет потрясающие профили пользователей, которые вы можете настраивать под свои предпочтения :)",
+    "welcome.card.just.title": "Просто для развлечения и самообучения \\*_*/",
+    "welcome.card.just.description": "Эта платформа была разработана одним человеком и находится в стадии развития.",
+    "welcome.card.about.title": "О авторе",
+    "welcome.card.about.description": "Привет! Я так рад видеть вас на своем первом крупном веб-проекте. Я обычный студент 3-го курса Национального университета ''Запорожская политехника'', Запорожье, Украина. У нас в университете нет современных курсов по веб-разработке, поэтому я решил заняться самообразованием.",
+    
+    "welcome.card.explore.title": "🎵 Исследовать",
+    "welcome.card.explore.description": "Исследуйте мир уникальной музыки, делясь, лайкая и комментируя потрясающие аудиопосты.",
+    "welcome.card.anywhere.title": "🌐 Где угодно",
+    "welcome.card.anywhere.description": "В любое время: Доступно на компьютере, планшете или мобильном – развлечение без границ.",
+    "welcome.card.community.title": "🤝 Сообщество",
+    "welcome.card.community.description": "Связывайтесь, сотрудничайте и вдохновляйтесь единомышленниками-творцами.",
+    "welcome.card.start.title": "🚀 Начнем",
+    "welcome.card.start.description": "Присоединяйтесь к ''Музыке из Ничего'' сегодня, и пусть начнется музыка!",
+
+
+    "login.main_text": "С возвращением!",
+    "login.title": "Войти",
+    "login.havent_registered_yet": "Еще не зарегистрированы",
+    "login.social": "Войти с использованием социальных сетей",
+    "login.forgot_password": "Забыли пароль",
+
+    "logout.text": "Выход",
+
+    "upload.main_text": "Загружаете что-то новенькое? Увлекательно!",
+    "upload.title": "Ваш новый пост",
+    "upload.post.title": "Название трека",
+    "upload.post.description": "Описание трека",
+    "upload.post.createdAt": "сейчас",
+
+    "support.main_text": "Не стесняйтесь связаться с нами!",
+    "support.title": "Свяжитесь с нами",
+    "support.notice": "Пожалуйста, будьте вежливы с администрацией проекта. Посетите страницу F.A.Q перед заполнением этой формы.",
+    "support.open_f.a.q": "Открыть страницу F.A.Q",
+
+    "register.main_text": "Давайте начнем!",
+    "register.title": "Зарегистрироваться",
+    "register.already_registered": "Уже зарегистрированы",
+
+    "restore.check_email.main_text": "Восстановление доступа к аккаунту",
+    "restore.check_email.title": "Восстановление аккаунта",
+    "restore.check_email.back_to_login": "Вернуться ко входу",
+
+    "verify.main_text": "Проверка аккаунта",
+    "verify.validating": "Проверка...",
+    "verify.verify_text": "Подтвердите свой аккаунт",
+    "verify.error": "Ошибка проверки",
+    "verify.error.text": "Это действие недопустимо",
+
+    "account_restore.main_text": "Новый",
+    "account_restore.validating": "Проверка...",
+    "account_restore.ready_to_restore": "Ваш аккаунт готов к восстановлению",
+    "account_restore.cancel": "Отменить действие восстановления аккаунта",
+    "account_restore.error.validation": "Ошибка проверки",
+    "account_restore.error.text": "Это действие недопустимо",
+    "account_restore.snack.success": "Действие было отменено",
+    "account_restore.snack.error": "Неожиданная ошибка"
+}

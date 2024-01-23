@@ -1,0 +1,49 @@
+{
+    "posts.not_found": "Ще немає треків",
+
+    "comments.not_found": "Ще немає коментарів",
+
+    "select.user.not_found": "Ще немає підписок на користувачів",
+    "select.user.snack.pending": "Надсилання обраного треку...",
+    "select.user.snack.success": "Трек відправлено!",
+    "select.user.snack.error": "Не вдається поділитися цим треком",
+
+    "select.post.info_text": "Почніть вводити назву треку для пошуку",
+    "select.post.snack.playlist.success": "Плейлист оновлено",
+    "select.post.snack.playlist.error": "Не вдається оновити цей плейлист",
+
+    "battles.not_found": "Боїв не знайдено",
+    "battles.in_progress": "В процесі",
+    "battles.finished": "Завершено",
+    "battles.create_new": "Створити новий",
+    "battles.create.main_text": "Готові до виклику?",
+    "battles.create.login_required": "Будь ласка, увійдіть, щоб створити новий",
+    "battles.create.title": "Створити бій",
+    "battles.create.select_my_track": "Виберіть ваш трек",
+    "battles.create.select_oponnents_track": "Виберіть трек супротивника",
+
+    "playlists.explore": "Дослідження",
+    "playlists.my_playlists": "Мої плейлисти",
+    "playlists.create_new": "Створити новий",
+    "playlists.not_found": "Ще немає плейлистів",
+    "playlists.login_to_operate": "Увійдіть, щоб управляти своїми плейлистами",
+    "playlists.create.main_text": "Новий плейлист? Прекрасно :)",
+    "playlists.create.title": "Створити плейлист",
+    "playlists.create.notice": "Увага, публічні плейлисти видимі всім користувачам",
+    "playlists.create.login_required": "Будь ласка, увійдіть, щоб створити новий",
+    
+
+    "rightbar.users.info_text": "Почніть вводити псевдонім для пошуку",
+    "leftbar.posts.info_text": "Почніть вводити назву треку для пошуку",
+
+    "notifications.unread": "Непрочитані",
+    "notifications.read": "Прочитані",
+    "notifications.mark_as_read": "Позначити всі як прочитані",
+    "notifications.delete_all": "Видалити всі сповіщення",
+    "notifications.snack.pending": "Очікування...",
+    "notifications.snack.success": "Успішно",
+    "notifications.snack.error": "Виникла помилка",
+
+    "categories.select": "Вибрати категорію",
+    "categories.selected": "Треки категорії"
+}

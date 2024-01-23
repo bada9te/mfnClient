@@ -10,7 +10,6 @@ import muiTheme from './utils/mui-theme/theme';
 
 
 
-
 function App() {
   const navigate = useNavigate();
   //const location = useLocation();

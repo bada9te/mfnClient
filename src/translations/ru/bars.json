@@ -1,0 +1,29 @@
+{
+    "topbar.title": "MUSIC FROM NOTHING",
+    "topbar.feed": "Лента",
+    "topbar.battles": "Баттлы",
+    "topbar.playlists": "Плейлисты",
+    "topbar.categories": "Категории",
+    "topbar.profile": "Профиль",
+    "topbar.notifications": "Уведомления",
+    "topbar.edit_profile": "Редактировать профиль",
+    "topbar.saved_posts": "Сохраненные посты",
+    "topbar.support": "Поддержка",
+    "topbar.language": "Язык",
+    "topbar.logout": "Выйти",
+    "topbar.log_in": "Войти",
+    "topbar.dark_mode": "Темный режим",
+
+    "bottombar.tracks": "Треки",
+    "bottombar.new_post": "Новый пост",
+    "bottombar.player": "Плеер",
+    "bottombar.people": "Люди",
+
+    "leftbar.header": "Поиск треков",
+    "leftbar.label": "Название трека",
+    "leftbar.info_text": "Начните вводить название трека для поиска",
+
+    "rightbar.header": "Поиск пользователей",
+    "rightbar.label": "Никнейм",
+    "rightbar.info_text": "Начните вводить никнейм для поиска"
+}

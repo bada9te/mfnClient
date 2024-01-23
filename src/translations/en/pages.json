@@ -49,5 +49,24 @@
 
     "register.main_text": "Let’s get started!",
     "register.title": "Register",
-    "register.already_registered": "Already registered"
+    "register.already_registered": "Already registered",
+
+    "restore.check_email.main_text": "Restore access to account",
+    "restore.check_email.title": "Account restore",
+    "restore.check_email.back_to_login": "Back to login",
+
+    "verify.main_text": "Account verification",
+    "verify.validating": "Validating...",
+    "verify.verify_text": "Verify your account",
+    "verify.error": "Validation error",
+    "verify.error.text": "This action is not valid",
+
+    "account_restore.main_text": "New",
+    "account_restore.validating": "Validating...",
+    "account_restore.ready_to_restore": "Your account is ready to be restored",
+    "account_restore.cancel": "Cancel account restore action",
+    "account_restore.error.validation": "Validation error",
+    "account_restore.error.text": "This action is not valid",
+    "account_restore.snack.success": "Action was canceled",
+    "account_restore.snack.error": "Unexpected error"
 }

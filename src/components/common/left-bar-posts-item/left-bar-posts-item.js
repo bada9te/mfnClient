@@ -45,7 +45,7 @@ const LeftBarPostsItem = (props) => {
             <CardActions sx={{m: 0, p: 0}}>
                 <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
                     <Button 
-                        startIcon={<Visibility/>}
+                        startIcon={<Person2/>}
                         sx={{ borderRadius: 0 }}
                         variant="contained" size="small" 
                         onClick={() => navigate(`/app/profile/${user[0]}`)}
@@ -54,11 +54,10 @@ const LeftBarPostsItem = (props) => {
                     </Button>
 
                     <Button
-                        startIcon={<Person2/>}
+                        startIcon={<Visibility/>}
                         sx={{ 
                             borderTopRightRadius: 50,
                             borderBottomRightRadius: 0,
-                            pr: 2
                         }} 
                         variant="contained" size="small"
                         onClick={() => navigate(`/app/track/${id}/${user[0]}`)}

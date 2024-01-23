@@ -5,19 +5,21 @@ import AccountRestoreRequestForm from '../../components/forms/account-restore-re
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
 import VerifyEmailBG from '../../images/bgs/emailCheckFormBG.png';
 import { Login } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 
 const AccountRestoreEmailCheck = (props)=> {
     const navigate = useNavigate();
+    const { t } = useTranslation("pages");
 
     return(
-        <LogRegVerContainer bg={VerifyEmailBG} text="Restore access to account">
+        <LogRegVerContainer bg={VerifyEmailBG} text={t('restore.check_email.main_text')}>
             <Box sx={{ width: '30rem', height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
                     <Avatar src={emailImage} sx={{ m: 1, boxShadow: 5 }}/>
                 </Box>
                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                    Account restore
+                    { t('restore.check_email.title') }
                 </Typography>
                 <CardContent>
                     <AccountRestoreRequestForm/>
@@ -29,7 +31,7 @@ const AccountRestoreEmailCheck = (props)=> {
                             startIcon={<Login/>}
                             variant='contained' 
                             onClick={() => navigate('/app/login')}>
-                            Back to login
+                            {t('restore.check_email.back_to_login')}
                         </Button>
                     </Stack>
                 </CardActions>

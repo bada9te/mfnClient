@@ -1,0 +1,29 @@
+{
+    "topbar.title": "MUSIC FROM NOTHING",
+    "topbar.feed": "Стрічка",
+    "topbar.battles": "Баталії",
+    "topbar.playlists": "Плейлисти",
+    "topbar.categories": "Категорії",
+    "topbar.profile": "Профіль",
+    "topbar.notifications": "Сповіщення",
+    "topbar.edit_profile": "Редагувати профіль",
+    "topbar.saved_posts": "Збережені записи",
+    "topbar.support": "Підтримка",
+    "topbar.language": "Мова",
+    "topbar.logout": "Вийти",
+    "topbar.log_in": "Увійти",
+    "topbar.dark_mode": "Темний режим",
+
+    "bottombar.tracks": "Треки",
+    "bottombar.new_post": "Новий пост",
+    "bottombar.player": "Програвач",
+    "bottombar.people": "Користувачі",
+
+    "leftbar.header": "Пошук треків",
+    "leftbar.label": "Назва треку",
+    "leftbar.info_text": "Почніть вводити назву треку для пошуку",
+
+    "rightbar.header": "Пошук користувачів",
+    "rightbar.label": "Псевдонім",
+    "rightbar.info_text": "Почніть вводити псевдонім для пошуку"
+}
