@@ -7,7 +7,7 @@
     "topbar.profile": "Профіль",
     "topbar.notifications": "Сповіщення",
     "topbar.edit_profile": "Редагувати профіль",
-    "topbar.saved_posts": "Збережені записи",
+    "topbar.saved_posts": "Збережені треки",
     "topbar.support": "Підтримка",
     "topbar.language": "Мова",
     "topbar.logout": "Вийти",
@@ -15,15 +15,13 @@
     "topbar.dark_mode": "Темний режим",
 
     "bottombar.tracks": "Треки",
-    "bottombar.new_post": "Новий пост",
+    "bottombar.new_post": "Створити",
     "bottombar.player": "Програвач",
     "bottombar.people": "Користувачі",
 
-    "leftbar.header": "Пошук треків",
-    "leftbar.label": "Назва треку",
-    "leftbar.info_text": "Почніть вводити назву треку для пошуку",
+    "leftbar.header": "Пошук музики",
+    "leftbar.label": "Назва",
 
-    "rightbar.header": "Пошук користувачів",
-    "rightbar.label": "Псевдонім",
-    "rightbar.info_text": "Почніть вводити псевдонім для пошуку"
+    "rightbar.header": "Пошук виконавців",
+    "rightbar.label": "Ім'я"
 }

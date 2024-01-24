@@ -66,7 +66,7 @@ const NotificationsContainer = props => {
     return (
         <Box sx={{width: '100%', height: '100vh'}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
-                <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth" TabIndicatorProps={{ sx: { backgroundColor: 'white' } }}>
+                <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                     <Tab icon={<MarkAsUnread/>} label={t('notifications.unread')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
                     <Tab icon={<Checklist/>} label={t('notifications.read')} id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
                 </Tabs>

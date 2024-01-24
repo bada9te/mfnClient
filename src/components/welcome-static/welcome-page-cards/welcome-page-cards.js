@@ -33,9 +33,17 @@ const cardsData = [
         title: 'About the author',
         description: 'Hi there! I am so happy to see u on my first huge web-project. I am a casual 3rd year student of National University "Zaporizhzhia Polytechnic", Zaporizhzhia, Ukraine. There is no modern web-development classes in my uni however, so I decided to do some self-education stuff.',
         iconUrl: logoClear,
-        github: 'https://github.com/bada9te',
-        instagram: 'NULL',
+        github: [{ bada9te: 'https://github.com/bada9te' }],
+        instagram: [{ bada9te: 'NULL' }],
     },
+    {
+        id: "gratitude",
+        title: 'Big gratitude',
+        iconUrl: logoClear,
+        description: "Want to say great thanks for translation to Deutch (Name Surname) and some technical stuff (Name Surname)",
+        github: [],
+        instagram: [],
+    }
 ];
 
 const WelcomePageCards = props => {

@@ -8,13 +8,13 @@
     "welcome.register": "Зареєструватися",
 
     "welcome.card.listening.title": "Прослуховування музики",
-    "welcome.card.listening.description": "Слухайте музику та отримуйте задоволення!1313",
+    "welcome.card.listening.description": "Слухайте музику та отримуйте задоволення!",
     "welcome.card.musical.title": "Обмін музичними творіннями",
     "welcome.card.musical.description": "Обмінюйтеся треками користувачів всередині платформи.",
     "welcome.card.musician.title": "Профілювання музиканта",
     "welcome.card.musician.description": "Платформа надає вражаючі профілі користувачів, які ви можете налаштовувати за своїм смаком :)",
     "welcome.card.just.title": "Просто для розваг та самостійного вивчення \\*_*/",
-    "welcome.card.just.description": "Цю платформу розроблено однією людиною та насправді знаходиться в розробці.",
+    "welcome.card.just.description": "Цю платформу розроблено однією людиною та знаходиться у стадії ''Вічна БЕТА''.",
     "welcome.card.about.title": "Про автора",
     "welcome.card.about.description": "Привіт! Я дуже радий бачити вас на своєму першому великому веб-проєкті. Я студент 3-го курсу Національного університету ''Запорізька політехніка'', Запоріжжя, Україна. У моєму університеті немає сучасних занять з веб-розробки, тому я вирішив самостійно вивчати цю сферу.",
     
@@ -25,7 +25,7 @@
     "welcome.card.community.title": "🤝 Спільнота",
     "welcome.card.community.description": "Приєднуйтеся, співпрацюйте та дайтеся натхненню від однодумців.",
     "welcome.card.start.title": "🚀 Почнемо",
-    "welcome.card.start.description": "Приєднуйтеся до ''Музики з Нічого'' сьогодні і нехай розпочнеться музика!",
+    "welcome.card.start.description": "Приєднуйтеся до ''Music From Nothing'' сьогодні і нехай розпочнеться музика!",
 
 
     "login.main_text": "З поверненням!",
@@ -36,10 +36,10 @@
 
     "logout.text": "Вихід",
 
-    "upload.main_text": "Завантаження чогось нового? Цікаво!",
-    "upload.title": "Ваш новий пост",
-    "upload.post.title": "Назва треку",
-    "upload.post.description": "Опис треку",
+    "upload.main_text": "Завантажуєте щось нове? Цікаво!",
+    "upload.title": "Новий пост",
+    "upload.post.title": "Назва пісні",
+    "upload.post.description": "Опис пісні",
     "upload.post.createdAt": "зараз",
 
     "support.main_text": "Не соромтеся звертатися до нас!",

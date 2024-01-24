@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, IconButton, Stack, Typography } from "@mui/material";
 import { GitHub, Instagram } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 
@@ -29,9 +29,34 @@ const WelcomePageCard = props => {
                 (item?.github || item?.instagram)
                 &&
                 <CardActions>
-                    {item?.github && <IconButton href={item.github} target="_blank"><GitHub/></IconButton>}
+                    <Stack useFlexGap flexWrap="wrap" flexDirection="row">
 
-                    {item?.instagram && <IconButton><Instagram/></IconButton>}
+                        {
+                            item?.github && item.github.map(object => {
+                                return Object.keys(object).map((i, key) => {
+                                    return (
+                                        <IconButton key={key} href={object[i]} target="_blank" sx={{borderRadius: 25}}>
+                                            <GitHub sx={{mr: 0.5}}/>
+                                            <Typography>{i}</Typography>
+                                        </IconButton>
+                                    );
+                                });
+                            })
+                        }
+
+                        {
+                            item?.instagram && item.instagram.map(object => {
+                                return Object.keys(object).map((i, key) => {
+                                    return (
+                                        <IconButton key={key} href={object[i]} target="_blank" sx={{borderRadius: 25}}>
+                                            <Instagram sx={{mr: 0.5}}/>
+                                            <Typography>{i}</Typography>
+                                        </IconButton>
+                                    );
+                                })
+                            })
+                        }
+                    </Stack>
                 </CardActions>
             }
         </Card>

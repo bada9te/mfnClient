@@ -50,6 +50,14 @@ const muiTheme = (mode) => {
                     },
                 }
             },
+            MuiTabs: {
+                styleOverrides: {
+                    indicator: {
+                        backgroundColor: 'white',
+                        height: 4,
+                    },
+                },
+            },
             MuiPaginationItem: {
                 styleOverrides: {
                     root: {

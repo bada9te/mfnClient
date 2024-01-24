@@ -92,7 +92,7 @@ const BattlesContainer = props => {
     return (
         <Box height={'100%'}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
-                <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth" TabIndicatorProps={{ sx: { backgroundColor: 'white' } }}>
+                <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                     <Tab icon={<Whatshot/>}  label={t('battles.in_progress')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
                     <Tab icon={<Timelapse/>} label={t('battles.finished')}    id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
                     <Tab icon={<AddCircle/>} label={t('battles.create_new')}  id="simple-tab-2" aria-controls="simple-tabpanel-2"/>

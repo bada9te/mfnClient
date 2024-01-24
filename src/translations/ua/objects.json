@@ -8,7 +8,7 @@
     "post.like": "Лайк",
     "post.dropdown.share": "Поділитися",
     "post.dropdown.download": "Завантажити",
-    "post.dropdown.report": "Поскаржитися",
+    "post.dropdown.report": "Скарга",
     "post.dropdown.delete": "Видалити",
     "post.see": "Переглянути трек",
     "post.track_details": "Деталі треку",
@@ -20,12 +20,12 @@
     "playlist.add_track": "Додати трек",
     "playlist.delete": "Видалити",
     "playlist.share": "Поділитися",
-    "playlist.report": "Звіт",
+    "playlist.report": "Скарга",
     "playlist.no_tracks": "Немає треків у цьому плейлисті",
 
     "comment.dropdown.delete": "Видалити",
     "comment.dropdown.reply": "Відповісти",
-    "comment.dropdown.report": "Звіт",
+    "comment.dropdown.report": "Скарга",
     "comment.no_replies": "Поки що немає відповідей",
 
     "leftbar_item.open_profile": "Відкрити профіль",
