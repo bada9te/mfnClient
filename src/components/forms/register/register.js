@@ -22,7 +22,7 @@ const RegisterForm = (props) => {
             nick: data.Nickname
         }).then(({ data }) => {
             navigate('/app/login');
-            enqueueSnackbar(`${t('register.snack.success1')} ${data.userCreate.email} ${t('register.snack.success2')}`, { autoHideDuration: 3000, variant: "success" });
+            enqueueSnackbar(`${t('register.snack.success1')} ${data.local.email} ${t('register.snack.success2')}`, { autoHideDuration: 3000, variant: "success" });
         }).catch(err => {
             enqueueSnackbar(err.response.data, { autoHideDuration: 3000, variant: "error" });
         });

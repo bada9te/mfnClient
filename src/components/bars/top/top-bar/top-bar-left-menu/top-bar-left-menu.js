@@ -1,5 +1,5 @@
 import { Button, ButtonGroup } from "@mui/material";
-import { Category, PlaylistPlay, QueueMusic, TrackChanges } from '@mui/icons-material';
+import { Category, Chat, PlaylistPlay, QueueMusic, TrackChanges } from '@mui/icons-material';
 import { useTranslation } from "react-i18next";
 
 
@@ -21,6 +21,7 @@ const TopBarLeftMenu = props => {
                             {page === "Battles"    && <TrackChanges/>}
                             {page === "Playlists"  && <PlaylistPlay/>}
                             {page === "Categories" && <Category/>    }
+                            {page === "Chats"      && <Chat/>        }
                         </>
                     }
                 >

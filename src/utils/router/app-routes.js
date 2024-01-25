@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Welcome, Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists, Categories } from '../../pages/pages';
+import { Welcome, Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists, Categories, Chats } from '../../pages/pages';
 
 const ApplicationRoutes = props => {
     return (
@@ -24,6 +24,7 @@ const ApplicationRoutes = props => {
                 <Route path='/app/notifications'   element={<Notifications/>}/>
                 <Route path='/app/playlists'       element={<Playlists/>}/>
                 <Route path='/app/categories'      element={<Categories/>}/>
+                <Route path='/app/chats'           element={<Chats/>}/>
                 <Route path='/app/*'               element={<NotFound404/>}/>
             </Route>
         </Routes>

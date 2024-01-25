@@ -1,6 +1,6 @@
 import RegisterForm from '../../components/forms/register/register';
 import { useNavigate } from 'react-router-dom';
-import { Box, CardActions, CardContent, Typography, Avatar, Stack, Button, useTheme } from '@mui/material';
+import { Box, CardActions, CardContent, Typography, Avatar, Stack, Button } from '@mui/material';
 import loginImage from '../../images/icons/logo.png';
 import registerFormBG from '../../images/bgs/loginFormBG.png';
 import LogRegVerContainer from '../../components/containers/image-left-form-conatiner/image-left-form-container';
@@ -10,8 +10,6 @@ import { useTranslation } from "react-i18next";
 const Register = () => {
     const navigate = useNavigate();
     const { t } = useTranslation("pages");
-    const theme = useTheme();
-    console.log(theme)
 
     return (
         <LogRegVerContainer bg={registerFormBG} text={t('register.main_text')}>

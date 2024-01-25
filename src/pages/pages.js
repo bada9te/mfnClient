@@ -19,6 +19,7 @@ import AccountVerify   from "./AccountVerify/AccountVerify";
 import Playlists       from "./Playlists/Playlists";
 import Welcome         from "./Welcome/Welcome";
 import Categories      from "./Categories/Categories";
+import Chats           from "./Chats/Chats";
 
 export {
     Welcome,
@@ -42,6 +43,7 @@ export {
     AccountVerify,
     Playlists,
     Categories,
+    Chats,
 };
 
 

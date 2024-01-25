@@ -1,5 +1,5 @@
 import { MenuItem, Typography } from "@mui/material";
-import { Category, PlaylistPlay, QueueMusic, TrackChanges } from '@mui/icons-material';
+import { Category, Chat, PlaylistPlay, QueueMusic, TrackChanges } from '@mui/icons-material';
 import { useTranslation } from "react-i18next";
 
 
@@ -18,6 +18,7 @@ const TopBarLeftMenuMin = props => {
                                 {item === "Battles" && <TrackChanges sx={{mr: 1}}/> }
                                 {item === "Playlists" && <PlaylistPlay sx={{mr: 1}}/> }
                                 {item === "Categories" && <Category sx={{mr: 1}}/> }
+                                {item === "Chats" && <Chat sx={{mr: 1}}/> }
                                 {t(`topbar.${item.toLowerCase()}`)}
                             </Typography>
                         </MenuItem>
