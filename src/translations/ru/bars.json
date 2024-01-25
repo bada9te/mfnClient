@@ -7,23 +7,23 @@
     "topbar.profile": "Профиль",
     "topbar.notifications": "Уведомления",
     "topbar.edit_profile": "Редактировать профиль",
-    "topbar.saved_posts": "Сохраненные посты",
+    "topbar.saved_posts": "Сохраненные",
     "topbar.support": "Поддержка",
     "topbar.language": "Язык",
     "topbar.logout": "Выйти",
     "topbar.log_in": "Войти",
     "topbar.dark_mode": "Темный режим",
 
-    "bottombar.tracks": "Треки",
+    "bottombar.tracks": "Музыка",
     "bottombar.new_post": "Новый пост",
     "bottombar.player": "Плеер",
-    "bottombar.people": "Люди",
+    "bottombar.people": "Исполнители",
 
-    "leftbar.header": "Поиск треков",
-    "leftbar.label": "Название трека",
-    "leftbar.info_text": "Начните вводить название трека для поиска",
+    "leftbar.header": "Поиск музыки",
+    "leftbar.label": "Название",
+    "leftbar.info_text": "Начните вводить название для поиска",
 
-    "rightbar.header": "Поиск пользователей",
-    "rightbar.label": "Никнейм",
-    "rightbar.info_text": "Начните вводить никнейм для поиска"
+    "rightbar.header": "Поиск исполнителей",
+    "rightbar.label": "Имя",
+    "rightbar.info_text": "Начните вводить имя для поиска"
 }

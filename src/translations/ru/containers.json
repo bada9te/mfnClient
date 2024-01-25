@@ -19,8 +19,8 @@
     "battles.create.main_text": "Готовы к вызову?",
     "battles.create.login_required": "Пожалуйста, войдите, чтобы создать новый баттл",
     "battles.create.title": "Создать баттл",
-    "battles.create.select_my_track": "Выбрать мой трек",
-    "battles.create.select_oponnents_track": "Выбрать трек соперника",
+    "battles.create.select_my_track": "Выбрать мою музыку",
+    "battles.create.select_oponnents_track": "Выбрать музыку соперника",
 
     "playlists.explore": "Исследовать",
     "playlists.my_playlists": "Мои плейлисты",
@@ -32,8 +32,8 @@
     "playlists.create.notice": "Обратите внимание, что общедоступные плейлисты видны всем пользователям",
     "playlists.create.login_required": "Пожалуйста, войдите, чтобы создать новый",
 
-    "rightbar.users.info_text": "Начните вводить никнейм для поиска",
-    "leftbar.posts.info_text": "Начните вводить название трека для поиска",
+    "rightbar.users.info_text": "Начните вводить имя для поиска",
+    "leftbar.posts.info_text": "Начните вводить название для поиска",
 
     "notifications.unread": "Непрочитанные",
     "notifications.read": "Прочитанные",
@@ -44,5 +44,5 @@
     "notifications.snack.error": "Произошла ошибка",
 
     "categories.select": "Выберите категорию",
-    "categories.selected": "Треки в категории"
+    "categories.selected": "Музыка в категории"
 }

@@ -10,18 +10,18 @@
     "post.dropdown.download": "Скачать",
     "post.dropdown.report": "Пожаловаться",
     "post.dropdown.delete": "Удалить",
-    "post.see": "Трек",
-    "post.track_details": "Детали трека",
+    "post.see": "Посмотреть",
+    "post.track_details": "Детали",
     "post.open_profile": "Профиль",
     "post.select": "Выбрать",
     "post.vote+1": "Голосовать (+1)",
-    "post.unavailable": "Трек недоступен",
+    "post.unavailable": "Музыка недоступна",
 
-    "playlist.add_track": "Добавить трек",
+    "playlist.add_track": "Добавить музыку",
     "playlist.delete": "Удалить",
     "playlist.share": "Поделиться",
     "playlist.report": "Пожаловаться",
-    "playlist.no_tracks": "Нет треков в этом плейлисте",
+    "playlist.no_tracks": "Нет записей в этом плейлисте",
 
     "comment.dropdown.delete": "Удалить",
     "comment.dropdown.reply": "Ответить",
@@ -29,7 +29,7 @@
     "comment.no_replies": "Пока нет ответов",
 
     "leftbar_item.open_profile": "Профиль",
-    "leftbar_item.see_track": "Трек",
+    "leftbar_item.see_track": "Музыка",
 
     "rightbar_item.open_profile": "Профиль",
 
