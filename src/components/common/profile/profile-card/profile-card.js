@@ -52,11 +52,13 @@ const ProfileCard = (props) => {
                 ...baseState(), 
                 user: { 
                     ...currentUser, 
-                    subscribedOn: { 
+                    subscribedOn: [ 
                         ...data.userSwitchSubscription.user2.subscribedOn 
-                    } 
+                    ]
                 } 
             });
+
+            console.log(baseState().user)
         }
     });
 

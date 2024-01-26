@@ -49,6 +49,18 @@ export default new InMemoryCache({
         },
         User: {
             keyFields: ['_id'],
+            fields: {
+                subscribedOn: {
+                    merge(_, incoming) {
+                        return incoming
+                    }
+                },
+                subscribers: {
+                    merge(_, incoming) {
+                        return incoming
+                    }
+                }
+            }
         },
         Playlist: {
             keyFields: ['_id'],

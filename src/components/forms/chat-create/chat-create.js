@@ -14,8 +14,11 @@ const CreateChatForm = props => {
 
     const onSubmit = async(data) => {
         if (!checked.length) {
-            enqueueSnackbar("No users selected", { autoHideDuration: 3000, variant: 'error' })
+            enqueueSnackbar("No users selected", { autoHideDuration: 3000, variant: 'error' });
+            return;
         }
+
+        reset();
     }
 
     return (

@@ -13,6 +13,7 @@ import { SpinnerCircular } from "../../common/spinner/Spinner";
 const UserSelectContainer = props => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { selectType, sharedItem: sharedItemId, checked } = useReactiveVar(userSelectContainerState);
+    console.log(currentUser)
     const { data, loading } = useQuery(USERS_BY_IDS_QUERY, {
         variables: {
             ids: currentUser.subscribedOn,
@@ -110,13 +111,14 @@ const UserSelectContainer = props => {
                                         return (
                                             <>
                                                 {
-                                                    data.usersByIds.map((value, key) => {
+                                                    data.usersByIds.map((user, key) => {
+                                                        
                                                         return (
-                                                            <ListItemButton key={key} role="listitem" onClick={handleToggle(value)}>
+                                                            <ListItemButton key={key} role="listitem" onClick={handleToggle(user._id)}>
                                                                 <ListItemIcon>
-                                                                    <Checkbox checked={checked.indexOf(value) !== -1} tabIndex={-1}/>
+                                                                    <Checkbox checked={checked.indexOf(user._id) !== -1} tabIndex={-1}/>
                                                                 </ListItemIcon>
-                                                                <ListItemText id={`transfer-list-all-item-${value}-label`} primary={`${value}`} />
+                                                                <ListItemText id={`transfer-list-all-item-${user._id}-label`} primary={`${user.nick}`} />
                                                             </ListItemButton>
                                                         );
                                                     })
