@@ -1,0 +1,61 @@
+import { gql } from "@apollo/client";
+
+export const CORE_CHAT_MESSAGE_FIELDS = gql`
+    fragment CoreChatMessageFields on ChatMessage {
+        _id
+        owner {
+            _id avatar nick
+        }
+        chat {
+            _id
+        }
+        text
+        isReply
+        createdAt
+    }
+`;
+
+
+// Q
+export const CHAT_MESSAGE_QUERY = gql`
+    ${CORE_CHAT_MESSAGE_FIELDS}
+    query chatMessage($_id: ID!) {
+        chatMessage(_id: $_id) {
+            ...CoreChatMessageFields
+        }
+    }
+`;
+
+export const CHAT_MESSAGES_BY_CHAT_ID_QUERY = gql`
+    ${CORE_CHAT_MESSAGE_FIELDS}
+    query chatMessagesByChatId($_id: ID!, $offset: Int!, $limit: Int!) {
+        chatMessagesByChatId(_id: $_id, offset: $offset, limit: $limit) {
+            ...CoreChatMessageFields
+        }
+    }
+`;
+
+// M
+export const CHAT_MESSAGE_CREATE_MUTATION = gql`
+    mutation chatMessageCreate($input: ChatMessageCreateInput!) {
+        chatMessageCreate(input: $input) {
+            ...CoreChatMessageFields
+        }
+    }
+`;
+
+export const CHAT_MESSAGE_DELETE_BY_ID_MUTATION = gql`
+    mutation chatMessageDeleteById($_id: ID!) {
+        chatMessageDeleteById(_id: $_id) {
+            ...CoreChatMessageFields
+        }
+    }
+`;
+
+export const CHAT_MESSAGE_UPDATE_MUTATION = gql`
+    mutation chatMessageUpdate($input: ChatMessageUpdateInput!) {
+        chatMessageUpdate(input: $input) {
+            ...CoreChatMessageFields
+        }
+    }
+`;
