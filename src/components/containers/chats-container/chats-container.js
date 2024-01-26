@@ -8,6 +8,7 @@ import TabPanel from "../../common/tab-panel/tab-panel";
 import EnumChats from "../../enums/enum-chats";
 import ChatHeader from "../../common/chat-header/chat-header";
 import EnumChatMessages from "../../enums/enum-chat-messages";
+import { chatCreateModalState } from "../../modals/chat-create-modal/reactive";
 
 
 
@@ -51,9 +52,15 @@ const ChatsContainer = props => {
         setStatus(key);
     }
 
+    // chat select handler
     const chatSelectionHandler = (id) => {
         setSelectedChatId(id);
         setStatus(1);
+    }
+
+    // open create chat modal
+    const handleCreateChatClick = () => {
+        chatCreateModalState({ ...chatCreateModalState(), isShowing: true })
     }
 
     // fetch data if chat was selected
@@ -79,7 +86,15 @@ const ChatsContainer = props => {
                     currentUser?._id?.length 
                     && 
                     <>
-                        <Button startIcon={<Add/>} sx={{ borderRadius: 0, boxShadow: 5 }} variant="contained" fullWidth onClick={() => {}}>{t('chats.create')}</Button>
+                        <Button 
+                            startIcon={<Add/>} 
+                            sx={{ borderRadius: 0, boxShadow: 5 }} 
+                            variant="contained" 
+                            fullWidth 
+                            onClick={handleCreateChatClick}
+                        >
+                            {t('chats.create')}
+                        </Button>
                         <Box sx={{height: 'calc(100vh - 255px)', overflow: 'auto', backgroundColor: 'red'}}>
                             <EnumChats chats={chats} chatSelectionHandler={chatSelectionHandler}/> 
                         </Box>

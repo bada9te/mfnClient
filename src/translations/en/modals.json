@@ -1,15 +1,21 @@
 {
     "comments.title": "Comments",
+
     "crop.title": "Cropping image",
     "crop.cancel": "Cancel image crop",
     "crop.ok": "Crop",
+
     "select.user.title": "Select user",
     "select.post.mine": "Select my track",
     "select.post.query": "Track title",
     "select.post.opponent": "Select opponent's track",
     "select.language.title": "Select language",
+
     "confirm.cancel": "Cancel",
     "confirm.ok": "I confirm",
+
     "report.title": "Report",
-    "report.info_text": "Pls, provide more information in text message field, so that we can easier understand what the violation is"
+    "report.info_text": "Pls, provide more information in text message field, so that we can easier understand what the violation is",
+
+    "create_chat.title": "Create chat"
 }

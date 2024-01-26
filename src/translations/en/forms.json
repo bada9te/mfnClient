@@ -150,5 +150,9 @@
     "account_restore.submit": "Confirm",
     "account_restore.snack.pending": "Updating account...",
     "account_restore.snack.success": "Account successfully updated",
-    "account_restore.snack.error": "Can't update account"
+    "account_restore.snack.error": "Can't update account",
+
+    "chat_create.title": "Chat title",
+    "chat_create.error.title": "Title must be from 4 to 10 characters",
+    "chat_create.user.not_found": "Not subscribed on users yet"
 }

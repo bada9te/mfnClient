@@ -14,6 +14,7 @@ import CommentsModal from "../../components/modals/comments-modal/comments-modal
 import ReportsModal from "../../components/modals/report-modal/report-modal";
 import PostSelectModal from "../../components/modals/post-select-modal/post-select-modal";
 import LanguageSelectModal from "../../components/modals/language-select-modal/language-select-modal";
+import ChatCreateModal from "../../components/modals/chat-create-modal/chat-create-modal";
 
 
 
@@ -30,6 +31,7 @@ const Container = (props) => {
             <ReportsModal/>
             <PostSelectModal/>
             <LanguageSelectModal/>
+            <ChatCreateModal/>
 
             {/* BARS */}
             <LeftBarPosts/>

@@ -4,4 +4,5 @@ export const userSelectContainerState = makeVar({
     isLoading: true,
     selectType: 'postShare',
     sharedItem: null,
+    checked: []
 });
