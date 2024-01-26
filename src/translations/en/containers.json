@@ -45,6 +45,11 @@
     "notifications.snack.error": "An error occured",
 
     "categories.select": "Select the category",
-    "categories.selected": "Category tracks"
+    "categories.selected": "Category tracks",
+
+    "chats.list": "Chats",
+    "chats.current": "Messages",
+    "chats.info": "Chat info",
+    "chats.create": "Create new"
 }
     

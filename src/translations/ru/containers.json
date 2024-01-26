@@ -44,5 +44,10 @@
     "notifications.snack.error": "Произошла ошибка",
 
     "categories.select": "Выберите категорию",
-    "categories.selected": "Музыка в категории"
+    "categories.selected": "Музыка в категории",
+
+    "chats.list": "Чаты",
+    "chats.current": "Сообщения",
+    "chats.info": "Информация",
+    "chats.create": "Новый чат"
 }
