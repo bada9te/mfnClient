@@ -154,5 +154,10 @@
 
     "chat_create.title": "Chat title",
     "chat_create.error.title": "Title must be from 4 to 10 characters",
-    "chat_create.user.not_found": "Not subscribed on users yet"
+    "chat_create.user.not_found": "Not subscribed on users yet",
+    
+    "chat_edit.title": "New title",
+    "chat_edit.title.submit": "Change title",
+    "chat_edit.snack.success": "Chat updated",
+    "chat_edit.snack.error": "Can't update this chat"
 }

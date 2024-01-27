@@ -7,6 +7,7 @@ import { userSelectContainerState } from "../../containers/user-select-container
 import UserSelectContainer from "../../containers/user-select-container/user-select-container";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_CREATE_MUTATION } from "../../../utils/graphql-requests/chats";
 import { baseState } from "../../baseReactive";
+import { chatCreateModalState } from "../../modals/chat-create-modal/reactive";
 
 
 const CreateChatForm = props => {
@@ -28,27 +29,13 @@ const CreateChatForm = props => {
                 input: {
                     title: data.Title,
                     owner: currentUser._id,
-                    participants: [...checked, currentUser._id]
+                    participants: [currentUser._id, ...checked]
                 }
             },
-            update: (cache, { data }) => {
-                const cachedData = cache.readQuery({ 
-                    query: CHATS_USER_RELATED_BY_USER_ID_QUERY, 
-                    variables: { _id: currentUser._id } 
-                });
-                console.log(cachedData)
-                /*
-                cache.writeQuery({
-                    query: CHATS_USER_RELATED_BY_USER_ID_QUERY,
-                    variables: { _id: currentUser._id },
-                    data: {
-                        chatsUserRelatedByUserId: [  ]
-                    }
-                });
-                */
-            }
+            refetchQueries: [{query: CHATS_USER_RELATED_BY_USER_ID_QUERY, variables: { _id: currentUser._id }}]
         }).then(_ => {
             enqueueSnackbar("Chat created.", { autoHideDuration: 1500, variant: 'success' });
+            chatCreateModalState({ ...chatCreateModalState(), isShowing: false });
             reset();
         }).catch(_ => {
             enqueueSnackbar("Can't create chat.", { autoHideDuration: 3000, variant: 'error' });

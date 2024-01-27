@@ -11,7 +11,7 @@ export const CORE_CHAT_FIELDS = gql`
         participants {
             _id
         }
-        messages {
+        lastMessage {
             _id
         }
     }
@@ -23,7 +23,7 @@ export const CHAT_QUERY = gql`
     query chat($_id: ID!) {
         chat(_id: $_id) {
             ...CoreChatFields
-            messages {
+            lastMessage {
                 text
             }
             participants {
@@ -39,7 +39,7 @@ export const CHATS_BY_IDS_QUERY = gql`
     query chatsByIds($ids: [ID!]!) {
         chatsByIds(ids: $ids) {
             ...CoreChatFields
-            messages {
+            lastMessage {
                 text
             }
             participants {
@@ -79,8 +79,8 @@ export const CHAT_CREATE_MUTATION = gql`
 
 export const CHAT_UPDATE_MUTATION = gql`
     ${CORE_CHAT_FIELDS}
-    mutation chatCreate($input: ChatUpdateInput!) {
-        chatCreate(input: $input) {
+    mutation chatUpdate($input: ChatUpdateInput!) {
+        chatUpdate(input: $input) {
             ...CoreChatFields
         }
     }

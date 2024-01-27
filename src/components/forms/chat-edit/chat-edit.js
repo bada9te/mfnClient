@@ -1,0 +1,71 @@
+import { useForm } from "react-hook-form";
+import { TextField, Button, Paper } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { useTranslation } from "react-i18next";
+import { useMutation, useReactiveVar } from "@apollo/client";
+import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_UPDATE_MUTATION } from "../../../utils/graphql-requests/chats";
+import { baseState } from "../../baseReactive";
+
+
+
+const ChatEditForm = props => {
+    const { selectedChatId } = props;
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation("forms");
+    const { user: currentUser } = useReactiveVar(baseState);
+    const [ updateChat ] = useMutation(CHAT_UPDATE_MUTATION);
+    
+
+    const onSubmit = async(data) => {
+        enqueueSnackbar(t('battle.snack.pending'), { autoHideDuration: 1500 });
+        
+        await updateChat({
+            variables: {
+                input: {
+                    _id: selectedChatId,
+                    what: "title",
+                    value: data.Title
+                }
+            },
+            refetchQueries: [{query: CHATS_USER_RELATED_BY_USER_ID_QUERY, variables: { _id: currentUser._id }}]
+        }).then(_ => {
+            reset();
+            enqueueSnackbar(t('chat_edit.snack.success'), {autoHideDuration: 1500, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar(t('chat_edit.snack.error'), { autoHideDuration: 3000, variant: 'error' });
+        }); 
+    }
+
+    return (
+        <Paper component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{py: 1, px: 2, boxShadow: 10, borderRadius: 5}}>
+            <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="title"
+                label={t('chat_edit.title')}
+                name="title"
+                error={Boolean(errors.Title)}
+                helperText={errors.Title && t('chat_create.error.title')}
+                {...register("Title", {
+                    maxLength: 10,
+                    minLength: 4,
+                    required: true,
+                })}
+            />
+           
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 1, mb: 2, boxShadow: 10 }}
+            >
+                {t('chat_edit.title.submit')}
+            </Button>
+        </Paper>
+    );
+}
+
+export default ChatEditForm;
+

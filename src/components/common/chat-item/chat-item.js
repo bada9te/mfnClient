@@ -12,7 +12,7 @@ const ChatItem = props => {
             <CardActionArea>
                 <CardHeader 
                     title={item.title}
-                    subheader={item.messages.length ? getTimeSince(new Date(+item.messages[0]?.createdAt)) : "No messages yet"}
+                    subheader={item.lastMessage ? getTimeSince(new Date(+item.lastMessage?.createdAt)) : "No messages yet"}
                     avatar={
                         <AvatarGroup max={3}>
                             {
@@ -24,7 +24,7 @@ const ChatItem = props => {
                     }
                 />
                 <CardContent>
-                    <Typography>{item.messages.length ? item.messages[0]?.text : "No messages yet"}</Typography>
+                    <Typography>{item.lastMessage ? item.lastMessage.text : "No messages yet"}</Typography>
                 </CardContent>
             </CardActionArea>
         </Card>

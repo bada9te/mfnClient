@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { baseState } from "../../baseReactive";
 import { useLazyQuery, useQuery, useReactiveVar } from "@apollo/client";
 import { useTranslation } from "react-i18next";
-import { Box, Button, IconButton, Paper, Stack, Tab, Tabs, TextField } from "@mui/material";
+import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Paper, Stack, Tab, Tabs, TextField } from "@mui/material";
 import { Add, Forum, Info, Send } from "@mui/icons-material";
 import TabPanel from "../../common/tab-panel/tab-panel";
 import EnumChats from "../../enums/enum-chats";
@@ -11,7 +11,10 @@ import EnumChatMessages from "../../enums/enum-chat-messages";
 import { chatCreateModalState } from "../../modals/chat-create-modal/reactive";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_QUERY } from "../../../utils/graphql-requests/chats";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
-
+import EnumChatParticipants from "../../enums/enum-chat-participants";
+import UserImage from "../../../images/icons/logo_person.png"
+import ClearImage from "../../../images/icons/logo_clear.png"
+import ChatEditForm from "../../forms/chat-edit/chat-edit";
 
 const ChatsContainer = props => {
     const [ status, setStatus ] = useState(0);
@@ -138,7 +141,45 @@ const ChatsContainer = props => {
             </TabPanel>
 
             <TabPanel value={status} index={2}>
-                CHAT INFO
+                { 
+                    (() => {
+                        if (currentUser?._id?.length && selectedChatId) {
+                            if (loadingSelectedChat) {
+                                return (<SpinnerLinear/>);
+                            }
+
+                            if (selectedChatData) {
+                                return (
+                                    <Stack sx={{ p: 2, mt: 0 }} spacing={2}>
+                                        <Paper sx={{ height: 'fit-content', boxShadow: 10, borderRadius: 5 }}>
+                                            <CardContent>
+                                                <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>
+                                                    <Avatar src={ClearImage} alt="Basic info" sx={{ m: 1, boxShadow: 5 }}/>
+                                                </Box>
+                                                <CardHeader title="Basic info"/>
+                                                <ChatEditForm selectedChatId={selectedChatId}/>
+                                            </CardContent>
+                                        </Paper>
+                                        <Paper sx={{ height: 'fit-content', boxShadow: 10, borderRadius: 5 }}>
+                                            <CardContent>
+                                                <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>
+                                                    <Avatar src={UserImage} alt="Participants" sx={{ m: 1, boxShadow: 5 }}/>
+                                                </Box>
+                                                <CardHeader title="Participants"/>
+                                                <Stack spacing={2}>
+                                                    <EnumChatParticipants  
+                                                        chatOwnerId={selectedChatData.chat.owner._id}
+                                                        participants={selectedChatData.chat.participants}
+                                                    />
+                                                </Stack>
+                                            </CardContent>
+                                        </Paper>
+                                    </Stack>
+                                );
+                            }
+                        }
+                    })()                   
+                }
             </TabPanel>
         </Box>
     );

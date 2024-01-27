@@ -9,7 +9,6 @@ const ProfileCardEdit = (props) => {
     const { user: currentUser, locations, theme } = useReactiveVar(baseState);
 
     return (
-        <>
             <Box sx={{
                 boxShadow: 1,  
                 backgroundImage: currentUser?.background ? `url(${locations?.images}/${currentUser?.background})` : null, 
@@ -60,7 +59,6 @@ const ProfileCardEdit = (props) => {
                     </Stack>
                 </Box>
             </Box>
-        </>
     );
 }
 
