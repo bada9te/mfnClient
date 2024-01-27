@@ -13,7 +13,6 @@ import { SpinnerCircular } from "../../common/spinner/Spinner";
 const UserSelectContainer = props => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { selectType, sharedItem: sharedItemId, checked } = useReactiveVar(userSelectContainerState);
-    console.log(currentUser)
     const { data, loading } = useQuery(USERS_BY_IDS_QUERY, {
         variables: {
             ids: currentUser.subscribedOn,
@@ -112,7 +111,6 @@ const UserSelectContainer = props => {
                                             <>
                                                 {
                                                     data.usersByIds.map((user, key) => {
-                                                        
                                                         return (
                                                             <ListItemButton key={key} role="listitem" onClick={handleToggle(user._id)}>
                                                                 <ListItemIcon>

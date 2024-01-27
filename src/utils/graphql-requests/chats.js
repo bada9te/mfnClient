@@ -4,11 +4,14 @@ import { gql } from "@apollo/client";
 export const CORE_CHAT_FIELDS = gql`
     fragment CoreChatFields on Chat {
         _id
+        title
         owner {
             _id
         }
         participants {
             _id
+            avatar
+            nick
         }
         messages {
             _id

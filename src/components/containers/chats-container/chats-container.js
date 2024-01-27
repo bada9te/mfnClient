@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { baseState } from "../../baseReactive";
-import { useReactiveVar } from "@apollo/client";
+import { useLazyQuery, useQuery, useReactiveVar } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import { Box, Button, IconButton, Paper, Stack, Tab, Tabs, TextField } from "@mui/material";
 import { Add, Forum, Info, Send } from "@mui/icons-material";
@@ -9,9 +9,8 @@ import EnumChats from "../../enums/enum-chats";
 import ChatHeader from "../../common/chat-header/chat-header";
 import EnumChatMessages from "../../enums/enum-chat-messages";
 import { chatCreateModalState } from "../../modals/chat-create-modal/reactive";
-
-
-
+import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_QUERY } from "../../../utils/graphql-requests/chats";
+import { SpinnerLinear } from "../../common/spinner/Spinner";
 
 
 const ChatsContainer = props => {
@@ -19,21 +18,16 @@ const ChatsContainer = props => {
     const [ selectedChatId, setSelectedChatId ] = useState(null);
     const { user: currentUser } = useReactiveVar(baseState);
     const { t } = useTranslation("containers");
-    
-    const chats = [
-        { _id: 1, },
-        { _id: 2, },
-        { _id: 3, },
-        { _id: 4, },
-        { _id: 5, },
-        { _id: 6, },
-        { _id: 7, },
-        { _id: 8, },
-        { _id: 9, },
-        { _id: 10, },
-        { _id: 11, },
-        { _id: 12, },
-    ];
+    const { data: chatsData, loading: chatsLoading } = useQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, {
+        variables: {
+            _id: currentUser._id,
+        }
+    });
+    const [ fetchSelectedChat, { data: selectedChatData, loading: loadingSelectedChat } ] = useLazyQuery(CHAT_QUERY, {
+        variables: {
+            _id: selectedChatId,
+        }
+    });
 
     const msgs = [
         { _id: 1, owner: { _id: currentUser._id, avatar: "NULL", nick: "profileNick", text: "tadawdwadwatadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadextdadadwadadext" } },
@@ -66,9 +60,9 @@ const ChatsContainer = props => {
     // fetch data if chat was selected
     useEffect(() => {
         if (selectedChatId) {
-            // fetch chat data
+            fetchSelectedChat();
         }
-    }, [selectedChatId]);
+    }, [selectedChatId, fetchSelectedChat]);
 
 
     return (
@@ -95,35 +89,51 @@ const ChatsContainer = props => {
                         >
                             {t('chats.create')}
                         </Button>
-                        <Box sx={{height: 'calc(100vh - 255px)', overflow: 'auto', backgroundColor: 'red'}}>
-                            <EnumChats chats={chats} chatSelectionHandler={chatSelectionHandler}/> 
-                        </Box>
+                        {
+                            chatsLoading
+                            ?
+                            <SpinnerLinear/>
+                            :
+                            <Box sx={{height: 'calc(100vh - 255px)', overflow: 'auto'}}>
+                                <EnumChats chats={chatsData.chatsUserRelatedByUserId} chatSelectionHandler={chatSelectionHandler}/> 
+                            </Box>
+                        }
                     </>
                 }
             </TabPanel>
         
             <TabPanel value={status} index={1}>
                 { 
-                    currentUser?._id?.length && selectedChatId
-                    &&
-                    <Paper>
-                        <ChatHeader handleClick={(e) => handleTabSwitch(e, 2)}/>
-                        <Stack sx={{height: 'calc(100vh - 347px)', p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
-                            <EnumChatMessages messages={msgs}/>
-                        </Stack>
-                        <Paper sx={{borderRadius: 0}}>
-                            <TextField
-                                fullWidth
-                                id="filled-static"
-                                label="Message"
-                                variant="filled"
-                                InputProps={{ 
-                                    disableUnderline: true, 
-                                    endAdornment: <IconButton><Send/></IconButton>
-                                }}
-                            />
-                        </Paper>
-                    </Paper>
+                    (() => {
+                        if (currentUser?._id?.length && selectedChatId) {
+                            if (loadingSelectedChat) {
+                                return (<SpinnerLinear/>);
+                            }
+
+                            if (selectedChatData) {
+                                return (
+                                    <Paper>
+                                        <ChatHeader handleClick={(e) => handleTabSwitch(e, 2)}/>
+                                        <Stack sx={{height: 'calc(100vh - 347px)', p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
+                                            <EnumChatMessages messages={msgs}/>
+                                        </Stack>
+                                        <Paper sx={{borderRadius: 0}}>
+                                            <TextField
+                                                fullWidth
+                                                id="filled-static"
+                                                label="Message"
+                                                variant="filled"
+                                                InputProps={{ 
+                                                    disableUnderline: true, 
+                                                    endAdornment: <IconButton><Send/></IconButton>
+                                                }}
+                                            />
+                                        </Paper>
+                                    </Paper>
+                                );
+                            }
+                        }
+                    })()                   
                 }
             </TabPanel>
 

@@ -1,25 +1,30 @@
+import { useReactiveVar } from "@apollo/client";
 import { Avatar, AvatarGroup, Card, CardActionArea, CardContent, CardHeader, Typography } from "@mui/material";
+import { baseState } from "../../baseReactive";
+import getTimeSince from "../../../utils/common-functions/getTimeSince";
 
 const ChatItem = props => {
     const { item, chatSelectionHandler } = props;
+    const { locations } = useReactiveVar(baseState);
 
     return (
         <Card sx={{cursor: 'pointer', borderRadius: 0}} onClick={chatSelectionHandler}>
             <CardActionArea>
                 <CardHeader 
-                    title={item._id}
-                    subheader={"two weeks ago"}
+                    title={item.title}
+                    subheader={item.messages.length ? getTimeSince(new Date(+item.messages[0]?.createdAt)) : "No messages yet"}
                     avatar={
                         <AvatarGroup max={3}>
-                            <Avatar src="NULL"/>
-                            <Avatar src="NULL"/>
-                            <Avatar src="NULL"/>
-                            <Avatar src="NULL"/>
+                            {
+                                item.participants.map((user, key) => {
+                                    return (<Avatar key={key} src={user.avatar.endsWith('/') ? "NULL" : `${locations.images}/${user.avatar}`}/>)
+                                })
+                            }
                         </AvatarGroup>
                     }
                 />
                 <CardContent>
-                    <Typography>Last message placeholder</Typography>
+                    <Typography>{item.messages.length ? item.messages[0]?.text : "No messages yet"}</Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
