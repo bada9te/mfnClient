@@ -5,7 +5,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { enqueueSnackbar } from "notistack";
 import { userSelectContainerState } from "../../containers/user-select-container/reactive";
 import UserSelectContainer from "../../containers/user-select-container/user-select-container";
-import { CHAT_CREATE_MUTATION } from "../../../utils/graphql-requests/chats";
+import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_CREATE_MUTATION } from "../../../utils/graphql-requests/chats";
 import { baseState } from "../../baseReactive";
 
 
@@ -31,6 +31,22 @@ const CreateChatForm = props => {
                     participants: [...checked, currentUser._id]
                 }
             },
+            update: (cache, { data }) => {
+                const cachedData = cache.readQuery({ 
+                    query: CHATS_USER_RELATED_BY_USER_ID_QUERY, 
+                    variables: { _id: currentUser._id } 
+                });
+                console.log(cachedData)
+                /*
+                cache.writeQuery({
+                    query: CHATS_USER_RELATED_BY_USER_ID_QUERY,
+                    variables: { _id: currentUser._id },
+                    data: {
+                        chatsUserRelatedByUserId: [  ]
+                    }
+                });
+                */
+            }
         }).then(_ => {
             enqueueSnackbar("Chat created.", { autoHideDuration: 1500, variant: 'success' });
             reset();
