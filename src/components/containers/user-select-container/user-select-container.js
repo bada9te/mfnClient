@@ -101,7 +101,7 @@ const UserSelectContainer = props => {
                                                 <SpinnerCircular/>
                                             </Box>
                                         );
-                                    } else if (!data.usersByIds.length) {
+                                    } else if (!data.usersByIds.length || data.usersByIds.filter(i => !except.map(j => j._id).includes(i._id)).length === 0) {
                                         return (
                                             <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                 <Typography>{t('chat_create.user.not_found')}</Typography>

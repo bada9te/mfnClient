@@ -17,12 +17,14 @@ import ClearImage from "../../../images/icons/logo_clear.png"
 import ChatEditForm from "../../forms/chat-edit/chat-edit";
 import UserSelectContainer from "../user-select-container/user-select-container";
 import { useSnackbar } from "notistack";
+import { userSelectContainerState } from "../user-select-container/reactive";
 
 
 const ChatsContainer = props => {
     const [ status, setStatus ] = useState(0);
     const [ selectedChatId, setSelectedChatId ] = useState(null);
     const { user: currentUser } = useReactiveVar(baseState);
+    const UserSelectContainerState = useReactiveVar(userSelectContainerState);
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("containers");
     const { data: chatsData, loading: chatsLoading } = useQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, {
@@ -35,7 +37,7 @@ const ChatsContainer = props => {
             _id: selectedChatId,
         }
     });
-    const [ switchParticipant ] = useMutation(CHAT_SWITCH_PARTICIPANT_MUTATION);
+    const [ switchParticipants ] = useMutation(CHAT_SWITCH_PARTICIPANT_MUTATION);
 
     const msgs = [
         { _id: 1, owner: { _id: currentUser._id, avatar: "NULL", nick: "profileNick", text: "tadawdwadwatadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadextdadadwadadext" } },
@@ -68,7 +70,8 @@ const ChatsContainer = props => {
     // seitch participant handler
     const addOrRemoveParticipants = (participants) => {
         enqueueSnackbar("Updating chat...", { autoHideDuration: 1500 });
-        switchParticipant({
+        
+        switchParticipants({
             variables: { chatId: selectedChatData.chat._id, participants },
             update: (cache, {data}) => {
                 const cachedChat = cache.readQuery({
@@ -81,7 +84,7 @@ const ChatsContainer = props => {
                     variables: { _id: selectedChatId },
                     data: {
                         ...cachedChat, 
-                        participants: data.chatSwitchParticipant.participants,
+                        participants: data.chatSwitchParticipants.participants,
                     }
                 });
             }
@@ -208,7 +211,7 @@ const ChatsContainer = props => {
                                                     <Button
                                                         variant="contained" 
                                                         sx={{ boxShadow: 10 }}
-                                                        onClick={addOrRemoveParticipants}
+                                                        onClick={() => addOrRemoveParticipants(UserSelectContainerState.checked)}
                                                     >
                                                         Add participants
                                                     </Button>
