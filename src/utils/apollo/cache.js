@@ -75,6 +75,15 @@ export default new InMemoryCache({
         Comment: {
             keyFields: ['_id']
         },
-        
+        Chat: {
+            keyFields: ['_id'],
+            fields: {
+                participants: {
+                    merge(_, incoming) {
+                        return incoming;
+                    }
+                }
+            }
+        }
     }
 });

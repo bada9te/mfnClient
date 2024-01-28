@@ -2,7 +2,7 @@ import { useReactiveVar } from "@apollo/client";
 import { chatCreateModalState } from "./reactive";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@emotion/react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, useMediaQuery } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import CreateChatForm from "../../forms/chat-create/chat-create";
 

@@ -1,11 +1,11 @@
 import { useReactiveVar } from "@apollo/client";
-import { Clear, Logout, Person, PersonRemove, RemoveCircle } from "@mui/icons-material";
+import { Logout, Person, RemoveCircle } from "@mui/icons-material";
 import { Avatar, ButtonGroup, Card, CardHeader, IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { baseState } from "../../baseReactive";
 
 const ChatParticipantItem = props => {
-    const { item, chatOwnerId } = props;
+    const { item, chatOwnerId, switchParticipants } = props;
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
     const me = currentUser._id === item._id;
@@ -17,7 +17,9 @@ const ChatParticipantItem = props => {
     }
 
     // delete from chat
-
+    const handleUserDeletion = () => {
+        switchParticipants([item._id]);
+    }
 
     return (
         <Card sx={{ borderRadius: 5, boxShadow: 5 }}>
@@ -30,7 +32,7 @@ const ChatParticipantItem = props => {
                             <IconButton onClick={handleProfileOpen}><Person/></IconButton>
                         </Tooltip>
                         <Tooltip title={me ? "Leave chat" : "Kick user"}>
-                            <IconButton>{me ? <Logout/> : <RemoveCircle/>}</IconButton>
+                            <IconButton onClick={handleUserDeletion}>{me ? <Logout/> : <RemoveCircle/>}</IconButton>
                         </Tooltip>
                     </ButtonGroup>
                 } 
