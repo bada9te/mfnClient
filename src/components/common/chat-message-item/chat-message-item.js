@@ -19,7 +19,7 @@ const ChatMessageItem = props => {
                 alignItems: 'start',
             }}
         >
-            { !myMsg && <Avatar src="NULL"/> }
+            { !myMsg && <Avatar src={item.owner.avatar}/> }
             <Stack spacing={0.5} useFlexGap display="flex" alignItems={myMsg ? 'end':'start'} >
                 <Typography fontSize={14} sx={{px: 0.5, width: 'fit-content', maxWidth: '350px'}}>{`${item.owner.nick}`}</Typography>
                 <Typography fontSize={10} sx={{px: 0.5, width: 'fit-content', maxWidth: '350px'}} fontStyle='italic'>{`${getParsedDate(new Date(+item.createdAt))}`}</Typography>
@@ -44,7 +44,7 @@ const ChatMessageItem = props => {
                     </Typography>
                 </Box>
             </Stack>
-            { myMsg && <Avatar src="NULL"/> }
+            { myMsg && <Avatar src={item.owner.avatar}/> }
         </Stack>
     );
 }

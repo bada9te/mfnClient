@@ -1,10 +1,7 @@
-import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Paper, Typography, Checkbox } from "@mui/material";
-import { enqueueSnackbar } from "notistack";
-import { CREATE_NOTIFICATION_MUTATION } from "../../../utils/graphql-requests/notifications";
 import { USERS_BY_IDS_QUERY } from "../../../utils/graphql-requests/users";
 import { baseState } from "../../baseReactive";
-import { userSelectModalState } from "../../modals/user-select-modal/reactive";
 import { userSelectContainerState } from "./reactive";
 import { useTranslation } from "react-i18next";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
@@ -13,14 +10,12 @@ import { SpinnerCircular } from "../../common/spinner/Spinner";
 const UserSelectContainer = props => {
     const { except } = props;
     const { user: currentUser } = useReactiveVar(baseState);
-    const { selectType, sharedItem: sharedItemId, checked } = useReactiveVar(userSelectContainerState);
+    const { checked } = useReactiveVar(userSelectContainerState);
     const { data, loading } = useQuery(USERS_BY_IDS_QUERY, {
         variables: {
             ids: currentUser.subscribedOn,
         },
     });
-    const [ createPostShareNotification ] = useMutation(CREATE_NOTIFICATION_MUTATION)
-    const userSelectModal = useReactiveVar(userSelectModalState);
     const { t } = useTranslation("containers");
 
 
@@ -37,38 +32,6 @@ const UserSelectContainer = props => {
         
         userSelectContainerState({...userSelectContainerState(), checked: newChecked})
     };
-
-    /*
-    const handleUserSelect = () => {
-        enqueueSnackbar(t('select.user.snack.pending'), { autoHideDuration: 1500 });
-        const promises = [];
-        if (selectType === 'postShare') {
-            checked.forEach(userId => {
-                promises.push(() => {
-                    createPostShareNotification({
-                        variables: {
-                            input: {
-                                receiver: userId,
-                                sender: currentUser._id,
-                                post: sharedItemId,
-                                text: 'Hey! Check this track!',
-                            }
-                        }
-                    });
-                })
-            })
-        } else if (selectType === 'chatCreate') {
-            // code ...
-        }
-
-        Promise.all(promises)
-        .then(() => {
-            enqueueSnackbar(t('select.user.snack.success'), { autoHideDuration: 1500, variant: 'success' });
-        }).catch(() => {
-            enqueueSnackbar(t('select.user.snack.error'), { autoHideDuration: 3000, variant: 'error' });
-        });
-        userSelectModalState({ ...userSelectModal, isShowing: false })
-    }*/
     
 
     return (
@@ -83,7 +46,7 @@ const UserSelectContainer = props => {
                 </Box>
                 :
                 <>
-                    <Paper sx={{ boxShadow: 10, my: 3 }}>
+                    <Paper sx={{ boxShadow: 10, my: 3, borderRadius: 5 }}>
                         <List
                             sx={{
                                 height: 200,
@@ -104,7 +67,7 @@ const UserSelectContainer = props => {
                                     } else if (!data.usersByIds.length || data.usersByIds.filter(i => !except.map(j => j._id).includes(i._id)).length === 0) {
                                         return (
                                             <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                                <Typography>{t('chat_create.user.not_found')}</Typography>
+                                                <Typography>{t('select.user.not_found')}</Typography>
                                             </Box>
                                         );
                                     } else {

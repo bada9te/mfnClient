@@ -61,7 +61,7 @@ const CreateChatForm = props => {
             />
 
             <Box sx={{my: 2}}>
-                <UserSelectContainer/>
+                <UserSelectContainer except={[]}/>
             </Box>
 
             <Button type="submit" sx={{my: 1}} fullWidth variant="contained">Create</Button>

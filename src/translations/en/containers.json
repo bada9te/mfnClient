@@ -50,6 +50,7 @@
     "chats.list": "Chats",
     "chats.current": "Messages",
     "chats.info": "Chat info",
-    "chats.create": "Create new"
+    "chats.create": "Create new",
+    "chats.create.users_not_found": "No users found"
 }
     

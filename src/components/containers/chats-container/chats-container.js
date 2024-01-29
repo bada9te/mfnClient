@@ -190,14 +190,14 @@ const ChatsContainer = props => {
 
                                                 if (!chatMessages.chatMessagesByChatId.length) {
                                                     return (
-                                                        <Stack sx={{height: 'calc(100vh - 347px)', p: 2, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>
+                                                        <Stack sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>
                                                             <Typography>No messages yet</Typography>
                                                         </Stack>
                                                     );
                                                 }
 
                                                 return (
-                                                    <Stack sx={{height: 'calc(100vh - 347px)', p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
+                                                    <Stack sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
                                                         <EnumChatMessages messages={chatMessages.chatMessagesByChatId}/>
                                                     </Stack>
                                                 );
@@ -253,7 +253,7 @@ const ChatsContainer = props => {
                                                     <Avatar src={UserImage} alt="Participants" sx={{ m: 1, boxShadow: 5 }}/>
                                                 </Box>
                                                 <CardHeader title="Participants"/>
-                                                <Stack spacing={2} sx={{mb: 2}}>
+                                                <Stack spacing={2}>
                                                     <EnumChatParticipants
                                                         switchParticipants={addOrRemoveParticipants}
                                                         chatOwnerId={selectedChatData.chat.owner._id}
