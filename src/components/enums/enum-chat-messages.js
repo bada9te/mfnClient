@@ -7,9 +7,9 @@ const EnumChatMessages = props => {
     return (
         <>
             {
-                messages.map((msg, key) => {
+                messages.map((message, key) => {
                     return (
-                        <ChatMessageItem key={key} item={msg}/>
+                        <ChatMessageItem key={key} item={message}/>
                     );
                 })
             }

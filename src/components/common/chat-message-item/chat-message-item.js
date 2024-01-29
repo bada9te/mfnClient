@@ -1,6 +1,7 @@
 import { useReactiveVar } from "@apollo/client";
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { baseState } from "../../baseReactive";
+import getParsedDate from "../../../utils/common-functions/getParsedDate";
 
 
 const ChatMessageItem = props => {
@@ -19,19 +20,15 @@ const ChatMessageItem = props => {
             }}
         >
             { !myMsg && <Avatar src="NULL"/> }
-            <Stack spacing={1} useFlexGap display="flex" alignItems={myMsg ? 'end':'start'} >
-                <Typography 
-                    fontSize={14} 
-                    sx={{px: 0.5, width: 'fit-content', maxWidth: '350px'}}
-                >
-                    Name Surname, at 18.01.24
-                </Typography>
+            <Stack spacing={0.5} useFlexGap display="flex" alignItems={myMsg ? 'end':'start'} >
+                <Typography fontSize={14} sx={{px: 0.5, width: 'fit-content', maxWidth: '350px'}}>{`${item.owner.nick}`}</Typography>
+                <Typography fontSize={10} sx={{px: 0.5, width: 'fit-content', maxWidth: '350px'}} fontStyle='italic'>{`${getParsedDate(new Date(+item.createdAt))}`}</Typography>
                 <Box 
                     sx={{ 
                         width: 'fit-content',
                         maxWidth: 'calc(100vw - 100px)',
                         borderRadius: 5,
-                        boxShadow: 1,
+                        boxShadow: 3,
                         overflowWrap: 'break-word',
                         p: 1, px: 1.2,
                     }} 
@@ -43,7 +40,7 @@ const ChatMessageItem = props => {
                         fontSize={13}
                         sx={{ maxWidth: '350px'}}
                     >
-                        {item.owner.text}
+                        {item.text}
                     </Typography>
                 </Box>
             </Stack>

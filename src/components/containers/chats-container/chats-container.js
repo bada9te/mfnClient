@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { baseState } from "../../baseReactive";
 import { useLazyQuery, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useTranslation } from "react-i18next";
-import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Paper, Stack, Tab, Tabs, TextField } from "@mui/material";
+import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Paper, Stack, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { Add, Forum, Info, Send } from "@mui/icons-material";
 import TabPanel from "../../common/tab-panel/tab-panel";
 import EnumChats from "../../enums/enum-chats";
@@ -18,39 +18,24 @@ import ChatEditForm from "../../forms/chat-edit/chat-edit";
 import UserSelectContainer from "../user-select-container/user-select-container";
 import { useSnackbar } from "notistack";
 import { userSelectContainerState } from "../user-select-container/reactive";
+import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
+import { chatsContainerState } from "./reactive";
 
 
 const ChatsContainer = props => {
     const [ status, setStatus ] = useState(0);
-    const [ selectedChatId, setSelectedChatId ] = useState(null);
     const { user: currentUser } = useReactiveVar(baseState);
     const UserSelectContainerState = useReactiveVar(userSelectContainerState);
+    const { messageText, replyingTo, selectedChatId, messagesPerLoad } = useReactiveVar(chatsContainerState)
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("containers");
+
     const { data: chatsData, loading: chatsLoading } = useQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, {
         variables: {
             _id: currentUser._id,
         }
     });
-    const [ fetchSelectedChat, { data: selectedChatData, loading: loadingSelectedChat } ] = useLazyQuery(CHAT_QUERY, {
-        variables: {
-            _id: selectedChatId,
-        }
-    });
-    const [ switchParticipants ] = useMutation(CHAT_SWITCH_PARTICIPANT_MUTATION);
-
-    const msgs = [
-        { _id: 1, owner: { _id: currentUser._id, avatar: "NULL", nick: "profileNick", text: "tadawdwadwatadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadexttadawdwadwadadadwadadextdadadwadadext" } },
-        { _id: 2, owner: { _id: 'a', avatar: "NULL", nick: "profileNick", text: "tadawdwadwadadadwadadext" }},
-        { _id: 3, owner: { _id: 'a', avatar: "NULL", nick: "profileNick", text: "tadawdwadwadadadwadadext" }},
-        { _id: 4, owner: { _id: 'a', avatar: "NULL", nick: "profileNick", text: "tadawdwadwadadadwadadext" }},
-        { _id: 5, owner: { _id: 'a', avatar: "NULL", nick: "profileNick", text: "tadawdw" }},
-        { _id: 6, owner: { _id: currentUser._id, avatar: "NULL", nick: "profileNick", text: "tadawdw" }},
-        { _id: 7, owner: { _id: 'a', avatar: "NULL", nick: "profileNick", text: "tadawdw" }},
-        { _id: 8, owner: { _id: 'a', avatar: "NULL", nick: "profileNick", text: "tadawdw" }},
-        { _id: 9, owner: { _id: currentUser._id, avatar: "NULL", nick: "profileNick", text: "tadawdw" }},
-    ];
-
+    
     
     const handleTabSwitch = (event, key) => {
         setStatus(key);
@@ -58,7 +43,7 @@ const ChatsContainer = props => {
 
     // chat select handler
     const chatSelectionHandler = (id) => {
-        setSelectedChatId(id);
+        chatsContainerState({ ...chatsContainerState(), selectedChatId: id })
         setStatus(1);
     }
 
@@ -67,7 +52,35 @@ const ChatsContainer = props => {
         chatCreateModalState({ ...chatCreateModalState(), isShowing: true })
     }
 
+    // handle msg input
+    const handleMessageInput = (e) => {
+        chatsContainerState({ ...chatsContainerState(), messageText: e.target.value })
+    }
+
+
+    // send message click 
+    const [ sendMessage ] = useMutation(CHAT_MESSAGE_CREATE_MUTATION);
+    const handleSendMessageClick = () => {
+        const input = {
+            owner: currentUser._id,
+            text: messageText,
+            chat: selectedChatId,
+        };
+
+        if (replyingTo) {
+            input.isReply = true;
+            input.isReplyTo = replyingTo;
+        }
+
+        sendMessage({
+            variables: { input }
+        }).then(({data}) => {
+            console.log(data)
+        });
+    }
+
     // seitch participant handler
+    const [ switchParticipants ] = useMutation(CHAT_SWITCH_PARTICIPANT_MUTATION);
     const addOrRemoveParticipants = (participants) => {
         enqueueSnackbar("Updating chat...", { autoHideDuration: 1500 });
         
@@ -95,12 +108,26 @@ const ChatsContainer = props => {
         });
     }
 
+
     // fetch data if chat was selected
+    const [ fetchSelectedChat, { data: selectedChatData, loading: loadingSelectedChat } ] = useLazyQuery(CHAT_QUERY, {
+        variables: {
+            _id: selectedChatId,
+        }
+    });
+    const [ fetchChatMessages, { data: chatMessages, loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
+        variables: {
+            _id: selectedChatId,
+            offset: 0,
+            limit: messagesPerLoad
+        }
+    });
     useEffect(() => {
         if (selectedChatId) {
             fetchSelectedChat();
+            fetchChatMessages();
         }
-    }, [selectedChatId, fetchSelectedChat]);
+    }, [selectedChatId, fetchSelectedChat, fetchChatMessages]);
 
 
     return (
@@ -151,19 +178,44 @@ const ChatsContainer = props => {
                             if (selectedChatData) {
                                 return (
                                     <Paper>
-                                        <ChatHeader handleClick={(e) => handleTabSwitch(e, 2)}/>
-                                        <Stack sx={{height: 'calc(100vh - 347px)', p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
-                                            <EnumChatMessages messages={msgs}/>
-                                        </Stack>
+                                        <ChatHeader 
+                                            chat={selectedChatData.chat}
+                                            handleClick={(e) => handleTabSwitch(e, 2)}
+                                        />
+                                        {
+                                            (() => {
+                                                if (loadingMessages) {
+                                                    return (<SpinnerLinear/>);
+                                                }
+
+                                                if (!chatMessages.chatMessagesByChatId.length) {
+                                                    return (
+                                                        <Stack sx={{height: 'calc(100vh - 347px)', p: 2, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>
+                                                            <Typography>No messages yet</Typography>
+                                                        </Stack>
+                                                    );
+                                                }
+
+                                                return (
+                                                    <Stack sx={{height: 'calc(100vh - 347px)', p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
+                                                        <EnumChatMessages messages={chatMessages.chatMessagesByChatId}/>
+                                                    </Stack>
+                                                );
+                                            })()
+                                            
+
+                                            
+                                        }
                                         <Paper sx={{borderRadius: 0}}>
                                             <TextField
                                                 fullWidth
                                                 id="filled-static"
                                                 label="Message"
                                                 variant="filled"
+                                                onChange={handleMessageInput}
                                                 InputProps={{ 
                                                     disableUnderline: true, 
-                                                    endAdornment: <IconButton><Send/></IconButton>
+                                                    endAdornment: <IconButton onClick={handleSendMessageClick}><Send/></IconButton>
                                                 }}
                                             />
                                         </Paper>
