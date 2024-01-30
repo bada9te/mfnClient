@@ -20,6 +20,7 @@ import { useSnackbar } from "notistack";
 import { userSelectContainerState } from "../user-select-container/reactive";
 import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { chatsContainerState } from "./reactive";
+import InfoImage from "../../common/info-image/info-image";
 
 
 const ChatsContainer = props => {
@@ -142,8 +143,8 @@ const ChatsContainer = props => {
 
             <TabPanel value={status} index={0}>
                 { 
-                    currentUser?._id?.length 
-                    && 
+                    currentUser?._id?.length
+                    ?
                     <>
                         <Button 
                             startIcon={<Add/>} 
@@ -164,6 +165,8 @@ const ChatsContainer = props => {
                             </Box>
                         }
                     </>
+                    :
+                    <InfoImage text="You have to be authenticated"/>
                 }
             </TabPanel>
         
@@ -202,9 +205,6 @@ const ChatsContainer = props => {
                                                     </Stack>
                                                 );
                                             })()
-                                            
-
-                                            
                                         }
                                         <Paper sx={{borderRadius: 0}}>
                                             <TextField

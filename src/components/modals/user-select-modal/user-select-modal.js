@@ -1,14 +1,17 @@
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import UserSelectContainer from "../../containers/user-select-container/user-select-container";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { userSelectModalState } from "./reactive";
 import { useTranslation } from "react-i18next";
 import { useSnackbar } from "notistack";
 import { userSelectContainerState } from "../../containers/user-select-container/reactive";
+import { baseState } from "../../baseReactive";
+import { CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 
 
 const UserSelectModal = props => {
+    const { user: currentUser } = useReactiveVar(baseState);
     const userSelectModal = useReactiveVar(userSelectModalState);
     const { selectType, sharedItem: sharedItemId, checked } = useReactiveVar(userSelectContainerState);
     const { t } = useTranslation("modals");
@@ -21,15 +24,32 @@ const UserSelectModal = props => {
     const theme = useTheme();
     const fullscreen = useMediaQuery(theme.breakpoints.down('md'));
 
-    const handleUserSelect = () => {
+    // confirm selection
+    const [ createMessage ] = useMutation(CHAT_MESSAGE_CREATE_MUTATION);
+    const handleUserAndChatsSelect = () => {
         enqueueSnackbar(t('select.user.snack.pending'), { autoHideDuration: 1500 });
         const promises = [];
         if (selectType === 'postShare') {
-            checked.forEach(userId => {
+            checked.forEach(({ _id, __typename }) => {
                 promises.push(() => {
-                    // code (send post to the chat)
-                })
-            })
+                    const input = {
+                        owner: currentUser._id,
+                        sharedItemId,
+                    };
+
+                    if (__typename === "User") {
+                        input.toUser = _id;
+                    }
+
+                    if (__typename === "Chat") {
+                        input.chat = _id;
+                    }
+                    
+                    createMessage({
+                        variables: { input }
+                    });
+                });
+            });
         }
 
         Promise.all(promises)
@@ -56,8 +76,8 @@ const UserSelectModal = props => {
                 </IconButton>
             </DialogTitle>
             <DialogContent dividers={true}>
-                <UserSelectContainer except={[]}/>
-                <Button variant="contained" fullWidth onClick={handleUserSelect}>Confirm</Button>
+                <UserSelectContainer except={[]} includeChats/>
+                <Button variant="contained" fullWidth onClick={handleUserAndChatsSelect}>Confirm</Button>
             </DialogContent>
         </Dialog>
     );
