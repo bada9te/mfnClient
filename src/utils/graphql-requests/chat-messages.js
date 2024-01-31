@@ -70,12 +70,3 @@ export const CHAT_MESSAGE_UPDATE_MUTATION = gql`
 `;
 
 
-// S
-export const CHAT_MESSAGES_SUBSCRIPTION = gql`
-    ${CORE_CHAT_MESSAGE_FIELDS}
-    subscription onChatMessageCreated($chatsIds: [ID]!) {
-        onChatMessageCreated(chatsIds: $chatsIds) {
-            ...CoreChatMessageFields
-        }
-    }
-`;

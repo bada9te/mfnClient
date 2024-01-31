@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { baseState } from "../../baseReactive";
-import { useLazyQuery, useMutation, useQuery, useReactiveVar, useSubscription } from "@apollo/client";
+import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Paper, Stack, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { Add, Forum, Info, Send } from "@mui/icons-material";
@@ -18,14 +18,13 @@ import ChatEditForm from "../../forms/chat-edit/chat-edit";
 import UserSelectContainer from "../user-select-container/user-select-container";
 import { useSnackbar } from "notistack";
 import { userSelectContainerState } from "../user-select-container/reactive";
-import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGES_SUBSCRIPTION, CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
+import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { chatsContainerState } from "./reactive";
 import InfoImage from "../../common/info-image/info-image";
 
 
 const ChatsContainer = props => {
     const [ status, setStatus ] = useState(0);
-    const [ skipSub, setSkipSub ] = useState(true);
     const { user: currentUser } = useReactiveVar(baseState);
     const UserSelectContainerState = useReactiveVar(userSelectContainerState);
     const { messageText, replyingTo, selectedChatId, messagesPerLoad } = useReactiveVar(chatsContainerState)
@@ -37,14 +36,6 @@ const ChatsContainer = props => {
         variables: {
             _id: currentUser._id,
         }
-    });
-
-    // chats msgs subscription
-    const { data: chatMessagesSubscription, loading: chatMessagesSubscriptionLoading } = useSubscription(CHAT_MESSAGES_SUBSCRIPTION, { 
-        variables: { 
-            chatsIds: chatsData?.chatsUserRelatedByUserId?.map(i => i._id) || []
-        },
-        shouldResubscribe: true
     });
     
     const handleTabSwitch = (event, key) => {
@@ -123,7 +114,7 @@ const ChatsContainer = props => {
             _id: selectedChatId,
         }
     });
-    const [ fetchChatMessages, { data: chatMessages, loading: loadingMessages, subscribeToMore: subscribeToChatMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
+    const [ fetchChatMessages, { data: chatMessages, loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
         variables: {
             _id: selectedChatId,
             offset: 0,
@@ -140,7 +131,6 @@ const ChatsContainer = props => {
     useEffect(() => {
         if (currentUser._id.length) {
             fetchChats();
-            setSkipSub(false)
         }
     }, [currentUser._id, fetchChats]);
 
