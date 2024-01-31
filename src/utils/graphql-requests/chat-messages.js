@@ -52,6 +52,7 @@ export const CHAT_MESSAGE_CREATE_MUTATION = gql`
 `;
 
 export const CHAT_MESSAGE_DELETE_BY_ID_MUTATION = gql`
+    ${CORE_CHAT_MESSAGE_FIELDS}
     mutation chatMessageDeleteById($_id: ID!) {
         chatMessageDeleteById(_id: $_id) {
             ...CoreChatMessageFields
@@ -60,8 +61,20 @@ export const CHAT_MESSAGE_DELETE_BY_ID_MUTATION = gql`
 `;
 
 export const CHAT_MESSAGE_UPDATE_MUTATION = gql`
+    ${CORE_CHAT_MESSAGE_FIELDS}
     mutation chatMessageUpdate($input: ChatMessageUpdateInput!) {
         chatMessageUpdate(input: $input) {
+            ...CoreChatMessageFields
+        }
+    }
+`;
+
+
+// S
+export const CHAT_MESSAGES_SUBSCRIPTION = gql`
+    ${CORE_CHAT_MESSAGE_FIELDS}
+    subscription onChatMessageCreated($chatsIds: [ID]!) {
+        onChatMessageCreated(chatsIds: $chatsIds) {
             ...CoreChatMessageFields
         }
     }

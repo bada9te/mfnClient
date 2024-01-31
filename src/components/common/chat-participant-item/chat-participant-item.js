@@ -18,7 +18,7 @@ const ChatParticipantItem = props => {
 
     // delete from chat
     const handleUserDeletion = () => {
-        switchParticipants([item._id]);
+        switchParticipants([{ _id: item._id }]);
     }
 
     return (

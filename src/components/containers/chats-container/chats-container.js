@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { baseState } from "../../baseReactive";
-import { useLazyQuery, useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery, useReactiveVar, useSubscription } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Paper, Stack, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { Add, Forum, Info, Send } from "@mui/icons-material";
@@ -18,25 +18,34 @@ import ChatEditForm from "../../forms/chat-edit/chat-edit";
 import UserSelectContainer from "../user-select-container/user-select-container";
 import { useSnackbar } from "notistack";
 import { userSelectContainerState } from "../user-select-container/reactive";
-import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
+import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGES_SUBSCRIPTION, CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { chatsContainerState } from "./reactive";
 import InfoImage from "../../common/info-image/info-image";
 
 
 const ChatsContainer = props => {
     const [ status, setStatus ] = useState(0);
+    const [ skipSub, setSkipSub ] = useState(true);
     const { user: currentUser } = useReactiveVar(baseState);
     const UserSelectContainerState = useReactiveVar(userSelectContainerState);
     const { messageText, replyingTo, selectedChatId, messagesPerLoad } = useReactiveVar(chatsContainerState)
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("containers");
 
-    const { data: chatsData, loading: chatsLoading } = useQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, {
+    
+    const [ fetchChats, { data: chatsData, loading: chatsLoading }] = useLazyQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, {
         variables: {
             _id: currentUser._id,
         }
     });
-    
+
+    // chats msgs subscription
+    const { data: chatMessagesSubscription, loading: chatMessagesSubscriptionLoading } = useSubscription(CHAT_MESSAGES_SUBSCRIPTION, { 
+        variables: { 
+            chatsIds: chatsData?.chatsUserRelatedByUserId?.map(i => i._id) || []
+        },
+        shouldResubscribe: true
+    });
     
     const handleTabSwitch = (event, key) => {
         setStatus(key);
@@ -73,20 +82,18 @@ const ChatsContainer = props => {
             input.isReplyTo = replyingTo;
         }
 
-        sendMessage({
-            variables: { input }
-        }).then(({data}) => {
+        sendMessage({ variables: { input } }).then(({data}) => {
             console.log(data)
         });
     }
 
-    // seitch participant handler
+    // switch participant handler
     const [ switchParticipants ] = useMutation(CHAT_SWITCH_PARTICIPANT_MUTATION);
     const addOrRemoveParticipants = (participants) => {
         enqueueSnackbar("Updating chat...", { autoHideDuration: 1500 });
         
         switchParticipants({
-            variables: { chatId: selectedChatData.chat._id, participants },
+            variables: { chatId: selectedChatData.chat._id, participants: participants.map(i => i._id) },
             update: (cache, {data}) => {
                 const cachedChat = cache.readQuery({
                     query: CHAT_QUERY,
@@ -116,7 +123,7 @@ const ChatsContainer = props => {
             _id: selectedChatId,
         }
     });
-    const [ fetchChatMessages, { data: chatMessages, loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
+    const [ fetchChatMessages, { data: chatMessages, loading: loadingMessages, subscribeToMore: subscribeToChatMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
         variables: {
             _id: selectedChatId,
             offset: 0,
@@ -129,6 +136,13 @@ const ChatsContainer = props => {
             fetchChatMessages();
         }
     }, [selectedChatId, fetchSelectedChat, fetchChatMessages]);
+
+    useEffect(() => {
+        if (currentUser._id.length) {
+            fetchChats();
+            setSkipSub(false)
+        }
+    }, [currentUser._id, fetchChats]);
 
 
     return (
@@ -161,7 +175,7 @@ const ChatsContainer = props => {
                             <SpinnerLinear/>
                             :
                             <Box sx={{height: 'calc(100vh - 255px)', overflow: 'auto'}}>
-                                <EnumChats chats={chatsData.chatsUserRelatedByUserId} chatSelectionHandler={chatSelectionHandler}/> 
+                                <EnumChats chats={chatsData?.chatsUserRelatedByUserId || []} chatSelectionHandler={chatSelectionHandler}/> 
                             </Box>
                         }
                     </>
