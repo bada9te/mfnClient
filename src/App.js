@@ -7,6 +7,7 @@ import { SnackbarProvider } from 'notistack';
 import { httpGetCurrentUser } from './utils/http-requests/auth';
 import ApplicationRouter from './utils/router/app-routes';
 import muiTheme from './utils/mui-theme/theme';
+import socket from './utils/socket/socket';
 
 
 
@@ -22,6 +23,8 @@ function App() {
       .then(({data}) => {
         if (data.done) {
           baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
+          socket.auth = { userId: data.user._id };
+          socket.connect();
         } else {
           //navigate('/login');
         }
