@@ -11,4 +11,10 @@ if (VERSION_TYPE === 'development') {
     });
 }
 
+socket.on('connect_error', (err) => {
+    if (err.message === "Invalid user id") {
+        console.error("Make sure that the client got user id via init request");
+    }
+});
+
 export default socket;

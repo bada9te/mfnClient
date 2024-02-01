@@ -21,6 +21,7 @@ import { userSelectContainerState } from "../user-select-container/reactive";
 import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { chatsContainerState } from "./reactive";
 import InfoImage from "../../common/info-image/info-image";
+import socket from "../../../utils/socket/socket";
 
 
 const ChatsContainer = props => {
@@ -35,6 +36,18 @@ const ChatsContainer = props => {
     const [ fetchChats, { data: chatsData, loading: chatsLoading }] = useLazyQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, {
         variables: {
             _id: currentUser._id,
+        }
+    });
+    const [ fetchSelectedChat, { data: selectedChatData, loading: loadingSelectedChat } ] = useLazyQuery(CHAT_QUERY, {
+        variables: {
+            _id: selectedChatId,
+        }
+    });
+    const [ fetchChatMessages, { data: chatMessages, loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
+        variables: {
+            _id: selectedChatId,
+            offset: 0,
+            limit: messagesPerLoad
         }
     });
     
@@ -75,6 +88,10 @@ const ChatsContainer = props => {
 
         sendMessage({ variables: { input } }).then(({data}) => {
             console.log(data)
+            socket.emit("message create", {
+                message: data.chatMessageCreate,
+                toUsers: selectedChatData.chat.participants.map(i => i._id)
+            });
         });
     }
 
@@ -109,18 +126,6 @@ const ChatsContainer = props => {
 
 
     // fetch data if chat was selected
-    const [ fetchSelectedChat, { data: selectedChatData, loading: loadingSelectedChat } ] = useLazyQuery(CHAT_QUERY, {
-        variables: {
-            _id: selectedChatId,
-        }
-    });
-    const [ fetchChatMessages, { data: chatMessages, loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
-        variables: {
-            _id: selectedChatId,
-            offset: 0,
-            limit: messagesPerLoad
-        }
-    });
     useEffect(() => {
         if (selectedChatId) {
             fetchSelectedChat();
