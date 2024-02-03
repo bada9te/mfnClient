@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { baseState } from "../../baseReactive";
 import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { useTranslation } from "react-i18next";
@@ -26,6 +26,7 @@ import socket from "../../../utils/socket/socket";
 
 const ChatsContainer = props => {
     const [ status, setStatus ] = useState(0);
+    const messgaesContainerRef = useRef();
     const { user: currentUser } = useReactiveVar(baseState);
     const UserSelectContainerState = useReactiveVar(userSelectContainerState);
     const { messageText, replyingTo, selectedChatId, messagesPerLoad } = useReactiveVar(chatsContainerState)
@@ -133,11 +134,38 @@ const ChatsContainer = props => {
         }
     }, [selectedChatId, fetchSelectedChat, fetchChatMessages]);
 
+    // fetch chats if user logged in
     useEffect(() => {
         if (currentUser._id.length) {
             fetchChats();
         }
     }, [currentUser._id, fetchChats]);
+
+    // effect REF (scroll) on messages container
+    useEffect(() => {
+        const msgsRef = messgaesContainerRef?.current;
+        if (msgsRef) {
+            msgsRef.scrollTop = msgsRef.scrollHeight
+        }
+
+        const handleScroll = (e) => {
+            console.log("oY offset", messgaesContainerRef?.current.scrollTop);
+            if (messgaesContainerRef?.current.scrollTop === 0) {
+                console.log("FETCH OLD MESSAGES!")
+                msgsRef?.removeEventListener("scroll", handleScroll);
+            } 
+            /*
+            else if (messgaesContainerRef?.current.scrollTop > messgaesContainerRef?.current.offsetHeight) {
+                console.log("FETCH NEW MESSAGES!")
+                msgsRef?.removeEventListener("scroll", handleScroll);
+            }
+            */
+        }
+        msgsRef?.addEventListener("scroll", handleScroll, { passive: true });
+        return () => {
+            msgsRef?.removeEventListener("scroll", handleScroll);
+        }
+    });
 
 
     return (
@@ -209,7 +237,7 @@ const ChatsContainer = props => {
                                                 }
 
                                                 return (
-                                                    <Stack sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
+                                                    <Stack ref={messgaesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
                                                         <EnumChatMessages messages={chatMessages.chatMessagesByChatId}/>
                                                     </Stack>
                                                 );
