@@ -87,7 +87,30 @@ const ChatsContainer = props => {
             input.isReplyTo = replyingTo;
         }
 
-        sendMessage({ variables: { input } }).then(({data}) => {
+        sendMessage({ 
+            variables: { input },
+            update: (cache, { data }) => {
+                const cachedData = cache.readQuery({ 
+                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
+                    variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad }
+                });
+
+                const retreivedMessageData = JSON.parse(JSON.stringify(data.chatMessageCreate));
+                retreivedMessageData.owner = {
+                    _id: currentUser._id,
+                    nick: currentUser.nickname,
+                    avatar: currentUser.avatar
+                };
+
+                cache.writeQuery({
+                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
+                    variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
+                    data: {
+                        chatMessagesByChatId: [...cachedData.chatMessagesByChatId, retreivedMessageData]
+                    }
+                });
+            }
+        }).then(({data}) => {
             console.log(data)
             socket.emit("message create", {
                 message: data.chatMessageCreate,
@@ -112,10 +135,7 @@ const ChatsContainer = props => {
                 cache.writeQuery({
                     query: CHAT_QUERY,
                     variables: { _id: selectedChatId },
-                    data: {
-                        ...cachedChat, 
-                        participants: data.chatSwitchParticipants.participants,
-                    }
+                    data: { ...cachedChat, participants: data.chatSwitchParticipants.participants }
                 });
             }
         }).then(_ => {

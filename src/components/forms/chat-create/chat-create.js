@@ -29,7 +29,7 @@ const CreateChatForm = props => {
                 input: {
                     title: data.Title,
                     owner: currentUser._id,
-                    participants: [currentUser._id, ...checked]
+                    participants: [currentUser._id, ...checked.map(i => i._id)]
                 }
             },
             refetchQueries: [{query: CHATS_USER_RELATED_BY_USER_ID_QUERY, variables: { _id: currentUser._id }}]

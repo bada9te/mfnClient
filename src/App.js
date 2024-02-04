@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
@@ -13,7 +13,7 @@ import socket from './utils/socket/socket';
 
 function App() {
   const navigate = useNavigate();
-  //const location = useLocation();
+  const location = useLocation();
   //const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
   const { theme: themeMode } = useReactiveVar(baseState);
@@ -24,9 +24,6 @@ function App() {
         if (data.done) {
           baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
           socket.auth = { userId: data.user._id };
-          socket.on('message create', ({ message }) => {
-            console.log(message)
-          })
           socket.connect();
 
           
