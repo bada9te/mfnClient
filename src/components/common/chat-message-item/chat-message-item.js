@@ -8,7 +8,7 @@ const ChatMessageItem = props => {
     const { item } = props;
     const { user: currentUser, locations } = useReactiveVar(baseState);
     const myMsg = item.owner._id === currentUser._id;
-    const avatar = `${locations.images}/${item.owner.avatar}`
+    const avatar = item.owner.avatar.length ? `${locations.images}/${item.owner.avatar}` : "NULL";
 
     return (
         <Stack spacing={1} useFlexGap flexWrap="wrap" flexDirection="row" 

@@ -84,6 +84,16 @@ export default new InMemoryCache({
                     }
                 }
             }
+        },
+        ChatMessage: {
+            keyFields: ['_id'],
+            fields: {
+                chatMessagesByChatId: {
+                    merge(_, incoming) {
+                        return incoming;
+                    }
+                }
+            }
         }
     }
 });
