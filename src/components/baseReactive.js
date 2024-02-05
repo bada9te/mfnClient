@@ -18,7 +18,7 @@ export const baseState = makeVar({
         google: {
             email:    '',
         },
-        nickname:     '',
+        nick:         '',
         description:  '',
         aboutMe:      '',
         avatar:       '',

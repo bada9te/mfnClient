@@ -8,7 +8,7 @@ import UserSelectContainer from "../../containers/user-select-container/user-sel
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_CREATE_MUTATION } from "../../../utils/graphql-requests/chats";
 import { baseState } from "../../baseReactive";
 import { chatCreateModalState } from "../../modals/chat-create-modal/reactive";
-import socket from "../../../utils/socket/socket";
+import { emitChatCreate } from "../../../utils/socket/event-emitters/chats";
 
 
 const CreateChatForm = props => {
@@ -37,7 +37,7 @@ const CreateChatForm = props => {
         }).then(({data}) => {
             enqueueSnackbar("Chat created.", { autoHideDuration: 1500, variant: 'success' });
             chatCreateModalState({ ...chatCreateModalState(), isShowing: false });
-            socket.emit('chat create', { chat: data.chatCreate, toUsers: data.chatCreate.participants.map(i => i._id) })
+            emitChatCreate(data.chatCreate, data.chatCreate.participants.map(i => i._id));
             reset();
         }).catch(_ => {
             enqueueSnackbar("Can't create chat.", { autoHideDuration: 3000, variant: 'error' });

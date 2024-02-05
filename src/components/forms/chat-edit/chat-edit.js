@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_UPDATE_MUTATION } from "../../../utils/graphql-requests/chats";
 import { baseState } from "../../baseReactive";
-import socket from "../../../utils/socket/socket";
+import { emitChatUpdate } from "../../../utils/socket/event-emitters/chats";
 
 
 
@@ -23,20 +23,13 @@ const ChatEditForm = props => {
         
         await updateChat({
             variables: {
-                input: {
-                    _id: selectedChatId,
-                    what: "title",
-                    value: data.Title
-                }
+                input: { _id: selectedChatId, what: "title",  value: data.Title }
             },
             refetchQueries: [{query: CHATS_USER_RELATED_BY_USER_ID_QUERY, variables: { _id: currentUser._id }}]
         }).then(({data}) => {
             reset();
             enqueueSnackbar(t('chat_edit.snack.success'), {autoHideDuration: 1500, variant: 'success'});
-            socket.emit('chat update', { 
-                chat: data.chatUpdate, 
-                toUsers: data.chatUpdate.participants.map(i => i._id) 
-            });
+            emitChatUpdate(data.chatUpdate, data.chatUpdate.participants.map(i => i._id));
         }).catch(_ => {
             enqueueSnackbar(t('chat_edit.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         }); 
