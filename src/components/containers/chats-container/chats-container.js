@@ -118,8 +118,12 @@ const ChatsContainer = props => {
                     }
                 });
             }
-        }).then(_ => {
+        }).then(({data}) => {
             enqueueSnackbar("Chat updated", { autoHideDuration: 1500, variant: 'success' });
+            socket.emit('chat update', { 
+                chat: data.chatSwitchParticipants, 
+                toUsers: data.chatSwitchParticipants.participants.map(i => i._id) 
+            });
         }).catch(_ => {
             enqueueSnackbar("Can't update this chat", { autoHideDuration: 3000, variant: 'error' });
         });

@@ -24,12 +24,7 @@ function App() {
         if (data.done) {
           baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
           socket.auth = { userId: data.user._id };
-          socket.on('message create', ({ message }) => {
-            console.log(message)
-          })
           socket.connect();
-
-          
         } else {
           //navigate('/login');
         }

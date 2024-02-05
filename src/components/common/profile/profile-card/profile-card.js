@@ -8,6 +8,7 @@ import { baseState } from "../../../baseReactive";
 import { useSnackbar } from "notistack";
 import { CREATE_NOTIFICATION_MUTATION } from "../../../../utils/graphql-requests/notifications";
 import { useTranslation } from "react-i18next";
+import socket from "../../../../utils/socket/socket";
 
 
 const ProfileCard = (props) => {
@@ -22,6 +23,7 @@ const ProfileCard = (props) => {
         variables: { 
             _id: id,
         },
+        pollInterval: 15000
     });
     const [ createSubscriptionNotification ] = useMutation(CREATE_NOTIFICATION_MUTATION, {
         variables: {
@@ -52,13 +54,9 @@ const ProfileCard = (props) => {
                 ...baseState(), 
                 user: { 
                     ...currentUser, 
-                    subscribedOn: [ 
-                        ...data.userSwitchSubscription.user2.subscribedOn 
-                    ]
+                    subscribedOn: [ ...data.userSwitchSubscription.user2.subscribedOn ]
                 } 
             });
-
-            console.log(baseState().user)
         }
     });
 
@@ -70,7 +68,13 @@ const ProfileCard = (props) => {
                 enqueueSnackbar(t('profile.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 
                 // notify user about new subscriber
-                if (actionType === 'subscribe') createSubscriptionNotification();
+                const dataToEmit = { userId: currentUser._id, toUsers: [id] };
+                if (actionType === 'subscribe') {
+                    createSubscriptionNotification();
+                    socket.emit('user subscribed', dataToEmit);
+                } else {
+                    socket.emit('user unsubscribed', dataToEmit);
+                }
             }).catch(() => {
                 enqueueSnackbar(t('profile.snack.error'), { autoHideDuration: 3000, variant: 'error' });
             });
