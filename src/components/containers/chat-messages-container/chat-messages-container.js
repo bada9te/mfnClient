@@ -6,20 +6,24 @@ import { IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
 import ChatHeader from "../../common/chat-header/chat-header";
 import EnumChatMessages from "../../enums/enum-chat-messages";
 import { Send } from "@mui/icons-material";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { emitMessageCreate } from "../../../utils/socket/event-emitters/messages";
 import { chatsContainerState } from "../chats-container/reactive";
+import { chatMessagesContainerState } from "./reactive";
 
 
 const ChatMessagesContainer = props => {
     const { handleTabSwitch, chat } = props;
+    const [ offset, setOffset ] = useState(0);
     const { user: currentUser } = useReactiveVar(baseState);
-    const { messageText, replyingTo, selectedChatId, messagesPerLoad } = useReactiveVar(chatsContainerState);
+    const { selectedChatId } = useReactiveVar(chatsContainerState);
+    const { messagesPerLoad, replyingTo, messageText, messages } = useReactiveVar(chatMessagesContainerState);
     const messgaesContainerRef = useRef();
-    const [ fetchChatMessages, { data: chatMessages, loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, { variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad }});
+    const [ fetchChatMessages, { loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY);
+    
     // handle msg input
     const handleMessageInput = (e) => {
-        chatsContainerState({ ...chatsContainerState(), messageText: e.target.value })
+        chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: e.target.value })
     }
 
     // send message click 
@@ -62,13 +66,16 @@ const ChatMessagesContainer = props => {
         }).then(({data}) => {
             console.log(data)
             emitMessageCreate(data.chatMessageCreate, chat.data.chat.participants.map(i => i._id));
+            chatMessagesContainerState({...chatMessagesContainerState(), messageText: ""});
+            messgaesContainerRef?.current && (messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.scrollHeight)
         });
     }
 
     // effect REF (scroll) on messages container
     useEffect(() => {
         const msgsRef = messgaesContainerRef?.current;
-        if (msgsRef) {
+        // first load
+        if (msgsRef && offset === 0) {
             msgsRef.scrollTop = msgsRef.scrollHeight
         }
 
@@ -77,6 +84,13 @@ const ChatMessagesContainer = props => {
             if (messgaesContainerRef?.current.scrollTop === 0) {
                 console.log("FETCH OLD MESSAGES!")
                 msgsRef?.removeEventListener("scroll", handleScroll);
+                setOffset(offset + 1);
+                fetchChatMessages({
+                    variables: { _id: selectedChatId, offset: (offset + 1) * messagesPerLoad, limit: messagesPerLoad }
+                }).then(({data}) => {
+                    const msgsContState = chatMessagesContainerState();
+                    chatMessagesContainerState({...msgsContState, messages: [...data.chatMessagesByChatId, ...msgsContState.messages]})
+                });
             } 
             /*
             else if (messgaesContainerRef?.current.scrollTop > messgaesContainerRef?.current.offsetHeight) {
@@ -93,10 +107,16 @@ const ChatMessagesContainer = props => {
 
     // fetch data if chat was selected
     useEffect(() => {
-        if (selectedChatId) {
-            fetchChatMessages();
+        // check for first load
+        if (selectedChatId && offset === 0) {
+            fetchChatMessages({
+                variables: { _id: selectedChatId, offset, limit: messagesPerLoad }
+            }).then(({data}) => {
+                const msgsContState = chatMessagesContainerState();
+                chatMessagesContainerState({...msgsContState, messages: [...data.chatMessagesByChatId, ...msgsContState.messages]})
+            });
         }
-    }, [selectedChatId, fetchChatMessages]);
+    }, [selectedChatId, fetchChatMessages, messagesPerLoad, offset]);
 
     return (
         <>
@@ -120,7 +140,7 @@ const ChatMessagesContainer = props => {
                                                 return (<SpinnerLinear/>);
                                             }
 
-                                            if (!chatMessages?.chatMessagesByChatId.length) {
+                                            if (!messages.length) {
                                                 return (
                                                     <Stack sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>
                                                         <Typography>No messages yet</Typography>
@@ -130,7 +150,7 @@ const ChatMessagesContainer = props => {
 
                                             return (
                                                 <Stack ref={messgaesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
-                                                    <EnumChatMessages messages={chatMessages.chatMessagesByChatId}/>
+                                                    <EnumChatMessages messages={messages}/>
                                                 </Stack>
                                             );
                                         })()
@@ -141,6 +161,7 @@ const ChatMessagesContainer = props => {
                                             id="filled-static"
                                             label="Message"
                                             variant="filled"
+                                            value={messageText}
                                             onChange={handleMessageInput}
                                             InputProps={{ 
                                                 disableUnderline: true, 
