@@ -10,7 +10,11 @@ import { useEffect, useRef, useState } from "react";
 import { emitMessageCreate } from "../../../utils/socket/event-emitters/messages";
 import { chatsContainerState } from "../chats-container/reactive";
 import { chatMessagesContainerState } from "./reactive";
+import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "../../../utils/graphql-requests/chats";
 
+const reverseDataArray = (arr) => {
+    return JSON.parse(JSON.stringify(arr)).reverse()
+}
 
 const ChatMessagesContainer = props => {
     const { handleTabSwitch, chat } = props;
@@ -43,26 +47,28 @@ const ChatMessagesContainer = props => {
         sendMessage({ 
             variables: { input },
             update: (cache, { data }) => {
-                const cachedData = cache.readQuery({ 
-                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
-                    variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad }
-                });
-
+                const cachedData = cache.readQuery({ query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad }});
                 const retreivedMessageData = JSON.parse(JSON.stringify(data.chatMessageCreate));
-                retreivedMessageData.owner = {
-                    _id: currentUser._id,
-                    nick: currentUser.nick,
-                    avatar: currentUser.avatar
-                };
+                retreivedMessageData.owner = { _id: currentUser._id, nick: currentUser.nick, avatar: currentUser.avatar };
 
+                console.log([retreivedMessageData, ...cachedData.chatMessagesByChatId])
                 cache.writeQuery({
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
                     variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
                     data: {
-                        chatMessagesByChatId: [...cachedData.chatMessagesByChatId, retreivedMessageData]
+                        chatMessagesByChatId: [retreivedMessageData, ...cachedData.chatMessagesByChatId]
                     }
                 });
-            }
+                const chatMsgsState = chatMessagesContainerState();
+                // TODO: NEED TO FIX !!!
+                chatMessagesContainerState({...chatMsgsState, messages: [
+                        retreivedMessageData,
+                        ...chatMsgsState.messages.slice(chatMsgsState.messages.length, 1)
+                    ]
+                })
+            },
+            refetchQueries: [{query: CHATS_USER_RELATED_BY_USER_ID_QUERY, variables: { _id: currentUser._id }}]
+                
         }).then(({data}) => {
             console.log(data)
             emitMessageCreate(data.chatMessageCreate, chat.data.chat.participants.map(i => i._id));
@@ -80,24 +86,16 @@ const ChatMessagesContainer = props => {
         }
 
         const handleScroll = (e) => {
-            console.log("oY offset", messgaesContainerRef?.current.scrollTop);
             if (messgaesContainerRef?.current.scrollTop === 0) {
-                console.log("FETCH OLD MESSAGES!")
                 msgsRef?.removeEventListener("scroll", handleScroll);
                 setOffset(offset + 1);
                 fetchChatMessages({
                     variables: { _id: selectedChatId, offset: (offset + 1) * messagesPerLoad, limit: messagesPerLoad }
                 }).then(({data}) => {
                     const msgsContState = chatMessagesContainerState();
-                    chatMessagesContainerState({...msgsContState, messages: [...data.chatMessagesByChatId, ...msgsContState.messages]})
+                    chatMessagesContainerState({...msgsContState, messages: [...msgsContState.messages, ...data.chatMessagesByChatId]})
                 });
-            } 
-            /*
-            else if (messgaesContainerRef?.current.scrollTop > messgaesContainerRef?.current.offsetHeight) {
-                console.log("FETCH NEW MESSAGES!")
-                msgsRef?.removeEventListener("scroll", handleScroll);
             }
-            */
         }
         msgsRef?.addEventListener("scroll", handleScroll, { passive: true });
         return () => {
@@ -113,7 +111,7 @@ const ChatMessagesContainer = props => {
                 variables: { _id: selectedChatId, offset, limit: messagesPerLoad }
             }).then(({data}) => {
                 const msgsContState = chatMessagesContainerState();
-                chatMessagesContainerState({...msgsContState, messages: [...data.chatMessagesByChatId, ...msgsContState.messages]})
+                chatMessagesContainerState({...msgsContState, messages: data.chatMessagesByChatId})
             });
         }
     }, [selectedChatId, fetchChatMessages, messagesPerLoad, offset]);
@@ -150,7 +148,7 @@ const ChatMessagesContainer = props => {
 
                                             return (
                                                 <Stack ref={messgaesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
-                                                    <EnumChatMessages messages={messages}/>
+                                                    <EnumChatMessages messages={reverseDataArray(messages)}/>
                                                 </Stack>
                                             );
                                         })()
