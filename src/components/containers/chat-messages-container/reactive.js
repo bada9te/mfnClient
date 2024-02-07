@@ -4,5 +4,5 @@ export const chatMessagesContainerState = makeVar({
     replyingTo: null,
     messageText: "",
     messages: [],
-    messagesPerLoad: 12,
+    messagesPerLoad: 6,
 });

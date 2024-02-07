@@ -1,10 +1,11 @@
 import { useReactiveVar } from "@apollo/client";
 import { Avatar, AvatarGroup, Card, CardActionArea, CardHeader } from "@mui/material";
 import { baseState } from "../../baseReactive";
+import { SpinnerCircular } from "../spinner/Spinner";
 
 
 const ChatHeader = props => {
-    const { handleClick, chat } = props;
+    const { handleClick, chat, loading } = props;
     const { locations } = useReactiveVar(baseState);
 
     return (
@@ -22,6 +23,8 @@ const ChatHeader = props => {
                             }
                         </AvatarGroup>
                     }
+                    
+                    action={loading && <SpinnerCircular/>}
                 />
             </CardActionArea>
         </Card>

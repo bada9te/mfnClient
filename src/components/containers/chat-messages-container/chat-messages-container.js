@@ -61,9 +61,10 @@ const ChatMessagesContainer = props => {
                 });
                 const chatMsgsState = chatMessagesContainerState();
                 // TODO: NEED TO FIX !!!
+                console.log(chatMsgsState.messages)
                 chatMessagesContainerState({...chatMsgsState, messages: [
                         retreivedMessageData,
-                        ...chatMsgsState.messages.slice(chatMsgsState.messages.length, 1)
+                        ...chatMsgsState.messages
                     ]
                 })
             },
@@ -80,10 +81,6 @@ const ChatMessagesContainer = props => {
     // effect REF (scroll) on messages container
     useEffect(() => {
         const msgsRef = messgaesContainerRef?.current;
-        // first load
-        if (msgsRef && offset === 0) {
-            msgsRef.scrollTop = msgsRef.scrollHeight
-        }
 
         const handleScroll = (e) => {
             if (messgaesContainerRef?.current.scrollTop === 0) {
@@ -111,10 +108,18 @@ const ChatMessagesContainer = props => {
                 variables: { _id: selectedChatId, offset, limit: messagesPerLoad }
             }).then(({data}) => {
                 const msgsContState = chatMessagesContainerState();
-                chatMessagesContainerState({...msgsContState, messages: data.chatMessagesByChatId})
+                chatMessagesContainerState({...msgsContState, messages: data.chatMessagesByChatId});
             });
         }
     }, [selectedChatId, fetchChatMessages, messagesPerLoad, offset]);
+
+    // scroll to bottom
+    useEffect(() => {
+        const msgsRef = messgaesContainerRef?.current;
+        if (msgsRef && offset < 1) {
+            msgsRef.scrollTop = msgsRef.scrollHeight
+        }
+    });
 
     return (
         <>
@@ -131,13 +136,10 @@ const ChatMessagesContainer = props => {
                                     <ChatHeader 
                                         chat={chat.data.chat}
                                         handleClick={(e) => handleTabSwitch(e, 2)}
+                                        loading={loadingMessages}
                                     />
                                     {
                                         (() => {
-                                            if (loadingMessages) {
-                                                return (<SpinnerLinear/>);
-                                            }
-
                                             if (!messages.length) {
                                                 return (
                                                     <Stack sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>

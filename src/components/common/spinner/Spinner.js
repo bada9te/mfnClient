@@ -4,7 +4,7 @@ import { Box, CircularProgress, LinearProgress } from "@mui/material";
 const SpinnerCircular = props => {
     return (
         <Box sx={{ display: 'flex' }}>
-            <CircularProgress sx={{color: 'white'}} />
+            <CircularProgress />
         </Box>
     );
 }
@@ -12,7 +12,7 @@ const SpinnerCircular = props => {
 const SpinnerLinear = props => {
     return (
         <Box sx={{ width: '100%' }}>
-            <LinearProgress sx={{color: 'white'}}/>
+            <LinearProgress/>
         </Box>
     );
 }
