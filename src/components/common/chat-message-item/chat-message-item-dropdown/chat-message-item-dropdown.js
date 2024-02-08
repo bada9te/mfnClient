@@ -1,5 +1,5 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
-import { Report, MoreVert, Reply, Delete } from "@mui/icons-material";
+import { Report, Reply, Delete } from "@mui/icons-material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

@@ -85,12 +85,14 @@ const ChatMessagesContainer = props => {
         const handleScroll = (e) => {
             if (messgaesContainerRef?.current.scrollTop === 0) {
                 msgsRef?.removeEventListener("scroll", handleScroll);
+                msgsRef.style.overflowY = 'hidden'
                 setOffset(offset + 1);
                 fetchChatMessages({
                     variables: { _id: selectedChatId, offset: (offset + 1) * messagesPerLoad, limit: messagesPerLoad }
                 }).then(({data}) => {
                     const msgsContState = chatMessagesContainerState();
                     chatMessagesContainerState({...msgsContState, messages: [...msgsContState.messages, ...data.chatMessagesByChatId]})
+                    msgsRef.style.overflowY = 'auto'
                 });
             }
         }

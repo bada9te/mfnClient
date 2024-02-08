@@ -52,7 +52,7 @@ const Topbar = (props) => {
     const { t } = useTranslation("bars");
  
     const pages = ['Feed', 'Battles', 'Playlists', 'Categories'];
-    user._id.length && pages.push('Chats');
+    user._id?.length && pages.push('Chats');
     const navigate = useNavigate();
 
     const handleNavigate = (where) => {

@@ -8,6 +8,7 @@ import { commentsModalState } from "../../modals/comments-modal/reactive";
 import { useSnackbar } from "notistack";
 import { baseState } from "../../baseReactive";
 
+
 const NotificationItem = props => {
     const {id, user, text, post, comment, createdAt, checked} = props;
     const navigate = useNavigate();
