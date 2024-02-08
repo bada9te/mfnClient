@@ -1,25 +1,26 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Card, CardHeader, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { DELETE_NOTIFICATION_MUTATION, MARK_NOTIFICATION_AS_READ_MUTATION } from "../../../utils/graphql-requests/notifications";
+import { DELETE_NOTIFICATION_MUTATION, MARK_NOTIFICATION_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "../../../utils/graphql-requests/notifications";
 import { commentsContainerState } from "../../containers/comments-container/reactive";
 import { commentsModalState } from "../../modals/comments-modal/reactive";
 import { useSnackbar } from "notistack";
+import { baseState } from "../../baseReactive";
 
 const NotificationItem = props => {
     const {id, user, text, post, comment, createdAt, checked} = props;
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
+    const { user: currentUser } = useReactiveVar(baseState);
+    const q = { query: NOTIFICATIONS_QUERY, variables: { receiverId: currentUser._id, checked } };
     const [ notificationDelete ] = useMutation(DELETE_NOTIFICATION_MUTATION, {
-        variables: {
-            _id: id,
-        }
+        variables: { _id: id },
+        refetchQueries: [q]
     });
     const [ notificationMarkAsRead ] = useMutation(MARK_NOTIFICATION_AS_READ_MUTATION, {
-        variables: {
-            _id: id,
-        }
+        variables: { _id: id },
+        refetchQueries: [q]
     });
 
     const handleDelete = () => {

@@ -4,6 +4,9 @@ import { baseState } from "../../baseReactive";
 import getParsedDate from "../../../utils/common-functions/getParsedDate";
 import ChatMessageItemDropDown from "./chat-message-item-dropdown/chat-message-item-dropdown";
 
+const ChatMessageAvatar = ({avatar}) => {
+    return (<Avatar sx={{ boxShadow: 5 }} src={avatar} alt="userAvatar"/>)
+}
 
 const ChatMessageItem = props => {
     const { item } = props;
@@ -16,7 +19,7 @@ const ChatMessageItem = props => {
         <Stack spacing={1} useFlexGap flexWrap="wrap" flexDirection="row" 
             sx={{ width: '100%', display: 'flex', justifyContent: myMsg ? "end": "start", alignItems: 'start' }}
         >
-            { !myMsg && <Avatar sx={{ boxShadow: 5 }} src={avatar}/> }
+            { !myMsg && <ChatMessageAvatar avatar={avatar}/> }
             <Paper elevation={5} sx={{ borderRadius: 3, p: 1, pb: 0 }}>
                 <Stack spacing={0.5} useFlexGap display="flex" alignItems={myMsg ? 'end':'start'}>
                     <ChatMessageItemDropDown>
@@ -33,7 +36,7 @@ const ChatMessageItem = props => {
                     </Box>
                 </Stack>
             </Paper>
-            { myMsg && <Avatar sx={{ boxShadow: 5 }} src={avatar}/> }
+            { myMsg && <ChatMessageAvatar avatar={avatar}/> }
         </Stack>
     );
 }

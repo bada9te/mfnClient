@@ -16,10 +16,7 @@ const NotificationsContainer = props => {
 
     const { user: currentUser } = useReactiveVar(baseState);
     const [ getNotifications, { data, loading } ] = useLazyQuery(NOTIFICATIONS_QUERY, {
-        variables: {
-            receiverId: currentUser._id,
-            checked: status === 0 ? false : true,
-        },
+        variables: { receiverId: currentUser._id, checked: status === 0 },
         pollInterval: 15000,
     });
     const [ deleteNotificationsByIds ] = useMutation(DELETE_NOTIFICATIONS_MUTATION);
@@ -31,10 +28,12 @@ const NotificationsContainer = props => {
         setStatus(key);
     }
 
+    const q = { query: NOTIFICATIONS_QUERY, variables: { receiverId: currentUser._id, checked: status === 0 } }
+
     const handleDeleteAllClick = async() => {
         if (data?.notifications && data?.notifications.length > 0) {
             enqueueSnackbar(t('notifications.snack.pending'), { autoHideDuration: 1500 });
-            await deleteNotificationsByIds({ variables: { ids: data.notifications.map(i => i._id) } })
+            await deleteNotificationsByIds({ variables: { ids: data.notifications.map(i => i._id) }, refetchQueries: [q] })
                 .then(() => {
                     enqueueSnackbar(t('notifications.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(() => {
@@ -46,7 +45,7 @@ const NotificationsContainer = props => {
     const handleReadAllClick = async() => {
         if (data?.notifications && data?.notifications.length > 0) {
             enqueueSnackbar(t('notifications.snack.pending'), { autoHideDuration: 1500 });
-            await markNotificationsAsReadByIds({ variables: { ids: data.notifications.map(i => i._id) } })
+            await markNotificationsAsReadByIds({ variables: { ids: data.notifications.map(i => i._id) }, refetchQueries: [q] })
                 .then(() => {
                     enqueueSnackbar(t('notifications.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(() => {
