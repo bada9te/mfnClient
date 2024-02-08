@@ -1,7 +1,13 @@
 import { makeVar } from "@apollo/client";
 
+export const replyingToNull = {
+    messageId: null,
+    userId: null,
+    userNick: null,
+}
+
 export const chatMessagesContainerState = makeVar({
-    replyingTo: null,
+    replyingTo: replyingToNull,
     messageText: "",
     messages: [],
     messagesPerLoad: 6,

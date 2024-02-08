@@ -1,10 +1,10 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
-import { Report, Reply, Delete } from "@mui/icons-material";
+import { Reply, Delete } from "@mui/icons-material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const ChatMessageItemDropDown = props => {
-    const { handleReply, handleDelete, canBeDeleted, handleReport } = props;
+    const { handleReply, handleDelete, canBeDeleted } = props;
     const [ anchorElComment, setAnchorElComment ] = useState(null);
     const { t } = useTranslation("objects");
 
@@ -12,7 +12,6 @@ const ChatMessageItemDropDown = props => {
     const handleClick = (i) => {
         if (i === 'Reply') handleReply();
         else if (i === 'Delete') handleDelete();
-        else if (i === 'Report') handleReport();
         handleCloseCommentMenu();
     }
 
@@ -36,11 +35,6 @@ const ChatMessageItemDropDown = props => {
                 <MenuItem onClick={() => handleClick('Reply')}>
                     <Typography textAlign="center" display="flex" alignItems="center">
                         <Reply sx={{mr: 1}}/>{t('comment.dropdown.reply')}
-                    </Typography>
-                </MenuItem>
-                <MenuItem onClick={() => handleClick('Report')}>
-                    <Typography textAlign="center" display="flex" alignItems="center">
-                        <Report sx={{mr: 1}}/>{t('comment.dropdown.report')}
                     </Typography>
                 </MenuItem>
                 {

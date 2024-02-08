@@ -5,11 +5,11 @@ import { SpinnerLinear } from "../../common/spinner/Spinner";
 import { IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
 import ChatHeader from "../../common/chat-header/chat-header";
 import EnumChatMessages from "../../enums/enum-chat-messages";
-import { Send } from "@mui/icons-material";
+import { Reply, Send } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
 import { emitMessageCreate } from "../../../utils/socket/event-emitters/messages";
 import { chatsContainerState } from "../chats-container/reactive";
-import { chatMessagesContainerState } from "./reactive";
+import { chatMessagesContainerState, replyingToNull } from "./reactive";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "../../../utils/graphql-requests/chats";
 
 const reverseDataArray = (arr) => {
@@ -18,6 +18,7 @@ const reverseDataArray = (arr) => {
 
 const ChatMessagesContainer = props => {
     const { handleTabSwitch, chat } = props;
+    const chatParticipants = chat?.data?.chat.participants.map(i => i._id) || [];
     const [ offset, setOffset ] = useState(0);
     const { user: currentUser } = useReactiveVar(baseState);
     const { selectedChatId } = useReactiveVar(chatsContainerState);
@@ -27,7 +28,12 @@ const ChatMessagesContainer = props => {
     
     // handle msg input
     const handleMessageInput = (e) => {
-        chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: e.target.value })
+        chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: e.target.value });
+    }
+
+    // cancel replying
+    const handleCancelReplying = () => {
+        chatMessagesContainerState({ ...chatMessagesContainerState(), replyingTo: replyingToNull });
     }
 
     // send message click 
@@ -51,7 +57,6 @@ const ChatMessagesContainer = props => {
                 const retreivedMessageData = JSON.parse(JSON.stringify(data.chatMessageCreate));
                 retreivedMessageData.owner = { _id: currentUser._id, nick: currentUser.nick, avatar: currentUser.avatar };
 
-                console.log([retreivedMessageData, ...cachedData.chatMessagesByChatId])
                 cache.writeQuery({
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
                     variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
@@ -60,8 +65,6 @@ const ChatMessagesContainer = props => {
                     }
                 });
                 const chatMsgsState = chatMessagesContainerState();
-                // TODO: NEED TO FIX !!!
-                console.log(chatMsgsState.messages)
                 chatMessagesContainerState({...chatMsgsState, messages: [
                         retreivedMessageData,
                         ...chatMsgsState.messages
@@ -71,8 +74,7 @@ const ChatMessagesContainer = props => {
             refetchQueries: [{query: CHATS_USER_RELATED_BY_USER_ID_QUERY, variables: { _id: currentUser._id }}]
                 
         }).then(({data}) => {
-            console.log(data)
-            emitMessageCreate(data.chatMessageCreate, chat.data.chat.participants.map(i => i._id));
+            emitMessageCreate(data.chatMessageCreate, chatParticipants);
             chatMessagesContainerState({...chatMessagesContainerState(), messageText: ""});
             messgaesContainerRef?.current && (messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.scrollHeight)
         });
@@ -135,11 +137,7 @@ const ChatMessagesContainer = props => {
                         if (chat.data) {
                             return (
                                 <Paper>
-                                    <ChatHeader 
-                                        chat={chat.data.chat}
-                                        handleClick={(e) => handleTabSwitch(e, 2)}
-                                        loading={loadingMessages}
-                                    />
+                                    <ChatHeader chat={chat.data.chat} handleClick={(e) => handleTabSwitch(e, 2)} loading={loadingMessages}/>
                                     {
                                         (() => {
                                             if (!messages.length) {
@@ -152,25 +150,26 @@ const ChatMessagesContainer = props => {
 
                                             return (
                                                 <Stack ref={messgaesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
-                                                    <EnumChatMessages messages={reverseDataArray(messages)}/>
+                                                    <EnumChatMessages messages={reverseDataArray(messages)} chatParticipants={chatParticipants}/>
                                                 </Stack>
                                             );
                                         })()
                                     }
-                                    <Paper sx={{borderRadius: 0}}>
-                                        <TextField
-                                            fullWidth
-                                            id="filled-static"
-                                            label="Message"
-                                            variant="filled"
-                                            value={messageText}
-                                            onChange={handleMessageInput}
-                                            InputProps={{ 
-                                                disableUnderline: true, 
-                                                endAdornment: <IconButton onClick={handleSendMessageClick}><Send/></IconButton>
-                                            }}
-                                        />
-                                    </Paper>
+                                    
+                                    <TextField
+                                        sx={{px: 0.25}}
+                                        fullWidth
+                                        id="filled-static"
+                                        label={replyingTo.userId ? `Replying to ${replyingTo.userNick}` : "Message"}
+                                        variant="outlined"
+                                        value={messageText}
+                                        onChange={handleMessageInput}
+                                        InputProps={{ 
+                                            startAdornment: replyingTo.userId && <IconButton onClick={handleCancelReplying}><Reply/></IconButton>,
+                                            disableUnderline: true, 
+                                            endAdornment: <IconButton onClick={handleSendMessageClick}><Send/></IconButton>
+                                        }}
+                                    />
                                 </Paper>
                             );
                         }
