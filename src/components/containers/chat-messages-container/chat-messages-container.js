@@ -94,10 +94,11 @@ const ChatMessagesContainer = props => {
             chatMessagesContainerState({
                 ...msgsState, 
                 messageText: "", 
-                messages: msgsState.messages.map(i => {
+                messages: JSON.parse(JSON.stringify(msgsState.messages)).map(i => {
                     if (i._id === data.chatMessageUpdate._id) { i.text = data.chatMessageUpdate.text }
                     return i;
                 }),
+                editingMessageId: null
             });
             emitMessageUpdate(data.chatMessageUpdate, chatParticipants);
         });
