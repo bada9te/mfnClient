@@ -7,7 +7,7 @@ import { baseState } from "../../baseReactive";
 const ChatParticipantItem = props => {
     const { item, chatOwnerId, switchParticipants } = props;
     const navigate = useNavigate();
-    const { user: currentUser } = useReactiveVar(baseState);
+    const { user: currentUser, locations } = useReactiveVar(baseState);
     const me = currentUser._id === item._id;
     const chatOwner = chatOwnerId === item._id;
 
@@ -25,7 +25,7 @@ const ChatParticipantItem = props => {
         <Card sx={{ borderRadius: 5, boxShadow: 5 }}>
             <CardHeader 
                 title={`${me ? `${item.nick} (me)` : item.nick} ${chatOwner ? '(owner)' : ''}`} 
-                avatar={<Avatar/>} 
+                avatar={<Avatar alt={item.nick} src={item.avatar.length ? `${locations.images}/${item.avatar}` : "NULL"} />} 
                 action={
                     <ButtonGroup>
                         <Tooltip title="Open profile">

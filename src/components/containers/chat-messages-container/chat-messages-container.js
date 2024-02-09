@@ -2,7 +2,7 @@ import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESSAGE_UPDATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
-import { IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Card, IconButton, Stack, TextField, Typography } from "@mui/material";
 import ChatHeader from "../../common/chat-header/chat-header";
 import EnumChatMessages from "../../enums/enum-chat-messages";
 import { AutoFixHigh, Clear, Reply, Send } from "@mui/icons-material";
@@ -160,7 +160,7 @@ const ChatMessagesContainer = props => {
 
                         if (chat.data) {
                             return (
-                                <Paper>
+                                <Card>
                                     <ChatHeader chat={chat.data.chat} handleClick={(e) => handleTabSwitch(e, 2)} loading={loadingMessages}/>
                                     {
                                         (() => {
@@ -203,7 +203,7 @@ const ChatMessagesContainer = props => {
                                                 <IconButton onClick={handleSendMessageClick}><Send/></IconButton>
                                         }}
                                     />
-                                </Paper>
+                                </Card>
                             );
                         }
                     }

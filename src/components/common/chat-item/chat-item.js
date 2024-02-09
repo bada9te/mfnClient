@@ -17,7 +17,8 @@ const ChatItem = props => {
                         <AvatarGroup max={3}>
                             {
                                 item.participants.map((user, key) => {
-                                    return (<Avatar key={key} src={!user.avatar.length ? "NULL" : `${locations.images}/${user.avatar}`}/>)
+                                    console.log(user)
+                                    return (<Avatar key={key} src={!user.avatar.length ? "NULL" : `${locations.images}/${user.avatar}`} alt={user.nick}/>)
                                 })
                             }
                         </AvatarGroup>

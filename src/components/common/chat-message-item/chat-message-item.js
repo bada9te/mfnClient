@@ -1,5 +1,5 @@
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { Avatar, Box, Paper, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Link, Paper, Stack, Typography } from "@mui/material";
 import { baseState } from "../../baseReactive";
 import getParsedDate from "../../../utils/common-functions/getParsedDate";
 import ChatMessageItemDropDown from "./chat-message-item-dropdown/chat-message-item-dropdown";
@@ -7,8 +7,12 @@ import { CHAT_MESSAGE_DELETE_BY_ID_MUTATION } from "../../../utils/graphql-reque
 import { emitMessageDelete } from "../../../utils/socket/event-emitters/messages";
 import { chatMessagesContainerState } from "../../containers/chat-messages-container/reactive";
 
-const ChatMessageAvatar = ({avatar}) => {
-    return (<Avatar sx={{ boxShadow: 5 }} src={avatar} alt="userAvatar"/>)
+const ChatMessageAvatar = ({avatar, userId, nick}) => {
+    return (
+        <Link href={`/app/profile/${userId}`}>
+            <Avatar sx={{ boxShadow: 5 }} src={avatar} alt={nick}/>
+        </Link>
+    )
 }
 
 const ChatMessageItem = props => {
@@ -42,7 +46,7 @@ const ChatMessageItem = props => {
         <Stack spacing={1} useFlexGap flexWrap="wrap" flexDirection="row" 
             sx={{ width: '100%', display: 'flex', justifyContent: myMsg ? "end": "start", alignItems: 'start' }}
         >
-            { !myMsg && <ChatMessageAvatar avatar={avatar}/> }
+            { !myMsg && <ChatMessageAvatar avatar={avatar} userId={item.owner._id} nick={item.owner.nick}/> }
             <Paper elevation={5} sx={{ borderRadius: 3, p: 1, pb: 0 }}>
                 <Stack spacing={0.5} useFlexGap display="flex" alignItems={myMsg ? 'end':'start'}>
                     <ChatMessageItemDropDown
@@ -64,7 +68,7 @@ const ChatMessageItem = props => {
                     </Box>
                 </Stack>
             </Paper>
-            { myMsg && <ChatMessageAvatar avatar={avatar}/> }
+            { myMsg && <ChatMessageAvatar avatar={avatar} userId={item.owner._id} nick={item.owner.nick}/> }
         </Stack>
     );
 }
