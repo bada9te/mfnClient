@@ -10,8 +10,13 @@ const emitMessageDelete = (message, toUsers) => {
     socket.emit("message delete", { message, toUsers });
 }
 
+// message update
+const emitMessageUpdate = (message, toUsers) => {
+    socket.emit("message update", { message, toUsers });
+}
 
 export {
     emitMessageCreate,
     emitMessageDelete,
+    emitMessageUpdate,
 }

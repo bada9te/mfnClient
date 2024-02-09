@@ -34,6 +34,10 @@ const ChatMessageItem = props => {
         }});
     }
 
+    const handleEdit = async() => {
+        chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: item.text, editingMessageId: item._id });
+    }
+
     return (
         <Stack spacing={1} useFlexGap flexWrap="wrap" flexDirection="row" 
             sx={{ width: '100%', display: 'flex', justifyContent: myMsg ? "end": "start", alignItems: 'start' }}
@@ -43,6 +47,7 @@ const ChatMessageItem = props => {
                 <Stack spacing={0.5} useFlexGap display="flex" alignItems={myMsg ? 'end':'start'}>
                     <ChatMessageItemDropDown
                         canBeDeleted={myMsg}
+                        handleEdit={handleEdit}
                         handleDelete={handleDelete}
                         handleReply={handleReply}
                     >

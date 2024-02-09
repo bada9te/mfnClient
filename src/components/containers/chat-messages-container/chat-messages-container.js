@@ -1,13 +1,13 @@
 import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
+import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESSAGE_UPDATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import { IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
 import ChatHeader from "../../common/chat-header/chat-header";
 import EnumChatMessages from "../../enums/enum-chat-messages";
-import { Reply, Send } from "@mui/icons-material";
+import { AutoFixHigh, Clear, Reply, Send } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
-import { emitMessageCreate } from "../../../utils/socket/event-emitters/messages";
+import { emitMessageCreate, emitMessageUpdate } from "../../../utils/socket/event-emitters/messages";
 import { chatsContainerState } from "../chats-container/reactive";
 import { chatMessagesContainerState, replyingToNull } from "./reactive";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "../../../utils/graphql-requests/chats";
@@ -22,7 +22,7 @@ const ChatMessagesContainer = props => {
     const [ offset, setOffset ] = useState(0);
     const { user: currentUser } = useReactiveVar(baseState);
     const { selectedChatId } = useReactiveVar(chatsContainerState);
-    const { messagesPerLoad, replyingTo, messageText, messages } = useReactiveVar(chatMessagesContainerState);
+    const { messagesPerLoad, replyingTo, messageText, messages, editingMessageId } = useReactiveVar(chatMessagesContainerState);
     const messgaesContainerRef = useRef();
     const [ fetchChatMessages, { loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY);
     
@@ -34,6 +34,11 @@ const ChatMessagesContainer = props => {
     // cancel replying
     const handleCancelReplying = () => {
         chatMessagesContainerState({ ...chatMessagesContainerState(), replyingTo: replyingToNull });
+    }
+
+    // cancel editing
+    const handleCancelEditing = () => {
+        chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: "", editingMessageId: null });
     }
 
     // send message click 
@@ -65,18 +70,36 @@ const ChatMessagesContainer = props => {
                     }
                 });
                 const chatMsgsState = chatMessagesContainerState();
-                chatMessagesContainerState({...chatMsgsState, messages: [
-                        retreivedMessageData,
-                        ...chatMsgsState.messages
-                    ]
-                })
+                chatMessagesContainerState({...chatMsgsState, messages: [ retreivedMessageData, ...chatMsgsState.messages ]});
             },
             refetchQueries: [{query: CHATS_USER_RELATED_BY_USER_ID_QUERY, variables: { _id: currentUser._id }}]
-                
         }).then(({data}) => {
             emitMessageCreate(data.chatMessageCreate, chatParticipants);
             chatMessagesContainerState({...chatMessagesContainerState(), messageText: ""});
             messgaesContainerRef?.current && (messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.scrollHeight)
+        });
+    }
+
+    // edit message click
+    const [ editMessage ] = useMutation(CHAT_MESSAGE_UPDATE_MUTATION);
+    const handleEditMessageClick = () => {
+        const input = {
+            _id: editingMessageId,
+            text: messageText
+        }
+        editMessage({
+            variables: { input },
+        }).then(({ data }) => {
+            const msgsState = chatMessagesContainerState();
+            chatMessagesContainerState({
+                ...msgsState, 
+                messageText: "", 
+                messages: msgsState.messages.map(i => {
+                    if (i._id === data.chatMessageUpdate._id) { i.text = data.chatMessageUpdate.text }
+                    return i;
+                }),
+            });
+            emitMessageUpdate(data.chatMessageUpdate, chatParticipants);
         });
     }
 
@@ -165,9 +188,18 @@ const ChatMessagesContainer = props => {
                                         value={messageText}
                                         onChange={handleMessageInput}
                                         InputProps={{ 
-                                            startAdornment: replyingTo.userId && <IconButton onClick={handleCancelReplying}><Reply/></IconButton>,
-                                            disableUnderline: true, 
-                                            endAdornment: <IconButton onClick={handleSendMessageClick}><Send/></IconButton>
+                                            startAdornment: 
+                                                editingMessageId
+                                                ?
+                                                <IconButton onClick={handleCancelEditing}><Clear/></IconButton>
+                                                :
+                                                replyingTo.userId && <IconButton onClick={handleCancelReplying}><Reply/></IconButton>, 
+                                            endAdornment: 
+                                                editingMessageId
+                                                ?
+                                                <IconButton onClick={handleEditMessageClick}><AutoFixHigh/></IconButton>
+                                                :
+                                                <IconButton onClick={handleSendMessageClick}><Send/></IconButton>
                                         }}
                                     />
                                 </Paper>

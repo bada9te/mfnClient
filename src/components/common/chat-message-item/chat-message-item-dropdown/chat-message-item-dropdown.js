@@ -1,16 +1,16 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
-import { Reply, Delete } from "@mui/icons-material";
+import { Reply, Delete, Edit } from "@mui/icons-material";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+
 
 const ChatMessageItemDropDown = props => {
-    const { handleReply, handleDelete, canBeDeleted } = props;
+    const { handleEdit, handleReply, handleDelete, canBeDeleted } = props;
     const [ anchorElComment, setAnchorElComment ] = useState(null);
-    const { t } = useTranslation("objects");
 
     // click
     const handleClick = (i) => {
         if (i === 'Reply') handleReply();
+        else if (i === 'Edit') handleEdit();
         else if (i === 'Delete') handleDelete();
         handleCloseCommentMenu();
     }
@@ -34,15 +34,24 @@ const ChatMessageItemDropDown = props => {
             >
                 <MenuItem onClick={() => handleClick('Reply')}>
                     <Typography textAlign="center" display="flex" alignItems="center">
-                        <Reply sx={{mr: 1}}/>{t('comment.dropdown.reply')}
+                        <Reply sx={{mr: 1}}/>Reply
                     </Typography>
                 </MenuItem>
                 {
                     canBeDeleted
                     &&
+                    <MenuItem onClick={() => handleClick('Edit')}>
+                        <Typography textAlign="center" display="flex" alignItems="center">
+                            <Edit sx={{mr: 1}}/>Edit
+                        </Typography>
+                    </MenuItem>
+                }
+                {
+                    canBeDeleted
+                    &&
                     <MenuItem onClick={() => handleClick('Delete')}>
                         <Typography textAlign="center" display="flex" alignItems="center">
-                            <Delete sx={{mr: 1}}/>{t('comment.dropdown.delete')}
+                            <Delete sx={{mr: 1}}/>Delete
                         </Typography>
                     </MenuItem>
                 }

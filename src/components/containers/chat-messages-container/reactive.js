@@ -8,6 +8,7 @@ export const replyingToNull = {
 
 export const chatMessagesContainerState = makeVar({
     replyingTo: replyingToNull,
+    editingMessageId: null,
     messageText: "",
     messages: [],
     messagesPerLoad: 6,
