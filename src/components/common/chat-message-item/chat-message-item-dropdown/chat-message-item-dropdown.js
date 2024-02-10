@@ -27,7 +27,6 @@ const ChatMessageItemDropDown = props => {
                 id="menu-appbar"
                 anchorEl={anchorElComment}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                keepMounted
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={Boolean(anchorElComment)}
                 onClose={handleCloseCommentMenu}
