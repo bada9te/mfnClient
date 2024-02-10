@@ -1,4 +1,4 @@
-import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESSAGE_UPDATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
@@ -24,9 +24,13 @@ const ChatMessagesContainer = props => {
     const [ offset, setOffset ] = useState(0);
     const { user: currentUser } = useReactiveVar(baseState);
     const { selectedChatId } = useReactiveVar(chatsContainerState);
-    const { messagesPerLoad, replyingTo, messageText, messages, editingMessageId } = useReactiveVar(chatMessagesContainerState);
+    const { messagesPerLoad, replyingTo, messageText, editingMessageId } = useReactiveVar(chatMessagesContainerState);
     const messgaesContainerRef = useRef();
-    const [ fetchChatMessages, { loading: loadingMessages } ] = useLazyQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY);
+    const { data: messages, loading: loadingMessages, fetchMore: fetchMoreMessages } = useQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
+        variables: {
+            _id: selectedChatId, offset: 0, limit: messagesPerLoad
+        }
+    });
     
     // handle msg input
     const handleMessageInput = (e) => {
@@ -109,18 +113,23 @@ const ChatMessagesContainer = props => {
     // effect REF (scroll) on messages container
     useEffect(() => {
         const msgsRef = messgaesContainerRef?.current;
-
         const handleScroll = (e) => {
             if (messgaesContainerRef?.current.scrollTop === 0) {
                 msgsRef?.removeEventListener("scroll", handleScroll);
-                msgsRef.style.overflowY = 'hidden'
+                //msgsRef.style.overflowY = 'hidden'
                 setOffset(offset + 1);
-                fetchChatMessages({
-                    variables: { _id: selectedChatId, offset: (offset + 1) * messagesPerLoad, limit: messagesPerLoad }
+                fetchMoreMessages({
+                    variables: {offset: messages.chatMessagesByChatId.length}, 
+                    updateQuery(prev, { fetchMoreResult }) {
+                        if (!fetchMoreResult) return prev;
+                        return Object.assign({}, prev, {
+                            chatMessagesByChatId: [...prev.chatMessagesByChatId, ...fetchMoreResult.chatMessagesByChatId]
+                        });
+                    }
                 }).then(({data}) => {
-                    const msgsContState = chatMessagesContainerState();
-                    chatMessagesContainerState({...msgsContState, messages: [...msgsContState.messages, ...data.chatMessagesByChatId]})
-                    msgsRef.style.overflowY = 'auto'
+                    if (data.chatMessagesByChatId.length) {
+                        messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.offsetHeight
+                    }
                 });
             }
         }
@@ -130,18 +139,6 @@ const ChatMessagesContainer = props => {
         }
     });
 
-    // fetch data if chat was selected
-    useEffect(() => {
-        // check for first load
-        if (selectedChatId && offset === 0) {
-            fetchChatMessages({
-                variables: { _id: selectedChatId, offset, limit: messagesPerLoad }
-            }).then(({data}) => {
-                const msgsContState = chatMessagesContainerState();
-                chatMessagesContainerState({...msgsContState, messages: data.chatMessagesByChatId});
-            });
-        }
-    }, [selectedChatId, fetchChatMessages, messagesPerLoad, offset]);
 
     // scroll to bottom
     useEffect(() => {
@@ -154,18 +151,20 @@ const ChatMessagesContainer = props => {
     // react on socket
     useEffect(() => {
         socket.on('message create', async(socketData) => {
-            await client.refetchQueries({ include: [CHAT_MESSAGES_BY_CHAT_ID_QUERY] }).then((data) => {
-                if (socketData.owner._id !== currentUser._id) {
-                    console.log(data[0].data.chatMessagesByChatId)
-                    const msgsContState = chatMessagesContainerState();
-                    chatMessagesContainerState({...msgsContState, messages: data[0].data.chatMessagesByChatId});
-                }
-            })
+            console.log(socketData);
+        });
+        socket.on('message update', async(socketData) => {
+            console.log(socketData);
+        });
+        socket.on('message delete', async(socketData) => {
+            console.log(socketData);
         });
         return () => {
-            socket.off('message create')
+            socket.off('message create');
+            socket.off('message update');
+            socket.off('message delete');
         }
-    })
+    });
 
     return (
         <>
@@ -182,7 +181,7 @@ const ChatMessagesContainer = props => {
                                     <ChatHeader chat={chat.data.chat} handleClick={(e) => handleTabSwitch(e, 2)} loading={loadingMessages}/>
                                     {
                                         (() => {
-                                            if (!messages.length) {
+                                            if (!messages?.chatMessagesByChatId.length || loadingMessages) {
                                                 return (
                                                     <Stack sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>
                                                         <Typography>No messages yet</Typography>
@@ -192,7 +191,7 @@ const ChatMessagesContainer = props => {
 
                                             return (
                                                 <Stack ref={messgaesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
-                                                    <EnumChatMessages messages={reverseDataArray(messages)} chatParticipants={chatParticipants}/>
+                                                    <EnumChatMessages messages={reverseDataArray(messages.chatMessagesByChatId)} chatParticipants={chatParticipants}/>
                                                 </Stack>
                                             );
                                         })()
