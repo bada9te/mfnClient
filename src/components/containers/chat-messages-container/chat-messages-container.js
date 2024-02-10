@@ -50,9 +50,9 @@ const ChatMessagesContainer = props => {
             chat: selectedChatId,
         };
 
-        if (replyingTo) {
+        if (replyingTo.messageId) {
             input.isReply = true;
-            input.isReplyTo = replyingTo;
+            input.isReplyTo = replyingTo.messageId;
         }
 
         sendMessage({ 

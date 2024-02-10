@@ -3,7 +3,7 @@ import { Avatar, Box, Link, Paper, Stack, Typography } from "@mui/material";
 import { baseState } from "../../baseReactive";
 import getParsedDate from "../../../utils/common-functions/getParsedDate";
 import ChatMessageItemDropDown from "./chat-message-item-dropdown/chat-message-item-dropdown";
-import { CHAT_MESSAGE_DELETE_BY_ID_MUTATION } from "../../../utils/graphql-requests/chat-messages";
+import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_DELETE_BY_ID_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { emitMessageDelete } from "../../../utils/socket/event-emitters/messages";
 import { chatMessagesContainerState } from "../../containers/chat-messages-container/reactive";
 
@@ -18,12 +18,15 @@ const ChatMessageAvatar = ({avatar, userId, nick}) => {
 const ChatMessageItem = props => {
     const { item, chatParticipants } = props;
     const { user: currentUser, locations } = useReactiveVar(baseState);
+    const { messagesPerLoad } = useReactiveVar(chatMessagesContainerState);
     const myMsg = item.owner._id === currentUser._id;
     const avatar = item.owner.avatar.length ? `${locations.images}/${item.owner.avatar}` : "NULL";
 
     const [ deleteMsg ] = useMutation(CHAT_MESSAGE_DELETE_BY_ID_MUTATION, { variables: {_id: item._id} });
     const handleDelete = () => {
-        deleteMsg().then(({data}) => {
+        deleteMsg({
+            refetchQueries: [{query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, variables: { _id: item.chat._id, offset: 0, limit: messagesPerLoad }}]
+        }).then(({data}) => {
             const chatMsgsState = chatMessagesContainerState();
             chatMessagesContainerState({...chatMsgsState, messages: chatMsgsState.messages.filter(i => i._id !== item._id)});
             emitMessageDelete(data.chatMessageDeleteById, chatParticipants);

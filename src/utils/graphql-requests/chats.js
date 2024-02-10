@@ -53,11 +53,6 @@ export const CHATS_USER_RELATED_BY_USER_ID_QUERY = gql`
             messages {
                 text
             }
-            lastMessage {
-                _id
-                text
-                createdAt
-            }
             participants {
                 avatar
                 nick
@@ -94,10 +89,6 @@ export const CHAT_SWITCH_PARTICIPANT_MUTATION = gql`
             participants {
                 avatar
                 nick
-            }
-            lastMessage {
-                _id
-                text
             }
         }
     }
