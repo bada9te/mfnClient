@@ -85,8 +85,7 @@ export default new InMemoryCache({
                 }
             }
         },
-        ChatMessage: {
-            keyFields: ['_id'],
+        Query: {
             fields: {
                 chatMessagesByChatId: {
                     merge(_, incoming) {

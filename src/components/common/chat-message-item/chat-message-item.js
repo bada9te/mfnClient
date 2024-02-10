@@ -6,6 +6,7 @@ import ChatMessageItemDropDown from "./chat-message-item-dropdown/chat-message-i
 import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_DELETE_BY_ID_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { emitMessageDelete } from "../../../utils/socket/event-emitters/messages";
 import { chatMessagesContainerState } from "../../containers/chat-messages-container/reactive";
+import { chatsContainerState } from "../../containers/chats-container/reactive";
 
 const ChatMessageAvatar = ({avatar, userId, nick}) => {
     return (
@@ -19,16 +20,32 @@ const ChatMessageItem = props => {
     const { item, chatParticipants } = props;
     const { user: currentUser, locations } = useReactiveVar(baseState);
     const { messagesPerLoad } = useReactiveVar(chatMessagesContainerState);
+    const { selectedChatId } = useReactiveVar(chatsContainerState);
     const myMsg = item.owner._id === currentUser._id;
     const avatar = item.owner.avatar.length ? `${locations.images}/${item.owner.avatar}` : "NULL";
 
     const [ deleteMsg ] = useMutation(CHAT_MESSAGE_DELETE_BY_ID_MUTATION, { variables: {_id: item._id} });
     const handleDelete = () => {
         deleteMsg({
-            refetchQueries: [{query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, variables: { _id: item.chat._id, offset: 0, limit: messagesPerLoad }}]
+            update: (cache, {data}) => {
+                const msgs = JSON.parse(JSON.stringify(cache.readQuery({
+                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
+                    variables: {
+                        _id: selectedChatId, offset: 0, limit: messagesPerLoad
+                    }
+                })));
+
+                cache.writeQuery({
+                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
+                    variables: {
+                        _id: selectedChatId, offset: 0, limit: messagesPerLoad
+                    },
+                    data: {
+                        chatMessagesByChatId: msgs.chatMessagesByChatId.filter(i => i._id !== data.chatMessageDeleteById._id)
+                    }
+                });
+            }
         }).then(({data}) => {
-            const chatMsgsState = chatMessagesContainerState();
-            chatMessagesContainerState({...chatMsgsState, messages: chatMsgsState.messages.filter(i => i._id !== item._id)});
             emitMessageDelete(data.chatMessageDeleteById, chatParticipants);
         });
     }
