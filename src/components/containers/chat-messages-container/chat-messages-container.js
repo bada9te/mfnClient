@@ -11,6 +11,8 @@ import { emitMessageCreate, emitMessageUpdate } from "../../../utils/socket/even
 import { chatsContainerState } from "../chats-container/reactive";
 import { chatMessagesContainerState, replyingToNull } from "./reactive";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "../../../utils/graphql-requests/chats";
+import socket from "../../../utils/socket/socket";
+import client from "../../../utils/apollo/client";
 
 const reverseDataArray = (arr) => {
     return JSON.parse(JSON.stringify(arr)).reverse()
@@ -148,6 +150,22 @@ const ChatMessagesContainer = props => {
             msgsRef.scrollTop = msgsRef.scrollHeight
         }
     });
+
+    // react on socket
+    useEffect(() => {
+        socket.on('message create', async(socketData) => {
+            await client.refetchQueries({ include: [CHAT_MESSAGES_BY_CHAT_ID_QUERY] }).then((data) => {
+                if (socketData.owner._id !== currentUser._id) {
+                    console.log(data[0].data.chatMessagesByChatId)
+                    const msgsContState = chatMessagesContainerState();
+                    chatMessagesContainerState({...msgsContState, messages: data[0].data.chatMessagesByChatId});
+                }
+            })
+        });
+        return () => {
+            socket.off('message create')
+        }
+    })
 
     return (
         <>

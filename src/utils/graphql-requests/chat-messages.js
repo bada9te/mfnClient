@@ -47,6 +47,9 @@ export const CHAT_MESSAGE_CREATE_MUTATION = gql`
     mutation chatMessageCreate($input: ChatMessageCreateInput!) {
         chatMessageCreate(input: $input) {
             ...CoreChatMessageFields
+            owner {
+                avatar nick
+            }
         }
     }
 `;
