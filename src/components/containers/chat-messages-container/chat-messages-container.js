@@ -95,17 +95,29 @@ const ChatMessagesContainer = props => {
         }
         editMessage({
             variables: { input },
+            update: (cache) => {
+                const msgs = JSON.parse(JSON.stringify(cache.readQuery({
+                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
+                    variables: {
+                        _id: selectedChatId, offset: 0, limit: messagesPerLoad
+                    }
+                })));
+    
+                cache.writeQuery({
+                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
+                    variables: {
+                        _id: selectedChatId, offset: 0, limit: messagesPerLoad
+                    },
+                    data: {
+                        chatMessagesByChatId: msgs.chatMessagesByChatId.map(i => {
+                            if (i._id === editingMessageId) { i.text = messageText; }
+                            return i;
+                        })
+                    }
+                });
+            }
         }).then(({ data }) => {
-            const msgsState = chatMessagesContainerState();
-            chatMessagesContainerState({
-                ...msgsState, 
-                messageText: "", 
-                messages: JSON.parse(JSON.stringify(msgsState.messages)).map(i => {
-                    if (i._id === data.chatMessageUpdate._id) { i.text = data.chatMessageUpdate.text }
-                    return i;
-                }),
-                editingMessageId: null
-            });
+            chatMessagesContainerState({...chatMessagesContainerState(), messageText: "", editingMessageId: null });
             emitMessageUpdate(data.chatMessageUpdate, chatParticipants);
         });
     }
