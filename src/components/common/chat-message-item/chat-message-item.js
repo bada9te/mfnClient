@@ -86,6 +86,9 @@ const ChatMessageItem = props => {
                             {item.text}
                         </Typography>
                     </Box>
+                    {
+                        item.replies.map((i, key) => <Typography key={key}>{i?.text}</Typography>)
+                    }
                 </Stack>
             </Paper>
             { myMsg && <ChatMessageAvatar avatar={avatar} userId={item.owner._id} nick={item.owner.nick}/> }

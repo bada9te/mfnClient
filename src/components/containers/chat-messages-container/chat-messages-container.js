@@ -18,6 +18,21 @@ const reverseDataArray = (arr) => {
     return JSON.parse(JSON.stringify(arr)).reverse()
 }
 
+const parseMessages = (retreivedMessageData, cachedData, replyForId=null) => {
+    if (!retreivedMessageData.isReply) {
+        return [retreivedMessageData, ...cachedData]
+    } else if (replyForId) {
+        cachedData = JSON.parse(JSON.stringify(cachedData));
+        return cachedData.map(msg => {
+            if (msg._id === replyForId) {
+                msg.replies.push(retreivedMessageData);
+            }
+            return msg;
+        });
+    }
+    return [];
+}
+
 const ChatMessagesContainer = props => {
     const { handleTabSwitch, chat } = props;
     const chatParticipants = chat?.data?.chat.participants.map(i => i._id) || [];
@@ -72,7 +87,7 @@ const ChatMessagesContainer = props => {
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
                     variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
                     data: {
-                        chatMessagesByChatId: [retreivedMessageData, ...cachedData.chatMessagesByChatId]
+                        chatMessagesByChatId: parseMessages(retreivedMessageData, cachedData.chatMessagesByChatId, replyingTo.messageId)
                     }
                 });
             },

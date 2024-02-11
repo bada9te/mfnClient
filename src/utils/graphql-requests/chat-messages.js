@@ -53,6 +53,9 @@ export const CHAT_MESSAGE_CREATE_MUTATION = gql`
             owner {
                 avatar nick
             }
+            replies {
+                ...CoreChatMessageFields
+            }
         }
     }
 `;
