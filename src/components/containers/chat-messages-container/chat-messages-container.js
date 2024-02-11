@@ -29,7 +29,7 @@ const ChatMessagesContainer = props => {
     const { data: messages, loading: loadingMessages, fetchMore: fetchMoreMessages } = useQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
         variables: {
             _id: selectedChatId, offset: 0, limit: messagesPerLoad
-        }
+        },
     });
     
     // handle msg input
@@ -174,11 +174,15 @@ const ChatMessagesContainer = props => {
 
         socket.on('message create', async(socketData) => {
             if (socketData.owner._id !== currentUser._id) {
-                const cachedData = readMsgsQuery();
-                client.cache.writeQuery({
-                    ...queryDefinition,
-                    data: { chatMessagesByChatId: [socketData, ...cachedData.chatMessagesByChatId] }
-                });
+                    const cachedData = readMsgsQuery();
+                if (socketData.isReply) {
+                    console.log('TODO: parse reply msg!')
+                } else {
+                    client.cache.writeQuery({
+                        ...queryDefinition,
+                        data: { chatMessagesByChatId: [socketData, ...cachedData.chatMessagesByChatId] }
+                    });
+                }
             }
         });
         socket.on('message update', async(socketData) => {

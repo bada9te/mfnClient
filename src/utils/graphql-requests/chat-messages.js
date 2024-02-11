@@ -37,6 +37,9 @@ export const CHAT_MESSAGES_BY_CHAT_ID_QUERY = gql`
             owner {
                 avatar nick
             }
+            replies {
+                ...CoreChatMessageFields
+            }
         }
     }
 `;
