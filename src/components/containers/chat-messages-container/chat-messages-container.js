@@ -75,8 +75,6 @@ const ChatMessagesContainer = props => {
                         chatMessagesByChatId: [retreivedMessageData, ...cachedData.chatMessagesByChatId]
                     }
                 });
-                const chatMsgsState = chatMessagesContainerState();
-                chatMessagesContainerState({...chatMsgsState, messages: [ retreivedMessageData, ...chatMsgsState.messages ]});
             },
             refetchQueries: [{query: CHATS_USER_RELATED_BY_USER_ID_QUERY, variables: { _id: currentUser._id }}]
         }).then(({data}) => {
@@ -139,9 +137,7 @@ const ChatMessagesContainer = props => {
                         });
                     }
                 }).then(({data}) => {
-                    if (data.chatMessagesByChatId.length) {
-                        messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.offsetHeight
-                    }
+                    data.chatMessagesByChatId.length && (messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.offsetHeight);
                 });
             }
         }
@@ -162,19 +158,54 @@ const ChatMessagesContainer = props => {
 
     // react on socket
     useEffect(() => {
+        // function to read query from cache
+        const readMsgsQuery = () => {
+            return JSON.parse(JSON.stringify(client.cache.readQuery({
+                query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
+                variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad }
+            })));
+        }
+
+        // messages query
+        const queryDefinition = {
+            query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
+            variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
+        }
+
         socket.on('message create', async(socketData) => {
-            console.log(socketData);
+            if (socketData.owner._id !== currentUser._id) {
+                const cachedData = readMsgsQuery();
+                client.cache.writeQuery({
+                    ...queryDefinition,
+                    data: { chatMessagesByChatId: [socketData, ...cachedData.chatMessagesByChatId] }
+                });
+            }
         });
         socket.on('message update', async(socketData) => {
-            console.log(socketData);
+            if (socketData.owner._id !== currentUser._id) {
+                const cachedData = readMsgsQuery();
+                client.cache.writeQuery({
+                    ...queryDefinition,
+                    data: { 
+                        chatMessagesByChatId: cachedData.chatMessagesByChatId.map(i => {
+                            i._id === socketData._id && (i.text = socketData.text);
+                            return i;
+                        })
+                    }
+                });
+            }
         });
         socket.on('message delete', async(socketData) => {
-            console.log(socketData);
+            if (socketData.owner._id !== currentUser._id) {
+                const cachedData = readMsgsQuery();
+                client.cache.writeQuery({
+                    ...queryDefinition,
+                    data: { chatMessagesByChatId: cachedData.chatMessagesByChatId.filter(i => i._id !== socketData._id) }
+                });
+            }
         });
         return () => {
-            socket.off('message create');
-            socket.off('message update');
-            socket.off('message delete');
+            socket.off('message create').off('message update').off('message delete');
         }
     });
 
