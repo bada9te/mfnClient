@@ -86,8 +86,43 @@ const ChatMessageItem = props => {
                             {item.text}
                         </Typography>
                     </Box>
+
                     {
-                        item.replies.map((i, key) => <Typography key={key}>{i?.text}</Typography>)
+                        item?.replies.length
+                        ?
+                        <Stack spacing={1} sx={{pb: 1}}>
+                            {
+                                item.replies.map((i, key) => {
+                                    return (
+                                        <Paper key={key} elevation={5} sx={{borderRadius: 3}}>
+                                            <Stack display="flex" useFlexGap flexWrap="wrap" direction="row" sx={{p: 1}}> 
+                                                { !myMsg && <ChatMessageAvatar avatar={avatar} userId={i.owner._id} nick={i.owner.nick}/> }
+                                                <ChatMessageItemDropDown
+                                                    canBeDeleted={myMsg}
+                                                    handleEdit={handleEdit}
+                                                    handleDelete={handleDelete}
+                                                    handleReply={handleReply}
+                                                >
+                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: myMsg ? 'end':'start' }}>
+                                                        <Typography fontSize={12} sx={{px: 0.5, width: 'fit-content', maxWidth: '350px'}}>{`${item.owner.nick}`}</Typography>
+                                                        <Typography fontSize={9} sx={{px: 0.5, width: 'fit-content', maxWidth: '350px'}} fontStyle='italic'>{`${getParsedDate(new Date(+item.createdAt))}`}</Typography>
+                                                    </Box>
+                                                </ChatMessageItemDropDown>
+                                                { myMsg && <ChatMessageAvatar avatar={avatar} userId={item.owner._id} nick={item.owner.nick}/> }
+                                            </Stack>
+                                            
+                                            <Box sx={{ width: 'fit-content', maxWidth: 'calc(100vw - 100px)', borderRadius: 5, overflowWrap: 'break-word', p: 1, px: 1.2}} elevation={5}>
+                                                <Typography fontFamily="'Roboto', sans-serif" flexWrap="wrap" fontSize={13} sx={{ maxWidth: '350px'}}>
+                                                    {i.text}
+                                                </Typography>
+                                            </Box>
+                                        </Paper>
+                                    )
+                                })
+                            }
+                        </Stack>
+                        :
+                        null
                     }
                 </Stack>
             </Paper>
