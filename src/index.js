@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.scss';
 import App from './App';
 import './styles/Scrollbar.scss';
+import "react-chat-elements/dist/main.css"
 import { BrowserRouter } from 'react-router-dom';
 
 // apollo

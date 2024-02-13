@@ -95,7 +95,7 @@ const ChatMessageItem = props => {
                                 item.replies.map((i, key) => {
                                     return (
                                         <Paper key={key} elevation={5} sx={{borderRadius: 3}}>
-                                            <Stack display="flex" useFlexGap flexWrap="wrap" direction="row" sx={{p: 1}}> 
+                                            <Stack display="flex" useFlexGap flexWrap="wrap" direction="row" spacing={1} sx={{p: 1}}> 
                                                 { !myMsg && <ChatMessageAvatar avatar={avatar} userId={i.owner._id} nick={i.owner.nick}/> }
                                                 <ChatMessageItemDropDown
                                                     canBeDeleted={myMsg}

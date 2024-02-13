@@ -10,7 +10,6 @@ export const CORE_CHAT_MESSAGE_FIELDS = gql`
             _id
         }
         text
-        isReply
         createdAt
     }
 `;
@@ -37,7 +36,7 @@ export const CHAT_MESSAGES_BY_CHAT_ID_QUERY = gql`
             owner {
                 avatar nick
             }
-            replies {
+            reply {
                 ...CoreChatMessageFields
             }
         }
@@ -53,7 +52,7 @@ export const CHAT_MESSAGE_CREATE_MUTATION = gql`
             owner {
                 avatar nick
             }
-            replies {
+            reply {
                 ...CoreChatMessageFields
             }
         }

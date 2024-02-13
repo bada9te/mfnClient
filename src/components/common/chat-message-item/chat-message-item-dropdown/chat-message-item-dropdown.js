@@ -56,7 +56,7 @@ const ChatMessageItemDropDown = props => {
                 }
             </Menu>
 
-            <IconButton aria-label="post-dropdown" onClick={(e) => setAnchorElComment(e.currentTarget)}>
+            <IconButton aria-label="post-dropdown" onClick={(e) => setAnchorElComment(e.currentTarget)} sx={{borderRadius: 3}}>
                 { props.children }
             </IconButton>
         </>

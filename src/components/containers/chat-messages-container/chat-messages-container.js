@@ -1,18 +1,20 @@
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESSAGE_UPDATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
+import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESSAGE_DELETE_BY_ID_MUTATION, CHAT_MESSAGE_UPDATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import { Card, IconButton, Stack, TextField, Typography } from "@mui/material";
 import ChatHeader from "../../common/chat-header/chat-header";
 import EnumChatMessages from "../../enums/enum-chat-messages";
 import { AutoFixHigh, Clear, Reply, Send } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
-import { emitMessageCreate, emitMessageUpdate } from "../../../utils/socket/event-emitters/messages";
+import { emitMessageCreate, emitMessageDelete, emitMessageUpdate } from "../../../utils/socket/event-emitters/messages";
 import { chatsContainerState } from "../chats-container/reactive";
 import { chatMessagesContainerState, replyingToNull } from "./reactive";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "../../../utils/graphql-requests/chats";
 import socket from "../../../utils/socket/socket";
 import client from "../../../utils/apollo/client";
+import { MessageList } from "react-chat-elements"
+import { useNavigate } from "react-router-dom"
 
 const reverseDataArray = (arr) => {
     return JSON.parse(JSON.stringify(arr)).reverse()
@@ -36,6 +38,7 @@ const parseMessages = (retreivedMessageData, cachedData, replyForId=null) => {
 const ChatMessagesContainer = props => {
     const { handleTabSwitch, chat } = props;
     const chatParticipants = chat?.data?.chat.participants.map(i => i._id) || [];
+    const navigate = useNavigate();
     const [ offset, setOffset ] = useState(0);
     const { user: currentUser } = useReactiveVar(baseState);
     const { selectedChatId } = useReactiveVar(chatsContainerState);
@@ -62,6 +65,21 @@ const ChatMessagesContainer = props => {
         chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: "", editingMessageId: null });
     }
 
+    // navigate to user profile
+    const navigateToUserProfile = (msg) => {
+        navigate(`/app/profile/${msg.owner_id}`);
+    }
+
+    // handle message reply
+    const handleMessageReply = (msg) => {
+        console.log(msg)
+        chatMessagesContainerState({...chatMessagesContainerState(), replyingTo: {
+            messageId: msg._id,
+            userId: msg.owner._id,
+            userNick: msg.owner.nick,
+        }});
+    }
+
     // send message click 
     const [ sendMessage ] = useMutation(CHAT_MESSAGE_CREATE_MUTATION);
     const handleSendMessageClick = () => {
@@ -72,8 +90,7 @@ const ChatMessagesContainer = props => {
         };
 
         if (replyingTo.messageId) {
-            input.isReply = true;
-            input.isReplyTo = replyingTo.messageId;
+            input.reply = replyingTo.messageId;
         }
 
         sendMessage({ 
@@ -98,6 +115,35 @@ const ChatMessagesContainer = props => {
             messgaesContainerRef?.current && (messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.scrollHeight)
         });
     }
+
+    // delete message
+    const [ deleteMsg ] = useMutation(CHAT_MESSAGE_DELETE_BY_ID_MUTATION);
+    const handleDelete = (msg) => {
+        deleteMsg({
+            variables: { _id: msg.id },
+            update: (cache, {data}) => {
+                const msgs = JSON.parse(JSON.stringify(cache.readQuery({
+                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
+                    variables: {
+                        _id: selectedChatId, offset: 0, limit: messagesPerLoad
+                    }
+                })));
+
+                cache.writeQuery({
+                    query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
+                    variables: {
+                        _id: selectedChatId, offset: 0, limit: messagesPerLoad
+                    },
+                    data: {
+                        chatMessagesByChatId: msgs.chatMessagesByChatId.filter(i => i._id !== data.chatMessageDeleteById._id)
+                    }
+                });
+            }
+        }).then(({data}) => {
+            emitMessageDelete(data.chatMessageDeleteById, chatParticipants);
+        });
+    }
+       
 
     // edit message click
     const [ editMessage ] = useMutation(CHAT_MESSAGE_UPDATE_MUTATION);
@@ -253,7 +299,27 @@ const ChatMessagesContainer = props => {
 
                                             return (
                                                 <Stack ref={messgaesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
-                                                    <EnumChatMessages messages={reverseDataArray(messages.chatMessagesByChatId)} chatParticipants={chatParticipants}/>
+                                                    <MessageList
+                                                        className='message-list'
+                                                        lockable={true}
+                                                        toBottomHeight={'100%'}
+                                                        dataSource={
+                                                            reverseDataArray(messages.chatMessagesByChatId).map(msg => ({
+                                                                id: msg._id,
+                                                                position: currentUser._id === msg.owner._id ? 'right' : 'left',
+                                                                type: 'text',
+                                                                title: msg.owner.nick,
+                                                                owner: msg.owner,
+                                                                text: msg.text,
+                                                                replyButton: true,
+                                                                removeButton: currentUser._id === msg.owner._id,
+                                                                date: msg.createdAt,
+                                                            }))
+                                                        }
+                                                        onTitleClick={navigateToUserProfile}
+                                                        onReplyClick={handleMessageReply}
+                                                        onRemoveMessageClick={handleDelete}
+                                                    />
                                                 </Stack>
                                             );
                                         })()
