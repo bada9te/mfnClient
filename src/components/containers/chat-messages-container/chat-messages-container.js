@@ -4,7 +4,6 @@ import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESS
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import { Card, IconButton, Stack, TextField, Typography } from "@mui/material";
 import ChatHeader from "../../common/chat-header/chat-header";
-import EnumChatMessages from "../../enums/enum-chat-messages";
 import { AutoFixHigh, Clear, Reply, Send } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
 import { emitMessageCreate, emitMessageDelete, emitMessageUpdate } from "../../../utils/socket/event-emitters/messages";
@@ -16,23 +15,13 @@ import client from "../../../utils/apollo/client";
 import { MessageList } from "react-chat-elements"
 import { useNavigate } from "react-router-dom"
 
+
 const reverseDataArray = (arr) => {
     return JSON.parse(JSON.stringify(arr)).reverse()
 }
 
-const parseMessages = (retreivedMessageData, cachedData, replyForId=null) => {
-    if (!retreivedMessageData.isReply) {
-        return [retreivedMessageData, ...cachedData]
-    } else if (replyForId) {
-        cachedData = JSON.parse(JSON.stringify(cachedData));
-        return cachedData.map(msg => {
-            if (msg._id === replyForId) {
-                msg.replies.push(retreivedMessageData);
-            }
-            return msg;
-        });
-    }
-    return [];
+const parseMessages = (retreivedMessageData, cachedData) => {
+    return [retreivedMessageData, ...cachedData]
 }
 
 const ChatMessagesContainer = props => {
@@ -79,7 +68,7 @@ const ChatMessagesContainer = props => {
     // handle message reply
     const handleMessageReply = (msg) => {
         chatMessagesContainerState({...chatMessagesContainerState(), replyingTo: {
-            messageId: msg._id,
+            messageId: msg.id,
             userId: msg.owner._id,
             userNick: msg.owner.nick,
         }, messageText: "", editingMessageId: null});
@@ -94,7 +83,11 @@ const ChatMessagesContainer = props => {
             chat: selectedChatId,
         };
 
-        if (replyingTo.messageId) { input.reply = replyingTo.messageId; }
+        if (replyingTo.messageId) { 
+            input.reply = replyingTo.messageId; 
+        }
+
+        console.log(replyingTo.messageId, input)
 
         sendMessage({ 
             variables: { input },
@@ -107,7 +100,7 @@ const ChatMessagesContainer = props => {
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
                     variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
                     data: {
-                        chatMessagesByChatId: parseMessages(retreivedMessageData, cachedData.chatMessagesByChatId, replyingTo.messageId)
+                        chatMessagesByChatId: parseMessages(retreivedMessageData, cachedData.chatMessagesByChatId)
                     }
                 });
             },
@@ -306,17 +299,28 @@ const ChatMessagesContainer = props => {
                                                         lockable={true}
                                                         toBottomHeight={'100%'}
                                                         dataSource={
-                                                            reverseDataArray(messages.chatMessagesByChatId).map(msg => ({
-                                                                id: msg._id,
-                                                                position: currentUser._id === msg.owner._id ? 'right' : 'left',
-                                                                type: 'text',
-                                                                title: msg.owner.nick,
-                                                                owner: msg.owner,
-                                                                text: msg.text,
-                                                                replyButton: true,
-                                                                removeButton: currentUser._id === msg.owner._id,
-                                                                date: msg.createdAt,
-                                                            }))
+                                                            reverseDataArray(messages.chatMessagesByChatId).map(msg => {
+                                                                let message = {
+                                                                    id: msg._id,
+                                                                    position: currentUser._id === msg.owner._id ? 'right' : 'left',
+                                                                    type: 'text',
+                                                                    title: msg.owner.nick,
+                                                                    owner: msg.owner,
+                                                                    text: msg.text,
+                                                                    date: msg.createdAt,
+                                                                    replyButton: true,
+                                                                    removeButton: currentUser._id === msg.owner._id,
+                                                                }
+                                                                
+                                                                if (msg?.reply) {
+                                                                    message.reply = {
+                                                                        message: msg?.reply.text,
+                                                                        title: msg?.reply.owner.nick
+                                                                    }
+                                                                }
+
+                                                                return message
+                                                            })
                                                         }
                                                         onTitleClick={navigateToUserProfile}
                                                         onReplyClick={handleMessageReply}
