@@ -70,14 +70,19 @@ const ChatMessagesContainer = props => {
         navigate(`/app/profile/${msg.owner_id}`);
     }
 
+    // handle message edit
+    const handleMessageEdit = (msg, index, e) => {
+        e.preventDefault();
+        chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: msg.text, editingMessageId: msg.id, replyingTo: replyingToNull });
+    }
+
     // handle message reply
     const handleMessageReply = (msg) => {
-        console.log(msg)
         chatMessagesContainerState({...chatMessagesContainerState(), replyingTo: {
             messageId: msg._id,
             userId: msg.owner._id,
             userNick: msg.owner.nick,
-        }});
+        }, messageText: "", editingMessageId: null});
     }
 
     // send message click 
@@ -89,9 +94,7 @@ const ChatMessagesContainer = props => {
             chat: selectedChatId,
         };
 
-        if (replyingTo.messageId) {
-            input.reply = replyingTo.messageId;
-        }
+        if (replyingTo.messageId) { input.reply = replyingTo.messageId; }
 
         sendMessage({ 
             variables: { input },
@@ -144,10 +147,9 @@ const ChatMessagesContainer = props => {
         });
     }
        
-
     // edit message click
     const [ editMessage ] = useMutation(CHAT_MESSAGE_UPDATE_MUTATION);
-    const handleEditMessageClick = () => {
+    const handleEditMessageConfirmClick = () => {
         const input = {
             _id: editingMessageId,
             text: messageText
@@ -319,6 +321,7 @@ const ChatMessagesContainer = props => {
                                                         onTitleClick={navigateToUserProfile}
                                                         onReplyClick={handleMessageReply}
                                                         onRemoveMessageClick={handleDelete}
+                                                        onContextMenu={handleMessageEdit}
                                                     />
                                                 </Stack>
                                             );
@@ -329,7 +332,13 @@ const ChatMessagesContainer = props => {
                                         sx={{px: 0.25}}
                                         fullWidth
                                         id="filled-static"
-                                        label={replyingTo.userId ? `Replying to ${replyingTo.userNick}` : "Message"}
+                                        label={
+                                            (() => {
+                                                if (editingMessageId) return "Editing message"
+                                                if (replyingTo.userId) return `Replying to ${replyingTo.userNick}`
+                                                return "Message"
+                                            })()
+                                        }
                                         variant="outlined"
                                         value={messageText}
                                         onChange={handleMessageInput}
@@ -343,7 +352,7 @@ const ChatMessagesContainer = props => {
                                             endAdornment: 
                                                 editingMessageId
                                                 ?
-                                                <IconButton onClick={handleEditMessageClick}><AutoFixHigh/></IconButton>
+                                                <IconButton onClick={handleEditMessageConfirmClick}><AutoFixHigh/></IconButton>
                                                 :
                                                 <IconButton onClick={handleSendMessageClick}><Send/></IconButton>
                                         }}
