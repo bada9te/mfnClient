@@ -319,6 +319,15 @@ const ChatMessagesContainer = props => {
                                                                     }
                                                                 }
 
+                                                                // TODO: parse types below
+                                                                /*
+                                                                    text
+                                                                    image
+                                                                    video
+                                                                    audio
+                                                                    file
+                                                                    spotify
+                                                                */
                                                                 return message
                                                             })
                                                         }

@@ -10,6 +10,11 @@ export const CORE_CHAT_MESSAGE_FIELDS = gql`
             _id
         }
         text
+        image
+        video
+        audio
+        file
+        spotify
         createdAt
     }
 `;
