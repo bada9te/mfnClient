@@ -17,8 +17,8 @@ export const CORE_CHAT_FIELDS = gql`
 // Q
 export const CHAT_QUERY = gql`
     ${CORE_CHAT_FIELDS}
-    query chat($_id: ID!) {
-        chat(_id: $_id) {
+    query chat($_id: ID!, $userId: ID) {
+        chat(_id: $_id, userId: $userId) {
             ...CoreChatFields
             participants {
                 avatar
@@ -50,9 +50,6 @@ export const CHATS_USER_RELATED_BY_USER_ID_QUERY = gql`
     query chatsUserRelatedByUserId($_id: ID!) {
         chatsUserRelatedByUserId(_id: $_id) {
             ...CoreChatFields
-            messages {
-                text
-            }
             participants {
                 avatar
                 nick

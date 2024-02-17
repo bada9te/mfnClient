@@ -31,8 +31,17 @@ const ChatsContainer = props => {
     const { t } = useTranslation("containers");
 
     
-    const [ fetchChats,        { data: chatsData, loading: chatsLoading }]                = useLazyQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, { variables: { _id: currentUser._id }});
-    const [ fetchSelectedChat, { data: selectedChatData, loading: loadingSelectedChat } ] = useLazyQuery(CHAT_QUERY, { variables: { _id: selectedChatId }});
+    const [ fetchChats, { data: chatsData, loading: chatsLoading }] = useLazyQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, { 
+        variables: { 
+            _id: currentUser._id 
+        }
+    });
+    const [ fetchSelectedChat, { data: selectedChatData, loading: loadingSelectedChat } ] = useLazyQuery(CHAT_QUERY, { 
+        variables: { 
+            _id: selectedChatId,
+            userId: currentUser._id,
+        }
+    });
     
     const handleTabSwitch = (event, key) => { setStatus(key) }
 
