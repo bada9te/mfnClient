@@ -11,5 +11,5 @@ export const chatMessagesContainerState = makeVar({
     editingMessageId: null,
     messageText: "",
     messages: [],
-    messagesPerLoad: 6,
+    messagesPerLoad: 12,
 });

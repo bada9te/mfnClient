@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { emitMessageCreate, emitMessageDelete, emitMessageUpdate } from "../../../utils/socket/event-emitters/messages";
 import { chatsContainerState } from "../chats-container/reactive";
 import { chatMessagesContainerState, replyingToNull } from "./reactive";
-import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "../../../utils/graphql-requests/chats";
+import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_READ_ALL_MESSAGES_MUTATION } from "../../../utils/graphql-requests/chats";
 import socket from "../../../utils/socket/socket";
 import client from "../../../utils/apollo/client";
 import { MessageList } from "react-chat-elements"
@@ -29,10 +29,11 @@ const ChatMessagesContainer = props => {
     const chatParticipants = chat?.data?.chat.participants.map(i => i._id) || [];
     const navigate = useNavigate();
     const [ offset, setOffset ] = useState(0);
+    const [ firstLoad, setFirstLoad ] = useState(true);
     const { user: currentUser } = useReactiveVar(baseState);
     const { selectedChatId } = useReactiveVar(chatsContainerState);
     const { messagesPerLoad, replyingTo, messageText, editingMessageId } = useReactiveVar(chatMessagesContainerState);
-    const messgaesContainerRef = useRef();
+    const messagesContainerRef = useRef();
     const { data: messages, loading: loadingMessages, fetchMore: fetchMoreMessages } = useQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
         variables: {
             _id: selectedChatId, offset: 0, limit: messagesPerLoad
@@ -109,7 +110,7 @@ const ChatMessagesContainer = props => {
         }).then(({data}) => {
             emitMessageCreate(data.chatMessageCreate, chatParticipants);
             chatMessagesContainerState({...chatMessagesContainerState(), messageText: ""});
-            messgaesContainerRef?.current && (messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.scrollHeight)
+            messagesContainerRef?.current && (messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight)
         });
     }
 
@@ -178,12 +179,12 @@ const ChatMessagesContainer = props => {
     }
 
     // effect REF (scroll) on messages container
+    const [ readAllMessages ] = useMutation(CHAT_READ_ALL_MESSAGES_MUTATION, { variables: { chatId: selectedChatId, userId: currentUser._id } });
     useEffect(() => {
-        const msgsRef = messgaesContainerRef?.current;
+        const msgsRef = messagesContainerRef?.current;
         const handleScroll = (e) => {
-            if (messgaesContainerRef?.current.scrollTop === 0) {
+            if (messagesContainerRef?.current.scrollTop === 0) {
                 msgsRef?.removeEventListener("scroll", handleScroll);
-                //msgsRef.style.overflowY = 'hidden'
                 setOffset(offset + 1);
                 fetchMoreMessages({
                     variables: {offset: messages.chatMessagesByChatId.length}, 
@@ -194,8 +195,13 @@ const ChatMessagesContainer = props => {
                         });
                     }
                 }).then(({data}) => {
-                    data.chatMessagesByChatId.length && (messgaesContainerRef.current.scrollTop = messgaesContainerRef.current.offsetHeight);
+                    data.chatMessagesByChatId.length && (msgsRef.scrollTop = msgsRef.offsetHeight);
                 });
+            }
+            if (msgsRef.scrollTop === msgsRef.scrollHeight - msgsRef.offsetHeight && !firstLoad) {
+                // fetch 
+                console.log('adwwadwad')
+                readAllMessages();
             }
         }
         msgsRef?.addEventListener("scroll", handleScroll, { passive: true });
@@ -207,7 +213,7 @@ const ChatMessagesContainer = props => {
 
     // scroll to bottom
     useEffect(() => {
-        const msgsRef = messgaesContainerRef?.current;
+        const msgsRef = messagesContainerRef?.current;
         if (msgsRef && offset < 1) {
             msgsRef.scrollTop = msgsRef.scrollHeight
         }
@@ -215,6 +221,8 @@ const ChatMessagesContainer = props => {
 
     // react on socket
     useEffect(() => {
+        setFirstLoad(false);
+
         // function to read query from cache
         const readMsgsQuery = () => {
             return JSON.parse(JSON.stringify(client.cache.readQuery({
@@ -268,7 +276,7 @@ const ChatMessagesContainer = props => {
         return () => {
             socket.off('message create').off('message update').off('message delete');
         }
-    });
+    }, [setFirstLoad,currentUser._id, messagesPerLoad, selectedChatId]);
 
     return (
         <>
@@ -294,7 +302,7 @@ const ChatMessagesContainer = props => {
                                             }
 
                                             return (
-                                                <Stack ref={messgaesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
+                                                <Stack ref={messagesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
                                                     <MessageList
                                                         className='message-list'
                                                         lockable={true}

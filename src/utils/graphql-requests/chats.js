@@ -84,6 +84,14 @@ export const CHAT_UPDATE_MUTATION = gql`
     }
 `;
 
+export const CHAT_READ_ALL_MESSAGES_MUTATION = gql`
+    mutation chatReadAllMessages($chatId: ID!, $userId: ID!) {
+        chatReadAllMessages(chatId: $chatId, userId: $userId) {
+            _id
+        }
+    }
+`;
+
 export const CHAT_SWITCH_PARTICIPANT_MUTATION = gql`
     ${CORE_CHAT_FIELDS}
     mutation chatSwitchParticipants($chatId: ID!, $participants: [ID!]!) {
