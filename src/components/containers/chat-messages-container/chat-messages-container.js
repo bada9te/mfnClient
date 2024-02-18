@@ -81,6 +81,7 @@ const ChatMessagesContainer = props => {
             owner: currentUser._id,
             text: messageText,
             chat: selectedChatId,
+            type: "text"
         };
 
         if (replyingTo.messageId) { 

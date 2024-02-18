@@ -11,6 +11,12 @@ export const CORE_CHAT_FIELDS = gql`
         participants {
             _id
         }
+        messagesUnreadCount {
+            user {
+                _id
+            }
+            count
+        }
     }
 `;
 
