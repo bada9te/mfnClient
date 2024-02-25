@@ -89,7 +89,7 @@ const ChatMessagesContainer = props => {
             input.reply = replyingTo.messageId; 
         }
 
-        console.log(replyingTo.messageId, input)
+        //console.log(replyingTo.messageId, input)
 
         sendMessage({ 
             variables: { input },
@@ -98,6 +98,7 @@ const ChatMessagesContainer = props => {
                 const retreivedMessageData = JSON.parse(JSON.stringify(data.chatMessageCreate));
                 retreivedMessageData.owner = { _id: currentUser._id, nick: currentUser.nick, avatar: currentUser.avatar };
 
+                //console.log("RDATA: ", retreivedMessageData)
                 cache.writeQuery({
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
                     variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
@@ -200,7 +201,6 @@ const ChatMessagesContainer = props => {
             }
             if (msgsRef.scrollTop === msgsRef.scrollHeight - msgsRef.offsetHeight && !firstLoad) {
                 // fetch 
-                console.log('adwwadwad')
                 readAllMessages();
             }
         }
