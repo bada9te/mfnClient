@@ -1,0 +1,30 @@
+.rce-avatar-container {
+    margin: 5px 0px;
+}
+.rce-avatar {
+    border-radius: 50%;
+}
+.rce-mbox {
+    background-color: #1c94a4;
+    color: white;
+}
+.rce-mbox-right-notch {
+    fill: #1c94a4;
+}
+.rce-mbox-forward {
+    box-shadow: 0 0 5px 0 black;
+    background-color: #1c94a4;
+}
+.rce-mbox-reply {
+    background-color: rgba($color: white, $alpha: 0.3);
+    backdrop-filter: blur(0.5px);
+}
+.rce-mbox-reply-message {
+    color: white;
+}
+.rce-mbox-title > span {
+    color: white;
+}
+.rce-mbox-time {
+    color: rgba(255, 255, 255, 0.767);
+}

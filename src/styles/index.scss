@@ -28,66 +28,6 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (max-width: 500px) {
-  .MuiDrawer-paper {
-    width: 100% !important;
-  }
-  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom {
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 700px) and (min-width: 500px){
-  .MuiDrawer-paper {
-    width: 70% !important;
-  }
-  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom {
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 900px) and (min-width: 700px){
-  .MuiDrawer-paper {
-    width: 50% !important;
-  }
-  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom {
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 1200px) and (min-width: 900px){
-  .MuiDrawer-paper {
-    width: 40% !important;
-  }
-  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom {
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 1400px) and (min-width: 1200px) {
-  .MuiDrawer-paper {
-    width: 30% !important;
-  }
-  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom { 
-    width: 100% !important;
-  }
-}
-
-
-@media (min-width: 1400px) {
-  .MuiDrawer-paper {
-    width: 20% !important;
-  }
-  .MuiDrawer-paper.MuiDrawer-paperAnchorBottom { 
-    width: 100% !important;
-  }
-}
-
-.MuiMenu-paper {
-  border-radius: 20px !important;
-}
-
-
 
 body {
   margin: 0;

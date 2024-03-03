@@ -30,7 +30,7 @@ const ChatMessagesContainer = props => {
     const navigate = useNavigate();
     const [ offset, setOffset ] = useState(0);
     const [ firstLoad, setFirstLoad ] = useState(true);
-    const { user: currentUser } = useReactiveVar(baseState);
+    const { user: currentUser, locations } = useReactiveVar(baseState);
     const { selectedChatId } = useReactiveVar(chatsContainerState);
     const { messagesPerLoad, replyingTo, messageText, editingMessageId } = useReactiveVar(chatMessagesContainerState);
     const messagesContainerRef = useRef();
@@ -312,9 +312,10 @@ const ChatMessagesContainer = props => {
                                                                 let message = {
                                                                     id: msg._id,
                                                                     position: currentUser._id === msg.owner._id ? 'right' : 'left',
-                                                                    type: 'text',
+                                                                    type: msg.type || 'text',
                                                                     title: msg.owner.nick,
                                                                     owner: msg.owner,
+                                                                    avatar: msg.owner.avatar?.length ? `${locations.images}/${msg.owner.avatar}` : null,
                                                                     text: msg.text,
                                                                     date: msg.createdAt,
                                                                     replyButton: true,
@@ -328,15 +329,21 @@ const ChatMessagesContainer = props => {
                                                                     }
                                                                 }
 
-                                                                // TODO: parse types below
-                                                                /*
-                                                                    text
-                                                                    image
-                                                                    video
-                                                                    audio
-                                                                    file
-                                                                    spotify
-                                                                */
+                                                                if (msg.tupe === 'spotify') {
+                                                                    message.theme = 'dark';
+                                                                    message.view = 'coverart';
+                                                                    message.uri = 'https://open.spotify.com/playlist/0Gvl5v7YRRMF03akVGT8pN?si=3d6ff4c10e984208'
+                                                                }
+
+                                                                if (msg.type === 'image') {
+                                                                    msg.data = {
+                                                                        uri: 'none',
+                                                                        width: 100,
+                                                                        height: 100,
+                                                                        alt: 'image'
+                                                                    }
+                                                                }
+
                                                                 return message
                                                             })
                                                         }

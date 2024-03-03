@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/index.scss';
 import App from './App';
-import './styles/Scrollbar.scss';
 import "react-chat-elements/dist/main.css"
 import { BrowserRouter } from 'react-router-dom';
 
@@ -14,6 +12,11 @@ import APClient from './utils/apollo/client';
 import { I18nextProvider } from "react-i18next";
 import i18next from "./translations/i18next";
 
+// styles
+import './styles/index.scss';
+import './styles/muiOverrides.scss';
+import './styles/Scrollbar.scss';
+import './styles/chats.scss';
 
 // root node
 const root = ReactDOM.createRoot(document.getElementById('root'));
