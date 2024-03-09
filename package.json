@@ -18,6 +18,7 @@
     "buffer": "^6.0.3",
     "dotenv": "^16.0.3",
     "file-saver": "^2.0.5",
+    "framer-motion": "^11.0.8",
     "graphql": "^16.8.1",
     "graphql-ws": "^5.14.3",
     "i18next": "^23.7.15",

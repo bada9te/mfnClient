@@ -17,11 +17,10 @@ import LanguageSelectModal from "../components/modals/language-select-modal/lang
 import ChatCreateModal from "../components/modals/chat-create-modal/chat-create-modal";
 
 
-
 const Container = (props) => {
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box >
             <CssBaseline />
 
             {/* MODALS */}

@@ -3,7 +3,7 @@ import BaseContentContainer from "../components/containers/base-content-containe
 
 
 const MainPage = (props) => {
-
+    
     return (
         <BaseContentContainer>
             <PostsContainer profileLinkAccessable={true}/>

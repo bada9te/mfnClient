@@ -1,10 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import { Welcome, Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists, Categories, Chats } from '../../pages/pages';
 
+
+
 const ApplicationRoutes = props => {
     return (
         <Routes>
-            <Route path='/'            element={<Container/>}>
+            <Route path='/'         element={<Container/>}>
                 <Route path='/'              element={<Welcome/>}/>
                 <Route path='/app/login'     element={<Login/>}/>
                 <Route path='/app/logout'    element={<Logout/>}/>
