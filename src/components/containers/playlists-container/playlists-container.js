@@ -174,7 +174,7 @@ const PlaylistsContainer = (props) => {
                         {
                             currentUser && currentUser._id !== ""
                             ?
-                            <Box sx={{ width: '30rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, background: 'none', my: 3 }}>
+                            <Box sx={{ my: 3 }}>
                                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                                     {t('playlists.create.title')}
                                 </Typography>
