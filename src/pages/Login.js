@@ -29,7 +29,8 @@ const Login = (props) => {
                         <Button 
                             sx={{ width: 'fit-content', boxShadow: 10 }}
                             startIcon={<LockReset/>}
-                            variant='contained' 
+                            variant='contained'
+                            color='secondary'
                             onClick={() => navigate('/app/account-restore/email-check')}>
                             {t('login.forgot_password')}
                         </Button>
@@ -37,6 +38,7 @@ const Login = (props) => {
                             sx={{ width: 'fit-content', boxShadow: 10 }}
                             startIcon={<HowToReg/>}
                             variant='contained' 
+                            color='secondary'
                             onClick={() => navigate('/app/register')}>
                             {t('login.havent_registered_yet')}
                         </Button>

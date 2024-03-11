@@ -1,5 +1,12 @@
 import { createTheme } from "@mui/material";
 import getCurrentLanguageFromLS from "../common-functions/getCurrentLanguageFromLS";
+/*
+main: '#1C94A4',
+light: '#42a5f5',
+dark: '#257a76',
+contrastText: '#fff',
+*/
+
 
 const muiTheme = (mode) => {
     // theme setup
@@ -7,11 +14,20 @@ const muiTheme = (mode) => {
         palette: {
             mode,
             primary : {
-                main: '#1C94A4',
-                light: '#42a5f5',
-                dark: '#257a76',
+                main: '#213A57',
+                light: '#DFB6B2',
                 contrastText: '#fff',
-            },    
+            },
+            secondary: {
+                light: "#0AD1C8",
+                main: "#80ED99",
+                contrastText: 'black',
+            },
+            info: {
+                light: "#0AD1C8",
+                main: "#45DFB1",
+                contrastText: 'black',
+            }
         },
         typography: {
             fontFamily: getCurrentLanguageFromLS() === 'en' ? ['Poppins','static'].join(',') : ['Open Sans', 'sans-serif'].join(','),

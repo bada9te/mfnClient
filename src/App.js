@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, useThemeProps } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { SnackbarProvider } from 'notistack';
@@ -9,6 +9,7 @@ import ApplicationRouter from './utils/router/app-routes';
 import muiTheme from './utils/mui-theme/theme';
 import socket from './utils/socket/socket';
 import PageLoader from './components/common/page-loader/page-loader';
+import { useTheme } from '@emotion/react';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   //const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
   const { theme: themeMode } = useReactiveVar(baseState);
-
+  
   useEffect(() => {
     httpGetCurrentUser()
       .then(({data}) => {

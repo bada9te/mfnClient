@@ -30,6 +30,7 @@ const AccountRestoreEmailCheck = (props)=> {
                             sx={{ width: 'fit-content', boxShadow: 10 }}
                             startIcon={<Login/>}
                             variant='contained' 
+                            color='secondary'
                             onClick={() => navigate('/app/login')}>
                             {t('restore.check_email.back_to_login')}
                         </Button>

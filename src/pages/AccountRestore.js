@@ -84,6 +84,7 @@ const AccountRestore = (props)=> {
                                                 sx={{ width: 'fit-content', boxShadow: 10 }}
                                                 startIcon={<Cancel/>}
                                                 variant='contained' 
+                                                color='secondary'
                                                 onClick={cancelAccountRestore}
                                             >
                                                 {t('account_restore.cancel')}
