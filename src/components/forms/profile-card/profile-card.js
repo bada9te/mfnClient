@@ -61,7 +61,7 @@ const ProfileCardForm = (props) => {
             <Box component="form">
                 <FormGroup sx={{py: 1}}>
                     <Typography>{t('profile.avatar')}</Typography>
-                    <Button variant="outlined" component="label">
+                    <Button variant="contained" color="secondary" component="label">
                         {t('profile.select_avatar')}
                         <input type="file" hidden 
                             onInput={e => cropImageFile(e.target.files[0], 'avatar')}
@@ -70,7 +70,7 @@ const ProfileCardForm = (props) => {
                 </FormGroup>
                 <FormGroup sx={{py: 1}}>
                     <Typography>{t('profile.background')}</Typography>
-                    <Button variant="outlined" component="label">
+                    <Button variant="contained" color="secondary" component="label">
                         {t('profile.select_background')}
                         <input type="file" hidden 
                             onInput={e => cropImageFile(e.target.files[0], 'background')}

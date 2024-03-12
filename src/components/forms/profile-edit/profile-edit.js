@@ -19,7 +19,7 @@ import ProfileEditPartSocial from "./profile-edit-social";
 
 const SubmitBtn = props => {
     return (
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 1, boxShadow: 10 }} startIcon={props.icon}>
+        <Button type="submit" color="secondary" fullWidth variant="contained" sx={{ mt: 3, mb: 1, boxShadow: 10 }} startIcon={props.icon}>
             {props.text}
         </Button>
     );

@@ -37,7 +37,7 @@ function App() {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 1200);
+    }, 800);
   }, [location.pathname]);
 
 

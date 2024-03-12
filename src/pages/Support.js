@@ -40,7 +40,7 @@ const Support = (props) => {
                                     sx={{ width: 'fit-content' }}
                                     startIcon={<Quiz/>}
                                     variant='contained' 
-                                    color='secondary'
+                                    color='primary'
                                     onClick={() => navigate('/app/f.a.q')}>
                                     {t('support.open_f.a.q')}
                                 </Button>

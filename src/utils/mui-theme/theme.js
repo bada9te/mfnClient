@@ -14,7 +14,7 @@ const muiTheme = (mode) => {
         palette: {
             mode,
             primary : {
-                main: '#213A57',
+                main: '#2a7192',
                 light: '#DFB6B2',
                 contrastText: '#fff',
             },

@@ -54,7 +54,7 @@ const AccountVerifyForm = (props)=> {
             <Button
                 type="submit"
                 fullWidth
-                variant="contained"
+                color="secondary"
                 sx={{ mt: 3, mb: 2, boxShadow: 10 }}
             >
                 {t('account_verify.submit')}

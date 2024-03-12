@@ -116,7 +116,8 @@ const ChatsContainer = props => {
                         <Button 
                             startIcon={<Add/>} 
                             sx={{ borderRadius: 0, boxShadow: 5 }} 
-                            variant="contained" 
+                            variant="contained"
+                            color="secondary" 
                             fullWidth 
                             onClick={handleCreateChatClick}
                         >
@@ -182,6 +183,7 @@ const ChatsContainer = props => {
                                                     <UserSelectContainer except={selectedChatData.chat.participants}/>
                                                     <Button
                                                         variant="contained" 
+                                                        color="secondary"
                                                         sx={{ boxShadow: 10 }}
                                                         onClick={() => addOrRemoveParticipants(UserSelectContainerState.checked)}
                                                     >

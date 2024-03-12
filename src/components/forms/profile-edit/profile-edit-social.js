@@ -11,6 +11,7 @@ const ProfileEditPartSocial = props => {
         <Stack useFlexGap flexWrap="wrap" spacing={2}>
             <Button 
                 variant="contained" 
+                color="secondary"
                 startIcon={<Google/>} 
                 sx={{ boxShadow: 10, backgroundColor: '#db373b', ':hover': { backgroundColor: '#912326' } }} 
                 href={ currentUser.google.email.length ? process.env.REACT_APP_GOOGLE_UNLINK : process.env.REACT_APP_GOOGLE_CONNECT }
@@ -19,6 +20,7 @@ const ProfileEditPartSocial = props => {
             </Button>
             <Button 
                 variant="contained" 
+                color="secondary"
                 startIcon={<Twitter/>} 
                 sx={{ boxShadow: 10, backgroundColor: '#009ae4', ':hover': { backgroundColor: '#016391' } }}
                 href={ currentUser.twitter.email.length ? process.env.REACT_APP_TWITTER_UNLINK : process.env.REACT_APP_TWITTER_CONNECT }
@@ -27,6 +29,7 @@ const ProfileEditPartSocial = props => {
             </Button>
             <Button 
                 variant="contained" 
+                color="secondary"
                 startIcon={<Facebook/>} 
                 sx={{ boxShadow: 10, backgroundColor: '#0872f8', ':hover': { backgroundColor: '#034aa3' } }}
                 href={ currentUser.facebook.email.length ? process.env.REACT_APP_FACEBOOK_UNLINK : process.env.REACT_APP_FACEBOOK_CONNECT }

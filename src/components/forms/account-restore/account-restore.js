@@ -127,7 +127,7 @@ const AccountRestoreForm = (props)=> {
                     }
                 })()
             }
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, boxShadow: 10 }}>
+            <Button type="submit" color="secondary" fullWidth variant="contained" sx={{ mt: 3, mb: 2, boxShadow: 10 }}>
                 {t('account_restore.submit')}
             </Button>
         </Paper>    

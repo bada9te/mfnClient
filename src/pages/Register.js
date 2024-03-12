@@ -29,7 +29,7 @@ const Register = () => {
                             sx={{ width: 'fit-content', boxShadow: 10 }}
                             startIcon={<Login/>}
                             variant='contained' 
-                            color='secondary'
+                            color='primary'
                             onClick={() => navigate('/app/login')}>
                             {t('register.already_registered')}
                         </Button>

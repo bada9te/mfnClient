@@ -121,6 +121,7 @@ const CreateBattleForm = props => {
                 type="submit"
                 fullWidth
                 variant="contained"
+                color="secondary"
                 sx={{ mt: 1, mb: 2, boxShadow: 10 }}
             >
                 {t('battle.submit')}
