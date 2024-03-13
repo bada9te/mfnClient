@@ -14,7 +14,9 @@ const TopBarLeftMenu = props => {
                 <Button
                     key={key}
                     onClick={() => handleNavigate(page)}
-                    sx={{ my: 2, color: 'white', display: 'flex', alignItems: 'center' }}
+                    color="secondary"
+                    variant="contained"
+                    sx={{ my: 2, display: 'flex', alignItems: 'center' }}
                     startIcon={
                         <>
                             {page === "Feed"       && <QueueMusic/>  }

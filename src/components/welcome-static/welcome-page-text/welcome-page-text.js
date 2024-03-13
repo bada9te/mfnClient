@@ -38,11 +38,13 @@ const WelcomePageText = props => {
     return (
         <Stack  
             sx={{ 
-                height: { xs: 'fit-content', md: 'calc(100vh - 100px)' }, 
+                height: { sm: 'fit-content', md: 'calc(100vh - 100px)' }, 
+                minHeight: '100vh',
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center', 
-                flexDirection: { sm: 'column', lg: 'row' },
+                gap: 2,
+                flexWrap: 'wrap',
                 py: 5,
                 scrollSnapAlign: 'start',
             }}

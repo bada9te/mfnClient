@@ -22,7 +22,8 @@ const WelcomePageBestTrackContainer = props => {
     return (
         <Stack 
             sx={{ 
-                height: { xs: 'fit-content', md: 'calc(100vh - 120px)' }, 
+                height: { sm: 'fit-content', md: 'calc(100vh - 120px)' }, 
+                minHeight: '100vh',
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center',
