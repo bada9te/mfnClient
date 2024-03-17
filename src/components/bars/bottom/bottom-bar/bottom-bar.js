@@ -54,7 +54,9 @@ const BottomBar = (props) => {
 
     return (
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={1}>
-            <BottomNavigation sx={{ background: 'none' }} showLabels value={bottomBar.value === '' ? location.pathname : bottomBar.value} onChange={handleChange}>
+            <BottomNavigation sx={{ 
+                background: 'none',  
+            }} showLabels value={bottomBar.value === '' ? location.pathname : bottomBar.value} onChange={handleChange}>
                 <BottomNavigationAction value="tracks" label={t('bottombar.tracks')} icon={<MusicNote />} />
                 {
                     user && user._id !== "" 

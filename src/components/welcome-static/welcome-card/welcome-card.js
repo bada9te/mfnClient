@@ -13,9 +13,9 @@ const WelcomePageCard = props => {
             boxShadow: 5, 
             borderRadius: 5,
             transition: '500ms', 
-            background: 'rgba(255,255,255,0.1)',
-            backdropFilter: 'blur(5px)',
-            color: 'white',
+            background: 'rgb(128,237,153)',
+            //backdropFilter: 'blur(5px)',
+            color: 'black',
             ":hover": { transform: 'scale(1.025)', boxShadow: 10 }
         }}>
             <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>
