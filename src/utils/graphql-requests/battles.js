@@ -40,8 +40,8 @@ export const CORE_BATTLE_FIELDS = gql`
 // Q
 export const BATTLES_BY_STATUS_QUERY = gql`
     ${CORE_BATTLE_FIELDS}
-    query battlesByStatus($status: String!, $offset: Int!, $limit: Int!) {
-        battlesByStatus(status: $status, offset: $offset, limit: $limit) {
+    query battlesByStatus($finished: Boolean!, $offset: Int!, $limit: Int!) {
+        battlesByStatus(finished: $finished, offset: $offset, limit: $limit) {
             battles {
                 ...CoreBattleFields
             }

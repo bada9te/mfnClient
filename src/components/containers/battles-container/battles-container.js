@@ -57,7 +57,7 @@ const BattlesContainer = props => {
     const [ makeVote ] = useMutation(BATTLE_MAKE_VOTE_MUTATION);
     const [ getBattles, { data, loading, stopPolling } ] = useLazyQuery(BATTLES_BY_STATUS_QUERY, {
         variables: {
-            status: status === 0 ? "running" : "finished",
+            finished: status === 0,
             offset: activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage,
             limit: maxCountPerPage,
         },
