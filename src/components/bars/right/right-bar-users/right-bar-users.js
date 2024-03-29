@@ -1,8 +1,8 @@
 import { Box, Drawer, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import RightBarUsersContainer from "../../../containers/rightbar-users-container/rightbar-users-container";
+import RightBarUsersContainer from "components/containers/rightbar-users-container/rightbar-users-container";
 import { useReactiveVar } from "@apollo/client";
-import { bottomBarState } from "../../bottom/bottom-bar/reactive";
+import { bottomBarState } from "components/bars/bottom/bottom-bar/reactive";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

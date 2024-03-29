@@ -1,9 +1,9 @@
 import { Avatar, Box, CardContent, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import passwordImage from "../images/icons/password.png"
+import passwordImage from "../assets/icons/password.png"
 import AccountVerifyForm from "../components/forms/account-verify/account-verify";
 import LogRegVerContainer from "../components/containers/image-left-form-conatiner/image-left-form-container";
-import VerifyAccBG from '../images/bgs/verifyFormBG.png';
+import VerifyAccBG from '../assets/bgs/verifyFormBG.png';
 import { MODERATION_ACTION_VALIDATE_QUERY } from "../utils/graphql-requests/moderation-actions";
 import { useQuery } from "@apollo/client";
 import { SpinnerCircular } from "../components/common/spinner/Spinner";

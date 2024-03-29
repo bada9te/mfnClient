@@ -1,9 +1,9 @@
-import passwordImage from '../images/icons/password.png';
+import passwordImage from '../assets/icons/password.png';
 import AccountRestoreForm from '../components/forms/account-restore/account-restore'
 import { Avatar, Box, CardActions, CardContent, Typography, Stack, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import LogRegVerContainer from '../components/containers/image-left-form-conatiner/image-left-form-container';
-import newPasswordBG from '../images/bgs/newPasswordFormBG.png';
+import newPasswordBG from '../assets/bgs/newPasswordFormBG.png';
 import { useMutation, useQuery } from '@apollo/client';
 import { MODERATION_ACTION_DELETE_MUTATION, MODERATION_ACTION_VALIDATE_QUERY } from '../utils/graphql-requests/moderation-actions';
 import { useSnackbar } from 'notistack';

@@ -5,7 +5,7 @@ import PaginationTree from "../../common/pagination/pagination";
 import EnumBattles from "../../enums/enum-battles";
 import CreateBattleForm from "../../forms/create-battle/create-battle";
 import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
-import newBattleFormBG from "../../../images/bgs/newBattleFormBG.png"
+import newBattleFormBG from "../../../assets/bgs/newBattleFormBG.png"
 import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { battlesContainerState } from "./reactive";
@@ -13,7 +13,7 @@ import { BATTLES_BY_STATUS_QUERY, BATTLE_MAKE_VOTE_MUTATION } from "../../../uti
 import { useTranslation } from "react-i18next";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import InfoImage from "../../common/info-image/info-image";
-import BattlesLogo from "../../../images/icons/battle-disk.png";
+import BattlesLogo from "../../../assets/icons/battle-disk.png";
 import TabPanel from "../../common/tab-panel/tab-panel";
 
 

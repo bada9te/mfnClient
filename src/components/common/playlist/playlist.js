@@ -14,7 +14,7 @@ import { playlistsContainerState } from "../../containers/playlists-container/re
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { useTranslation } from "react-i18next";
-import PlaylistLogo from "../../../images/icons/logo_playlist.png"
+import PlaylistLogo from "../../../assets/icons/logo_playlist.png"
 
 
 const Playlist = (props) => {

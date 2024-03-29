@@ -2,7 +2,7 @@ import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
 import { Report, Download, Share, MoreVert, Delete } from "@mui/icons-material";
 import { useState } from "react";
 import { useReactiveVar } from "@apollo/client";
-import { baseState } from "../../../baseReactive";
+import { baseState } from "components/baseReactive";
 import { useTranslation } from "react-i18next";
 
 const PostItemDropDown = props => {

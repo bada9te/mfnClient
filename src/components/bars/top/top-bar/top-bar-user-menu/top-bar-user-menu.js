@@ -1,11 +1,11 @@
 import { Menu, MenuItem, Typography } from "@mui/material";
 import { Person, Logout, ContactSupport, BookmarkAdded, Settings, Notifications, Login, Language } from '@mui/icons-material';
-import ThemeSwitcher from "../../../../common/theme-switcher/theme-switcher";
+import ThemeSwitcher from "components/common/theme-switcher/theme-switcher";
 import { useNavigate } from "react-router-dom";
 import StyledBadge from "../styled-badge/styled-badge";
 import { useReactiveVar } from "@apollo/client";
-import { baseState } from "../../../../baseReactive";
-import { languageSelectModalState } from "../../../../modals/language-select-modal/reactive";
+import { baseState } from "components/baseReactive";
+import { languageSelectModalState } from "components/modals/language-select-modal/reactive";
 import { useTranslation } from "react-i18next";
 
 

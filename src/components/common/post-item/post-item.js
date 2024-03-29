@@ -7,18 +7,18 @@ import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, Pl
 import PostItemDropDown             from './post-item-dropdown/post-item-dropdown';
 
 import { useMutation, useReactiveVar } from '@apollo/client';
-import { POSTS_SAVED_BY_USER_QUERY, POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from '../../../utils/graphql-requests/posts';
+import { POSTS_SAVED_BY_USER_QUERY, POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from 'utils/graphql-requests/posts';
 import { audioPlayerState } from '../audio-player/reactive';
-import { userSelectContainerState } from '../../containers/user-select-container/reactive';
-import { userSelectModalState } from '../../modals/user-select-modal/reactive';
-import { reportFormState } from '../../forms/report/reactive';
-import { reportModalState } from '../../modals/report-modal/reactive';
-import { confirmContainerState } from '../../containers/confirm-container/reactive';
-import { confirmModalState } from '../../modals/confirm-modal/reactive';
-import { commentsModalState } from '../../modals/comments-modal/reactive';
-import { commentsContainerState } from '../../containers/comments-container/reactive';
-import { baseState } from '../../baseReactive';
-import { postsContainerState } from '../../containers/posts-container/reactive';
+import { userSelectContainerState } from 'components/containers/user-select-container/reactive';
+import { userSelectModalState } from 'components/modals/user-select-modal/reactive';
+import { reportFormState } from 'components/forms/report/reactive';
+import { reportModalState } from 'components/modals/report-modal/reactive';
+import { confirmContainerState } from 'components/containers/confirm-container/reactive';
+import { confirmModalState } from 'components/modals/confirm-modal/reactive';
+import { commentsModalState } from 'components/modals/comments-modal/reactive';
+import { commentsContainerState } from 'components/containers/comments-container/reactive';
+import { baseState } from 'components/baseReactive';
+import { postsContainerState } from 'components/containers/posts-container/reactive';
 import { useTranslation } from "react-i18next";
 
 

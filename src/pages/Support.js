@@ -2,10 +2,10 @@ import FormSupportContact from "../components/forms/support-contact/support-cont
 import { Box, CardActions, CardContent, Typography, Stack, Avatar, Button } from "@mui/material";
 import { Quiz } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import supportContactImage from "../images/icons/logo_support.png";
+import supportContactImage from "../assets/icons/logo_support.png";
 import ImageRightFormContainer from "../components/containers/image-right-form-container/image-right-form.container";
 import BaseContentContainer from "../components/containers/base-content-container/base-content-container";
-import supportFromBG from "../images/bgs/supportFormBG.png";
+import supportFromBG from "../assets/bgs/supportFormBG.png";
 import { useTranslation } from "react-i18next";
 
 

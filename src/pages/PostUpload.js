@@ -3,7 +3,7 @@ import PostItem from "../components/common/post-item/post-item";
 import ImageCropperModal from "../components/modals/image-cropper-modal/image-cropper-modal";
 import { Typography, CardContent, Box } from "@mui/material";
 import ImageRightFormContainer from "../components/containers/image-right-form-container/image-right-form.container";
-import newPostFormBG from '../images/bgs/newPostFormBG.png';
+import newPostFormBG from '../assets/bgs/newPostFormBG.png';
 import BaseContentContainer from "../components/containers/base-content-container/base-content-container";
 import { imageCropperModalState } from "../components/modals/image-cropper-modal/reactive";
 import { useReactiveVar } from "@apollo/client";

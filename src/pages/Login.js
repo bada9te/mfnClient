@@ -1,8 +1,8 @@
 import LoginForm from '../components/forms/login/login';
 import { CardActions, CardContent, Typography, Box, Avatar, Stack, Button } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import loginImage from '../images/icons/logo.png';
-import loginFormBG from '../images/bgs/loginFormBG.png';
+import loginImage from '../assets/icons/logo.png';
+import loginFormBG from '../assets/bgs/loginFormBG.png';
 import LogRegVerContainer from '../components/containers/image-left-form-conatiner/image-left-form-container';
 import { HowToReg, LockReset } from '@mui/icons-material';
 import { useTranslation } from "react-i18next";

@@ -1,5 +1,5 @@
 import { Avatar, Box, Card, CardHeader } from "@mui/material";
-import LogoClear from "../../../images/icons/logo_clear.png";
+import LogoClear from "assets/icons/logo_clear.png";
 
 const CategoryCard = props => {
     const { title, color, handleClick } = props;

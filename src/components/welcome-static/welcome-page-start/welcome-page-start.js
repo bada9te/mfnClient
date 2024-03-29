@@ -1,7 +1,7 @@
 import { Login, PlayArrow, VpnKey } from "@mui/icons-material";
 import { Avatar, Box, Button, ButtonGroup, Stack, Typography } from "@mui/material";
-import AppLogoImg from "../../../images/icons/logo.png";
-import WelcomePageStartBG from "../../../images/bgs/welcomePageStart.png";
+import AppLogoImg from "../../../assets/icons/logo.png";
+import WelcomePageStartBG from "../../../assets/bgs/welcomePageStart.png";
 import { useNavigate } from "react-router-dom";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";

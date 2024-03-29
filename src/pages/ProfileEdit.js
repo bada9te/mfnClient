@@ -2,10 +2,10 @@ import ProfileCardEdit from "../components/common/profile/profile-card-edit/prof
 import FormProfileEdit from "../components/forms/profile-edit/profile-edit";
 import { Avatar, Box, CardContent, CardHeader, Paper, Stack } from "@mui/material";
 import BaseContentContainer from "../components/containers/base-content-container/base-content-container";
-import EmailImage    from "../images/icons/email.png"
-import PasswordImage from "../images/icons/password.png"
-import TextImage     from "../images/icons/text.png"
-import ClearImage     from "../images/icons/logo_clear.png"
+import EmailImage    from "../assets/icons/email.png"
+import PasswordImage from "../assets/icons/password.png"
+import TextImage     from "../assets/icons/text.png"
+import ClearImage     from "../assets/icons/logo_clear.png"
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../components/baseReactive";
 

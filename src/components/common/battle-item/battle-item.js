@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
-import getTimeLeft from '../../../utils/common-functions/getTimeLeft';
+import getTimeLeft from 'utils/common-functions/getTimeLeft';
 import { Card, CardActions, CardContent, Typography, Box, Stack, Avatar } from '@mui/material';
-import battleImg from '../../../images/icons/battle-disk.png';
+import battleImg from 'assets/icons/battle-disk.png';
 import { useTranslation } from "react-i18next";
 
 

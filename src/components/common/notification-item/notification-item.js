@@ -2,11 +2,11 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Card, CardHeader, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { DELETE_NOTIFICATION_MUTATION, MARK_NOTIFICATION_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "../../../utils/graphql-requests/notifications";
-import { commentsContainerState } from "../../containers/comments-container/reactive";
-import { commentsModalState } from "../../modals/comments-modal/reactive";
+import { DELETE_NOTIFICATION_MUTATION, MARK_NOTIFICATION_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "utils/graphql-requests/notifications";
+import { commentsContainerState } from "components/containers/comments-container/reactive";
+import { commentsModalState } from "components/modals/comments-modal/reactive";
 import { useSnackbar } from "notistack";
-import { baseState } from "../../baseReactive";
+import { baseState } from "components/baseReactive";
 
 
 const NotificationItem = props => {

@@ -8,7 +8,7 @@ import WaveForm from './audiowave/waveform';
 import PostItemUnavailable from '../post-item/post-item-unavailable';
 import { useReactiveVar } from '@apollo/client';
 import { audioPlayerState } from './reactive';
-import { bottomBarState } from '../../bars/bottom/bottom-bar/reactive';
+import { bottomBarState } from 'components/bars/bottom/bottom-bar/reactive';
 import PostGenerate from '../post-item/post-generate';
 
 const getTime = (t) => {

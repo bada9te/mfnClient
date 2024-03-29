@@ -1,7 +1,7 @@
 import { SpinnerLinear } from "../../spinner/Spinner";
 import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
-import ProfileDefaultBGImage from "../../../../images/bgs/profileDefaultBG.png";
+import ProfileDefaultBGImage from "../../../../assets/bgs/profileDefaultBG.png";
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '../../../../utils/graphql-requests/users';
 import { baseState } from "../../../baseReactive";

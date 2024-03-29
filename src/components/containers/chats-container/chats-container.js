@@ -10,8 +10,8 @@ import { chatCreateModalState } from "../../modals/chat-create-modal/reactive";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_QUERY, CHAT_SWITCH_PARTICIPANT_MUTATION } from "../../../utils/graphql-requests/chats";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumChatParticipants from "../../enums/enum-chat-participants";
-import UserImage from "../../../images/icons/logo_person.png"
-import ClearImage from "../../../images/icons/logo_clear.png"
+import UserImage from "../../../assets/icons/logo_person.png"
+import ClearImage from "../../../assets/icons/logo_clear.png"
 import ChatEditForm from "../../forms/chat-edit/chat-edit";
 import UserSelectContainer from "../user-select-container/user-select-container";
 import { useSnackbar } from "notistack";

@@ -1,5 +1,5 @@
 import { Typography, Stack } from "@mui/material";
-import logoClear from "../../../images/icons/logo_clear.png"
+import logoClear from "../../../assets/icons/logo_clear.png"
 import WelcomePageCard from "../welcome-card/welcome-card";
 import { useTranslation } from "react-i18next";
 

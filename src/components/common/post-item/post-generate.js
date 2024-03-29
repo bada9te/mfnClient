@@ -1,13 +1,11 @@
 import { useReactiveVar } from "@apollo/client";
-import getTimeSince from "../../../utils/common-functions/getTimeSince";
-import { baseState } from "../../baseReactive";
+import getTimeSince from "utils/common-functions/getTimeSince";
+import { baseState } from "components/baseReactive";
 import PostItem from "./post-item";
 
 const PostGenerate = (props) => {
     const { item, addonsCorrections, baseCorrections } = props;
     const { locations } = useReactiveVar(baseState);
-
-
 
     return (
         <PostItem 

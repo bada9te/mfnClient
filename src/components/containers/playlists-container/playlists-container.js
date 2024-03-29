@@ -6,7 +6,7 @@ import { SpinnerLinear } from "../../common/spinner/Spinner";
 import EnumPlaylists from "../../enums/enum-playlists";
 import CreatePlaylistForm from "../../forms/create-playlist/create-playlist";
 import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
-import newPlaylistBG from "../../../images/bgs/newPlaylistFormBG.png"
+import newPlaylistBG from "../../../assets/bgs/newPlaylistFormBG.png"
 import { playlistsContainerState } from "./reactive";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from "../../../utils/graphql-requests/playlists";
@@ -14,7 +14,7 @@ import { baseState } from "../../baseReactive";
 import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
 import { useTranslation } from "react-i18next";
 import InfoImage from "../../common/info-image/info-image";
-import PlaylistsLogo from "../../../images/icons/logo_playlist.png";
+import PlaylistsLogo from "../../../assets/icons/logo_playlist.png";
 import TabPanel from "../../common/tab-panel/tab-panel";
 
 

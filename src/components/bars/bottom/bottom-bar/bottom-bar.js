@@ -3,9 +3,9 @@ import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { MusicNote, PersonSearch, AddCircle, Radio } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useReactiveVar } from "@apollo/client";
-import { audioPlayerState } from "../../../common/audio-player/reactive";
+import { audioPlayerState } from "components/common/audio-player/reactive";
 import { bottomBarState } from "./reactive";
-import { baseState } from "../../../baseReactive";
+import { baseState } from "components/baseReactive";
 import { useTranslation } from "react-i18next";
 
 

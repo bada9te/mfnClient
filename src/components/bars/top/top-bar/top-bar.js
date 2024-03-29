@@ -1,4 +1,4 @@
-import logoImg from '../../../../images/icons/logo.png';
+import logoImg from 'assets/icons/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { memo, useEffect, useState } from "react";
 import {AppBar, IconButton, Avatar, Typography, Box, Toolbar, Tooltip, Menu, Container, useScrollTrigger, Slide } from '@mui/material';
@@ -9,10 +9,10 @@ import TopBarLeftMenu from './top-bar-left-menu/top-bar-left-menu';
 import StyledBadge from "./styled-badge/styled-badge";
 import PropTypes from 'prop-types';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
-import { audioPlayerState } from '../../../common/audio-player/reactive';
-import { bottomBarState } from '../../bottom/bottom-bar/reactive';
-import { baseState } from '../../../baseReactive';
-import { NOTIFICATIONS_QUERY } from '../../../../utils/graphql-requests/notifications';
+import { audioPlayerState } from 'components/common/audio-player/reactive';
+import { bottomBarState } from 'components/bars/bottom/bottom-bar/reactive';
+import { baseState } from 'components/baseReactive';
+import { NOTIFICATIONS_QUERY } from 'utils/graphql-requests/notifications';
 import { useTranslation } from 'react-i18next';
 
 
