@@ -12,7 +12,6 @@ import PageLoader from './components/common/page-loader/page-loader';
 
 
 function App() {
-  
   //const navigate = useNavigate();
   //const location = useLocation();
   const [ loading, setIsLoading ] = useState(false);

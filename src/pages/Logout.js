@@ -9,7 +9,7 @@ import { httpLogOut } from "../utils/http-requests/auth";
 import { useTranslation } from "react-i18next";
 
 
-const Logout = (props) => {
+export default function Logout() {
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
@@ -45,5 +45,3 @@ const Logout = (props) => {
         </>
     );
 }
-
-export default Logout;

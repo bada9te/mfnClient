@@ -5,7 +5,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { POSTS_BY_CATEGORY_QUERY, POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../utils/graphql-requests/posts';
-import defineMaxPage from '../../../utils/common-functions/defineMaxPage';
+import defineMaxPage from '../../../utils/common-functions/defineMaxPage.ts';
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from './reactive';
 import { useLocation } from 'react-router-dom';

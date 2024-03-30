@@ -11,7 +11,7 @@ import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { playlistsContainerState } from "../playlists-container/reactive";
 import { postSelectContainerState } from "./reactive";
 import { useTranslation } from "react-i18next";
-import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
+import defineMaxPage from "../../../utils/common-functions/defineMaxPage.ts";
 import { enqueueSnackbar } from "notistack";
 
 

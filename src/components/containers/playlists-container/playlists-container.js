@@ -11,7 +11,7 @@ import { playlistsContainerState } from "./reactive";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from "../../../utils/graphql-requests/playlists";
 import { baseState } from "../../baseReactive";
-import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
+import defineMaxPage from "../../../utils/common-functions/defineMaxPage.ts";
 import { useTranslation } from "react-i18next";
 import InfoImage from "../../common/info-image/info-image";
 import PlaylistsLogo from "../../../assets/icons/logo_playlist.png";
