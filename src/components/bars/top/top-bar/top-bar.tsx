@@ -1,52 +1,21 @@
 import logoImg from 'assets/icons/logo.png';
 import { useNavigate } from 'react-router-dom';
-import { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {AppBar, IconButton, Avatar, Typography, Box, Toolbar, Tooltip, Menu, Container, useScrollTrigger, Slide } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import TopBarUserMenu from './top-bar-user-menu/top-bar-user-menu';
 import TopBarLeftMenuMin from './top-bar-left-menu-min/top-bar-left-menu-min';
 import TopBarLeftMenu from './top-bar-left-menu/top-bar-left-menu';
 import StyledBadge from "./styled-badge/styled-badge";
-import PropTypes from 'prop-types';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
-import { audioPlayerState } from 'components/common/audio-player/reactive';
-import { bottomBarState } from 'components/bars/bottom/bottom-bar/reactive';
 import { baseState } from 'components/baseReactive';
 import { NOTIFICATIONS_QUERY } from 'utils/graphql-requests/notifications';
 import { useTranslation } from 'react-i18next';
 
 
-function HideOnScroll(props) {
-    const { children, window } = props;
-    const {showRB: rightBarIsShwoing, showLB: leftBarIsShowing} = useReactiveVar(bottomBarState);
-    const {isShowing: audioPlayerIsShowing} = useReactiveVar(audioPlayerState);
-
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
-    const trigger = useScrollTrigger({
-      target: window ? window() : undefined,
-    });
-  
-    return (
-      <Slide appear={false} direction="down" in={!trigger || leftBarIsShowing || rightBarIsShwoing || audioPlayerIsShowing}>
-        {children}
-      </Slide>
-    );
-  }
-  
-  HideOnScroll.propTypes = {
-    children: PropTypes.element.isRequired,
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-  };
 
 
-
-const Topbar = (props) => {
+export default memo(function Topbar() {
     const { user, locations } = useReactiveVar(baseState);
     const [ getUnreadNotifications, { data } ] = useLazyQuery(NOTIFICATIONS_QUERY);
     const { t } = useTranslation("bars");
@@ -55,7 +24,7 @@ const Topbar = (props) => {
     user._id?.length && pages.push('Chats');
     const navigate = useNavigate();
 
-    const handleNavigate = (where) => {
+    const handleNavigate = (where: string) => {
         handleCloseNavMenu();
         switch (where) {
             case 'Feed': 
@@ -68,13 +37,13 @@ const Topbar = (props) => {
     }
 
 
-    const [anchorElNav, setAnchorElNav] = useState(null);
-    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [anchorElNav, setAnchorElNav] = useState<(EventTarget & HTMLButtonElement) | null>(null);
+    const [anchorElUser, setAnchorElUser] = useState<(EventTarget & HTMLButtonElement) | null>(null);
 
-    const handleOpenNavMenu = (event) => {
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event) => {
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setAnchorElUser(event.currentTarget);
     };
 
@@ -102,7 +71,6 @@ const Topbar = (props) => {
     
 
     return (
-        <HideOnScroll {...props}>
             <AppBar component="nav" sx={{
                 height: 65, 
                 zIndex: (theme) => theme.zIndex.drawer + 1, 
@@ -110,7 +78,7 @@ const Topbar = (props) => {
                 alignItems: 'center', 
                 justifyContent: 'center',
             }}>
-                <Container maxWidth="xxl" >
+                <Container >
                     <Toolbar disableGutters>
                         <Avatar alt="app logo" src={logoImg} sx={{mr: 1, display: { xs: 'none', md: 'flex' }}}/>
                         <Typography
@@ -227,11 +195,5 @@ const Topbar = (props) => {
                     </Toolbar>
                 </Container>
             </AppBar>
-        </HideOnScroll>
     );
-}
-
-
-export default memo(Topbar);
-
-
+});

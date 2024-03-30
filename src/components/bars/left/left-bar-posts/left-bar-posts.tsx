@@ -7,13 +7,13 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 
-const LeftBarPosts = (props) => {
+export default function LeftBarPosts() {
     const [searchQuery, setSearchQuery] = useState("");
     const bottomBar = useReactiveVar(bottomBarState);
     const { t } = useTranslation("bars");
 
-    const handleInput = (query) => {
-        setSearchQuery(query);
+    const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
+        setSearchQuery((e.target as HTMLInputElement).value);
     }
     
     const closeLB = () => {
@@ -38,7 +38,7 @@ const LeftBarPosts = (props) => {
                         label={t('leftbar.label')}
                         name="track-title"
                         type="text"
-                        onInput={(e) => handleInput(e.target.value)}
+                        onInput={handleInput}
                     />
                 </Box>
             </Paper>
@@ -47,6 +47,3 @@ const LeftBarPosts = (props) => {
         </Drawer>
     );
 }
-
-
-export default LeftBarPosts;

@@ -10,7 +10,11 @@ import { useTranslation } from "react-i18next";
 
 
 
-const TopBarUserMenu = props => {
+export default function TopBarUserMenu(props: {
+    handleCloseUserMenu: () => void;
+    notifications: unknown[];
+    anchorElUser: (EventTarget & HTMLButtonElement) | null
+}) {
     const { handleCloseUserMenu, notifications, anchorElUser } = props;
     const items = ['Profile', 'Notifications', 'Edit_profile', 'Saved_posts', 'Support', 'Language', 'Logout'];
     const itemsNL = ['Log_in', 'Support', 'Language'];
@@ -18,7 +22,7 @@ const TopBarUserMenu = props => {
     const { user: currentUser } = useReactiveVar(baseState);
     const { t } = useTranslation("bars");
 
-    const handleNavigate = (where) => {
+    const handleNavigate = (where: string) => {
         handleCloseUserMenu();
         switch (where) {
             case 'Profile':
@@ -74,7 +78,7 @@ const TopBarUserMenu = props => {
                 items.map((item, key) => {
                     return (
                         <MenuItem onClick={() => handleNavigate(item)} key={key}>
-                            <Typography variant="div" textAlign="center" display="flex" alignItems="center">
+                            <Typography component="div" textAlign="center" display="flex" alignItems="center">
                                 {
                                     (() => {
                                         switch(item) {
@@ -116,7 +120,7 @@ const TopBarUserMenu = props => {
                 itemsNL.map((item, key) => {
                     return (
                         <MenuItem onClick={() => handleNavigate(item)} key={key}>
-                            <Typography variant="div" textAlign="center" display="flex" alignItems="center">
+                            <Typography component="div" textAlign="center" display="flex" alignItems="center">
                                 {
                                     (() => {
                                         switch(item) {
@@ -145,5 +149,3 @@ const TopBarUserMenu = props => {
         </Menu>
     );
 }
-
-export default TopBarUserMenu;

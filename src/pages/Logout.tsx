@@ -17,10 +17,10 @@ export default function Logout() {
 
     
     useEffect(() => {
-        let timeout = null;
+        let timeout: NodeJS.Timeout | null = null;
         if (currentUser?._id !== "") {
             httpLogOut().then(() => {
-                baseState({ ...baseState(), user: {} });
+                baseState({ ...baseState(), user: {} as any });
                 
                 timeout = setTimeout(() => {
                     enqueueSnackbar("Logged out", { autoHideDuration: 1500, variant: "success" });
@@ -31,7 +31,7 @@ export default function Logout() {
         } else {
             navigate('/app/');
         }
-        return () => clearTimeout(timeout);
+        return () => clearTimeout(timeout as NodeJS.Timeout);
     }, [currentUser?._id, navigate, enqueueSnackbar]);
     
     return (

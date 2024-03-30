@@ -4,12 +4,15 @@ import { useTranslation } from "react-i18next";
 
 
 
-const TopBarLeftMenu = props => {
+export default function TopBarLeftMenu(props: {
+    handleNavigate: (where: string) => void;
+    pages: string[];
+}) {
     const { handleNavigate, pages } = props;
     const { t } = useTranslation("bars");
 
     return (
-        <ButtonGroup variant='string'>
+        <ButtonGroup variant="text">
             {pages.map((page, key) => (
                 <Button
                     key={key}
@@ -33,5 +36,3 @@ const TopBarLeftMenu = props => {
         </ButtonGroup>
     );
 }
-
-export default TopBarLeftMenu;
