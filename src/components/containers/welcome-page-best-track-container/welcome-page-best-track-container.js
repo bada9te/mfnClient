@@ -18,6 +18,7 @@ const WelcomePageBestTrackContainer = props => {
         
         fetchMostpopularTracks({ variables: { date } });
     }, [fetchMostpopularTracks]);
+    
 
     return (
         <Stack 
