@@ -10,7 +10,7 @@ export default function Profile() {
 
     return (
         <BaseContentContainer>
-            <ProfileCard id={id}/>
+            <ProfileCard id={id as string}/>
             <PostsContainer id={id} profileLinkAccessable={false}/>
         </BaseContentContainer>
     );

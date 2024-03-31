@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client';
 import { baseState } from '../../../baseReactive';
 
 
-const ProfileCardEdit = (props) => {
+export default function ProfileCardEdit() {
     const { user: currentUser, locations, theme } = useReactiveVar(baseState);
 
     return (
@@ -61,5 +61,3 @@ const ProfileCardEdit = (props) => {
             </Box>
     );
 }
-
-export default ProfileCardEdit;

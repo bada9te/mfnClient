@@ -1,7 +1,7 @@
 import { Box, CircularProgress, LinearProgress } from "@mui/material";
 
 
-const SpinnerCircular = props => {
+export function SpinnerCircular() {
     return (
         <Box sx={{ display: 'flex' }}>
             <CircularProgress />
@@ -9,13 +9,10 @@ const SpinnerCircular = props => {
     );
 }
 
-const SpinnerLinear = props => {
+export function SpinnerLinear() {
     return (
         <Box sx={{ width: '100%' }}>
             <LinearProgress/>
         </Box>
     );
 }
-
-export { SpinnerCircular, SpinnerLinear };
-

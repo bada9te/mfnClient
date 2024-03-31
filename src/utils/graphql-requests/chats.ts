@@ -39,10 +39,6 @@ export const CHATS_BY_IDS_QUERY = gql`
     query chatsByIds($ids: [ID!]!) {
         chatsByIds(ids: $ids) {
             ...CoreChatFields
-            lastMessage {
-                _id
-                text
-            }
             participants {
                 avatar
                 nick
@@ -107,8 +103,8 @@ export const CHAT_SWITCH_PARTICIPANT_MUTATION = gql`
 
 export const CHAT_SWITCH_MESSAGE_MUTATION = gql`
     ${CORE_CHAT_FIELDS}
-    mutation chatSwicthMessage($chatId: ID!, $messageId: ID!) {
-        chatSwicthMessage(chatId: $chatId, messageId: $messageId) {
+    mutation chatSwitchMessage($chatId: ID!, $messageId: ID!) {
+        chatSwitchMessage(chatId: $chatId, messageId: $messageId) {
             ...CoreChatFields
         }
     }

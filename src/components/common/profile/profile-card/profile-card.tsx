@@ -1,17 +1,20 @@
 import { SpinnerLinear } from "../../spinner/Spinner";
 import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
-import ProfileDefaultBGImage from "../../../../assets/bgs/profileDefaultBG.png";
+import ProfileDefaultBGImage from "assets/bgs/profileDefaultBG.png";
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '../../../../utils/graphql-requests/users';
-import { baseState } from "../../../baseReactive";
+import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from 'utils/graphql-requests/users';
+import { baseState } from "components/baseReactive";
 import { useSnackbar } from "notistack";
-import { CREATE_NOTIFICATION_MUTATION } from "../../../../utils/graphql-requests/notifications";
+import { CREATE_NOTIFICATION_MUTATION } from "utils/graphql-requests/notifications";
 import { useTranslation } from "react-i18next";
-import socket from "../../../../utils/socket/socket";
+import socket from "utils/socket/socket";
 
 
-const ProfileCard = (props) => {
+export default function ProfileCard(props: {
+    id: string;
+    bgRadius?: number;
+}) {
     const { id, bgRadius } = props;
     const { user: currentUser, theme, locations } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
@@ -54,13 +57,13 @@ const ProfileCard = (props) => {
                 ...baseState(), 
                 user: { 
                     ...currentUser, 
-                    subscribedOn: [ ...data.userSwitchSubscription.user2.subscribedOn ]
+                    subscribedOn: [ ...data.userSwitchSubscription.user2.subscribedOn ] as any
                 } 
             });
         }
     });
 
-    const switchSubscriptionOnUserHandler = async(actionType) => {
+    const switchSubscriptionOnUserHandler = async(actionType: "subscribe" | "unsubscribe") => {
         enqueueSnackbar(t('profile.snack.pending'), { autoHideDuration: 1500 });
 
         switchSubscriptionOnUser()
@@ -134,7 +137,7 @@ const ProfileCard = (props) => {
                                 {
                                     (() => {
                                         if (currentUser?._id !== userData?.user._id && currentUser._id !== "") {
-                                            if (userData?.user.subscribers.map(i => i._id).includes(currentUser._id)) {
+                                            if (userData?.user.subscribers.map((i: any) => i._id).includes(currentUser._id)) {
                                                 return (
                                                     <Button sx={{ mt: 1.5, width: '120px' }} variant="contained" onClick={() => switchSubscriptionOnUserHandler('unsubscribe')}>
                                                         {t('profile.unsubscribe')}
@@ -164,6 +167,3 @@ const ProfileCard = (props) => {
         </>
     );
 }
-
-
-export default ProfileCard;

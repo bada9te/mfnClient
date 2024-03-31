@@ -3,7 +3,12 @@ import { Card, CardHeader, Avatar, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 
-const RightBarUsersItem = (props) => {
+export default function RightBarUsersItem(props: {
+    id: string;
+    avatar: string;
+    nickname: string;
+    description: string;
+}) {
     const {id, avatar, nickname, description} = props;
     const navigate = useNavigate();
     const { t } = useTranslation("objects");
@@ -35,6 +40,3 @@ const RightBarUsersItem = (props) => {
         </Card>
     );
 }
-
-
-export default RightBarUsersItem;

@@ -9,7 +9,7 @@ import { baseState } from "components/baseReactive";
 import { useTranslation } from "react-i18next";
 
 
-const BottomBar = (props) => {
+export default memo(function BottomBar() {
     const navigate= useNavigate();
     const location = useLocation();
 
@@ -27,7 +27,7 @@ const BottomBar = (props) => {
         audioPlayerState({...audioPlayer, isShowing: true});
     }
 
-    const handleChange = (event, newValue) => {
+    const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: string) => {
         bottomBarState({ ...bottomBar, value: newValue });
         switch (newValue) {
             case 'tracks': 
@@ -69,13 +69,5 @@ const BottomBar = (props) => {
         </Paper>
         
     );
-}
-
-    
-export default memo(BottomBar);
-
-/*
-
-<Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1 }}>
-            { isLoading && <SpinnerLinear/> }
-*/
+});
+ 

@@ -8,9 +8,16 @@ import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { confirmModalState } from "../../modals/confirm-modal/reactive";
 import { confirmContainerState } from "../../containers/confirm-container/reactive";
+import { TReply } from "../types";
 
 
-const Reply = props => {
+
+export default function Reply(props: {
+    item: TReply;
+    goToProfile: (id: string) => void;
+    id: string;
+    postId: string;
+}) {
     const { item, goToProfile, id, postId } = props;
     const { locations, user: currentUser } = useReactiveVar(baseState);
     
@@ -22,7 +29,7 @@ const Reply = props => {
                 userId: item.owner._id,
                 userNick: item.owner.nick,
             },
-            postId,
+            postId: postId,
         });
     }
 
@@ -70,5 +77,3 @@ const Reply = props => {
         </Card>
     );
 }
-
-export default Reply;

@@ -1,6 +1,10 @@
 import { Box } from "@mui/material";
 
-function TabPanel(props) {
+export default function TabPanel(props: {
+  children: React.ReactNode;
+  value: number;
+  index: number;
+}) {
     const { children, value, index, ...other } = props;
   
     return (
@@ -19,5 +23,3 @@ function TabPanel(props) {
       </div>
     );
 }
-
-export default TabPanel;

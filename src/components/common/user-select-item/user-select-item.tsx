@@ -2,7 +2,13 @@ import { Avatar, Card, CardHeader, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 
-const UserSelectItem = props => {
+export default function UserSelectItem(props: {
+    id: string;
+    avatar: string;
+    nickname: string;
+    description: string;
+    userSelectionHandler: (id: string) => void;
+}) {
     const {id, avatar, nickname, description, userSelectionHandler} = props;
     const { t } = useTranslation("objects");
 
@@ -21,5 +27,3 @@ const UserSelectItem = props => {
         </Card>
     );
 }
-
-export default UserSelectItem;

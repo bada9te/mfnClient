@@ -1,13 +1,11 @@
 import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
-
 import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp, CheckCircle, HowToVote } from "@mui/icons-material";
-import PostItemDropDown             from './post-item-dropdown/post-item-dropdown';
-
+import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
 import { useMutation, useReactiveVar } from '@apollo/client';
-import { POSTS_SAVED_BY_USER_QUERY, POST_SWITCH_IN_SAVED_MUTATION, POST_SWITCH_LIKE_MUTATION } from 'utils/graphql-requests/posts';
+import { POSTS_SAVED_BY_USER_QUERY } from 'utils/graphql-requests/posts';
 import { audioPlayerState } from '../audio-player/reactive';
 import { userSelectContainerState } from 'components/containers/user-select-container/reactive';
 import { userSelectModalState } from 'components/modals/user-select-modal/reactive';
@@ -20,15 +18,22 @@ import { commentsContainerState } from 'components/containers/comments-container
 import { baseState } from 'components/baseReactive';
 import { postsContainerState } from 'components/containers/posts-container/reactive';
 import { useTranslation } from "react-i18next";
+import { TUserId } from '../types';
+import { Post, PostsSavedByUserLazyQueryHookResult, PostsSavedByUserQuery, PostsSavedByUserQueryResult, usePostSwicthInSavedMutation, usePostSwitchLikeMutation } from 'utils/graphql-requests/generated/schema';
 
 
-const PostItem = (props) => {
+
+
+export default function PostItem(props: {
+    base: any;
+    addons: any;
+}) {
     const { base, addons } = props;
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
 
-    const [likedBy, setLikedBy] = useState(base.likedBy);
-    const [savedBy, setSavedBy] = useState(base.savedBy);
+    const [likedBy, setLikedBy] = useState<TUserId[]>(base.likedBy);
+    const [savedBy, setSavedBy] = useState<TUserId[]>(base.savedBy);
 
     const { user: currentUser } = useReactiveVar(baseState);
     const audioPlayer = useReactiveVar(audioPlayerState);
@@ -39,43 +44,43 @@ const PostItem = (props) => {
     // nav
     const navigate = useNavigate();
     
-    const [ switchLike ] = useMutation(POST_SWITCH_LIKE_MUTATION);
-    const [ switchInSaved ] = useMutation(POST_SWITCH_IN_SAVED_MUTATION);
+    const [ switchLike ] = usePostSwitchLikeMutation();
+    const [ switchInSaved ] = usePostSwicthInSavedMutation();
 
     // handle likes
-    const onLikesChanged = async(e, value) => {
+    const onLikesChanged = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (addons.status === "upload") return;
 
         await switchLike({
             variables: {
                 input: {
                     userId: currentUser._id,
-                    postId: base._id
-                },
-            },
+                    postId: base._id,
+                }
+            }
         }).then(({data}) => {
-            setLikedBy(data.postSwitchLike.likedBy);
+            setLikedBy(data?.postSwitchLike.likedBy as TUserId[]);
         });
     }
     
     // add to saved or remove from saved
-    const switchPostInSaved = async(e, value) => {
+    const switchPostInSaved = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (addons.status === "upload") return;
         
         await switchInSaved({
             update: (cache, { data }) => {
-                const postData = data.postSwicthInSaved;
+                const postData = data?.postSwicthInSaved;
                 let cachedData = cache.readQuery({ 
                     query: POSTS_SAVED_BY_USER_QUERY, 
                     variables: { user: currentUser._id, offset: 0, limit: maxCountPerPage } 
                 });
 
                 if (cachedData) {
-                    let savedPosts = JSON.parse(JSON.stringify(cachedData.postsSavedByUser.posts));
-                    const itemExists = savedPosts.map(i => i._id).includes(postData._id);
+                    let savedPosts = JSON.parse(JSON.stringify((cachedData as PostsSavedByUserQuery).postsSavedByUser.posts));
+                    const itemExists = savedPosts.map((i: Post) => i._id).includes(postData?._id);
     
                     if (itemExists) {
-                        savedPosts = savedPosts.filter(i => i._id !== postData._id);
+                        savedPosts = savedPosts.filter((i: Post) => i._id !== postData?._id);
                     } else {
                         savedPosts.push(postData);
                     }
@@ -99,7 +104,7 @@ const PostItem = (props) => {
                 }
             }
         }).then(({ data }) => {
-            setSavedBy(data.postSwicthInSaved.savedBy);
+            setSavedBy(data?.postSwicthInSaved.savedBy as TUserId[]);
         });
     }
 
@@ -194,7 +199,7 @@ const PostItem = (props) => {
             likedBy.find(item => item._id === currentUser?._id) ? setIsLiked(true) : setIsLiked(false);
             savedBy.find(item => item._id === currentUser?._id) ? setIsSaved(true) : setIsSaved(false);
         }
-    }, [likedBy, currentUser?.savedPosts, currentUser, currentUser?._id, base._id, savedBy]);
+    }, [likedBy, currentUser, currentUser?._id, base._id, savedBy]);
 
     
 
@@ -233,12 +238,12 @@ const PostItem = (props) => {
                     ?
                     <Skeleton variant="rectangular" height={160} sx={{ width: {xs: '100%', md: '400px'} }}/>
                     :
-                    <CardMedia component="img" height="160" width={{xs: '100%', md: '400px'}} image={base.img} alt={base.title}/>
+                    <CardMedia component="img" image={base.img} alt={base.title} sx={{ height: "160px", width: {xs: '100%', md: '400px'} }}/>
                 }
                 <Box sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', bgcolor: 'rgba(0,0,0,0.3)', color: 'white', padding: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(5px)' }}>
                     <Box>
                         <Typography variant='h5'>{base.title}</Typography>
-                        <Typography variant='p'>{base.description}</Typography>
+                        <Typography variant='inherit'>{base.description}</Typography>
                     </Box>
 
                     {/* ################################# LIKE SAVE COMMENT ################################# */}
@@ -285,7 +290,7 @@ const PostItem = (props) => {
                                     <span>
                                         <IconButton 
                                             aria-label="add to favorites" 
-                                            onClick={(e) => onLikesChanged(e, -isLiked)} 
+                                            onClick={onLikesChanged} 
                                             sx={{ color: 'white' }}
                                             disabled={currentUser && currentUser._id !== "" ? false : true}
                                         >
@@ -396,5 +401,3 @@ const PostItem = (props) => {
         </Card>
     );
 }
-
-export default memo(PostItem);

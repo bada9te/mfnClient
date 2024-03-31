@@ -47,6 +47,7 @@ export default function PostUpload() {
                             <Box sx={{width: {xs: '100%', sm: '375px', md: '400px'}, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                 <PostItem
                                     base={{
+                                        _id: null,
                                         owner: {
                                             _id: currentUser?._id,
                                             nick: currentUser?.nick,
@@ -67,7 +68,6 @@ export default function PostUpload() {
                                         status: "upload",
                                         profileLinkAccessable: false,
                                     }}
-                                    id={null}
                                 />
                             </Box>
                         </Box>

@@ -36,7 +36,7 @@ export default memo(function Container() {
             <RightBarUsers/>
 
             {/* PAGES OUTLET */}
-            <Topbar text="Music From Nothing" username="UserName" where="feed"/>
+            <Topbar/>
             <Box sx={{width: '100%', pt: 8}}>
                 <Outlet/>
             </Box>

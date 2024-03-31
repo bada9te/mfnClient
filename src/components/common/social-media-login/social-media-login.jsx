@@ -3,7 +3,7 @@ import { FormGroup, ButtonGroup, Button } from "@mui/material";
 
 
 
-const SocialMediaLogin = (props) => {
+export default function SocialMediaLogin() {
     return (
         <FormGroup>
             <ButtonGroup sx={{ my: 1, display: 'flex', justifyContent: 'center' }} variant='string' orientation="horizontal">
@@ -14,5 +14,3 @@ const SocialMediaLogin = (props) => {
         </FormGroup>
     );
 }
-
-export default SocialMediaLogin;

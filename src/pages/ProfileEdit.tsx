@@ -14,7 +14,7 @@ export default function ProfileEdit (){
 
     return (
         <BaseContentContainer>
-            <ProfileCardEdit id='0'/>
+            <ProfileCardEdit/>
             <Paper sx={{ height: 'fit-content', boxShadow: 10, borderRadius: 5, m: 2 }}>
                 <CardContent>
                     <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>

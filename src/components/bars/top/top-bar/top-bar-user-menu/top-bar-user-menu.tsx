@@ -7,12 +7,13 @@ import { useReactiveVar } from "@apollo/client";
 import { baseState } from "components/baseReactive";
 import { languageSelectModalState } from "components/modals/language-select-modal/reactive";
 import { useTranslation } from "react-i18next";
+import { Notification } from "utils/graphql-requests/generated/schema";
 
 
 
 export default function TopBarUserMenu(props: {
     handleCloseUserMenu: () => void;
-    notifications: unknown[];
+    notifications: Notification[];
     anchorElUser: (EventTarget & HTMLButtonElement) | null
 }) {
     const { handleCloseUserMenu, notifications, anchorElUser } = props;
