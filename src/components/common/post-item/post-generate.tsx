@@ -2,8 +2,13 @@ import { useReactiveVar } from "@apollo/client";
 import getTimeSince from "utils/common-functions/getTimeSince";
 import { baseState } from "components/baseReactive";
 import PostItem from "./post-item";
+import { TPostAddons, TPostBase } from "./types";
 
-const PostGenerate = (props) => {
+export default function PostGenerate(props: {
+    item: (TPostBase & TPostAddons);
+    addonsCorrections: TPostAddons | any;
+    baseCorrections: TPostBase | any;
+}) {
     const { item, addonsCorrections, baseCorrections } = props;
     const { locations } = useReactiveVar(baseState);
 
@@ -27,5 +32,3 @@ const PostGenerate = (props) => {
         />
     );
 }
-
-export default PostGenerate;

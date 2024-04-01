@@ -1,10 +1,10 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
 import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp, CheckCircle, HowToVote } from "@mui/icons-material";
 import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
-import { useMutation, useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client';
 import { POSTS_SAVED_BY_USER_QUERY } from 'utils/graphql-requests/posts';
 import { audioPlayerState } from '../audio-player/reactive';
 import { userSelectContainerState } from 'components/containers/user-select-container/reactive';
@@ -19,7 +19,7 @@ import { baseState } from 'components/baseReactive';
 import { postsContainerState } from 'components/containers/posts-container/reactive';
 import { useTranslation } from "react-i18next";
 import { TUserId } from '../types';
-import { Post, PostsSavedByUserLazyQueryHookResult, PostsSavedByUserQuery, PostsSavedByUserQueryResult, usePostSwicthInSavedMutation, usePostSwitchLikeMutation } from 'utils/graphql-requests/generated/schema';
+import { Post, PostsSavedByUserQuery, usePostSwicthInSavedMutation, usePostSwitchLikeMutation } from 'utils/graphql-requests/generated/schema';
 
 
 

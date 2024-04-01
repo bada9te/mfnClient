@@ -1,10 +1,14 @@
-import { memo } from 'react';
 import { Card, CardHeader, CardContent, Typography, Skeleton, Button } from "@mui/material";
 import { Search } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { TPostStatus } from './types';
 
 
-const PostItemUnavailable = (props) => {
+export default function PostItemUnavailable(props: {
+    status: TPostStatus;
+    text: string;
+    selectHandler: () => void;
+}) {
     const { status, text, selectHandler } = props;
     const { t } = useTranslation("objects");
 
@@ -61,7 +65,3 @@ const PostItemUnavailable = (props) => {
             </Card>
     );
 }
-
-
-export default memo(PostItemUnavailable);
-

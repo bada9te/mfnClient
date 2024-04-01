@@ -1,18 +1,27 @@
 import { MenuItem, Typography, Menu, IconButton } from "@mui/material";
 import { Report, Download, Share, MoreVert, Delete } from "@mui/icons-material";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "components/baseReactive";
 import { useTranslation } from "react-i18next";
 
-const PostItemDropDown = props => {
+export default function PostItemDropDown(props: {
+    owner: string;
+    handlers: {
+        audioDownload: () => void;
+        shareTrack: () => void;
+        reportTrack: () => void;
+        deleteTrack: () => void;
+    };
+    downloadsAllowed: boolean;
+}) {
     const { owner, handlers, downloadsAllowed } = props;
-    const [ anchorElUser, setAnchorElUser ] = useState(null);
+    const [ anchorElUser, setAnchorElUser ] = useState<null | (EventTarget & HTMLButtonElement)>(null);
     const { user: currentUser } = useReactiveVar(baseState);
     const { t } = useTranslation("objects");
 
     // click
-    const handleClick = (i) => {
+    const handleClick = (i: string) => {
         //console.log(i);
         if (i === 'Download') {
             handlers.audioDownload();
@@ -89,5 +98,3 @@ const PostItemDropDown = props => {
         </>
     );
 }
-
-export default PostItemDropDown;
