@@ -1,7 +1,11 @@
 /* eslint-disable */
 import { Grid, Paper } from "@mui/material"
 
-const BaseContentContainer = props => {
+export default function BaseContentContainer(props: {
+    left?: React.ReactNode;
+    right?: React.ReactNode;
+    children: React.ReactNode;
+}) {
     const {left, right} = props;
 
     return (
@@ -14,8 +18,8 @@ const BaseContentContainer = props => {
                     {left}
                 </Grid>
                 <Grid
-                    sx={{mb: { xs: 0, md: 2 }, mt: { xs: 0, md: 0.8 }, borderRadius: { xs: 0, md: 5 }, overflow: 'hidden',                 background: 'rgba(255,255,255,0.3)',
-                    backdropFilter: 'blur(5px)', background: 'rgba(255,255,255,0.3)', color: 'white'}}
+                    sx={{mb: { xs: 0, md: 2 }, mt: { xs: 0, md: 0.8 }, borderRadius: { xs: 0, md: 5 }, overflow: 'hidden', background: 'rgba(255,255,255,0.3)',
+                    backdropFilter: 'blur(5px)', color: 'white'}}
                     xs={12} 
                     sm={12} 
                     md={6} 
@@ -34,5 +38,3 @@ const BaseContentContainer = props => {
             </Grid>
     );
 }
-
-export default BaseContentContainer;

@@ -17,7 +17,11 @@ import BattlesLogo from "../../../assets/icons/battle-disk.png";
 import TabPanel from "../../common/tab-panel/tab-panel";
 
 
-const TabContent = (props) => {
+function TabContent(props: {
+    loading: boolean;
+    battles: any;
+    makeBattleVote: (battleId: string, postNScore: "post1Score" | "post2Score", voteCount: number, voterId: string) => Promise<void>;
+}) {
     const {loading, battles, makeBattleVote} = props;
     const { t } = useTranslation("containers");
 
@@ -48,7 +52,7 @@ const TabContent = (props) => {
 }
 
 
-const BattlesContainer = props => {
+export default function BattlesContainer() {
     const [status, setStatus] = useState(0);
     const { activePage, maxCountPerPage } = useReactiveVar(battlesContainerState);
     const { user: currentUser } = useReactiveVar(baseState);
@@ -64,7 +68,7 @@ const BattlesContainer = props => {
         pollInterval: 15000,
     });
 
-    const makeBattleVote = async(battleId, postNScore, voteCount, voterId) => {
+    const makeBattleVote = async(battleId: string, postNScore: "post1Score" | "post2Score", voteCount: number, voterId: string) => {
         makeVote({
             variables: {
                 input: {
@@ -76,7 +80,7 @@ const BattlesContainer = props => {
     }
 
 
-    const handleTabSwitch = (event, key) => {
+    const handleTabSwitch = (event: React.SyntheticEvent<Element, Event>, key: number) => {
         setStatus(key);
     }
 
@@ -130,6 +134,3 @@ const BattlesContainer = props => {
         </Box>
     );
 }
-
-
-export default BattlesContainer;

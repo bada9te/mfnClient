@@ -8,8 +8,8 @@ import PostsContainer from "../posts-container/posts-container";
 
 
 
-const CategoriesContainer = props => {
-    const [ category, setCategory ] = useState(null);
+function CategoriesContainer() {
+    const [ category, setCategory ] = useState<null | string>(null);
     const [ status, setStatus ] = useState(0);
     const genres = [
         { title: "Country",          color: '#f44336' }, 
@@ -28,12 +28,12 @@ const CategoriesContainer = props => {
     ];
     const { t } = useTranslation("containers");
 
-    const handleCategoryClick = (category) => {
+    const handleCategoryClick = (category: string) => {
         setCategory(category);
         setStatus(1);
     }
 
-    const handleTabSwitch = (event, key) => {
+    const handleTabSwitch = (event: React.SyntheticEvent<Element, Event>, key: number) => {
         setStatus(key);
     }
 

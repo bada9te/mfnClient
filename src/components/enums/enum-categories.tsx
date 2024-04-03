@@ -1,6 +1,9 @@
 import CategoryCard from "../common/catgeory-card/category-card";
 
-const EnumCategories = props => {
+export default function EnumCategories(props: {
+    categories: any[];
+    handleClick: (categoryName: string) => void;
+}) {
     const { categories, handleClick } = props;
 
     return (
@@ -15,5 +18,3 @@ const EnumCategories = props => {
         </>
     );
 }
-
-export default EnumCategories;
