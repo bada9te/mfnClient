@@ -1,47 +1,53 @@
-import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESSAGE_DELETE_BY_ID_MUTATION, CHAT_MESSAGE_UPDATE_MUTATION } from "../../../utils/graphql-requests/chat-messages";
+import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESSAGE_UPDATE_MUTATION } from "utils/graphql-requests/chat-messages";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
 import { Card, IconButton, Stack, TextField, Typography } from "@mui/material";
 import ChatHeader from "../../common/chat-header/chat-header";
 import { AutoFixHigh, Clear, Reply, Send } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
-import { emitMessageCreate, emitMessageDelete, emitMessageUpdate } from "../../../utils/socket/event-emitters/messages";
+import { emitMessageCreate, emitMessageDelete, emitMessageUpdate } from "utils/socket/event-emitters/messages";
 import { chatsContainerState } from "../chats-container/reactive";
-import { chatMessagesContainerState, replyingToNull } from "./reactive";
-import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_READ_ALL_MESSAGES_MUTATION } from "../../../utils/graphql-requests/chats";
-import socket from "../../../utils/socket/socket";
-import client from "../../../utils/apollo/client";
-import { MessageList } from "react-chat-elements"
+import { TSendMessage, chatMessagesContainerState, replyingToNull } from "./reactive";
+import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_READ_ALL_MESSAGES_MUTATION } from "utils/graphql-requests/chats";
+import socket from "utils/socket/socket";
+import client from "utils/apollo/client";
+import { MessageList, MessageListEvent } from "react-chat-elements"
 import { useNavigate } from "react-router-dom"
+import { ChatMessage, ChatQuery, ChatMessagesByChatIdQuery, useChatMessagesByChatIdQuery, useChatMessageDeleteByIdMutation } from "utils/graphql-requests/generated/schema";
 
 
-const reverseDataArray = (arr) => {
+const reverseDataArray = (arr: unknown[]) => {
     return JSON.parse(JSON.stringify(arr)).reverse()
 }
 
-const parseMessages = (retreivedMessageData, cachedData) => {
-    return [retreivedMessageData, ...cachedData]
-}
-
-const ChatMessagesContainer = props => {
+export default function ChatMessagesContainer(props: {
+    handleTabSwitch: (event: React.SyntheticEvent<Element, Event>, key: number) => void;
+    chat: {
+        data: ChatQuery,
+        loading: boolean,
+    };
+}) {
     const { handleTabSwitch, chat } = props;
-    const chatParticipants = chat?.data?.chat.participants.map(i => i._id) || [];
+    const chatParticipants = chat.data.chat.participants?.map(i => i?._id) || [];
     const navigate = useNavigate();
     const [ offset, setOffset ] = useState(0);
     const [ firstLoad, setFirstLoad ] = useState(true);
     const { user: currentUser, locations } = useReactiveVar(baseState);
     const { selectedChatId } = useReactiveVar(chatsContainerState);
     const { messagesPerLoad, replyingTo, messageText, editingMessageId } = useReactiveVar(chatMessagesContainerState);
-    const messagesContainerRef = useRef();
-    const { data: messages, loading: loadingMessages, fetchMore: fetchMoreMessages } = useQuery(CHAT_MESSAGES_BY_CHAT_ID_QUERY, {
+    const messagesContainerRef = useRef<HTMLDivElement>();
+
+    const { data: messages, loading: loadingMessages, fetchMore: fetchMoreMessages } = useChatMessagesByChatIdQuery({
         variables: {
-            _id: selectedChatId, offset: 0, limit: messagesPerLoad
-        },
-    });
+            _id: selectedChatId as string,
+            offset: 0,
+            limit: messagesPerLoad
+        }
+    })
     
     // handle msg input
-    const handleMessageInput = (e) => {
+    const handleMessageInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: e.target.value });
     }
 
@@ -56,20 +62,19 @@ const ChatMessagesContainer = props => {
     }
 
     // navigate to user profile
-    const navigateToUserProfile = (msg) => {
-        navigate(`/app/profile/${msg.owner_id}`);
+    const navigateToUserProfile = (msg: ChatMessage) => {
+        navigate(`/app/profile/${msg.owner._id}`);
     }
 
     // handle message edit
-    const handleMessageEdit = (msg, index, e) => {
-        e.preventDefault();
-        chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: msg.text, editingMessageId: msg.id, replyingTo: replyingToNull });
+    const handleMessageEdit = (msg: ChatMessage, e: MessageListEvent) => {
+        chatMessagesContainerState({ ...chatMessagesContainerState(), messageText: msg.text as string, editingMessageId: msg._id, replyingTo: replyingToNull });
     }
 
     // handle message reply
-    const handleMessageReply = (msg) => {
+    const handleMessageReply = (msg: ChatMessage) => {
         chatMessagesContainerState({...chatMessagesContainerState(), replyingTo: {
-            messageId: msg.id,
+            messageId: msg._id,
             userId: msg.owner._id,
             userNick: msg.owner.nick,
         }, messageText: "", editingMessageId: null});
@@ -78,23 +83,22 @@ const ChatMessagesContainer = props => {
     // send message click 
     const [ sendMessage ] = useMutation(CHAT_MESSAGE_CREATE_MUTATION);
     const handleSendMessageClick = () => {
-        const input = {
+        const input: TSendMessage = {
             owner: currentUser._id,
             text: messageText,
-            chat: selectedChatId,
-            type: "text"
+            chat: selectedChatId as unknown as string,
+            type: "text",
         };
 
         if (replyingTo.messageId) { 
             input.reply = replyingTo.messageId; 
         }
 
-        //console.log(replyingTo.messageId, input)
 
         sendMessage({ 
             variables: { input },
             update: (cache, { data }) => {
-                const cachedData = cache.readQuery({ query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad }});
+                const cachedData: ChatMessagesByChatIdQuery | null = cache.readQuery({ query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad }});
                 const retreivedMessageData = JSON.parse(JSON.stringify(data.chatMessageCreate));
                 retreivedMessageData.owner = { _id: currentUser._id, nick: currentUser.nick, avatar: currentUser.avatar };
 
@@ -103,7 +107,7 @@ const ChatMessagesContainer = props => {
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
                     variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
                     data: {
-                        chatMessagesByChatId: parseMessages(retreivedMessageData, cachedData.chatMessagesByChatId)
+                        chatMessagesByChatId: [retreivedMessageData, ...cachedData?.chatMessagesByChatId as ChatMessagesByChatIdQuery[]]
                     }
                 });
             },
@@ -116,17 +120,17 @@ const ChatMessagesContainer = props => {
     }
 
     // delete message
-    const [ deleteMsg ] = useMutation(CHAT_MESSAGE_DELETE_BY_ID_MUTATION);
-    const handleDelete = (msg) => {
+    const [ deleteMsg ] = useChatMessageDeleteByIdMutation();
+    const handleDelete = (msg: ChatMessage) => {
         deleteMsg({
-            variables: { _id: msg.id },
+            variables: { _id: msg._id },
             update: (cache, {data}) => {
                 const msgs = JSON.parse(JSON.stringify(cache.readQuery({
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
                     variables: {
                         _id: selectedChatId, offset: 0, limit: messagesPerLoad
                     }
-                })));
+                }))) as ChatMessagesByChatIdQuery;
 
                 cache.writeQuery({
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
@@ -134,12 +138,12 @@ const ChatMessagesContainer = props => {
                         _id: selectedChatId, offset: 0, limit: messagesPerLoad
                     },
                     data: {
-                        chatMessagesByChatId: msgs.chatMessagesByChatId.filter(i => i._id !== data.chatMessageDeleteById._id)
+                        chatMessagesByChatId: msgs.chatMessagesByChatId?.filter(i => i._id !== data?.chatMessageDeleteById._id)
                     }
                 });
             }
         }).then(({data}) => {
-            emitMessageDelete(data.chatMessageDeleteById, chatParticipants);
+            emitMessageDelete(data?.chatMessageDeleteById, chatParticipants);
         });
     }
        
@@ -158,7 +162,7 @@ const ChatMessagesContainer = props => {
                     variables: {
                         _id: selectedChatId, offset: 0, limit: messagesPerLoad
                     }
-                })));
+                }))) as ChatMessagesByChatIdQuery;
     
                 cache.writeQuery({
                     query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
@@ -166,7 +170,7 @@ const ChatMessagesContainer = props => {
                         _id: selectedChatId, offset: 0, limit: messagesPerLoad
                     },
                     data: {
-                        chatMessagesByChatId: msgs.chatMessagesByChatId.map(i => {
+                        chatMessagesByChatId: msgs.chatMessagesByChatId?.map(i => {
                             if (i._id === editingMessageId) { i.text = messageText; }
                             return i;
                         })
@@ -183,23 +187,23 @@ const ChatMessagesContainer = props => {
     const [ readAllMessages ] = useMutation(CHAT_READ_ALL_MESSAGES_MUTATION, { variables: { chatId: selectedChatId, userId: currentUser._id } });
     useEffect(() => {
         const msgsRef = messagesContainerRef?.current;
-        const handleScroll = (e) => {
-            if (messagesContainerRef?.current.scrollTop === 0) {
+        const handleScroll = (e: Event) => {
+            if (messagesContainerRef?.current?.scrollTop === 0) {
                 msgsRef?.removeEventListener("scroll", handleScroll);
                 setOffset(offset + 1);
                 fetchMoreMessages({
-                    variables: {offset: messages.chatMessagesByChatId.length}, 
+                    variables: {offset: messages?.chatMessagesByChatId?.length}, 
                     updateQuery(prev, { fetchMoreResult }) {
                         if (!fetchMoreResult) return prev;
                         return Object.assign({}, prev, {
-                            chatMessagesByChatId: [...prev.chatMessagesByChatId, ...fetchMoreResult.chatMessagesByChatId]
+                            chatMessagesByChatId: [...prev.chatMessagesByChatId as ChatMessagesByChatIdQuery[] , ...fetchMoreResult.chatMessagesByChatId as ChatMessagesByChatIdQuery[]]
                         });
                     }
                 }).then(({data}) => {
-                    data.chatMessagesByChatId.length && (msgsRef.scrollTop = msgsRef.offsetHeight);
+                    data?.chatMessagesByChatId?.length && (msgsRef!.scrollTop = msgsRef?.offsetHeight as number);
                 });
             }
-            if (msgsRef.scrollTop === msgsRef.scrollHeight - msgsRef.offsetHeight && !firstLoad) {
+            if (msgsRef?.scrollTop === (msgsRef?.scrollHeight as number) - (msgsRef?.offsetHeight as number) && !firstLoad) {
                 // fetch 
                 readAllMessages();
             }
@@ -222,19 +226,15 @@ const ChatMessagesContainer = props => {
     // react on socket
     useEffect(() => {
         setFirstLoad(false);
-
-        // function to read query from cache
-        const readMsgsQuery = () => {
-            return JSON.parse(JSON.stringify(client.cache.readQuery({
-                query: CHAT_MESSAGES_BY_CHAT_ID_QUERY, 
-                variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad }
-            })));
-        }
-
         // messages query
         const queryDefinition = {
             query: CHAT_MESSAGES_BY_CHAT_ID_QUERY,  
             variables: { _id: selectedChatId, offset: 0, limit: messagesPerLoad },
+        }
+
+        // function to read query from cache
+        const readMsgsQuery = (): ChatMessagesByChatIdQuery => {
+            return JSON.parse(JSON.stringify(client.cache.readQuery(queryDefinition)));
         }
 
         socket.on('message create', async(socketData) => {
@@ -245,7 +245,7 @@ const ChatMessagesContainer = props => {
                 } else {
                     client.cache.writeQuery({
                         ...queryDefinition,
-                        data: { chatMessagesByChatId: [socketData, ...cachedData.chatMessagesByChatId] }
+                        data: { chatMessagesByChatId: [socketData, ...cachedData.chatMessagesByChatId as ChatMessagesByChatIdQuery[]] }
                     });
                 }
             }
@@ -256,7 +256,7 @@ const ChatMessagesContainer = props => {
                 client.cache.writeQuery({
                     ...queryDefinition,
                     data: { 
-                        chatMessagesByChatId: cachedData.chatMessagesByChatId.map(i => {
+                        chatMessagesByChatId: cachedData.chatMessagesByChatId?.map(i => {
                             i._id === socketData._id && (i.text = socketData.text);
                             return i;
                         })
@@ -269,7 +269,7 @@ const ChatMessagesContainer = props => {
                 const cachedData = readMsgsQuery();
                 client.cache.writeQuery({
                     ...queryDefinition,
-                    data: { chatMessagesByChatId: cachedData.chatMessagesByChatId.filter(i => i._id !== socketData._id) }
+                    data: { chatMessagesByChatId: cachedData.chatMessagesByChatId?.filter(i => i._id !== socketData._id) }
                 });
             }
         });
@@ -290,10 +290,10 @@ const ChatMessagesContainer = props => {
                         if (chat.data) {
                             return (
                                 <Card>
-                                    <ChatHeader chat={chat.data.chat} handleClick={(e) => handleTabSwitch(e, 2)} loading={loadingMessages}/>
+                                    <ChatHeader chat={chat.data.chat} handleClick={(e: React.MouseEvent<HTMLDivElement>) => handleTabSwitch(e, 2)} loading={loadingMessages}/>
                                     {
                                         (() => {
-                                            if (!messages?.chatMessagesByChatId.length || loadingMessages) {
+                                            if (!messages?.chatMessagesByChatId?.length || loadingMessages) {
                                                 return (
                                                     <Stack sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>
                                                         <Typography>No messages yet</Typography>
@@ -302,13 +302,14 @@ const ChatMessagesContainer = props => {
                                             }
 
                                             return (
-                                                <Stack ref={messagesContainerRef} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
+                                                <Stack ref={messagesContainerRef as unknown as React.RefObject<HTMLDivElement>} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
+                                                    { /* @ts-ignore */ }
                                                     <MessageList
                                                         className='message-list'
                                                         lockable={true}
                                                         toBottomHeight={'100%'}
                                                         dataSource={
-                                                            reverseDataArray(messages.chatMessagesByChatId).map(msg => {
+                                                            reverseDataArray(messages.chatMessagesByChatId).map((msg: any) => {
                                                                 let message = {
                                                                     id: msg._id,
                                                                     position: currentUser._id === msg.owner._id ? 'right' : 'left',
@@ -323,6 +324,7 @@ const ChatMessagesContainer = props => {
                                                                 }
                                                                 
                                                                 if (msg?.reply) {
+                                                                    { /* @ts-ignore */ }
                                                                     message.reply = {
                                                                         message: msg?.reply.text,
                                                                         title: msg?.reply.owner.nick
@@ -330,8 +332,11 @@ const ChatMessagesContainer = props => {
                                                                 }
 
                                                                 if (msg.tupe === 'spotify') {
+                                                                    { /* @ts-ignore */ }
                                                                     message.theme = 'dark';
+                                                                    { /* @ts-ignore */ }
                                                                     message.view = 'coverart';
+                                                                    { /* @ts-ignore */ }
                                                                     message.uri = 'https://open.spotify.com/playlist/0Gvl5v7YRRMF03akVGT8pN?si=3d6ff4c10e984208'
                                                                 }
 
@@ -395,6 +400,3 @@ const ChatMessagesContainer = props => {
         </>
     );
 }
-
-
-export default ChatMessagesContainer;

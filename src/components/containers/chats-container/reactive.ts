@@ -5,6 +5,8 @@ export const chatsContainerStateBaseValues = {
 }
 
 
-export const chatsContainerState = makeVar(
+export const chatsContainerState = makeVar<{
+    selectedChatId: null | string;
+}>(
     chatsContainerStateBaseValues
 );
