@@ -2,13 +2,13 @@ import { Box, Button, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import EnumNotifications from "../../enums/enum-notifications";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
-import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import { DELETE_NOTIFICATIONS_MUTATION, MARK_NOTIFICATIONS_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "../../../utils/graphql-requests/notifications";
+import { NOTIFICATIONS_QUERY } from "../../../utils/graphql-requests/notifications";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 import TabPanel from "../../common/tab-panel/tab-panel";
-import { NotificationsQuery } from "utils/graphql-requests/generated/schema";
+import { NotificationsQuery, useNotificationsDeleteByIdsMutation, useNotificationsLazyQuery, useNotificationsMarkAsReadByIdsMutation } from "utils/graphql-requests/generated/schema";
 
 
 
@@ -16,12 +16,10 @@ export default function NotificationsContainer() {
     const [status, setStatus] = useState(0);
 
     const { user: currentUser } = useReactiveVar(baseState);
-    const [ getNotifications, { data, loading } ] = useLazyQuery(NOTIFICATIONS_QUERY, {
-        variables: { receiverId: currentUser._id, checked: status === 0 },
-        pollInterval: 15000,
-    });
-    const [ deleteNotificationsByIds ] = useMutation(DELETE_NOTIFICATIONS_MUTATION);
-    const [ markNotificationsAsReadByIds ] = useMutation(MARK_NOTIFICATIONS_AS_READ_MUTATION);
+    const [ getNotifications, { data, loading } ] = useNotificationsLazyQuery();
+    const [ deleteNotificationsByIds ] = useNotificationsDeleteByIdsMutation();
+    const [ markNotificationsAsReadByIds ] = useNotificationsMarkAsReadByIdsMutation()
+
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("containers");
 
@@ -32,9 +30,9 @@ export default function NotificationsContainer() {
     const q = { query: NOTIFICATIONS_QUERY, variables: { receiverId: currentUser._id, checked: status === 0 } }
 
     const handleDeleteAllClick = async() => {
-        if ((data as NotificationsQuery)?.notifications && data?.notifications.length > 0) {
+        if ((data as NotificationsQuery)?.notifications && data?.notifications?.length) {
             enqueueSnackbar(t('notifications.snack.pending'), { autoHideDuration: 1500 });
-            await deleteNotificationsByIds({ variables: { ids: (data as NotificationsQuery)?.notifications?.map((i) => i._id) }, refetchQueries: [q] })
+            await deleteNotificationsByIds({ variables: { ids: (data as NotificationsQuery)?.notifications?.map((i) => i._id) as string[] }, refetchQueries: [q] })
                 .then(() => {
                     enqueueSnackbar(t('notifications.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(() => {
@@ -46,7 +44,7 @@ export default function NotificationsContainer() {
     const handleReadAllClick = async() => {
         if (data?.notifications && data?.notifications.length > 0) {
             enqueueSnackbar(t('notifications.snack.pending'), { autoHideDuration: 1500 });
-            await markNotificationsAsReadByIds({ variables: { ids: (data as NotificationsQuery)?.notifications?.map(i => i._id) }, refetchQueries: [q] })
+            await markNotificationsAsReadByIds({ variables: { ids: (data as NotificationsQuery)?.notifications?.map(i => i._id) as string[] }, refetchQueries: [q] })
                 .then(() => {
                     enqueueSnackbar(t('notifications.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(() => {

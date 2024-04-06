@@ -4,8 +4,12 @@ import getTimeSince from "../../utils/common-functions/getTimeSince";
 import { baseState } from "../baseReactive";
 import NotificationItem from "../common/notification-item/notification-item";
 import { SpinnerLinear } from "../common/spinner/Spinner";
+import { NotificationsQuery } from "utils/graphql-requests/generated/schema";
 
-const EnumNotifications = props => {
+export default function EnumNotifications(props: {
+    loading: boolean;
+    notifications: NotificationsQuery["notifications"];
+}) {
     const { notifications, loading } = props;
     const { locations }  = useReactiveVar(baseState);
 
@@ -28,7 +32,7 @@ const EnumNotifications = props => {
                             <Box sx={{ width: '100%', py: 4 }}>
                                 <Stack spacing={1} direction="column" useFlexGap>
                                     {
-                                        notifications.map((notification, key) => {
+                                        notifications?.map((notification, key) => {
                                             return (
                                                 <NotificationItem
                                                     key={key}
@@ -57,4 +61,3 @@ const EnumNotifications = props => {
     );
 }
 
-export default EnumNotifications;

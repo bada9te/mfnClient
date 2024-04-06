@@ -1,15 +1,18 @@
 import LeftBarPostsItem from "../common/left-bar-posts-item/left-bar-posts-item";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../baseReactive";
+import { PostsByTitleQuery } from "utils/graphql-requests/generated/schema";
 
-const EnumLeftBarPosts = props => {
+export default function EnumLeftBarPosts(props: {
+    posts: PostsByTitleQuery["postsByTitle"]
+}) {
     const { posts } = props;
     const { locations } = useReactiveVar(baseState);
 
     return (
         <>
             {
-                posts.map((item, key) => {
+                posts?.map((item, key) => {
                     return (
                         <div key={key}>
                             <LeftBarPostsItem 
@@ -31,5 +34,3 @@ const EnumLeftBarPosts = props => {
     );
 
 }
-
-export default EnumLeftBarPosts;
