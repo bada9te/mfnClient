@@ -60,7 +60,7 @@ export default function ChatsContainer() {
 
     // switch participant handler
     const [ switchParticipants ] = useChatSwitchParticipantsMutation();
-    const addOrRemoveParticipants = (participants: ChatQuery["chat"]["participants"]) => {
+    const addOrRemoveParticipants = (participants: { _id: string, __typename: string }[]) => {
         enqueueSnackbar("Updating chat...", { autoHideDuration: 1500 });
         
         switchParticipants({
@@ -182,7 +182,7 @@ export default function ChatsContainer() {
                                                         chatOwnerId={selectedChatData.chat.owner?._id}
                                                         participants={selectedChatData.chat.participants}
                                                     />
-                                                    <UserSelectContainer except={selectedChatData.chat.participants}/>
+                                                    <UserSelectContainer except={selectedChatData.chat.participants?.map(i => ({ _id: i?._id as string })) as { _id: string; }[]} includeChats={false}/>
                                                     <Button
                                                         variant="contained" 
                                                         color="secondary"

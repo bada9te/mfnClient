@@ -7,7 +7,7 @@ import { TPostStatus } from './types';
 export default function PostItemUnavailable(props: {
     status: TPostStatus;
     text: string;
-    selectHandler: () => void;
+    selectHandler?: () => void;
 }) {
     const { status, text, selectHandler } = props;
     const { t } = useTranslation("objects");

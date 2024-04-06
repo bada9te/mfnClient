@@ -1,34 +1,37 @@
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Paper, Typography, Checkbox } from "@mui/material";
-import { USERS_BY_IDS_QUERY } from "../../../utils/graphql-requests/users";
 import { baseState } from "../../baseReactive";
 import { userSelectContainerState } from "./reactive";
 import { useTranslation } from "react-i18next";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
-import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "../../../utils/graphql-requests/chats";
 import { useEffect, useState } from "react";
+import { useChatsUserRelatedByUserIdQuery, useUsersByIdsQuery } from "utils/graphql-requests/generated/schema";
  
 
-const UserSelectContainer = props => {
+export default function UserSelectContainer(props: {
+    except: {_id: string}[];
+    includeChats: boolean;
+}) {
     const { except, includeChats } = props;
     const { user: currentUser } = useReactiveVar(baseState);
     const { checked } = useReactiveVar(userSelectContainerState);
-    const [ visibleData, setVisibleData ] = useState([]);
-    const { data: users, loading: usersLoading } = useQuery(USERS_BY_IDS_QUERY, {
+    const [ visibleData, setVisibleData ] = useState<any[]>([]);
+
+    const { data: users, loading: usersLoading } = useUsersByIdsQuery({
         variables: {
             ids: currentUser.subscribedOn,
         },
     });
-    const { data: chats, loading: chatsLoading } = useQuery(CHATS_USER_RELATED_BY_USER_ID_QUERY, {
+    const { data: chats, loading: chatsLoading } = useChatsUserRelatedByUserIdQuery({
         variables: {
             _id: currentUser._id
         }
-    });
+    })
     const { t } = useTranslation("containers");
 
 
     // handle element toggle in list
-    const handleToggle = (value) => () => {
+    const handleToggle = (value: { _id: string, __typename: string }) => () => {
         const currentIndex = checked.map(i => i._id).indexOf(value._id);
         const newChecked = [...checked];
 
@@ -129,5 +132,3 @@ const UserSelectContainer = props => {
         </>
     );
 }
-
-export default UserSelectContainer;

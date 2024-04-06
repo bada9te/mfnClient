@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import EnumPosts from "../../enums/enum-posts";
 
 
-const WelcomePageBestTrackContainer = props => {
+export default function WelcomePageBestTrackContainer() {
     const [ fetchMostpopularTracks, { data, loading }] = useLazyQuery(POSTS_MOST_POPULAR_BY_STARTDATE_QUERY);
     const { t } = useTranslation("pages");
     
@@ -56,10 +56,8 @@ const WelcomePageBestTrackContainer = props => {
                     <EnumPosts posts={data.postsMostPopular} profileLinkAccessable/> 
                 </Stack>
                 : 
-                <PostItemUnavailable/>
+                <PostItemUnavailable status={"in-player"} text="" />
             }
         </Stack>
     );
 }
-
-export default WelcomePageBestTrackContainer;
