@@ -8,21 +8,21 @@ import CreatePlaylistForm from "../../forms/create-playlist/create-playlist";
 import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
 import newPlaylistBG from "../../../assets/bgs/newPlaylistFormBG.png"
 import { playlistsContainerState } from "./reactive";
-import { useLazyQuery, useReactiveVar } from "@apollo/client";
-import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLISTS_PUBLIC_AWAILABLE_QUERY } from "../../../utils/graphql-requests/playlists";
+import {  useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
-import defineMaxPage from "../../../utils/common-functions/defineMaxPage.ts";
+import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
 import { useTranslation } from "react-i18next";
 import InfoImage from "../../common/info-image/info-image";
 import PlaylistsLogo from "../../../assets/icons/logo_playlist.png";
 import TabPanel from "../../common/tab-panel/tab-panel";
+import { usePlaylistsByOwnerIdLazyQuery, usePlaylistsPublicAvailableLazyQuery } from "utils/graphql-requests/generated/schema";
 
 
 
 const PlaylistsEnumWithPagination = () => {
     const playlistsContainer = useReactiveVar(playlistsContainerState);
 
-    const handlePageChange = page => {
+    const handlePageChange = (page: number) => {
         playlistsContainerState({...playlistsContainerState(), activePage: page})
     }
 
@@ -48,13 +48,13 @@ const PlaylistsEnumWithPagination = () => {
 
 
 
-const PlaylistsContainer = (props) => {
+export default function PlaylistsContainer() {
     const { maxCountPerPage, activePage, playlists, isLoading } = useReactiveVar(playlistsContainerState);
     const { user: currentUser } = useReactiveVar(baseState);
 
 
-    const [ getCurrentUserPlaylists ] = useLazyQuery(PLAYLISTS_BY_OWNER_ID_QUERY);
-    const [ getPublicAvailablePlaylists ] = useLazyQuery(PLAYLISTS_PUBLIC_AWAILABLE_QUERY);
+    const [ getCurrentUserPlaylists ] = usePlaylistsByOwnerIdLazyQuery();
+    const [ getPublicAvailablePlaylists ] = usePlaylistsPublicAvailableLazyQuery();
 
     // used to know the page number
     const [status, setStatus] = useState(0);
@@ -62,10 +62,10 @@ const PlaylistsContainer = (props) => {
     const { t } = useTranslation("containers");
 
     // on tab switch
-    const handleTabSwitch = (event, key) => {
+    const handleTabSwitch = (event: React.SyntheticEvent<Element, Event>, key: number) => {
         setStatus(key);
 
-        const setPagename = (name) => {
+        const setPagename = (name: string) => {
             playlistsContainerState({ ...playlistsContainerState(), page: name })
         }
 
@@ -79,7 +79,7 @@ const PlaylistsContainer = (props) => {
     }
 
 
-    const setPlaylistsAndCount = useCallback((result, at) => {
+    const setPlaylistsAndCount = useCallback((result: any, at: string) => {
         playlistsContainerState({
             ...playlistsContainerState(), 
             playlists: result.data[at].playlists,
@@ -113,7 +113,7 @@ const PlaylistsContainer = (props) => {
                     setPlaylistsAndCount(result, "playlistsPublicAvailable");
                 }
             } catch (error) {
-                playlistsContainerState({ ...playlistsContainerState(), error });
+                playlistsContainerState({ ...playlistsContainerState(), error: error as string });
             } finally {
                 playlistsContainerState({ ...playlistsContainerState(), isLoading: false });
             }
@@ -196,6 +196,3 @@ const PlaylistsContainer = (props) => {
         </Box>
     );
 }
-
-
-export default PlaylistsContainer;

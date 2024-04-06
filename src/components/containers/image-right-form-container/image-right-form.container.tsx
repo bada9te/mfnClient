@@ -1,7 +1,12 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { Grid } from "@mui/material";
+import React from "react";
 
-const ImageRightFormContainer = (props) => {
+export default function ImageRightFormContainer(props: {
+    bg: string;
+    text: string;
+    children: React.ReactNode
+}) {
     const { bg, text } = props;
 
     return (
@@ -53,6 +58,3 @@ const ImageRightFormContainer = (props) => {
         </Grid>
     );
 }
-
-
-export default ImageRightFormContainer;

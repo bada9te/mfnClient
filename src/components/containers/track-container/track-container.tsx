@@ -1,15 +1,17 @@
 import ProfileCard from "../../common/profile/profile-card/profile-card";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, Stack } from "@mui/material";
-import { useQuery } from "@apollo/client";
-import { POST_QUERY } from "../../../utils/graphql-requests/posts";
 import PostGenerate from "../../common/post-item/post-generate";
+import { Post, usePostQuery } from "utils/graphql-requests/generated/schema";
+import { TPostAddons, TPostBase } from "components/common/post-item/types";
 
 
-const TrackContainer = (props) => {
+export default function TrackContainer(props: {
+    trackId: string;
+}) {
     const { trackId } = props;
 
-    const { data, loading } = useQuery(POST_QUERY, {
+    const { data, loading } = usePostQuery({
         variables: {
             _id: trackId,
         },
@@ -37,7 +39,7 @@ const TrackContainer = (props) => {
                                 boxShadow: 15,
                                 borderRadius: 5
                             }} flexWrap="wrap" spacing={2} direction="row" useFlexGap>
-                                <PostGenerate item={data.post} />
+                                <PostGenerate item={data.post as unknown as (TPostBase & TPostAddons)} addonsCorrections={{}} baseCorrections={{}} />
                                 
                                 <ProfileCard id={data.post.owner._id} bgRadius={5}/>
                             </Stack>
@@ -48,5 +50,3 @@ const TrackContainer = (props) => {
         </>
     );
 }
-
-export default TrackContainer;

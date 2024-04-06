@@ -1,8 +1,7 @@
-import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { Box, Stack, Typography } from "@mui/material";
 import getTimeSince from "../../../utils/common-functions/getTimeSince";
-import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLIST_SWICTH_TRACK_MUTATION } from "../../../utils/graphql-requests/playlists";
-import { POSTS_BY_TITLE_QUERY } from "../../../utils/graphql-requests/posts";
+import { PLAYLISTS_BY_OWNER_ID_QUERY } from "../../../utils/graphql-requests/playlists";
 import { baseState } from "../../baseReactive";
 import PostItem from "../../common/post-item/post-item";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
@@ -11,19 +10,21 @@ import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { playlistsContainerState } from "../playlists-container/reactive";
 import { postSelectContainerState } from "./reactive";
 import { useTranslation } from "react-i18next";
-import defineMaxPage from "../../../utils/common-functions/defineMaxPage.ts";
+import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
 import { enqueueSnackbar } from "notistack";
+import { Playlist, PlaylistsByOwnerIdQuery, Post, usePlaylistSwicthTrackMutation, usePostsByTitleLazyQuery, usePostsByTitleQuery } from "utils/graphql-requests/generated/schema";
+import { TPostAddons, TPostBase } from "components/common/post-item/types";
 
 
 
-const PostSelectContainer = props => {
+const PostSelectContainer = () => {
     const { locations, user: currentUser } = useReactiveVar(baseState);
     const { targetPlaylist, maxCountPerPage, activePage } = useReactiveVar(playlistsContainerState);
     const { query, isMine, selectingFor } = useReactiveVar(postSelectContainerState);
     const { t } = useTranslation("containers");
 
-    const [switchTrackInPlaylist] = useMutation(PLAYLIST_SWICTH_TRACK_MUTATION);
-    const { data, loading } = useQuery(POSTS_BY_TITLE_QUERY, {
+    const [ switchTrackInPlaylist ] = usePlaylistSwicthTrackMutation();
+    const { data, loading } = usePostsByTitleQuery({
         variables: {
             input: {
                 title: query,
@@ -32,9 +33,8 @@ const PostSelectContainer = props => {
             },
         },
     });
-
     
-    const handlePostSelection = async(post) => {
+    const handlePostSelection = async(post: { base: TPostBase, addons: TPostAddons }) => {
         postSelectModalState({ ...postSelectModalState(), isShowing: false });
 
         if (selectingFor === "playlist") {
@@ -43,24 +43,25 @@ const PostSelectContainer = props => {
                 variables: {
                     input: {
                         trackId: post.base._id,
-                        playlistId: targetPlaylist,
+                        playlistId: targetPlaylist as string,
                     },
                 },
                 update: (cache, { data }) => {
                     let offset = activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage;
                     
+
                     const cachedData = cache.readQuery({ query: PLAYLISTS_BY_OWNER_ID_QUERY, 
                         variables: {
                             owner: currentUser._id,
                             offset,
                             limit: maxCountPerPage,
                         }
-                    });
+                    }) as PlaylistsByOwnerIdQuery;
 
-                    let playlists = JSON.parse(JSON.stringify(cachedData.playlistsByOwnerId.playlists));
+                    let playlists = JSON.parse(JSON.stringify(cachedData.playlistsByOwnerId.playlists)) as Playlist[];
                     playlists.forEach(playlist => {
-                        if (playlist._id === data.playlistSwicthTrack._id) {
-                            playlist.tracks = data.playlistSwicthTrack.tracks;
+                        if (playlist._id === data?.playlistSwicthTrack._id) {
+                            playlist.tracks = data.playlistSwicthTrack.tracks as Post[];
                         }
                     });
                     

@@ -2,14 +2,15 @@ import { useEffect } from "react";
 import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, List, Typography } from "@mui/material";
 import EnumLeftBarPosts from "../../enums/enum-leftbar-posts";
-import { useLazyQuery } from "@apollo/client";
-import { POSTS_BY_TITLE_QUERY } from "../../../utils/graphql-requests/posts";
 import { useTranslation } from "react-i18next";
+import { usePostsByTitleLazyQuery } from "utils/graphql-requests/generated/schema";
 
 
-const LeftBarPostsContainer = props => {
+export default function LeftBarPostsContainer(props: {
+    searchQuery: string;
+}) {
     const { searchQuery } = props;
-    const [ getPostsByTitle, { data, loading } ] = useLazyQuery(POSTS_BY_TITLE_QUERY);
+    const [ getPostsByTitle, { data, loading } ] = usePostsByTitleLazyQuery();
     const { t } = useTranslation("containers");
 
     useEffect(() => {
@@ -59,5 +60,3 @@ const LeftBarPostsContainer = props => {
         </List>
     );
 }
-
-export default LeftBarPostsContainer;

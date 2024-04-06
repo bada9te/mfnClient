@@ -1,6 +1,11 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
+import React from "react";
 
-const LogRegVerContainer = (props) => {
+export default function LogRegVerContainer(props: {
+    bg: string;
+    text: string;
+    children: React.ReactNode
+}) {
     const { bg, text } = props;
     return (
         <Box sx={{ height: 'calc(100vh - 110px)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -65,5 +70,3 @@ const LogRegVerContainer = (props) => {
         </Box>
     );
 }
-
-export default LogRegVerContainer;

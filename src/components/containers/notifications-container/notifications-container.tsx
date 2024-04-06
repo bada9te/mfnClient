@@ -1,5 +1,5 @@
 import { Box, Button, Tab, Tabs } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import EnumNotifications from "../../enums/enum-notifications";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
 import { useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
@@ -8,10 +8,11 @@ import { DELETE_NOTIFICATIONS_MUTATION, MARK_NOTIFICATIONS_AS_READ_MUTATION, NOT
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 import TabPanel from "../../common/tab-panel/tab-panel";
+import { NotificationsQuery } from "utils/graphql-requests/generated/schema";
 
 
 
-const NotificationsContainer = props => {
+export default function NotificationsContainer() {
     const [status, setStatus] = useState(0);
 
     const { user: currentUser } = useReactiveVar(baseState);
@@ -24,16 +25,16 @@ const NotificationsContainer = props => {
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("containers");
 
-    const handleTabSwitch = (event, key) => {
+    const handleTabSwitch = (event: React.SyntheticEvent<Element, Event>, key: number) => {
         setStatus(key);
     }
 
     const q = { query: NOTIFICATIONS_QUERY, variables: { receiverId: currentUser._id, checked: status === 0 } }
 
     const handleDeleteAllClick = async() => {
-        if (data?.notifications && data?.notifications.length > 0) {
+        if ((data as NotificationsQuery)?.notifications && data?.notifications.length > 0) {
             enqueueSnackbar(t('notifications.snack.pending'), { autoHideDuration: 1500 });
-            await deleteNotificationsByIds({ variables: { ids: data.notifications.map(i => i._id) }, refetchQueries: [q] })
+            await deleteNotificationsByIds({ variables: { ids: (data as NotificationsQuery)?.notifications?.map((i) => i._id) }, refetchQueries: [q] })
                 .then(() => {
                     enqueueSnackbar(t('notifications.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(() => {
@@ -45,7 +46,7 @@ const NotificationsContainer = props => {
     const handleReadAllClick = async() => {
         if (data?.notifications && data?.notifications.length > 0) {
             enqueueSnackbar(t('notifications.snack.pending'), { autoHideDuration: 1500 });
-            await markNotificationsAsReadByIds({ variables: { ids: data.notifications.map(i => i._id) }, refetchQueries: [q] })
+            await markNotificationsAsReadByIds({ variables: { ids: (data as NotificationsQuery)?.notifications?.map(i => i._id) }, refetchQueries: [q] })
                 .then(() => {
                     enqueueSnackbar(t('notifications.snack.success'), { autoHideDuration: 1500, variant: 'success' });
                 }).catch(() => {
@@ -83,5 +84,3 @@ const NotificationsContainer = props => {
         </Box>
     );
 }
-
-export default NotificationsContainer;
