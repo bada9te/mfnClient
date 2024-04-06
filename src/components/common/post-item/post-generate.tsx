@@ -3,11 +3,12 @@ import getTimeSince from "utils/common-functions/getTimeSince";
 import { baseState } from "components/baseReactive";
 import PostItem from "./post-item";
 import { TPostAddons, TPostBase } from "./types";
+import { Post } from "utils/graphql-requests/generated/schema";
 
 export default function PostGenerate(props: {
-    item: (TPostBase & TPostAddons);
-    addonsCorrections: TPostAddons | any;
-    baseCorrections: TPostBase | any;
+    item: Post;
+    addonsCorrections?: TPostAddons | any;
+    baseCorrections?: TPostBase | any;
 }) {
     const { item, addonsCorrections, baseCorrections } = props;
     const { locations } = useReactiveVar(baseState);

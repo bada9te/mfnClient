@@ -1,17 +1,21 @@
 import { MessageList } from "react-chat-elements";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../baseReactive";
+import { ChatMessage } from "utils/graphql-requests/generated/schema";
 
 
-const EnumChatMessages = props => {
-    const { messages, chatParticipants } = props;
-    const { user: currentUser, locations } = useReactiveVar(baseState);
+export default function EnumChatMessages(props: {
+    messages: ChatMessage[]
+}) {
+    const { messages } = props;
+    const { user: currentUser } = useReactiveVar(baseState);
 
     return (
         <MessageList
             className='message-list'
             lockable={true}
             toBottomHeight={'100%'}
+            /* @ts-ignore */ 
             dataSource={
                 messages.map(msg => ({
                     id: msg._id,
@@ -28,5 +32,3 @@ const EnumChatMessages = props => {
         />
     );
 }
-
-export default EnumChatMessages;

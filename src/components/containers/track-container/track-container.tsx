@@ -39,7 +39,7 @@ export default function TrackContainer(props: {
                                 boxShadow: 15,
                                 borderRadius: 5
                             }} flexWrap="wrap" spacing={2} direction="row" useFlexGap>
-                                <PostGenerate item={data.post as unknown as (TPostBase & TPostAddons)} addonsCorrections={{}} baseCorrections={{}} />
+                                <PostGenerate item={data.post as Post} addonsCorrections={{}} baseCorrections={{}} />
                                 
                                 <ProfileCard id={data.post.owner._id} bgRadius={5}/>
                             </Stack>

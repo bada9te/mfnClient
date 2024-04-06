@@ -3,9 +3,17 @@ import PostItemUnavailable from "../common/post-item/post-item-unavailable";
 import PostGenerate from "../common/post-item/post-generate";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../baseReactive";
+import { Battle, Post, User } from "utils/graphql-requests/generated/schema";
 
 
-const PostFromData = (props) => {
+function PostFromData(props: {
+    data: Post;
+    battleId: string;
+    makeBattleVote: (battleId: string, postNScore: "post1Score" | "post2Score", voteCount: number, voterId: string) => Promise<void>;
+    votedBy: User[];
+    finished: boolean;
+    postNScore: "post1Score" | "post2Score"
+}) {
     const { data, battleId, makeBattleVote, votedBy, finished, postNScore } = props;
     const { user: currentUser } = useReactiveVar(baseState);
  
@@ -14,10 +22,13 @@ const PostFromData = (props) => {
             {
                 data?._id && data._id !== ""
                 ?
-                <PostGenerate item={data} addonsCorrections={{ 
-                    status: !finished && !votedBy.map(i => i._id).includes(currentUser._id) && currentUser._id.length ? "voting" : null,
-                    battleId, makeBattleVote, postNScore, votedBy,
-                }}/>
+                <PostGenerate 
+                    item={data} 
+                    addonsCorrections={{ 
+                        status: !finished && !votedBy.map(i => i._id).includes(currentUser._id) && currentUser._id.length ? "voting" : null,
+                        battleId, makeBattleVote, postNScore, votedBy,
+                    }}
+                />
                 :
                 <PostItemUnavailable/>
             }
@@ -26,7 +37,10 @@ const PostFromData = (props) => {
 }
 
 
-const EnumBattles = props => {
+export default function EnumBattles(props: {
+    makeBattleVote: (battleId: string, postNScore: "post1Score" | "post2Score", voteCount: number, voterId: string) => Promise<void>;
+    battles: Battle[];
+}) {
     const { makeBattleVote, battles } = props;
 
     return (
@@ -40,20 +54,20 @@ const EnumBattles = props => {
                             title={item.title}
                             post1={
                                 <PostFromData 
-                                    data={item?.post1} 
+                                    data={item?.post1 as Post} 
                                     battleId={item?._id} 
                                     makeBattleVote={makeBattleVote}
-                                    votedBy={item?.votedBy}
+                                    votedBy={item?.votedBy as User[]}
                                     finished={item?.finished}
                                     postNScore="post1Score"
                                 />
                             }
                             post2={
                                 <PostFromData 
-                                    data={item?.post2} 
+                                    data={item?.post2 as Post} 
                                     battleId={item?._id} 
                                     makeBattleVote={makeBattleVote}
-                                    votedBy={item?.votedBy}
+                                    votedBy={item?.votedBy as User[]}
                                     finished={item?.finished}
                                     postNScore="post2Score"
                                 />
@@ -71,5 +85,3 @@ const EnumBattles = props => {
         </>
     );
 }
-
-export default EnumBattles;

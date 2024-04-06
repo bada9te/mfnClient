@@ -179,7 +179,7 @@ export default function ChatsContainer() {
                                                 <Stack spacing={2}>
                                                     <EnumChatParticipants
                                                         switchParticipants={addOrRemoveParticipants}
-                                                        chatOwnerId={selectedChatData.chat.owner?._id}
+                                                        chatOwnerId={selectedChatData.chat.owner?._id as string}
                                                         participants={selectedChatData.chat.participants}
                                                     />
                                                     <UserSelectContainer except={selectedChatData.chat.participants?.map(i => ({ _id: i?._id as string })) as { _id: string; }[]} includeChats={false}/>

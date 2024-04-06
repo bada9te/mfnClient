@@ -15,11 +15,12 @@ import { SpinnerLinear } from "../../common/spinner/Spinner";
 import InfoImage from "../../common/info-image/info-image";
 import BattlesLogo from "../../../assets/icons/battle-disk.png";
 import TabPanel from "../../common/tab-panel/tab-panel";
+import { Battle } from "utils/graphql-requests/generated/schema";
 
 
 function TabContent(props: {
     loading: boolean;
-    battles: any;
+    battles: Battle[];
     makeBattleVote: (battleId: string, postNScore: "post1Score" | "post2Score", voteCount: number, voterId: string) => Promise<void>;
 }) {
     const {loading, battles, makeBattleVote} = props;
@@ -40,7 +41,7 @@ function TabContent(props: {
                     } else {
                         return (
                             <>
-                                <EnumBattles battles={battles || []} loading={loading} makeBattleVote={makeBattleVote}/>
+                                <EnumBattles battles={battles || []} makeBattleVote={makeBattleVote}/>
                                 { battles?.length > 0 ? <Box sx={{mb: 10}}><PaginationTree/></Box> : null }
                             </>
                         );

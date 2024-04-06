@@ -1,12 +1,16 @@
+import { ChatsUserRelatedByUserIdQuery } from "utils/graphql-requests/generated/schema";
 import ChatItem from "../common/chat-item/chat-item";
 
-const EnumChats = props => {
+export default function EnumChats(props: {
+    chats: ChatsUserRelatedByUserIdQuery["chatsUserRelatedByUserId"];
+    chatSelectionHandler: (id: string) => void;
+}) {
     const { chats, chatSelectionHandler } = props;
 
     return (
         <>
             {
-                chats.map((chat, key) => {
+                chats?.map((chat, key) => {
                     return (
                         <ChatItem 
                             key={key} 
@@ -19,5 +23,3 @@ const EnumChats = props => {
         </>
     );
 }
-
-export default EnumChats;

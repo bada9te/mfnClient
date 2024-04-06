@@ -1,8 +1,10 @@
+import { Comment as TComment } from "utils/graphql-requests/generated/schema";
 import getTimeSince from "../../utils/common-functions/getTimeSince";
-import Comment from "../common/comment/comment";
+import Comment from "components/common/comment/comment";
 
-
-const EnumComments = props => {
+export default function EnumComments(props: {
+    comments: TComment[];
+}) {
     const { comments } = props;
 
     return (
@@ -28,5 +30,3 @@ const EnumComments = props => {
         </>
     );
 }
-
-export default EnumComments;
