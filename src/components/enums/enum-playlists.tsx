@@ -2,8 +2,11 @@ import { useReactiveVar } from "@apollo/client";
 import getTimeSince from "../../utils/common-functions/getTimeSince";
 import { baseState } from "../baseReactive";
 import Playlist from "../common/playlist/playlist";
+import { Playlist as TPlaylist } from "utils/graphql-requests/generated/schema";
 
-const EnumPlaylists = (props) => {
+export default function EnumPlaylists(props: {
+    playlists: TPlaylist[]
+}) {
     const { playlists } = props;
     const { locations } = useReactiveVar(baseState);
 
@@ -23,5 +26,3 @@ const EnumPlaylists = (props) => {
         </>
     );
 }
-
-export default EnumPlaylists;

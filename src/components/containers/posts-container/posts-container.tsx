@@ -3,9 +3,9 @@ import { SpinnerLinear } from '../../common/spinner/Spinner';
 import PaginationTree from '../../common/pagination/pagination';
 import { Box, Stack, Typography } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
-import { useLazyQuery, useReactiveVar } from '@apollo/client';
+import { OperationVariables, QueryResult, useLazyQuery, useReactiveVar } from '@apollo/client';
 import { POSTS_BY_CATEGORY_QUERY, POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../utils/graphql-requests/posts';
-import defineMaxPage from '../../../utils/common-functions/defineMaxPage.ts';
+import defineMaxPage from '../../../utils/common-functions/defineMaxPage';
 import { baseState } from '../../baseReactive';
 import { postsContainerState } from './reactive';
 import { useLocation } from 'react-router-dom';
@@ -13,7 +13,13 @@ import { useTranslation } from 'react-i18next';
 
 
 
-const PostsContainer = (props) => {
+export default function PostsContainer(props: {
+    id?: string;
+    profileLinkAccessable: boolean;
+    savedOnly?: boolean;
+    except?: unknown[];
+    category?: string;
+}) {
     const { id, profileLinkAccessable, savedOnly, except, category } = props;
     const location = useLocation();
 
@@ -25,11 +31,11 @@ const PostsContainer = (props) => {
     const [ getPostsByCategory ] = useLazyQuery(POSTS_BY_CATEGORY_QUERY);
     const { t } = useTranslation("containers");
     
-    const handlePageChange = page => {
+    const handlePageChange = (page: number) => {
         postsContainerState({...postsContainerState(), activePage: page});
     }
 
-    const setPostsAndCount = useCallback((result, at) => {
+    const setPostsAndCount = useCallback((result: QueryResult<any, OperationVariables>, at: string) => {
         //console.log(result.data.postsByOwner)
         postsContainerState({
             ...postsContainerState(), 
@@ -141,6 +147,3 @@ const PostsContainer = (props) => {
         </>
     );
 }
-
-
-export default PostsContainer;

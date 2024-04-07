@@ -2,10 +2,14 @@ import PostItem from "../common/post-item/post-item";
 import getTimeSince from "../../utils/common-functions/getTimeSince";
 import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../baseReactive";
+import { Post } from "utils/graphql-requests/generated/schema";
 
 
-const EnumPlaylistTracks = props => {
-    const {tracks, profileLinkAccessable} = props;
+export default function EnumPlaylistTracks(props: {
+    tracks: Post[];
+    profileLinkAccessable: boolean;
+}) {
+    const { tracks, profileLinkAccessable } = props;
     const { locations } = useReactiveVar(baseState);
 
     return (
@@ -35,5 +39,3 @@ const EnumPlaylistTracks = props => {
         </>
     )
 }
-
-export default EnumPlaylistTracks;

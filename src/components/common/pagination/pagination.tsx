@@ -1,10 +1,14 @@
 import { Pagination, Box } from "@mui/material";
 
 
-const PaginationTree = props => {
+export default function PaginationTree(props: {
+    maxPage?: number;
+    activePage?: number;
+    handlePageChange: (page: number) => void;
+}) {
     const { maxPage, activePage, handlePageChange } = props;
 
-    const handleChangePageEvent = (event, newPage) => {
+    const handleChangePageEvent = (event: React.ChangeEvent<unknown>, newPage: number) => {
         handlePageChange(newPage);
     };
  
@@ -14,5 +18,3 @@ const PaginationTree = props => {
         </Box>
     );
 }
-
-export default PaginationTree;

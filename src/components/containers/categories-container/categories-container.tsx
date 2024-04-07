@@ -65,7 +65,7 @@ function CategoriesContainer() {
             </TabPanel>
         
             <TabPanel value={status} index={1}>
-                <PostsContainer category={category} profileLinkAccessable={true}/>
+                <PostsContainer category={category as string} profileLinkAccessable={true}/>
             </TabPanel>
         </Box>
     );

@@ -16,7 +16,7 @@ export default function Track() {
     return (
         <BaseContentContainer>
             <TrackContainer trackId={trackId as string}/>
-            <PostsContainer id={ownerId} except={[trackId]} profileLinkAccessable={true}/>
+            <PostsContainer id={ownerId as string} except={[trackId]} profileLinkAccessable={true}/>
         </BaseContentContainer>
     );
 }
