@@ -1,21 +1,31 @@
 import { Button, Paper, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
-import { USER_RESTORE_ACCOUNT_MUTATION } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
+import { useUserRestoreAccountMutation } from "utils/graphql-requests/generated/schema";
 
 
-const AccountRestoreForm = (props)=> {
+type Inputs = {
+    newValue: string;
+    ConfirmPassword: string;
+    Email: string;
+}
+
+export default function AccountRestoreForm (props: {
+    userId: string;
+    actionId: string;
+    verifyToken: string;
+    type: string;
+}){
     const { userId, actionId, verifyToken, type } = props;
-    const { register, handleSubmit, getValues, formState: { errors } } = useForm();
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm<Inputs>();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const [ restoreAccount ] = useMutation(USER_RESTORE_ACCOUNT_MUTATION);
+    const [ restoreAccount ] = useUserRestoreAccountMutation();
     const { t } = useTranslation("forms");
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('account_restore.snack.pending'), { autoHideDuration: 1500 });
         await restoreAccount({
             variables: {
@@ -49,10 +59,9 @@ const AccountRestoreForm = (props)=> {
                                     fullWidth
                                     id="password"
                                     label={t('account_restore.password')}
-                                    name="password"
                                     type="password"
-                                    error={Boolean(errors.Password)}
-                                    helperText={errors.Password && t('account_restore.error.password')}
+                                    error={Boolean(errors.newValue)}
+                                    helperText={errors.newValue && t('account_restore.error.password')}
                                     {...register("newValue", {
                                         maxLength: 20,
                                         minLength: 8,
@@ -65,7 +74,6 @@ const AccountRestoreForm = (props)=> {
                                     fullWidth
                                     id="confirm-password"
                                     label={t('account_restore.confirm_password')}
-                                    name="password"
                                     type="password"
                                     error={Boolean(errors.ConfirmPassword)}
                                     helperText={errors.ConfirmPassword && t('account_restore.error.confirm_password')}
@@ -90,11 +98,10 @@ const AccountRestoreForm = (props)=> {
                                     fullWidth
                                     id="email"
                                     label={t('account_restore.email')}
-                                    name="email"
                                     autoComplete="email"
                                     autoFocus
-                                    error={Boolean(errors.Email)}
-                                    helperText={errors.Email && t('account_restore.error.email')}
+                                    error={Boolean(errors.newValue)}
+                                    helperText={errors.newValue && t('account_restore.error.email')}
                                     {...register("newValue", {
                                         required: true,
                                         pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -106,7 +113,6 @@ const AccountRestoreForm = (props)=> {
                                     fullWidth
                                     id="confirm-email"
                                     label={t('account_restore.confirm_email')}
-                                    name="email"
                                     autoComplete="email"
                                     autoFocus
                                     error={Boolean(errors.Email)}
@@ -133,5 +139,3 @@ const AccountRestoreForm = (props)=> {
         </Paper>    
     );
 }
-
-export default AccountRestoreForm;

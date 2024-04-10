@@ -75,7 +75,7 @@ export default function AccountRestore() {
                                         {t('account_restore.ready_to_restore')}
                                     </Typography>
                                     <CardContent>
-                                        <AccountRestoreForm userId={userId} actionId={actionId} verifyToken={verifyToken} type={type}/>
+                                        <AccountRestoreForm userId={userId as string} actionId={actionId as string} verifyToken={verifyToken as string} type={type as string}/>
                                     </CardContent>
 
                                     <CardActions>

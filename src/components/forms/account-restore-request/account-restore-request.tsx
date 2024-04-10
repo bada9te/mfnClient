@@ -1,20 +1,24 @@
 import { Button, Paper, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
-import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
+import { useUserPrepareAccountToRestoreMutation } from "utils/graphql-requests/generated/schema";
 
 
-const AccountRestoreRequestForm = (props)=> {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+type Inputs = {
+    Email: string;
+}
+
+
+export default function AccountRestoreRequestForm() {
+    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const [ makeAccountRestoreRequest ] = useMutation(USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION);
+    const [ makeAccountRestoreRequest ] = useUserPrepareAccountToRestoreMutation();
     const { t } = useTranslation("forms");
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('account_restore_request.snack.pending'), { autoHideDuration: 1500 });
         await makeAccountRestoreRequest({
             variables: {
@@ -40,7 +44,6 @@ const AccountRestoreRequestForm = (props)=> {
                 fullWidth
                 id="email"
                 label={t('account_restore_request.email')}
-                name="email"
                 autoComplete="email"
                 autoFocus
                 error={Boolean(errors.Email)}
@@ -56,5 +59,3 @@ const AccountRestoreRequestForm = (props)=> {
         </Paper>    
     );
 }
-
-export default AccountRestoreRequestForm;

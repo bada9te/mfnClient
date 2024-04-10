@@ -10,16 +10,15 @@ import muiTheme from './utils/mui-theme/theme';
 import socket from './utils/socket/socket';
 import PageLoader from './components/common/page-loader/page-loader';
 
-
 function App() {
   //const navigate = useNavigate();
-  //const location = useLocation();
+  const location = useLocation();
   const [ loading, setIsLoading ] = useState(false);
   //const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
 
   const { theme: themeMode } = useReactiveVar(baseState);
-  /*
+  
   useEffect(() => {
     httpGetCurrentUser()
       .then(({data}) => {
@@ -39,7 +38,6 @@ function App() {
       setIsLoading(false);
     }, 800);
   }, [location.pathname]);
-  */
 
   return (
     <ThemeProvider theme={muiTheme(themeMode)}>

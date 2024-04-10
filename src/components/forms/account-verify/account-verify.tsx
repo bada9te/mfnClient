@@ -1,22 +1,28 @@
 import { Button, Paper, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
-import { USER_CONFIRM_ACCOUNT_MUTATION } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
+import { useUserConfirmAccountMutation } from "utils/graphql-requests/generated/schema";
 
 
+type Inputs = {
+    Code: string;
+}
 
-const AccountVerifyForm = (props)=> {
+
+export default function AccountVerifyForm(props: {
+    userId: string;
+    actionId: string;
+}) {
     const { userId, actionId } = props;
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const [ confirmAccount ] = useMutation(USER_CONFIRM_ACCOUNT_MUTATION);
+    const [ confirmAccount ] = useUserConfirmAccountMutation();
     const { t } = useTranslation("forms");
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('account_verify.snack.pending'), { autoHideDuration: 1500 });
         await confirmAccount({
             variables: {
@@ -43,7 +49,6 @@ const AccountVerifyForm = (props)=> {
                 fullWidth
                 id="code"
                 label={t('account_verify.code')}
-                name="code"
                 error={Boolean(errors.Code)}
                 helperText={errors.Code && t('account_verify.error.code')}
                 {...register("Code", {
@@ -62,5 +67,3 @@ const AccountVerifyForm = (props)=> {
         </Paper>    
     );
 }
-
-export default AccountVerifyForm;

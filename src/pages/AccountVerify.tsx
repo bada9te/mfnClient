@@ -52,7 +52,7 @@ export default function AccountVerify() {
                                         {t('verify.verify_text')} 
                                     </Typography>
                                     <CardContent>
-                                        <AccountVerifyForm userId={userId} actionId={actionId}/>
+                                        <AccountVerifyForm userId={userId as string} actionId={actionId as string}/>
                                     </CardContent>
                                 </>
                             );

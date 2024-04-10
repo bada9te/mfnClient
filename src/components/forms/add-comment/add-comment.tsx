@@ -1,18 +1,23 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, TextField, IconButton, Tooltip } from "@mui/material";
 import { Reply, Send } from "@mui/icons-material";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { commentsContainerState, replyingToNull } from "../../containers/comments-container/reactive";
 import { COMMENTS_BY_POST_ID, COMMENTS_REPLIES_BY_COMMENT_ID, COMMENT_CREATE_MUTATION } from "../../../utils/graphql-requests/comments";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
+import { AddCommentInput, Comment, CommentRepliesQuery, CommentsByPostIdQuery, useCommentCreateMutation } from "utils/graphql-requests/generated/schema";
 
 
+type Inputs = {
+    Text: string;
+}
 
-const AddCommentForm = (props) => {
-    const { register, handleSubmit, reset } = useForm();
-    const [ createComment ] = useMutation(COMMENT_CREATE_MUTATION);
+
+export default function AddCommentForm() {
+    const { register, handleSubmit, reset } = useForm<Inputs>();
+    const [ createComment ] = useCommentCreateMutation()
     const { user: currentUser } = useReactiveVar(baseState);
     const { postId, replyingTo } = useReactiveVar(commentsContainerState);
     const { enqueueSnackbar } = useSnackbar();
@@ -22,15 +27,15 @@ const AddCommentForm = (props) => {
         commentsContainerState({...commentsContainerState(), replyingTo: replyingToNull});
     }
 
-    const onSubmit = async(data) => {
-        const commentData = {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        const commentData: AddCommentInput = {
             text: data.Text,
-            post: postId,
+            post: postId as string,
             owner: currentUser?._id,
             receiver: replyingTo.userId,
+            isReply: false,
         }
 
-        commentData.isReply = false;
         if (replyingTo.commentId !== null) {
             commentData.isReplyTo = replyingTo.commentId;
             commentData.isReply = true;
@@ -44,7 +49,7 @@ const AddCommentForm = (props) => {
                 },
             },
             update: (cache, { data }) => {
-                const commentData = JSON.parse(JSON.stringify(data.commentCreate));
+                const commentData = JSON.parse(JSON.stringify(data?.commentCreate));
                 commentData.owner = {
                     _id: currentUser._id,
                     avatar: currentUser.avatar,
@@ -52,23 +57,23 @@ const AddCommentForm = (props) => {
                 };
                 // updating replies
                 if (replyingTo.commentId !== null) {
-                    const cachedData = cache.readQuery({ query: COMMENTS_REPLIES_BY_COMMENT_ID, variables: { _id: replyingTo.commentId } });
+                    const cachedData = cache.readQuery({ query: COMMENTS_REPLIES_BY_COMMENT_ID, variables: { _id: replyingTo.commentId } }) as CommentRepliesQuery;
                     cache.writeQuery({
                         query: COMMENTS_REPLIES_BY_COMMENT_ID,
                         variables: { _id: replyingTo.commentId },
                         data: {
-                            commentReplies: cachedData?.commentReplies ? [...cachedData.commentReplies, commentData] : [commentData]
+                            commentReplies: cachedData.commentReplies ? [...cachedData.commentReplies, commentData] : [commentData]
                         }
                     });
                 } 
                 // updating main comments
                 else {
-                    const cachedData = cache.readQuery({ query: COMMENTS_BY_POST_ID, variables: { _id: postId } });
+                    const cachedData = cache.readQuery({ query: COMMENTS_BY_POST_ID, variables: { _id: postId } }) as CommentsByPostIdQuery;
                     cache.writeQuery({
                         query: COMMENTS_BY_POST_ID,
                         variables: { _id: postId },
                         data: {
-                            commentsByPostId: [...cachedData.commentsByPostId, commentData]
+                            commentsByPostId: cachedData.commentsByPostId ? [...cachedData.commentsByPostId, commentData] : [commentData]
                         }
                     });
                 }
@@ -115,5 +120,3 @@ const AddCommentForm = (props) => {
         </>
     );
 }
-
-export default AddCommentForm;
