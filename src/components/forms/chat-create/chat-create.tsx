@@ -1,24 +1,30 @@
 import { Box, Button, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { enqueueSnackbar } from "notistack";
 import { userSelectContainerState } from "../../containers/user-select-container/reactive";
 import UserSelectContainer from "../../containers/user-select-container/user-select-container";
-import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_CREATE_MUTATION } from "../../../utils/graphql-requests/chats";
+import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "../../../utils/graphql-requests/chats";
 import { baseState } from "../../baseReactive";
 import { chatCreateModalState } from "../../modals/chat-create-modal/reactive";
 import { emitChatCreate } from "../../../utils/socket/event-emitters/chats";
+import { useChatCreateMutation } from "utils/graphql-requests/generated/schema";
 
 
-const CreateChatForm = props => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+type Inputs = {
+    Title: string;
+}
+
+
+export default function CreateChatForm() {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
     const { t } = useTranslation("forms");
     const { user: currentUser } = useReactiveVar(baseState);
     const { checked } = useReactiveVar(userSelectContainerState);
-    const [ createChat ] = useMutation(CHAT_CREATE_MUTATION);
+    const [ createChat ] = useChatCreateMutation();
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         if (!checked.length) {
             enqueueSnackbar("No users selected", { autoHideDuration: 3000, variant: 'error' });
             return;
@@ -37,7 +43,7 @@ const CreateChatForm = props => {
         }).then(({data}) => {
             enqueueSnackbar("Chat created.", { autoHideDuration: 1500, variant: 'success' });
             chatCreateModalState({ ...chatCreateModalState(), isShowing: false });
-            emitChatCreate(data.chatCreate, data.chatCreate.participants.map(i => i._id));
+            emitChatCreate(data?.chatCreate, data?.chatCreate?.participants?.map(i => i?._id));
             reset();
         }).catch(_ => {
             enqueueSnackbar("Can't create chat.", { autoHideDuration: 3000, variant: 'error' });
@@ -52,7 +58,6 @@ const CreateChatForm = props => {
                 fullWidth
                 id="title"
                 label={t('chat_create.title')}
-                name="title"
                 error={Boolean(errors.Title)}
                 helperText={errors.Title && t('chat_create.error.title')}
                 {...register("Title", {
@@ -70,5 +75,3 @@ const CreateChatForm = props => {
         </Box>
     );
 }
-
-export default CreateChatForm;

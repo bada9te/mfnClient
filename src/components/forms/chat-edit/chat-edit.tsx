@@ -1,24 +1,32 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { TextField, Button, Paper } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_UPDATE_MUTATION } from "../../../utils/graphql-requests/chats";
+import { CHATS_USER_RELATED_BY_USER_ID_QUERY, CHAT_UPDATE_MUTATION } from "utils/graphql-requests/chats";
 import { baseState } from "../../baseReactive";
-import { emitChatUpdate } from "../../../utils/socket/event-emitters/chats";
+import { emitChatUpdate } from "utils/socket/event-emitters/chats";
+import { useChatUpdateMutation } from "utils/graphql-requests/generated/schema";
 
 
+type Inputs = {
+    Title: string;
+}
 
-const ChatEditForm = props => {
+
+export default function ChatEditForm(props: {
+    selectedChatId: string;
+}) {
     const { selectedChatId } = props;
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
     const { user: currentUser } = useReactiveVar(baseState);
-    const [ updateChat ] = useMutation(CHAT_UPDATE_MUTATION);
+
+    const [ updateChat ] = useChatUpdateMutation();
     
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs>= async(data) => {
         enqueueSnackbar(t('battle.snack.pending'), { autoHideDuration: 1500 });
         
         await updateChat({
@@ -29,7 +37,7 @@ const ChatEditForm = props => {
         }).then(({data}) => {
             reset();
             enqueueSnackbar(t('chat_edit.snack.success'), {autoHideDuration: 1500, variant: 'success'});
-            emitChatUpdate(data.chatUpdate, data.chatUpdate.participants.map(i => i._id));
+            emitChatUpdate(data?.chatUpdate, data?.chatUpdate?.participants?.map(i => i?._id));
         }).catch(_ => {
             enqueueSnackbar(t('chat_edit.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         }); 
@@ -43,7 +51,6 @@ const ChatEditForm = props => {
                 fullWidth
                 id="title"
                 label={t('chat_edit.title')}
-                name="title"
                 error={Boolean(errors.Title)}
                 helperText={errors.Title && t('chat_create.error.title')}
                 {...register("Title", {
@@ -65,6 +72,3 @@ const ChatEditForm = props => {
         </Paper>
     );
 }
-
-export default ChatEditForm;
-
