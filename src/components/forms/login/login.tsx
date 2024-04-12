@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Paper } from "@mui/material";
 import { httpLogin } from "../../../utils/http-requests/auth";
@@ -7,13 +7,19 @@ import SocialMediaLogin from "../../common/social-media-login/social-media-login
 import { useTranslation } from "react-i18next";
 
 
-const LoginForm = (props) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+type Inputs = {
+    Email: string;
+    Password: string;
+}
+
+
+export default function LoginForm() {
+    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
      
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         // show process
         enqueueSnackbar(t('login.snack.pending'), { autoHideDuration: 1500 })
         // update store
@@ -35,7 +41,6 @@ const LoginForm = (props) => {
                 fullWidth
                 id="email"
                 label={t('login.email')}
-                name="email"
                 autoComplete="email"
                 autoFocus
                 error={Boolean(errors.Email)}
@@ -52,7 +57,6 @@ const LoginForm = (props) => {
                 fullWidth
                 id="password"
                 label={t('login.password')}
-                name="password"
                 type="password"
                 error={Boolean(errors.Password)}
                 helperText={errors.Password && t('login.error.password')}
@@ -77,6 +81,3 @@ const LoginForm = (props) => {
         </Paper>
     );
 }
-
-
-export default LoginForm;

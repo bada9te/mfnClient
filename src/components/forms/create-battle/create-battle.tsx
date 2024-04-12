@@ -1,42 +1,49 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import PostItem from "../../common/post-item/post-item";
 import { Box, TextField, Button, Stack, Typography, Paper, FormGroup } from "@mui/material";
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { useState } from "react";
 import { createBattleFormState } from "./reactive";
 import { useSnackbar } from "notistack";
-import { BATTLE_CREATE_MUTATTION } from "../../../utils/graphql-requests/battles";
 import { useTranslation } from "react-i18next";
+import { useBattleCreateMutation } from "utils/graphql-requests/generated/schema";
+import { TPostAddons, TPostBase } from "components/common/post-item/types";
 
 
+type Inputs = {
+    Title: string;
+    MyTrack: {base: TPostBase; addons: TPostAddons};
+    OpponentsTrack: {base: TPostBase; addons: TPostAddons};
+}
 
-const CreateBattleForm = props => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+export default function CreateBattleForm() {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
     const [ title, setTitle ] = useState("Battle's title");
     const { post1, post2 } = useReactiveVar(createBattleFormState);
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
 
-    const [ createBattle ] = useMutation(BATTLE_CREATE_MUTATTION, {
+    const [ createBattle ] = useBattleCreateMutation({
         variables: {
             input: {
                 title: title,
-                post1: post1?.base._id,
-                post2: post2?.base._id,
+                post1: post1?.base._id as string,
+                post2: post2?.base._id as string,
             },
         },
-    });
+    })
     
-    const handleOpenPostSelectModal = (isMine) => {
+    const handleOpenPostSelectModal = (isMine: boolean) => {
         postSelectContainerState({ ...postSelectContainerState(), isMine });
         postSelectModalState({ ...postSelectModalState(), isShowing: true });
     }
 
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('battle.snack.pending'), { autoHideDuration: 1500 });
         
         await createBattle()
@@ -57,10 +64,9 @@ const CreateBattleForm = props => {
                     fullWidth
                     id="title"
                     label={t('battle.title')}
-                    name="title"
                     error={Boolean(errors.Title)}
                     helperText={errors.Title && t('battle.error.title')}
-                    onInput={(e) => setTitle(e.target.value)}
+                    onInput={(e: React.FormEvent<HTMLInputElement>) => setTitle((e.target as HTMLInputElement).value)}
                     {...register("Title", {
                         maxLength: 10,
                         minLength: 4,
@@ -129,6 +135,3 @@ const CreateBattleForm = props => {
         </Paper>
     );
 }
-
-export default CreateBattleForm;
-

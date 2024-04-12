@@ -1,26 +1,32 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { TextField, Button, FormGroup, FormControlLabel, Checkbox, Card } from "@mui/material";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
-import { PLAYLISTS_BY_OWNER_ID_QUERY, PLAYLIST_CREATE_MUTATION } from "../../../utils/graphql-requests/playlists";
-import { playlistsContainerState } from "../../containers/playlists-container/reactive";
+import { PLAYLISTS_BY_OWNER_ID_QUERY} from "utils/graphql-requests/playlists";
+import { playlistsContainerState } from "components/containers/playlists-container/reactive";
 import { useTranslation } from "react-i18next";
+import { PlaylistCreateMutation, PlaylistsByOwnerIdQuery, usePlaylistCreateMutation } from "utils/graphql-requests/generated/schema";
 
 
+type Inputs = {
+    Title: string;
+    AllowDownloads: string;
+}
 
-const CreatePlaylistForm = props => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+export default function CreatePlaylistForm() {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
     const [ publicAccess, setPublicAccess ] = useState(true);
     const [ title, setTitle ] = useState("Playlist's title");
     const { enqueueSnackbar } = useSnackbar();
     const { user: currentUser } = useReactiveVar(baseState);
     const { maxCountPerPage } = useReactiveVar(playlistsContainerState);
-    const [ createPlaylist ] = useMutation(PLAYLIST_CREATE_MUTATION);
+    const [ createPlaylist ] = usePlaylistCreateMutation();
     const { t } = useTranslation("forms");
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('playlist.snack.pending'), { autoHideDuration: 1500 });
         await createPlaylist({
             variables: {
@@ -34,10 +40,10 @@ const CreatePlaylistForm = props => {
                 const cachedData = cache.readQuery({
                     query: PLAYLISTS_BY_OWNER_ID_QUERY, 
                     variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage } 
-                });
+                }) as PlaylistsByOwnerIdQuery;
 
                 // function to update array of playlists
-                const updatePlaylists = (cachedArray, playlist) => {
+                const updatePlaylists = (cachedArray: PlaylistsByOwnerIdQuery["playlistsByOwnerId"]["playlists"], playlist: PlaylistCreateMutation["playlistCreate"]) => {
                     const cachedPlaylists = JSON.parse(JSON.stringify(cachedArray));
                     if (cachedPlaylists.length >= maxCountPerPage) {
                         cachedPlaylists.pop();
@@ -47,7 +53,7 @@ const CreatePlaylistForm = props => {
                 };
 
                 if (cachedData) {
-                    const playlists = updatePlaylists(cachedData.playlistsByOwnerId.playlists);
+                    const playlists = updatePlaylists(cachedData.playlistsByOwnerId.playlists, data?.playlistCreate as PlaylistCreateMutation["playlistCreate"]);
                     cache.writeQuery({
                         query: PLAYLISTS_BY_OWNER_ID_QUERY,
                         variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage },
@@ -74,10 +80,9 @@ const CreatePlaylistForm = props => {
                 fullWidth
                 id="title"
                 label={t('playlist.title')}
-                name="title"
                 error={Boolean(errors.Title)}
                 helperText={errors.Title && t('playlist.error.title')}
-                onInput={(e) => setTitle(e.target.value)}
+                onInput={(e) => setTitle((e.target as HTMLInputElement).value)}
                 {...register("Title", {
                     maxLength: 10,
                     minLength: 4,
@@ -109,6 +114,3 @@ const CreatePlaylistForm = props => {
         </Card>
     );
 }
-
-export default CreatePlaylistForm;
-
