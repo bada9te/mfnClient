@@ -1,4 +1,4 @@
-interface IBlob extends Blob {
+export interface IBlob extends Blob {
     lastModifiedDate: Date;
     name: string;
 }

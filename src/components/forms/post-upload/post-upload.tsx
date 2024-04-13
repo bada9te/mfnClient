@@ -1,11 +1,11 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FormControlLabel, Button, TextField, Checkbox, FormGroup, Typography, FormControl, InputLabel, Select, MenuItem, Card } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POST_CREATE_MUTATION } from "../../../utils/graphql-requests/posts";
-import blobToFile from "../../../utils/common-functions/blobToFile";
+import { POSTS_BY_OWNER_QUERY, POSTS_QUERY, POST_CREATE_MUTATION } from "utils/graphql-requests/posts";
+import blobToFile, { IBlob } from "utils/common-functions/blobToFile";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
-import { httpSaveFile } from "../../../utils/http-requests/files";
+import { httpSaveFile } from "utils/http-requests/files";
 import { postUploadFormState } from "./reactive";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { useSnackbar } from "notistack";
@@ -13,11 +13,22 @@ import { postsContainerState } from "../../containers/posts-container/reactive";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import getFileExtension from "../../../utils/common-functions/getFileExtension";
+import getFileExtension from "utils/common-functions/getFileExtension";
+import { Post, PostsByOwnerQuery, PostsQuery, User, usePostCreateMutation } from "utils/graphql-requests/generated/schema";
 
 
-const PostUploadForm = (props) => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+type Inputs = {
+    Title: string;
+    ShortDesc: string;
+    Audio: File[] | null;
+    Image: File[] | null;
+    AllowComments: boolean;
+    AllowDownloads: boolean;
+}
+
+
+export default function PostUploadForm() {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
     const { user: currentUser } = useReactiveVar(baseState);
     const { isShowing: cropModalIsShowing } = useReactiveVar(imageCropperModalState);
     const postUploadForm = useReactiveVar(postUploadFormState);
@@ -32,12 +43,12 @@ const PostUploadForm = (props) => {
     const supportedImageExtensions = ['.jpg', '.jpeg', '.png'];
     const supportedAudioExtensions = ['.wav', '.mp3'];
 
-    const [ postUpload ] = useMutation(POST_CREATE_MUTATION, {
+    const [ postUpload ] = usePostCreateMutation({
         variables: {
             input: {
                 owner:            currentUser._id,
-                title:            postUploadForm.title,
-                description:      postUploadForm.description,
+                title:            postUploadForm.title as string,
+                description:      postUploadForm.description as string,
                 audio:            postUploadForm.uploadedAudioName,
                 image:            postUploadForm.uploadedPictureName,
                 commentsAllowed:  postUploadForm.commentsAllowed,
@@ -49,18 +60,18 @@ const PostUploadForm = (props) => {
 
 
     // form submit
-    const onSubmit = async(data) => {
-        let blob = await fetch(postUploadForm.picture).then(r => r.blob());
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        let blob = await fetch(postUploadForm.picture as string).then(r => r.blob());
 
         enqueueSnackbar(t('upload.snack.pending'), { autoHideDuration: 1500 });
         
         await Promise.all([
-            httpSaveFile(data.Audio[0])
+            httpSaveFile(data.Audio?.[0])
                 .then(({data}) => {
                     //console.log(data.file.filename)
                     postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.file.filename });
                 }),
-            httpSaveFile(blobToFile(blob, data.Image[0].name))
+            httpSaveFile(blobToFile(blob as IBlob, data.Image?.[0].name as string))
                 .then(({data}) => {
                     //console.log(data.file.filename)
                     postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.file.filename });
@@ -69,7 +80,7 @@ const PostUploadForm = (props) => {
 
         await postUpload({
             update: (cache, { data }) => {
-                const postData = JSON.parse(JSON.stringify(data.postCreate));
+                const postData = JSON.parse(JSON.stringify(data?.postCreate));
                 postData.owner = {
                     _id: currentUser._id,
                     avatar: currentUser.avatar,
@@ -77,7 +88,7 @@ const PostUploadForm = (props) => {
                 };
 
                 // function to update array of posts
-                const updatePosts = (cachedArray, post) => {
+                const updatePosts = (cachedArray: Post[], post: any) => {
                     let cachedPosts = JSON.parse(JSON.stringify(cachedArray));
                     if (cachedPosts.length >= maxCountPerPage) {
                         cachedPosts.pop();
@@ -87,12 +98,12 @@ const PostUploadForm = (props) => {
                 };
 
                 // update owner posts query
-                let cachedData = cache.readQuery({ 
+                const cachedData = cache.readQuery({ 
                     query: POSTS_BY_OWNER_QUERY, 
                     variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage }
-                });
+                }) as PostsByOwnerQuery;
                 if (cachedData) {
-                    const posts = updatePosts(cachedData.postsByOwner.posts, postData);
+                    const posts = updatePosts(cachedData.postsByOwner.posts as Post[], postData);
                     cache.writeQuery({
                         query: POSTS_BY_OWNER_QUERY,
                         variables: { owner: currentUser._id, offset: 0, limit: maxCountPerPage },
@@ -102,12 +113,12 @@ const PostUploadForm = (props) => {
                     });
                 }
 
-                cachedData = cache.readQuery({
+                const postsCachedData = cache.readQuery({
                     query: POSTS_QUERY,
                     variables: { offset: 0, limit: maxCountPerPage }
-                });
-                if (cachedData) {
-                    const posts = updatePosts(cachedData.posts.posts, postData);
+                }) as PostsQuery;
+                if (postsCachedData) {
+                    const posts = updatePosts(postsCachedData.posts.posts as Post[], postData);
                     cache.writeQuery({
                         query: POSTS_QUERY,
                         variables: { offset: 0, limit: maxCountPerPage },
@@ -130,7 +141,7 @@ const PostUploadForm = (props) => {
     
     
     // handlers
-    const handlePicture = (file) => { 
+    const handlePicture = (file: File | null) => { 
         if (file !== null) {
             if (!supportedImageExtensions.includes(getFileExtension(file.name))) {
                 enqueueSnackbar(t('upload.snack.error.image_not_supported'), { autoHideDuration: 3000, variant: 'error' });
@@ -141,7 +152,7 @@ const PostUploadForm = (props) => {
         }
     };
 
-    const handleAudio = (file) => { 
+    const handleAudio = (file: File | null) => { 
         if (file !== null) {
             if (!supportedAudioExtensions.includes(getFileExtension(file.name))) {
                 enqueueSnackbar(t('upload.snack.error.audio_not_supported'), { autoHideDuration: 3000, variant: 'error' });
@@ -151,14 +162,14 @@ const PostUploadForm = (props) => {
         }
     };
 
-    const updateState = (what, value) => {
+    const updateState = (what: string, value: string | boolean) => {
         postUploadFormState({ ...postUploadFormState(), [what]: value })
     }
 
-    const handleImageCropModalClose = async(value, picture) => {
+    const handleImageCropModalClose = async(value: boolean, picture: any) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: value});
         let blob = await fetch(picture).then(r => r.blob());
-        postUploadFormState({ ...postUploadFormState(), picture: URL.createObjectURL(blobToFile(blob)) });
+        postUploadFormState({ ...postUploadFormState(), picture: URL.createObjectURL(blobToFile(blob as IBlob, "filename")) });
     }
 
 
@@ -180,10 +191,9 @@ const PostUploadForm = (props) => {
                 fullWidth
                 id="title"
                 label={t('upload.title')}
-                name="title"
                 error={Boolean(errors.Title)}
                 helperText={errors.Title && t('upload.error.title')}
-                onInput={(e) => updateState("title", e.target.value)}
+                onInput={(e) => updateState("title", (e.target as HTMLInputElement).value)}
                 {...register("Title", {
                     maxLength: 10,
                     minLength: 4,
@@ -196,10 +206,9 @@ const PostUploadForm = (props) => {
                 fullWidth
                 id="description"
                 label={t('upload.description')}
-                name="description"
                 error={Boolean(errors.ShortDesc)}
                 helperText={errors.ShortDesc && t('upload.error.description')}
-                onInput={(e) => updateState("description", e.target.value)}
+                onInput={(e) => updateState("description", (e.target as HTMLInputElement).value)}
                 {...register("ShortDesc", {
                     maxLength: 40,
                     minLength: 4,
@@ -210,7 +219,7 @@ const PostUploadForm = (props) => {
                 <Button variant="outlined" component="label">
                     {postUploadForm.imageTitle ? `${postUploadForm.imageTitle.slice(0, 30)}` : t('upload.image_text')}
                     <input type="file" hidden 
-                        onInput={e => handlePicture(e.target.files[0] || null)}
+                        onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
                         {...register("Image", {
                             required: true,
                         })} 
@@ -223,7 +232,7 @@ const PostUploadForm = (props) => {
                 <Button variant="outlined" component="label">
                     {postUploadForm.audioTitle ? `${postUploadForm.audioTitle.slice(0, 30)}` : t('upload.audio_text')}
                     <input type="file" hidden 
-                        onInput={e => handleAudio(e.target.files[0] || null)}
+                        onInput={e => handleAudio((e.target as HTMLInputElement).files?.[0] || null)}
                         {...register("Audio", {
                             required: true,
                         })} 
@@ -282,5 +291,3 @@ const PostUploadForm = (props) => {
     </>
     );
 }
-
-export default PostUploadForm;
