@@ -1,28 +1,34 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, TextField, Button, MenuItem } from "@mui/material";
 import { useState } from "react";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { reportFormState } from "./reactive";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
-import { REPORT_CREATE_MUTATION } from "../../../utils/graphql-requests/reports";
 import { useTranslation } from "react-i18next";
+import { useReportCreateMutation } from "utils/graphql-requests/generated/schema";
 
 
-const ReportForm = (props) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+type Inputs = {
+    FoulType: string;
+    Message: string;
+}
+
+
+export default function ReportForm() {
+    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
     const [ value, setValue ] = useState("");
     const { reportingItemId } = useReactiveVar(reportFormState);
     const { user: currentUser } = useReactiveVar(baseState);
-    const [ createReport ] = useMutation(REPORT_CREATE_MUTATION);
+    const [ createReport ] = useReportCreateMutation();
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
 
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setValue(event.target.value);
     };
     
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('report.snack.pending'), { autoHideDuration: 1500 });
         await createReport({
             variables: {
@@ -46,9 +52,8 @@ const ReportForm = (props) => {
                 <TextField
                     select
                     fullWidth
-                    defaultValue={value}
+                    defaultValue={"Copyright infringement"}
                     label={t('report.foul_type')}
-                    onChange={handleChange}
                     
                     error={Boolean(errors.FoulType)}
                     helperText={errors.FoulType && t('report.error.foul_type')}
@@ -67,7 +72,6 @@ const ReportForm = (props) => {
                     fullWidth
                     id="message"
                     label={t('report.message')}
-                    name="message"
                     error={Boolean(errors.Message)}
                     helperText={errors.Message && errors.Message.type === "minLength" && <span>Min length must be 10</span>}
                     {...register("Message", {
@@ -88,6 +92,3 @@ const ReportForm = (props) => {
         </>
     );
 }
-
-export default ReportForm;
-

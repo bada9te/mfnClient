@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { TextField, Button, Paper } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
@@ -7,14 +7,21 @@ import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 
 
-const FormSupportContact = (props) => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+type Inputs = {
+    ContactReason: string;
+    Email: string;
+    Message: string;
+}
+
+
+export default function FormSupportContact() {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
     const { user: currentUser } = useReactiveVar(baseState);
     const [createSupportRequest] = useMutation(SUPPORT_CONTACT_CREATE_MUTATION);
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('support.snack.pending'), { autoHideDuration: 1500 });
         await createSupportRequest({
             variables: {
@@ -40,7 +47,6 @@ const FormSupportContact = (props) => {
                 fullWidth
                 id="contactReason"
                 label={t('support.contact_reason')}
-                name="contactReason"
                 autoFocus
                 error={Boolean(errors.ContactReason)}
                 helperText={errors.ContactReason && t('support.error.contact_reason')}
@@ -49,13 +55,12 @@ const FormSupportContact = (props) => {
                 })} 
             />
             <TextField
-                defaultValue={currentUser?.email || ""}
+                defaultValue={currentUser?.local.email || ""}
                 margin="normal"
                 required
                 fullWidth
                 id="email"
                 label={t('support.email')}
-                name="email"
                 autoComplete="email"
                 autoFocus
                 error={Boolean(errors.Email)}
@@ -72,7 +77,6 @@ const FormSupportContact = (props) => {
                 fullWidth
                 id="message"
                 label={t('support.message')}
-                name="message"
                 autoComplete="email"
                 error={Boolean(errors.Message)}
                 helperText={errors.Message && t('support.error.message')}
@@ -94,5 +98,3 @@ const FormSupportContact = (props) => {
         </Paper>
     );
 }
-
-export default FormSupportContact;

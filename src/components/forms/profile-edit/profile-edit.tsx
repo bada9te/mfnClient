@@ -1,4 +1,4 @@
-import { useForm }        from "react-hook-form";
+import { SubmitHandler, useForm }        from "react-hook-form";
 import { Box, Button, TextField, FormGroup } from "@mui/material";
 /*
 import EmailImage    from "../../../images/icons/email.png"
@@ -12,12 +12,24 @@ import { Email, Save } from "@mui/icons-material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";
-import { USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION, USER_UPDATE_MUTATION } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
 import ProfileEditPartSocial from "./profile-edit-social";
+import { useUserPrepareAccountToRestoreMutation, useUserUpdateMutation } from "utils/graphql-requests/generated/schema";
 
 
-const SubmitBtn = props => {
+type Inputs = {
+    NewNickname: string;
+    NewDescription: string;
+    OldPassword: string;
+    OldEmail: string;
+}
+
+
+
+function SubmitBtn(props: {
+    text: string;
+    icon: JSX.Element;
+}) {
     return (
         <Button type="submit" color="secondary" fullWidth variant="contained" sx={{ mt: 3, mb: 1, boxShadow: 10 }} startIcon={props.icon}>
             {props.text}
@@ -25,16 +37,18 @@ const SubmitBtn = props => {
     );
 }
 
-const FormProfileEdit = (props) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+export default function FormProfileEdit(props: {
+    part: number;
+}) {
+    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
     const { user: currentUser } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
-    const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
-    const [ prepareToRestore ] = useMutation(USER_PREPARE_ACCOUNT_TO_RESTORE_MUTATION);
+    const [ updateUser ] = useUserUpdateMutation();
+    const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();
     const { t } = useTranslation("forms");
 
     // form submit
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         const keys = Object.keys(data);
         switch (keys.at(keys.length - 1)) {
             case "NewNickname":
@@ -96,7 +110,7 @@ const FormProfileEdit = (props) => {
         }
     }
 
-    const dispatchUser = (what, value) => {
+    const dispatchUser = (what: string, value: string) => {
         baseState({
             ...baseState(),
             user: {
@@ -126,7 +140,7 @@ const FormProfileEdit = (props) => {
                     case 1:
                         return (
                             <>
-                                <TextField margin="normal" required fullWidth id="nickname"label={t('profile.nickname')} name="nickname" type="text"
+                                <TextField margin="normal" required fullWidth id="nickname"label={t('profile.nickname')} type="text"
                                     error={Boolean(errors.NewNickname)}
                                     helperText={errors.NewNickname && t('profile.error.nickname')}
                                     {...register("NewNickname", {
@@ -135,9 +149,9 @@ const FormProfileEdit = (props) => {
                                         required: true,
                                     })} 
                                 />
-                                <TextField margin="normal" required fullWidth id="newDescription" label={t('profile.description')} name="newDescription" type="text"
+                                <TextField margin="normal" required fullWidth id="newDescription" label={t('profile.description')} type="text"
                                     error={Boolean(errors.NewDescription)}
-                                    helperText={errors.NewNickname && t('profile.error.description"')}
+                                    helperText={errors.NewDescription && t('profile.error.description"')}
                                     {...register("NewDescription", {
                                         maxLength: 20,
                                         minLength: 4,
@@ -151,7 +165,7 @@ const FormProfileEdit = (props) => {
                         return (
                             <>
                                 <FormGroup sx={{display: 'flex', flexWrap: 'wrap', direction: 'row'}}>
-                                    <TextField fullWidth margin="normal" required id="password" label={t('profile.current_password')} name="password" type="password"
+                                    <TextField fullWidth margin="normal" required id="password" label={t('profile.current_password')} type="password"
                                         error={Boolean(errors.OldPassword)}
                                         helperText={errors.OldPassword && t('profile.error.passwor')}
                                         {...register("OldPassword", {
@@ -167,7 +181,7 @@ const FormProfileEdit = (props) => {
                     case 3: 
                         return (
                             <>
-                                <TextField margin="normal" required fullWidth id="oldEmail" label={t('profile.current_email')} name="oldEmail" type="text"
+                                <TextField margin="normal" required fullWidth id="oldEmail" label={t('profile.current_email')} type="text"
                                     error={Boolean(errors.OldEmail)}
                                     helperText={errors.OldEmail && t('profile.error.email')}
                                     {...register("OldEmail", {
@@ -188,7 +202,3 @@ const FormProfileEdit = (props) => {
         </Box>
     );
 }
-
-
-
-export default FormProfileEdit;

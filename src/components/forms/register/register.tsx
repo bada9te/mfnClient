@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Paper } from "@mui/material";
 import { useSnackbar } from "notistack";
@@ -7,14 +7,21 @@ import { httpRegister } from "../../../utils/http-requests/auth";
 import { useTranslation } from "react-i18next";
 
 
+type Inputs = {
+    Email: string;
+    Nickname: string;
+    Password: string;
+    ConfirmPassword: string;
+}
 
-const RegisterForm = (props) => {
+
+export default function RegisterForm() {
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm();
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm<Inputs>();
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
 
-    const onSubmit = async(data) => {
+    const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('register.snack.pending'), { autoHideDuration: 1500 });
         await httpRegister({
             email: data.Email,
@@ -36,7 +43,6 @@ const RegisterForm = (props) => {
                 fullWidth
                 id="email"
                 label={t('register.email')}
-                name="email"
                 autoComplete="email"
                 autoFocus
                 error={Boolean(errors.Email)}
@@ -52,7 +58,6 @@ const RegisterForm = (props) => {
                 fullWidth
                 id="nickname"
                 label={t('register.nick')}
-                name="nickname"
                 error={Boolean(errors.Nickname)}
                 helperText={errors.Nickname && t('register.error.nick')}
                 {...register("Nickname", {
@@ -67,7 +72,6 @@ const RegisterForm = (props) => {
                 fullWidth
                 id="password"
                 label={t('register.password')}
-                name="password"
                 type="password"
                 error={Boolean(errors.Password)}
                 helperText={errors.Password && t('register.error.password')}
@@ -83,7 +87,6 @@ const RegisterForm = (props) => {
                 fullWidth
                 id="confirm-password"
                 label={t('register.repeat_password')}
-                name="password"
                 type="password"
                 error={Boolean(errors.ConfirmPassword)}
                 helperText={errors.ConfirmPassword && t('register.error.repeat_password')}
@@ -111,6 +114,3 @@ const RegisterForm = (props) => {
     </Paper>
     );
 }
-
-export default RegisterForm;
-

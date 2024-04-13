@@ -1,39 +1,39 @@
-import { httpSaveFile } from "../../../utils/http-requests/files";
+import { httpSaveFile } from "utils/http-requests/files";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 import { useState } from "react";
-import blobToFile from "../../../utils/common-functions/blobToFile";
+import blobToFile, { IBlob } from "utils/common-functions/blobToFile";
 import { useSnackbar } from "notistack";
-import { USER_UPDATE_MUTATION } from "../../../utils/graphql-requests/users";
 import { useTranslation } from "react-i18next";
+import { useUserUpdateMutation } from "utils/graphql-requests/generated/schema";
 
 
-const ProfileCardForm = (props) => {
-    const [ picture, setPicture ] = useState(null);
+export default function ProfileCardForm() {
+    const [ picture, setPicture ] = useState<null | string>(null);
 
     const { user: currentUser } = useReactiveVar(baseState);
-    const { isShwoing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
+    const { isShowing: cropModalIsShowing, imageType } = useReactiveVar(imageCropperModalState);
     const { enqueueSnackbar } = useSnackbar();
-    const [ updateUser ] = useMutation(USER_UPDATE_MUTATION);
+    const [ updateUser ] = useUserUpdateMutation();
     const { t } = useTranslation("forms");
  
-    const cropImageFile = (img, what) => {
+    const cropImageFile = (img: File, what: 'avatar' | 'background') => {
         imageCropperModalState({...imageCropperModalState(), isShowing: true, imageType: what})
         setPicture(URL.createObjectURL(img));
     };
 
 
     // handler
-    const handleImageCropModalClose = async(value, picture) => {
+    const handleImageCropModalClose = async(value: boolean, picture: any) => {
         imageCropperModalState({...imageCropperModalState(), isShowing: value});
 
         if (picture != null) { 
             enqueueSnackbar(t('profile.snack.default.pending'), { autoHideDuration: 1500 });
             // save image on server
-            let blob = await fetch(picture).then(r => r.blob());
+            let blob = await fetch(picture).then(r => r.blob()) as IBlob;
             let result = await httpSaveFile(blobToFile(blob, currentUser?.nick + `${imageType}.jpg`));
             
             // process image assigning
@@ -42,7 +42,7 @@ const ProfileCardForm = (props) => {
                     input: { _id: currentUser._id, what: imageType, value: result.data.file.filename },
                 },
             }).then(({ data }) => {
-                baseState({ ...baseState(), user: { ...baseState().user, ...data.userUpdate} });
+                baseState({ ...baseState(), user: { ...baseState().user, ...data?.userUpdate} });
                 enqueueSnackbar(t('profile.snack.default.success'), { autoHideDuration: 1500, variant: 'success' });
             }).catch(err => {
                 enqueueSnackbar(t('profile.snack.default.error'), { autoHideDuration: 3000, variant: 'error' });
@@ -64,7 +64,7 @@ const ProfileCardForm = (props) => {
                     <Button variant="contained" color="secondary" component="label">
                         {t('profile.select_avatar')}
                         <input type="file" hidden 
-                            onInput={e => cropImageFile(e.target.files[0], 'avatar')}
+                            onInput={e => cropImageFile((e.target as HTMLInputElement).files?.[0] as File, 'avatar')}
                         />
                     </Button>
                 </FormGroup>
@@ -73,7 +73,7 @@ const ProfileCardForm = (props) => {
                     <Button variant="contained" color="secondary" component="label">
                         {t('profile.select_background')}
                         <input type="file" hidden 
-                            onInput={e => cropImageFile(e.target.files[0], 'background')}
+                            onInput={e => cropImageFile((e.target as HTMLInputElement).files?.[0] as File, 'background')}
                         />
                     </Button>
                 </FormGroup>
@@ -81,5 +81,3 @@ const ProfileCardForm = (props) => {
         </>
     );
 }
-
-export default ProfileCardForm;

@@ -3,7 +3,7 @@ import { Facebook, Google, Twitter } from "@mui/icons-material";
 import { Button, Stack } from "@mui/material";
 import { baseState } from "../../baseReactive";
 
-const ProfileEditPartSocial = props => {
+export default function ProfileEditPartSocial() {
     const { user: currentUser } = useReactiveVar(baseState);
 
 
@@ -39,5 +39,3 @@ const ProfileEditPartSocial = props => {
         </Stack>
     );
 }
-
-export default ProfileEditPartSocial;
