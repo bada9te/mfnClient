@@ -123,7 +123,7 @@ export default function PlaylistsContainer() {
 
 
     return (
-        <Box sx={{width: '100%'}}>
+        <Box>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} centered variant="fullWidth">
                     <Tab icon={<Explore/>}         label={t('playlists.explore')}      id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
@@ -170,11 +170,11 @@ export default function PlaylistsContainer() {
 
             <TabPanel value={status} index={2}>
                 <ImageRightFormContainer bg={newPlaylistBG} text={t('playlists.create.main_text')}>
-                <Box sx={{width: '30rem', height: 'fit-content', mx: 0, px: 0, boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
+                    <Box sx={{width: '30rem', mx: 0, px: 0, boxShadow: 0, borderRadius: 5}}>
                         {
                             currentUser && currentUser._id !== ""
                             ?
-                            <Box sx={{ my: 3 }}>
+                            <Box>
                                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                                     {t('playlists.create.title')}
                                 </Typography>

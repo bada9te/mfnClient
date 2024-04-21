@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Grid, Paper } from "@mui/material"
+import { Box, Grid, Paper } from "@mui/material"
+import Footer from "components/common/footer/footer";
 
 export default function BaseContentContainer(props: {
     left?: React.ReactNode;
@@ -9,32 +10,46 @@ export default function BaseContentContainer(props: {
     const {left, right} = props;
 
     return (
-            <Grid container component="main" sx={{ 
-                height: 'calc(100vh - 110px)', 
-                position: 'relative', 
-                overflow: 'auto',
+        <Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+           <Grid container component="main" sx={{ 
+                width: { xs: '100%', md: '1200px' },
+                height: '100vh', 
+                position: 'relative',
+                overflow: 'hidden',
+                boxShadow: 10
             }}>
-                <Grid item xs={0} sm={0} md={3} lg={2.5} xl={2}>
-                    {left}
-                </Grid>
                 <Grid
-                    sx={{mb: { xs: 0, md: 2 }, mt: { xs: 0, md: 0.8 }, borderRadius: { xs: 0, md: 5 }, overflow: 'hidden', background: 'rgba(255,255,255,0.3)',
-                    backdropFilter: 'blur(5px)', color: 'white'}}
+                    sx={{ 
+                        overflow: 'hidden', background: 'rgba(255,255,255,0.3)',
+                        backdropFilter: 'blur(5px)', color: 'white', pt: '65px', overflowY: 'auto', height: '100%', pb: '50px', width: '100%',
+                    }}
                     xs={12} 
                     sm={12} 
-                    md={6} 
-                    lg={7}
-                    xl={8}
+                    md={12} 
+                    lg={12}
+                    xl={12}
                     component={Paper} 
                     elevation={6} 
                     square 
                     item
                 >
                     {props.children}
-                </Grid>
-                <Grid item xs={0} sm={0} md={3} lg={2.5} xl={2}>
-                    {right}
+                    <Footer/>
                 </Grid>
             </Grid>
+        </Box>
     );
 }
+
+
+/*
+<Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Grid container component="main" sx={{ 
+                width: { xs: '100%', md: '1200px' },
+                height: '100vh', 
+                position: 'relative',
+                overflowY: 'auto',
+                boxShadow: 10,
+                pt: 10,
+            }}></Grid>
+            */

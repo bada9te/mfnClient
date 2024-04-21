@@ -10,7 +10,7 @@ export default function Welcome() {
     return (
         <Paper sx={{ 
             position: 'relative', 
-            height: 'calc(100vh - 120px)', 
+            height: '100vh', 
             overflow: 'auto', 
             scrollSnapType: 'y mandatory',
             background: 'rgba(255,255,255,0.2)',

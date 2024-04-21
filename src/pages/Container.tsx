@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Topbar from "../components/bars/top/top-bar/top-bar";
 import BottomBar from "../components/bars/bottom/bottom-bar/bottom-bar";
-import React, { memo } from "react";
+import { memo } from "react";
 
 //import './Container.scss';
 import AudioPlayer from "../components/common/audio-player/audio-player";
@@ -37,7 +37,7 @@ export default memo(function Container() {
 
             {/* PAGES OUTLET */}
             <Topbar/>
-            <Box sx={{width: '100%', pt: 8}}>
+            <Box sx={{width: '100%', height: '100%'}}>
                 <Outlet/>
             </Box>
 

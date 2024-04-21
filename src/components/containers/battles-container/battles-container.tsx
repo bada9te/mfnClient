@@ -96,7 +96,7 @@ export default function BattlesContainer() {
 
 
     return (
-        <Box height={'100%'}>
+        <Box>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                     <Tab icon={<Whatshot/>}  label={t('battles.in_progress')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />

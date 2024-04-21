@@ -13,11 +13,8 @@ export default function PageLoader(props: {
                 transition: `opacity ${loading ? '0s' : '.4s'}`,
                 position: 'absolute',
                 width: '100%',
-                marginTop: '55px',
-                minHeight: 'calc(100vh - 110px)',
-                zIndex: loading ? 99 : 0,
-                //backgroundColor: 'rgba($color: white, $alpha: 0.5)',
-                //backdropFilter: 'blur(12px)',
+                minHeight: '100vh',
+                zIndex: loading ? 80 : 0,
             }} 
             className="loader"
         >

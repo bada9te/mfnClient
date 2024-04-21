@@ -15,7 +15,7 @@ const WelcomePageStart = props => {
     return (
         <Box
             sx={{ 
-                height: 'calc(100vh - 120px)', 
+                height: '100vh', 
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

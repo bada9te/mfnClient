@@ -1,7 +1,7 @@
 import logoImg from 'assets/icons/logo.png';
 import { useNavigate } from 'react-router-dom';
 import React, { memo, useEffect, useState } from "react";
-import {AppBar, IconButton, Avatar, Typography, Box, Toolbar, Tooltip, Menu, Container, useScrollTrigger, Slide } from '@mui/material';
+import {AppBar, IconButton, Avatar, Typography, Box, Toolbar, Tooltip, Menu, Container, Paper } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import TopBarUserMenu from './top-bar-user-menu/top-bar-user-menu';
 import TopBarLeftMenuMin from './top-bar-left-menu-min/top-bar-left-menu-min';
@@ -71,6 +71,18 @@ export default memo(function Topbar() {
     
 
     return (
+        <Paper sx={{ 
+            position: 'fixed', 
+            top: 0, 
+            left: '50%', 
+            transform: 'translateX(-50%)', 
+            margin: '0 auto', 
+            width: { xs: '100%', lg: '1200px' },
+            borderRadius: '20px 20px 0 0',
+            zIndex: 99
+        }} 
+        elevation={1}
+        >
             <AppBar component="nav" sx={{
                 height: 65, 
                 zIndex: (theme) => theme.zIndex.drawer + 1, 
@@ -195,5 +207,6 @@ export default memo(function Topbar() {
                     </Toolbar>
                 </Container>
             </AppBar>
+        </Paper>
     );
 });

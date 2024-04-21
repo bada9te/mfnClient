@@ -53,7 +53,19 @@ export default memo(function BottomBar() {
 
 
     return (
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={1}>
+        <Paper sx={{ 
+                position: 'fixed', 
+                bottom: 0, 
+                left: '50%', 
+                transform: 'translateX(-50%)', 
+                margin: '0 auto', 
+                width: { xs: '100%', lg: '1200px' },
+                borderRadius: '20px 20px 0 0',
+                zIndex: 99
+            }} 
+            elevation={1}
+
+        >
             <BottomNavigation sx={{ 
                 background: 'none',  
             }} showLabels value={bottomBar.value === '' ? location.pathname : bottomBar.value} onChange={handleChange}>
@@ -67,7 +79,6 @@ export default memo(function BottomBar() {
                 <BottomNavigationAction value="people" label={t('bottombar.people')} icon={<PersonSearch />} />
             </BottomNavigation>
         </Paper>
-        
     );
 });
  

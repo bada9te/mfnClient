@@ -16,11 +16,11 @@ export default function Support () {
     return (
         <BaseContentContainer>
             <ImageRightFormContainer bg={supportFromBG} text={t('support.main_text')}>
-                <Box sx={{height: 'calc(100vh - 132px)'}}>
+                <Box sx={{height: '100vh'}}>
                     <Box sx={{ 
                         boxShadow: 0, maxWidth: 700, borderRadius: 5, 
                         display: 'flex', justifyContent: 'center', alignItems:'center', flexDirection: 'column',
-                        height: 'calc(100vh - 132px)'
+                        height: '100vh'
                     }}>
                         <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2 }}>
                             <Avatar src={supportContactImage} sx={{ m: 1, boxShadow: 5 }}/>

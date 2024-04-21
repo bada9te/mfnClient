@@ -38,7 +38,7 @@ function CategoriesContainer() {
     }
 
     return (
-        <Box height={'100%'}>
+        <Box>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                     <Tab icon={<Category/>}  label={t('categories.select')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />

@@ -38,12 +38,12 @@ export default function PostUpload() {
                         what={'post-image'}
                     />
                 }
-                    <Box sx={{width: '40rem', height: 'fit-content', boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
-                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', py: 3, mb: 0}}>
+                    <Box sx={{ width: '40rem', boxShadow: 0, borderRadius: 5 }}>
+                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', py: 3, mb: 0}}>
                             {t('upload.title')}
                         </Typography>
 
-                        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Box sx={{width: '100%', height: 'fit-content', display: 'flex', justifyContent: 'center'}}>
                             <Box sx={{width: {xs: '100%', sm: '375px', md: '400px'}, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                 <PostItem
                                     base={{
