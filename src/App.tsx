@@ -1,6 +1,6 @@
-import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ThemeProvider, useThemeProps } from '@mui/material/styles';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useLayoutEffect } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
 import { SnackbarProvider } from 'notistack';
@@ -8,12 +8,11 @@ import { httpGetCurrentUser } from './utils/http-requests/auth';
 import ApplicationRouter from './utils/router/app-routes';
 import muiTheme from './utils/mui-theme/theme';
 import socket from './utils/socket/socket';
-import PageLoader from './components/common/page-loader/page-loader';
+import { pageLoaderState } from 'components/common/page-loader/reactive';
 
 function App() {
   //const navigate = useNavigate();
   const location = useLocation();
-  const [ loading, setIsLoading ] = useState(false);
   //const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
 
@@ -33,16 +32,15 @@ function App() {
   }, []);
 
   useLayoutEffect(() => {
-    setIsLoading(true);
+    pageLoaderState({ isLoading: true });
     setTimeout(() => {
-      setIsLoading(false);
+      pageLoaderState({ isLoading: false });
     }, 800);
   }, [location.pathname]);
 
   return (
     <ThemeProvider theme={muiTheme(themeMode)}>
       <SnackbarProvider maxSnack={5}>
-          <PageLoader loading={loading}/>
           <ApplicationRouter/>
       </SnackbarProvider>
     </ThemeProvider>

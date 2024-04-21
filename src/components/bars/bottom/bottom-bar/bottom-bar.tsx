@@ -60,8 +60,8 @@ export default memo(function BottomBar() {
                 transform: 'translateX(-50%)', 
                 margin: '0 auto', 
                 width: { xs: '100%', lg: '1200px' },
-                borderRadius: '20px 20px 0 0',
-                zIndex: 99
+                zIndex: 99,
+                borderRadius: 0
             }} 
             elevation={1}
 
