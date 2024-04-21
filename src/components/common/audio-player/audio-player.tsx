@@ -11,7 +11,7 @@ import { audioPlayerState } from './reactive';
 import { bottomBarState } from 'components/bars/bottom/bottom-bar/reactive';
 import PostGenerate from '../post-item/post-generate';
 
-const getTime = (t) => {
+const getTime = (t: number) => {
     var minute = Math.floor(t / 60); // get minute(integer) from time
     var tmp = Math.round(t - (minute * 60)); // get second(integer) from time
     var second = (tmp < 10 ? '0' : '') + tmp; // make two-figured integer if less than 10
@@ -28,7 +28,7 @@ const CustomAudioPlayer = () => {
     const [ time, setTime ] = useState("00:00");
     const [ duration, setDuration ] = useState("00:00");
     const [ analyzerData, setAnalyzerData ] = useState(null);
-    const containerRef = useRef();
+    const containerRef = useRef<HTMLAudioElement>(null);
     const waveformContainerRef = useRef();
 
     
@@ -39,40 +39,45 @@ const CustomAudioPlayer = () => {
         audioPlayerState({...audioPlayerState(), isShowing: false});
     };
     // volume
-    const handleVolumeChange = (event, vol) => {
+    const handleVolumeChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, vol: number) => {
         setVolume(vol);
-        containerRef.current.volume = vol / 100;
+        if (containerRef.current)
+            containerRef.current.volume = vol / 100;
     };
     // play/pause
     const handlePlayPause = () => {
         audioPlayerState({ ...audioPlayerState(), isPlaying: !isPlaying });
         if (!isPlaying === false) {
-            containerRef.current.pause();
+            containerRef.current?.pause();
         } else {
-            containerRef.current.play();
+            containerRef.current?.play();
         } 
     };
     // mute / unmute
     const handleMuteUnmute = () => {
         audioPlayerState({ ...audioPlayerState(), isMuted: !isMuted });
-        containerRef.current.muted = !isMuted === false ? false : true;
+        if (containerRef.current)
+            containerRef.current.muted = !isMuted === false ? false : true;
     }
     // switch loop
     const handleSwitchLoop = () => {
         audioPlayerState({ ...audioPlayerState(), loop: !loop });
-        containerRef.current.loop = !loop === false ? false : true;
+        if (containerRef.current)
+            containerRef.current.loop = !loop === false ? false : true;
     }
     //rewind to start
     const handleRewind = () => {
         setProgress(0);
         setTime("00:00");
-        containerRef.current.currentTime = 0;
+        if (containerRef.current)
+            containerRef.current.currentTime = 0;
     }
     
 
     // rewind on progressbar 
-    const rewindOnProgressBar = (e, value) => {
-        containerRef.current.currentTime = containerRef.current.duration * value / 100;
+    const rewindOnProgressBar = (e: React.SyntheticEvent, value: number) => {
+        if (containerRef.current)
+            containerRef.current.currentTime = containerRef.current.duration * value / 100;
         setProgress(value);
     }
 
@@ -90,17 +95,23 @@ const CustomAudioPlayer = () => {
 
     // volume
     useEffect(() => {
-        try { containerRef.current.volume = volume / 100; } catch (error) {}
+        try {
+            containerRef.current && (containerRef.current.volume = volume / 100); 
+        } catch (error) {}
     }, [volume]);
 
     // mute / unmute
     useEffect(() => {
-        try { containerRef.current.muted = isMuted; } catch (error) {}
+        try { 
+            containerRef.current && (containerRef.current.muted = isMuted); 
+        } catch (error) {}
     }, [isMuted]);
 
     // loop
     useEffect(() => {
-        try { containerRef.current.loop = loop; } catch (error) {}
+        try { 
+            containerRef.current && (containerRef.current.loop = loop); 
+        } catch (error) {}
     }, [loop]);
 
 
@@ -112,12 +123,14 @@ const CustomAudioPlayer = () => {
         if (container) {
             audioPlayerState({ ...audioPlayerState(), controlsLocked: false, isPlaying: true });
             container.addEventListener("loadeddata", () => {
-                setDuration(getTime(containerRef.current.duration));
+                setDuration(getTime(containerRef.current?.duration as number));
+                /* @ts-ignore */
                 container.removeEventListener("loadeddata", this);
             });
             container.addEventListener("timeupdate", () => {
                 setProgress(container.currentTime / container.duration * 100);
                 setTime(getTime(container.currentTime));
+                /* @ts-ignore */
                 container.removeEventListener("timeupdate", this);
             });
             container.addEventListener("ended", () => {
@@ -175,6 +188,7 @@ const CustomAudioPlayer = () => {
                                         sx={{my: 1.5}} 
                                         aria-label="Progress" 
                                         value={progress || 0}
+                                        /* @ts-ignore */
                                         onChange={rewindOnProgressBar} 
                                         disabled={controlsLocked ? true : false} 
                                     />
@@ -205,6 +219,7 @@ const CustomAudioPlayer = () => {
                                         sx={{width: '100px'}} 
                                         aria-label="Volume" 
                                         value={volume} 
+                                        /* @ts-ignore */
                                         onChange={handleVolumeChange}
                                         valueLabelDisplay="auto"
                                         disabled={controlsLocked ? true : false} 

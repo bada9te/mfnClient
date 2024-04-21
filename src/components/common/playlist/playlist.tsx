@@ -14,10 +14,13 @@ import { playlistsContainerState } from "../../containers/playlists-container/re
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
 import { useTranslation } from "react-i18next";
-import PlaylistLogo from "../../../assets/icons/logo_playlist.png"
+import PlaylistLogo from "assets/icons/logo_playlist.png"
+import { Post, Playlist as TPlaylist } from "utils/graphql-requests/generated/schema";
 
 
-const Playlist = (props) => {
+export default function Playlist(props: {
+    playlist: TPlaylist & { ownerAvatar: string; createdAt: string; };
+}) {
     const { playlist } = props;
     const { user: currentUser } = useReactiveVar(baseState);
     const { t } = useTranslation("objects");
@@ -75,12 +78,12 @@ const Playlist = (props) => {
             <CardContent sx={{ ":last-child": { p: 0 } }}>
                 <Accordion sx={{boxShadow: 0}}>
                     <AccordionSummary expandIcon={<ExpandMore/>} aria-controls="panel1a-content" id="panel1a-header">
-                        <Typography>{playlist.title} - {playlist.tracks.length} track(s)</Typography>
+                        <Typography>{playlist.title} - {playlist.tracks?.length} track(s)</Typography>
                     </AccordionSummary>
                     <AccordionDetails sx={{p: {xs: 0, md: 2}, mb: { xs: 2, md: 0 }}}>
                         {
                             (() => {
-                                if (playlist.tracks.length === 0) {
+                                if (playlist.tracks?.length === 0) {
                                     return (
                                         <Box sx={{p: 2, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', flexDirection: 'column', gap: 2}}>
                                             <Avatar sx={{width: 100, height: 100, boxShadow: 10}} src={PlaylistLogo} alt="Playlist logo"/>
@@ -90,7 +93,7 @@ const Playlist = (props) => {
                                 } else {
                                     return (
                                         <Stack spacing={4} sx={{width: '100%', display: 'flex', justifyContent: 'space-around', alignItems: 'center'}} direction="row" useFlexGap flexWrap="wrap">
-                                            <EnumPlaylistTracks tracks={playlist.tracks}/>
+                                            <EnumPlaylistTracks tracks={playlist.tracks as Post[]} profileLinkAccessable={true}/>
                                         </Stack>
                                     );
                                 }
@@ -103,5 +106,3 @@ const Playlist = (props) => {
     );
 }
 
-
-export default Playlist;
