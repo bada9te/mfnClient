@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import getFileExtension from "utils/common-functions/getFileExtension";
-import { Post, PostsByOwnerQuery, PostsQuery, User, usePostCreateMutation } from "utils/graphql-requests/generated/schema";
+import { Post, PostsByOwnerQuery, PostsQuery, usePostCreateMutation } from "utils/graphql-requests/generated/schema";
 
 
 type Inputs = {

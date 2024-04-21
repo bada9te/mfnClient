@@ -2,7 +2,9 @@ import { Paper } from "@mui/material";
 import { SpinnerCircular } from "../spinner/Spinner";
 import "./page-loader.scss";
 
-const PageLoader = props => {
+export default function PageLoader(props: {
+    loading: boolean;
+}) {
     const { loading } = props;
 
     return (
@@ -23,5 +25,3 @@ const PageLoader = props => {
         </Paper>
     );
 }
-
-export default PageLoader;

@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, TextField, Button, MenuItem } from "@mui/material";
-import { useState } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { reportFormState } from "./reactive";
 import { baseState } from "../../baseReactive";
@@ -17,16 +16,13 @@ type Inputs = {
 
 export default function ReportForm() {
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
-    const [ value, setValue ] = useState("");
+
     const { reportingItemId } = useReactiveVar(reportFormState);
     const { user: currentUser } = useReactiveVar(baseState);
     const [ createReport ] = useReportCreateMutation();
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("forms");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setValue(event.target.value);
-    };
     
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('report.snack.pending'), { autoHideDuration: 1500 });

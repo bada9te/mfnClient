@@ -1,7 +1,7 @@
 import { GitHub, Instagram } from "@mui/icons-material";
 import { Box, IconButton, Typography } from "@mui/material";
 
-const Footer = props => {
+export default function Footer() {
     return (
       <Box
         component="footer"
@@ -23,5 +23,3 @@ const Footer = props => {
       </Box>
     );
 }
-
-export default Footer;

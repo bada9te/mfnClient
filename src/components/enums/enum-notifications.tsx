@@ -4,7 +4,7 @@ import getTimeSince from "../../utils/common-functions/getTimeSince";
 import { baseState } from "../baseReactive";
 import NotificationItem from "../common/notification-item/notification-item";
 import { SpinnerLinear } from "../common/spinner/Spinner";
-import { NotificationsQuery } from "utils/graphql-requests/generated/schema";
+import { Comment, NotificationsQuery, Post } from "utils/graphql-requests/generated/schema";
 
 export default function EnumNotifications(props: {
     loading: boolean;
@@ -37,14 +37,14 @@ export default function EnumNotifications(props: {
                                                 <NotificationItem
                                                     key={key}
                                                     id={notification._id}
-                                                    user={[
-                                                        notification.sender?._id || "", 
-                                                        notification.sender?.nick || "Deleted User", 
-                                                        notification.sender?.avatar ? `${locations?.images}/${notification.sender?.avatar}` : "NULL",
-                                                    ]}
+                                                    user={{
+                                                        _id: notification.sender?._id || "", 
+                                                        nick: notification.sender?.nick || "Deleted User", 
+                                                        avatar: notification.sender?.avatar ? `${locations?.images}/${notification.sender?.avatar}` : "NULL",
+                                                    }}
                                                     text={notification.text}
-                                                    comment={notification.comment}
-                                                    post={notification.post}
+                                                    comment={notification.comment as Comment}
+                                                    post={notification.post as Post}
                                                     createdAt={getTimeSince(new Date(+notification.createdAt)) + ' ago'}
                                                     checked={notification.checked}
                                                 />

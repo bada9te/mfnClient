@@ -20,11 +20,11 @@ export default function EnumLeftBarPosts(props: {
                                 title={item.title} 
                                 description={item.description}
                                 image={`${locations?.images}/${item.image}`}
-                                user={[
-                                    item.owner._id, 
-                                    item.owner.nick, 
-                                    `${locations?.images}/${item.owner.avatar}`,
-                                ]}
+                                user={{
+                                    _id: item.owner._id, 
+                                    nick: item.owner.nick, 
+                                    avatar: `${locations?.images}/${item.owner.avatar}`,
+                                }}
                             />
                         </div>
                     );

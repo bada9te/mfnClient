@@ -1,25 +1,39 @@
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { Delete, ExpandMore, TaskAlt } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Card, CardHeader, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { DELETE_NOTIFICATION_MUTATION, MARK_NOTIFICATION_AS_READ_MUTATION, NOTIFICATIONS_QUERY } from "utils/graphql-requests/notifications";
+import { NOTIFICATIONS_QUERY } from "utils/graphql-requests/notifications";
 import { commentsContainerState } from "components/containers/comments-container/reactive";
 import { commentsModalState } from "components/modals/comments-modal/reactive";
 import { useSnackbar } from "notistack";
 import { baseState } from "components/baseReactive";
+import { Comment, Post, useNotificationDeleteByIdMutation, useNotificationMarkAsReadByIdMutation } from "utils/graphql-requests/generated/schema";
 
 
-const NotificationItem = props => {
+export default function NotificationItem(props: {
+    id: string;
+    user: {
+        _id: string;
+        nick: string;
+        avatar: string;
+    };
+    text: string;
+    post: Post;
+    comment: Comment;
+    createdAt: string;
+    checked: boolean;
+}) {
     const {id, user, text, post, comment, createdAt, checked} = props;
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const { user: currentUser } = useReactiveVar(baseState);
     const q = { query: NOTIFICATIONS_QUERY, variables: { receiverId: currentUser._id, checked } };
-    const [ notificationDelete ] = useMutation(DELETE_NOTIFICATION_MUTATION, {
+    const [ notificationDelete ] = useNotificationDeleteByIdMutation({
         variables: { _id: id },
         refetchQueries: [q]
     });
-    const [ notificationMarkAsRead ] = useMutation(MARK_NOTIFICATION_AS_READ_MUTATION, {
+
+    const [ notificationMarkAsRead ] = useNotificationMarkAsReadByIdMutation({
         variables: { _id: id },
         refetchQueries: [q]
     });
@@ -44,7 +58,7 @@ const NotificationItem = props => {
             });
     }
 
-    const handleOpenComment = (commentId) => {
+    const handleOpenComment = (commentId: string) => {
         commentsModalState({ ...commentsModalState(), isShowing: false });
         commentsContainerState({ 
             ...commentsContainerState(), 
@@ -54,7 +68,7 @@ const NotificationItem = props => {
         });
     }
 
-    const handleOpenPost = (trackId, ownerId) => {
+    const handleOpenPost = (trackId: string, ownerId: string) => {
         navigate(`/app/track/${trackId}`, {state: {trackId: trackId, ownerId: ownerId}});
     }
 
@@ -65,12 +79,12 @@ const NotificationItem = props => {
                     //onClick={handleCommentSelection}
                     avatar={
                         <Avatar
-                            src={user[2].endsWith('/') ? "NULL" : user[2]} 
+                            src={user.avatar.endsWith('/') ? "NULL" : user.avatar} 
                             sx={{bgcolor: "gray", boxShadow: 3}} 
                             aria-label="recipe"
                         />
                     }
-                    title={user[1]}
+                    title={user.nick}
                     subheader={createdAt}
                     action={
                         !checked
@@ -103,8 +117,8 @@ const NotificationItem = props => {
                                         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                                             <Typography>{comment.text}</Typography>
                                             <Box sx={{display: 'flex', alignItems: 'center'}}>
-                                                <Button variant="outlined" onClick={handleOpenComment}>Show related comment</Button>
-                                                <Button variant="outlined" onClick={() => handleOpenPost(post._id, post.owner._id)}>Open related post</Button>
+                                                <Button variant="outlined" onClick={() => handleOpenComment(comment._id)}>Show related comment</Button>
+                                                <Button variant="outlined" onClick={() => handleOpenPost(comment.post._id, comment.post.owner._id)}>Open related post</Button>
                                             </Box>
                                         </Box>
                                     );
@@ -117,5 +131,3 @@ const NotificationItem = props => {
         </>
     );
 }
-
-export default NotificationItem;

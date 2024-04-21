@@ -4,7 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 
 
-const LeftBarPostsItem = (props) => {
+export default function LeftBarPostsItem(props: {
+    id: string;
+    title: string;
+    description: string;
+    user: {
+        _id: string;
+        nick: string;
+        avatar: string;
+    };
+    image: string;
+}) {
     const {id, title, description, user, image} = props;
     const navigate = useNavigate();
     const { t } = useTranslation("objects");
@@ -14,12 +24,12 @@ const LeftBarPostsItem = (props) => {
             <CardHeader
                 avatar={
                     <Avatar 
-                        src={user[2].endsWith('/') ? "NULL" : user[2]} 
+                        src={user.avatar.endsWith('/') ? "NULL" : user.avatar} 
                         sx={{bgcolor: "gray", boxShadow: 3}} 
                         aria-label="recipe"
                     />
                 }
-                title={user[1]}
+                title={user.nick}
                 subheader={`${title} - ${description}`}
             />
             {
@@ -48,7 +58,7 @@ const LeftBarPostsItem = (props) => {
                         startIcon={<Person2/>}
                         sx={{ borderRadius: 0 }}
                         variant="contained" size="small" 
-                        onClick={() => navigate(`/app/profile/${user[0]}`)}
+                        onClick={() => navigate(`/app/profile/${user._id}`)}
                     >
                         {t('leftbar_item.open_profile')}
                     </Button>
@@ -60,7 +70,7 @@ const LeftBarPostsItem = (props) => {
                             borderBottomRightRadius: 0,
                         }} 
                         variant="contained" size="small"
-                        onClick={() => navigate(`/app/track/${id}/${user[0]}`)}
+                        onClick={() => navigate(`/app/track/${id}/${user._id}`)}
                     >
                         {t('leftbar_item.see_track')} 
                     </Button>
@@ -69,6 +79,3 @@ const LeftBarPostsItem = (props) => {
         </Card>
     );
 }
-
-
-export default LeftBarPostsItem;
