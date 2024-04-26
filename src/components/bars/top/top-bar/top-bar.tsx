@@ -77,9 +77,8 @@ export default memo(function Topbar() {
             left: '50%', 
             transform: 'translateX(-50%)', 
             margin: '0 auto', 
-            width: { xs: '100%', lg: '1200px' },
-            borderRadius: '20px 20px 0 0',
-            zIndex: 99
+            width: { xs: '100%', lg: "1200px" },
+            zIndex: 99,
         }} 
         elevation={1}
         >

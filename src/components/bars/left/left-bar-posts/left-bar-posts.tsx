@@ -21,9 +21,8 @@ export default function LeftBarPosts() {
     }
 
     return (
-        <Drawer anchor="left" open={bottomBar.showLB} onClose={closeLB} keepMounted elevation={3} 
-        PaperProps={{ sx: { background: 'none' } }}>
-            <Paper sx={{ pt: '70px', zIndex: 1, boxShadow: 5 }} elevation={3}>
+        <Drawer anchor="left" open={bottomBar.showLB} onClose={closeLB} keepMounted elevation={3} PaperProps={{ sx: { background: 'none' } }}>
+            <Paper sx={{ zIndex: 1, boxShadow: 5 }} elevation={3}>
                 <Box sx={{p: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Typography variant="h6">{t('leftbar.header')}</Typography>
                     <IconButton onClick={closeLB}>

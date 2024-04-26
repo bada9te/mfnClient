@@ -59,9 +59,9 @@ export default memo(function BottomBar() {
                 left: '50%', 
                 transform: 'translateX(-50%)', 
                 margin: '0 auto', 
-                width: { xs: '100%', lg: '1200px' },
+                width: { xs: '100%', lg: "1200px" },
+                borderRadius: 0,
                 zIndex: 99,
-                borderRadius: 0
             }} 
             elevation={1}
 

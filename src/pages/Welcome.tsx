@@ -1,31 +1,20 @@
-import { Paper} from "@mui/material"
-import Footer from "../components/common/footer/footer";
 import WelcomePageCards from "../components/welcome-static/welcome-page-cards/welcome-page-cards";
 import WelcomePageText from "../components/welcome-static/welcome-page-text/welcome-page-text";
 import WelcomePageStart from "../components/welcome-static/welcome-page-start/welcome-page-start";
 import WelcomePageBestTrackContainer from "../components/containers/welcome-page-best-track-container/welcome-page-best-track-container";
+import BaseContentContainer from "components/containers/base-content-container/base-content-container";
 
 
 export default function Welcome() {
     return (
-        <Paper sx={{ 
-            position: 'relative', 
-            height: '100vh', 
-            overflow: 'auto', 
-            scrollSnapType: 'y mandatory',
-            background: 'rgba(255,255,255,0.2)',
-            backdropFilter: 'blur(5px)',
-            color: 'white',
-        }}>
-            <WelcomePageStart/>
+        <BaseContentContainer mandatoryScroll>
+                <WelcomePageStart/>
 
-            <WelcomePageText/>
-            
-            <WelcomePageBestTrackContainer/>
+                <WelcomePageText/>
+                
+                <WelcomePageBestTrackContainer/>
 
-            <WelcomePageCards/>
-
-            <Footer/>
-        </Paper>
+                <WelcomePageCards/>
+        </BaseContentContainer>
     );
 }

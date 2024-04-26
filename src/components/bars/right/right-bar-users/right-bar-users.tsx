@@ -22,7 +22,7 @@ export default function RightBarUsers() {
 
     return (
         <Drawer anchor="right" open={bottomBar.showRB} onClose={closeRB} keepMounted elevation={3} PaperProps={{ sx: { background: 'none' } }}>
-            <Paper sx={{ pt: '70px', zIndex: 1, boxShadow: 5 }} elevation={3}>
+            <Paper sx={{ zIndex: 1, boxShadow: 5 }} elevation={3}>
                 <Box sx={{p: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Typography variant="h6">{t('rightbar.header')}</Typography>
                     <IconButton onClick={closeRB}>
