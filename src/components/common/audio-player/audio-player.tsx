@@ -213,9 +213,11 @@ const CustomAudioPlayer = () => {
                             
                             <Box sx={{display: 'flex', alignItems: 'center', mx: 1.5}}>
                                 <Tooltip title={ isMuted ? "Unmute" : "Mute"}>
-                                    <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
-                                        { isMuted ? <VolumeOff/> : <VolumeDown/>}
-                                    </IconButton>
+                                    <span>
+                                        <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
+                                            { isMuted ? <VolumeOff/> : <VolumeDown/>}
+                                        </IconButton>
+                                    </span>
                                 </Tooltip>
                                     <Slider 
                                         sx={{width: '100px'}} 
@@ -227,9 +229,11 @@ const CustomAudioPlayer = () => {
                                         disabled={controlsLocked ? true : false} 
                                     />
                                 <Tooltip title="100%">
-                                    <IconButton onClick={(e) => handleVolumeChange(e, 100)} disabled={controlsLocked ? true : false}>
-                                        <VolumeUp/>
-                                    </IconButton>
+                                    <span>
+                                        <IconButton onClick={(e) => handleVolumeChange(e, 100)} disabled={controlsLocked ? true : false}>
+                                            <VolumeUp/>
+                                        </IconButton>
+                                    </span>
                                 </Tooltip>
                             </Box>
                         </Box>
