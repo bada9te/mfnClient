@@ -5,6 +5,7 @@ import { httpLogin } from "../../../utils/http-requests/auth";
 import { useSnackbar } from "notistack";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
 import { useTranslation } from "react-i18next";
+import { baseState } from "components/baseReactive";
 
 
 type Inputs = {
@@ -25,6 +26,7 @@ export default function LoginForm() {
         // update store
         await httpLogin(data.Email, data.Password)
             .then(({ data }) => {
+                baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
                 navigate('/app/');
                 enqueueSnackbar(`${t('login.snack.success')} ${data.nick}`, { variant: "success", autoHideDuration: 3000 });
             }).catch((err) => {

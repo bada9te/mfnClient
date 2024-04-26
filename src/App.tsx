@@ -13,6 +13,7 @@ import { pageLoaderState } from 'components/common/page-loader/reactive';
 function App() {
   //const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useReactiveVar(baseState);
   //const [regAllowed] = useState(/\/(profile|track|register|account-restore|account-verify|battles|support|logout|f.a.q|playlists)\/*/);
 
 

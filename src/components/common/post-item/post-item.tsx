@@ -205,7 +205,7 @@ export default function PostItem(props: {
 
     return (
         <Card sx={{
-            width: {xs: '95%', sm: '375px', md: '400px'}, 
+            width: {xs: '95%', sm: '375px'}, 
             boxShadow: 10, 
             borderRadius: addons.status === "in-player" ? 0 : 5,
             transition: '500ms',

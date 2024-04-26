@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { memo, useEffect, useRef, useState } from 'react';
-import { Box, Drawer, IconButton, Slider, Stack, Typography } from '@mui/material';
+import { Box, Drawer, IconButton, Slider, Stack, Tooltip, Typography } from '@mui/material';
 import { FastRewind, Loop, Pause, PlayArrow, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material';
 import { SpinnerLinear } from '../spinner/Spinner';
 import audioAnalyzer from './audiowave/analyzer';
@@ -170,9 +170,9 @@ const CustomAudioPlayer = () => {
                     }
                 </Box>
                 
-                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'flex-end', flexGrow: 4}}>
-                    <Box sx={{ width: '100%' }}>
-                        <Box ref={waveformContainerRef} sx={{width: '100%', height: '120px'}}>
+                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'flex-end', flexGrow: 4, width: 'auto'}}>
+                    <Box sx={{ maxWidth: '800px', width: '100%' }}>
+                        <Box ref={waveformContainerRef} sx={{width: 'auto', height: '120px'}}>
                             {analyzerData && <WaveForm analyzerData={analyzerData} />}
                         </Box>
                         <Box sx={{display: 'flex', alignItems: 'center', mx: 1}}>
@@ -212,9 +212,11 @@ const CustomAudioPlayer = () => {
                             </Box>
                             
                             <Box sx={{display: 'flex', alignItems: 'center', mx: 1.5}}>
-                                <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
-                                    { isMuted ? <VolumeOff/> : <VolumeDown/>}
-                                </IconButton>
+                                <Tooltip title={ isMuted ? "Unmute" : "Mute"}>
+                                    <IconButton onClick={handleMuteUnmute} disabled={controlsLocked ? true : false}>
+                                        { isMuted ? <VolumeOff/> : <VolumeDown/>}
+                                    </IconButton>
+                                </Tooltip>
                                     <Slider 
                                         sx={{width: '100px'}} 
                                         aria-label="Volume" 
@@ -224,9 +226,11 @@ const CustomAudioPlayer = () => {
                                         valueLabelDisplay="auto"
                                         disabled={controlsLocked ? true : false} 
                                     />
-                                <IconButton onClick={(e) => handleVolumeChange(e, 100)} disabled={controlsLocked ? true : false}>
-                                    <VolumeUp/>
-                                </IconButton>
+                                <Tooltip title="100%">
+                                    <IconButton onClick={(e) => handleVolumeChange(e, 100)} disabled={controlsLocked ? true : false}>
+                                        <VolumeUp/>
+                                    </IconButton>
+                                </Tooltip>
                             </Box>
                         </Box>
                     </Box>

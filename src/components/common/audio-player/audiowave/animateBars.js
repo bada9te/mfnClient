@@ -22,18 +22,7 @@ function animateBars(analyser, canvas, canvasCtx, dataArray, bufferLength, theme
       // Calculate the height of the current bar based on the audio data and the canvas height.
       barHeight = (dataArray[i] / 255) * HEIGHT / 1.35;
   
-      // Generate random RGB values for each bar.
-      const maximum = 10;
-      const minimum = -10;
-
-      let rgb = theme === 'dark' ? [54, 178, 172] : [28, 148, 164];
-
-      var r = rgb[0] + Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-      var g = rgb[1] + Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-      var b = rgb[2] + Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-  
-      // Set the canvas fill style to the random RGB values.
-      canvasCtx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+      canvasCtx.fillStyle = '#80ED99';
   
       // Draw the bar on the canvas at the current x-position and with the calculated height and width.
       canvasCtx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);

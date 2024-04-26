@@ -13,7 +13,7 @@ export default function PostItemUnavailable(props: {
     const { t } = useTranslation("objects");
 
     return (
-            <Card sx={{width: {xs: '95%', sm: '375px', md: '400px'}, boxShadow: 10, borderRadius: 5}}>
+            <Card sx={{width: {xs: '95%', sm: '375px'}, boxShadow: 10, borderRadius: 5}}>
                 <CardHeader
                     avatar={
                         <Skeleton variant="circular" width={40} height={40} />
@@ -22,7 +22,7 @@ export default function PostItemUnavailable(props: {
                     subheader={<Skeleton variant="text" width={150} sx={{ fontSize: '1rem' }} />}
                 />
                 
-                <Skeleton variant="rectangular" height={160} />
+                <Skeleton variant="rectangular" height={160} sx={{ width: {xs: '100%', sm: '375px'} }}/>
                 { 
                     (() => {
                         if (status !== "in-player" && status !== "battle-form") {

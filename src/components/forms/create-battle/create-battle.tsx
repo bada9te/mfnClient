@@ -76,7 +76,7 @@ export default function CreateBattleForm() {
             </Box>
             
             <Stack direction="column" spacing={2} sx={{ my: 3, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <FormGroup>
+                <FormGroup sx={{ width: '100%' }}>
                     {
                         post1 != null 
                         ?
@@ -99,7 +99,7 @@ export default function CreateBattleForm() {
                     }
                 </FormGroup>
 
-                <FormGroup>
+                <FormGroup sx={{ width: '100%' }}>
                     {
                         post2 != null 
                         ?
