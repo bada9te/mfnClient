@@ -63,7 +63,7 @@ export default function UserSelectContainer(props: {
             {
                 visibleData.length === 0 
                 ?
-                <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                <Box sx={{width: '100%', display: 'flex', my: 3, justifyContent: 'center'}}>
                     <Typography>
                         {t('select.user.not_found')}
                     </Typography>

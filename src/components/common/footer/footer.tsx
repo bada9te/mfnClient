@@ -13,7 +13,7 @@ export default function Footer() {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           color: 'white',
           scrollSnapAlign: 'start',
-          borderRadius: 0
+          borderRadius: 0,
         }}
       >
         <Typography variant="body1" textAlign="center" sx={{mx: 1}}>

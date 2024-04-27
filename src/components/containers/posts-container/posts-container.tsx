@@ -117,10 +117,11 @@ export default function PostsContainer(props: {
                                 spacing={2} 
                                 sx={{
                                     width: '100%', 
+                                    minHeight: '78vh',
                                     py: 1.5, 
                                     display: 'flex', 
                                     justifyContent: 'space-around',
-                                    alignItems: 'center',
+                                    alignItems: 'flex-start',
                                 }} 
                                 direction="row" 
                                 useFlexGap 

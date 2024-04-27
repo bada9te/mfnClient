@@ -9,6 +9,7 @@ export default function TabPanel(props: {
   
     return (
       <div
+        style={{minHeight: '80vh'}}
         role="tabpanel"
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
