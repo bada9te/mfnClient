@@ -323,34 +323,31 @@ export default function PostItem(props: {
                             if (audioPlayer.src === base.audio && audioPlayer.isPlaying) {
                                 return (
                                     <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>   
-                                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
-                                            <Button startIcon={<Pause/>} sx={{ borderRadius: 0 }} variant="contained" size="small" onClick={pauseAudio} disabled={audioPlayer.controlsLocked ? true : false}>
+                                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }} fullWidth>
+                                            <Button fullWidth startIcon={<Pause/>} sx={{ borderRadius: 0 }} variant="contained" size="small" onClick={pauseAudio} disabled={audioPlayer.controlsLocked ? true : false}>
                                                 {t('post.pause')}
                                             </Button>
 
                                             <Button 
+                                                fullWidth
                                                 startIcon={<Loop/>}
                                                 sx={{ 
                                                     backgroundColor: audioPlayer.loop ? '#1BA39C' : '', 
                                                     color: audioPlayer.loop ? 'white' : '',
-                                                    borderTopRightRadius: 50,
-                                                    borderBottomRightRadius: 0,
+                                                    borderRadius: 0,
                                                 }} 
                                                 variant="contained" size="small" onClick={switchLoop} 
                                                 disabled={ audioPlayer.controlsLocked ? true : false }
                                             >
                                                 {t('post.loop')} 
                                             </Button>
-                                        </ButtonGroup>
-                                        <ButtonGroup variant="contained" sx={{ boxShadow: 0 }}>
                                             <Button 
-                                                startIcon={ audioPlayer.isMuted || audioPlayer.volume === 0 ? <VolumeOff/> : <VolumeUp/> }
+                                                fullWidth
+                                                startIcon={ audioPlayer.isMuted ? <VolumeOff/> : <VolumeUp/> }
                                                 sx={{ 
-                                                    backgroundColor: audioPlayer.isMuted || audioPlayer.volume === 0 ? '#f44336' : '',
+                                                    backgroundColor: audioPlayer.isMuted ? '#f44336' : '',
                                                     color: audioPlayer.isMuted ? 'white' : '',
-                                                    borderTopLeftRadius: 50,
-                                                    borderBottomLeftRadius: 0,
-                                                    borderTopRightRadius: 0,
+                                                    borderRadius: 0,
                                                 }} 
                                                 variant="contained" size="small" onClick={handleMuteUnmute} 
                                                 disabled={audioPlayer.controlsLocked ? true : false}
@@ -362,14 +359,16 @@ export default function PostItem(props: {
                                 );
                             } else {
                                 return (
-                                    <ButtonGroup variant="contained" sx={{ boxShadow: 0 }} >
+                                    <ButtonGroup variant="contained" sx={{ boxShadow: 0 }} fullWidth>
                                         <Button 
                                             startIcon={<PlayArrow/>}
                                             sx={{ 
                                                 borderTopRightRadius: ["selecting", "voting"].includes(addons.status) && !addons?.votedBy?.includes(currentUser?._id) ? 0 : 50,
-                                                borderBottomRightRadius: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0,
+                                                borderRadius: 0,
                                             }} 
                                             disabled={!base.audio}
+                                            fullWidth
+                                            color='secondary'
                                             variant="contained" size="small" onClick={playAudio}
                                         >
                                             {t('post.play')}

@@ -14,7 +14,7 @@ const UserSelectModal = props => {
     const { user: currentUser } = useReactiveVar(baseState);
     const userSelectModal = useReactiveVar(userSelectModalState);
     const { selectType, sharedItem: sharedItemId, checked } = useReactiveVar(userSelectContainerState);
-    const { t } = useTranslation("modals");
+    const { t } = useTranslation("containers");
     const { enqueueSnackbar } = useSnackbar();
     
     const handleClose = () => {
@@ -28,6 +28,11 @@ const UserSelectModal = props => {
     const [ createMessage ] = useMutation(CHAT_MESSAGE_CREATE_MUTATION);
     const handleUserAndChatsSelect = () => {
         enqueueSnackbar(t('select.user.snack.pending'), { autoHideDuration: 1500 });
+        if (!checked.length) {
+            enqueueSnackbar(t('select.user.snack.error'), { autoHideDuration: 3000, variant: 'error' })
+            return;
+        }
+
         const promises = [];
         if (selectType === 'postShare') {
             checked.forEach(({ _id, __typename }) => {
