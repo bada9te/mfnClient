@@ -95,7 +95,7 @@ const PostSelectContainer = () => {
 
 
     return (
-        <Stack spacing={4} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', height: '100%'}} direction="row" useFlexGap flexWrap="wrap">
+        <Stack spacing={4} sx={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', height: '100%', p: 1.5}} direction="row" useFlexGap flexWrap="wrap">
             {
                 (() => {
                     if (loading && query !== "") {

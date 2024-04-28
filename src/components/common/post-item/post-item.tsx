@@ -205,7 +205,7 @@ export default function PostItem(props: {
 
     return (
         <Card sx={{
-            width: {xs: '95%', sm: '375px'}, 
+            width: {xs: '100%', sm: '375px'}, 
             boxShadow: 10, 
             borderRadius: addons.status === "in-player" ? 0 : 5,
             transition: '500ms',
@@ -377,13 +377,13 @@ export default function PostItem(props: {
                                             (() => {
                                                 if (addons.status === "selecting") {
                                                     return (
-                                                        <Button size="small" onClick={() => addons.selectPost({base, addons})} startIcon={<CheckCircle/>} sx={{ borderTopRightRadius: 50, borderBottomRightRadius: 0, borderBottomLeftRadius: 25, backgroundColor: '#36B2AC' }}>
+                                                        <Button size="small" onClick={() => addons.selectPost({base, addons})} startIcon={<CheckCircle/>} fullWidth sx={{ borderRadius: 0, backgroundColor: '#36B2AC' }}>
                                                             {t('post.select')}
                                                         </Button>
                                                     );
                                                 } else if (addons.status === "voting" && !addons.votedBy.includes(currentUser?._id)) {
                                                     return (
-                                                        <Button size="small" onClick={() => addons.makeBattleVote(addons.battleId, addons.postNScore, 1, currentUser?._id)} startIcon={<HowToVote/>} sx={{ borderTopRightRadius: 50, borderBottomRightRadius: 0, borderBottomLeftRadius: 25, backgroundColor: '#36B2AC' }}>
+                                                        <Button size="small" onClick={() => addons.makeBattleVote(addons.battleId, addons.postNScore, 1, currentUser?._id)} fullWidth startIcon={<HowToVote/>} sx={{ borderRadius: 0, backgroundColor: '#36B2AC' }}>
                                                             {t('post.vote+1')}
                                                         </Button>
                                                     );

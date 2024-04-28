@@ -11,6 +11,7 @@ import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 import { useBattleCreateMutation } from "utils/graphql-requests/generated/schema";
 import { TPostAddons, TPostBase } from "components/common/post-item/types";
+import { battlesContainerState } from "components/containers/battles-container/reactive";
 
 
 type Inputs = {
@@ -50,6 +51,7 @@ export default function CreateBattleForm() {
             .then(({ data }) => {
                 reset();
                 enqueueSnackbar(t('battle.snack.success'), {autoHideDuration: 1500, variant: 'success'});
+                battlesContainerState({...battlesContainerState(), activePage: 0})
             }).catch(err => {
                 enqueueSnackbar(t('battle.snack.error'), { autoHideDuration: 3000, variant: 'error' });
             }); 
@@ -76,7 +78,7 @@ export default function CreateBattleForm() {
             </Box>
             
             <Stack direction="column" spacing={2} sx={{ my: 3, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <FormGroup sx={{ width: '100%' }}>
+                <FormGroup sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                     {
                         post1 != null 
                         ?

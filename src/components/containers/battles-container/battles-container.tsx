@@ -63,7 +63,7 @@ export default function BattlesContainer() {
     const [ makeVote ] = useBattleMakeVoteMutation();
     const [ getBattles, { data, loading, stopPolling } ] = useBattlesByStatusLazyQuery({
         variables: {
-            finished: status === 0,
+            finished: status !== 0,
             offset: activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage,
             limit: maxCountPerPage,
         },
