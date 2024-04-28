@@ -5,6 +5,9 @@ import reportWebVitals from './reportWebVitals';
 import "react-chat-elements/dist/main.css"
 import { BrowserRouter } from 'react-router-dom';
 
+// rainbowkit
+import RainbowkitAppProvider from 'utils/rainbowkit/rainbowkitProvider';
+
 // apollo
 import { ApolloProvider } from '@apollo/client';
 import APClient from './utils/apollo/client';
@@ -24,13 +27,15 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <ApolloProvider client={APClient}>
-      <I18nextProvider i18n={i18next}>
-          <BrowserRouter>
-              <App />
-          </BrowserRouter> 
-      </I18nextProvider>
-  </ApolloProvider>
+    <ApolloProvider client={APClient}>
+        <RainbowkitAppProvider>
+            <I18nextProvider i18n={i18next}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter> 
+            </I18nextProvider>
+        </RainbowkitAppProvider>
+    </ApolloProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

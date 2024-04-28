@@ -1,5 +1,5 @@
 import { Menu, MenuItem, Typography } from "@mui/material";
-import { Person, Logout, ContactSupport, BookmarkAdded, Settings, Notifications, Login, Language } from '@mui/icons-material';
+import { Person, Logout, ContactSupport, BookmarkAdded, Settings, Notifications, Login, Language, Wallet } from '@mui/icons-material';
 import ThemeSwitcher from "components/common/theme-switcher/theme-switcher";
 import { useNavigate } from "react-router-dom";
 import StyledBadge from "../styled-badge/styled-badge";
@@ -8,6 +8,7 @@ import { baseState } from "components/baseReactive";
 import { languageSelectModalState } from "components/modals/language-select-modal/reactive";
 import { useTranslation } from "react-i18next";
 import { Notification } from "utils/graphql-requests/generated/schema";
+import { walletConnectModalState } from "components/modals/wallet-modal/reactive";
 
 
 
@@ -17,7 +18,7 @@ export default function TopBarUserMenu(props: {
     anchorElUser: (EventTarget & HTMLButtonElement) | null
 }) {
     const { handleCloseUserMenu, notifications, anchorElUser } = props;
-    const items = ['Profile', 'Notifications', 'Edit_profile', 'Saved_posts', 'Support', 'Language', 'Logout'];
+    const items = ['Profile', 'Wallet', 'Notifications', 'Edit_profile', 'Saved_posts', 'Support', 'Language', 'Logout'];
     const itemsNL = ['Log_in', 'Support', 'Language'];
     const navigate = useNavigate();
     const { user: currentUser } = useReactiveVar(baseState);
@@ -50,6 +51,9 @@ export default function TopBarUserMenu(props: {
             case 'Language': 
                 languageSelectModalState({ isShowing: true });
                 break;
+            case 'Wallet': 
+                walletConnectModalState({ isShowing: true });
+                break;
             default:
                 break;
         }
@@ -72,7 +76,7 @@ export default function TopBarUserMenu(props: {
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
-        >
+        >   
             {
                 currentUser && currentUser._id !== ""
                 ?
@@ -85,6 +89,8 @@ export default function TopBarUserMenu(props: {
                                         switch(item) {
                                             case 'Profile':
                                                 return (<Person sx={{mr: 1}}/>);
+                                            case 'Wallet':
+                                                return (<Wallet sx={{mr: 1}}/>);
                                             case 'Notifications':
                                                 if (notifications.length > 0 && notifications.find(i => i.checked === false)) 
                                                     return (

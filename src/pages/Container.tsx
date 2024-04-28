@@ -15,6 +15,7 @@ import ReportsModal from "../components/modals/report-modal/report-modal";
 import PostSelectModal from "../components/modals/post-select-modal/post-select-modal";
 import LanguageSelectModal from "../components/modals/language-select-modal/language-select-modal";
 import ChatCreateModal from "../components/modals/chat-create-modal/chat-create-modal";
+import WalletConnectModal from "components/modals/wallet-modal/wallet-modal";
 
 
 export default memo(function Container() {
@@ -30,6 +31,7 @@ export default memo(function Container() {
             <PostSelectModal/>
             <LanguageSelectModal/>
             <ChatCreateModal/>
+            <WalletConnectModal/>
 
             {/* BARS */}
             <LeftBarPosts/>

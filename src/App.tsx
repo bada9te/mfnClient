@@ -10,6 +10,7 @@ import muiTheme from './utils/mui-theme/theme';
 import socket from './utils/socket/socket';
 import { pageLoaderState } from 'components/common/page-loader/reactive';
 
+
 const publicAvailablePages = [
   'profile',
   'track',
@@ -24,43 +25,43 @@ const publicAvailablePages = [
 ]
 
 function App() {
-  //const navigate = useNavigate();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { user } = useReactiveVar(baseState);
+    //const navigate = useNavigate();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { user } = useReactiveVar(baseState);
 
 
-  const { theme: themeMode } = useReactiveVar(baseState);
+    const { theme: themeMode } = useReactiveVar(baseState);
   
-  useEffect(() => {
-    httpGetCurrentUser()
-      .then(({data}) => {
-        if (data.done) {
-          baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
-          socket.auth = { userId: data.user._id };
-          socket.connect();
-        } else {
-          (publicAvailablePages.includes(location.pathname) && 
-          !['/app', '/'].includes(location.pathname)) && 
-          navigate('/app/login');
-        }
-      });
-  }, [navigate]);
+    useEffect(() => {
+        httpGetCurrentUser()
+            .then(({data}) => {
+                if (data.done) {
+                    baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
+                    socket.auth = { userId: data.user._id };
+                    socket.connect();
+                } else {
+                    (publicAvailablePages.includes(location.pathname) && 
+                    !['/app', '/'].includes(location.pathname)) && 
+                    navigate('/app/login');
+                }
+            });
+    }, [navigate]);
 
-  useLayoutEffect(() => {
-    pageLoaderState({ isLoading: true });
-    setTimeout(() => {
-      pageLoaderState({ isLoading: false });
-    }, 800);
-  }, [location.pathname]);
+    useLayoutEffect(() => {
+            pageLoaderState({ isLoading: true });
+            setTimeout(() => {
+            pageLoaderState({ isLoading: false });
+        }, 800);
+    }, [location.pathname]);
 
-  return (
-    <ThemeProvider theme={muiTheme(themeMode)}>
-      <SnackbarProvider maxSnack={5}>
-          <ApplicationRouter/>
-      </SnackbarProvider>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={muiTheme(themeMode)}>
+            <SnackbarProvider maxSnack={5}>
+                <ApplicationRouter/>
+            </SnackbarProvider>
+        </ThemeProvider>
+    );
 }
 
 export default App;

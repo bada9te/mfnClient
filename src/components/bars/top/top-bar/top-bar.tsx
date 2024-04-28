@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 
 
 
-
 export default memo(function Topbar() {
     const { user, locations } = useReactiveVar(baseState);
     const [ getUnreadNotifications, { data } ] = useLazyQuery(NOTIFICATIONS_QUERY);
@@ -197,11 +196,12 @@ export default memo(function Topbar() {
                                 </IconButton>
                             </Tooltip>
 
+
                             <TopBarUserMenu 
                                 handleCloseUserMenu={handleCloseUserMenu}
                                 notifications={data?.notifications || []}
                                 anchorElUser={anchorElUser}
-                            />
+                                />
                         </Box>
                     </Toolbar>
                 </Container>
