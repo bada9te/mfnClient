@@ -62,12 +62,16 @@ export default memo(function BottomBar() {
                 width: { xs: '100%', lg: "1200px" },
                 borderRadius: 0,
                 zIndex: 99,
+                borderTopLeftRadius: '24px',
+                borderTopRightRadius: '24px',
             }} 
             elevation={1}
 
         >
             <BottomNavigation sx={{ 
                 background: 'none',  
+                borderTopLeftRadius: '24px',
+                borderTopRightRadius: '24px',
             }} showLabels value={bottomBar.value === '' ? location.pathname : bottomBar.value} onChange={handleChange}>
                 <BottomNavigationAction value="tracks" label={t('bottombar.tracks')} icon={<MusicNote />} />
                 {

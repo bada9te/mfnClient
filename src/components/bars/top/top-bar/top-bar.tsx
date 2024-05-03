@@ -87,6 +87,7 @@ export default memo(function Topbar() {
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
+                borderRadius: '0 0 24px 24px '
             }}>
                 <Container >
                     <Toolbar disableGutters>

@@ -6,6 +6,7 @@ import loginFormBG from '../assets/bgs/loginFormBG.png';
 import LogRegVerContainer from '../components/containers/image-left-form-conatiner/image-left-form-container';
 import { HowToReg, LockReset } from '@mui/icons-material';
 import { useTranslation } from "react-i18next";
+import BaseContentContainer from '../components/containers/base-content-container/base-content-container';
 
 
 export default function Login() {
