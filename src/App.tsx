@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
 import { baseState } from './components/baseReactive';
@@ -28,8 +28,6 @@ function App() {
     //const navigate = useNavigate();
     const location = useLocation();
     const navigate = useNavigate();
-    const { user } = useReactiveVar(baseState);
-
 
     const { theme: themeMode } = useReactiveVar(baseState);
   
@@ -46,7 +44,7 @@ function App() {
                     navigate('/app/login');
                 }
             });
-    }, [navigate]);
+    }, [navigate, location.pathname]);
 
     useLayoutEffect(() => {
             pageLoaderState({ isLoading: true });

@@ -12,7 +12,7 @@ import { postSelectContainerState } from "./reactive";
 import { useTranslation } from "react-i18next";
 import defineMaxPage from "../../../utils/common-functions/defineMaxPage";
 import { enqueueSnackbar } from "notistack";
-import { Playlist, PlaylistsByOwnerIdQuery, Post, usePlaylistSwicthTrackMutation, usePostsByTitleLazyQuery, usePostsByTitleQuery } from "utils/graphql-requests/generated/schema";
+import { Playlist, PlaylistsByOwnerIdQuery, Post, usePlaylistSwicthTrackMutation, usePostsByTitleQuery } from "utils/graphql-requests/generated/schema";
 import { TPostAddons, TPostBase } from "components/common/post-item/types";
 
 

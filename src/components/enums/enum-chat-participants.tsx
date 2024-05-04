@@ -1,4 +1,4 @@
-import { ChatQuery, User } from "utils/graphql-requests/generated/schema";
+import { ChatQuery } from "utils/graphql-requests/generated/schema";
 import ChatParticipantItem from "../common/chat-participant-item/chat-participant-item";
 
 export default function EnumChatParticipants(props: {

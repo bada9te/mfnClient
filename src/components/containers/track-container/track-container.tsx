@@ -3,7 +3,6 @@ import { SpinnerCircular } from "../../common/spinner/Spinner";
 import { Box, Stack } from "@mui/material";
 import PostGenerate from "../../common/post-item/post-generate";
 import { Post, usePostQuery } from "utils/graphql-requests/generated/schema";
-import { TPostAddons, TPostBase } from "components/common/post-item/types";
 
 
 export default function TrackContainer(props: {
