@@ -29,7 +29,8 @@ export default function ChatMessagesContainer(props: {
     };
 }) {
     const { handleTabSwitch, chat } = props;
-    const chatParticipants = chat.data.chat.participants?.map(i => i?._id) || [];
+    console.log(chat)
+    const chatParticipants = chat?.data?.chat?.participants?.map(i => i?._id) || [];
     const navigate = useNavigate();
     const [ offset, setOffset ] = useState(0);
     const [ firstLoad, setFirstLoad ] = useState(true);
