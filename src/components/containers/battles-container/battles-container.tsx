@@ -64,7 +64,7 @@ export default function BattlesContainer() {
     const [ getBattles, { data, loading, stopPolling } ] = useBattlesByStatusLazyQuery({
         variables: {
             finished: status !== 0,
-            offset: activePage === 0 ? maxCountPerPage : (activePage - 1) * maxCountPerPage,
+            offset: (activePage - 1) * maxCountPerPage,
             limit: maxCountPerPage,
         },
         pollInterval: 15000,
