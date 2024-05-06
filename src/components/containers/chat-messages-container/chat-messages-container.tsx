@@ -74,6 +74,7 @@ export default function ChatMessagesContainer(props: {
 
     // handle message reply
     const handleMessageReply = (msg: ChatMessage) => {
+        console.log(msg)
         chatMessagesContainerState({...chatMessagesContainerState(), replyingTo: {
             messageId: msg._id,
             userId: msg.owner._id,
@@ -91,10 +92,10 @@ export default function ChatMessagesContainer(props: {
             type: "text",
         };
 
+        
         if (replyingTo.messageId) { 
             input.reply = replyingTo.messageId; 
         }
-
 
         sendMessage({ 
             variables: { input },
@@ -290,20 +291,20 @@ export default function ChatMessagesContainer(props: {
 
                         if (chat.data) {
                             return (
-                                <Card>
+                                <Card sx={{ borderRadius: '20px', m: 2, boxShadow: 5 }}>
                                     <ChatHeader chat={chat.data.chat} handleClick={(e: React.MouseEvent<HTMLDivElement>) => handleTabSwitch(e, 2)} loading={loadingMessages}/>
                                     {
                                         (() => {
                                             if (!messages?.chatMessagesByChatId?.length || loadingMessages) {
                                                 return (
-                                                    <Stack sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>
+                                                    <Stack sx={{height: {xs: 'calc(100vh - 300px)', md: 'calc(100vh - 317px)'}, p: 2, pb: 0, mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}} spacing={3}>
                                                         <Typography>No messages yet</Typography>
                                                     </Stack>
                                                 );
                                             }
 
                                             return (
-                                                <Stack ref={messagesContainerRef as unknown as React.RefObject<HTMLDivElement>} sx={{height: {xs: 'calc(100vh - 335px)', md: 'calc(100vh - 347px)'}, p: 2, mt: 0, overflow: 'auto'}} spacing={3}>
+                                                <Stack ref={messagesContainerRef as unknown as React.RefObject<HTMLDivElement>} sx={{height: {xs: 'calc(100vh - 300px)', md: 'calc(100vh - 317px)'}, p: 2, m: 0, overflow: 'auto'}} spacing={3}>
                                                     { /* @ts-ignore */ }
                                                     <MessageList
                                                         className='message-list'
@@ -312,7 +313,7 @@ export default function ChatMessagesContainer(props: {
                                                         dataSource={
                                                             reverseDataArray(messages.chatMessagesByChatId).map((msg: any) => {
                                                                 let message = {
-                                                                    id: msg._id,
+                                                                    _id: msg._id,
                                                                     position: currentUser._id === msg.owner._id ? 'right' : 'left',
                                                                     type: msg.type || 'text',
                                                                     title: msg.owner.nick,

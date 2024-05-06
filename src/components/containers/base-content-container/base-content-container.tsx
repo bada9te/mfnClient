@@ -10,8 +10,9 @@ export default function BaseContentContainer(props: {
     right?: React.ReactNode;
     children: React.ReactNode;
     mandatoryScroll?: boolean;
+    hideFooter?: boolean;
 }) {
-    const {left, right, mandatoryScroll} = props;
+    const { left, right, mandatoryScroll, hideFooter } = props;
     const { isLoading } = useReactiveVar(pageLoaderState);
 
     return (
@@ -42,8 +43,14 @@ export default function BaseContentContainer(props: {
                                 }
                             } else {
                                 return {
-                                    overflow: 'hidden', background: 'rgba(255,255,255,0.3)',
-                                    backdropFilter: 'blur(5px)', color: 'white', pt: '65px', overflowY: 'auto', height: '100%', pb: '50px', width: '100%',
+                                    background: 'rgba(255,255,255,0.3)',
+                                    backdropFilter: 'blur(5px)', 
+                                    color: 'white', 
+                                    pt: '65px', 
+                                    overflow: 'auto', 
+                                    height: '100vh', 
+                                    pb: '50px',
+                                    width: '100%',
                                 }
                             }
                         })()}
@@ -58,7 +65,7 @@ export default function BaseContentContainer(props: {
                         item
                     >
                         {props.children}
-                        <Footer/>
+                        {!hideFooter && <Footer/> }
                     </Grid>
                 </Grid>
             }

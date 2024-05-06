@@ -101,7 +101,7 @@ export default function ChatsContainer() {
 
 
     return (
-        <Box height={'100%'}>
+        <Box>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
                 <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                     <Tab icon={<Forum/>} label={t('chats.list')}    id="simple-tab-0" aria-controls="simple-tabpanel-0"/>
@@ -160,7 +160,7 @@ export default function ChatsContainer() {
 
                             if (selectedChatData) {
                                 return (
-                                    <Stack sx={{ p: 2, mt: 0 }} spacing={2}>
+                                    <Stack sx={{ p: 2, mt: 0, pb: 0 }} spacing={2}>
                                         <Paper sx={{ height: 'fit-content', boxShadow: 10, borderRadius: 5 }}>
                                             <CardContent>
                                                 <Box sx={{display: 'flex', justifyContent: 'start', alignItems: 'center', p: 1}}>

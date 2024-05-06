@@ -8,6 +8,7 @@ import { MODERATION_ACTION_VALIDATE_QUERY } from "../utils/graphql-requests/mode
 import { useQuery } from "@apollo/client";
 import { SpinnerCircular } from "../components/common/spinner/Spinner";
 import { useTranslation } from "react-i18next";
+import BaseContentContainer from "components/containers/base-content-container/base-content-container";
 
 
 export default function AccountVerify() {
@@ -26,51 +27,53 @@ export default function AccountVerify() {
 
 
     return(
-        <LogRegVerContainer bg={VerifyAccBG} text={t('verify.main_text')}>
-            <Box sx={{ width: '30rem', height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                    <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
+        <BaseContentContainer>
+            <LogRegVerContainer bg={VerifyAccBG} text={t('verify.main_text')}>
+                <Box sx={{ width: '30rem', height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
+                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
+                    </Box>
+                    {
+                        (() => {
+                            if (loading) {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('verify.validating')}
+                                        </Typography>
+                                        <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
+                                            <SpinnerCircular/>
+                                        </CardContent>
+                                    </>
+                                );
+                            }
+                            if (data?.moderationActionValidate) {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('verify.verify_text')} 
+                                        </Typography>
+                                        <CardContent>
+                                            <AccountVerifyForm userId={userId as string} actionId={actionId as string}/>
+                                        </CardContent>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('verify.error')}
+                                        </Typography>
+                                        <CardContent>
+                                            <Typography textAlign={'center'}>{t('This action is not valid')}</Typography>
+                                        </CardContent>
+                                    </>
+                                );
+                            }
+                        })()
+                    }
                 </Box>
-                {
-                    (() => {
-                        if (loading) {
-                            return (
-                                <>
-                                    <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        {t('verify.validating')}
-                                    </Typography>
-                                    <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
-                                        <SpinnerCircular/>
-                                    </CardContent>
-                                </>
-                            );
-                        }
-                        if (data?.moderationActionValidate) {
-                            return (
-                                <>
-                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        {t('verify.verify_text')} 
-                                    </Typography>
-                                    <CardContent>
-                                        <AccountVerifyForm userId={userId as string} actionId={actionId as string}/>
-                                    </CardContent>
-                                </>
-                            );
-                        } else {
-                            return (
-                                <>
-                                    <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        {t('verify.error')}
-                                    </Typography>
-                                    <CardContent>
-                                        <Typography textAlign={'center'}>{t('This action is not valid')}</Typography>
-                                    </CardContent>
-                                </>
-                            );
-                        }
-                    })()
-                }
-            </Box>
-        </LogRegVerContainer>
+            </LogRegVerContainer>
+        </BaseContentContainer>
     );
 }

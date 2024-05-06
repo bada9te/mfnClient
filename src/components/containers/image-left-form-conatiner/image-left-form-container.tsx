@@ -8,7 +8,7 @@ export default function LogRegVerContainer(props: {
 }) {
     const { bg, text } = props;
     return (
-        <Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
             <Grid container component="main" sx={{ 
                 borderRadius: { xs: 0, md: 5 },
                 width: { xs: '100%', md: '1200px' },

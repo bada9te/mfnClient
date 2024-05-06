@@ -10,6 +10,7 @@ import { useSnackbar } from 'notistack';
 import { SpinnerCircular } from '../components/common/spinner/Spinner';
 import { Cancel } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import BaseContentContainer from 'components/containers/base-content-container/base-content-container';
 
 
 export default function AccountRestore() {
@@ -50,64 +51,66 @@ export default function AccountRestore() {
 
 
     return(
-        <LogRegVerContainer bg={newPasswordBG} text={`${t('account_restore.main_text')} ${type}`}>
-            <Box sx={{ width: '30rem', height: '100%', boxShadow: 0, display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
-                    <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
-                </Box>
-                {
-                    (() => {
-                        if (loading) {
-                            return (
-                                <>
-                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        {t('account_restore.validating')}
-                                    </Typography>
-                                    <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
-                                        <SpinnerCircular/>
-                                    </CardContent>
-                                </>
-                            );
-                        } else if (data?.moderationActionValidate) {
-                            return (
-                                <>
-                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        {t('account_restore.ready_to_restore')}
-                                    </Typography>
-                                    <CardContent>
-                                        <AccountRestoreForm userId={userId as string} actionId={actionId as string} verifyToken={verifyToken as string} type={type as string}/>
-                                    </CardContent>
+        <BaseContentContainer>
+            <LogRegVerContainer bg={newPasswordBG} text={`${t('account_restore.main_text')} ${type}`}>
+                <Box sx={{ width: '30rem', height: '100%', boxShadow: 0, display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
+                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
+                    </Box>
+                    {
+                        (() => {
+                            if (loading) {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('account_restore.validating')}
+                                        </Typography>
+                                        <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
+                                            <SpinnerCircular/>
+                                        </CardContent>
+                                    </>
+                                );
+                            } else if (data?.moderationActionValidate) {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('account_restore.ready_to_restore')}
+                                        </Typography>
+                                        <CardContent>
+                                            <AccountRestoreForm userId={userId as string} actionId={actionId as string} verifyToken={verifyToken as string} type={type as string}/>
+                                        </CardContent>
 
-                                    <CardActions>
-                                        <Stack direction="column" spacing={0.75} mx={1.5} mb={1.5}>
-                                            <Button 
-                                                sx={{ width: 'fit-content', boxShadow: 10 }}
-                                                startIcon={<Cancel/>}
-                                                variant='contained' 
-                                                onClick={cancelAccountRestore}
-                                            >
-                                                {t('account_restore.cancel')}
-                                            </Button>
-                                        </Stack>
-                                    </CardActions>
-                                </>
-                            );
-                        } else {
-                            return (
-                                <>
-                                    <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
-                                        {t('account_restore.error.validation')}
-                                    </Typography>
-                                    <CardContent>
-                                        <Typography textAlign={'center'}>{t('account_restore.error.text')}</Typography>
-                                    </CardContent>
-                                </>
-                            );
-                        }
-                    })()
-                }  
-            </Box>
-        </LogRegVerContainer>
+                                        <CardActions>
+                                            <Stack direction="column" spacing={0.75} mx={1.5} mb={1.5}>
+                                                <Button 
+                                                    sx={{ width: 'fit-content', boxShadow: 10 }}
+                                                    startIcon={<Cancel/>}
+                                                    variant='contained' 
+                                                    onClick={cancelAccountRestore}
+                                                >
+                                                    {t('account_restore.cancel')}
+                                                </Button>
+                                            </Stack>
+                                        </CardActions>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('account_restore.error.validation')}
+                                        </Typography>
+                                        <CardContent>
+                                            <Typography textAlign={'center'}>{t('account_restore.error.text')}</Typography>
+                                        </CardContent>
+                                    </>
+                                );
+                            }
+                        })()
+                    }  
+                </Box>
+            </LogRegVerContainer>
+        </BaseContentContainer>
     );
 }
 
