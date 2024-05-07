@@ -118,7 +118,7 @@ export default function PostsContainer(props: {
                                 sx={{
                                     width: '100%', 
                                     minHeight: '78vh',
-                                    py: 1.5, 
+                                    p: 2, 
                                     display: 'flex', 
                                     justifyContent: 'space-around',
                                     alignItems: 'flex-start',

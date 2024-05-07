@@ -39,12 +39,12 @@ function TabContent(props: {
                         );
                     } else {
                         return (
-                            <>
+                            <Box sx={{ p: 2 }}>
                                 <EnumBattles battles={battles || []} makeBattleVote={makeBattleVote}/>
                                 { 
                                     //battles?.length > 0 ? <Box sx={{mb: 10}}><PaginationTree/></Box> : null 
                                 }
-                            </>
+                            </Box>
                         );
                     } 
                 })()

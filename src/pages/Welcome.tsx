@@ -8,13 +8,13 @@ import BaseContentContainer from "components/containers/base-content-container/b
 export default function Welcome() {
     return (
         <BaseContentContainer mandatoryScroll>
-                <WelcomePageStart/>
+            <WelcomePageStart/>
 
-                <WelcomePageText/>
-                
-                <WelcomePageBestTrackContainer/>
+            <WelcomePageText/>
+            
+            <WelcomePageBestTrackContainer/>
 
-                <WelcomePageCards/>
+            <WelcomePageCards/>
         </BaseContentContainer>
     );
 }

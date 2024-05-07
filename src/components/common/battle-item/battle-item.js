@@ -29,7 +29,7 @@ const BattleItem = (props) => {
 
 
     return (
-        <Card sx={{ boxShadow: 5, my: 3, p: 0, mx: {xs: 1, md: 2, sm: 1 }, borderRadius: 5 }}>
+        <Card sx={{ boxShadow: 5, my: 3, p: 0, borderRadius: 5 }}>
             <Box sx={{ display: 'flex', justifyContent: 'center',  alignItems: 'center', fontSize: 24,  p: 1, boxShadow: 10, backgroundColor: '#1C94A4', color: 'white' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mx: 1 }}>
                     <Typography variant='span' sx={{ 

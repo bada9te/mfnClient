@@ -10,12 +10,14 @@ export default function ProfileCardEdit() {
 
     return (
             <Box sx={{
+                m: 2,
                 boxShadow: 1,  
                 backgroundImage: currentUser?.background ? `url(${locations?.images}/${currentUser?.background})` : null, 
                 backgroundRepeat: 'no-repeat', 
                 backgroundSize: 'cover', 
                 objectFit: 'contain', 
                 backgroundColor: theme !== 'light' ? '#1e1e1e' : 'white', 
+                borderRadius: '20px',
                 }}
             >
                 <Box sx={{

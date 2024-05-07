@@ -88,18 +88,19 @@ export default function ProfileCard(props: {
             {
                 userLoading || subsLoading
                 ?
-                <Box sx={{minHeight: '200px'}}>
+                <Box sx={{minHeight: '200px', m: 2}}>
                     <SpinnerLinear/>
                 </Box>     
                 :
                 <Box sx={{
+                    m: 2,
                     boxShadow: 10,  
                     backgroundImage: userData?.user.background ? `url(${locations?.images}/${userData?.user.background})` : `url(${ProfileDefaultBGImage})`, 
                     backgroundRepeat: 'no-repeat', 
                     backgroundSize: 'cover', 
                     objectFit: 'contain', 
                     backgroundColor: theme !== 'light' ? '#1e1e1e' : 'white', 
-                    borderRadius: bgRadius ? bgRadius : 0,
+                    borderRadius: '20px',
                 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: 0 }}>
                         <Stack 

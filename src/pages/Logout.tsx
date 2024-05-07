@@ -7,6 +7,7 @@ import { baseState } from "../components/baseReactive";
 import { SpinnerCircular } from "../components/common/spinner/Spinner";
 import { httpLogOut } from "../utils/http-requests/auth";
 import { useTranslation } from "react-i18next";
+import BaseContentContainer from "components/containers/base-content-container/base-content-container";
 
 
 
@@ -36,11 +37,13 @@ export default function Logout() {
     }, [currentUser?._id, navigate, enqueueSnackbar]);
     
     return (
-        <Box sx={{ width: '100%', minHeight: '100vh', py: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Stack direction="column" spacing={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Typography variant="h4" sx={{my: 2}}>{t('logout.text')}</Typography>
-                <SpinnerCircular/>
-            </Stack>
-        </Box>
+        <BaseContentContainer>
+            <Box sx={{ width: '100%', minHeight: '100vh', py: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Stack direction="column" spacing={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Typography variant="h4" sx={{my: 2}}>{t('logout.text')}</Typography>
+                    <SpinnerCircular/>
+                </Stack>
+            </Box>
+        </BaseContentContainer>
     );
 }

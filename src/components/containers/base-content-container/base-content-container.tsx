@@ -40,6 +40,7 @@ export default function BaseContentContainer(props: {
                                     background: 'rgba(255,255,255,0.2)',
                                     backdropFilter: 'blur(5px)',
                                     color: 'white',
+                                    pb: '50px',
                                 }
                             } else {
                                 return {
