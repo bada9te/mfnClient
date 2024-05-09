@@ -11,7 +11,7 @@ export default function ProfileCardEdit() {
     return (
             <Box sx={{
                 m: 2,
-                boxShadow: 1,  
+                boxShadow: 5,  
                 backgroundImage: currentUser?.background ? `url(${locations?.images}/${currentUser?.background})` : null, 
                 backgroundRepeat: 'no-repeat', 
                 backgroundSize: 'cover', 
@@ -24,7 +24,7 @@ export default function ProfileCardEdit() {
                     display: 'flex', 
                     justifyContent: 'center', 
                     alignItems: 'center',
-                    boxShadow: 1
+                    boxShadow: 0
                     }}
                 >
                     <Stack 
