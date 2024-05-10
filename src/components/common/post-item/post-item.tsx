@@ -31,6 +31,7 @@ export default function PostItem(props: {
     const { base, addons } = props;
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
 
     const [likedBy, setLikedBy] = useState<TUserId[]>(base.likedBy);
     const [savedBy, setSavedBy] = useState<TUserId[]>(base.savedBy);
@@ -234,11 +235,11 @@ export default function PostItem(props: {
             {/* ################################# BLURED PANEL ################################# */}
             <Box sx={{ position: 'relative' }}>
                 {
-                    base.img?.endsWith('/') || !base.img
+                    base.img?.endsWith('/') || !base.img || !imageLoaded
                     ?
                     <Skeleton variant="rectangular" height={160} sx={{ width: {xs: '100%', md: '400px'} }}/>
                     :
-                    <CardMedia component="img" image={base.img} alt={base.title} sx={{ height: "160px", width: {xs: '100%', md: '400px'} }}/>
+                    <CardMedia onLoad={() => setImageLoaded(true)} component="img" image={base.img} alt={base.title} sx={{ height: "160px", width: {xs: '100%', md: '400px'} }}/>
                 }
                 <Box sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', bgcolor: 'rgba(0,0,0,0.3)', color: 'white', padding: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(5px)' }}>
                     <Box>

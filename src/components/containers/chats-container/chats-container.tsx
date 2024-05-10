@@ -114,10 +114,18 @@ export default function ChatsContainer() {
                 { 
                     currentUser?._id?.length
                     ?
-                    <>
+                    <Paper sx={{ 
+                        borderRadius: '20px', 
+                        m: 2, 
+                        mb: 0,
+                        boxShadow: 5,
+                    }}>
                         <Button 
                             startIcon={<Add/>} 
-                            sx={{ borderRadius: 0, boxShadow: 5 }} 
+                            sx={{ 
+                                boxShadow: 5, 
+                                borderRadius: !chatsData?.chatsUserRelatedByUserId?.length ? '20px' : '20px 20px 0 0'
+                            }} 
                             variant="contained"
                             color="secondary" 
                             fullWidth 
@@ -134,7 +142,7 @@ export default function ChatsContainer() {
                                 <EnumChats chats={chatsData?.chatsUserRelatedByUserId || []} chatSelectionHandler={chatSelectionHandler}/> 
                             </Box>
                         }
-                    </>
+                    </Paper>
                     :
                     <InfoImage text="You have to be authenticated"/>
                 }
