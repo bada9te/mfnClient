@@ -4,7 +4,7 @@ import axios from "axios";
 const SERVER_BASE = process.env.REACT_APP_SERVER_BASE;
 
 // login
-const httpLogin = async(email, password) => {
+const httpLogin = async(email: string, password: string) => {
     return await axios.post(`${SERVER_BASE}/auth/local`, {
         email,
         password,
@@ -12,7 +12,7 @@ const httpLogin = async(email, password) => {
 }
 
 // register
-const httpRegister = async(data) => {
+const httpRegister = async(data: any) => {
     return await axios.post(`${SERVER_BASE}/register`, data);
 }
 
@@ -22,7 +22,7 @@ const httpLogOut = async() => {
 }
 
 // update session user object
-const httpUpdateSessionUser = async(user) => {
+const httpUpdateSessionUser = async(user: any) => {
     return await axios.post(`${SERVER_BASE}/update-session-user`, user)
 }
 

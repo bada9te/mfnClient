@@ -23,7 +23,7 @@ export default function LoginForm() {
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         // show process
         enqueueSnackbar(t('login.snack.pending'), { autoHideDuration: 1500 })
-        // update store
+        // login
         await httpLogin(data.Email, data.Password)
             .then(({ data }) => {
                 baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
