@@ -59,6 +59,7 @@ export default function AccountVerifyForm(props: {
             <Button
                 type="submit"
                 fullWidth
+                variant="contained"
                 color="secondary"
                 sx={{ mt: 3, mb: 2, boxShadow: 10 }}
             >

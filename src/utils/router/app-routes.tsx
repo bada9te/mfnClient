@@ -10,7 +10,7 @@ export default function ApplicationRoutes() {
                 <Route path='/app/login' element={<Login/>}/>
                 <Route path='/app/logout' element={<Logout/>}/>
                 <Route path='/app/register' element={<Register/>}/>
-                <Route path='/app/account-verify/:userId/:actionId' element={<AccountVerify/>}/>
+                <Route path='/app/account-verify/:userId/:actionId/:verifyToken/:type' element={<AccountVerify/>}/>
                 <Route path='/app/account-restore/:userId/:actionId/:verifyToken/:type' element={<AccountRestore/>}/>
                 <Route path='/app/account-restore/email-check' element={<AccountRestoreEmailCheck/>}/>
                 <Route path='/app' element={<MainPage/>}/>

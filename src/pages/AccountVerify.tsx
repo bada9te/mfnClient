@@ -9,18 +9,19 @@ import { useQuery } from "@apollo/client";
 import { SpinnerCircular } from "../components/common/spinner/Spinner";
 import { useTranslation } from "react-i18next";
 import BaseContentContainer from "components/containers/base-content-container/base-content-container";
+import { useModerationActionValidateQuery } from "utils/graphql-requests/generated/schema";
 
 
 export default function AccountVerify() {
-    const { userId, actionId } = useParams();
+    const { userId, actionId, verifyToken, type } = useParams();
     const { t } = useTranslation("pages");
-    
-    const { data, loading } = useQuery(MODERATION_ACTION_VALIDATE_QUERY, {
+    const { data, loading } = useModerationActionValidateQuery({
         variables: {
             input: {
-                userId,
-                actionId,
-                type: "verify",
+                userId: userId as string,
+                actionId: actionId as string,
+                verifyToken: verifyToken as string,
+                type: type as string,
             }
         }
     });
