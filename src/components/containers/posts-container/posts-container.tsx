@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect } from 'react';
 import { SpinnerLinear } from '../../common/spinner/Spinner';
 import PaginationTree from '../../common/pagination/pagination';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
 import { OperationVariables, QueryResult, useLazyQuery, useReactiveVar } from '@apollo/client';
 import { POSTS_BY_CATEGORY_QUERY, POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '../../../utils/graphql-requests/posts';
@@ -10,7 +10,8 @@ import { baseState } from '../../baseReactive';
 import { postsContainerState } from './reactive';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
+import InfoImage from 'components/common/info-image/info-image';
+import LogoClear from 'assets/icons/logo_clear.png';
 
 
 export default function PostsContainer(props: {
@@ -108,7 +109,7 @@ export default function PostsContainer(props: {
                     } else if (posts.length === 0) {
                         return (
                             <Box sx={{mt: 3, mb: 5, minHeight: '78vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Typography sx={{textAlign: 'center'}}>{t('posts.not_found')}</Typography>
+                                <InfoImage text={t('posts.not_found')} src={LogoClear}/>
                             </Box>
                         );
                     } else {

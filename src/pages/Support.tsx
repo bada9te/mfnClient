@@ -28,7 +28,7 @@ export default function Support () {
                         <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, mb: 0}}>
                             {t('support.title')}
                         </Typography>
-                        <CardContent>
+                        <CardContent sx={{ px: 0, py: 2, ":last-child": { pb: 0 } }}>
                             <FormSupportContact/>
                         </CardContent>
                         <CardActions>

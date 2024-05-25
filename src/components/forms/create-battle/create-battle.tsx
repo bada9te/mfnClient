@@ -58,7 +58,7 @@ export default function CreateBattleForm() {
     }
 
     return (
-        <Paper component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{py: 1, px: 2, boxShadow: 10, borderRadius: 5}}>
+        <Paper component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ px: 2, boxShadow: 10, borderRadius: 5}}>
             <Box sx={{ px: 2 }}>
                 <TextField
                     margin="normal"

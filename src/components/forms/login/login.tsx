@@ -26,7 +26,7 @@ export default function LoginForm() {
         // login
         await httpLogin(data.Email, data.Password)
             .then(({ data }) => {
-                baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
+                baseState({ ...baseState(), user: {...baseState().user, ...data}});
                 navigate('/app/');
                 enqueueSnackbar(`${t('login.snack.success')} ${data.nick}`, { variant: "success", autoHideDuration: 3000 });
             }).catch((err) => {

@@ -115,15 +115,15 @@ export default function BattlesContainer() {
 
             <TabPanel value={status} index={2}>
                 <ImageRightFormContainer bg={newBattleFormBG} text={t('battles.create.main_text')}>
-                    <Box sx={{width: '30rem', height: 'fit-content', mx: 0, px: 0, boxShadow: 0, borderRadius: 5, mb: {xs: 4, sm: 1, md: 0}}}>
+                    <Box sx={{width: '30rem', height: 'fit-content', mx: 0, px: 0, boxShadow: 0, borderRadius: 5}}>
                         {
                             currentUser && currentUser._id !== ""
                             ?
-                            <Box sx={{ my: 3 }}>
+                            <Box>
                                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, pb: 1.5}}>
                                     {t('battles.create.title')}
                                 </Typography>
-                                <CardContent>
+                                <CardContent sx={{ px: 0, py: 2, ":last-child": { pb: 0 } }}>
                                     <CreateBattleForm/>
                                 </CardContent>
                             </Box>

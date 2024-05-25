@@ -10,8 +10,8 @@ export default function ImageRightFormContainer(props: {
     const { bg, text } = props;
 
     return (
-        <Box sx={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', m: 2 }}>
-            <Grid container component="main" sx={{ minHeight: '100vh', position: 'relative' }}>
+        <Box sx={{ height: 'fit-content', display: 'flex', justifyContent: 'center', alignItems: 'center', m: 2 }}>
+            <Grid container component="main" sx={{ position: 'relative' }}>
                 <Grid 
                     item 
                     xs={12} 
@@ -22,7 +22,16 @@ export default function ImageRightFormContainer(props: {
                     component={Paper} 
                     elevation={6} 
                     square 
-                    sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none', color: 'white', boxShadow: 0, pt: '65px', pb: '160px' }}
+                    sx={{
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: { md: 'start', lg: 'center' }, 
+                        background: 'none', 
+                        color: 'white', 
+                        boxShadow: 0, 
+                        pr: { md: 0, lg: 2 },
+                        minHeight: { md: 0, lg: '100vh' }
+                    }}
                 >
                     {props.children}
                 </Grid>

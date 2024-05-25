@@ -51,7 +51,8 @@ function CategoriesContainer() {
                     spacing={2} 
                     sx={{
                         width: '100%', 
-                        py: 1.5, 
+                        pt: 2,
+                        px: 0.75,
                         display: 'flex', 
                         justifyContent: 'space-around',
                         alignItems: 'center',

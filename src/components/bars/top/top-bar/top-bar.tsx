@@ -20,7 +20,7 @@ export default memo(function Topbar() {
     const { t } = useTranslation("bars");
  
     const pages = ['Feed', 'Battles', 'Playlists', 'Categories'];
-    user._id?.length && pages.push('Chats');
+    user._id !== "" && pages.push('Chats');
     const navigate = useNavigate();
 
     const handleNavigate = (where: string) => {
@@ -170,10 +170,10 @@ export default memo(function Topbar() {
                                             textDecoration: 'none', 
                                         }}
                                     >
-                                        { user && user?._id !== "" ? user?.nick : t('topbar.log_in') }
+                                        { (user && user?._id !== "") ? user?.nick : t('topbar.log_in') }
                                     </Typography>
                                     {
-                                        data?.notifications.length > 0
+                                        data?.notifications?.length > 0
                                         ?
                                         <StyledBadge
                                             overlap="circular"

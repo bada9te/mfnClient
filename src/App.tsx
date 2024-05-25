@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useLayoutEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { useReactiveVar } from '@apollo/client';
-import { baseState } from './components/baseReactive';
+import { baseState, userInitialState } from './components/baseReactive';
 import { SnackbarProvider } from 'notistack';
 import { httpGetCurrentUser } from './utils/http-requests/auth';
 import ApplicationRouter from './utils/router/app-routes';
@@ -28,15 +28,16 @@ function App() {
     //const navigate = useNavigate();
     const location = useLocation();
     const navigate = useNavigate();
+    const { user } = baseState();
 
     const { theme: themeMode } = useReactiveVar(baseState);
   
     useEffect(() => {
         httpGetCurrentUser()
             .then(({data}) => {
-                if (data.done) {
-                    baseState({ ...baseState(), user: {...baseState().user, ...data.user}});
-                    socket.auth = { userId: data.user._id };
+                if (data) {
+                    baseState({ ...baseState(), user: {...baseState().user, ...data}});
+                    socket.auth = { userId: data._id };
                     socket.connect();
                 } else {
                     (publicAvailablePages.includes(location.pathname) && 
@@ -44,7 +45,11 @@ function App() {
                     navigate('/app/login');
                 }
             }).catch(() => {
-                console.log("Not authenticated!")
+                console.log("Not authenticated!");
+                if (user._id.length) {
+                    baseState({...baseState(), user: userInitialState });
+                    console.log("User state was restored.");
+                }
             });
     }, [navigate, location.pathname]);
 

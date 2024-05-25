@@ -71,7 +71,7 @@ export default function PostUpload() {
                                 />
                             </Box>
                         </Box>
-                        <CardContent>
+                        <CardContent sx={{ px: 0, py: 2, ":last-child": { pb: 0 } }}>
                             <PostUploadForm/>
                         </CardContent>
                     </Box>
