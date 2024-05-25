@@ -47,6 +47,20 @@ export const USERS_BY_IDS_QUERY = gql`
 `;
 
 // M
+export const USER_CREATE_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userCreate($input: AddUserInput!) {
+        userCreate(input: $input) {
+            user {
+                ...CoreUserFileds
+            }
+            action {
+                _id
+            }
+        }
+    }
+`;
+
 export const USER_DELETE_BY_ID_MUTATION = gql`
     mutation userDeleteById($_id: ID!) {
         userDeleteById(_id: $_id) {

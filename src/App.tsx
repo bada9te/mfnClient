@@ -43,6 +43,8 @@ function App() {
                     !['/app', '/'].includes(location.pathname)) && 
                     navigate('/app/login');
                 }
+            }).catch(() => {
+                console.log("Not authenticated!")
             });
     }, [navigate, location.pathname]);
 

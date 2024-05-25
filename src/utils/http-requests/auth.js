@@ -5,7 +5,7 @@ const SERVER_BASE = process.env.REACT_APP_SERVER_BASE;
 
 // login
 const httpLogin = async(email, password) => {
-    return await axios.post(`${SERVER_BASE}/login`, {
+    return await axios.post(`${SERVER_BASE}/auth/local`, {
         email,
         password,
     }, {withCredentials: true}); 
@@ -28,7 +28,7 @@ const httpUpdateSessionUser = async(user) => {
 
 // get current user 
 const httpGetCurrentUser = async() => {
-    return await axios.get(`${SERVER_BASE}/current-user`, { withCredentials: true });
+    return await axios.get(`${SERVER_BASE}/auth/me`, { withCredentials: true });
 }
 
 

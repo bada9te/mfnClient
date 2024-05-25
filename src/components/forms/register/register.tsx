@@ -5,6 +5,7 @@ import { useSnackbar } from "notistack";
 import SocialMediaLogin from "../../common/social-media-login/social-media-login";
 import { httpRegister } from "../../../utils/http-requests/auth";
 import { useTranslation } from "react-i18next";
+import { useUserCreateMutation } from "utils/graphql-requests/generated/schema";
 
 
 type Inputs = {
@@ -19,19 +20,26 @@ export default function RegisterForm() {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, getValues } = useForm<Inputs>();
     const { enqueueSnackbar } = useSnackbar();
+    const [ createUser ] = useUserCreateMutation();
     const { t } = useTranslation("forms");
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('register.snack.pending'), { autoHideDuration: 1500 });
-        await httpRegister({
-            email: data.Email,
-            password: data.Password,
-            nick: data.Nickname
+        createUser({
+            variables: {
+                input: {
+                    email: data.Email,
+                    password: data.Password,
+                    nick: data.Nickname
+                }
+            }
         }).then(({ data }) => {
+            console.log(data)
             navigate('/app/login');
-            enqueueSnackbar(`${t('register.snack.success1')} ${data.local.email} ${t('register.snack.success2')}`, { autoHideDuration: 3000, variant: "success" });
+            enqueueSnackbar(`${t('register.snack.success1')} "########" ${t('register.snack.success2')}`, { autoHideDuration: 10000, variant: "warning" });
         }).catch(err => {
-            enqueueSnackbar(err.response.data, { autoHideDuration: 3000, variant: "error" });
+            console.log(err)
+            //enqueueSnackbar(err.response.data, { autoHideDuration: 3000, variant: "error" });
         });
     }
 
