@@ -1,5 +1,5 @@
 import { AddCircle, Timelapse, Whatshot } from "@mui/icons-material";
-import { Box, Tabs, Tab, Typography, CardContent } from "@mui/material";
+import { Box, Tabs, Tab, Typography, CardContent, Avatar } from "@mui/material";
 import { useState, useEffect } from "react";
 //import PaginationTree from "../../common/pagination/pagination";
 import EnumBattles from "../../enums/enum-battles";
@@ -15,6 +15,7 @@ import InfoImage from "../../common/info-image/info-image";
 import BattlesLogo from "../../../assets/icons/battle-disk.png";
 import TabPanel from "../../common/tab-panel/tab-panel";
 import { Battle, useBattleMakeVoteMutation, useBattlesByStatusLazyQuery } from "utils/graphql-requests/generated/schema";
+import BattleDisk from "assets/icons/battle-disk.png"
 
 
 function TabContent(props: {
@@ -120,6 +121,9 @@ export default function BattlesContainer() {
                             currentUser && currentUser._id !== ""
                             ?
                             <Box>
+                                <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
+                                    <Avatar src={BattleDisk} sx={{ m: 1, boxShadow: 5 }}/>
+                                </Box>
                                 <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', pt: 3, pb: 1.5}}>
                                     {t('battles.create.title')}
                                 </Typography>

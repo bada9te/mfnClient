@@ -10,8 +10,16 @@ export default function ImageRightFormContainer(props: {
     const { bg, text } = props;
 
     return (
-        <Box sx={{ height: 'fit-content', display: 'flex', justifyContent: 'center', alignItems: 'center', m: 2 }}>
-            <Grid container component="main" sx={{ position: 'relative' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mx: 2, mt: 2 }}>
+            <Grid container component="main" sx={{ 
+                borderRadius: 5,
+                width: { xs: '100%', md: '1200px' },
+                height: 'fit-content', 
+                minHeight: '700px',
+                position: 'relative',
+                overflow: 'hidden',
+                boxShadow: 10
+            }}>
                 <Grid 
                     item 
                     xs={12} 
@@ -25,12 +33,12 @@ export default function ImageRightFormContainer(props: {
                     sx={{
                         display: 'flex', 
                         justifyContent: 'center', 
-                        alignItems: { md: 'start', lg: 'center' }, 
-                        background: 'none', 
+                        alignItems: 'center', 
                         color: 'white', 
                         boxShadow: 0, 
-                        pr: { md: 0, lg: 2 },
-                        minHeight: { md: 0, lg: '100vh' }
+                        p: 2,
+                        minHeight: '700px',
+                        background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(5px)'
                     }}
                 >
                     {props.children}
@@ -53,7 +61,6 @@ export default function ImageRightFormContainer(props: {
                         backgroundPosition: 'right',
                         display: 'flex',
                         alignItems: 'center',
-                        borderRadius: '24px',
                     }}
                 >
                     <Box sx={{ display: {xs: 'none', md: 'flex'} }}>

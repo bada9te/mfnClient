@@ -8,11 +8,12 @@ export default function LogRegVerContainer(props: {
 }) {
     const { bg, text } = props;
     return (
-        <Box sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+        <Box sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', mx: 2, mt: 2 }}>
             <Grid container component="main" sx={{ 
-                borderRadius: { xs: 0, md: 5 },
+                borderRadius: 5,
                 width: { xs: '100%', md: '1200px' },
-                height: { xs: 'calc(100vh - 110px)', md: '710px' }, 
+                height: 'fit-content', 
+                minHeight: '700px',
                 position: 'relative',
                 overflow: 'hidden',
                 boxShadow: 10
@@ -58,8 +59,10 @@ export default function LogRegVerContainer(props: {
                         boxShadow: 20, 
                         display: 'flex',
                         justifyContent: 'center',
+                        alignItems: 'center',
                         overflowY: 'auto', 
                         height: '100%',
+                        minHeight: '700px',
                         color: 'white',
                         background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(5px)'
                     }}

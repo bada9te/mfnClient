@@ -1,7 +1,7 @@
 import PostUploadForm from "../components/forms/post-upload/post-upload";
 import PostItem from "../components/common/post-item/post-item";
 import ImageCropperModal from "../components/modals/image-cropper-modal/image-cropper-modal";
-import { Typography, CardContent, Box } from "@mui/material";
+import { Typography, CardContent, Box, Avatar } from "@mui/material";
 import ImageRightFormContainer from "../components/containers/image-right-form-container/image-right-form.container";
 import newPostFormBG from '../assets/bgs/newPostFormBG.png';
 import BaseContentContainer from "../components/containers/base-content-container/base-content-container";
@@ -10,6 +10,7 @@ import { useReactiveVar } from "@apollo/client";
 import { baseState } from "../components/baseReactive";
 import { postUploadFormState } from "../components/forms/post-upload/reactive";
 import { useTranslation } from "react-i18next";
+import LogoClear from "assets/icons/logo_clear.png";
 
 
 export default function PostUpload() {
@@ -39,6 +40,9 @@ export default function PostUpload() {
                     />
                 }
                     <Box sx={{ width: '40rem', boxShadow: 0, borderRadius: 5 }}>
+                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
+                            <Avatar src={LogoClear} sx={{ m: 1, boxShadow: 5 }}/>
+                        </Box>
                         <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', py: 3, mb: 0}}>
                             {t('upload.title')}
                         </Typography>

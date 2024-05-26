@@ -1,10 +1,12 @@
 import { useReactiveVar } from "@apollo/client";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import getTimeSince from "../../utils/common-functions/getTimeSince";
 import { baseState } from "../baseReactive";
 import NotificationItem from "../common/notification-item/notification-item";
 import { SpinnerLinear } from "../common/spinner/Spinner";
 import { Comment, NotificationsQuery, Post } from "utils/graphql-requests/generated/schema";
+import InfoImage from "components/common/info-image/info-image";
+import NotificationsImage from "assets/icons/text.png"
 
 export default function EnumNotifications(props: {
     loading: boolean;
@@ -23,9 +25,7 @@ export default function EnumNotifications(props: {
                         );
                     } else if (notifications?.length === 0) {
                         return (
-                            <Box sx={{minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Typography sx={{textAlign: 'center', fontSize: 16}}>No notifications yet</Typography>
-                            </Box>
+                            <InfoImage text="No notifications yet" src={NotificationsImage}/>
                         );
                     } else {
                         return (

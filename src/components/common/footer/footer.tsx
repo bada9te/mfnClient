@@ -14,7 +14,7 @@ export default function Footer() {
         color: 'white',
         scrollSnapAlign: 'start',
         margin: 2,
-        borderRadius: '12px',
+        borderRadius: 5,
         boxShadow: 5,
       }}
     >

@@ -184,7 +184,7 @@ export default function PostUploadForm() {
                 image={postUploadForm.picture} 
             />
         }     
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ borderRadius: 5, boxShadow: 10, px: 2 }}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ borderRadius: 5, boxShadow: 10, p: 2 }}>
             <TextField
                 margin="normal"
                 required

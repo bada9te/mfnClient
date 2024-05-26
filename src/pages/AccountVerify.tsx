@@ -4,8 +4,6 @@ import passwordImage from "../assets/icons/password.png"
 import AccountVerifyForm from "../components/forms/account-verify/account-verify";
 import LogRegVerContainer from "../components/containers/image-left-form-conatiner/image-left-form-container";
 import VerifyAccBG from '../assets/bgs/verifyFormBG.png';
-import { MODERATION_ACTION_VALIDATE_QUERY } from "../utils/graphql-requests/moderation-actions";
-import { useQuery } from "@apollo/client";
 import { SpinnerCircular } from "../components/common/spinner/Spinner";
 import { useTranslation } from "react-i18next";
 import BaseContentContainer from "components/containers/base-content-container/base-content-container";
