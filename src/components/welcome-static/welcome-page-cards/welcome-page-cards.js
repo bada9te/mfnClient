@@ -59,7 +59,7 @@ const WelcomePageCards = props => {
                 alignItems: 'center', 
                 flexDirection: 'column' ,
                 scrollSnapAlign: 'start',
-                py: 10,
+                py: 18,
             }}
         >
             <Typography variant="h3" textAlign="center">{t('welcome.purpose')}</Typography>

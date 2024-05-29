@@ -108,7 +108,7 @@ export default function PostsContainer(props: {
                         );
                     } else if (posts.length === 0) {
                         return (
-                            <Box sx={{mt: 3, mb: 5, minHeight: '78vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <Box sx={{mt: 3, mb: 5, minHeight: '88vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                 <InfoImage text={t('posts.not_found')} src={LogoClear}/>
                             </Box>
                         );
@@ -118,7 +118,7 @@ export default function PostsContainer(props: {
                                 spacing={2} 
                                 sx={{
                                     width: '100%', 
-                                    minHeight: '78vh',
+                                    minHeight: '88vh',
                                     p: 2, 
                                     display: 'flex', 
                                     justifyContent: 'space-around',

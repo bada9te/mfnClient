@@ -1,6 +1,8 @@
 /* eslint-disable */
 import { useReactiveVar } from "@apollo/client";
 import { Box, Grid, Paper } from "@mui/material"
+import BottomBar from "components/bars/bottom/bottom-bar/bottom-bar";
+import TopBar from "components/bars/top/top-bar/top-bar";
 import Footer from "components/common/footer/footer";
 import PageLoader from "components/common/page-loader/page-loader";
 import { pageLoaderState } from "components/common/page-loader/reactive";
@@ -16,60 +18,154 @@ export default function BaseContentContainer(props: {
     const { isLoading } = useReactiveVar(pageLoaderState);
 
     return (
-        <Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            {
-                isLoading
-                ?
-                <PageLoader loading={isLoading}/>
-                :
-                <Grid container component="main" sx={{ 
-                    width: { xs: '100%', md: '100%', lg: '1200px' },
-                    height: '100vh', 
-                    position: 'relative',
-                    overflow: 'hidden',
-                    boxShadow: 10
+        <Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}> 
+            <Grid container component="main" sx={{ 
+                //width: { xs: '100%', md: '100%', lg: '1200px' },
+                height: '100vh', 
+                position: 'relative',
+                overflow: 'hidden',
+                boxShadow: 10
+            }}>
+                <Grid
+                    sx={{
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 999, // Ensure it's above other content
+                        width: '100%',
+                        justifyContent: 'center',
+                        backdropFilter: 'blur(5px)',
+                        '& > *': { // Apply styles to direct children
+                            width: '100%',
+                            px: 2, // Add padding to the sides
+                        },
+                    }}
+                    container
+                    component="header"
+                >
+                    <TopBar/>
+                </Grid>
+
+                <Grid 
+                    lg={0} 
+                    xl={2} 
+                    sx={{ 
+                        display: { xs: 'none', xl: 'flex' }, 
+                        justifyContent: 'center', 
+                        alignItems: 'center',
+                    }}
+                >
+                    <Box sx={{
+                        height: '100%',
+                        width: '100%',
+                        p: 2,
+                        py: 9,
+                    }}>
+                        <Box sx={{
+                            background: 'rgba(255,255,255,0.3)',
+                            backdropFilter: 'blur(5px)', 
+                            height: '100%',
+                            width: '100%',
+                            boxShadow: 10,
+                            borderRadius: 5,
+                            display: 'flex', justifyContent: 'center', alignItems: 'center'
+                        }}>
+                            LEFT
+                        </Box>
+                    </Box>
+                </Grid>
+
+                <Grid xs={12} sm={12} md={12} lg={12} xl={8} sx={{
+                    height: '100%',
+                    width: '100%',
+                    py: 9,
                 }}>
                     <Grid
                         sx={(() => {
+                            const styles = {
+                                height: { xs: 'calc(100vh - 140px)', lg: 'calc(100vh - 144.5px)'}, 
+                                overflow: 'auto', 
+                                background: 'rgba(255,255,255,0.3)',
+                                backdropFilter: 'blur(5px)',
+                                color: 'white',
+                                borderRadius: 5,
+                                mx: { xs: 1.5, lg: 0 },
+                            }
                             if (mandatoryScroll) {
                                 return { 
+                                    ...styles,
                                     position: 'relative', 
-                                    height: '100vh', 
                                     overflow: 'auto', 
                                     scrollSnapType: 'y mandatory',
-                                    background: 'rgba(255,255,255,0.2)',
-                                    backdropFilter: 'blur(5px)',
-                                    color: 'white',
-                                    pb: '50px',
                                 }
-                            } else {
-                                return {
-                                    background: 'rgba(255,255,255,0.3)',
-                                    backdropFilter: 'blur(5px)', 
-                                    color: 'white', 
-                                    pt: '65px', 
-                                    overflow: 'auto', 
-                                    height: '100vh', 
-                                    pb: '50px',
-                                    width: '100%',
-                                }
-                            }
+                            } 
+                            return styles;
                         })()}
-                        xs={12} 
-                        sm={12} 
-                        md={12} 
-                        lg={12}
-                        xl={12}
                         component={Paper} 
                         elevation={6} 
                         square 
                         item
                     >
-                        {props.children}
-                        {!hideFooter && <Footer/> }
+                        {
+                            isLoading
+                            ?
+                            <PageLoader loading={isLoading}/>
+                            :
+                            <>
+                                {props.children}
+                                {!hideFooter && <Footer/> }
+                            </>
+                        }
                     </Grid>
                 </Grid>
-            }
+                
+                <Grid 
+                    lg={0} 
+                    xl={2} 
+                    sx={{ 
+                        display: { xs: 'none', xl: 'flex' }, 
+                        justifyContent: 'center', 
+                        alignItems: 'center',
+                    }}
+                >
+                    <Box sx={{
+                        height: '100%',
+                        width: '100%',
+                        p: 2,
+                        py: 9,
+                    }}>
+                        <Box sx={{
+                            background: 'rgba(255,255,255,0.3)',
+                            backdropFilter: 'blur(5px)', 
+                            height: '100%',
+                            width: '100%',
+                            boxShadow: 10,
+                            borderRadius: 5,
+                            display: 'flex', justifyContent: 'center', alignItems: 'center'
+                        }}>
+                            RIGHT
+                        </Box>
+                    </Box>
+                </Grid>
+
+                <Grid
+                    sx={{
+                        position: 'sticky',
+                        bottom: '0',
+                        zIndex: 999, // Ensure it's above other content
+                        width: '100%',
+                        justifyContent: 'center',
+                        backdropFilter: 'blur(5px)',
+                        '& > *': { // Apply styles to direct children
+                            width: '100%',
+                            px: 2, // Add padding to the sides
+                        },
+                    }}
+                    container
+                    component="footer"
+                >
+                    <BottomBar/>
+                </Grid>
+            </Grid>
         </Box>
     );
 }

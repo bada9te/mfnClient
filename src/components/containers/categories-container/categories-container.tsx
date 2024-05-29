@@ -39,7 +39,7 @@ function CategoriesContainer() {
 
     return (
         <Box>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1.2 }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={status} onChange={handleTabSwitch} variant="fullWidth">
                     <Tab icon={<Category/>}  label={t('categories.select')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
                     <Tab icon={<QueueMusic/>} label={category || t('categories.selected')} id="simple-tab-1" aria-controls="simple-tabpanel-1"/>
@@ -52,7 +52,7 @@ function CategoriesContainer() {
                     sx={{
                         width: '100%', 
                         pt: 2,
-                        px: 0.75,
+                        px: 1,
                         display: 'flex', 
                         justifyContent: 'space-around',
                         alignItems: 'center',

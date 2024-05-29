@@ -11,7 +11,7 @@ export default function PageLoader(props: {
         <Paper style={{
                 opacity: loading ? 1 : 0,
                 transition: `opacity ${loading ? '0s' : '.4s'}`,
-                maxWidth: '1200px',
+                //maxWidth: '1200px',
                 width: '100%',
                 minHeight: '100vh',
                 zIndex: loading ? 80 : 0,

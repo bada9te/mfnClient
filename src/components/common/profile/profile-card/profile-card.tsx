@@ -15,7 +15,7 @@ export default function ProfileCard(props: {
     id: string;
     bgRadius?: number;
 }) {
-    const { id, bgRadius } = props;
+    const { id } = props;
     const { user: currentUser, theme, locations } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("objects");

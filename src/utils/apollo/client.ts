@@ -7,9 +7,10 @@ const httpLink = new HttpLink({
     credentials: 'include'
 });
 
-
-export default new ApolloClient({
+const client = new ApolloClient({
     link: httpLink,
     cache,
     connectToDevTools: process.env.REACT_APP_VERSION_TYPE === "development"
 });
+
+export default client;

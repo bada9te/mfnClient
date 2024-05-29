@@ -71,23 +71,17 @@ export default memo(function Topbar() {
 
     return (
         <Paper sx={{ 
-            position: 'fixed', 
-            top: 0, 
-            left: '50%', 
-            transform: 'translateX(-50%)', 
-            margin: '0 auto', 
-            width: { xs: '100%', lg: "1200px" },
             zIndex: 99,
         }} 
         elevation={1}
         >
             <AppBar component="nav" sx={{
-                height: 65, 
+                height: 60, 
                 zIndex: (theme) => theme.zIndex.drawer + 1, 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                borderRadius: '0 0 24px 24px '
+                //borderRadius: '0 0 24px 24px '
             }}>
                 <Container >
                     <Toolbar disableGutters>

@@ -1,6 +1,7 @@
 import { InMemoryCache } from "@apollo/client";
 
-export default new InMemoryCache({
+
+const cache = new InMemoryCache({
     typePolicies: {
         Post: {
             keyFields: ['_id'],
@@ -96,3 +97,6 @@ export default new InMemoryCache({
         }
     }
 });
+
+
+export default cache;

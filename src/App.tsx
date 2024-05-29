@@ -51,7 +51,7 @@ function App() {
                     console.log("User state was restored.");
                 }
             });
-    }, [navigate, location.pathname]);
+    }, [navigate, location.pathname, user._id]);
 
     useLayoutEffect(() => {
             pageLoaderState({ isLoading: true });

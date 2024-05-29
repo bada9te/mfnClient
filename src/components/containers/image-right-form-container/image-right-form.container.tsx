@@ -10,15 +10,15 @@ export default function ImageRightFormContainer(props: {
     const { bg, text } = props;
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mx: 2, mt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mx: 2, mt: 2, borderRadius: 5 }}>
             <Grid container component="main" sx={{ 
                 borderRadius: 5,
-                width: { xs: '100%', md: '1200px' },
+                width: '100%',
                 height: 'fit-content', 
                 minHeight: '700px',
                 position: 'relative',
                 overflow: 'hidden',
-                boxShadow: 10
+                boxShadow: 10,
             }}>
                 <Grid 
                     item 
@@ -31,6 +31,8 @@ export default function ImageRightFormContainer(props: {
                     elevation={6} 
                     square 
                     sx={{
+                        borderTopLeftRadius: '18px',
+                        borderBottomLeftRadius: '18px',
                         display: 'flex', 
                         justifyContent: 'center', 
                         alignItems: 'center', 
