@@ -6,6 +6,7 @@
     "login.submit": "Увійти",
     "login.snack.pending": "Вхід...",
     "login.snack.success": "Успішно увійдено як",
+    "login.snack.error": "Невірні дані, або ваш акаунт не підтверджений",
 
     "playlist.title": "Назва",
     "playlist.error.title": "Назва повинна містити від 4 до 10 символів",
@@ -45,8 +46,8 @@
     "register.error.passwords_should_match": "Паролі повинні збігатися!",
     "register.submit": "Створити обліковий запис",
     "register.snack.pending": "Спроба створити новий обліковий запис...",
-    "register.snack.success1": "Обліковий запис",
-    "register.snack.success2": "успішно створений",
+    "register.snack.success": "Обліковий запис успішно створено, перевірте вашу пошту для наступних кроків",
+    "register.snack.error": "Неможливо створити акаунт, можливо обліковий запис із такою поштою вже існує",
 
     "support.contact_reason": "Причина звернення",
     "support.error.contact_reason": "Причина звернення не вказана",

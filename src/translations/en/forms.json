@@ -6,6 +6,7 @@
     "login.submit": "Sign in",
     "login.snack.pending": "Logging in...",
     "login.snack.success": "Successfully logged in as",
+    "login.snack.error": "Invalid credentials, or maybe your account is not verified",
 
     "playlist.title": "Title",
     "playlist.error.title": "Title must be from 4 to 10 characters",
@@ -45,8 +46,8 @@
     "register.error.passwords_should_match": "Passwords should match!",
     "register.submit": "Create account",
     "register.snack.pending": "Trying to register new account...",
-    "register.snack.success1": "Account",
-    "register.snack.success2": "was successfully created",
+    "register.snack.success": "Account was successfully created, pls check you email for next steps",
+    "register.snack.error": "Could not create an account, it may already exist",
 
     "support.contact_reason": "Contact reason",
     "support.error.contact_reason": "Contact reason is not specified",

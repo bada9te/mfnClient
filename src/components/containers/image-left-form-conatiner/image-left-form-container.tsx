@@ -54,10 +54,7 @@ export default function LogRegVerContainer(props: {
                     md={4} 
                     component={Paper} 
                     elevation={6} 
-                    square 
                     sx={{
-                        borderTopRightRadius: '18px',
-                        borderBottomRightRadius: '18px',
                         boxShadow: 20, 
                         display: 'flex',
                         justifyContent: 'center',
@@ -66,7 +63,7 @@ export default function LogRegVerContainer(props: {
                         height: '100%',
                         minHeight: '700px',
                         color: 'white',
-                        background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(5px)'
+                        background: 'rgba(255,255,255,0.5)',
                     }}
                 >
                     {props.children}

@@ -29,8 +29,8 @@ export default function LoginForm() {
                 baseState({ ...baseState(), user: {...baseState().user, ...data}});
                 navigate('/app/');
                 enqueueSnackbar(`${t('login.snack.success')} ${data.nick}`, { variant: "success", autoHideDuration: 3000 });
-            }).catch((err) => {
-                enqueueSnackbar(err.response.data, { variant: "error" });
+            }).catch(_ => {
+                enqueueSnackbar(t('login.snack.error'), { variant: "error" });
             });
     };
 

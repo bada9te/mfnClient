@@ -1,6 +1,4 @@
 import { Outlet } from "react-router-dom";
-import Topbar from "../components/bars/top/top-bar/top-bar";
-import BottomBar from "../components/bars/bottom/bottom-bar/bottom-bar";
 import { memo } from "react";
 
 //import './Container.scss';

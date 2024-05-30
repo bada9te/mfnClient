@@ -40,7 +40,7 @@ export default function ImageRightFormContainer(props: {
                         boxShadow: 0, 
                         p: 2,
                         minHeight: '700px',
-                        background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(5px)'
+                        background: 'rgba(255,255,255,0.5)'
                     }}
                 >
                     {props.children}

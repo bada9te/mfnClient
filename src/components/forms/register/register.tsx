@@ -33,12 +33,10 @@ export default function RegisterForm() {
                 }
             }
         }).then(({ data }) => {
-            console.log(data)
             navigate('/app/login');
-            enqueueSnackbar(`${t('register.snack.success1')} "########" ${t('register.snack.success2')}`, { autoHideDuration: 10000, variant: "warning" });
+            enqueueSnackbar(`${t('register.snack.success')}`, { autoHideDuration: 10000, variant: "warning" });
         }).catch(err => {
-            console.log(err)
-            //enqueueSnackbar(err.response.data, { autoHideDuration: 3000, variant: "error" });
+            enqueueSnackbar(t('register.snack.error'), { autoHideDuration: 3000, variant: "error" });
         });
     }
 

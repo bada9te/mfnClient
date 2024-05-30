@@ -6,6 +6,7 @@
     "login.submit": "Войти",
     "login.snack.pending": "Вход в систему...",
     "login.snack.success": "Успешный вход как",
+    "login.snack.error": "Неверные данные входа, возможно ваш аккаунт не подтверждён",
 
     "playlist.title": "Название",
     "playlist.error.title": "Название должно быть от 4 до 10 символов",
@@ -45,8 +46,8 @@
     "register.error.passwords_should_match": "Пароли должны совпадать!",
     "register.submit": "Создать аккаунт",
     "register.snack.pending": "Попытка зарегистрировать новый аккаунт...",
-    "register.snack.success1": "Аккаунт",
-    "register.snack.success2": "успешно создан",
+    "register.snack.success": "Аккаунт успешно создан, проверьте вашу почту для его подтверждения",
+    "register.snack.error": "Невозможно создать аккаунт, возможно учётная запись с такой почтой уже существует",
 
     "support.contact_reason": "Причина обращения",
     "support.error.contact_reason": "Не указана причина обращения",

@@ -26,7 +26,7 @@ export default function BaseContentContainer(props: {
                 overflow: 'hidden',
                 boxShadow: 10
             }}>
-                <Grid
+                <Grid item
                     sx={{
                         position: 'sticky',
                         top: 0,
@@ -45,7 +45,7 @@ export default function BaseContentContainer(props: {
                     <TopBar/>
                 </Grid>
 
-                <Grid 
+                <Grid item
                     lg={0} 
                     xl={2} 
                     sx={{ 
@@ -74,7 +74,7 @@ export default function BaseContentContainer(props: {
                     </Box>
                 </Grid>
 
-                <Grid xs={12} sm={12} md={12} lg={12} xl={8} sx={{
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={8} sx={{
                     height: '100%',
                     width: '100%',
                     py: 9,
@@ -118,7 +118,7 @@ export default function BaseContentContainer(props: {
                     </Grid>
                 </Grid>
                 
-                <Grid 
+                <Grid item
                     lg={0} 
                     xl={2} 
                     sx={{ 
