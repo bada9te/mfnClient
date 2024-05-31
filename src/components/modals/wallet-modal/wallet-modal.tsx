@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Dialog, DialogContent, DialogTitle, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Button, ButtonGroup, Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useReactiveVar } from "@apollo/client";
 import { walletConnectModalState } from "./reactive";
@@ -24,9 +24,6 @@ export default function WalletConnectModal() {
         walletConnectModalState({...walletConnectModalState, isShowing: false});
     }
 
-    const theme = useTheme();
-    /* @ts-ignore */
-    const fullscreen = useMediaQuery(theme.breakpoints.down('xs'));
     const { t } = useTranslation("modals");
 
     return (
@@ -34,8 +31,7 @@ export default function WalletConnectModal() {
             open={walletConnectModal.isShowing} 
             scroll='paper' fullWidth 
             maxWidth='xs' 
-            PaperProps={{ sx: { borderRadius: {sm: 0, md: 5} } }}
-            fullScreen={Boolean(fullscreen)}
+            PaperProps={{ sx: { borderRadius: 5 } }}
         >
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 {t('wallet.connect.title')}

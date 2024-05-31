@@ -304,15 +304,19 @@ export default function ChatMessagesContainer(props: {
                                             }
 
                                             return (
-                                                <Stack ref={messagesContainerRef as unknown as React.RefObject<HTMLDivElement>} sx={{height: {xs: 'calc(100vh - 300px)', md: 'calc(100vh - 317px)'}, p: 2, m: 0, overflow: 'auto'}} spacing={3}>
-                                                    { /* @ts-ignore */ }
+                                                <Stack
+                                                    ref={messagesContainerRef as unknown as React.RefObject<HTMLDivElement>}
+                                                    sx={{height: {xs: 'calc(100vh - 300px)', md: 'calc(100vh - 317px)'}, p: 2, m: 0, overflow: 'auto'}}
+                                                    spacing={3}
+                                                >
+                                                    {/* @ts-ignore */}
                                                     <MessageList
                                                         className='message-list'
                                                         lockable={true}
                                                         toBottomHeight={'100%'}
                                                         dataSource={
                                                             reverseDataArray(messages.chatMessagesByChatId).map((msg: any) => {
-                                                                let message = {
+                                                                let message: any = {
                                                                     _id: msg._id,
                                                                     position: currentUser._id === msg.owner._id ? 'right' : 'left',
                                                                     type: msg.type || 'text',
@@ -323,23 +327,19 @@ export default function ChatMessagesContainer(props: {
                                                                     date: msg.createdAt,
                                                                     replyButton: true,
                                                                     removeButton: currentUser._id === msg.owner._id,
-                                                                }
+                                                                };
                                                                 
                                                                 if (msg?.reply) {
-                                                                    { /* @ts-ignore */ }
                                                                     message.reply = {
                                                                         message: msg?.reply.text,
                                                                         title: msg?.reply.owner.nick
-                                                                    }
+                                                                    };
                                                                 }
 
-                                                                if (msg.tupe === 'spotify') {
-                                                                    { /* @ts-ignore */ }
+                                                                if (msg.type === 'spotify') {
                                                                     message.theme = 'dark';
-                                                                    { /* @ts-ignore */ }
                                                                     message.view = 'coverart';
-                                                                    { /* @ts-ignore */ }
-                                                                    message.uri = 'https://open.spotify.com/playlist/0Gvl5v7YRRMF03akVGT8pN?si=3d6ff4c10e984208'
+                                                                    message.uri = 'https://open.spotify.com/playlist/0Gvl5v7YRRMF03akVGT8pN?si=3d6ff4c10e984208';
                                                                 }
 
                                                                 if (msg.type === 'image') {
@@ -348,10 +348,10 @@ export default function ChatMessagesContainer(props: {
                                                                         width: 100,
                                                                         height: 100,
                                                                         alt: 'image'
-                                                                    }
+                                                                    };
                                                                 }
 
-                                                                return message
+                                                                return message;
                                                             })
                                                         }
                                                         onTitleClick={navigateToUserProfile}
@@ -360,6 +360,7 @@ export default function ChatMessagesContainer(props: {
                                                         onContextMenu={handleMessageEdit}
                                                     />
                                                 </Stack>
+
                                             );
                                         })()
                                     }
