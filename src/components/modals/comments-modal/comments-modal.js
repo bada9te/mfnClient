@@ -35,7 +35,7 @@ const CommentsModal = props => {
                         <Close />
                     </IconButton>
                 </DialogTitle>
-            <DialogContent dividers={true}>
+            <DialogContent dividers={true} sx={{m: 0, p: 2, backgroundColor: '#1c94a4'}}>
                 <CommentsContainer/>
             </DialogContent>
             <DialogActions>

@@ -41,7 +41,7 @@ export default function AddCommentForm() {
             commentData.isReply = true;
         }
 
-        enqueueSnackbar(t('report.snack.pending'), { autoHideDuration: 1500 });
+        enqueueSnackbar(t('comment.snack.pending'), { autoHideDuration: 1500 });
         createComment({
             variables: {
                 input: {
@@ -80,10 +80,10 @@ export default function AddCommentForm() {
             }
         }).then(({data}) => {
             reset();
-            enqueueSnackbar(t('report.snack.success'), { autoHideDuration: 1500, variant: 'success' });
+            enqueueSnackbar(t('comment.snack.success'), { autoHideDuration: 1500, variant: 'success' });
         }).catch(err => {
             //console.error(err)
-            enqueueSnackbar(t('report.snack.error'), { autoHideDuration: 3000, variant: 'error' });
+            enqueueSnackbar(t('comment.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }
 

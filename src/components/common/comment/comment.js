@@ -64,7 +64,7 @@ const Comment = (props) => {
     return (
         <>
 
-            <Card sx={{mb: 3, boxShadow: 1, marginBottom: 1, borderRadius: 5}}>
+            <Card sx={{mb: 3, boxShadow: 5, marginBottom: 1, borderRadius: 5 }}>
                 <CardHeader
                     avatar={
                         <Avatar 

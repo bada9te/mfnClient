@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import getFileExtension from "utils/common-functions/getFileExtension";
 import { Post, PostsByOwnerQuery, PostsQuery, usePostCreateMutation } from "utils/graphql-requests/generated/schema";
+import blobToFile, { IBlob } from "utils/common-functions/blobToFile";
 
 
 type Inputs = {
@@ -59,12 +60,14 @@ export default function PostUploadForm() {
     // form submit
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('upload.snack.pending'), { autoHideDuration: 1500 });
+        let blob = await fetch(postUploadForm.picture as string).then(r => r.blob());
+
         await Promise.all([
             httpSaveFile(data.Audio?.[0])
                 .then(({data}) => {
                     postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.data.filename });
                 }),
-            httpSaveFile(data.Image?.[0])
+            httpSaveFile(blobToFile(blob as IBlob, data.Image?.[0].name as string))
                 .then(({data}) => {
                     postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.data.filename });
                 }),
