@@ -202,7 +202,11 @@ export default function PostItem(props: {
         }
     }, [likedBy, currentUser, currentUser?._id, base._id, savedBy]);
 
-    
+    useEffect(() => {
+        if (base.img) {
+            setImageLoaded(base.img);
+        }
+    }, [base.img]);
 
     return (
         <Card sx={{
@@ -235,12 +239,13 @@ export default function PostItem(props: {
             {/* ################################# BLURED PANEL ################################# */}
             <Box sx={{ position: 'relative' }}>
                 {
-                    base.img?.endsWith('/') || !base.img || !imageLoaded
+                    !base.img || !imageLoaded
                     ?
                     <Skeleton variant="rectangular" height={160} sx={{ width: {xs: '100%', md: '400px'} }}/>
                     :
                     <CardMedia onLoad={() => setImageLoaded(true)} component="img" image={base.img} alt={base.title} sx={{ height: "160px", width: {xs: '100%', md: '400px'} }}/>
                 }
+                
                 <Box sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', bgcolor: 'rgba(0,0,0,0.3)', color: 'white', padding: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(5px)' }}>
                     <Box>
                         <Typography variant='h5'>{base.title}</Typography>

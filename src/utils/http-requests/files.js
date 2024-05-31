@@ -4,9 +4,10 @@ const SERVER_BASE = process.env.REACT_APP_SERVER_BASE;
 
 const httpSaveFile = async(file) => {
     let data = new FormData();
+    console.log(file)
     data.append("file", file, file.name);
 
-    const response = await axios.post(`${SERVER_BASE}/upload-single`, data);
+    const response = await axios.post(`${SERVER_BASE}/files/upload`, data);
     return response;
 }
 
@@ -16,7 +17,7 @@ const httpSaveFileMultiple = async(files) => {
         data.append('uploadedFiles', file)
     }
 
-    const response = await axios.post(`${SERVER_BASE}/upload-multiple`, data);
+    const response = await axios.post(`${SERVER_BASE}/files/upload-multiple`, data);
     return response;
 }
 

@@ -7,11 +7,10 @@ import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";
 import { httpSaveFile } from "utils/http-requests/files";
 import { postUploadFormState } from "./reactive";
-import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { useSnackbar } from "notistack";
 import { postsContainerState } from "../../containers/posts-container/reactive";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import getFileExtension from "utils/common-functions/getFileExtension";
 import { Post, PostsByOwnerQuery, PostsQuery, usePostCreateMutation } from "utils/graphql-requests/generated/schema";
@@ -30,7 +29,6 @@ type Inputs = {
 export default function PostUploadForm() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
     const { user: currentUser } = useReactiveVar(baseState);
-    const { isShowing: cropModalIsShowing } = useReactiveVar(imageCropperModalState);
     const postUploadForm = useReactiveVar(postUploadFormState);
     const { maxCountPerPage } = useReactiveVar(postsContainerState);
     const { enqueueSnackbar } = useSnackbar();
@@ -61,20 +59,15 @@ export default function PostUploadForm() {
 
     // form submit
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
-        let blob = await fetch(postUploadForm.picture as string).then(r => r.blob());
-
         enqueueSnackbar(t('upload.snack.pending'), { autoHideDuration: 1500 });
-        
         await Promise.all([
             httpSaveFile(data.Audio?.[0])
                 .then(({data}) => {
-                    //console.log(data.file.filename)
-                    postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.file.filename });
+                    postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.data.filename });
                 }),
-            httpSaveFile(blobToFile(blob as IBlob, data.Image?.[0].name as string))
+            httpSaveFile(data.Image?.[0])
                 .then(({data}) => {
-                    //console.log(data.file.filename)
-                    postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.file.filename });
+                    postUploadFormState({ ...postUploadFormState(), uploadedPictureName: data.data.filename });
                 }),
         ]);
 
@@ -166,24 +159,10 @@ export default function PostUploadForm() {
         postUploadFormState({ ...postUploadFormState(), [what]: value })
     }
 
-    const handleImageCropModalClose = async(value: boolean, picture: any) => {
-        imageCropperModalState({...imageCropperModalState(), isShowing: value});
-        let blob = await fetch(picture).then(r => r.blob());
-        postUploadFormState({ ...postUploadFormState(), picture: URL.createObjectURL(blobToFile(blob as IBlob, "filename")) });
-    }
-
 
     return(     
         <>
-        {
-            cropModalIsShowing 
-            &&
-            <ImageCropperModal 
-                show={cropModalIsShowing} 
-                handleImageCropModalClose={handleImageCropModalClose} 
-                image={postUploadForm.picture} 
-            />
-        }     
+           
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ borderRadius: 5, boxShadow: 10, p: 2 }}>
             <TextField
                 margin="normal"
@@ -225,6 +204,7 @@ export default function PostUploadForm() {
                         })} 
                     />
                 </Button>
+                
                 <Typography sx={{p: 1}} fontSize={14}>{supportedImageExtensions.join(', ')}</Typography>
                 { errors.Image && <Typography sx={{ color: '#f44336', fontSize: 12, mx: 1, mt: 1 }}>{t('upload.error.image')}</Typography> }
             </FormGroup>

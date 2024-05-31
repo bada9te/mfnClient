@@ -64,8 +64,8 @@ export const baseState = makeVar<{
     theme:    JSON.parse(localStorage.getItem(themeVAR as string) as string)?.theme       || ('light' && localStorage.setItem(themeVAR as string, JSON.stringify({ theme: 'light' }))),
     language: JSON.parse(localStorage.getItem(languageVAR as string) as string)?.language || ('en' && localStorage.setItem(languageVAR as string, JSON.stringify({ language: 'en' }))),
     locations: {
-        images: `${process.env.REACT_APP_SERVER_BASE}/uploads/images`,
-        audios: `${process.env.REACT_APP_SERVER_BASE}/uploads/audios`,
-        others: `${process.env.REACT_APP_SERVER_BASE}/uploads/others`,
+        images: `${process.env.REACT_APP_SERVER_BASE}/files`,
+        audios: `${process.env.REACT_APP_SERVER_BASE}/files`,
+        others: `${process.env.REACT_APP_SERVER_BASE}/files`,
     },
 });

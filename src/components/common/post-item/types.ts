@@ -4,7 +4,7 @@ export type TPostBase = {
     _id: string;
     title: string;
     description: string;
-    savedBy: string;
+    savedBy: string[];
     likedBy: string[];
     comments: string[];
     createdAt: string;
