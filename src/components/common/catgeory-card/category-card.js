@@ -8,6 +8,7 @@ const CategoryCard = props => {
     return (
         <Card onClick={handleClick} sx={{ 
             //width: {xs: '95%', sm: '375px', md: '400px'}, 
+            width: '100%',
             boxShadow: 5, 
             borderRadius: 5,
             backgroundColor: `${color}95`,

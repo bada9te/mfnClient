@@ -38,7 +38,7 @@ function CategoriesContainer() {
                     sx={{
                         width: '100%', 
                         pt: 2,
-                        px: 1,
+                        px: 2,
                         display: 'flex', 
                         justifyContent: 'space-around',
                         alignItems: 'center',
