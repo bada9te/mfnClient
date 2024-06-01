@@ -7,7 +7,7 @@ const CategoryCard = props => {
 
     return (
         <Card onClick={handleClick} sx={{ 
-            width: {xs: '95%', sm: '375px', md: '400px'}, 
+            //width: {xs: '95%', sm: '375px', md: '400px'}, 
             boxShadow: 5, 
             borderRadius: 5,
             backgroundColor: `${color}95`,
@@ -21,7 +21,6 @@ const CategoryCard = props => {
                 <Avatar src={LogoClear} alt={title} sx={{ m: 1, boxShadow: 5 }}/>
             </Box>
             <CardHeader title={title}/>
-            
         </Card>
     );
 }

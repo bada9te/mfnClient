@@ -6,6 +6,7 @@ import TopBar from "components/bars/top/top-bar/top-bar";
 import Footer from "components/common/footer/footer";
 import PageLoader from "components/common/page-loader/page-loader";
 import { pageLoaderState } from "components/common/page-loader/reactive";
+import CategoriesLeftbarConatiner from "../categories-leftbar-container/categories-leftbar-container";
 
 export default function BaseContentContainer(props: {
     left?: React.ReactNode;
@@ -52,26 +53,29 @@ export default function BaseContentContainer(props: {
                         display: { xs: 'none', xl: 'flex' }, 
                         justifyContent: 'center', 
                         alignItems: 'center',
-                    }}
-                >
-                    <Box sx={{
                         height: '100%',
                         width: '100%',
-                        p: 2,
                         py: 9,
-                    }}>
-                        <Box sx={{
-                            background: 'rgba(255,255,255,0.3)',
-                            backdropFilter: 'blur(5px)', 
-                            height: '100%',
+                    }}
+                >
+                    <Grid
+                        sx={{
                             width: '100%',
-                            boxShadow: 10,
+                            height: { xs: 'calc(100vh - 140px)', lg: 'calc(100vh - 144.5px)'}, 
+                            overflow: 'auto', 
+                            background: 'rgba(255,255,255,0.3)',
+                            backdropFilter: 'blur(5px)',
+                            color: 'white',
                             borderRadius: 5,
-                            display: 'flex', justifyContent: 'center', alignItems: 'center'
-                        }}>
-                            LEFT
-                        </Box>
-                    </Box>
+                            m: 1.5,
+                        }}
+                        component={Paper} 
+                        elevation={6} 
+                        square 
+                        item
+                    >
+                        <CategoriesLeftbarConatiner/>
+                    </Grid>
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={8} sx={{

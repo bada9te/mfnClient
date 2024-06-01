@@ -1,0 +1,15 @@
+export const genres = [
+    { title: "Country",          color: '#f44336' }, 
+    { title: "Pop",              color: '#e91e63' }, 
+    { title: "Classical",        color: '#9c27b0' }, 
+    { title: "Funk",             color: '#673ab7' }, 
+    { title: "Soul music",       color: '#3f51b5' }, 
+    { title: "Hip hop",          color: '#2196f3' },
+    { title: "Rock",             color: '#009688' },
+    { title: "Electronic music", color: '#4caf50' },
+    { title: "Latin",            color: '#00a0b2' },
+    { title: "Jazz",             color: '#ff9800' },
+    { title: "Blues",            color: '#ff5722' },
+    { title: "Folk",             color: '#b2102f' },
+    { title: "Metal",            color: '#637bfe' },
+];
