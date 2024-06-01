@@ -93,7 +93,6 @@ export default function ProfileCard(props: {
                 </Box>     
                 :
                 <Box sx={{
-                    m: 2,
                     boxShadow: 10,  
                     backgroundImage: userData?.user.background ? `url(${locations?.images}/${userData?.user.background})` : `url(${ProfileDefaultBGImage})`, 
                     backgroundRepeat: 'no-repeat', 

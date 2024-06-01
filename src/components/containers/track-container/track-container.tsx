@@ -30,15 +30,19 @@ export default function TrackContainer(props: {
                     } else {
                         return (
                             <Stack sx={{ 
-                                py: 3, 
-                                m: {xs: 0, md: 1.5}, 
+                                p: 2, 
+                                m: 2,
                                 display: 'flex', 
                                 justifyContent: 'space-around', 
                                 alignItems: 'center', 
                                 boxShadow: 15,
-                                borderRadius: 5
+                                borderRadius: 5,
+                                backgroundColor: 'rgba(255,255,255,0.4)',
+                                backdropFilter: 'blur(5px)'
                             }} flexWrap="wrap" spacing={2} direction="row" useFlexGap>
-                                <PostGenerate item={data.post as Post} addonsCorrections={{}} baseCorrections={{}} />
+                                
+                                    <PostGenerate item={data.post as Post} addonsCorrections={{}} baseCorrections={{}} />
+                                
                                 
                                 <ProfileCard id={data.post.owner._id} bgRadius={5}/>
                             </Stack>

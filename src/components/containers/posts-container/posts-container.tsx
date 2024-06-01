@@ -121,7 +121,7 @@ export default function PostsContainer(props: {
                                     minHeight: '88vh',
                                     p: 2, 
                                     display: 'flex', 
-                                    justifyContent: 'space-around',
+                                    justifyContent: 'center',
                                     alignItems: 'flex-start',
                                 }} 
                                 direction="row" 
