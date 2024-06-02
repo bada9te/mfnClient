@@ -16,6 +16,7 @@ import BattlesLogo from "../../../assets/icons/battle-disk.png";
 import TabPanel from "../../common/tab-panel/tab-panel";
 import { Battle, useBattleMakeVoteMutation, useBattlesByStatusLazyQuery } from "utils/graphql-requests/generated/schema";
 import BattleDisk from "assets/icons/battle-disk.png"
+import PaginationTree from "components/common/pagination/pagination";
 
 
 function TabContent(props: {
@@ -23,8 +24,13 @@ function TabContent(props: {
     battles: Battle[];
     makeBattleVote: (battleId: string, postNScore: "post1Score" | "post2Score", voteCount: number, voterId: string) => Promise<void>;
 }) {
+    const { maxPage, activePage } = useReactiveVar(battlesContainerState);
     const {loading, battles, makeBattleVote} = props;
     const { t } = useTranslation("containers");
+
+    const handlePageChange = (page: number) => {
+        battlesContainerState({...battlesContainerState(), activePage: page});
+    }
 
     return (
         <>
@@ -43,7 +49,10 @@ function TabContent(props: {
                             <Box sx={{ p: 2 }}>
                                 <EnumBattles battles={battles || []} makeBattleVote={makeBattleVote}/>
                                 { 
-                                    //battles?.length > 0 ? <Box sx={{mb: 10}}><PaginationTree/></Box> : null 
+                                    battles?.length > 0 && 
+                                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', my: 5}}>
+                                        <PaginationTree maxPage={maxPage} activePage={activePage} handlePageChange={handlePageChange}/>
+                                    </Box>
                                 }
                             </Box>
                         );
