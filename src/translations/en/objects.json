@@ -1,0 +1,50 @@
+{
+    "post.play": "Play",
+    "post.pause": "Pause",
+    "post.loop": "Loop",
+    "post.mute": "Mute",
+    "post.comment": "Comments",
+    "post.save": "Save",
+    "post.like": "Like",
+    "post.dropdown.share": "Share",
+    "post.dropdown.download": "Download",
+    "post.dropdown.report": "Report",
+    "post.dropdown.delete": "Delete",
+    "post.see": "See track",
+    "post.track_details": "Track details",
+    "post.open_profile": "Open profile",
+    "post.select": "Select",
+    "post.vote+1": "Vote (+1)",
+    "post.unavailable": "Track is unavailable",
+
+    "playlist.add_track": "Add track",
+    "playlist.delete": "Delete",
+    "playlist.share": "Share",
+    "playlist.report": "Report",
+    "playlist.no_tracks": "No tracks in this playlist",
+
+    "comment.dropdown.delete": "Delete",
+    "comment.dropdown.reply": "Reply",
+    "comment.dropdown.report": "Report",
+    "comment.no_replies": "No replies yet",
+
+    "leftbar_item.open_profile": "Open profile",
+    "leftbar_item.see_track": "See track",
+
+    "rightbar_item.open_profile": "Open profile",
+
+    "battle.finished.winner": "Finished, the winner is",
+    "battle.finished.draw": "Draw",
+    "battle.finished.unknown": "Finished",
+
+    "select.user.item.select": "Select",
+
+    "profile.subscribe": "Follow",
+    "profile.unsubscribe": "Unsubscribe",
+    "profile.following": "Following",
+    "profile.subscribers": "Subscribers",
+    "profile.login_to_subscribe": "Login to subscribe",
+    "profile.snack.pending": "Pending...",
+    "profile.snack.success": "Success",
+    "profile.snack.error": "Can't perform this action"
+}

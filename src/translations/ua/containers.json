@@ -1,0 +1,54 @@
+{
+    "posts.not_found": "Ще немає пісень",
+
+    "comments.not_found": "Ще немає коментарів",
+
+    "select.user.not_found": "Ще немає підписок на користувачів",
+    "select.user.snack.pending": "Надсилання обраної пісні...",
+    "select.user.snack.success": "Надіслано!",
+    "select.user.snack.error": "Не вдається поділитися піснею",
+
+    "select.post.info_text": "Почніть вводити назву для пошуку",
+    "select.post.snack.playlist.success": "Плейлист оновлено",
+    "select.post.snack.playlist.error": "Не вдається оновити цей плейлист",
+
+    "battles.not_found": "Боїв не знайдено",
+    "battles.in_progress": "В процесі",
+    "battles.finished": "Завершено",
+    "battles.create_new": "Створити новий",
+    "battles.create.main_text": "Готові до виклику?",
+    "battles.create.login_required": "Будь ласка, увійдіть, щоб створити новий",
+    "battles.create.title": "Створити бій",
+    "battles.create.select_my_track": "Виберіть вашу пісню",
+    "battles.create.select_oponnents_track": "Виберіть пісню супротивника",
+
+    "playlists.explore": "Дослідження",
+    "playlists.my_playlists": "Мої плейлисти",
+    "playlists.create_new": "Створити новий",
+    "playlists.not_found": "Ще немає плейлистів",
+    "playlists.login_to_operate": "Увійдіть, щоб управляти своїми плейлистами",
+    "playlists.create.main_text": "Новий плейлист? Чудово!",
+    "playlists.create.title": "Створити плейлист",
+    "playlists.create.notice": "Увага, публічні плейлисти доступні всім користувачам",
+    "playlists.create.login_required": "Будь ласка, увійдіть, щоб створити новий",
+    
+
+    "rightbar.users.info_text": "Почніть вводити ім'я для пошуку",
+    "leftbar.posts.info_text": "Почніть вводити назву для пошуку",
+
+    "notifications.unread": "Непрочитані",
+    "notifications.read": "Прочитані",
+    "notifications.mark_as_read": "Позначити всі як прочитані",
+    "notifications.delete_all": "Видалити всі сповіщення",
+    "notifications.snack.pending": "Очікування...",
+    "notifications.snack.success": "Успішно",
+    "notifications.snack.error": "Виникла помилка",
+
+    "categories.select": "Вибрати категорію",
+    "categories.selected": "Музика в категорії",
+
+    "chats.list": "Чати",
+    "chats.current": "Повідомлення",
+    "chats.info": "Інформація",
+    "chats.create": "Новий чат"
+}

@@ -1,0 +1,74 @@
+{
+    "welcome.hello": "Welcome to",
+    "welcome.explore_btn": "Explore custom music",
+    "welcome.purpose": "Purpose of the platform and author information",
+    "welcome.best_track": "Best tracks of the week",
+    "welcome.text": "Welcome to ''Music from Nothing'' – where creativity knows no bounds! 🎶",
+    "welcome.log_in": "Log in",
+    "welcome.register": "Register",
+
+    "welcome.card.listening.title": "Listening to music",
+    "welcome.card.listening.description": "Listen to music and have fun!",
+    "welcome.card.musical.title": "Musical creations sharing",
+    "welcome.card.musical.description": "Share users tracks inside the platform.",
+    "welcome.card.musician.title": "Musician's profiling",
+    "welcome.card.musician.description": "The platform provides amazing user profiles which you can customize to your own likes :)",
+    "welcome.card.just.title": "Just for entertaiment and self-study \\*_*/",
+    "welcome.card.just.description": "This platform was developed by a single person and actually at ''Everlasting BETA'' stage.",
+    "welcome.card.about.title": "About the author",
+    "welcome.card.about.description": "Hi there! I am so happy to see u on my first huge web-project. I am a casual 3rd year student of National University ''Zaporizhzhia Polytechnic'', Zaporizhzhia, Ukraine. There is no modern web-development classes in my uni however, so I decided to do some self-education stuff.",
+    "welcome.card.gratitude.title": "Big gratitude",
+    "welcome.card.gratitude.description": "Want to say great thanks for translation to Deutch (Name Surname) and some technical stuff (Name Surname).",
+    
+    "welcome.card.explore.title": "🎵 Explore",
+    "welcome.card.explore.description": "Explore the world of custom music, share, like and comment amazing audio posts.",
+    "welcome.card.anywhere.title": "🌐 Anywhere",
+    "welcome.card.anywhere.description": "Anytime: Accessible on desktop, tablet, or mobile – fun knows no bounds.",
+    "welcome.card.community.title": "🤝 Community",
+    "welcome.card.community.description": "Connect, collaborate, and be inspired by like-minded creators.",
+    "welcome.card.start.title": "🚀 Lets get started",
+    "welcome.card.start.description": "Join ''Music from Nothing'' today and let the music begin!",
+
+
+    "login.main_text": "Welcome back!",
+    "login.title": "Sign in",
+    "login.havent_registered_yet": "Haven't registered yet",
+    "login.social": "Log in using social media",
+    "login.forgot_password": "Forgot password",
+
+    "logout.text": "Logging out",
+
+    "upload.main_text": "Uploading sth new? Fascinating!",
+    "upload.title": "Your new post",
+    "upload.post.title": "Track title",
+    "upload.post.description": "Track description",
+    "upload.post.createdAt": "now",
+
+    "support.main_text": "Feel yourself free to contact us!",
+    "support.title": "Contact us",
+    "support.notice": "Please, be polite with the project administration. Visit the F.A.Q page before filling in this form.",
+    "support.open_f.a.q": "Open F.A.Q page",
+
+    "register.main_text": "Let’s get started!",
+    "register.title": "Register",
+    "register.already_registered": "Already registered",
+
+    "restore.check_email.main_text": "Restore access to account",
+    "restore.check_email.title": "Account restore",
+    "restore.check_email.back_to_login": "Back to login",
+
+    "verify.main_text": "Account verification",
+    "verify.validating": "Validating...",
+    "verify.verify_text": "Verify your account",
+    "verify.error": "Validation error",
+    "verify.error.text": "This action is not valid",
+
+    "account_restore.main_text": "New",
+    "account_restore.validating": "Validating...",
+    "account_restore.ready_to_restore": "Your account is ready to be restored",
+    "account_restore.cancel": "Cancel account restore action",
+    "account_restore.error.validation": "Validation error",
+    "account_restore.error.text": "This action is not valid",
+    "account_restore.snack.success": "Action was canceled",
+    "account_restore.snack.error": "Unexpected error"
+}

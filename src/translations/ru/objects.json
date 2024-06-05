@@ -1,0 +1,50 @@
+{
+    "post.play": "Воспроизвести",
+    "post.pause": "Пауза",
+    "post.loop": "Цикл",
+    "post.mute": "Мут",
+    "post.comment": "Комментарии",
+    "post.save": "Сохранить",
+    "post.like": "Нравится",
+    "post.dropdown.share": "Поделиться",
+    "post.dropdown.download": "Скачать",
+    "post.dropdown.report": "Пожаловаться",
+    "post.dropdown.delete": "Удалить",
+    "post.see": "Посмотреть",
+    "post.track_details": "Детали",
+    "post.open_profile": "Профиль",
+    "post.select": "Выбрать",
+    "post.vote+1": "Голосовать (+1)",
+    "post.unavailable": "Музыка недоступна",
+
+    "playlist.add_track": "Добавить музыку",
+    "playlist.delete": "Удалить",
+    "playlist.share": "Поделиться",
+    "playlist.report": "Пожаловаться",
+    "playlist.no_tracks": "Нет записей в этом плейлисте",
+
+    "comment.dropdown.delete": "Удалить",
+    "comment.dropdown.reply": "Ответить",
+    "comment.dropdown.report": "Пожаловаться",
+    "comment.no_replies": "Пока нет ответов",
+
+    "leftbar_item.open_profile": "Профиль",
+    "leftbar_item.see_track": "Музыка",
+
+    "rightbar_item.open_profile": "Профиль",
+
+    "battle.finished.winner": "Завершено, победитель",
+    "battle.finished.draw": "Ничья",
+    "battle.finished.unknown": "Завершено",
+
+    "select.user.item.select": "Выбрать",
+
+    "profile.subscribe": "Подписаться",
+    "profile.unsubscribe": "Отписаться",
+    "profile.following": "Подписан",
+    "profile.subscribers": "Подписчики",
+    "profile.login_to_subscribe": "Войдите, чтобы подписаться",
+    "profile.snack.pending": "Ожидание...",
+    "profile.snack.success": "Успех",
+    "profile.snack.error": "Невозможно выполнить это действие"
+}

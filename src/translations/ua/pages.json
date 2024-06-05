@@ -1,0 +1,72 @@
+{
+    "welcome.hello": "Ласкаво просимо до",
+    "welcome.explore_btn": "Досліджуйте унікальну музику",
+    "welcome.purpose": "Мета платформи та інформація про автора",
+    "welcome.best_track": "Найкращі треки тижня",
+    "welcome.text": "Ласкаво просимо в ''Music From Nothing'' – де творчість не має меж! 🎶",
+    "welcome.log_in": "Увійти",
+    "welcome.register": "Зареєструватися",
+
+    "welcome.card.listening.title": "Прослуховування музики",
+    "welcome.card.listening.description": "Слухайте музику та отримуйте задоволення!",
+    "welcome.card.musical.title": "Обмін музичними творіннями",
+    "welcome.card.musical.description": "Обмінюйтесь музикою користувачів всередині платформи.",
+    "welcome.card.musician.title": "Профілювання музиканта",
+    "welcome.card.musician.description": "Платформа надає вражаючі профілі користувачів, які ви можете налаштовувати за своїм смаком :)",
+    "welcome.card.just.title": "Просто для розваг та самостійного вивчення \\*_*/",
+    "welcome.card.just.description": "Цю платформу розроблено однією людиною, платформа знаходиться у стадії ''Вічна БЕТА''.",
+    "welcome.card.about.title": "Про автора",
+    "welcome.card.about.description": "Привіт! Я дуже радий бачити вас на своєму першому великому веб-проєкті. Я студент 3-го курсу Національного університету ''Запорізька політехніка'', Запоріжжя, Україна. У моєму університеті немає сучасних занять з веб-розробки, тому я вирішив самостійно вивчати цю сферу.",
+    
+    "welcome.card.explore.title": "🎵 Досліджуйте",
+    "welcome.card.explore.description": "Досліджуйте світ власної музики, діліться, ставте лайки та коментуйте дивовижні аудіо-пости.",
+    "welcome.card.anywhere.title": "🌐 Будь-де",
+    "welcome.card.anywhere.description": "Будь-коли: Доступно на настільному пк, планшеті або мобільному – розваги не мають меж.",
+    "welcome.card.community.title": "🤝 Спільнота",
+    "welcome.card.community.description": "Приєднуйтеся, співпрацюйте та дайтеся натхненню від однодумців.",
+    "welcome.card.start.title": "🚀 Почнемо",
+    "welcome.card.start.description": "Приєднуйтеся до ''Music From Nothing'' сьогодні і нехай розпочнеться музика!",
+
+
+    "login.main_text": "З поверненням!",
+    "login.title": "Увійти",
+    "login.havent_registered_yet": "Ще не зареєстровані",
+    "login.social": "Увійти за допомогою соціальних мереж",
+    "login.forgot_password": "Забули пароль",
+
+    "logout.text": "Вихід",
+
+    "upload.main_text": "Завантажуєте щось нове? Цікаво!",
+    "upload.title": "Новий пост",
+    "upload.post.title": "Назва пісні",
+    "upload.post.description": "Опис пісні",
+    "upload.post.createdAt": "зараз",
+
+    "support.main_text": "Не соромтеся звертатися до нас!",
+    "support.title": "Зв'яжіться з нами",
+    "support.notice": "Будь ласка, будьте ввічливі з адміністрацією проекту. Відвідайте сторінку F.A.Q перед тим, як заповнити цю форму.",
+    "support.open_f.a.q": "Відкрити сторінку F.A.Q",
+
+    "register.main_text": "Давайте почнемо!",
+    "register.title": "Реєстрація",
+    "register.already_registered": "Вже зареєстровані",
+
+    "restore.check_email.main_text": "Відновлення доступу до облікового запису",
+    "restore.check_email.title": "Відновлення облікового запису",
+    "restore.check_email.back_to_login": "Повернутися до входу",
+
+    "verify.main_text": "Перевірка облікового запису",
+    "verify.validating": "Перевірка...",
+    "verify.verify_text": "Перевірте свій обліковий запис",
+    "verify.error": "Помилка перевірки",
+    "verify.error.text": "Ця дія не є дійсною",
+
+    "account_restore.main_text": "Новий",
+    "account_restore.validating": "Перевірка...",
+    "account_restore.ready_to_restore": "Ваш обліковий запис готовий до відновлення",
+    "account_restore.cancel": "Скасувати дію відновлення облікового запису",
+    "account_restore.error.validation": "Помилка перевірки",
+    "account_restore.error.text": "Ця дія не є дійсною",
+    "account_restore.snack.success": "Дія скасована",
+    "account_restore.snack.error": "Неочікувана помилка"
+}

@@ -1,0 +1,78 @@
+import { Avatar, Box, CardContent, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
+import passwordImage from "@/assets/icons/password.png"
+import AccountVerifyForm from "@/components/forms/account-verify/account-verify";
+import LogRegVerContainer from "@/components/containers/image-left-form-conatiner/image-left-form-container";
+import VerifyAccBG from '@/assets/bgs/verifyFormBG.png';
+import { SpinnerCircular } from "@/components/common/spinner/Spinner";
+import { useTranslation } from "react-i18next";
+import BaseContentContainer from "@/components/containers/base-content-container/base-content-container";
+import { useModerationActionValidateQuery } from "@/utils/graphql-requests/generated/schema";
+
+
+export default function AccountVerify() {
+    const { userId, actionId, verifyToken, type } = useParams();
+    const { t } = useTranslation("pages");
+    const { data, loading } = useModerationActionValidateQuery({
+        variables: {
+            input: {
+                userId: userId as string,
+                actionId: actionId as string,
+                verifyToken: verifyToken as string,
+                type: type as string,
+            }
+        }
+    });
+
+
+    return(
+        <BaseContentContainer>
+            <LogRegVerContainer bg={VerifyAccBG} text={t('verify.main_text')}>
+                <Box sx={{ width: '30rem', height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2}}>
+                        <Avatar src={passwordImage} sx={{ m: 1, boxShadow: 5 }}/>
+                    </Box>
+                    {
+                        (() => {
+                            if (loading) {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('verify.validating')}
+                                        </Typography>
+                                        <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
+                                            <SpinnerCircular/>
+                                        </CardContent>
+                                    </>
+                                );
+                            }
+                            if (data?.moderationActionValidate) {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h4" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('verify.verify_text')} 
+                                        </Typography>
+                                        <CardContent>
+                                            <AccountVerifyForm userId={userId as string} actionId={actionId as string}/>
+                                        </CardContent>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <>
+                                        <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex', justifyContent: 'center', textAlign:'center', pt: 2, mb: 0}}>
+                                            {t('verify.error')}
+                                        </Typography>
+                                        <CardContent>
+                                            <Typography textAlign={'center'}>{t('This action is not valid')}</Typography>
+                                        </CardContent>
+                                    </>
+                                );
+                            }
+                        })()
+                    }
+                </Box>
+            </LogRegVerContainer>
+        </BaseContentContainer>
+    );
+}

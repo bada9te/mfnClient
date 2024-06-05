@@ -1,0 +1,50 @@
+{
+    "post.play": "Програти",
+    "post.pause": "Пауза",
+    "post.loop": "Цикл",
+    "post.mute": "Мут",
+    "post.comment": "Коментарі",
+    "post.save": "Зберегти",
+    "post.like": "Лайк",
+    "post.dropdown.share": "Поділитися",
+    "post.dropdown.download": "Завантажити",
+    "post.dropdown.report": "Скарга",
+    "post.dropdown.delete": "Видалити",
+    "post.see": "Переглянути трек",
+    "post.track_details": "Деталі треку",
+    "post.open_profile": "Відкрити профіль",
+    "post.select": "Вибрати",
+    "post.vote+1": "Голосувати (+1)",
+    "post.unavailable": "Трек недоступний",
+
+    "playlist.add_track": "Додати трек",
+    "playlist.delete": "Видалити",
+    "playlist.share": "Поділитися",
+    "playlist.report": "Скарга",
+    "playlist.no_tracks": "Немає треків у цьому плейлисті",
+
+    "comment.dropdown.delete": "Видалити",
+    "comment.dropdown.reply": "Відповісти",
+    "comment.dropdown.report": "Скарга",
+    "comment.no_replies": "Поки що немає відповідей",
+
+    "leftbar_item.open_profile": "Відкрити профіль",
+    "leftbar_item.see_track": "Переглянути трек",
+
+    "rightbar_item.open_profile": "Відкрити профіль",
+
+    "battle.finished.winner": "Завершено, переможець -",
+    "battle.finished.draw": "Нічия",
+    "battle.finished.unknown": "Завершено",
+
+    "select.user.item.select": "Вибрати",
+
+    "profile.subscribe": "Підписатися",
+    "profile.unsubscribe": "Відписатися",
+    "profile.following": "Підписки",
+    "profile.subscribers": "Підписники",
+    "profile.login_to_subscribe": "Увійдіть, щоб підписатися",
+    "profile.snack.pending": "В очікуванні...",
+    "profile.snack.success": "Успішно",
+    "profile.snack.error": "Не вдалося виконати цю дію"
+}

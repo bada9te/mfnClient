@@ -1,0 +1,29 @@
+{
+    "topbar.title": "MUSIC FROM NOTHING",
+    "topbar.feed": "Стрічка",
+    "topbar.wallet": "Гаманець",
+    "topbar.battles": "Баталії",
+    "topbar.playlists": "Плейлисти",
+    "topbar.categories": "Категорії",
+    "topbar.chats": "Чати",
+    "topbar.profile": "Профіль",
+    "topbar.notifications": "Сповіщення",
+    "topbar.edit_profile": "Редагувати профіль",
+    "topbar.saved_posts": "Збережена музика",
+    "topbar.support": "Підтримка",
+    "topbar.language": "Мова",
+    "topbar.logout": "Вийти",
+    "topbar.log_in": "Увійти",
+    "topbar.dark_mode": "Темний режим",
+
+    "bottombar.tracks": "Музика",
+    "bottombar.new_post": "Створити",
+    "bottombar.player": "Програвач",
+    "bottombar.people": "Користувачі",
+
+    "leftbar.header": "Пошук музики",
+    "leftbar.label": "Назва",
+
+    "rightbar.header": "Пошук виконавців",
+    "rightbar.label": "Ім'я"
+}

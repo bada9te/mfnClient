@@ -1,32 +1,73 @@
-import { Suspense, lazy } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useLayoutEffect } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import { useReactiveVar } from '@apollo/client';
+import { baseState, userInitialState } from './components/baseReactive';
+import { SnackbarProvider } from 'notistack';
+import { httpGetCurrentUser } from './utils/http-requests/auth';
+import ApplicationRouter from './utils/router/app-routes';
+import muiTheme from './utils/mui-theme/theme';
+import socket from './utils/socket/socket';
+import { pageLoaderState } from './components/common/page-loader/reactive';
 
-// Works also with SSR as expected
-const Card = lazy(() => import('./Card'))
+
+const publicAvailablePages = [
+  'profile',
+  'track',
+  'register',
+  'account-restore',
+  'account-verify',
+  'battles',
+  'support',
+  'logout',
+  'f.a.q',
+  'playlists',
+]
 
 function App() {
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+    //const navigate = useNavigate();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { user } = baseState();
 
-      <Suspense fallback={<p>Loading card component...</p>}>
-        <Card />
-      </Suspense>
+    const { theme: themeMode } = useReactiveVar(baseState);
+  
+    useEffect(() => {
+        httpGetCurrentUser()
+            .then(({data}) => {
+                if (data) {
+                    baseState({ ...baseState(), user: {...baseState().user, ...data}});
+                    socket.auth = { userId: data._id };
+                    socket.connect();
+                } else {
+                    (publicAvailablePages.includes(location.pathname) && 
+                    !['/app', '/'].includes(location.pathname)) && 
+                    navigate('/app/login');
+                }
+            }).catch(() => {
+                console.log("Not authenticated!");
+                if (user._id.length) {
+                    baseState({...baseState(), user: userInitialState });
+                    console.log("User state was restored.");
+                }
+            });
+    }, [navigate, location.pathname, user._id]);
 
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useLayoutEffect(() => {
+            pageLoaderState({ isLoading: true });
+            setTimeout(() => {
+            pageLoaderState({ isLoading: false });
+        }, 800);
+    }, [location.pathname]);
+
+    return (
+        <ThemeProvider theme={muiTheme('dark')}>
+            <SnackbarProvider maxSnack={5}>
+                <ApplicationRouter/>
+            </SnackbarProvider>
+        </ThemeProvider>
+    );
 }
 
-export default App
+
+export default App;
