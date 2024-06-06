@@ -61,7 +61,7 @@ function App() {
     }, [location.pathname]);
 
     return (
-        <ThemeProvider theme={muiTheme('dark')}>
+        <ThemeProvider theme={muiTheme(themeMode)}>
             <SnackbarProvider maxSnack={5}>
                 <ApplicationRouter/>
             </SnackbarProvider>

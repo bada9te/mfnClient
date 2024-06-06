@@ -1,7 +1,8 @@
 import axios from "axios";
+import {cfg} from "@/config";
 
 
-const SERVER_BASE = process.env.REACT_APP_SERVER_BASE;
+const SERVER_BASE = cfg.serverBase;
 
 // login
 const httpLogin = async(email: string, password: string) => {

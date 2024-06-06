@@ -1,16 +1,17 @@
 import { ApolloClient, HttpLink } from "@apollo/client";
 import cache from "./cache";
+import {cfg} from "@/config";
 
 // http
 const httpLink = new HttpLink({
-    uri: `${process.env.REACT_APP_SERVER_BASE}/graphql`,
+    uri: `${cfg.serverBase}/graphql`,
     credentials: 'include'
 });
 
 const client = new ApolloClient({
     link: httpLink,
     cache,
-    connectToDevTools: process.env.REACT_APP_VERSION_TYPE === "development"
+    connectToDevTools: true
 });
 
 export default client;

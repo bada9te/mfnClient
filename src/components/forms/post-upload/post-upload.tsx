@@ -60,10 +60,10 @@ export default function PostUploadForm() {
     // form submit
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar(t('upload.snack.pending'), { autoHideDuration: 1500 });
-        let blob = await fetch(postUploadForm.picture as string).then(r => r.blob());
+        const blob = await fetch(postUploadForm.picture as string).then(r => r.blob());
 
         await Promise.all([
-            httpSaveFile(data.Audio?.[0])
+            httpSaveFile(data.Audio?.[0] as File)
                 .then(({data}) => {
                     postUploadFormState({ ...postUploadFormState(), uploadedAudioName: data.data.filename });
                 }),
@@ -83,8 +83,8 @@ export default function PostUploadForm() {
                 };
 
                 // function to update array of posts
-                const updatePosts = (cachedArray: Post[], post: any) => {
-                    let cachedPosts = JSON.parse(JSON.stringify(cachedArray));
+                const updatePosts = (cachedArray: Post[], post: Post) => {
+                    const cachedPosts = JSON.parse(JSON.stringify(cachedArray));
                     if (cachedPosts.length >= maxCountPerPage) {
                         cachedPosts.pop();
                     }
@@ -128,7 +128,7 @@ export default function PostUploadForm() {
             enqueueSnackbar(t('upload.snack.success'), { autoHideDuration: 1500, variant: 'success' });
             postUploadFormState({...postUploadFormState(), imageTitle: null, audioTitle: null, picture: null, audio: null});
             navigate(`/app/profile/${currentUser._id}`)
-        }).catch(_ => {
+        }).catch(() => {
             enqueueSnackbar(t('upload.snack.error'), { autoHideDuration: 3000, variant: 'error' });
         });
     }

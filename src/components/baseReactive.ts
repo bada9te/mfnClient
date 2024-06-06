@@ -1,8 +1,6 @@
 import { makeVar } from "@apollo/client";
 import { PaletteMode } from "@mui/material";
-
-const themeVAR = process.env.REACT_APP_THEME_VAR_NAME;
-const languageVAR = process.env.REACT_APP_LANGUAGE_VAR_NAME;
+import {cfg} from "@/config";
 
 export type TUserInitialState = {
     _id:          string;
@@ -61,11 +59,11 @@ export const baseState = makeVar<{
     },
 }>({
     user: userInitialState,
-    theme:    JSON.parse(localStorage.getItem(themeVAR as string) as string)?.theme       || ('light' && localStorage.setItem(themeVAR as string, JSON.stringify({ theme: 'light' }))),
-    language: JSON.parse(localStorage.getItem(languageVAR as string) as string)?.language || ('en' && localStorage.setItem(languageVAR as string, JSON.stringify({ language: 'en' }))),
+    theme:    JSON.parse(localStorage.getItem(cfg.themeVarName) as string)?.theme       || ('light' && localStorage.setItem(cfg.themeVarName, JSON.stringify({ theme: 'light' }))),
+    language: JSON.parse(localStorage.getItem(cfg.languageVarName) as string)?.language || ('en' && localStorage.setItem(cfg.languageVarName, JSON.stringify({ language: 'en' }))),
     locations: {
-        images: `${process.env.REACT_APP_SERVER_BASE}/files`,
-        audios: `${process.env.REACT_APP_SERVER_BASE}/files`,
-        others: `${process.env.REACT_APP_SERVER_BASE}/files`,
+        images: `${cfg.serverBase}/files`,
+        audios: `${cfg.serverBase}/files`,
+        others: `${cfg.serverBase}/files`,
     },
 });

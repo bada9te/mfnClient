@@ -2,6 +2,7 @@ import { useReactiveVar } from "@apollo/client";
 import { FormControlLabel, Switch } from "@mui/material";
 import { baseState } from "../../baseReactive";
 import { useTranslation } from "react-i18next";
+import {cfg} from "@/config";
 
 
 export default  function ThemeSwitcher() {
@@ -13,7 +14,7 @@ export default  function ThemeSwitcher() {
             ...baseState(),
             theme: e.target.checked ? 'dark' : 'light',
         });
-        localStorage.setItem(process.env.REACT_APP_THEME_VAR_NAME as string, JSON.stringify({ theme: e.target.checked ? 'dark' : 'light' })); 
+        localStorage.setItem(cfg.themeVarName as string, JSON.stringify({ theme: e.target.checked ? 'dark' : 'light' }));
     }
 
     return (

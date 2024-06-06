@@ -1,4 +1,4 @@
-import { httpSaveFile } from "@/utils/http-requests/files";
+import { httpSaveFile } from "@/utils/http-requests/files.ts";
 import ImageCropperModal from "../../modals/image-cropper-modal/image-cropper-modal";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
 import { useReactiveVar } from "@apollo/client";
@@ -33,8 +33,8 @@ export default function ProfileCardForm() {
         if (picture != null) { 
             enqueueSnackbar(t('profile.snack.default.pending'), { autoHideDuration: 1500 });
             // save image on server
-            let blob = await fetch(picture).then(r => r.blob()) as IBlob;
-            let result = await httpSaveFile(blobToFile(blob, currentUser?.nick + `${imageType}.jpg`));
+            const blob = await fetch(picture).then(r => r.blob()) as IBlob;
+            const result = await httpSaveFile(blobToFile(blob, currentUser?.nick + `${imageType}.jpg`));
             
             // process image assigning
             await updateUser({
@@ -44,7 +44,7 @@ export default function ProfileCardForm() {
             }).then(({ data }) => {
                 baseState({ ...baseState(), user: { ...baseState().user, ...data?.userUpdate} });
                 enqueueSnackbar(t('profile.snack.default.success'), { autoHideDuration: 1500, variant: 'success' });
-            }).catch(_ => {
+            }).catch(() => {
                 enqueueSnackbar(t('profile.snack.default.error'), { autoHideDuration: 3000, variant: 'error' });
             });
         }

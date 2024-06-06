@@ -1,4 +1,3 @@
-
 import ReactDOM from 'react-dom/client'
 import './index.css';
 import App from './App';
@@ -21,17 +20,24 @@ import './styles/index.scss';
 import './styles/muiOverrides.scss';
 import './styles/Scrollbar.scss';
 import './styles/chats.scss';
+import React from "react";
 
-
-ReactDOM.hydrateRoot(
-  document.getElementById('root') as HTMLElement,
-    <ApolloProvider client={APClient}>
-        <RainbowkitAppProvider>
-            <I18nextProvider i18n={i18next}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
-            </I18nextProvider>
-        </RainbowkitAppProvider>
-    </ApolloProvider>
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+      <ApolloProvider client={APClient}>
+          <RainbowkitAppProvider>
+              <I18nextProvider i18n={i18next}>
+                  <BrowserRouter>
+                      <App />
+                  </BrowserRouter>
+              </I18nextProvider>
+          </RainbowkitAppProvider>
+      </ApolloProvider>
+  </React.StrictMode>,
 )
+
+
+
+
+
+

@@ -4,9 +4,10 @@ import { Dialog, DialogContent, DialogTitle, IconButton, List, ListItem, ListIte
 import { languageSelectModalState } from "./reactive";
 import { baseState } from "@/components/baseReactive";
 import { useTranslation } from "react-i18next";
+import {cfg} from "@/config";
 
 
-const LanguageSelectModal = props => {
+const LanguageSelectModal = () => {
     const { isShowing } = useReactiveVar(languageSelectModalState);
     const { t, i18n } = useTranslation("modals"); 
 
@@ -14,10 +15,10 @@ const LanguageSelectModal = props => {
         languageSelectModalState({ isShowing: false });
     }
 
-    const selectLanguage = (language) => {
-        i18n.changeLanguage(language);
+    const selectLanguage = async(language) => {
+        await i18n.changeLanguage(language);
         baseState({ ...baseState(), language });
-        localStorage.setItem(process.env.REACT_APP_LANGUAGE_VAR_NAME, JSON.stringify({ language }));
+        localStorage.setItem(cfg.languageVarName, JSON.stringify({ language }));
         handleClose();
     }
 
