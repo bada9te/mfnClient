@@ -1,6 +1,4 @@
 import { PaletteMode, createTheme } from "@mui/material";
-import getCurrentLanguageFromLS from "../common-functions/getCurrentLanguageFromLS";
-
 
 // theme setup
 const muiTheme = (mode: PaletteMode) => {
