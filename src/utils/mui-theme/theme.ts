@@ -24,7 +24,7 @@ const muiTheme = (mode: PaletteMode) => {
             }
         },
         typography: {
-            fontFamily: getCurrentLanguageFromLS() === 'en' ? ['Poppins','static'].join(',') : ['Open Sans', 'sans-serif'].join(','),
+            fontFamily: `"Roboto", sans-serif`,
             fontWeightRegular: 600,
         },
         components: {
