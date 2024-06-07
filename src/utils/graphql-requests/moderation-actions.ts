@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client/index.js";
 
 // Q
 export const MODERATION_ACTION_VALIDATE_QUERY = gql`

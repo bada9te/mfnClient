@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { userSelectModalState } from "./reactive";
 import UserSelectContainerShare from "@/components/containers/user-select-share-container/user-select-share-container";
 import { useTranslation } from "react-i18next";

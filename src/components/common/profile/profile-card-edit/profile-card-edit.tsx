@@ -1,7 +1,7 @@
 import './profile-card-edit.scss';
 import ProfileCardForm from '@/components/forms/profile-card/profile-card';
 import { Avatar, Box, Stack, Typography } from '@mui/material';
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client/index.js';
 import { baseState } from '@/components/baseReactive';
 
 

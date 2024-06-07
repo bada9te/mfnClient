@@ -1,4 +1,4 @@
-import { makeVar } from "@apollo/client";
+import { makeVar } from "@apollo/client/index.js";
 import { ChatMessage } from "utils/graphql-requests/generated/schema";
 
 export type TReplyingToNull = {

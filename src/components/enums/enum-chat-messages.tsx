@@ -1,5 +1,5 @@
 import { MessageList } from "react-chat-elements";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "../baseReactive";
 import { ChatMessage } from "utils/graphql-requests/generated/schema";
 

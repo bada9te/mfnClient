@@ -3,7 +3,7 @@ import AddCommentForm from "@/components/forms/add-comment/add-comment";
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import CommentsContainer from "@/components/containers/comments-container/comments-container";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { commentsModalState } from "./reactive";
 import { useTranslation } from "react-i18next";
 

@@ -1,4 +1,4 @@
-import { makeVar } from "@apollo/client";
+import { makeVar } from "@apollo/client/index.js";
 import { PaletteMode } from "@mui/material";
 import {cfg} from "@/config";
 
@@ -50,8 +50,8 @@ export const userInitialState: TUserInitialState = {
 
 export const baseState = makeVar<{
     user: TUserInitialState;
-    theme:    PaletteMode;
-    language: string;
+    //theme:    PaletteMode;
+    //language: string;
     locations: {
         images: string;
         audios: string;
@@ -59,8 +59,8 @@ export const baseState = makeVar<{
     },
 }>({
     user: userInitialState,
-    theme:    JSON.parse(localStorage.getItem(cfg.themeVarName) as string)?.theme       || ('light' && localStorage.setItem(cfg.themeVarName, JSON.stringify({ theme: 'light' }))),
-    language: JSON.parse(localStorage.getItem(cfg.languageVarName) as string)?.language || ('en' && localStorage.setItem(cfg.languageVarName, JSON.stringify({ language: 'en' }))),
+    //theme:    JSON.parse(localStorage.getItem(cfg.themeVarName) as string)?.theme       || ('light' && localStorage.setItem(cfg.themeVarName, JSON.stringify({ theme: 'light' }))),
+    //language: JSON.parse(localStorage.getItem(cfg.languageVarName) as string)?.language || ('en' && localStorage.setItem(cfg.languageVarName, JSON.stringify({ language: 'en' }))),
     locations: {
         images: `${cfg.serverBase}/files`,
         audios: `${cfg.serverBase}/files`,

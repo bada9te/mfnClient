@@ -4,7 +4,7 @@ import CommentDropDown from "../comment/comment-dropdown/comment-dropdown";
 import { reportFormState } from "@/components/forms/report/reactive";
 import { reportModalState } from "@/components/modals/report-modal/reactive";
 import { commentsContainerState } from "@/components/containers/comments-container/reactive";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import { confirmModalState } from "@/components/modals/confirm-modal/reactive";
 import { confirmContainerState } from "@/components/containers/confirm-container/reactive";

@@ -8,7 +8,7 @@ import CreatePlaylistForm from "../../forms/create-playlist/create-playlist";
 import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
 import newPlaylistBG from "@/assets/bgs/newPlaylistFormBG.png"
 import { playlistsContainerState } from "./reactive";
-import {  useReactiveVar } from "@apollo/client";
+import {  useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import defineMaxPage from "@/utils/common-functions/defineMaxPage";
 import { useTranslation } from "react-i18next";

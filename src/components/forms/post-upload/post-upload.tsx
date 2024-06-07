@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormControlLabel, Button, TextField, Checkbox, FormGroup, Typography, FormControl, InputLabel, Select, MenuItem, Card } from "@mui/material";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { POSTS_BY_OWNER_QUERY, POSTS_QUERY } from "@/utils/graphql-requests/posts";
 import { baseState } from "../../baseReactive";
 import { imageCropperModalState } from "../../modals/image-cropper-modal/reactive";

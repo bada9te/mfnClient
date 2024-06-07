@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import Slide from '@mui/material/Slide';
 import ConfirmContainer from '@/components/containers/confirm-container/confirm-container';
-import { useMutation, useReactiveVar } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client/index.js';
 import { POST_DELETE_BY_ID_MUTATION } from '@/utils/graphql-requests/posts';
 import { COMMENT_DELETE_BY_ID_MUTATION } from '@/utils/graphql-requests/comments';
 import { USER_DELETE_BY_ID_MUTATION } from '@/utils/graphql-requests/users';

@@ -6,7 +6,7 @@ import EnumBattles from "@/components/enums/enum-battles";
 import CreateBattleForm from "../../forms/create-battle/create-battle";
 import ImageRightFormContainer from "../image-right-form-container/image-right-form.container";
 import newBattleFormBG from "@/assets/bgs/newBattleFormBG.png"
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import { battlesContainerState } from "./reactive";
 import { useTranslation } from "react-i18next";

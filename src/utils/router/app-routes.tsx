@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Welcome, Login, Logout, Register, NotFound404, MainPage, Profile, ProfileEdit, Battles, Support, FAQ, AccountRestore, PostUpload, Container, Track, SavedPosts, Notifications, AccountRestoreEmailCheck, AccountVerify, Playlists, Categories, Chats } from '../../pages/pages';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useLayoutEffect } from 'react';
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client/index.js';
 import { baseState, userInitialState } from '@/components/baseReactive';
 import { httpGetCurrentUser } from '@/utils/http-requests/auth';
 import socket from '@/utils/socket/socket';

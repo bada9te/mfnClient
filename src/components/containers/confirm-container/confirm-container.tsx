@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { confirmContainerState } from "./reactive";
 

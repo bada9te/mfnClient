@@ -7,7 +7,7 @@ import TopBarUserMenu from './top-bar-user-menu/top-bar-user-menu';
 import TopBarLeftMenuMin from './top-bar-left-menu-min/top-bar-left-menu-min';
 import TopBarLeftMenu from './top-bar-left-menu/top-bar-left-menu';
 import StyledBadge from "./styled-badge/styled-badge";
-import { useLazyQuery, useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useReactiveVar } from '@apollo/client/index.js';
 import { baseState } from '@/components/baseReactive';
 import { NOTIFICATIONS_QUERY } from '@/utils/graphql-requests/notifications';
 import { useTranslation } from 'react-i18next';

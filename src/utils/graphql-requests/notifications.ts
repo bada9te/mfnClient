@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client/index.js";
 import { CORE_COMMENT_FIELDS } from "./comments";
 import { CORE_POST_FIELDS } from "./posts";
 

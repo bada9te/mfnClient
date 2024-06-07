@@ -1,4 +1,4 @@
-import { makeVar } from "@apollo/client";
+import { makeVar } from "@apollo/client/index.js";
 
 export const bottomBarState = makeVar<{
     showRB: boolean;

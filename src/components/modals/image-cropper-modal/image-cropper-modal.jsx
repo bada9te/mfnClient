@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Box } from "@mui/material";
 import { useState, useCallback } from "react";
 import Cropper from 'react-easy-crop';

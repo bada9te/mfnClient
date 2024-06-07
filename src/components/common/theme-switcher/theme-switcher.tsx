@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { FormControlLabel, Switch } from "@mui/material";
 import { baseState } from "../../baseReactive";
 import { useTranslation } from "react-i18next";

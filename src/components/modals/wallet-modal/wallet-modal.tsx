@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { walletConnectModalState } from "./reactive";
 import { useTranslation } from "react-i18next";
 

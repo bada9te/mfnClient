@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { useRef, useEffect, useCallback } from "react";
 import { baseState } from "../../../baseReactive";
 import animateBars from "./animateBars";

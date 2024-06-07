@@ -4,7 +4,7 @@ import { Box, TextField, Button, Stack, Typography, Paper, FormGroup } from "@mu
 import PostItemUnavailable from "../../common/post-item/post-item-unavailable";
 import { postSelectContainerState } from "@/components/containers/post-select-container/reactive";
 import { postSelectModalState } from "../../modals/post-select-modal/reactive";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { useState } from "react";
 import { createBattleFormState } from "./reactive";
 import { useSnackbar } from "notistack";

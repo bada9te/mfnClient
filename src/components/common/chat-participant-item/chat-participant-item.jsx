@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { Logout, Person, RemoveCircle } from "@mui/icons-material";
 import { Avatar, ButtonGroup, Card, CardHeader, IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";

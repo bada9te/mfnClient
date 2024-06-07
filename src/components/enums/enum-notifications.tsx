@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { Box, Stack } from "@mui/material";
 import getTimeSince from "@/utils/common-functions/getTimeSince";
 import { baseState } from "../baseReactive";

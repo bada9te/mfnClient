@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Tooltip, Button, Avatar, Card, CardHeader, IconButton, CardMedia, CardContent, Box, Typography, Skeleton, ButtonGroup } from "@mui/material";
 import { Favorite, FavoriteBorder, CommentOutlined, Bookmark, BookmarkBorder, PlayArrow, Pause, Loop, VolumeOff, VolumeUp, CheckCircle, HowToVote } from "@mui/icons-material";
 import PostItemDropDown from './post-item-dropdown/post-item-dropdown';
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client/index.js';
 import { POSTS_SAVED_BY_USER_QUERY } from '@/utils/graphql-requests/posts';
 import { audioPlayerState } from '../audio-player/reactive';
 import { userSelectContainerState } from '@/components/containers/user-select-container/reactive';

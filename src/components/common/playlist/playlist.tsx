@@ -8,7 +8,7 @@ import { userSelectContainerState } from "../../containers/user-select-container
 import { confirmContainerState } from "../../containers/confirm-container/reactive";
 import { confirmModalState } from "../../modals/confirm-modal/reactive";
 import { reportModalState } from "../../modals/report-modal/reactive";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import { playlistsContainerState } from "../../containers/playlists-container/reactive";
 import { postSelectContainerState } from "../../containers/post-select-container/reactive";

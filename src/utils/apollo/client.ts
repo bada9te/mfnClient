@@ -1,4 +1,4 @@
-import { ApolloClient, HttpLink } from "@apollo/client";
+import { ApolloClient, HttpLink } from "@apollo/client/index.js";
 import cache from "./cache";
 import {cfg} from "@/config";
 

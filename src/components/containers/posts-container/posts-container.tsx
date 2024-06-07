@@ -3,7 +3,7 @@ import { SpinnerLinear } from '../../common/spinner/Spinner';
 import PaginationTree from '../../common/pagination/pagination';
 import { Box, Stack } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
-import { OperationVariables, QueryResult, useLazyQuery, useReactiveVar } from '@apollo/client';
+import { OperationVariables, QueryResult, useLazyQuery, useReactiveVar } from '@apollo/client/index.js';
 import { POSTS_BY_CATEGORY_QUERY, POSTS_BY_OWNER_QUERY, POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY } from '@/utils/graphql-requests/posts';
 import defineMaxPage from '../../../utils/common-functions/defineMaxPage';
 import { baseState } from '../../baseReactive';

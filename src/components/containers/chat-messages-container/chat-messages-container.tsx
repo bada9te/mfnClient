@@ -1,4 +1,4 @@
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "../../baseReactive";
 import { CHAT_MESSAGES_BY_CHAT_ID_QUERY, CHAT_MESSAGE_CREATE_MUTATION, CHAT_MESSAGE_UPDATE_MUTATION } from "@/utils/graphql-requests/chat-messages";
 import { SpinnerLinear } from "../../common/spinner/Spinner";

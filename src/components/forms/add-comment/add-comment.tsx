@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, TextField, IconButton, Tooltip } from "@mui/material";
 import { Reply, Send } from "@mui/icons-material";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { commentsContainerState, replyingToNull } from "@/components/containers/comments-container/reactive";
 import { COMMENTS_BY_POST_ID, COMMENTS_REPLIES_BY_COMMENT_ID } from "@/utils/graphql-requests/comments";
 import { baseState } from "@/components/baseReactive";

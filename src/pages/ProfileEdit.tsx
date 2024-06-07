@@ -6,7 +6,7 @@ import EmailImage    from "@/assets/icons/email.png"
 import PasswordImage from "@/assets/icons/password.png"
 import TextImage     from "@/assets/icons/text.png"
 import ClearImage     from "@/assets/icons/logo_clear.png"
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 
 export default function ProfileEdit (){

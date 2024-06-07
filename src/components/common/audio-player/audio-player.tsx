@@ -6,7 +6,7 @@ import { SpinnerLinear } from '../spinner/Spinner';
 import audioAnalyzer from './audiowave/analyzer';
 import WaveForm from './audiowave/waveform';
 import PostItemUnavailable from '../post-item/post-item-unavailable';
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client/index.js';
 import { audioPlayerState } from './reactive';
 import { bottomBarState } from '@/components/bars/bottom/bottom-bar/reactive';
 import PostGenerate from '../post-item/post-generate';

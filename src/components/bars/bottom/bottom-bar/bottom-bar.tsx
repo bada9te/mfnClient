@@ -2,7 +2,7 @@ import { memo, useEffect } from "react";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { MusicNote, PersonSearch, AddCircle, Radio } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { audioPlayerState } from "@/components/common/audio-player/reactive";
 import { bottomBarState } from "./reactive";
 import { baseState } from "@/components/baseReactive";

@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, TextField, Button, MenuItem } from "@mui/material";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { reportFormState } from "./reactive";
 import { baseState } from "../../baseReactive";
 import { useSnackbar } from "notistack";

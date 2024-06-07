@@ -1,5 +1,5 @@
 import LeftBarPostsItem from "../common/left-bar-posts-item/left-bar-posts-item";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "../baseReactive";
 import { PostsByTitleQuery } from "utils/graphql-requests/generated/schema";
 

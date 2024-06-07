@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { Box, Stack, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect } from "react"

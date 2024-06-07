@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { Box, Grid, Paper } from "@mui/material"
 import BottomBar from "@/components/bars/bottom/bottom-bar/bottom-bar";
 import TopBar from "@/components/bars/top/top-bar/top-bar";

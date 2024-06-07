@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
 import { Close, Send } from "@mui/icons-material";
 import PostSelectContainer from "@/components/containers/post-select-container/post-select-container";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { postSelectContainerState } from "@/components/containers/post-select-container/reactive";
 import { postSelectModalState } from "./reactive";
 import { useTranslation } from "react-i18next";

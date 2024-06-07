@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { enqueueSnackbar } from "notistack";
 import { userSelectContainerState } from "../../containers/user-select-container/reactive";
 import UserSelectContainer from "../../containers/user-select-container/user-select-container";

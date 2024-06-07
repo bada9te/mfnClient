@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { Avatar, AvatarGroup, Card, CardActionArea, CardHeader } from "@mui/material";
 import { baseState } from "@/components/baseReactive";
 import { SpinnerCircular } from "../spinner/Spinner";

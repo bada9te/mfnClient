@@ -2,7 +2,7 @@ import { Avatar, Box, Card, CardHeader } from "@mui/material";
 import LogoClear from "@/assets/icons/logo_clear.png";
 
 const CategoryCard = props => {
-    const { title, color, handleClick } = props;
+    const { title, color, color2, handleClick } = props;
 
 
     return (
@@ -11,7 +11,7 @@ const CategoryCard = props => {
             width: '100%',
             boxShadow: 5, 
             borderRadius: 5,
-            backgroundColor: `${color}95`,
+            background: `linear-gradient(90deg, ${color} 0%, ${color2} 100%)`,
             backdropFilter: 'blur(5px)',
             cursor: 'pointer',
             transition: '500ms', 

@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TextField, Button, Paper } from "@mui/material";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import { SUPPORT_CONTACT_CREATE_MUTATION } from "@/utils/graphql-requests/support-contact";
 import { useSnackbar } from "notistack";

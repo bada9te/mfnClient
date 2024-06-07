@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { Box, Stack, Typography } from "@mui/material";
 import getTimeSince from "../../../utils/common-functions/getTimeSince";
 import { PLAYLISTS_BY_OWNER_ID_QUERY } from "@/utils/graphql-requests/playlists";

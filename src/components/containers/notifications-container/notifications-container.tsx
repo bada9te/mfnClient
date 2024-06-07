@@ -2,7 +2,7 @@ import { Box, Button, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import EnumNotifications from "../../enums/enum-notifications";
 import { Checklist, MarkAsUnread } from "@mui/icons-material";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "../../baseReactive";
 import { NOTIFICATIONS_QUERY } from "@/utils/graphql-requests/notifications";
 import { useSnackbar } from "notistack";

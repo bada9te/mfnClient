@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "../baseReactive";
 import RightBarUsersItem from "../common/right-bar-users-item/right-bar-users-item";
 import { UsersByNicknameQuery } from "utils/graphql-requests/generated/schema";

@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import getTimeSince from "@/utils/common-functions/getTimeSince";
 import { baseState } from "@/components/baseReactive";
 import PostItem from "./post-item";

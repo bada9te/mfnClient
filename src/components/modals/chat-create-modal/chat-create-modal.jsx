@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { chatCreateModalState } from "./reactive";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@emotion/react";

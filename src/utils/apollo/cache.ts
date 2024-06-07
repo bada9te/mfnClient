@@ -1,4 +1,4 @@
-import { InMemoryCache } from "@apollo/client";
+import { InMemoryCache } from "@apollo/client/index.js";
 
 
 const cache = new InMemoryCache({

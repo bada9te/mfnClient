@@ -4,7 +4,7 @@ import { Avatar, Box, CardActions, CardContent, Typography, Stack, Button } from
 import { useNavigate, useParams } from 'react-router-dom';
 import LogRegVerContainer from '@/components/containers/image-left-form-conatiner/image-left-form-container';
 import newPasswordBG from '@/assets/bgs/newPasswordFormBG.png';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client/index.js';
 import { MODERATION_ACTION_DELETE_MUTATION, MODERATION_ACTION_VALIDATE_QUERY } from '../utils/graphql-requests/moderation-actions';
 import { useSnackbar } from 'notistack';
 import { SpinnerCircular } from '@/components/common/spinner/Spinner';

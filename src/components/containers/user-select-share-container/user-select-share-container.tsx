@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import UserSelectContainer from "../user-select-container/user-select-container";
 import { userSelectModalState } from "@/components/modals/user-select-modal/reactive";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import { userSelectContainerState } from "../user-select-container/reactive";
 import { useTranslation } from "react-i18next";

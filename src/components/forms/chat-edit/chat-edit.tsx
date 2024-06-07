@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { TextField, Button, Paper } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { CHATS_USER_RELATED_BY_USER_ID_QUERY } from "@/utils/graphql-requests/chats";
 import { baseState } from "../../baseReactive";
 import { emitChatUpdate } from "@/utils/socket/event-emitters/chats";

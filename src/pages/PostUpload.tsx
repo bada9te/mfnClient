@@ -6,7 +6,7 @@ import ImageRightFormContainer from "@/components/containers/image-right-form-co
 import newPostFormBG from '@/assets/bgs/newPostFormBG.png';
 import BaseContentContainer from "@/components/containers/base-content-container/base-content-container";
 import { imageCropperModalState } from "@/components/modals/image-cropper-modal/reactive";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import { postUploadFormState } from "@/components/forms/post-upload/reactive";
 import { useTranslation } from "react-i18next";

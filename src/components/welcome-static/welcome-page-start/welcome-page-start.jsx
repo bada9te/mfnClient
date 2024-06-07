@@ -3,7 +3,7 @@ import { Avatar, Box, Button, ButtonGroup, Stack, Typography } from "@mui/materi
 import AppLogoImg from "../../../assets/icons/logo.png";
 import WelcomePageStartBG from "../../../assets/bgs/welcomePageStart.png";
 import { useNavigate } from "react-router-dom";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "../../baseReactive";
 import { useTranslation } from "react-i18next";
 

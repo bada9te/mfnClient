@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { baseState } from "../../baseReactive";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { useTranslation } from "react-i18next";
 import { Avatar, Box, Button, CardContent, CardHeader, Paper, Stack, Tab, Tabs } from "@mui/material";
 import { Add, Forum, Info, Send } from "@mui/icons-material";

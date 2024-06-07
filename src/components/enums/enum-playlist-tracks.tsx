@@ -1,6 +1,6 @@
 import PostItem from "../common/post-item/post-item";
 import getTimeSince from "../../utils/common-functions/getTimeSince";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "../baseReactive";
 import { Post } from "utils/graphql-requests/generated/schema";
 

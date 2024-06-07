@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client/index.js";
 
 export const CORE_USER_FIELDS = gql`
     fragment CoreUserFileds on User {

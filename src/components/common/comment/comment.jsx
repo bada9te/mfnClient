@@ -9,7 +9,7 @@ import { confirmContainerState } from "@/components/containers/confirm-container
 import { confirmModalState } from "@/components/modals/confirm-modal/reactive";
 import { reportModalState } from "@/components/modals/report-modal/reactive";
 import { commentsContainerState } from "@/components/containers/comments-container/reactive";
-import { useLazyQuery, useReactiveVar } from "@apollo/client";
+import { useLazyQuery, useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import { COMMENTS_REPLIES_BY_COMMENT_ID } from "@/utils/graphql-requests/comments";
 import { SpinnerCircular } from "../spinner/Spinner";

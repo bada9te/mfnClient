@@ -1,4 +1,4 @@
-import { makeVar } from "@apollo/client";
+import { makeVar } from "@apollo/client/index.js";
 import { TPostAddons, TPostBase } from "components/common/post-item/types";
 
 

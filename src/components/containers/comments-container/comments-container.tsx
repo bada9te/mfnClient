@@ -1,4 +1,4 @@
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client/index.js";
 import { Box, Stack, Typography } from "@mui/material";
 import { COMMENTS_BY_POST_ID } from "@/utils/graphql-requests/comments";
 import { SpinnerLinear } from "../../common/spinner/Spinner";
