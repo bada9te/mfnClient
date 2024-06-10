@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect } from 'react';
-import { SpinnerLinear } from '../../common/spinner/Spinner';
+import { useCallback, useEffect } from 'react';
 import PaginationTree from '../../common/pagination/pagination';
 import { Box, Stack } from '@mui/material';
 import EnumPosts from '../../enums/enum-posts';
@@ -12,6 +11,7 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InfoImage from '@/components/common/info-image/info-image';
 import LogoClear from '@/assets/icons/logo_clear.png';
+import PostsContainerSkeleton from "@/components/skeletons/posts-container-skeleton.tsx";
 
 
 export default function PostsContainer(props: {
@@ -105,7 +105,7 @@ export default function PostsContainer(props: {
                 (() => {
                     if (isLoading) {
                         return (
-                            <SpinnerLinear/>
+                            <PostsContainerSkeleton/>
                         );
                     } else if (posts.length === 0) {
                         return (

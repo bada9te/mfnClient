@@ -1,5 +1,6 @@
-import { Post, PostsMostPopularQuery } from "utils/graphql-requests/generated/schema";
+
 import PostGenerate from "../common/post-item/post-generate";
+import {PostsMostPopularQuery, Post} from "@/utils/graphql-requests/generated/schema.ts";
 
 export default function EnumPosts(props: {
     except?: unknown[];

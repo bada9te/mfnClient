@@ -8,8 +8,9 @@ export default function PostItemUnavailable(props: {
     status?: TPostStatus;
     text?: string;
     selectHandler?: () => void;
+    hideText?: boolean;
 }) {
-    const { status, text, selectHandler } = props;
+    const { status, text, selectHandler, hideText } = props;
     const { t } = useTranslation("objects");
 
     return (
@@ -27,8 +28,8 @@ export default function PostItemUnavailable(props: {
                     (() => {
                         if (status !== "in-player" && status !== "battle-form") {
                             return (
-                                <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', m: 1, p: 0, paddingBottom: 0, "&:last-child": { paddingBottom: 0 }}}>
-                                    <Typography sx={{textAlign: 'center', width: '100%'}}>{t('post.unavailable')}</Typography> 
+                                <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', m: 1, p: hideText ? 3 : 0, paddingBottom: 0, "&:last-child": { paddingBottom: 0 }}}>
+                                    { !hideText && <Typography sx={{textAlign: 'center', width: '100%'}}>{t('post.unavailable')}</Typography> }
                                 </CardContent>
                             );
                         } else if (status === "battle-form") {
