@@ -37,11 +37,12 @@ export default function PostsContainer(props: {
     }
 
     const setPostsAndCount = useCallback((result: QueryResult<any, OperationVariables>, at: string) => {
-        //console.log(result.data.postsByOwner)
+        console.log(result.data)
         postsContainerState({
             ...postsContainerState(), 
-            posts: result.data[at].posts,
-            maxPage: defineMaxPage(result.data[at].count, maxCountPerPage),
+            posts: result?.data?.[at]?.posts || [],
+            /* @ts-ignore */
+            maxPage: defineMaxPage(result?.data?.[at].count, maxCountPerPage),
         });
     }, [maxCountPerPage]);
 

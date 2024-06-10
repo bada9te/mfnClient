@@ -14,7 +14,6 @@ const UserSelectModal = props => {
     }
 
     const theme = useTheme();
-    /* @ts-ignore */
     const fullscreen = useMediaQuery(theme.breakpoints.down('md'));
     const { t } = useTranslation("modals");
 

@@ -1,32 +1,32 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import Slide from '@mui/material/Slide';
 import ConfirmContainer from '@/components/containers/confirm-container/confirm-container';
-import { useMutation, useReactiveVar } from '@apollo/client/index.js';
-import { POST_DELETE_BY_ID_MUTATION } from '@/utils/graphql-requests/posts';
-import { COMMENT_DELETE_BY_ID_MUTATION } from '@/utils/graphql-requests/comments';
-import { USER_DELETE_BY_ID_MUTATION } from '@/utils/graphql-requests/users';
+import { useReactiveVar } from '@apollo/client/index.js';
+
 import { confirmModalState } from './reactive';
 import { confirmContainerState } from '@/components/containers/confirm-container/reactive';
 import { useTranslation } from 'react-i18next';
+import {useMediaQuery, useTheme, DialogActions, Dialog, Button} from "@mui/material";
+import {
+    useCommentDeleteByIdMutation,
+    usePostDeleteByIdMutation,
+    useUserDeleteByIdMutation
+} from "@/utils/graphql-requests/generated/schema";
 
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
 
-const ConfirmModal = (props) => {
+const ConfirmModal = () => {
     const confirmModal = useReactiveVar(confirmModalState);
     const { actionType, itemId } = useReactiveVar(confirmContainerState);
 
-    const [ deleteTrack ] = useMutation(POST_DELETE_BY_ID_MUTATION);
-    const [ deleteComment ] = useMutation(COMMENT_DELETE_BY_ID_MUTATION);
-    const [ deleteUser ] = useMutation(USER_DELETE_BY_ID_MUTATION);
+
+    const [ deleteTrack ] = usePostDeleteByIdMutation();
+    const [ deleteComment ] = useCommentDeleteByIdMutation();
+    const [ deleteUser ] = useUserDeleteByIdMutation();
     const { t } = useTranslation("modals")
 
-    const handleClose = (confirmed) => {
+    const theme = useTheme();
+    const fullscreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const handleClose = (confirmed: boolean) => {
         confirmModalState({ ...confirmModal, isShowing: false });
         if (confirmed) {
             switch (actionType) {
@@ -57,13 +57,12 @@ const ConfirmModal = (props) => {
 
     return (
         <Dialog
-            sx={{zIndex: 10}}
             open={confirmModal.isShowing}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={() => handleClose(false)}
-            aria-describedby="alert-dialog-slide-description"
-            PaperProps={{ sx: { borderRadius: 5 } }}
+            scroll='paper'
+            fullWidth
+            maxWidth='sm'
+            PaperProps={{ sx: { borderRadius: {sm: 0, md: 5} } }}
+            fullScreen={Boolean(fullscreen)}
         >
             <ConfirmContainer/>
             <DialogActions>
