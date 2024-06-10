@@ -22,7 +22,7 @@ export default memo(function Container() {
             <CssBaseline />
 
             {/* MODALS */}
-            <ConfirmModal/>
+
             <UserSelectModal/>
             <CommentsModal/>
             <ReportsModal/>

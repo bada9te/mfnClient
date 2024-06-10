@@ -4,7 +4,7 @@ import ApplicationRouter from './utils/router/app-routes';
 import RainbowkitAppProvider from './utils/rainbowkit/rainbowkitProvider';
 
 // apollo
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/index.js';
 import APClient from './utils/apollo/client';
 
 // localization

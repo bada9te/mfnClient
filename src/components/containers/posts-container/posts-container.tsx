@@ -46,7 +46,7 @@ export default function PostsContainer(props: {
     }, [maxCountPerPage]);
 
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         postsContainerState({...postsContainerState(), activePage: 1});
         //console.log(postsContainerState())
     }, [location.key, location]);
