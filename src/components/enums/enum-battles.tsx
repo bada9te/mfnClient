@@ -3,7 +3,7 @@ import PostItemUnavailable from "../common/post-item/post-item-unavailable";
 import PostGenerate from "../common/post-item/post-generate";
 import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "../baseReactive";
-import { Battle, Post, User } from "utils/graphql-requests/generated/schema";
+import { Battle, Post, User } from "@/utils/graphql-requests/generated/schema.ts";
 
 
 function PostFromData(props: {

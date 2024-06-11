@@ -9,7 +9,7 @@ import APClient from './utils/apollo/client';
 
 // localization
 import { I18nextProvider } from "react-i18next";
-import i18next from "./translations/i18next";
+import i18next from "@/utils/translations/i18next";
 
 
 export default function App() {

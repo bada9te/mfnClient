@@ -10,13 +10,13 @@ import { useReactiveVar } from "@apollo/client/index.js";
 import { baseState } from "@/components/baseReactive";
 import { battlesContainerState } from "./reactive";
 import { useTranslation } from "react-i18next";
-import { SpinnerLinear } from "../../common/spinner/Spinner";
 import InfoImage from "../../common/info-image/info-image";
 import BattlesLogo from "@/assets/icons/battle-disk.png";
 import TabPanel from "../../common/tab-panel/tab-panel";
 import { Battle, useBattleMakeVoteMutation, useBattlesByStatusLazyQuery } from "@/utils/graphql-requests/generated/schema";
 import BattleDisk from "@/assets/icons/battle-disk.png"
 import PaginationTree from "@/components/common/pagination/pagination";
+import BattlesContainerSkeleton from "@/components/skeletons/battles-container-skeleton.tsx";
 
 
 function TabContent(props: {
@@ -38,7 +38,7 @@ function TabContent(props: {
                 (() => {
                     if (loading) {
                         return (
-                            <SpinnerLinear/>
+                            <BattlesContainerSkeleton/>
                         );
                     } else if (battles?.length === 0) {
                         return (
@@ -92,7 +92,7 @@ export default function BattlesContainer() {
     }
 
 
-    const handleTabSwitch = (event: React.SyntheticEvent<Element, Event>, key: number) => {
+    const handleTabSwitch = (_: React.SyntheticEvent<Element, Event>, key: number) => {
         setStatus(key);
     }
 

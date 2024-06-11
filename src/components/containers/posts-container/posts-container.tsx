@@ -12,6 +12,12 @@ import { useTranslation } from 'react-i18next';
 import InfoImage from '@/components/common/info-image/info-image';
 import LogoClear from '@/assets/icons/logo_clear.png';
 import PostsContainerSkeleton from "@/components/skeletons/posts-container-skeleton.tsx";
+import {
+    usePostsByCategoryLazyQuery,
+    usePostsByOwnerLazyQuery,
+    usePostsLazyQuery,
+    usePostsSavedByUserLazyQuery
+} from "@/utils/graphql-requests/generated/schema.ts";
 
 
 export default function PostsContainer(props: {
@@ -26,10 +32,10 @@ export default function PostsContainer(props: {
 
     const { user: currentUser } = useReactiveVar(baseState);
     const { activePage, maxCountPerPage, maxPage, isLoading, posts } = useReactiveVar(postsContainerState);
-    const [ getSavedOnlyPosts ] = useLazyQuery(POSTS_SAVED_BY_USER_QUERY);
-    const [ getAllPosts] = useLazyQuery(POSTS_QUERY);
-    const [ getOwnerPosts ] = useLazyQuery(POSTS_BY_OWNER_QUERY);
-    const [ getPostsByCategory ] = useLazyQuery(POSTS_BY_CATEGORY_QUERY);
+    const [ getSavedOnlyPosts ] = usePostsSavedByUserLazyQuery();
+    const [ getAllPosts ] = usePostsLazyQuery()
+    const [ getOwnerPosts ] = usePostsByOwnerLazyQuery();
+    const [ getPostsByCategory ] = usePostsByCategoryLazyQuery();
     const { t } = useTranslation("containers");
     
     const handlePageChange = (page: number) => {

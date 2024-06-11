@@ -1,5 +1,5 @@
 import i18next from "i18next";
-import getCurrentLanguageFromLS from "../utils/common-functions/getCurrentLanguageFromLS";
+import getCurrentLanguageFromLS from "@/utils/common-functions/getCurrentLanguageFromLS";
 
 import enResources from "./en";
 import ruResources from "./ru";
