@@ -6,7 +6,6 @@ import { useReactiveVar } from '@apollo/client/index.js';
 import { baseState, userInitialState } from '@/components/baseReactive';
 import { httpGetCurrentUser } from '@/utils/http-requests/auth';
 import socket from '@/utils/socket/socket';
-import { pageLoaderState } from '@/components/common/page-loader/reactive';
 import muiTheme from "@/utils/mui-theme/theme.ts";
 import { ThemeProvider } from '@mui/material/styles';
 import { SnackbarProvider } from 'notistack';
@@ -54,13 +53,6 @@ export default function ApplicationRoutes() {
             }
         });
     }, [navigate, location.pathname, user._id]);
-
-    useEffect(() => {
-        pageLoaderState({ isLoading: true });
-        setTimeout(() => {
-            pageLoaderState({ isLoading: false });
-        }, 800);
-    }, [location.pathname]);
 
 
     return (

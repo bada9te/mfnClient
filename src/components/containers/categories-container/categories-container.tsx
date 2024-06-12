@@ -1,17 +1,19 @@
 import { Category, QueueMusic } from "@mui/icons-material";
 import { Box, Stack, Tab, Tabs } from "@mui/material";
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import { useTranslation } from "react-i18next";
 import TabPanel from "@/components/common/tab-panel/tab-panel";
 import EnumCategories from "@/components/enums/enum-categories";
 import PostsContainer from "../posts-container/posts-container";
 import { genres } from "@/config";
+import {categoriesContainerState} from "@/components/containers/categories-container/reactive.ts";
 
 
 
 function CategoriesContainer() {
-    const [ category, setCategory ] = useState<null | string>(null);
-    const [ status, setStatus ] = useState(0);
+    const categoriesContainer = categoriesContainerState();
+    const [ category, setCategory ] = useState<null | string>(categoriesContainer.selectedCategory);
+    const [ status, setStatus ] = useState(categoriesContainer.openedTab);
     const { t } = useTranslation("containers");
 
     const handleCategoryClick = (category: string) => {
@@ -22,6 +24,11 @@ function CategoriesContainer() {
     const handleTabSwitch = (_: React.SyntheticEvent<Element, Event>, key: number) => {
         setStatus(key);
     }
+
+    useEffect(() => {
+        categoriesContainer.selectedCategory && setCategory(categoriesContainer.selectedCategory);
+        categoriesContainer.openedTab && setStatus(categoriesContainer.openedTab);
+    }, [categoriesContainer.openedTab, categoriesContainer.selectedCategory]);
 
     return (
         <Box>

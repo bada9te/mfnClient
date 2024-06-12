@@ -2,43 +2,52 @@ import { SpinnerLinear } from "../../spinner/Spinner";
 import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import ProfileDefaultBGImage from "@/assets/bgs/profileDefaultBG.png";
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client/index.js';
-import { USER_QUERY, USER_SWITCH_SUBSCRIPTION_MUTATION } from '@/utils/graphql-requests/users';
+import { useReactiveVar } from '@apollo/client/index.js';
+import { USER_QUERY } from '@/utils/graphql-requests/users';
 import { baseState } from "@/components/baseReactive";
 import { useSnackbar } from "notistack";
-import { CREATE_NOTIFICATION_MUTATION } from "@/utils/graphql-requests/notifications";
 import { useTranslation } from "react-i18next";
 import socket from "@/utils/socket/socket";
+import {
+    useNotificationCreateMutation,
+    User,
+    useUserLazyQuery,
+    useUserSwitchSubscriptionMutation
+} from "@/utils/graphql-requests/generated/schema.ts";
+import {useEffect, useState} from "react";
 
 
 export default function ProfileCard(props: {
     id: string;
     bgRadius?: number;
+    prefetchedUser?: User;
+    inRightBar?: boolean;
 }) {
-    const { id } = props;
+    const { id, prefetchedUser, inRightBar } = props;
     const { user: currentUser, theme, locations } = useReactiveVar(baseState);
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation("objects");
-
+    const [ uData, setUData ] = useState<User | undefined>(undefined);
     const navigate = useNavigate();
 
-    const { data: userData, loading: userLoading } = useQuery(USER_QUERY, { 
-        variables: { 
+    const [fetchUserData, {data: userData, loading: userLoading}] = useUserLazyQuery({
+        variables: {
             _id: id,
         },
         pollInterval: 15000
     });
-    const [ createSubscriptionNotification ] = useMutation(CREATE_NOTIFICATION_MUTATION, {
+
+    const [ createSubscriptionNotification ] = useNotificationCreateMutation({
         variables: {
             input: {
                 receiver: id,
                 sender: currentUser._id,
                 text: "Has just subscribed on you!",
             }
-        } 
+        }
     });
 
-    const [ switchSubscriptionOnUser, { loading: subsLoading } ] = useMutation(USER_SWITCH_SUBSCRIPTION_MUTATION, { 
+    const [ switchSubscriptionOnUser, { loading: subsLoading } ] = useUserSwitchSubscriptionMutation({
         variables: {
             input: {
                 subscriberId: currentUser?._id,
@@ -50,18 +59,20 @@ export default function ProfileCard(props: {
                 query: USER_QUERY,
                 variables: { _id: id },
                 data: {
-                    user: data.userSwitchSubscription.user1
+                    user: data?.userSwitchSubscription.user1
                 }
             });
-            baseState({ 
-                ...baseState(), 
-                user: { 
-                    ...currentUser, 
-                    subscribedOn: [ ...data.userSwitchSubscription.user2.subscribedOn ] as any
-                } 
+            //...data?.userSwitchSubscription?.user2?.subscribedOn
+            baseState({
+                ...baseState(),
+                user: {
+                    ...currentUser,
+                    subscribedOn: data?.userSwitchSubscription.user2.subscribedOn as any,
+                }
             });
         }
     });
+
 
     const switchSubscriptionOnUserHandler = async(actionType: "subscribe" | "unsubscribe") => {
         enqueueSnackbar(t('profile.snack.pending'), { autoHideDuration: 1500 });
@@ -82,6 +93,16 @@ export default function ProfileCard(props: {
                 enqueueSnackbar(t('profile.snack.error'), { autoHideDuration: 3000, variant: 'error' });
             });
     }
+
+    useEffect(() => {
+        if (!prefetchedUser && id) {
+            fetchUserData().then(({data}) => {
+                setUData({ ...data?.user, email: "unknown" } as User);
+            });
+        } else {
+            setUData(prefetchedUser);
+        }
+    }, []);
     
     return (
         <>
@@ -94,7 +115,7 @@ export default function ProfileCard(props: {
                 :
                 <Box sx={{
                     boxShadow: 10,  
-                    backgroundImage: userData?.user.background ? `url(${locations?.images}/${userData?.user.background})` : `url(${ProfileDefaultBGImage})`, 
+                    backgroundImage: uData?.background ? `url(${locations?.images}/${uData?.background})` : `url(${ProfileDefaultBGImage})`,
                     backgroundRepeat: 'no-repeat', 
                     backgroundSize: 'cover', 
                     objectFit: 'contain', 
@@ -106,7 +127,7 @@ export default function ProfileCard(props: {
                             spacing={3} 
                             sx={{
                                 display: 'flex', 
-                                justifyContent: 'space-around', 
+                                justifyContent: 'space-around',
                                 alignItems: 'center', 
                                 backgroundColor: theme !== 'light' ? '#333' : 'white', 
                                 color: theme !== 'light' ? 'white' : '#292A2A',
@@ -115,29 +136,30 @@ export default function ProfileCard(props: {
                                 borderRadius: 5,
                                 boxShadow: 3,
                                 transition: '500ms',
-                                ":hover": { transform: 'scale(1.025)', boxShadow: 10 }
+                                ":hover": { transform: 'scale(1.025)', boxShadow: 10 },
+                                width: '100%'
                             }}
-                            direction="row" 
+                            direction={inRightBar ? "column" : "row"}
                             useFlexGap
                             flexWrap="wrap"
                         >
                             <Avatar 
-                                alt={userData?.user.nick} 
-                                sx={{boxShadow: 3, fontSize: 100}} 
-                                src={userData?.user?.avatar !== "" ? `${locations?.images}/${userData?.user?.avatar}` : "NULL"}
+                                alt={uData?.nick}
+                                sx={{boxShadow: 3, fontSize: 100}}
+                                src={uData?.avatar !== "" ? `${locations?.images}/${uData?.avatar}` : "NULL"}
                                 style={{objectFit: 'contain', width: '35vw', height: '35vw', maxHeight: '160px', maxWidth: '160px'}}
                             />
                             <Box>
-                                <Typography variant='h4'>{userData?.user?.nick}</Typography>
-                                <Typography variant='h6'>{userData?.user?.description}</Typography>
+                                <Typography variant='h4'>{uData?.nick}</Typography>
+                                <Typography variant='h6'>{uData?.description}</Typography>
                             </Box>
                             <Box>
-                                <Typography>{t('profile.following')} {userData?.user?.subscribedOn?.length || 0}</Typography>
-                                <Typography>{t('profile.subscribers')} {userData?.user?.subscribers?.length}</Typography>
+                                <Typography>{t('profile.following')} {uData?.subscribedOn?.length || 0}</Typography>
+                                <Typography>{t('profile.subscribers')} {uData?.subscribers?.length || 0}</Typography>
                                 {
                                     (() => {
-                                        if (currentUser?._id !== userData?.user._id && currentUser._id !== "") {
-                                            if (userData?.user.subscribers.map((i: any) => i._id).includes(currentUser._id)) {
+                                        if (uData?._id !== userData?.user._id && currentUser._id !== "") {
+                                            if (uData?.subscribers?.map((i: any) => i._id).includes(currentUser._id)) {
                                                 return (
                                                     <Button sx={{ mt: 1.5, width: '120px' }} variant="contained" onClick={() => switchSubscriptionOnUserHandler('unsubscribe')}>
                                                         {t('profile.unsubscribe')}
@@ -150,7 +172,7 @@ export default function ProfileCard(props: {
                                                     </Button>
                                                 )
                                             }
-                                        } else if (currentUser._id === "") {
+                                        } else if (uData?._id === "") {
                                             return (
                                                 <Button sx={{ mt: 1.5 }} variant="contained" onClick={() => navigate('/app/login')}>
                                                     {t('profile.login_to_subscribe')}

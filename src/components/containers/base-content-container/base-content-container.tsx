@@ -1,12 +1,11 @@
 /* eslint-disable */
-import { useReactiveVar } from "@apollo/client/index.js";
 import { Box, Grid, Paper } from "@mui/material"
 import BottomBar from "@/components/bars/bottom/bottom-bar/bottom-bar";
 import TopBar from "@/components/bars/top/top-bar/top-bar";
 import Footer from "@/components/common/footer/footer";
-import PageLoader from "@/components/common/page-loader/page-loader";
-import { pageLoaderState } from "@/components/common/page-loader/reactive";
 import CategoriesLeftbarConatiner from "../categories-leftbar-container/categories-leftbar-container";
+import CurrentTrackPlayingContainer
+    from "@/components/containers/current-track-playing-container/current-track-playing-container.tsx";
 
 export default function BaseContentContainer(props: {
     left?: React.ReactNode;
@@ -16,7 +15,6 @@ export default function BaseContentContainer(props: {
     hideFooter?: boolean;
 }) {
     const { mandatoryScroll, hideFooter } = props;
-    const { isLoading } = useReactiveVar(pageLoaderState);
 
     return (
         <Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}> 
@@ -109,16 +107,8 @@ export default function BaseContentContainer(props: {
                         square 
                         item
                     >
-                        {
-                            isLoading
-                            ?
-                            <PageLoader loading={isLoading}/>
-                            :
-                            <>
-                                {props.children}
-                                {!hideFooter && <Footer/> }
-                            </>
-                        }
+                        {props.children}
+                        {!hideFooter && <Footer/> }
                     </Grid>
                 </Grid>
                 
@@ -131,24 +121,24 @@ export default function BaseContentContainer(props: {
                         alignItems: 'center',
                     }}
                 >
-                    <Box sx={{
-                        height: '100%',
-                        width: '100%',
-                        p: 2,
-                        py: 9,
-                    }}>
-                        <Box sx={{
-                            background: 'rgba(255,255,255,0.3)',
-                            backdropFilter: 'blur(5px)', 
-                            height: '100%',
+                    <Grid
+                        sx={{
                             width: '100%',
-                            boxShadow: 10,
+                            height: { xs: 'calc(100vh - 140px)', lg: 'calc(100vh - 144.5px)'},
+                            overflow: 'auto',
+                            background: 'rgba(255,255,255,0.3)',
+                            backdropFilter: 'blur(5px)',
+                            color: 'white',
                             borderRadius: 5,
-                            display: 'flex', justifyContent: 'center', alignItems: 'center'
-                        }}>
-                            RIGHT
-                        </Box>
-                    </Box>
+                            m: 1.5,
+                        }}
+                        component={Paper}
+                        elevation={6}
+                        square
+                        item
+                    >
+                        <CurrentTrackPlayingContainer/>
+                    </Grid>
                 </Grid>
 
                 <Grid
