@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import AppBar from "@/components/bars/appbar/appbar";
+import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,33 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <body className={inter.className}>
+    <AppBar/>
+    <div className="grid grid-cols-5 grid-rows-1">
+        <div className="ml-3 my-3 hidden xl:block">
+            <div className="card bg-base-100 shadow-xl w-full main-layout-card">
+                <div className="card-body overflow-y-auto">
+                    A
+                </div>
+            </div>
+        </div>
+        <div className="col-span-5 xl:col-span-3 m-3">
+            <div className="card bg-base-100 shadow-xl w-full main-layout-card">
+                <div className="card-body overflow-y-auto">
+                    {children}
+                </div>
+            </div>
+        </div>
+        <div className="mr-3 my-3 hidden xl:block">
+            <div className="card bg-base-100 shadow-xl w-full main-layout-card">
+                <div className="card-body overflow-y-auto">
+                    C
+                </div>
+            </div>
+        </div>
+    </div>
+    <BottomNav/>
+    </body>
     </html>
   );
 }

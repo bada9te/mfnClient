@@ -16,18 +16,22 @@
   }
 }
 
+html {
+  background: rgb(28,148,164);
+  background: radial-gradient(circle, rgba(28,148,164,1) 0%, rgba(49,104,179,1) 50%, rgba(37,122,118,1) 100%);
+}
+
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.main-layout-card {
+  height: calc(100vh - 155px);
+  max-height: calc(100vh - 155px);
 }
