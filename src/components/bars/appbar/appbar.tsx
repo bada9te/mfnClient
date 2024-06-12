@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AppBar() {
     return (
@@ -14,14 +15,14 @@ export default function AppBar() {
                     </div>
                     <ul tabIndex={0}
                         className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>
+                        <li><Link href={"/feed/1"}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
                                 <path
                                     d="M16.555 5.412a8.028 8.028 0 0 0-3.503-2.81 14.899 14.899 0 0 1 1.663 4.472 8.547 8.547 0 0 0 1.84-1.662ZM13.326 7.825a13.43 13.43 0 0 0-2.413-5.773 8.087 8.087 0 0 0-1.826 0 13.43 13.43 0 0 0-2.413 5.773A8.473 8.473 0 0 0 10 8.5c1.18 0 2.304-.24 3.326-.675ZM6.514 9.376A9.98 9.98 0 0 0 10 10c1.226 0 2.4-.22 3.486-.624a13.54 13.54 0 0 1-.351 3.759A13.54 13.54 0 0 1 10 13.5c-1.079 0-2.128-.127-3.134-.366a13.538 13.538 0 0 1-.352-3.758ZM5.285 7.074a14.9 14.9 0 0 1 1.663-4.471 8.028 8.028 0 0 0-3.503 2.81c.529.638 1.149 1.199 1.84 1.66ZM17.334 6.798a7.973 7.973 0 0 1 .614 4.115 13.47 13.47 0 0 1-3.178 1.72 15.093 15.093 0 0 0 .174-3.939 10.043 10.043 0 0 0 2.39-1.896ZM2.666 6.798a10.042 10.042 0 0 0 2.39 1.896 15.196 15.196 0 0 0 .174 3.94 13.472 13.472 0 0 1-3.178-1.72 7.973 7.973 0 0 1 .615-4.115ZM10 15c.898 0 1.778-.079 2.633-.23a13.473 13.473 0 0 1-1.72 3.178 8.099 8.099 0 0 1-1.826 0 13.47 13.47 0 0 1-1.72-3.178c.855.151 1.735.23 2.633.23ZM14.357 14.357a14.912 14.912 0 0 1-1.305 3.04 8.027 8.027 0 0 0 4.345-4.345c-.953.542-1.971.981-3.04 1.305ZM6.948 17.397a8.027 8.027 0 0 1-4.345-4.345c.953.542 1.971.981 3.04 1.305a14.912 14.912 0 0 0 1.305 3.04Z"/>
                             </svg>
                             Feed
-                        </a></li>
+                        </Link></li>
                         <li>
                             <a>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -36,9 +37,9 @@ export default function AppBar() {
                                 Battles
                             </a>
                             <ul className="p-2">
-                                <li><a>In progress</a></li>
-                                <li><a>Finished</a></li>
-                                <li><a>Create new</a></li>
+                                <li><Link href={"/battles/in-progress/1"}>In progress</Link></li>
+                                <li><Link href={"/battles/finished/1"}>Finished</Link></li>
+                                <li><Link href={"/battles/create"}>Create new</Link></li>
                             </ul>
                         </li>
                         <li>
@@ -51,9 +52,9 @@ export default function AppBar() {
                                 Playlists
                             </a>
                             <ul className="p-2">
-                                <li><a>Explore</a></li>
-                                <li><a>My playlists</a></li>
-                                <li><a>Create new</a></li>
+                                <li><Link href={"/playlists/explore/1"}>Explore</Link></li>
+                                <li><Link href={"/playlists/my-playlists/1"}>My playlists</Link></li>
+                                <li><Link href={"/playlists/create"}>Create new</Link></li>
                             </ul>
                         </li>
                         <li>
@@ -67,22 +68,22 @@ export default function AppBar() {
                                 Categories
                             </a>
                             <ul className="p-2">
-                                <li><a>Country</a></li>
-                                <li><a>Pop</a></li>
-                                <li><a>Classical</a></li>
-                                <li><a>Funk</a></li>
-                                <li><a>Soul</a></li>
-                                <li><a>Hip hop</a></li>
-                                <li><a>Rock</a></li>
-                                <li><a>Electronic</a></li>
-                                <li><a>Latin</a></li>
-                                <li><a>Jazz</a></li>
-                                <li><a>Blues</a></li>
-                                <li><a>Folk</a></li>
-                                <li><a>Metal</a></li>
+                                <li><Link href={"/categories/country/1"}>Country</Link></li>
+                                <li><Link href={"/categories/pop/1"}>Pop</Link></li>
+                                <li><Link href={"/categories/classical/1"}>Classical</Link></li>
+                                <li><Link href={"/categories/funk/1"}>Funk</Link></li>
+                                <li><Link href={"/categories/soul/1"}>Soul</Link></li>
+                                <li><Link href={"/categories/hip-hop/1"}>Hip hop</Link></li>
+                                <li><Link href={"/categories/rock/1"}>Rock</Link></li>
+                                <li><Link href={"/categories/electronic/1"}>Electronic</Link></li>
+                                <li><Link href={"/categories/latin/1"}>Latin</Link></li>
+                                <li><Link href={"/categories/jazz/1"}>Jazz</Link></li>
+                                <li><Link href={"/categories/blues/1"}>Blues</Link></li>
+                                <li><Link href={"/categories/folk/1"}>Folk</Link></li>
+                                <li><Link href={"/categories/metal/1"}>Metal</Link></li>
                             </ul>
                         </li>
-                        <li><a>
+                        <li><Link href={"/chats"}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
                                 <path fillRule="evenodd"
@@ -90,7 +91,7 @@ export default function AppBar() {
                                       clipRule="evenodd"/>
                             </svg>
                             Chats
-                        </a></li>
+                        </Link></li>
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl">
@@ -101,14 +102,14 @@ export default function AppBar() {
             </div>
             <div className="navbar-center hidden xl:flex">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a>
+                    <li><Link href={"/feed/1"}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path
                                 d="M16.555 5.412a8.028 8.028 0 0 0-3.503-2.81 14.899 14.899 0 0 1 1.663 4.472 8.547 8.547 0 0 0 1.84-1.662ZM13.326 7.825a13.43 13.43 0 0 0-2.413-5.773 8.087 8.087 0 0 0-1.826 0 13.43 13.43 0 0 0-2.413 5.773A8.473 8.473 0 0 0 10 8.5c1.18 0 2.304-.24 3.326-.675ZM6.514 9.376A9.98 9.98 0 0 0 10 10c1.226 0 2.4-.22 3.486-.624a13.54 13.54 0 0 1-.351 3.759A13.54 13.54 0 0 1 10 13.5c-1.079 0-2.128-.127-3.134-.366a13.538 13.538 0 0 1-.352-3.758ZM5.285 7.074a14.9 14.9 0 0 1 1.663-4.471 8.028 8.028 0 0 0-3.503 2.81c.529.638 1.149 1.199 1.84 1.66ZM17.334 6.798a7.973 7.973 0 0 1 .614 4.115 13.47 13.47 0 0 1-3.178 1.72 15.093 15.093 0 0 0 .174-3.939 10.043 10.043 0 0 0 2.39-1.896ZM2.666 6.798a10.042 10.042 0 0 0 2.39 1.896 15.196 15.196 0 0 0 .174 3.94 13.472 13.472 0 0 1-3.178-1.72 7.973 7.973 0 0 1 .615-4.115ZM10 15c.898 0 1.778-.079 2.633-.23a13.473 13.473 0 0 1-1.72 3.178 8.099 8.099 0 0 1-1.826 0 13.47 13.47 0 0 1-1.72-3.178c.855.151 1.735.23 2.633.23ZM14.357 14.357a14.912 14.912 0 0 1-1.305 3.04 8.027 8.027 0 0 0 4.345-4.345c-.953.542-1.971.981-3.04 1.305ZM6.948 17.397a8.027 8.027 0 0 1-4.345-4.345c.953.542 1.971.981 3.04 1.305a14.912 14.912 0 0 0 1.305 3.04Z"/>
                         </svg>
                         Feed
-                    </a></li>
+                    </Link></li>
                     <li>
                         <details>
                             <summary>
@@ -124,9 +125,9 @@ export default function AppBar() {
                                 Battles
                             </summary>
                             <ul className="p-2">
-                                <li><a>In progress</a></li>
-                                <li><a>Finished</a></li>
-                                <li><a>Create new</a></li>
+                                <li><Link href={"/battles/in-progress/1"}>In progress</Link></li>
+                                <li><Link href={"/battles/finished/1"}>Finished</Link></li>
+                                <li><Link href={"/battles/create"}>Create new</Link></li>
                             </ul>
                         </details>
                     </li>
@@ -141,9 +142,9 @@ export default function AppBar() {
                                 Playlists
                             </summary>
                             <ul className="p-2">
-                                <li><a>Explore</a></li>
-                                <li><a>My playlists</a></li>
-                                <li><a>Create new</a></li>
+                                <li><Link href={"/playlists/explore/1"}>Explore</Link></li>
+                                <li><Link href={"/playlists/my-playlists/1"}>My playlists</Link></li>
+                                <li><Link href={"/playlists/create"}>Create new</Link></li>
                             </ul>
                         </details>
                     </li>
@@ -159,23 +160,23 @@ export default function AppBar() {
                                 Categories
                             </summary>
                             <ul className="p-2">
-                                <li><a>Country</a></li>
-                                <li><a>Pop</a></li>
-                                <li><a>Classical</a></li>
-                                <li><a>Funk</a></li>
-                                <li><a>Soul</a></li>
-                                <li><a>Hip hop</a></li>
-                                <li><a>Rock</a></li>
-                                <li><a>Electronic</a></li>
-                                <li><a>Latin</a></li>
-                                <li><a>Jazz</a></li>
-                                <li><a>Blues</a></li>
-                                <li><a>Folk</a></li>
-                                <li><a>Metal</a></li>
+                                <li><Link href={"/categories/country/1"}>Country</Link></li>
+                                <li><Link href={"/categories/pop/1"}>Pop</Link></li>
+                                <li><Link href={"/categories/classical/1"}>Classical</Link></li>
+                                <li><Link href={"/categories/funk/1"}>Funk</Link></li>
+                                <li><Link href={"/categories/soul/1"}>Soul</Link></li>
+                                <li><Link href={"/categories/hip-hop/1"}>Hip hop</Link></li>
+                                <li><Link href={"/categories/rock/1"}>Rock</Link></li>
+                                <li><Link href={"/categories/electronic/1"}>Electronic</Link></li>
+                                <li><Link href={"/categories/latin/1"}>Latin</Link></li>
+                                <li><Link href={"/categories/jazz/1"}>Jazz</Link></li>
+                                <li><Link href={"/categories/blues/1"}>Blues</Link></li>
+                                <li><Link href={"/categories/folk/1"}>Folk</Link></li>
+                                <li><Link href={"/categories/metal/1"}>Metal</Link></li>
                             </ul>
                         </details>
                     </li>
-                    <li><a>
+                    <li><Link href={"/chats"}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"
@@ -183,7 +184,7 @@ export default function AppBar() {
                                   clipRule="evenodd"/>
                         </svg>
                         Chats
-                    </a></li>
+                    </Link></li>
                 </ul>
             </div>
             <div className="navbar-end">
