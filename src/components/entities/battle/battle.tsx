@@ -14,8 +14,8 @@ export default function Battle(props: {
     }, [])
 
     return (
-        <div className="card bg-base-100 shadow-xl md:w-80 xl:w-full">
-            <div className="card-body justify-center items-center flex flex-col gap-5">
+        <div className="card bg-base-100 md:w-80 xl:w-full">
+            <div className="card-body justify-center items-center flex flex-col gap-5 p-4">
                 <h2 className="card-title">Post1 vs Post2</h2>
                 <div className="flex flex-wrap gap-5 justify-between items-center flex-col xl:flex-row">
                     <div className="flex flex-nowrap flex-col">
@@ -25,7 +25,7 @@ export default function Battle(props: {
                             <button className="btn btn-sm btn-secondary w-full">Supervote</button>
                         </div>
                     </div>
-                    <div className="stats stats-vertical shadow w-64">
+                    <div className="stats stats-vertical shadow-md w-64">
                         <div className="stat place-items-center">
                             <div className="stat-title">Votes</div>
                             <div className="stat-value">31K</div>

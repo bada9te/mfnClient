@@ -11,6 +11,6 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex flex-wrap gap-5 justify-center p-4">{children}</div>
+        <div className="flex flex-wrap gap-5 justify-center">{children}</div>
     );
 }
