@@ -22,22 +22,22 @@ export default function RootLayout({
     <body className={inter.className}>
     <AppBar/>
     <div className="grid grid-cols-5 grid-rows-1">
-        <div className="ml-3 my-3 hidden xl:block">
-            <div className="card bg-base-100 shadow-xl w-full main-layout-card">
+        <div className="hidden xl:block">
+            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
                 <div className="card-body overflow-y-auto">
                     A
                 </div>
             </div>
         </div>
-        <div className="col-span-5 xl:col-span-3 m-3">
-            <div className="card bg-base-100 shadow-xl w-full main-layout-card">
-                <div className="card-body overflow-y-auto">
+        <div className="col-span-5 xl:col-span-3">
+            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
+                <div className="card-body overflow-y-auto p-0">
                     {children}
                 </div>
             </div>
         </div>
-        <div className="mr-3 my-3 hidden xl:block">
-            <div className="card bg-base-100 shadow-xl w-full main-layout-card">
+        <div className="hidden xl:block">
+            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
                 <div className="card-body overflow-y-auto">
                     C
                 </div>

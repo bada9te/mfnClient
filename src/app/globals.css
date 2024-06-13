@@ -32,6 +32,6 @@ body {
 }
 
 .main-layout-card {
-  height: calc(100vh - 155px);
-  max-height: calc(100vh - 155px);
+  height: calc(100vh - 132px);
+  max-height: calc(100vh - 132px);
 }

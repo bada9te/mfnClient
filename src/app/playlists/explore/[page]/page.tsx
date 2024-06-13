@@ -4,11 +4,10 @@ import Playlist from "@/components/entities/playlist/playlist";
 
 export default function Playlists({params}: {params: {page: number}}) {
     return (
-        <div className="flex flex-wrap gap-5 justify-center">
+        <>
             <BarTabsPlaylists activeTab="explore"/>
-
             <Playlist title={"Playlist1"} posts={[<Post/>, <Post/>, <Post/>]}/>
             <Playlist title={"Playlist2"} posts={[<Post/>, <Post/>, <Post/>]}/>
-        </div>
+        </>
     );
 }
