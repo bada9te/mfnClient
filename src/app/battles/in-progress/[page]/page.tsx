@@ -1,26 +1,24 @@
 import BarTabsBattles from "@/components/bars/bar-tabs/bar-tabs-battles";
 import Battle from "@/components/entities/battle/battle";
 import Post from "@/components/entities/post/post";
+import HeroWrapper from "@/components/wrappers/hero-wrapper";
 
 export default function Battles({params}: {params: {page: number}}) {
     return (
         <>
             <BarTabsBattles activeTab="in-progress"/>
-            <div className="hero min-h-screen bg-[url('/assets/bgs/newBattleFormBG.png')] bg-right rounded-none">
-                <div className="hero-overlay bg-opacity-60 rounded-2xl"></div>
-                <div className="hero-content text-center text-neutral-content">
-                    <div className="flex w-full flex-col items-center justify-center py-10">
-                        <h1 className="mb-5 text-5xl font-bold">Battles in progress</h1>
-                        <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                            exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
-                        </p>
-                        <div className="card shadow-2xl bg-base-100 text-black">
+            <HeroWrapper imgUrl="url('/assets/bgs/newBattleFormBG.png')">
+                <div className="flex w-full flex-col items-center justify-center py-10">
+                    <h1 className="mb-5 text-5xl font-bold">Battles in progress</h1>
+                    <p className="mb-5">Battles in progress description</p>
+                    <div className="card shadow-2xl bg-base-100 w-full">
+                        <div className="card card-body flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center m-0 p-0 w-full gap-10 sm:p-10">
                             <Battle post1={<Post/>} post2={<Post/>}/>
                             <Battle post1={<Post/>} post2={<Post/>}/>
                         </div>
                     </div>
                 </div>
-            </div>
+            </HeroWrapper>
         </>
     );
 }

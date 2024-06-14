@@ -17,7 +17,8 @@ export default function Battle(props: {
         <div className="card bg-base-100 md:w-80 xl:w-full">
             <div className="card-body justify-center items-center flex flex-col gap-5 p-4">
                 <h2 className="card-title">Post1 vs Post2</h2>
-                <div className="flex flex-wrap gap-5 justify-between items-center flex-col xl:flex-row">
+                <div className="flex flex-wrap gap-5 justify-center items-center flex-col xl:flex-row">
+                    {/* left */}
                     <div className="flex flex-nowrap flex-col">
                         {post1}
                         <div className="flex flex-nowrap flex-col gap-4 p-2">
@@ -25,6 +26,8 @@ export default function Battle(props: {
                             <button className="btn btn-sm btn-secondary w-full">Supervote</button>
                         </div>
                     </div>
+
+                    {/* mid */}
                     <div className="stats stats-vertical shadow-md w-64">
                         <div className="stat place-items-center">
                             <div className="stat-title">Votes</div>
@@ -44,6 +47,8 @@ export default function Battle(props: {
                             <div className="stat-desc">For Post2</div>
                         </div>
                     </div>
+
+                    {/* right */}
                     <div className="flex flex-nowrap flex-col">
                         {post2}
                         <div className="flex flex-nowrap flex-col gap-4 p-2">

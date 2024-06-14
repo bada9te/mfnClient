@@ -4,7 +4,7 @@ export default function Login() {
     return (
         <div className="hero min-h-screen bg-[url('/assets/bgs/supportFormBG.png')] bg-left">
             <div className="hero-overlay bg-opacity-60 rounded-2xl"></div>
-            <div className="hero-content text-center text-neutral-content">
+            <div className="hero-content text-center">
                 <div className="max-w-md flex flex-col items-center justify-center">
                     <h1 className="mb-5 text-5xl font-bold">Feel yourself free to contact us!</h1>
                     <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
