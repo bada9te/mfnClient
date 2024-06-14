@@ -2,6 +2,7 @@ import BarTabsBattles from "@/components/bars/bar-tabs/bar-tabs-battles";
 import Battle from "@/components/entities/battle/battle";
 import Post from "@/components/entities/post/post";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
+import Pagination from "@/components/pagination/pagination";
 
 export default function Battles({params}: {params: {page: number}}) {
     return (
@@ -17,6 +18,7 @@ export default function Battles({params}: {params: {page: number}}) {
                         <Battle post1={<Post/>} post2={<Post/>}/>
                         <Battle post1={<Post/>} post2={<Post/>}/>
                     </div>
+                    <Pagination/>
                 </div>
             </HeroWrapper>
         </>

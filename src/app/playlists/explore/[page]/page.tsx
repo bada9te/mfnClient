@@ -2,6 +2,7 @@ import Post from "@/components/entities/post/post";
 import BarTabsPlaylists from "@/components/bars/bar-tabs/bar-tabs-playlists";
 import Playlist from "@/components/entities/playlist/playlist";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
+import Pagination from "@/components/pagination/pagination";
 
 export default function Playlists({params}: {params: {page: number}}) {
     return (
@@ -18,8 +19,8 @@ export default function Playlists({params}: {params: {page: number}}) {
                         <Playlist title={"Playlist1"} posts={[<Post/>, <Post/>, <Post/>]}/>
                         <Playlist title={"Playlist2"} posts={[<Post/>, <Post/>, <Post/>]}/>
                     </div>
+                    <Pagination/>
                 </div>
-
             </HeroWrapper>
         </>
     );
