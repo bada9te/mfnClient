@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AppBar from "@/components/bars/appbar/appbar";
 import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
+import Footer from "@/components/footer/footer";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,8 +32,9 @@ export default function RootLayout({
         </div>
         <div className="col-span-5 xl:col-span-3">
             <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                <div className="card-body overflow-y-auto p-0">
+                <div className="card-body overflow-y-auto p-0 gap-0">
                     {children}
+                    <Footer/>
                 </div>
             </div>
         </div>

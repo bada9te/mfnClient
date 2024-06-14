@@ -7,15 +7,15 @@ export default function Battles({params}: {params: {page: number}}) {
     return (
         <>
             <BarTabsBattles activeTab="in-progress"/>
-            <HeroWrapper imgUrl="url('/assets/bgs/newBattleFormBG.png')">
-                <div className="flex w-full flex-col items-center justify-center py-10">
-                    <h1 className="mb-5 text-5xl font-bold">Battles in progress</h1>
-                    <p className="mb-5">Battles in progress description</p>
-                    <div className="card shadow-2xl bg-base-100 w-full">
-                        <div className="card card-body flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center m-0 p-0 w-full gap-10 sm:p-10">
-                            <Battle post1={<Post/>} post2={<Post/>}/>
-                            <Battle post1={<Post/>} post2={<Post/>}/>
-                        </div>
+            <HeroWrapper
+                bgStyles="bg-[url('/assets/bgs/newBattleFormBG.png')] bg-right"
+                title="Battles in progress"
+                description="Battles in progress description"
+            >
+                <div className="card shadow-2xl bg-base-100 w-full">
+                    <div className="card card-body flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center m-0 p-0 w-full gap-10 sm:p-10">
+                        <Battle post1={<Post/>} post2={<Post/>}/>
+                        <Battle post1={<Post/>} post2={<Post/>}/>
                     </div>
                 </div>
             </HeroWrapper>

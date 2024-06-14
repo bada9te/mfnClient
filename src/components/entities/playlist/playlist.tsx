@@ -11,7 +11,7 @@ export default function Playlist(props: {
             <div className="collapse-title text-xl font-medium">
                 {title}
             </div>
-            <div className="collapse-content flex flex-wrap gap-5 justify-between px-5">
+            <div className="collapse-content flex flex-wrap gap-5 md:gap-3 justify-center">
                 {
                     posts.map((post, index) => (
                         <div key={index}>{post}</div>
