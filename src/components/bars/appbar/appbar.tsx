@@ -83,7 +83,7 @@ export default function AppBar() {
                                 <li><Link href={"/categories/metal/1"}>Metal</Link></li>
                             </ul>
                         </li>
-                        <li><Link href={"/chats"}>
+                        <li><Link href={"/profile/me/chats"}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
                                 <path fillRule="evenodd"
@@ -176,7 +176,7 @@ export default function AppBar() {
                             </ul>
                         </details>
                     </li>
-                    <li><Link href={"/chats"}>
+                    <li><Link href={"/profile/me/chats"}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"
