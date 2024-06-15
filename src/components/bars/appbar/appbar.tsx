@@ -198,7 +198,7 @@ export default function AppBar() {
                     <ul tabIndex={0}
                         className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         <li>
-                            <a className="justify-between" href="/profile/me">
+                            <a className="justify-between" href="/profile/me/1">
                                 <div className="flex flex-wrap gap-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                          className="size-5">
@@ -219,7 +219,7 @@ export default function AppBar() {
                             Wallet
                         </a></li>
                         <li>
-                            <a className="justify-between">
+                            <a className="justify-between" href="/profile/me/notifications/new/1">
                                 <div className="flex flex-wrap gap-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                          className="size-5">

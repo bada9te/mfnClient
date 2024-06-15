@@ -4,6 +4,7 @@ import "./globals.css";
 import AppBar from "@/components/bars/appbar/appbar";
 import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
 import Footer from "@/components/footer/footer";
+import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,32 +22,34 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body className={inter.className}>
-    <AppBar/>
-    <div className="grid grid-cols-5 grid-rows-1">
-        <div className="hidden xl:block">
-            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                <div className="card-body overflow-y-auto">
-                    A
+        <ApolloWrapper>
+            <AppBar/>
+            <div className="grid grid-cols-5 grid-rows-1">
+                <div className="hidden xl:block">
+                    <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
+                        <div className="card-body overflow-y-auto">
+                            A
+                        </div>
+                    </div>
+                </div>
+                <div className="col-span-5 xl:col-span-3">
+                    <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
+                        <div className="card-body overflow-y-auto p-0 gap-0">
+                            {children}
+                            <Footer/>
+                        </div>
+                    </div>
+                </div>
+                <div className="hidden xl:block">
+                    <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
+                        <div className="card-body overflow-y-auto">
+                            C
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div className="col-span-5 xl:col-span-3">
-            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                <div className="card-body overflow-y-auto p-0 gap-0">
-                    {children}
-                    <Footer/>
-                </div>
-            </div>
-        </div>
-        <div className="hidden xl:block">
-            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                <div className="card-body overflow-y-auto">
-                    C
-                </div>
-            </div>
-        </div>
-    </div>
-    <BottomNav/>
+            <BottomNav/>
+        </ApolloWrapper>
     </body>
     </html>
   );
