@@ -11,7 +11,7 @@ export default function Playlists() {
                 title="New playlist"
                 description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
             >
-                <div className="card shadow-2xl bg-base-100">
+                <div className="card shadow-2xl bg-base-100 w-fit md:w-96">
                     <PlaylistForm/>
                 </div>
             </HeroWrapper>

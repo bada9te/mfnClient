@@ -12,7 +12,7 @@ export default function Notifications({params}: {params: { page: number }}) {
                 title="Reviewed notifications"
                 description="Reviewed notifications"
             >
-                <div className="card shadow-2xl glass w-fit min-h-screen">
+                <div className="card shadow-2xl glass w-full min-h-screen">
                     <div className="card card-body flex flex-col gap-5 md:p-10">
                         <Notification/>
                         <Notification/>

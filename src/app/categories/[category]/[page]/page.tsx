@@ -3,6 +3,7 @@ import {useParams} from "next/navigation";
 import Post from "@/components/entities/post/post";
 import Playlist from "@/components/entities/playlist/playlist";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
+import Pagination from "@/components/pagination/pagination";
 
 export default function Categories({params}: {params: {category: string, page: number}}) {
     const category = params.category;
@@ -20,6 +21,7 @@ export default function Categories({params}: {params: {category: string, page: n
                     <Post/>
                     <Post/>
                 </div>
+                <Pagination/>
             </div>
         </HeroWrapper>   
     );
