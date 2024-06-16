@@ -13,6 +13,7 @@ export default function Chats() {
             >
                 <div className="card shadow-2xl glass w-full min-h-screen">
                     <div className="card card-body flex flex-wrap m-0 p-0 w-full gap-5 md:p-10">
+                        <button className="btn btn-primary">Create new chat</button>
                         <Chat/>
                         <Chat/>
                         <Chat/>

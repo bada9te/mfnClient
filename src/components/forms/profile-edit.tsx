@@ -1,5 +1,3 @@
-import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
-
 export default function ProfileEditForm() {
     return (
         <div className="card-body">
