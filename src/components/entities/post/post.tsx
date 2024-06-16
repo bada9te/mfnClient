@@ -1,6 +1,9 @@
-export default function Post() {
+export default function Post(props: {
+    fullWidth?: boolean;
+}) {
+    const { fullWidth } = props;
     return (
-        <div className="card w-full md:w-80 bg-base-100 shadow-xl">
+        <div className={`card w-full md:${fullWidth ? 'w-full' : 'w-80'} bg-base-100 shadow-xl`}>
         <figure><img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
             <div className="card-body">
                 <h2 className="card-title">

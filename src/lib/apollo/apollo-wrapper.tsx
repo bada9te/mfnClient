@@ -8,6 +8,7 @@ import {
   InMemoryCache,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support";
+import cache from "@/lib/apollo/cache";
 
 // have a function to create a client for you
 function makeClient() {
@@ -21,12 +22,13 @@ function makeClient() {
     // via the `context` property on the options passed as a second argument
     // to an Apollo Client data fetching hook, e.g.:
     // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
+    credentials: 'include'
   });
 
   // use the `ApolloClient` from "@apollo/experimental-nextjs-app-support"
   return new ApolloClient({
     // use the `InMemoryCache` from "@apollo/experimental-nextjs-app-support"
-    cache: new InMemoryCache(),
+    cache: cache,
     link: httpLink,
   });
 }

@@ -1,0 +1,15 @@
+export const genres = [
+    { title: "Country",          bg: '/assets/bgs/country-category.jpg' },
+    { title: "Pop",              bg: '/assets/bgs/pop-category.jpg' },
+    { title: "Classical",        bg: '/assets/bgs/classical-category.jpg' },
+    { title: "Funk",             bg: '/assets/bgs/funk-category.jpg'},
+    { title: "Soul music",       bg: '/assets/bgs/soul-category.jpg' },
+    { title: "Hip hop",          bg: '/assets/bgs/hip-hop-category.jpg' },
+    { title: "Rock",             bg: '/assets/bgs/rock-category.jpg'},
+    { title: "Electronic music", bg: '/assets/bgs/electronic-category.jpg'},
+    { title: "Latin",            bg: '/assets/bgs/latin-category.jpg' },
+    { title: "Jazz",             bg: '/assets/bgs/jazz-category.jpg'},
+    { title: "Blues",            bg: '/assets/bgs/blues-category.jpg'},
+    { title: "Folk",             bg: '/assets/bgs/folk-category.jpg'},
+    { title: "Metal",            bg: '/assets/bgs/metal-category.jpg' },
+];

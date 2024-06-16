@@ -5,6 +5,9 @@ import AppBar from "@/components/bars/appbar/appbar";
 import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
 import Footer from "@/components/footer/footer";
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
+import CategoryLeftBar from "@/components/bars/category-leftbar/category-leftbar";
+import {genres} from "@/config/categories";
+import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/current-track-rightbar";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,8 +30,19 @@ export default function RootLayout({
             <div className="grid grid-cols-5 grid-rows-1">
                 <div className="hidden xl:block">
                     <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                        <div className="card-body overflow-y-auto">
-                            A
+                        <div className="card-body overflow-y-auto p-4">
+                            {
+                                genres.map((gen, i) => {
+
+                                    return (
+                                        <CategoryLeftBar
+                                            key={i}
+                                            title={gen.title}
+                                            bgImage={gen.bg}
+                                        />
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                 </div>
@@ -42,8 +56,8 @@ export default function RootLayout({
                 </div>
                 <div className="hidden xl:block">
                     <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                        <div className="card-body overflow-y-auto">
-                            C
+                        <div className="card-body overflow-y-auto p-4">
+                            <CurrentTrackRightBar/>
                         </div>
                     </div>
                 </div>
