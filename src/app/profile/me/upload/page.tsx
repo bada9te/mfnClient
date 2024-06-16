@@ -1,13 +1,14 @@
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
+import PostUploadForm from "@/components/forms/post-upload";
+import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
 
 export default function UploadNewPost() {
     return (
-        <HeroWrapper
+        <HeroWrapperForm
             bgStyles="bg-[url('/assets/bgs/newPostFormBG.png')] bg-right"
             title="New post"
             description="Upload the new post"
         >
-            A
-        </HeroWrapper>
+            <PostUploadForm/>
+        </HeroWrapperForm>
     );
 }

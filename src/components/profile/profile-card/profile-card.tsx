@@ -1,7 +1,10 @@
-export default function ProfileCard() {
+export default function ProfileCard(props: {
+    isEditable?: boolean;
+}) {
+    const { isEditable } = props;
     return (
-        <div className="card w-full max-h-96 bg-base-100 shadow-xl rounded-none">
-            <figure><img className="w-full" src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"/>
+        <div className="card w-full max-h-screen bg-base-100 shadow-xl rounded-none">
+            <figure className="max-h-48"><img className="w-full" src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"/>
             </figure>
             <div className="card-body flex flex-col md:flex-row gap-5">
                 <div className="avatar flex justify-center">
@@ -17,7 +20,18 @@ export default function ProfileCard() {
                     </h2>
                     <p className="mt-3 md:mt-0">If a dog chews shoes whose shoes does he choose?</p>
                     <div className="card-actions justify-start mt-3">
-                        <button className="btn btn-primary w-full md:w-96">Subscribe</button>
+                        {
+                            !isEditable
+                            ?
+                            <>
+                                <button className="btn btn-primary w-full md:w-96">Subscribe</button>
+                            </>
+                            :
+                            <>
+                                <button className="btn btn-primary w-full md:w-96">Change avatar</button>
+                                <button className="btn btn-primary w-full md:w-96">Change background</button>
+                            </>
+                        }
                     </div>
                 </div>
             </div>
