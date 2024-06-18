@@ -8,6 +8,7 @@ import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import CategoryLeftBar from "@/components/bars/category-leftbar/category-leftbar";
 import {genres} from "@/config/categories";
 import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/current-track-rightbar";
+import ReduxProvider from "@/lib/redux/provider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,43 +27,45 @@ export default function RootLayout({
     <html lang="en">
     <body className={inter.className}>
         <ApolloWrapper>
-            <AppBar/>
-            <div className="grid grid-cols-5 grid-rows-1">
-                <div className="hidden xl:block">
-                    <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                        <div className="card-body overflow-y-auto p-4">
-                            {
-                                genres.map((gen, i) => {
+            <ReduxProvider>
+                <AppBar/>
+                <div className="grid grid-cols-5 grid-rows-1">
+                    <div className="hidden xl:block">
+                        <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
+                            <div className="card-body overflow-y-auto p-4">
+                                {
+                                    genres.map((gen, i) => {
 
-                                    return (
-                                        <CategoryLeftBar
-                                            key={i}
-                                            title={gen.title}
-                                            bgImage={gen.bg}
-                                        />
-                                    );
-                                })
-                            }
+                                        return (
+                                            <CategoryLeftBar
+                                                key={i}
+                                                title={gen.title}
+                                                bgImage={gen.bg}
+                                            />
+                                        );
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-span-5 xl:col-span-3">
+                        <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
+                            <div className="card-body overflow-y-auto p-0 gap-0">
+                                {children}
+                                <Footer/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="hidden xl:block">
+                        <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
+                            <div className="card-body overflow-y-auto p-4">
+                                <CurrentTrackRightBar/>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="col-span-5 xl:col-span-3">
-                    <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                        <div className="card-body overflow-y-auto p-0 gap-0">
-                            {children}
-                            <Footer/>
-                        </div>
-                    </div>
-                </div>
-                <div className="hidden xl:block">
-                    <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                        <div className="card-body overflow-y-auto p-4">
-                            <CurrentTrackRightBar/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <BottomNav/>
+                <BottomNav/>
+            </ReduxProvider>
         </ApolloWrapper>
     </body>
     </html>
