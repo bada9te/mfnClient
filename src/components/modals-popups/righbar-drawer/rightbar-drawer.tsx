@@ -1,7 +1,21 @@
+"use client"
+import {setTab} from "@/lib/redux/slices/bottom-bar";
+import {useAppDispatch} from "@/lib/redux/store";
+
 export default function RightBarDrawer() {
+
+    const dispatch = useAppDispatch();
+    const handleOpen = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) {
+            dispatch(setTab("people"));
+        } else {
+            dispatch(setTab(null));
+        }
+    }
+
     return (
         <div className="drawer drawer-end">
-            <input id="my-drawer-people" type="checkbox" className="drawer-toggle"/>
+            <input id="my-drawer-people" type="checkbox" className="drawer-toggle" onChange={e => handleOpen(e)}/>
 
             <div className="drawer-content">
                 {/* Page content here */}
@@ -13,7 +27,7 @@ export default function RightBarDrawer() {
                     <span className="btm-nav-label">People</span>
                 </label>
             </div>
-            <div className="drawer-side pt-16">
+            <div className="drawer-side pt-16 z-10">
                 <label htmlFor="my-drawer-people" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                     {/* Sidebar content here */}
