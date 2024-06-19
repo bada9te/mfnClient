@@ -1,36 +1,26 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 // @ts-ignore
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import bottomBarReducer from "@/lib/redux/slices/bottom-bar";
+import storage from 'redux-persist/lib/storage';
+import {persistReducer} from "redux-persist";
 
-const createNoopStorage = () => {
-    return {
-        getItem() {
-            return Promise.resolve(null);
-        },
-        setItem(_key: string, value: number) {
-            return Promise.resolve(value);
-        },
-        removeItem() {
-            return Promise.resolve();
-        },
-    };
+
+const persistConfig = {
+    key: 'root',
+    storage,
 };
-
-export const storage =
-    typeof window !== "undefined"
-        ? createWebStorage("local")
-        : createNoopStorage();
-
-
 
 const rootReducer = combineReducers({
     bottomBar: bottomBarReducer,
 });
 
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+
 export const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ serializableCheck: false }),
 });

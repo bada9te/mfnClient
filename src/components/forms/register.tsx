@@ -2,6 +2,9 @@
 import Link from "next/link";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
+import {useSnackbar} from "notistack";
+import {useUserCreateMutation} from "@/utils/graphql-requests/generated/schema";
+import {useRouter} from 'next/navigation';
 
 type Inputs = {
     email: string;
@@ -11,10 +14,28 @@ type Inputs = {
 };
 
 export default function RegisterForm() {
-    const { getValues, register, handleSubmit, formState: {errors} } = useForm<Inputs>();
+    const { getValues, register, handleSubmit, formState: {errors}, reset } = useForm<Inputs>();
+    const { enqueueSnackbar } = useSnackbar();
+    const [ createUser ] = useUserCreateMutation();
+    const router = useRouter();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
-
+        createUser({
+            variables: {
+                input: {
+                    email: data.email,
+                    password: data.password,
+                    nick: data.nickname,
+                }
+            }
+        }).then(({data: result}) => {
+            enqueueSnackbar(`Account ${data.email} was successfully created`, {variant: "success", autoHideDuration: 2000});
+            reset();
+            router.replace('/login');
+        }).catch(err => {
+            console.log(err.message)
+            enqueueSnackbar(`Account with this email already exists`, {variant: 'error', autoHideDuration: 3000});
+        });
     }
 
     return (
@@ -82,6 +103,7 @@ export default function RegisterForm() {
                     ...register("repeatPassword", {
                         validate: (value) => {
                             const { password } = getValues();
+                            if (!password) return false;
                             return password == value;
                         }
                     })

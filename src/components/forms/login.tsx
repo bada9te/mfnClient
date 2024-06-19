@@ -2,6 +2,9 @@
 import Link from "next/link";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
+import {httpLogin} from "@/utils/http-requests/auth";
+import {useSnackbar} from "notistack";
+import {useRouter} from "next/navigation";
 
 type Inputs = {
     email: string;
@@ -9,10 +12,21 @@ type Inputs = {
 };
 
 export default function LoginForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>()
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>()
+    const { enqueueSnackbar } = useSnackbar();
+    const router = useRouter();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
-        console.log(data)
+        httpLogin(data.email, data.password)
+            .then(({data: response}) => {
+                enqueueSnackbar(`Logged in as ${response.nick}`, {variant: 'success', autoHideDuration: 2000});
+                reset();
+                router.replace('/feed/1');
+            })
+            .catch(err => {
+                console.log(err.message);
+                enqueueSnackbar("Invalid credentials or maybe account is not verified", {variant: 'error', autoHideDuration: 3000});
+            });
     }
 
     return (
