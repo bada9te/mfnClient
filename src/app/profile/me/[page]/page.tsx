@@ -7,7 +7,7 @@ export default function Profile({params}: {params: { page: number }}) {
         <>
             <ProfileCard/>
             <div className="card shadow-2xl bg-base-100 w-full rounded-none">
-                <div className="card-body flex flex-wrap flex-row justify-between gap-5">
+                <div className="card-body flex flex-wrap flex-row justify-around gap-5">
                     <Post/>
                     <Post/>
                     <Post/>

@@ -10,7 +10,7 @@ export default function Feed({params}: {params: { page: number }}) {
             description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
         >
             <div className="card shadow-2xl glass w-full">
-                <div className="card-body flex flex-wrap flex-row justify-center gap-5">
+                <div className="card-body flex flex-wrap flex-row justify-around gap-5">
                     <Post/>
                     <Post/>
                     <Post/>
