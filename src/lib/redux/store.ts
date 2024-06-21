@@ -50,12 +50,13 @@ const loadStore = async(getCurrentState: any) => {
         httpGetCurrentUser()
             .then(response => response.data)
             .then(user => {
-                console.log(user)
                 resolve({
                     // reuse state that was before loading current user
                     ...getCurrentState(),
                     // and replace only `user` key
-                    user,
+                    user: {
+                        user
+                    },
                 })
             })
             .catch(err => {
@@ -65,11 +66,11 @@ const loadStore = async(getCurrentState: any) => {
     });
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+//const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
 export const store = configureStore({
-    reducer: persistedReducer,
+    reducer: rootReducer,
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ serializableCheck: false })

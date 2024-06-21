@@ -1,11 +1,13 @@
 "use client"
-import React, {useState} from "react";
+import React from "react";
 
-export default function Pagination() {
-    const [selectedOption, setSelectedOption] = useState("3"); // Assuming "3" is the default checked option
-
+export default function Pagination(props: {
+    page: number;
+    maxPage: number;
+}) {
+    const page = props.page;
     const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedOption(e.target.getAttribute("aria-label") as string);
+        console.log(e.target.getAttribute("aria-label") as string);
     };
 
     return (
@@ -15,42 +17,11 @@ export default function Pagination() {
                     className="join-item btn btn-square"
                     type="radio"
                     name="options"
-                    aria-label="1"
-                    checked={selectedOption === "1"}
+                    aria-label={""+page}
+                    checked={true}
                     onChange={handleOptionChange}
                 />
-                <input
-                    className="join-item btn btn-square"
-                    type="radio"
-                    name="options"
-                    aria-label="2"
-                    checked={selectedOption === "2"}
-                    onChange={handleOptionChange}
-                />
-                <input
-                    className="join-item btn btn-square"
-                    type="radio"
-                    name="options"
-                    aria-label="3"
-                    checked={selectedOption === "3"}
-                    onChange={handleOptionChange}
-                />
-                <input
-                    className="join-item btn btn-square"
-                    type="radio"
-                    name="options"
-                    aria-label="4"
-                    checked={selectedOption === "4"}
-                    onChange={handleOptionChange}
-                />
-                <input
-                    className="join-item btn btn-square"
-                    type="radio"
-                    name="options"
-                    aria-label="5"
-                    checked={selectedOption === "5"}
-                    onChange={handleOptionChange}
-                />
+
             </div>
         </div>
     );

@@ -11,6 +11,5 @@ export default function Login() {
         >
             <LoginForm/>
         </HeroWrapperForm>
-
     );
 }

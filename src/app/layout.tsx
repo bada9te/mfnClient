@@ -4,12 +4,12 @@ import "./globals.css";
 import AppBar from "@/components/bars/appbar/appbar";
 import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
 import Footer from "@/components/footer/footer";
-import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import CategoryLeftBar from "@/components/bars/category-leftbar/category-leftbar";
 import {genres} from "@/config/categories";
 import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/current-track-rightbar";
 import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
+import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 
 
 const inter = Inter({ subsets: ["latin"] });

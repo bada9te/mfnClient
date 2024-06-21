@@ -5,6 +5,8 @@ import {formsConstants} from "@/config/forms";
 import {httpLogin} from "@/utils/http-requests/auth";
 import {useSnackbar} from "notistack";
 import {useRouter} from "next/navigation";
+import {useAppDispatch} from "@/lib/redux/store";
+import {setUser} from "@/lib/redux/slices/user";
 
 type Inputs = {
     email: string;
@@ -14,6 +16,7 @@ type Inputs = {
 export default function LoginForm() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>()
     const { enqueueSnackbar } = useSnackbar();
+    const dispatch = useAppDispatch();
     const router = useRouter();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
@@ -21,6 +24,7 @@ export default function LoginForm() {
             .then(({data: response}) => {
                 enqueueSnackbar(`Logged in as ${response.nick}`, {variant: 'success', autoHideDuration: 2000});
                 reset();
+                dispatch(setUser(response));
                 router.replace('/feed/1');
             })
             .catch(err => {
