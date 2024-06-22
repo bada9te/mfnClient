@@ -1,8 +1,7 @@
-import Post from "@/components/entities/post/post";
 import BarTabsPlaylists from "@/components/bars/bar-tabs/bar-tabs-playlists";
-import Playlist from "@/components/entities/playlist/playlist";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import Pagination from "@/components/pagination/pagination";
+import PlaylistsContainer from "@/components/containers/playlists-container/playlists-container";
+
 
 export default function Playlists({params}: {params: {page: number}}) {
     return (
@@ -12,10 +11,9 @@ export default function Playlists({params}: {params: {page: number}}) {
                 title="My playlists"
                 description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
             >
-                <div className="card w-full min-h-screen">
-                    <div className="card  flex flex-wrap m-0 p-0 w-full gap-5">
-                        <Playlist title={"Playlist1"} posts={[<Post/>, <Post/>, <Post/>]}/>
-                        <Playlist title={"Playlist2"} posts={[<Post/>, <Post/>, <Post/>]}/>
+                <div className="card w-full">
+                    <div className="flex flex-wrap w-full gap-5">
+                        <PlaylistsContainer/>
                     </div>
                 </div>
             </HeroWrapper>

@@ -12,7 +12,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex flex-wrap gap-5 justify-between">
+        <div className="flex flex-wrap justify-center">
             {children}
         </div>
     );

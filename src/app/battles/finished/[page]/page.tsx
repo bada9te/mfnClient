@@ -16,6 +16,7 @@ export default function Battles({params}: {params: {page: number}}) {
                             offset={(params.page - 1) * 12}
                             limit={12}
                             finished={true}
+                            page={params.page}
                         />
                     </div>
                 </div>

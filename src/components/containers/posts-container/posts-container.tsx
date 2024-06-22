@@ -3,6 +3,7 @@ import {usePostsQuery} from "@/utils/graphql-requests/generated/schema";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import Post from "@/components/entities/post/post";
 import Pagination from "@/components/pagination/pagination";
+import InfoImage from "@/components/info-image/info-image";
 
 
 export default function PostsContainer(props: {
@@ -39,7 +40,7 @@ export default function PostsContainer(props: {
                             <Pagination page={page} maxPage={Number(data?.posts.count as number / limit)}/>
                         </>
                         :
-                        "No tracks yet"
+                        <InfoImage text={"No tracks yet"}/>
                     }
                 </>
             }
