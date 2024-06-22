@@ -1,28 +1,41 @@
 "use client"
-import React from "react";
+import React, {useEffect} from "react";
+import {usePathname, useRouter} from "next/navigation";
 
 export default function Pagination(props: {
     page: number;
     maxPage: number;
 }) {
-    const page = props.page;
-    const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.getAttribute("aria-label") as string);
-    };
+    const { page, maxPage } = props;
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const extractPathWithoutPageIndex = () => {
+        return pathname.substring(0, pathname.lastIndexOf('/') + 1)
+    }
+
+    const handleClick = (payload: number) => {
+        let newPath = pathname;
+        let newPage = Number(page) + payload;
+        if (newPage <= 0) {
+            newPage = 1;
+        }
+        newPath = extractPathWithoutPageIndex() + newPage;
+        router.replace(newPath);
+    }
+
+    // if page == 0 redirect to 1st page (1)
+    useEffect(() => {
+        if (+page === 0) {
+            router.replace(extractPathWithoutPageIndex() + 1)
+        }
+    }, [page]);
 
     return (
-        <div className="w-full flex justify-center my-10">
-            <div className="join">
-                <input
-                    className="join-item btn btn-square"
-                    type="radio"
-                    name="options"
-                    aria-label={""+page}
-                    checked={true}
-                    onChange={handleOptionChange}
-                />
-
-            </div>
+        <div className="join">
+            <button className="join-item btn" onClick={() => handleClick(-1)}>«</button>
+            <button className="join-item btn">{page}</button>
+            <button className="join-item btn" disabled={page > maxPage} onClick={() => handleClick(1)}>»</button>
         </div>
     );
 }

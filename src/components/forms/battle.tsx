@@ -2,7 +2,7 @@ import Post from "@/components/entities/post/post";
 
 export default function BattleForm() {
     return (
-        <form className="card-body">
+        <form className="card-body w-full">
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Battle title</span>
@@ -10,7 +10,7 @@ export default function BattleForm() {
                 <input type="text" placeholder="Title" className="input input-bordered shadow-md" required/>
             </div>
 
-            <div className="flex flex-wrap gap-5 mt-5">
+            <div className="flex flex-wrap gap-5 mt-5 w-full justify-around">
                 <div className="flex flex-col gap-3">
                     <p className='font-bold text-lg'>Your track</p>
                     <Post/>

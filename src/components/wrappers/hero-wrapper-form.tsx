@@ -3,8 +3,9 @@ export default function HeroWrapperForm(props: {
     bgStyles: string;
     title: string;
     description: string;
+    fullWidth?: boolean;
 }) {
-    const { bgStyles, children, title, description } = props;
+    const { bgStyles, children, title, description, fullWidth } = props;
 
     return (
         <div className={`hero min-h-screen ${bgStyles} rounded-none`}>
@@ -13,7 +14,7 @@ export default function HeroWrapperForm(props: {
                 <h1 className="mb-5 text-5xl font-bold text-white text-center">{title}</h1>
                 <p className="mb-5 text-white text-center">{description}</p>
                 <div className="hero-content text-center w-full">
-                    <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
+                    <div className={`card shrink-0 w-full max-w-${fullWidth ? 'full' : 'md'} shadow-2xl bg-base-100`}>
                         {children}
                     </div>
                 </div>

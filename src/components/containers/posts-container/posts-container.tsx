@@ -9,8 +9,9 @@ export default function PostsContainer(props: {
     offset: number;
     limit: number;
     page: number;
+    category?: string;
 }) {
-    const { offset, limit, page } = props;
+    const { offset, limit, page, category } = props;
 
     const { data, loading } = usePostsQuery({
         variables: {
@@ -27,11 +28,19 @@ export default function PostsContainer(props: {
                 :
                 <>
                     {
-                        data?.posts.posts?.map((post, key) => {
-                            return (<Post key={key}/>)
-                        })
+                        data?.posts.posts?.length
+                        ?
+                        <>
+                            {
+                                data?.posts.posts?.map((post, key) => {
+                                    return (<Post key={key}/>)
+                                })
+                            }
+                            <Pagination page={page} maxPage={Number(data?.posts.count as number / limit)}/>
+                        </>
+                        :
+                        "No tracks yet"
                     }
-                    <Pagination page={page} maxPage={Number(data?.posts.count as number / limit)}/>
                 </>
             }
         </>

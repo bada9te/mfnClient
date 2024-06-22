@@ -44,7 +44,7 @@ export default function Battle(props: {
                     {/* left */}
                     <div className="flex flex-nowrap flex-col">
                         {post1}
-                        <div className="p-2 join join-vertical">
+                        <div className="p-2 join join-vertical mt-3">
                             <button className="btn btn-sm btn-accent w-full join-item"><VoteIcon/>Vote for Post1</button>
                             <button className="btn btn-sm btn-secondary w-full join-item"><DollarIcon/>Supervote</button>
                         </div>
@@ -74,7 +74,7 @@ export default function Battle(props: {
                     {/* right */}
                     <div className="flex flex-nowrap flex-col">
                         {post2}
-                        <div className="p-2 join join-vertical">
+                        <div className="p-2 join join-vertical mt-3">
                             <button className="btn btn-sm btn-accent w-full join-item"><VoteIcon/>Vote for Post1</button>
                             <button className="btn btn-sm btn-secondary w-full join-item"><DollarIcon/>Supervote</button>
                         </div>
