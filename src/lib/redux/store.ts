@@ -39,11 +39,12 @@ const persistConfig = {
     storage,
 };
 
-const rootReducer = asyncInitialState.outerReducer(combineReducers({
+const rootReducer = combineReducers({
     user: userReducer,
     bottomBar: bottomBarReducer,
     asyncInitialState: asyncInitialState.innerReducer,
-}));
+});
+
 
 const loadStore = async(getCurrentState: any) => {
     return new Promise(resolve => {
@@ -70,7 +71,7 @@ const loadStore = async(getCurrentState: any) => {
 
 
 export const store = configureStore({
-    reducer: rootReducer,
+    reducer: asyncInitialState.outerReducer(rootReducer),
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ serializableCheck: false })
@@ -78,8 +79,10 @@ export const store = configureStore({
 });
 
 
-export type RootState = ReturnType<typeof store.getState>;
+
 export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof rootReducer>;
+
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

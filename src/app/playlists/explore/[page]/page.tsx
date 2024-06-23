@@ -1,6 +1,4 @@
-import Post from "@/components/entities/post/post";
 import BarTabsPlaylists from "@/components/bars/bar-tabs/bar-tabs-playlists";
-import Playlist from "@/components/entities/playlist/playlist";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import PlaylistsContainer from "@/components/containers/playlists-container/playlists-container";
 
@@ -15,7 +13,7 @@ export default function Playlists({params}: {params: {page: number}}) {
             >
                 <div className="card w-full">
                     <div className="flex flex-wrap w-full gap-5">
-                        <PlaylistsContainer/>
+                        <PlaylistsContainer page={params.page} offset={(params.page - 1) * 12} limit={12} type={"explore"}/>
                     </div>
                 </div>
             </HeroWrapper>

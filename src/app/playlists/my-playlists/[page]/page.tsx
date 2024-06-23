@@ -13,7 +13,7 @@ export default function Playlists({params}: {params: {page: number}}) {
             >
                 <div className="card w-full">
                     <div className="flex flex-wrap w-full gap-5">
-                        <PlaylistsContainer/>
+                        <PlaylistsContainer page={params.page} offset={(params.page - 1) * 12} limit={12} type={"my"}/>
                     </div>
                 </div>
             </HeroWrapper>

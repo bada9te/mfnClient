@@ -18,6 +18,7 @@ export const config = {
     matcher: [
         '/battles/create',
         '/playlists/create',
+        '/playlists/my-playlists/:path*',
         '/profile/me/:path*',
     ],
 }
