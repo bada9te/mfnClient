@@ -1,6 +1,11 @@
 import BarTabsBattles from "@/components/bars/bar-tabs/bar-tabs-battles";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
+import {BATTLES_BY_STATUS_QUERY} from "@/utils/graphql-requests/battles";
+import {Suspense} from "react";
+import BattlesContainerSkeleton from "@/components/containers/battles-container/battles-container-skeleton";
 import BattlesContainer from "@/components/containers/battles-container/battles-container";
+import {PreloadQuery} from "@/lib/apollo/client";
+
 
 export default function Battles({params}: {params: {page: number}}) {
     return (
@@ -11,14 +16,24 @@ export default function Battles({params}: {params: {page: number}}) {
                 description="Battles in progress description"
             >
                 <div className="card w-full">
-                    <div
-                        className="flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center w-full gap-10">
-                        <BattlesContainer
-                            offset={(params.page - 1) * 12}
-                            limit={12}
-                            finished={false}
-                            page={params.page}
-                        />
+                    <div className="flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center w-full gap-10">
+                        <PreloadQuery
+                            query={BATTLES_BY_STATUS_QUERY}
+                            variables={{
+                                offset: (params.page - 1) * 6,
+                                limit: 6,
+                                finished: false,
+                            }}
+                        >
+                            <Suspense fallback={<BattlesContainerSkeleton/>}>
+                                <BattlesContainer
+                                    offset={(params.page - 1) * 12}
+                                    limit={12}
+                                    finished={false}
+                                    page={params.page}
+                                />
+                            </Suspense>
+                        </PreloadQuery>
                     </div>
                 </div>
             </HeroWrapper>

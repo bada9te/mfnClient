@@ -1,6 +1,6 @@
 import BarTabsPlaylists from "@/components/bars/bar-tabs/bar-tabs-playlists";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import PlaylistsContainer from "@/components/containers/playlists-container/playlists-container";
+import PlaylistsContainerOwner from "@/components/containers/playlists-container/playlists-container-my";
 
 
 export default function Playlists({params}: {params: {page: number}}) {
@@ -13,7 +13,7 @@ export default function Playlists({params}: {params: {page: number}}) {
             >
                 <div className="card w-full">
                     <div className="flex flex-wrap w-full gap-5">
-                        <PlaylistsContainer page={params.page} offset={(params.page - 1) * 12} limit={12} type={"my"}/>
+                        <PlaylistsContainerOwner page={params.page} offset={(params.page - 1) * 12} limit={12}/>
                     </div>
                 </div>
             </HeroWrapper>

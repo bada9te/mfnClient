@@ -1,7 +1,9 @@
-"use client"
-import Post from "@/components/entities/post/post";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import PostsContainer from "@/components/containers/posts-container/posts-container";
+import PostsContainerCategory from "@/components/containers/posts-container/posts-container-category";
+import {PreloadQuery} from "@/lib/apollo/client";
+import {POSTS_BY_CATEGORY_QUERY} from "@/utils/graphql-requests/posts";
+import {Suspense} from "react";
+import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 
 export default function Categories({params}: {params: {category: string, page: number}}) {
     const category = params.category;
@@ -13,12 +15,22 @@ export default function Categories({params}: {params: {category: string, page: n
         >
             <div className="card w-full">
                 <div className="flex flex-wrap flex-row justify-around gap-5">
-                    <PostsContainer
-                        offset={(params.page - 1) * 12}
-                        limit={12}
-                        page={params.page}
-                        category={params.category}
-                    />
+                    <PreloadQuery
+                        query={POSTS_BY_CATEGORY_QUERY}
+                        variables={{
+                            offset: (params.page - 1) * 12,
+                            limit: 12
+                        }}
+                    >
+                        <Suspense fallback={<PostsContainerSkeleton/>}>
+                            <PostsContainerCategory
+                                offset={(params.page - 1) * 12}
+                                limit={12}
+                                page={params.page}
+                                category={params.category}
+                            />
+                        </Suspense>
+                    </PreloadQuery>
                 </div>
             </div>
         </HeroWrapper>   
