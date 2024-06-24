@@ -1,5 +1,5 @@
 import {PreloadQuery} from "@/lib/apollo/client";
-import {POSTS_QUERY, POSTS_SAVED_BY_USER_QUERY} from "@/utils/graphql-requests/posts";
+import {POSTS_SAVED_BY_USER_QUERY} from "@/utils/graphql-requests/posts";
 import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";

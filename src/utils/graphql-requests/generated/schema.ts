@@ -656,6 +656,8 @@ export type QueryModerationActionValidateArgs = {
 
 export type QueryNotificationsArgs = {
   checked: Scalars['Boolean']['input'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
   receiverId: Scalars['ID']['input'];
 };
 
@@ -1044,6 +1046,8 @@ export type CoreNotificationFieldsFragment = { __typename?: 'Notification', _id:
 export type NotificationsQueryVariables = Exact<{
   receiverId: Scalars['ID']['input'];
   checked: Scalars['Boolean']['input'];
+  offset: Scalars['Int']['input'];
+  limit: Scalars['Int']['input'];
 }>;
 
 
@@ -2431,8 +2435,13 @@ export type ModerationActionDeleteMutationHookResult = ReturnType<typeof useMode
 export type ModerationActionDeleteMutationResult = Apollo.MutationResult<ModerationActionDeleteMutation>;
 export type ModerationActionDeleteMutationOptions = Apollo.BaseMutationOptions<ModerationActionDeleteMutation, ModerationActionDeleteMutationVariables>;
 export const NotificationsDocument = gql`
-    query notifications($receiverId: ID!, $checked: Boolean!) {
-  notifications(receiverId: $receiverId, checked: $checked) {
+    query notifications($receiverId: ID!, $checked: Boolean!, $offset: Int!, $limit: Int!) {
+  notifications(
+    receiverId: $receiverId
+    checked: $checked
+    offset: $offset
+    limit: $limit
+  ) {
     ...CoreNotificationFields
   }
 }
@@ -2452,6 +2461,8 @@ export const NotificationsDocument = gql`
  *   variables: {
  *      receiverId: // value for 'receiverId'
  *      checked: // value for 'checked'
+ *      offset: // value for 'offset'
+ *      limit: // value for 'limit'
  *   },
  * });
  */

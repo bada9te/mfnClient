@@ -1,6 +1,4 @@
 import ProfileCard from "@/components/profile/profile-card/profile-card";
-import Post from "@/components/entities/post/post";
-import Pagination from "@/components/pagination/pagination";
 import PostsContainerFeed from "@/components/containers/posts-container/posts-container-feed";
 
 export default function Profile({params}: {params: { page: number }}) {

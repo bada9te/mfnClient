@@ -1,4 +1,3 @@
-import Pagination from "@/components/pagination/pagination";
 import NotificationsTabsBattles from "@/components/bars/bar-tabs/bar-tabs-notifications";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import Notification from "@/components/entities/notification/notification";
@@ -9,7 +8,6 @@ export default function Notifications({params}: {params: { page: number }}) {
         <>
             <NotificationsTabsBattles activeTab={"new"}/>
             <HeroWrapper
-                bgStyles="bg-[url('/assets/bgs/newPostFormBG.png')] bg-right"
                 title="Unread notifications"
                 description="Unread notifications"
             >
@@ -19,7 +17,6 @@ export default function Notifications({params}: {params: { page: number }}) {
                         <Notification/>
                         <Notification/>
                     </div>
-                    <Pagination/>
                 </div>
             </HeroWrapper>
         </>
