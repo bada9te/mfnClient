@@ -30,11 +30,11 @@ export default function NotificationsContainer(props: TPaginationProps & { check
                 :
                 <>
                     {
-                        data?.notifications?.length
+                        data?.notifications.notifications?.length
                         ?
                         <>
                             {
-                                data?.notifications?.map((notification, key) => {
+                                data?.notifications.notifications?.map((notification, key) => {
                                     return (<Notification key={key} />)
                                 })
                             }
@@ -45,6 +45,6 @@ export default function NotificationsContainer(props: TPaginationProps & { check
                     }
                 </>
             }
-        </Pa>
+        </>
     );
 }
