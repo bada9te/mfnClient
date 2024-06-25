@@ -33,7 +33,10 @@ export const NOTIFICATIONS_QUERY = gql`
     ${CORE_NOTIFICATION_FIELDS}
     query notifications($receiverId: ID!, $checked: Boolean!, $offset: Int!, $limit: Int!) {
         notifications(receiverId: $receiverId, checked: $checked, offset: $offset, limit: $limit) {
-            ...CoreNotificationFields
+            notifications {
+                ...CoreNotificationFields
+            }
+            count
         }
     }
 `;

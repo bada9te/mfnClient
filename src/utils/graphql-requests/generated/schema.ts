@@ -487,6 +487,12 @@ export type NotificationCount = {
   count: Scalars['Int']['output'];
 };
 
+export type NotificationsWithCount = {
+  __typename?: 'NotificationsWithCount';
+  count: Scalars['Int']['output'];
+  notifications?: Maybe<Array<Notification>>;
+};
+
 export type Playlist = {
   __typename?: 'Playlist';
   _id: Scalars['ID']['output'];
@@ -567,7 +573,7 @@ export type Query = {
   commentsByIds?: Maybe<Array<Comment>>;
   commentsByPostId?: Maybe<Array<Comment>>;
   moderationActionValidate: ModerationAction;
-  notifications?: Maybe<Array<Notification>>;
+  notifications: NotificationsWithCount;
   notificationsByIds?: Maybe<Array<Notification>>;
   playlistsByOwnerId: PlaylistsWithCount;
   playlistsByTitle?: Maybe<Array<Playlist>>;
@@ -1051,7 +1057,7 @@ export type NotificationsQueryVariables = Exact<{
 }>;
 
 
-export type NotificationsQuery = { __typename?: 'Query', notifications?: Array<{ __typename?: 'Notification', _id: string, text: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, comment?: { __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } } | null }> | null };
+export type NotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationsWithCount', count: number, notifications?: Array<{ __typename?: 'Notification', _id: string, text: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, comment?: { __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } } | null }> | null } };
 
 export type NotificationCreateMutationVariables = Exact<{
   input: CreateNotificationInput;
@@ -2442,7 +2448,10 @@ export const NotificationsDocument = gql`
     offset: $offset
     limit: $limit
   ) {
-    ...CoreNotificationFields
+    notifications {
+      ...CoreNotificationFields
+    }
+    count
   }
 }
     ${CoreNotificationFieldsFragmentDoc}`;
