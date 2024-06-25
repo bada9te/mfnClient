@@ -1,3 +1,4 @@
+"use client"
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
 
@@ -49,6 +50,7 @@ export default function ProfileEditForm() {
                             ...registerNick("nickname", {
                                 minLength: { value: 4, message: "Min length must be 4" },
                                 maxLength: { value: 20, message: "Max length must be 20" },
+                                required: { value: true, message: "This field is required" },
                             })
                         }/>
                         <button className="btn btn-primary join-item" type="submit">Save</button>
@@ -72,6 +74,7 @@ export default function ProfileEditForm() {
                             ...registerDescr("description", {
                                 minLength: { value: 4, message: "Min length must be 4" },
                                 maxLength: { value: 40, message: "Max length must be 40" },
+                                required: { value: true, message: "This field is required" },
                             })
                         }/>
                         <button className="btn btn-primary join-item" type="submit">Save</button>
@@ -95,6 +98,7 @@ export default function ProfileEditForm() {
                     <input type="text" placeholder="Old email" className="input input-bordered shadow-md w-full" {
                         ...registerEmail("oldEmail", {
                             pattern: {value: formsConstants.emailRegex, message: "Email address is not valid"},
+                            required: { value: true, message: "This field is required" },
                         })
                     }/>
                     {
@@ -112,6 +116,7 @@ export default function ProfileEditForm() {
                         <input type="text" placeholder="New email" className="input input-bordered shadow-md w-full" {
                             ...registerEmail("newEmail", {
                                 pattern: {value: formsConstants.emailRegex, message: "Email address is not valid"},
+                                required: { value: true, message: "This field is required" },
                             })
                         }/>
                         <button className="btn btn-primary join-item" type="submit">Save</button>

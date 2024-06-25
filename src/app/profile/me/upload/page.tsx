@@ -7,6 +7,7 @@ export default function UploadNewPost() {
             bgStyles="bg-[url('/assets/bgs/newPostFormBG.png')] bg-right"
             title="New post"
             description="Upload the new post"
+            fullWidth
         >
             <PostUploadForm/>
         </HeroWrapperForm>

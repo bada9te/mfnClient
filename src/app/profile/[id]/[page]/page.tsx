@@ -1,19 +1,36 @@
 import ProfileCard from "@/components/profile/profile-card/profile-card";
 import Post from "@/components/entities/post/post";
 import Pagination from "@/components/pagination/pagination";
+import { PreloadQuery } from "@/lib/apollo/client";
+import { Suspense } from "react";
+import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
+import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
+import { POSTS_BY_OWNER_QUERY } from "@/utils/graphql-requests/posts";
 
-export default function ProfileId({params}: {params: {page: number}}) {
+export default function ProfileId({params}: {params: {page: number, id: string}}) {
     return (
         <>
             <ProfileCard/>
             <div className="card shadow-2xl bg-base-100 w-full rounded-none">
                 <div className="card-body flex flex-wrap flex-row justify-between gap-5">
-                    <Post/>
-                    <Post/>
-                    <Post/>
-                    <Post/>
+                    <PreloadQuery 
+                        query={POSTS_BY_OWNER_QUERY}
+                        variables={{
+                            offset: (params.page - 1) * 12,
+                            limit: 12,
+                            owner: params.id
+                        }}
+                    >
+                        <Suspense fallback={<PostsContainerSkeleton/>}>
+                            <PostsContainerProfile
+                                page={params.page}
+                                offset={(params.page - 1) * 12} 
+                                limit={12}
+                                profileId={params.id}
+                            />
+                        </Suspense>
+                    </PreloadQuery>
                 </div>
-                <Pagination/>
             </div>
         </>
     );

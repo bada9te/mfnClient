@@ -7,6 +7,8 @@ import {useSnackbar} from "notistack";
 import {useRouter} from "next/navigation";
 import {useAppDispatch} from "@/lib/redux/store";
 import {setUser} from "@/lib/redux/slices/user";
+import {setCookie} from "cookies-next";
+
 
 type Inputs = {
     email: string;
@@ -25,6 +27,7 @@ export default function LoginForm() {
                 enqueueSnackbar(`Logged in as ${response.nick}`, {variant: 'success', autoHideDuration: 2000});
                 reset();
                 dispatch(setUser(response));
+                setCookie(process.env.NEXT_PUBLIC_USER_ID_COOKIE_KEY as string, response._id);
                 router.replace('/feed/1');
             })
             .catch(err => {

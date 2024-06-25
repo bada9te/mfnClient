@@ -13,7 +13,7 @@ export default function Post(props: {
                     </div>
                 </div>
                 <div className="w-fit bg-white font-bold px-4 flex items-center justify-center rounded-full shadow-lg">
-                    <p>UserName</p>
+                    <p className="text-black">UserName</p>
                 </div>
             </div>
 

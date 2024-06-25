@@ -8,7 +8,6 @@ export default function Notifications({params}: {params: { page: number }}) {
         <>
             <NotificationsTabsBattles activeTab={"read"}/>
             <HeroWrapper
-                bgStyles="bg-[url('/assets/bgs/newPostFormBG.png')] bg-right"
                 title="Reviewed notifications"
                 description="Reviewed notifications"
             >
@@ -18,7 +17,6 @@ export default function Notifications({params}: {params: { page: number }}) {
                         <Notification/>
                         <Notification/>
                     </div>
-                    <Pagination/>
                 </div>
             </HeroWrapper>
         </>
