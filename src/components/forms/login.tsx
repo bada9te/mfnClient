@@ -8,6 +8,7 @@ import {useRouter} from "next/navigation";
 import {useAppDispatch} from "@/lib/redux/store";
 import {setUser} from "@/lib/redux/slices/user";
 import {setCookie} from "cookies-next";
+import nextConfig from "../../../next.config.mjs";
 
 
 type Inputs = {
@@ -27,7 +28,7 @@ export default function LoginForm() {
                 enqueueSnackbar(`Logged in as ${response.nick}`, {variant: 'success', autoHideDuration: 2000});
                 reset();
                 dispatch(setUser(response));
-                setCookie(process.env.NEXT_PUBLIC_USER_ID_COOKIE_KEY as string, response._id);
+                setCookie(nextConfig.env?.userIdCookieKey as string, response._id);
                 router.replace('/feed/1');
             })
             .catch(err => {

@@ -16,7 +16,7 @@ export default function Notifications({params}: {params: { page: number }}) {
                 title="Reviewed notifications"
                 description="Reviewed notifications"
             >
-                <div className="card w-full min-h-screen">
+                <div className="card w-full">
                     <div className="flex flex-col gap-5">
                         <PreloadQuery
                             query={NOTIFICATIONS_QUERY}

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
 
 export const metadata: Metadata = {
     title: "Create Next App",

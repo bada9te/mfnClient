@@ -17,12 +17,12 @@ export default function Notifications({params}: {params: { page: number }}) {
                 title="Unread notifications"
                 description="Unread notifications"
             >
-                <div className="card w-full min-h-screen">
+                <div className="card w-full">
                     <div className="flex flex-col gap-5">
                         <PreloadQuery
                             query={NOTIFICATIONS_QUERY}
                             variables={{
-                                receiverId: cookies().get(nextConfig.env?.userIdCookieKey as string)?.value, 
+                                receiverId: cookies().get(nextConfig.env?.userIdCookieKey as string)?.value,
                                 checked: false, 
                                 offset: (params.page - 1) * 12, 
                                 limit: 12
