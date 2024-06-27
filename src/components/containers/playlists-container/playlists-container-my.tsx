@@ -7,15 +7,13 @@ import {
 import Pagination from "@/components/pagination/pagination";
 import InfoImage from "@/components/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
-import {useAppSelector} from "@/lib/redux/store";
 
-export default function PlaylistsContainerOwner(props: TPaginationProps) {
-    const { offset, limit, page } = props;
-    const { user } = useAppSelector(state => state.user.user);
+export default function PlaylistsContainerOwner(props: TPaginationProps & { ownerId: string }) {
+    const { offset, limit, page, ownerId } = props;
 
     const { data } = usePlaylistsByOwnerIdSuspenseQuery({
         variables: {
-            offset, limit, owner: user._id
+            offset, limit, owner: ownerId
         }
     });
 

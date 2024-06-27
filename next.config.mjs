@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+    reactStrictMode: false,
     env: {
         serverBase: process.env.NEXT_PUBLIC_SERVER_BASE,
         userIdCookieKey: process.env.NEXT_PUBLIC_USER_ID_COOKIE_KEY,

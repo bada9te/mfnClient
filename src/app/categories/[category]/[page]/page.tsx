@@ -6,7 +6,7 @@ import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 
 export default function Categories({params}: {params: {category: string, page: number}}) {
-    const category = params.category;
+    const category = params.category.replaceAll('-', ' ');
 
     return (
         <HeroWrapper

@@ -1,7 +1,18 @@
+"use client"
+import {useUserSuspenseQuery} from "@/utils/graphql-requests/generated/schema";
+
 export default function ProfileCard(props: {
     isEditable?: boolean;
+    userId: string;
 }) {
-    const { isEditable } = props;
+    const { isEditable, userId } = props;
+
+    const { data } = useUserSuspenseQuery({
+        variables: {
+            _id: userId
+        }
+    });
+
     return (
         <div className="card w-full max-h-screen bg-base-100 shadow-xl rounded-none">
             <figure className="max-h-48"><img className="w-full" src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"/>
@@ -14,7 +25,7 @@ export default function ProfileCard(props: {
                 </div>
                 <div>
                     <h2 className="card-title flex flex-col md:flex-row">
-                        User profile header
+                        {data.user.nick}
                         <div className="badge badge-secondary">789798787 followers</div>
                         <div className="badge badge-accent">7897 following</div>
                     </h2>

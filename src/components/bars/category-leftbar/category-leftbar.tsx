@@ -17,7 +17,7 @@ export default function CategoryLeftBar(props: {
                 </div>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-primary btn-sm">
+                    <a className="btn btn-primary btn-sm" href={`/categories/${title.toLowerCase().replaceAll(' ', '-')}/1`}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"
@@ -25,7 +25,7 @@ export default function CategoryLeftBar(props: {
                                   clipRule="evenodd"/>
                         </svg>
                         Open
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
