@@ -12,7 +12,7 @@ export default function HeroWrapperForm(props: {
             <div className={`hero min-h-screen ${bgStyles} rounded-none h-fit`}>
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="flex w-full flex-col items-center justify-center py-10 min-h-screen">
-                    <div className="hero-content text-center w-full flex flex-col md:flex-row">
+                    <div className="hero-content text-center w-full flex flex-col">
                         <div>
                             <h1 className="mb-5 text-5xl font-bold text-white text-center">{title}</h1>
                             <p className="mb-5 text-white text-center">{description}</p>
