@@ -6,12 +6,13 @@ import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 
 export default function Categories({params}: {params: {category: string, page: number}}) {
-    const category = params.category.replaceAll('-', ' ');
+    let category = params.category.replaceAll('-', ' ');
+    category = category.substring(0, 1).toUpperCase() + category.substring(1, category.length);
 
     return (
         <HeroWrapper
-            title={category.substring(0, 1).toUpperCase() + category.substring(1, category.length)}
-            description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
+            title={category}
+            description={`The newest tracks in "${category}" category`}
         >
             <div className="card w-full">
                 <div className="flex flex-wrap flex-row justify-around gap-5">

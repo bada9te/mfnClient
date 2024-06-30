@@ -13,7 +13,7 @@ export default function ProfileButton() {
 
     if (!isMounted) {
         return (
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar text-black">
                 <div className="w-10 rounded-full">
                     <div className="skeleton rounded-full w-10 h-10"></div>
                 </div>
@@ -22,10 +22,10 @@ export default function ProfileButton() {
     }
 
     return (
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end text-black">
             <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 p-0 pl-0 md:pl-2 rounded-full">
                 <div className="rounded-full flex flex-row justify-center items-center gap-4">
-                    <div className="text-black dark:text-white hidden md:block">
+                    <div className="hidden md:block">
                         <p className="font-bold text-lg">{user?._id ? user.nick : "Login"}</p>
                     </div>
                     <img

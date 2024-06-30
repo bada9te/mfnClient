@@ -4,9 +4,9 @@ import ProfileButton from "@/components/profile-button/profile-button";
 
 export default function AppBar() {
     return (
-        <div className="navbar bg-base-100 sticky top-0 z-40">
+        <div className="navbar bg-base-100 sticky top-0 z-40 text-black">
             <div className="navbar-start">
-                <div className="dropdown hidden">
+                <div className="dropdown max-h-screen block lg:hidden">
                     <div tabIndex={0} role="button" className="btn btn-ghost">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor">
@@ -15,7 +15,7 @@ export default function AppBar() {
                         </svg>
                     </div>
                     <ul tabIndex={0}
-                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        className="menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex flex-col flex-nowrap">
                         <li><Link href={"/feed/1"}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
@@ -89,10 +89,11 @@ export default function AppBar() {
                 <a className="btn btn-ghost text-xl">
                     <Image src={'/assets/logo.png'} alt={'logo'} width={40} height={40}
                            className="rounded-full hidden lg:block"/>
-                    Music From Nothing
+                    <span className="hidden md:flex">Music From Nothing</span>
+                    <span className="flex md:hidden">MFN</span>
                 </a>
             </div>
-            <div className="navbar-center hidden xl:flex">
+            <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
                     <li><Link href={"/feed/1"}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"

@@ -20,7 +20,7 @@ export default function PostUploadForm() {
     }
 
     return (
-        <form className="card-body" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-black" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Track title</span>

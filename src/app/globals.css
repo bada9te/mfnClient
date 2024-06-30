@@ -21,6 +21,7 @@
 html {
   background: rgb(28,148,164);
   background: radial-gradient(circle, rgba(28,148,164,1) 0%, rgba(49,104,179,1) 50%, rgba(37,122,118,1) 100%);
+  transition: all .1s;
 }
 
 body {
@@ -34,6 +35,7 @@ body {
 
   .thin-scrollbar {
     scrollbar-width: thin;
+    scrollbar-color: black;
   }
 }
 

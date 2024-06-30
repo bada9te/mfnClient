@@ -3,7 +3,7 @@ export default function Post(props: {
 }) {
     const { fullWidth } = props;
     return (
-        <div className={`card w-fit max-w-80 md:${fullWidth ? 'w-full' : 'w-80'} bg-base-100 shadow-xl`}>
+        <div className={`card w-fit max-w-80 md:${fullWidth ? 'w-full rounded-none' : 'w-80'} bg-base-100 shadow-xl text-black`}>
             <figure><img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"/>
             </figure>
             <div className="absolute m-5 flex flex-row gap-3 cursor-pointer">

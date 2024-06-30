@@ -14,7 +14,7 @@ export default function ProfileCard(props: {
     });
 
     return (
-        <div className="card w-full max-h-screen bg-base-100 shadow-xl rounded-none">
+        <div className="card w-full max-h-screen bg-base-100 shadow-xl rounded-none text-black">
             <figure className="max-h-48">
                 <img className="w-full" src={data.user.background.length ? data.user.background : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
             </figure>

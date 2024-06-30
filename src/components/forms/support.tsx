@@ -17,7 +17,7 @@ export default function SupportForm() {
     }
 
     return (
-        <form className="card-body" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-black" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Email</span>

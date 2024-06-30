@@ -3,7 +3,7 @@ import Post from "@/components/entities/post/post";
 
 export default function CurrentTrackRightBar() {
     return (
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col gap-0 items-center">
             <Post fullWidth/>
             <CurrentTrackOwner/>
             <button className="btn btn-neutral w-full">

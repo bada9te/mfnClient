@@ -2,7 +2,7 @@ import Post from "@/components/entities/post/post";
 
 export default function BattleForm() {
     return (
-        <form className="card-body w-full">
+        <form className="card-body w-full text-black">
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Battle title</span>

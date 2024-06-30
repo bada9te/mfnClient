@@ -30,7 +30,7 @@ export default function RootLayout({
                     <div className="grid grid-cols-5 grid-rows-1">
                         <div className="hidden xl:block">
                             <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                                <div className="card-body overflow-y-auto p-4 flex flex-col gap-5 thin-scrollbar">
+                                <div className="overflow-y-auto flex flex-col gap-0 thin-scrollbar">
                                     {
                                         genres.map((gen, i) => {
 
@@ -55,8 +55,8 @@ export default function RootLayout({
                             </div>
                         </div>
                         <div className="hidden xl:block">
-                            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                                <div className="card-body overflow-y-auto p-4 thin-scrollbar">
+                            <div className="card bg-base-100 w-full main-layout-card rounded-none">
+                                <div className="overflow-y-auto p-0 pb-2 thin-scrollbar">
                                     <CurrentTrackRightBar/>
                                 </div>
                             </div>

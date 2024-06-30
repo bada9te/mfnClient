@@ -4,7 +4,7 @@ import ProfileCard from "@/components/profile/profile-card/profile-card";
 export default function ChatEditForm() {
     return (
         <>
-            <form className="card-body">
+            <form className="card-body text-black">
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Chat title</span>

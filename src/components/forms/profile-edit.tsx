@@ -37,7 +37,7 @@ export default function ProfileEditForm() {
     }
 
     return (
-        <div className="card-body">
+        <div className="card-body text-black">
             <div className="divider divider-primary">Basics</div>
 
             <form onSubmit={handleSubmitNick(onSubmitNick)} noValidate>

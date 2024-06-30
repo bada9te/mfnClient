@@ -9,7 +9,7 @@ export default async function Feed({params}: {params: { page: number }}) {
     return (
         <HeroWrapper
             title="Recent tracks"
-            description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
+            description="The newest tracks from users"
         >
             <div className="card w-full">
                 <div className="flex flex-wrap justify-center md:justify-around gap-5">
