@@ -1,4 +1,4 @@
-import ProfileCard from "@/components/profile/profile-card/profile-card";
+import ProfileCard from "@/components/common/profile-card/profile-card";
 import {PreloadQuery} from "@/lib/apollo/client";
 import {POSTS_BY_OWNER_QUERY, POSTS_QUERY} from "@/utils/graphql-requests/posts";
 import {Suspense} from "react";
@@ -8,7 +8,7 @@ import PostsContainerProfile from "@/components/containers/posts-container/posts
 import {cookies} from "next/headers";
 import nextConfig from "@/../next.config.mjs";
 import {USER_QUERY} from "@/utils/graphql-requests/users";
-import ProfileCardSkeleton from "@/components/profile/profile-card/profile-card-skelton";
+import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
 
 export default function Profile({params}: {params: { page: number }}) {
     const myId = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;

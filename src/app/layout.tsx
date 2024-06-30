@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AppBar from "@/components/bars/appbar/appbar";
 import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
-import Footer from "@/components/footer/footer";
+import Footer from "@/components/common/footer/footer";
 import CategoryLeftBar from "@/components/bars/category-leftbar/category-leftbar";
 import {genres} from "@/config/categories";
 import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/current-track-rightbar";
@@ -33,7 +33,6 @@ export default function RootLayout({
                                 <div className="overflow-y-auto flex flex-col gap-0 thin-scrollbar">
                                     {
                                         genres.map((gen, i) => {
-
                                             return (
                                                 <CategoryLeftBar
                                                     key={i}

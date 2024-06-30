@@ -1,12 +1,10 @@
-import ProfileCard from "@/components/profile/profile-card/profile-card";
-import Post from "@/components/entities/post/post";
-import Pagination from "@/components/pagination/pagination";
+import ProfileCard from "@/components/common/profile-card/profile-card";
 import { PreloadQuery } from "@/lib/apollo/client";
 import { Suspense } from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
 import { POSTS_BY_OWNER_QUERY, POSTS_QUERY } from "@/utils/graphql-requests/posts";
-import ProfileCardSkeleton from "@/components/profile/profile-card/profile-card-skelton";
+import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
 
 export default function ProfileId({params}: {params: {page: number, id: string}}) {
     return (
