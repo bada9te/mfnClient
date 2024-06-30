@@ -17,7 +17,7 @@ export default function CategoryLeftBar(props: {
                 </div>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <div className="card-actions justify-end">
-                    <a className="btn btn-primary btn-sm" href={`/categories/${title.toLowerCase().replaceAll(' ', '-')}/1`}>
+                    <a className="btn gradient-btn btn-sm" href={`/categories/${title.toLowerCase().replaceAll(' ', '-')}/1`}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"

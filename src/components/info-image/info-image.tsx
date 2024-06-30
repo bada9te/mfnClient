@@ -10,7 +10,7 @@ export default function InfoImage(props: {
                 height={100}
                 className="rounded-full"
             />
-            <p className="font-bold text-white">{props.text}</p>
+            <p className="font-bold">{props.text}</p>
         </div>
     );
 }
