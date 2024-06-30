@@ -8,6 +8,7 @@ import {
     InMemoryCache,
     SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support";
+import cache from "@/lib/apollo/cache";
 
 // have a function to create a client for you
 function makeClient() {
@@ -16,7 +17,7 @@ function makeClient() {
         uri: process.env.NEXT_PUBLIC_SERVER_BASE_GQL,
         // you can disable result caching here if you want to
         // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
-        fetchOptions: { cache: "no-store" },
+        // fetchOptions: { cache: "no-store" },
         // you can override the default `fetchOptions` on a per query basis
         // via the `context` property on the options passed as a second argument
         // to an Apollo Client data fetching hook, e.g.:
@@ -27,7 +28,7 @@ function makeClient() {
     // use the `ApolloClient` from "@apollo/experimental-nextjs-app-support"
     return new ApolloClient({
         // use the `InMemoryCache` from "@apollo/experimental-nextjs-app-support"
-        cache: new InMemoryCache(),
+        cache: cache,
         link: httpLink,
     });
 }

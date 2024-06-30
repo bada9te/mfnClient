@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import ProfileButton from "@/components/profile-button/profile-button";
+import ProfileButton from "@/components/common/profile-button/profile-button";
 
 export default function AppBar() {
     return (

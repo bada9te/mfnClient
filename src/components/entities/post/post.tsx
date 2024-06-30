@@ -1,29 +1,51 @@
+import {Post as TPost} from "@/utils/graphql-requests/generated/schema";
+import nextConfig from "@/../next.config.mjs";
+
 export default function Post(props: {
     fullWidth?: boolean;
+    data: TPost
 }) {
-    const { fullWidth } = props;
+    const { fullWidth, data } = props;
+    console.log(data)
     return (
         <div className={`card w-fit max-w-80 md:${fullWidth ? 'w-full rounded-none' : 'w-80'} bg-base-100 shadow-xl text-black`}>
-            <figure><img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"/>
-            </figure>
+            {
+                data?.image
+                    ?
+                    <figure><img
+                        src={data?.image ? `${nextConfig.env?.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
+                        alt="Shoes"/>
+                    </figure>
+                    :
+                    <div
+                        className={`w-full flex items-center justify-center h-48 bg-gray-300 rounded dark:bg-gray-700`}>
+                        <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                            <path
+                                d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                        </svg>
+                    </div>
+            }
+
             <div className="absolute m-5 flex flex-row gap-3 cursor-pointer">
                 <div className="avatar">
                     <div className="w-10 rounded-full shadow-lg">
-                        <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+                        <img
+                            src={data?.owner?.avatar ? `${nextConfig.env?.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
                     </div>
                 </div>
                 <div className="w-fit bg-white font-bold px-4 flex items-center justify-center rounded-full shadow-lg">
-                    <p className="text-black">UserName</p>
+                <p className="text-black">{data?.owner?.nick}</p>
                 </div>
             </div>
 
 
             <div className="card-body text-start">
                 <h2 className="card-title">
-                    Shoes!
-                    <div className="badge badge-secondary">NEW</div>
+                    {data?.title}
+                    <div className="badge badge-secondary">{data?.category}</div>
                 </h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <p>{data?.description}</p>
                 <div className="card-actions justify-start">
                     <div className="badge badge-outline">Fashion</div>
                     <div className="badge badge-outline">Products</div>

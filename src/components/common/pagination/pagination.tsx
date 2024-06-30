@@ -32,7 +32,7 @@ export default function Pagination(props: {
     }, [page]);
 
     return (
-        <div className="join">
+        <div className="join w-full flex justify-center">
             <button className="join-item btn" onClick={() => handleClick(-1)}>«</button>
             <button className="join-item btn">{page}</button>
             <button className="join-item btn" disabled={page > maxPage} onClick={() => handleClick(1)}>»</button>
