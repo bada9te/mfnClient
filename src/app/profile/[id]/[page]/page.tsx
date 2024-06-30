@@ -5,12 +5,22 @@ import { PreloadQuery } from "@/lib/apollo/client";
 import { Suspense } from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
-import { POSTS_BY_OWNER_QUERY } from "@/utils/graphql-requests/posts";
+import { POSTS_BY_OWNER_QUERY, POSTS_QUERY } from "@/utils/graphql-requests/posts";
+import ProfileCardSkeleton from "@/components/profile/profile-card/profile-card-skelton";
 
 export default function ProfileId({params}: {params: {page: number, id: string}}) {
     return (
         <>
-            <ProfileCard/>
+            <PreloadQuery
+                query={POSTS_QUERY}
+                variables={{
+                    _id: params.id
+                }}
+            >
+                <Suspense fallback={<ProfileCardSkeleton/>}>
+                    <ProfileCard userId={params.id}/>
+                </Suspense>
+            </PreloadQuery>
             <div className="card shadow-2xl bg-base-100 w-full rounded-none">
                 <div className="card-body flex flex-wrap flex-row justify-between gap-5">
                     <PreloadQuery 
