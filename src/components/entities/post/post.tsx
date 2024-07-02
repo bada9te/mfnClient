@@ -8,11 +8,12 @@ export default function Post(props: {
     const { fullWidth, data } = props;
     console.log(data)
     return (
-        <div className={`card w-fit max-w-80 md:${fullWidth ? 'w-full rounded-none' : 'w-80'} bg-base-100 shadow-xl text-black`}>
+        <div className={`card w-fit max-w-80 md:${fullWidth ? 'w-full rounded-none' : 'w-80'} bg-base-100 shadow-xl text-white`}>
             {
                 data?.image
                     ?
                     <figure><img
+                        className="max-h-[180px] w-full"
                         src={data?.image ? `${nextConfig.env?.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
                         alt="Shoes"/>
                     </figure>

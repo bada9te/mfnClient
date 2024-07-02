@@ -10,6 +10,8 @@ import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/curre
 import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
+import RightbarTrack from "@/components/bars/rightbar-track/rightbar-track";
+import CentralBlock from "@/components/bars/central/central";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="retro">
+    <html lang="en" data-theme="dark">
     <body className={inter.className}>
         <ApolloWrapper>
             <SnackbarProvider maxSnack={5}>
@@ -45,21 +47,10 @@ export default function RootLayout({
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-5 xl:col-span-3">
-                            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                                <div className="card-body overflow-y-auto p-0 gap-0 thin-scrollbar">
-                                    {children}
-                                    <Footer/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="hidden xl:block">
-                            <div className="card bg-base-100 w-full main-layout-card rounded-none">
-                                <div className="overflow-y-auto p-0 pb-2 thin-scrollbar">
-                                    <CurrentTrackRightBar/>
-                                </div>
-                            </div>
-                        </div>
+                        <CentralBlock>
+                            {children}
+                        </CentralBlock>
+                        <RightbarTrack/>
                     </div>
                     <BottomNav/>
                 </ReduxProvider>

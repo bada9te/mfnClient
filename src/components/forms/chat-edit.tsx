@@ -1,10 +1,10 @@
 import Link from "next/link";
-import ProfileCard from "@/components/profile/profile-card/profile-card";
+import ProfileCard from "@/components/common/profile-card/profile-card";
 
 export default function ChatEditForm() {
     return (
         <>
-            <form className="card-body text-black">
+            <form className="card-body text-white">
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Chat title</span>

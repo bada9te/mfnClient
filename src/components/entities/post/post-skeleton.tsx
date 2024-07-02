@@ -20,7 +20,6 @@ export default function PostSkeleton(props: {
                 <div className="skeleton w-32 h-10 rounded-full shadow-md shrink-0"></div>
             </div>
 
-
             <div className="card-body text-start mt-2">
                 <h2 className="card-title">
                     <div className="skeleton h-5 w-32 shadow-md"></div>

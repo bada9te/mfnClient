@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Playlist(props: {
     title: string;
-    posts: React.ReactNode[];
+    posts: React.ReactNode[] | undefined;
 }) {
     const { posts, title } = props;
     return (
@@ -53,7 +53,7 @@ export default function Playlist(props: {
                 </div>
                 <div className="flex flex-wrap gap-5 md:gap-3 justify-around mb-10 mt-5">
                     {
-                        posts.map((post, index) => (
+                        posts?.map((post, index) => (
                             <div key={index}>{post}</div>
                         ))
                     }

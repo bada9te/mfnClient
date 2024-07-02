@@ -20,6 +20,7 @@ export const CORE_POST_FIELDS = gql`
         audio
         commentsAllowed
         downloadsAllowed
+        category
     }
 `;
 

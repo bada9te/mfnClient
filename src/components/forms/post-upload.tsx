@@ -200,7 +200,7 @@ export default function PostUploadForm() {
                 }>
                     {
                         genres.map((gen, key) => {
-                            return <option key={key} value={key}>{gen.title}</option>
+                            return <option key={key} value={gen.title}>{gen.title}</option>
                         })
                     }
                 </select>

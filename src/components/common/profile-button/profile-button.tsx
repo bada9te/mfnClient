@@ -22,7 +22,7 @@ export default function ProfileButton() {
     }
 
     return (
-        <div className="dropdown dropdown-end text-black">
+        <div className="dropdown dropdown-end text-white">
             <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 p-0 pl-0 md:pl-2 rounded-full">
                 <div className="rounded-full flex flex-row justify-center items-center gap-4">
                     <div className="hidden md:block">

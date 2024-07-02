@@ -4,8 +4,12 @@ import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import PostsContainerSaved from "@/components/containers/posts-container/posts-container-saved";
+import {cookies} from "next/headers";
+import config from "@/../next.config.mjs";
 
 export default function Feed({params}: {params: { page: number }}) {
+    const userId = cookies().get(config.env?.userIdCookieKey as string)?.value as string;
+
     return (
         <HeroWrapper
             title="Saved tracks"
@@ -17,11 +21,12 @@ export default function Feed({params}: {params: { page: number }}) {
                         query={POSTS_SAVED_BY_USER_QUERY}
                         variables={{
                             offset: (params.page - 1) * 12,
-                            limit: 12
+                            limit: 12,
+                            user: userId
                         }}
                     >
                         <Suspense fallback={<PostsContainerSkeleton/>}>
-                            <PostsContainerSaved offset={(params.page - 1) * 12} limit={12} page={params.page} />
+                            <PostsContainerSaved offset={(params.page - 1) * 12} limit={12} page={params.page} userId={userId}/>
                         </Suspense>
                     </PreloadQuery>
                 </div>

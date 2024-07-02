@@ -1,6 +1,6 @@
 export default function CurrentTrackOwner() {
     return (
-        <div className="card w-full bg-base-100 shadow-xl rounded-none text-black">
+        <div className="card w-full bg-base-100 shadow-xl rounded-none text-white">
             <figure className="min-h-32"><img className="w-full"
                          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"/>
             </figure>

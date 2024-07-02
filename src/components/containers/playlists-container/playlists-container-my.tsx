@@ -2,9 +2,10 @@
 import Playlist from "@/components/entities/playlist/playlist";
 import Post from "@/components/entities/post/post";
 import {
+    Post as TPost,
     usePlaylistsByOwnerIdSuspenseQuery,
 } from "@/utils/graphql-requests/generated/schema";
-import Pagination from "@/components/pagination/pagination";
+import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
 
@@ -26,7 +27,11 @@ export default function PlaylistsContainerOwner(props: TPaginationProps & { owne
                     {
                         data?.playlistsByOwnerId.playlists?.map((playlist, key) => {
                             return (
-                                <Playlist key={key} title={"Playlist1"} posts={[<Post/>, <Post/>, <Post/>]}/>
+                                <Playlist key={key} title={"Playlist1"} posts={playlist.tracks?.map((post, keyP) => {
+                                    return (
+                                        <Post data={post as TPost} key={keyP}/>
+                                    );
+                                })}/>
                             );
                         })
                     }
