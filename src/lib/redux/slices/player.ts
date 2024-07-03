@@ -3,12 +3,14 @@ import {createSlice} from "@reduxjs/toolkit";
 
 export interface IPlayerSlice {
     post: Post | null;
+    isLoop: boolean;
     isPlaying: boolean;
 }
 
 
 const initialState: IPlayerSlice = {
     isPlaying: false,
+    isLoop: false,
     post: null
 };
 
@@ -22,9 +24,16 @@ export const playerSlice = createSlice({
         },
         setPost: (state, action) => {
             state.post = action.payload;
+        },
+        setIsLoop: (state, action) => {
+            state.isLoop = action.payload;
         }
     },
 });
 
-export const { setIsPlaying, setPost } = playerSlice.actions;
+export const {
+    setIsPlaying,
+    setPost,
+    setIsLoop,
+} = playerSlice.actions;
 export default playerSlice.reducer;
