@@ -35,13 +35,12 @@ body {
 
   .thin-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: black;
   }
 }
 
 .main-layout-card {
-  height: calc(100vh - 132px);
-  max-height: calc(100vh - 132px);
+  height: calc(100vh - 125px);
+  max-height: calc(100vh - 125px);
 }
 
 .gradient-btn {

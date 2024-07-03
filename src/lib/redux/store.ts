@@ -2,46 +2,24 @@ import {applyMiddleware, combineReducers, compose, configureStore, Tuple} from "
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 // @ts-ignore
 import bottomBarReducer from "@/lib/redux/slices/bottom-bar";
-import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import {persistReducer} from "redux-persist";
 // @ts-ignore
 import * as asyncInitialState from 'redux-async-initial-state';
 import {httpGetCurrentUser} from "@/utils/http-requests/auth";
 import userReducer from "@/lib/redux/slices/user";
+import playerReducer from "@/lib/redux/slices/player";
+import storagePersist from "redux-persist/lib/storage";
 
-interface NoopStorageReturnType {
-    getItem: (_key: any) => Promise<null>
-    setItem: (_key: any, value: any) => Promise<any>
-    removeItem: (_key: any) => Promise<void>
-}
 
-const createNoopStorage = (): NoopStorageReturnType => {
-    return {
-        getItem(_key: any): Promise<null> {
-            return Promise.resolve(null);
-        },
-        setItem(_key: any, value: any): Promise<any> {
-            return Promise.resolve(value);
-        },
-        removeItem(_key: any): Promise<void> {
-            return Promise.resolve();
-        },
-    };
-};
-
-const storage =
-    typeof window !== 'undefined'
-        ? createWebStorage('local')
-        : createNoopStorage();
-
-const persistConfig = {
-    key: 'root',
-    storage,
+const userPersistConfig = {
+    key: 'user',
+    storage: storagePersist,
 };
 
 const rootReducer = combineReducers({
-    user: userReducer,
+    user: persistReducer(userPersistConfig, userReducer),
     bottomBar: bottomBarReducer,
+    player: playerReducer,
     asyncInitialState: asyncInitialState.innerReducer,
 });
 
@@ -66,8 +44,6 @@ const loadStore = async(getCurrentState: any) => {
             });
     });
 };
-
-//const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
 export const store = configureStore({
