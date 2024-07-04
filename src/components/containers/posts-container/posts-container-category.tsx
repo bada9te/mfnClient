@@ -2,7 +2,7 @@
 import {TPaginationProps} from "@/types/pagination";
 import {usePostsByCategorySuspenseQuery} from "@/utils/graphql-requests/generated/schema";
 import Post from "@/components/entities/post/post";
-import Pagination from "@/components/pagination/pagination";
+import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/info-image/info-image";
 
 export default function PostsContainerCategory(props: TPaginationProps & {category: string}) {

@@ -16,10 +16,15 @@ const userPersistConfig = {
     storage: storagePersist,
 };
 
+const playerPersistConfig = {
+    key: 'player',
+    storage: storagePersist,
+}
+
 const rootReducer = combineReducers({
     user: persistReducer(userPersistConfig, userReducer),
     bottomBar: bottomBarReducer,
-    player: playerReducer,
+    player: persistReducer(playerPersistConfig, playerReducer),
     asyncInitialState: asyncInitialState.innerReducer,
 });
 

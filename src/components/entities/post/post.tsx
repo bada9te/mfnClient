@@ -1,32 +1,43 @@
+"use client"
 import {Post as TPost} from "@/utils/graphql-requests/generated/schema";
 import nextConfig from "@/../next.config.mjs";
+import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
+import {setIsPlaying, setPost} from "@/lib/redux/slices/player";
+import {useEffect, useState} from "react";
+import PostSkeleton from "@/components/entities/post/post-skeleton";
 
 export default function Post(props: {
     fullWidth?: boolean;
     data: TPost
 }) {
     const { fullWidth, data } = props;
-    console.log(data)
+    const dispatch = useAppDispatch();
+    const player = useAppSelector(state => state.player);
+    const [isMounted, setIsMounted] = useState(false);
+
+    const handlePlayCLick = () => {
+        dispatch(setPost(data));
+    }
+
+    const handlePauseCLick = () => {
+        dispatch(setIsPlaying(false));
+    }
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return (<PostSkeleton/>);
+    }
+
     return (
         <div className={`card w-fit max-w-80 md:${fullWidth ? 'w-full rounded-none' : 'w-80'} bg-base-100 shadow-xl text-white`}>
-            {
-                data?.image
-                    ?
-                    <figure><img
-                        className="max-h-[180px] w-full"
-                        src={data?.image ? `${nextConfig.env?.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
-                        alt="Shoes"/>
-                    </figure>
-                    :
-                    <div
-                        className={`w-full flex items-center justify-center h-48 bg-gray-300 rounded dark:bg-gray-700`}>
-                        <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                            <path
-                                d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
-                        </svg>
-                    </div>
-            }
+            <figure><img
+                className="max-h-[180px] w-full"
+                src={data?.image ? `${nextConfig.env?.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
+                alt="Shoes"/>
+            </figure>
 
             <div className="absolute m-5 flex flex-row gap-3 cursor-pointer">
                 <div className="avatar">
@@ -103,13 +114,29 @@ export default function Post(props: {
                     </button>
                 </div>
 
-                <button className="btn btn-primary w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                        <path
-                            d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z"/>
-                    </svg>
-                    Play
-                </button>
+                {
+                    player.isPlaying && player.post?._id === data?._id
+                    ?
+                        <button className="btn btn-primary w-full" onClick={handlePauseCLick}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 className="size-6">
+                                <path fillRule="evenodd"
+                                      d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z"
+                                      clipRule="evenodd"/>
+                            </svg>
+                            Pause
+                        </button>
+                        :
+                        <button className="btn btn-primary w-full" onClick={handlePlayCLick}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                 className="size-5">
+                                <path
+                                    d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z"/>
+                        </svg>
+                        Play
+                    </button>
+                }
+
             </div>
         </div>
     );
