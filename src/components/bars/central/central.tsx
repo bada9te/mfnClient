@@ -18,8 +18,8 @@ export default function CentralBlock({children}: {
     }
 
     return (
-        <div className={`col-span-5 xl:${playerPost === null ? "col-span-4" : "col-span-3"} flex-1`}>
-            <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
+        <div className={`col-auto flex-1`}>
+            <div className="card shadow-xl w-full main-layout-card rounded-none glass">
                 <div className="card-body overflow-y-auto p-0 gap-0 thin-scrollbar">
                     {children}
                     <Footer/>

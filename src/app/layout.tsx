@@ -12,6 +12,7 @@ import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import RightbarTrack from "@/components/bars/rightbar-track/rightbar-track";
 import CentralBlock from "@/components/bars/central/central";
+import {store, useAppSelector} from "@/lib/redux/store";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,7 +30,7 @@ export default function RootLayout({
             <SnackbarProvider maxSnack={5}>
                 <ReduxProvider>
                     <AppBar/>
-                    <div className="grid grid-cols-5 grid-rows-1">
+                    <div className={`grid grid-cols-[auto] lg:grid-cols-[320px_auto_320px] grid-rows-1`}>
                         <div className="hidden xl:block">
                             <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
                                 <div className="overflow-y-auto flex flex-col gap-0 thin-scrollbar">

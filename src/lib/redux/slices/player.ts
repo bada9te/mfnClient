@@ -23,10 +23,15 @@ export const playerSlice = createSlice({
             state.isPlaying = action.payload;
         },
         setPost: (state, action) => {
-            if (action.payload._id !== state.post?._id) {
+            if (action.payload === null) {
                 state.post = action.payload;
+                state.isPlaying = false;
+            } else {
+                if (action.payload._id !== state.post?._id) {
+                    state.post = action.payload;
+                }
+                state.isPlaying = true;
             }
-            state.isPlaying = true;
         },
         setIsLoop: (state, action) => {
             state.isLoop = action.payload;

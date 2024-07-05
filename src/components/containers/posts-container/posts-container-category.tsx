@@ -1,6 +1,6 @@
 "use client"
 import {TPaginationProps} from "@/types/pagination";
-import {usePostsByCategorySuspenseQuery} from "@/utils/graphql-requests/generated/schema";
+import {usePostsByCategorySuspenseQuery, Post as TPost} from "@/utils/graphql-requests/generated/schema";
 import Post from "@/components/entities/post/post";
 import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/info-image/info-image";
@@ -22,7 +22,7 @@ export default function PostsContainerCategory(props: TPaginationProps & {catego
                 <>
                     {
                         data?.postsByCategory.posts?.map((post, key) => {
-                            return (<Post key={key}/>)
+                            return (<Post key={key} data={post as TPost}/>)
                         })
                     }
                     <Pagination page={page} maxPage={Number(data?.postsByCategory.count as number / limit)}/>
