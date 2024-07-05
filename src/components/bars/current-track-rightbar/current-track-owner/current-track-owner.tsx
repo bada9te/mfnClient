@@ -1,16 +1,16 @@
 import {User} from "@/utils/graphql-requests/generated/schema";
+import nextConfig from "../../../../../next.config.mjs";
 
 export default function CurrentTrackOwner({user}: {user: User}) {
-    console.log(user);
     return (
         <div className="card w-full bg-base-100 shadow-xl rounded-none text-white">
             <figure className="min-h-32"><img className="w-full"
-                         src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"/>
+                         src={user?.background ? `${nextConfig.env?.serverFilesEndpoint}/${user.background}` : '/assets/bgs/profileDefaultBG.png'} alt="Shoes"/>
             </figure>
             <div className="card-body flex flex-col gap-3 text-center justify-center items-center">
                 <div className="avatar flex justify-center">
                     <div className="w-24 mask mask-hexagon">
-                        <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+                        <img src={user?.avatar ? `${nextConfig.env?.serverFilesEndpoint}/${user.avatar}` : '/assets/icons/logo_clear.png'}/>
                     </div>
                 </div>
                 <h2 className="card-title">{user?.nick}</h2>
