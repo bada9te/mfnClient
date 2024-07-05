@@ -59,8 +59,9 @@ export default function Post(props: {
                 </h2>
                 <p>{data?.description}</p>
                 <div className="card-actions justify-start">
-                    <div className="badge badge-outline">Fashion</div>
-                    <div className="badge badge-outline">Products</div>
+                    <div className="badge badge-outline">{data.likedBy?.length} Likes</div>
+                    <div className="badge badge-outline">{data.savedBy?.length} Saves</div>
+                    <div className="badge badge-outline">{data.comments?.length} Comments</div>
                 </div>
             </div>
             <div className="card-actions justify-end p-2 flex flex-row">

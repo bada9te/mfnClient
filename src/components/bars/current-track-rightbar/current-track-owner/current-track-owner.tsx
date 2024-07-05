@@ -1,4 +1,7 @@
-export default function CurrentTrackOwner() {
+import {User} from "@/utils/graphql-requests/generated/schema";
+
+export default function CurrentTrackOwner({user}: {user: User}) {
+    console.log(user);
     return (
         <div className="card w-full bg-base-100 shadow-xl rounded-none text-white">
             <figure className="min-h-32"><img className="w-full"
@@ -10,11 +13,11 @@ export default function CurrentTrackOwner() {
                         <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
                     </div>
                 </div>
-                <h2 className="card-title">User profile header</h2>
-                <p className="mt-3 md:mt-0">If a dog chews shoes whose shoes does he choose?</p>
+                <h2 className="card-title">{user?.nick}</h2>
+                <p className="mt-3 md:mt-0">{user?.description}</p>
 
-                <div className="badge badge-secondary">789798787 followers</div>
-                <div className="badge badge-accent">7897 following</div>
+                <div className="badge badge-secondary">{user?.subscribers?.length} followers</div>
+                <div className="badge badge-accent">{user?.subscribedOn?.length} following</div>
                 <button className="btn btn-primary w-full">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                         <path fillRule="evenodd"

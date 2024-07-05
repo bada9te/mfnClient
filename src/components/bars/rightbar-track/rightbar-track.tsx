@@ -1,25 +1,12 @@
-"use client"
 import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/current-track-rightbar";
-import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
-import {useEffect, useState} from "react";
+import {useAppDispatch} from "@/lib/redux/store";
 import {setPost} from "@/lib/redux/slices/player";
 
 export default function RightbarTrack() {
-    const playerPost = useAppSelector(state => state.player.post);
-    const [isMounted, setIsMounted] = useState(false);
     const dispatch = useAppDispatch();
-
 
     const handleCloseRightbar = () => {
         dispatch(setPost(null));
-    }
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
-    if (!isMounted) {
-        return <></>;
     }
 
     return (

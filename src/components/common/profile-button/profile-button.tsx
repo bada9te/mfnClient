@@ -33,7 +33,7 @@ export default function ProfileButton() {
                         height={40}
                         alt="Avatar"
                         className="rounded-full"
-                        src={user?.avatar.length ? user?.avatar : "/assets/icons/logo_clear.png"}
+                        src={user?.avatar?.length ? user?.avatar : "/assets/icons/logo_clear.png"}
                     />
                 </div>
             </div>
