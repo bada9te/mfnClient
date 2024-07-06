@@ -1,10 +1,19 @@
 "use client"
-import {Post as TPost} from "@/utils/graphql-requests/generated/schema";
+import {
+    Post as TPost,
+    usePostSwicthInSavedMutation,
+    usePostSwitchLikeMutation,
+    User
+} from "@/utils/graphql-requests/generated/schema";
 import nextConfig from "@/../next.config.mjs";
 import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
 import {setIsPlaying, setPost} from "@/lib/redux/slices/player";
 import {useEffect, useState} from "react";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
+import user from "@/lib/redux/slices/user";
+import {revalidatePath} from "next/cache";
+import {revalidatePathAction} from "@/actions/revalidation";
+import {useSnackbar} from "notistack";
 
 export default function Post(props: {
     fullWidth?: boolean;
@@ -13,7 +22,11 @@ export default function Post(props: {
     const { fullWidth, data } = props;
     const dispatch = useAppDispatch();
     const player = useAppSelector(state => state.player);
+    const user = useAppSelector(state => state.user.user);
     const [isMounted, setIsMounted] = useState(false);
+    const [switchLike] = usePostSwitchLikeMutation();
+    const [switchInSaved] = usePostSwicthInSavedMutation();
+    const { enqueueSnackbar } = useSnackbar();
 
     const handlePlayCLick = () => {
         dispatch(setPost(data));
@@ -26,9 +39,43 @@ export default function Post(props: {
     useEffect(() => {
         setIsMounted(true);
     }, []);
-
     if (!isMounted) {
         return (<PostSkeleton/>);
+    }
+
+
+    // on like click
+    const handleSwitchLike = async() => {
+        if (!user?._id) {
+            enqueueSnackbar("Not authenticated", {autoHideDuration: 1000});
+            return;
+        }
+        await switchLike({
+            variables: {
+                input: {
+                    userId: user?._id as string,
+                    postId: data._id
+                }
+            }
+        });
+        revalidatePathAction("/feed/[page]", "page");
+    }
+
+    // on save click
+    const handleSwitchInSaved = async() => {
+        if (!user?._id) {
+            enqueueSnackbar("Not authenticated", {autoHideDuration: 1000});
+            return;
+        }
+        await switchInSaved({
+            variables: {
+                input: {
+                    userId: user?._id as string,
+                    postId: data._id,
+                }
+            }
+        });
+        revalidatePathAction("/feed/[page]", "page");
     }
 
     return (
@@ -46,8 +93,8 @@ export default function Post(props: {
                             src={data?.owner?.avatar ? `${nextConfig.env?.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
                     </div>
                 </div>
-                <div className="w-fit bg-white font-bold px-4 flex items-center justify-center rounded-full shadow-lg">
-                <p className="text-black">{data?.owner?.nick}</p>
+                <div className="text-white w-fit font-bold px-4 flex items-center justify-center rounded-full shadow-lg glass">
+                    <p className="text-primary drop-shadow-lg">{data?.owner?.nick}</p>
                 </div>
             </div>
 
@@ -66,14 +113,20 @@ export default function Post(props: {
             </div>
             <div className="card-actions justify-end p-2 flex flex-row">
                 <div className="join">
-                    <button className="btn btn-sm join-item">
+                    <button
+                        className={`btn btn-sm join-item ${data.likedBy?.find((i: User) => i._id === user?._id) && "text-green-500"}`}
+                        onClick={handleSwitchLike}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                              className="size-6">
                             <path
                                 d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z"/>
                         </svg>
                     </button>
-                    <button className="btn btn-sm join-item">
+                    <button
+                        className={`btn btn-sm join-item ${data.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`}
+                        onClick={handleSwitchInSaved}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"
@@ -85,17 +138,8 @@ export default function Post(props: {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"
-                                  d="M12.207 2.232a.75.75 0 0 0 .025 1.06l4.146 3.958H6.375a5.375 5.375 0 0 0 0 10.75H9.25a.75.75 0 0 0 0-1.5H6.375a3.875 3.875 0 0 1 0-7.75h10.003l-4.146 3.957a.75.75 0 0 0 1.036 1.085l5.5-5.25a.75.75 0 0 0 0-1.085l-5.5-5.25a.75.75 0 0 0-1.06.025Z"
+                                  d="M3.43 2.524A41.29 41.29 0 0 1 10 2c2.236 0 4.43.18 6.57.524 1.437.231 2.43 1.49 2.43 2.902v5.148c0 1.413-.993 2.67-2.43 2.902a41.102 41.102 0 0 1-3.55.414c-.28.02-.521.18-.643.413l-1.712 3.293a.75.75 0 0 1-1.33 0l-1.713-3.293a.783.783 0 0 0-.642-.413 41.108 41.108 0 0 1-3.55-.414C1.993 13.245 1 11.986 1 10.574V5.426c0-1.413.993-2.67 2.43-2.902Z"
                                   clipRule="evenodd"/>
-                        </svg>
-                    </button>
-                    <button className="btn btn-sm join-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                             className="size-5">
-                            <path
-                                d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z"/>
-                            <path
-                                d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z"/>
                         </svg>
                     </button>
                     <button className="btn btn-sm join-item">
@@ -108,16 +152,17 @@ export default function Post(props: {
                     <button className="btn btn-sm join-item">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
-                            <path fillRule="evenodd"
-                                  d="M3.43 2.524A41.29 41.29 0 0 1 10 2c2.236 0 4.43.18 6.57.524 1.437.231 2.43 1.49 2.43 2.902v5.148c0 1.413-.993 2.67-2.43 2.902a41.102 41.102 0 0 1-3.55.414c-.28.02-.521.18-.643.413l-1.712 3.293a.75.75 0 0 1-1.33 0l-1.713-3.293a.783.783 0 0 0-.642-.413 41.108 41.108 0 0 1-3.55-.414C1.993 13.245 1 11.986 1 10.574V5.426c0-1.413.993-2.67 2.43-2.902Z"
-                                  clipRule="evenodd"/>
+                            <path
+                                d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z"/>
+                            <path
+                                d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z"/>
                         </svg>
                     </button>
                 </div>
 
                 {
                     player.isPlaying && player.post?._id === data?._id
-                    ?
+                        ?
                         <button className="btn btn-primary w-full" onClick={handlePauseCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">
@@ -137,7 +182,6 @@ export default function Post(props: {
                         Play
                     </button>
                 }
-
             </div>
         </div>
     );
