@@ -14,7 +14,7 @@ export default function CommentsModal({postData, button}: {postData: Post, butto
             {React.cloneElement(button, {
                 onClick: handleOpen,
             })}
-            <dialog ref={ref} className="modal">
+            <dialog ref={ref} className="modal no-scrollbar">
                 <form method="dialog" className="modal-backdrop">
                     <button>close</button>
                 </form>
