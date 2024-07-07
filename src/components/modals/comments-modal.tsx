@@ -18,15 +18,21 @@ export default function CommentsModal({postData, button}: {postData: Post, butto
                 <form method="dialog" className="modal-backdrop">
                     <button>close</button>
                 </form>
-                <div className="modal-box text-gray-300 max-w-[600px] h-[600px] no-scrollbar text-start flex flex-col">
+                <div className="modal-box text-gray-300 max-w-[600px] min-h-screen no-scrollbar text-start flex flex-col rounded-none">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
 
-                    <h4 className="font-bold text-lg">{postData.title} - Comments</h4>
+                    <h4 className="font-bold text-lg">{postData?.title} - Comments</h4>
 
-                    <AddCommentForm/>
+                    <div className="flex-1 min-h-full flex justify-center items-center overflow-y-auto">
+                        DATA
+                    </div>
+
+                    <div className="modal-action"> 
+                        <AddCommentForm/>
+                    </div>
                 </div>
             </dialog>
         </>

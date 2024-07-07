@@ -111,19 +111,19 @@ export default function Post(props: {
                 <p>{data?.description}</p>
                 <div className="card-actions justify-start">
                     <div className="badge badge-outline flex flex-row gap-1">
-                        {data.likedBy?.length} 
+                        {data?.likedBy?.length} 
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
                             <path d="M2.09 15a1 1 0 0 0 1-1V8a1 1 0 1 0-2 0v6a1 1 0 0 0 1 1ZM5.765 13H4.09V8c.663 0 1.218-.466 1.556-1.037a4.02 4.02 0 0 1 1.358-1.377c.478-.292.907-.706.989-1.26V4.32a9.03 9.03 0 0 0 0-2.642c-.028-.194.048-.394.224-.479A2 2 0 0 1 11.09 3c0 .812-.08 1.605-.235 2.371a.521.521 0 0 0 .502.629h1.733c1.104 0 2.01.898 1.901 1.997a19.831 19.831 0 0 1-1.081 4.788c-.27.747-.998 1.215-1.793 1.215H9.414c-.215 0-.428-.035-.632-.103l-2.384-.794A2.002 2.002 0 0 0 5.765 13Z" />
                         </svg>
                     </div>
                     <div className="badge badge-outline flex flex-row gap-1">
-                        {data.savedBy?.length}
+                        {data?.savedBy?.length}
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
                             <path d="M3.75 2a.75.75 0 0 0-.75.75v10.5a.75.75 0 0 0 1.28.53L8 10.06l3.72 3.72a.75.75 0 0 0 1.28-.53V2.75a.75.75 0 0 0-.75-.75h-8.5Z" />
                         </svg>
                     </div>
                     <div className="badge badge-outline flex flex-row gap-1">
-                        {data.comments?.length}
+                        {data?.comments?.length}
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
                             <path d="M1 8.74c0 .983.713 1.825 1.69 1.943.904.108 1.817.19 2.737.243.363.02.688.231.85.556l1.052 2.103a.75.75 0 0 0 1.342 0l1.052-2.103c.162-.325.487-.535.85-.556.92-.053 1.833-.134 2.738-.243.976-.118 1.689-.96 1.689-1.942V4.259c0-.982-.713-1.824-1.69-1.942a44.45 44.45 0 0 0-10.62 0C1.712 2.435 1 3.277 1 4.26v4.482Z" />
                         </svg>
@@ -133,7 +133,7 @@ export default function Post(props: {
             <div className="card-actions justify-end p-2 flex flex-row">
                 <div className="join">
                     <button
-                        className={`btn btn-sm join-item ${data.likedBy?.find((i: User) => i._id === user?._id) && "text-green-500"}`}
+                        className={`btn btn-sm join-item ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-green-500"}`}
                         onClick={handleSwitchLike}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -143,7 +143,7 @@ export default function Post(props: {
                         </svg>
                     </button>
                     <button
-                        className={`btn btn-sm join-item ${data.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`}
+                        className={`btn btn-sm join-item ${data?.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`}
                         onClick={handleSwitchInSaved}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"

@@ -5,6 +5,7 @@ import {POSTS_QUERY} from "@/utils/graphql-requests/posts";
 import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 
+
 export default async function Feed({params}: {params: { page: number }}) {
     return (
         <HeroWrapper

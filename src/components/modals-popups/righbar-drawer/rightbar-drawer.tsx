@@ -22,7 +22,7 @@ export default function RightBarDrawer(props: {
 
             <div className="drawer-side pt-16 z-10">
                 <label htmlFor="my-drawer-people" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                <ul className="menu p-4 w-80 md:w-[360px] min-h-full bg-base-200 text-base-content">
                     {/* Sidebar content here */}
                     <li><a>User Item 1</a></li>
                     <li><a>User Item 2</a></li>
