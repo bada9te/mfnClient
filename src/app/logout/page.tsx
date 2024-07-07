@@ -4,7 +4,6 @@ import { deleteCookie } from "cookies-next";
 import { useEffect } from "react";
 import nextConfig from "@/../next.config.mjs";
 import { useRouter } from "next/navigation";
-import { deleteCookieAction } from "@/actions/cookies";
 
 export default function LogoutPage() {
     const router = useRouter();
