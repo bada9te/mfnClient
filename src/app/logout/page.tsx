@@ -13,8 +13,8 @@ export default function LogoutPage() {
     useEffect(() => {
         if (keyID && keySE) {
             localStorage.removeItem("persist:user");
-            deleteCookieAction(keyID);
-            deleteCookieAction(keySE);
+            //deleteCookieAction(keyID);
+            //deleteCookieAction(keySE);
             router.replace('/feed/1');
         }
     }, [keyID, keySE]);

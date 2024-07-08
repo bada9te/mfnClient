@@ -1,11 +1,32 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import {cookies} from "next/headers";
+import nextConfig from '../next.config.mjs';
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
     const isLoggedIn = cookies().get(process.env.NEXT_PUBLIC_SESSION_COOKIE_KEY as string);
     const pathname = request.nextUrl.pathname;
+
+    const jwtCookieKey = nextConfig.env?.userSessionCookieKey as string;
+    const userIdCookieKey = nextConfig.env?.userIdCookieKey as string;
+
+    if (pathname === '/logout') {
+        console.log("awddadhkawdhaku")
+        const res = NextResponse.redirect(new URL('/feed/1', request.url));
+        res.cookies.set(jwtCookieKey, "", {
+            expires: new Date(0),
+            path: '/',
+            domain: nextConfig.env?.serverDomain,
+        });
+        res.cookies.set(userIdCookieKey, "", {
+            expires: new Date(0),
+            path: '/',
+            domain: nextConfig.env?.serverDomain,
+        });
+        
+        return res;
+    }
 
     // if user is trying to access auth routes
     if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
@@ -30,5 +51,6 @@ export const config = {
         '/profile/me/:path*',
         '/login/:path*',
         '/register/:path*',
+        '/logout'
     ],
 }
