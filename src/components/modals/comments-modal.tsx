@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import AddCommentForm from "../forms/add-comment";
 import { Post } from "@/utils/graphql-requests/generated/schema";
+import CommentsContainer from "../containers/comments-container/comments-container";
 
 export default function CommentsModal({postData, button}: {postData: Post, button: React.ReactElement}) {
     const ref = useRef<HTMLDialogElement | null>(null);
@@ -26,8 +27,8 @@ export default function CommentsModal({postData, button}: {postData: Post, butto
 
                     <h4 className="font-bold text-lg">{postData?.title} - Comments</h4>
 
-                    <div className="flex-1 min-h-full flex justify-center items-center overflow-y-auto">
-                        DATA
+                    <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
+                        <CommentsContainer/>
                     </div>
 
                     <div className="modal-action"> 
