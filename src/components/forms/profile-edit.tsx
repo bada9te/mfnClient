@@ -37,7 +37,7 @@ export default function ProfileEditForm() {
     }
 
     return (
-        <div className="card-body text-white">
+        <div className="bg-gray-950 card-body text-white rounded-none md:rounded-2xl shadow-2xl glass">
             <div className="divider divider-primary">Basics</div>
 
             <form onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
@@ -53,7 +53,7 @@ export default function ProfileEditForm() {
                                 required: { value: true, message: "This field is required" },
                             })
                         }/>
-                        <button className="btn btn-primary join-item" type="submit">Save</button>
+                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Save</button>
                     </div>
                     {
                         errorsNick.nickname &&
@@ -77,7 +77,7 @@ export default function ProfileEditForm() {
                                 required: { value: true, message: "This field is required" },
                             })
                         }/>
-                        <button className="btn btn-primary join-item" type="submit">Save</button>
+                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Save</button>
                     </div>
                     {
                         errorDescr.description &&
@@ -119,7 +119,7 @@ export default function ProfileEditForm() {
                                 required: { value: true, message: "This field is required" },
                             })
                         }/>
-                        <button className="btn btn-primary join-item" type="submit">Save</button>
+                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Save</button>
                     </div>
                     {
                         errorEmail.newEmail &&
@@ -132,9 +132,9 @@ export default function ProfileEditForm() {
 
 
             <div className="divider divider-primary">Socials</div>
-            <button className="btn btn-error">Connect google</button>
-            <button className="btn btn-info">Connect facebook</button>
-            <button className="btn btn-neutral">Connect twitter</button>
+            <button className="btn btn-error glass bg-error">Connect google</button>
+            <button className="btn btn-info glass bg-info">Connect facebook</button>
+            <button className="btn btn-neutral glass bg-neutral">Connect twitter</button>
         </div>
 
     );

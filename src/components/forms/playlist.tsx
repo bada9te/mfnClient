@@ -14,7 +14,8 @@ export default function PlaylistForm() {
     }
 
     return (
-        <form className="card-body text-black" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-white glass bg-gray-950 rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <div className="divider divider-primary">Playlist setup</div>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Playlist title</span>
@@ -42,7 +43,7 @@ export default function PlaylistForm() {
             </div>
 
             <div className="form-control mt-4">
-                <button className="btn btn-primary">Create playlist</button>
+                <button className="btn btn-primary glass bg-pink-500">Create playlist</button>
             </div>
         </form>
     );

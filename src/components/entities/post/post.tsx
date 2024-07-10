@@ -106,12 +106,12 @@ export default function Post(props: {
             <div className="card-body text-start pb-2">
                 <h2 className="card-title">
                     {data?.title}
-                    <div className="badge badge-secondary">{data?.category}</div>
+                    <div className="badge badge-secondary glass bg-purple-500">{data?.category}</div>
                 </h2>
                 <p>{data?.description}</p>
             </div>
 
-            <div className="stats shadow">
+            <div className="stats glass mx-2 rounded-lg">
                 <div className="stat">
                     <div className="stat-title">
                         <button
@@ -166,7 +166,7 @@ export default function Post(props: {
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?
-                        <button className="btn btn-primary w-full" onClick={handlePauseCLick}>
+                        <button className="btn btn-primary w-full glass bg-pink-500 rounded-lg" onClick={handlePauseCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">
                                 <path fillRule="evenodd"
@@ -176,7 +176,7 @@ export default function Post(props: {
                             Pause
                         </button>
                         :
-                        <button className="btn btn-primary w-full" onClick={handlePlayCLick}>
+                        <button className="btn btn-primary w-full glass bg-pink-500 rounded-lg" onClick={handlePlayCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
                                 <path

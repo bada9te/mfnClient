@@ -10,9 +10,6 @@ import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/curre
 import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
-import RightbarTrack from "@/components/bars/rightbar-track/rightbar-track";
-import CentralBlock from "@/components/bars/central/central";
-import {store, useAppSelector} from "@/lib/redux/store";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark">
+    <html lang="en" data-theme="dracula">
     <body className={inter.className}>
         <ApolloWrapper>
             <SnackbarProvider maxSnack={5}>
@@ -33,7 +30,7 @@ export default function RootLayout({
                     <div className={`grid grid-cols-[auto] lg:grid-cols-[320px_auto_320px] grid-rows-1`}>
                         <div className="hidden xl:block">
                             <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
-                                <div className="overflow-y-auto flex flex-col gap-0 thin-scrollbar">
+                                <div className="overflow-y-auto flex flex-col gap-10 no-scrollbar py-8">
                                     {
                                         genres.map((gen, i) => {
                                             return (
@@ -50,15 +47,17 @@ export default function RootLayout({
                         </div>
                         <div className={`col-auto flex-1`}>
                             <div className="card shadow-xl w-full main-layout-card rounded-none glass">
-                                <div className="card-body overflow-y-auto p-0 gap-0 thin-scrollbar">
+                                <div className="card-body overflow-y-auto p-0 gap-0 no-scrollbar">
                                     {children}
-                                    <Footer/>
+                                    <div className="p-0 md:p-8">
+                                        <Footer/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div className={`hidden xl:block col-auto max-w-80`}>
                             <div className="card bg-base-100 w-full main-layout-card rounded-none">
-                                <div className="overflow-y-auto p-0 pb-2 thin-scrollbar">
+                                <div className="overflow-y-auto p-0 no-scrollbar pb-10">
                                     <div className="h-[80px] flex justify-between items-center text-white px-5">
                                         <p className="font-bold text-xl">In player:</p>
                                     </div>

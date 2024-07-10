@@ -14,7 +14,7 @@ export default function ProfileCard(props: {
     });
 
     return (
-        <div className="card w-full max-h-screen bg-base-100 shadow-xl rounded-none text-white">
+        <div className="card w-full max-h-screen bg-gray-950 text-white rounded-none md:rounded-2xl shadow-2xl glass">
             <figure className="max-h-48">
                 <img className="w-full" src={data.user.background.length ? data.user.background : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
             </figure>
@@ -27,8 +27,8 @@ export default function ProfileCard(props: {
                 <div>
                     <h2 className="card-title flex flex-col md:flex-row">
                         {data.user.nick}
-                        <div className="badge badge-secondary">{data.user.subscribers?.length} followers</div>
-                        <div className="badge badge-accent">{data.user.subscribedOn?.length} following</div>
+                        <div className="badge badge-secondary glass bg-secondary">{data.user.subscribers?.length} followers</div>
+                        <div className="badge badge-accent glass bg-accent">{data.user.subscribedOn?.length} following</div>
                     </h2>
                     <p className="mt-3 md:mt-0">{data.user.description}</p>
                     <div className="card-actions justify-start mt-3">
@@ -36,12 +36,12 @@ export default function ProfileCard(props: {
                             !isEditable
                             ?
                             <>
-                                <button className="btn btn-primary w-full md:w-96">Subscribe</button>
+                                <button className="btn btn-primary w-full md:w-96 glass bg-pink-500">Subscribe</button>
                             </>
                             :
                             <>
-                                <button className="btn btn-primary w-full md:w-96">Change avatar</button>
-                                <button className="btn btn-primary w-full md:w-96">Change background</button>
+                                <button className="btn btn-primary w-full md:w-96 glass bg-pink-500">Change avatar</button>
+                                <button className="btn btn-primary w-full md:w-96 glass bg-pink-500">Change background</button>
                             </>
                         }
                     </div>

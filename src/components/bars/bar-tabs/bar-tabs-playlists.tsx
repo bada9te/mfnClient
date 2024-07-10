@@ -14,7 +14,7 @@ export default function BarTabsPlaylists(props: {
 
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full">
+        <div role="tablist" className="tabs tabs-boxed w-full rounded-none bg-base-100">
             <a 
                 role="tab" 
                 className={`tab ${activeTab === "explore" && "tab-active"}`}

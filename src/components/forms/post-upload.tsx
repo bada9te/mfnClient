@@ -116,7 +116,8 @@ export default function PostUploadForm() {
     }
 
     return (
-        <form className="card-body text-black" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-white glass bg-gray-950 rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <div className="divider divider-primary">Post stup</div>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Track title</span>
@@ -225,7 +226,7 @@ export default function PostUploadForm() {
             </div>
 
             <div className="form-control mt-4">
-                <button className="btn btn-primary">Upload</button>
+                <button className="btn btn-primary glass bg-pink-500">Upload</button>
             </div>
         </form>
     );

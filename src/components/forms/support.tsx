@@ -73,7 +73,7 @@ export default function SupportForm() {
                 }
             </div>
             <div className="form-control mt-4">
-                <button className="btn btn-primary" type="submit">Send support request</button>
+                <button className="btn btn-primary glass bg-pink-500" type="submit">Send support request</button>
             </div>
             <label className="label flex flex-col gap-3 justify-start items-start">
                 <Link href="/faq" className="label-text-alt link link-hover">FAQ</Link>

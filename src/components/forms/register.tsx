@@ -39,7 +39,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <form className="card-body text-black" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-white" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Register</div>
             <div className="form-control">
                 <label className="label">
@@ -116,7 +116,7 @@ export default function RegisterForm() {
                 }
             </div>
             <div className="form-control mt-4">
-                <button className="btn btn-primary">Register</button>
+                <button className="btn btn-primary glass bg-pink-500">Register</button>
             </div>
             <label className="label flex flex-col gap-3 justify-start items-start">
                 <Link href="/login" className="label-text-alt link link-hover">Already have an account?</Link>

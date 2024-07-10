@@ -6,7 +6,7 @@ export const genres = [
     { title: "Soul music",       bg: '/assets/bgs/soul-category.jpg' },
     { title: "Hip hop",          bg: '/assets/bgs/hip-hop-category.jpg' },
     { title: "Rock",             bg: '/assets/bgs/rock-category.jpg'},
-    { title: "Electronic music", bg: '/assets/bgs/electronic-category.jpg'},
+    { title: "Electronic",       bg: '/assets/bgs/electronic-category.jpg'},
     { title: "Latin",            bg: '/assets/bgs/latin-category.jpg' },
     { title: "Jazz",             bg: '/assets/bgs/jazz-category.jpg'},
     { title: "Blues",            bg: '/assets/bgs/blues-category.jpg'},
