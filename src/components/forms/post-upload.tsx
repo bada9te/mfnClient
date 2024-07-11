@@ -14,7 +14,6 @@ type Inputs = {
     image: File[];
     audio: File[];
     genre: string;
-    commentsAllowed: boolean;
     downloadsAllowed: boolean;
 }
 
@@ -51,7 +50,6 @@ export default function PostUploadForm() {
                     description:      data.description,
                     audio:            uploadedAudioName as unknown as string,
                     image:            uploadedImageName as unknown as string,
-                    commentsAllowed:  data.commentsAllowed,
                     downloadsAllowed: data.downloadsAllowed,
                     category:         data.genre,
                 },
@@ -207,16 +205,7 @@ export default function PostUploadForm() {
                 </select>
             </label>
 
-            <div className="form-control">
-                <label className="label cursor-pointer">
-                    <span className="label-text">Comments allowed</span>
-                    <input type="checkbox" defaultChecked className="checkbox checkbox-primary" {
-                        ...register("commentsAllowed")
-                    }/>
-                </label>
-            </div>
-
-            <div className="form-control">
+            <div className="form-control mt-4">
                 <label className="label cursor-pointer">
                     <span className="label-text">Downloads allowed</span>
                     <input type="checkbox" className="checkbox checkbox-primary" {

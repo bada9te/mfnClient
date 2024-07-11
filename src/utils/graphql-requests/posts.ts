@@ -12,13 +12,9 @@ export const CORE_POST_FIELDS = gql`
         likedBy {
             _id
         }
-        comments {
-            _id
-        }
         createdAt
         image
         audio
-        commentsAllowed
         downloadsAllowed
         category
     }

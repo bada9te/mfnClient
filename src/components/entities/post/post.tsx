@@ -8,15 +8,10 @@ import {
 import nextConfig from "@/../next.config.mjs";
 import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
 import {setIsPlaying, setPost} from "@/lib/redux/slices/player";
-import {cache, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
-import user from "@/lib/redux/slices/user";
-import {revalidatePath} from "next/cache";
-import {revalidatePathAction} from "@/actions/revalidation";
 import {useSnackbar} from "notistack";
-import { POSTS_QUERY } from "@/utils/graphql-requests/posts";
-import { useParams } from "next/navigation";
-import CommentsModal from "@/components/modals/comments-modal";
+
 
 export default function Post(props: {
     fullWidth?: boolean;
@@ -30,7 +25,6 @@ export default function Post(props: {
     const [switchLike] = usePostSwitchLikeMutation();
     const [switchInSaved] = usePostSwicthInSavedMutation();
     const { enqueueSnackbar } = useSnackbar();
-    const params = useParams();
 
     const handlePlayCLick = () => {
         dispatch(setPost(data));
@@ -62,7 +56,6 @@ export default function Post(props: {
                 }
             },
         });
-        //revalidatePathAction("/feed/[page]", "page");
     }
 
     // on save click
@@ -79,11 +72,10 @@ export default function Post(props: {
                 }
             }
         });
-        //revalidatePathAction("/feed/[page]", "page");
     }
 
     return (
-        <div className={`card w-fit md:${fullWidth ? 'w-full rounded-none' : 'w-80 max-w-80'} bg-base-100 shadow-xl text-white`}>
+        <div className={`card w-fit md:${fullWidth ? 'w-full rounded-none' : 'w-80 max-w-80'} bg-base-300 shadow-xl text-white glass`}>
             <figure><img
                 className="max-h-[180px] w-full"
                 src={data?.image ? `${nextConfig.env?.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
@@ -111,52 +103,41 @@ export default function Post(props: {
                 <p>{data?.description}</p>
             </div>
 
-            <div className="stats glass mx-2 rounded-lg">
+            <div className="stats glass mx-2 mt-2 rounded-lg thin-scrollbar">
                 <div className="stat">
-                    <div className="stat-title">
-                        <button
-                            className={`join-item ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-green-500"}`}
-                            onClick={handleSwitchLike}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                            </svg>
-                        </button>
+                    <div className={`cursor-pointer ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-green-500"}`} onClick={handleSwitchLike}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            className="inline-block h-8 w-8 stroke-current">
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
                     </div>
-                    <div className="stat-value text-primary text-2xl">{data?.likedBy?.length}</div>
+                    <div className="stat-title">Total Likes</div>
+                    <div className="stat-value text-primary">{data.likedBy?.length}</div>
                 </div>
 
                 <div className="stat">
-                    <div className="stat-title">
-                        <button
-                            className={`join-item ${data?.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`}
-                            onClick={handleSwitchInSaved}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                className="size-5">
-                                <path fillRule="evenodd"
-                                    d="M10 2c-1.716 0-3.408.106-5.07.31C3.806 2.45 3 3.414 3 4.517V17.25a.75.75 0 0 0 1.075.676L10 15.082l5.925 2.844A.75.75 0 0 0 17 17.25V4.517c0-1.103-.806-2.068-1.93-2.207A41.403 41.403 0 0 0 10 2Z"
-                                    clipRule="evenodd"/>
-                            </svg>
-                        </button>
+                    <div className={`cursor-pointer ${data?.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`} onClick={handleSwitchInSaved}>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        className="inline-block h-8 w-8 stroke-current">
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
                     </div>
-                    <div className="stat-value text-primary text-2xl">{data?.savedBy?.length}</div>
-                </div>
-
-                <div className="stat">
-                    <div className="stat-title">
-                        <CommentsModal postData={data as TPost} button={
-                            <button className="join-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                    className="size-5">
-                                    <path fillRule="evenodd"
-                                        d="M3.43 2.524A41.29 41.29 0 0 1 10 2c2.236 0 4.43.18 6.57.524 1.437.231 2.43 1.49 2.43 2.902v5.148c0 1.413-.993 2.67-2.43 2.902a41.102 41.102 0 0 1-3.55.414c-.28.02-.521.18-.643.413l-1.712 3.293a.75.75 0 0 1-1.33 0l-1.713-3.293a.783.783 0 0 0-.642-.413 41.108 41.108 0 0 1-3.55-.414C1.993 13.245 1 11.986 1 10.574V5.426c0-1.413.993-2.67 2.43-2.902Z"
-                                        clipRule="evenodd"/>
-                                </svg>
-                            </button>
-                        }/>
-                    </div>
-                    <div className="stat-value text-primary text-2xl">{data?.comments?.length}</div>
+                    <div className="stat-title">Total Saves</div>
+                    <div className="stat-value text-primary">{data.savedBy?.length}</div>
                 </div>
             </div>
 

@@ -32,15 +32,6 @@ export type AccountRestoreInput = {
   verifyToken: Scalars['String']['input'];
 };
 
-export type AddCommentInput = {
-  isReply: Scalars['Boolean']['input'];
-  isReplyTo?: InputMaybe<Scalars['ID']['input']>;
-  owner: Scalars['ID']['input'];
-  post: Scalars['ID']['input'];
-  receiver?: InputMaybe<Scalars['ID']['input']>;
-  text: Scalars['String']['input'];
-};
-
 export type AddNewBattleByPostsIdsInput = {
   post1: Scalars['ID']['input'];
   post2: Scalars['ID']['input'];
@@ -50,7 +41,6 @@ export type AddNewBattleByPostsIdsInput = {
 export type AddPostInput = {
   audio: Scalars['String']['input'];
   category: Scalars['String']['input'];
-  commentsAllowed: Scalars['Boolean']['input'];
   description: Scalars['String']['input'];
   downloadsAllowed: Scalars['Boolean']['input'];
   image: Scalars['String']['input'];
@@ -85,81 +75,12 @@ export type BattlesWithCount = {
   count: Scalars['Int']['output'];
 };
 
-export type Chat = {
-  __typename?: 'Chat';
-  _id: Scalars['ID']['output'];
-  messagesUnreadCount?: Maybe<Array<Maybe<MessagesUnreadCount>>>;
-  owner?: Maybe<User>;
-  participants?: Maybe<Array<Maybe<User>>>;
-  title: Scalars['String']['output'];
-};
-
-export type ChatCreateInput = {
-  owner: Scalars['ID']['input'];
-  participants?: InputMaybe<Array<Scalars['ID']['input']>>;
-  title: Scalars['String']['input'];
-};
-
-export type ChatMessage = {
-  __typename?: 'ChatMessage';
-  _id: Scalars['ID']['output'];
-  audio?: Maybe<Scalars['String']['output']>;
-  chat: Chat;
-  createdAt: Scalars['String']['output'];
-  file?: Maybe<Scalars['String']['output']>;
-  image?: Maybe<Scalars['String']['output']>;
-  owner: User;
-  reply?: Maybe<ChatMessage>;
-  spotify?: Maybe<Scalars['String']['output']>;
-  text?: Maybe<Scalars['String']['output']>;
-  video?: Maybe<Scalars['String']['output']>;
-};
-
-export type ChatMessageCreateInput = {
-  audio?: InputMaybe<Scalars['String']['input']>;
-  chat?: InputMaybe<Scalars['ID']['input']>;
-  file?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<Scalars['String']['input']>;
-  owner: Scalars['ID']['input'];
-  reply?: InputMaybe<Scalars['ID']['input']>;
-  sharedItem?: InputMaybe<Scalars['ID']['input']>;
-  spotify?: InputMaybe<Scalars['String']['input']>;
-  text?: InputMaybe<Scalars['String']['input']>;
-  toUser?: InputMaybe<Scalars['ID']['input']>;
-  type: Scalars['String']['input'];
-  video?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ChatMessageUpdateInput = {
-  _id: Scalars['ID']['input'];
-  text: Scalars['String']['input'];
-};
-
-export type ChatUpdateInput = {
-  _id: Scalars['ID']['input'];
-  value: Scalars['String']['input'];
-  what: Scalars['String']['input'];
-};
-
-export type Comment = {
-  __typename?: 'Comment';
-  _id: Scalars['ID']['output'];
-  createdAt: Scalars['String']['output'];
-  isReply?: Maybe<Scalars['Boolean']['output']>;
-  owner?: Maybe<User>;
-  post: Post;
-  receiver?: Maybe<User>;
-  replies?: Maybe<Array<Comment>>;
-  text: Scalars['String']['output'];
-};
-
 export type CreateModerationActionInput = {
   type: Scalars['String']['input'];
   user: Scalars['ID']['input'];
 };
 
 export type CreateNotificationInput = {
-  comment?: InputMaybe<Scalars['ID']['input']>;
   post?: InputMaybe<Scalars['ID']['input']>;
   receiver: Scalars['ID']['input'];
   sender: Scalars['ID']['input'];
@@ -194,12 +115,6 @@ export type MakeBattleVoteInput = {
   voterId: Scalars['ID']['input'];
 };
 
-export type MessagesUnreadCount = {
-  __typename?: 'MessagesUnreadCount';
-  count: Scalars['Int']['output'];
-  user: User;
-};
-
 export type ModerateActionInput = {
   actionId: Scalars['ID']['input'];
   type: Scalars['String']['input'];
@@ -221,17 +136,6 @@ export type Mutation = {
   battleCreate: Battle;
   battleDeleteById: Battle;
   battleMakeVote: Battle;
-  chatCreate: Chat;
-  chatDeleteById: Chat;
-  chatMessageCreate: ChatMessage;
-  chatMessageDeleteById: ChatMessage;
-  chatMessageUpdate: ChatMessage;
-  chatReadAllMessages: Chat;
-  chatSwitchMessage: Chat;
-  chatSwitchParticipants: Chat;
-  chatUpdate: Chat;
-  commentCreate: Comment;
-  commentDeleteById: Comment;
   login?: Maybe<User>;
   moderationActionCreate: ModerationAction;
   moderationActionDelete: ModerationAction;
@@ -274,64 +178,6 @@ export type MutationBattleDeleteByIdArgs = {
 
 export type MutationBattleMakeVoteArgs = {
   input: MakeBattleVoteInput;
-};
-
-
-export type MutationChatCreateArgs = {
-  input: ChatCreateInput;
-};
-
-
-export type MutationChatDeleteByIdArgs = {
-  _id: Scalars['ID']['input'];
-};
-
-
-export type MutationChatMessageCreateArgs = {
-  input: ChatMessageCreateInput;
-};
-
-
-export type MutationChatMessageDeleteByIdArgs = {
-  _id: Scalars['ID']['input'];
-};
-
-
-export type MutationChatMessageUpdateArgs = {
-  input: ChatMessageUpdateInput;
-};
-
-
-export type MutationChatReadAllMessagesArgs = {
-  chatId: Scalars['ID']['input'];
-  userId: Scalars['ID']['input'];
-};
-
-
-export type MutationChatSwitchMessageArgs = {
-  chatId: Scalars['ID']['input'];
-  messageId: Scalars['ID']['input'];
-};
-
-
-export type MutationChatSwitchParticipantsArgs = {
-  chatId: Scalars['ID']['input'];
-  participants: Array<Scalars['ID']['input']>;
-};
-
-
-export type MutationChatUpdateArgs = {
-  input: ChatUpdateInput;
-};
-
-
-export type MutationCommentCreateArgs = {
-  input: AddCommentInput;
-};
-
-
-export type MutationCommentDeleteByIdArgs = {
-  _id: Scalars['ID']['input'];
 };
 
 
@@ -474,7 +320,6 @@ export type Notification = {
   __typename?: 'Notification';
   _id: Scalars['ID']['output'];
   checked: Scalars['Boolean']['output'];
-  comment?: Maybe<Comment>;
   createdAt: Scalars['String']['output'];
   post?: Maybe<Post>;
   receiver: User;
@@ -514,8 +359,6 @@ export type Post = {
   _id: Scalars['ID']['output'];
   audio: Scalars['String']['output'];
   category: Scalars['String']['output'];
-  comments?: Maybe<Array<Comment>>;
-  commentsAllowed: Scalars['Boolean']['output'];
   createdAt: Scalars['String']['output'];
   description: Scalars['String']['output'];
   downloadsAllowed: Scalars['Boolean']['output'];
@@ -563,15 +406,6 @@ export type PrepareAccountToRestoreInput = {
 export type Query = {
   __typename?: 'Query';
   battlesByStatus: BattlesWithCount;
-  chat: Chat;
-  chatMessage: ChatMessage;
-  chatMessagesByChatId?: Maybe<Array<ChatMessage>>;
-  chatsByIds?: Maybe<Array<Chat>>;
-  chatsUserRelatedByUserId?: Maybe<Array<Chat>>;
-  comment: Comment;
-  commentReplies?: Maybe<Array<Comment>>;
-  commentsByIds?: Maybe<Array<Comment>>;
-  commentsByPostId?: Maybe<Array<Comment>>;
   moderationActionValidate: ModerationAction;
   notifications: NotificationsWithCount;
   notificationsByIds?: Maybe<Array<Notification>>;
@@ -602,56 +436,6 @@ export type Query = {
 
 export type QueryBattlesByStatusArgs = {
   finished: Scalars['Boolean']['input'];
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
-};
-
-
-export type QueryChatArgs = {
-  _id: Scalars['ID']['input'];
-  userId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryChatMessageArgs = {
-  _id: Scalars['ID']['input'];
-};
-
-
-export type QueryChatMessagesByChatIdArgs = {
-  _id: Scalars['ID']['input'];
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
-};
-
-
-export type QueryChatsByIdsArgs = {
-  ids: Array<Scalars['ID']['input']>;
-};
-
-
-export type QueryChatsUserRelatedByUserIdArgs = {
-  _id: Scalars['ID']['input'];
-};
-
-
-export type QueryCommentArgs = {
-  _id: Scalars['ID']['input'];
-};
-
-
-export type QueryCommentRepliesArgs = {
-  _id: Scalars['ID']['input'];
-};
-
-
-export type QueryCommentsByIdsArgs = {
-  ids: Array<Scalars['ID']['input']>;
-};
-
-
-export type QueryCommentsByPostIdArgs = {
-  _id: Scalars['ID']['input'];
   limit: Scalars['Int']['input'];
   offset: Scalars['Int']['input'];
 };
@@ -794,7 +578,6 @@ export type Report = {
   isClosed: Scalars['Boolean']['output'];
   message: Scalars['String']['output'];
   reportOwner?: Maybe<User>;
-  reportedComment?: Maybe<Comment>;
   reportedPost?: Maybe<Post>;
 };
 
@@ -858,7 +641,7 @@ export type UserWithAction = {
   user: User;
 };
 
-export type CoreBattleFieldsFragment = { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null };
+export type CoreBattleFieldsFragment = { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null };
 
 export type BattlesByStatusQueryVariables = Exact<{
   finished: Scalars['Boolean']['input'];
@@ -867,14 +650,14 @@ export type BattlesByStatusQueryVariables = Exact<{
 }>;
 
 
-export type BattlesByStatusQuery = { __typename?: 'Query', battlesByStatus: { __typename?: 'BattlesWithCount', count: number, battles?: Array<{ __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type BattlesByStatusQuery = { __typename?: 'Query', battlesByStatus: { __typename?: 'BattlesWithCount', count: number, battles?: Array<{ __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type BattleMakeVoteMutationVariables = Exact<{
   input: MakeBattleVoteInput;
 }>;
 
 
-export type BattleMakeVoteMutation = { __typename?: 'Mutation', battleMakeVote: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type BattleMakeVoteMutation = { __typename?: 'Mutation', battleMakeVote: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type BattleCreateMutationVariables = Exact<{
   input: AddNewBattleByPostsIdsInput;
@@ -882,153 +665,6 @@ export type BattleCreateMutationVariables = Exact<{
 
 
 export type BattleCreateMutation = { __typename?: 'Mutation', battleCreate: { __typename?: 'Battle', _id: string } };
-
-export type CoreChatMessageFieldsFragment = { __typename?: 'ChatMessage', _id: string, text?: string | null, image?: string | null, video?: string | null, audio?: string | null, file?: string | null, spotify?: string | null, createdAt: string, owner: { __typename?: 'User', _id: string }, chat: { __typename?: 'Chat', _id: string } };
-
-export type ChatMessageQueryVariables = Exact<{
-  _id: Scalars['ID']['input'];
-}>;
-
-
-export type ChatMessageQuery = { __typename?: 'Query', chatMessage: { __typename?: 'ChatMessage', _id: string, text?: string | null, image?: string | null, video?: string | null, audio?: string | null, file?: string | null, spotify?: string | null, createdAt: string, owner: { __typename?: 'User', avatar: string, nick: string, _id: string }, chat: { __typename?: 'Chat', _id: string } } };
-
-export type ChatMessagesByChatIdQueryVariables = Exact<{
-  _id: Scalars['ID']['input'];
-  offset: Scalars['Int']['input'];
-  limit: Scalars['Int']['input'];
-}>;
-
-
-export type ChatMessagesByChatIdQuery = { __typename?: 'Query', chatMessagesByChatId?: Array<{ __typename?: 'ChatMessage', _id: string, text?: string | null, image?: string | null, video?: string | null, audio?: string | null, file?: string | null, spotify?: string | null, createdAt: string, owner: { __typename?: 'User', avatar: string, nick: string, _id: string }, reply?: { __typename?: 'ChatMessage', _id: string, text?: string | null, image?: string | null, video?: string | null, audio?: string | null, file?: string | null, spotify?: string | null, createdAt: string, owner: { __typename?: 'User', avatar: string, nick: string, _id: string }, chat: { __typename?: 'Chat', _id: string } } | null, chat: { __typename?: 'Chat', _id: string } }> | null };
-
-export type ChatMessageCreateMutationVariables = Exact<{
-  input: ChatMessageCreateInput;
-}>;
-
-
-export type ChatMessageCreateMutation = { __typename?: 'Mutation', chatMessageCreate: { __typename?: 'ChatMessage', _id: string, text?: string | null, image?: string | null, video?: string | null, audio?: string | null, file?: string | null, spotify?: string | null, createdAt: string, owner: { __typename?: 'User', avatar: string, nick: string, _id: string }, reply?: { __typename?: 'ChatMessage', _id: string, text?: string | null, image?: string | null, video?: string | null, audio?: string | null, file?: string | null, spotify?: string | null, createdAt: string, owner: { __typename?: 'User', avatar: string, nick: string, _id: string }, chat: { __typename?: 'Chat', _id: string } } | null, chat: { __typename?: 'Chat', _id: string } } };
-
-export type ChatMessageDeleteByIdMutationVariables = Exact<{
-  _id: Scalars['ID']['input'];
-}>;
-
-
-export type ChatMessageDeleteByIdMutation = { __typename?: 'Mutation', chatMessageDeleteById: { __typename?: 'ChatMessage', _id: string, text?: string | null, image?: string | null, video?: string | null, audio?: string | null, file?: string | null, spotify?: string | null, createdAt: string, owner: { __typename?: 'User', _id: string }, chat: { __typename?: 'Chat', _id: string } } };
-
-export type ChatMessageUpdateMutationVariables = Exact<{
-  input: ChatMessageUpdateInput;
-}>;
-
-
-export type ChatMessageUpdateMutation = { __typename?: 'Mutation', chatMessageUpdate: { __typename?: 'ChatMessage', _id: string, text?: string | null, image?: string | null, video?: string | null, audio?: string | null, file?: string | null, spotify?: string | null, createdAt: string, owner: { __typename?: 'User', _id: string }, chat: { __typename?: 'Chat', _id: string } } };
-
-export type CoreChatFieldsFragment = { __typename?: 'Chat', _id: string, title: string, owner?: { __typename?: 'User', _id: string } | null, participants?: Array<{ __typename?: 'User', _id: string } | null> | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null };
-
-export type ChatQueryVariables = Exact<{
-  _id: Scalars['ID']['input'];
-  userId?: InputMaybe<Scalars['ID']['input']>;
-}>;
-
-
-export type ChatQuery = { __typename?: 'Query', chat: { __typename?: 'Chat', _id: string, title: string, participants?: Array<{ __typename?: 'User', avatar: string, nick: string, _id: string } | null> | null, owner?: { __typename?: 'User', _id: string } | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null } };
-
-export type ChatsByIdsQueryVariables = Exact<{
-  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
-}>;
-
-
-export type ChatsByIdsQuery = { __typename?: 'Query', chatsByIds?: Array<{ __typename?: 'Chat', _id: string, title: string, participants?: Array<{ __typename?: 'User', avatar: string, nick: string, _id: string } | null> | null, owner?: { __typename?: 'User', _id: string } | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null }> | null };
-
-export type ChatsUserRelatedByUserIdQueryVariables = Exact<{
-  _id: Scalars['ID']['input'];
-}>;
-
-
-export type ChatsUserRelatedByUserIdQuery = { __typename?: 'Query', chatsUserRelatedByUserId?: Array<{ __typename?: 'Chat', _id: string, title: string, participants?: Array<{ __typename?: 'User', avatar: string, nick: string, _id: string } | null> | null, owner?: { __typename?: 'User', _id: string } | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null }> | null };
-
-export type ChatCreateMutationVariables = Exact<{
-  input: ChatCreateInput;
-}>;
-
-
-export type ChatCreateMutation = { __typename?: 'Mutation', chatCreate: { __typename?: 'Chat', _id: string, title: string, owner?: { __typename?: 'User', _id: string } | null, participants?: Array<{ __typename?: 'User', _id: string } | null> | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null } };
-
-export type ChatUpdateMutationVariables = Exact<{
-  input: ChatUpdateInput;
-}>;
-
-
-export type ChatUpdateMutation = { __typename?: 'Mutation', chatUpdate: { __typename?: 'Chat', _id: string, title: string, owner?: { __typename?: 'User', _id: string } | null, participants?: Array<{ __typename?: 'User', _id: string } | null> | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null } };
-
-export type ChatReadAllMessagesMutationVariables = Exact<{
-  chatId: Scalars['ID']['input'];
-  userId: Scalars['ID']['input'];
-}>;
-
-
-export type ChatReadAllMessagesMutation = { __typename?: 'Mutation', chatReadAllMessages: { __typename?: 'Chat', _id: string } };
-
-export type ChatSwitchParticipantsMutationVariables = Exact<{
-  chatId: Scalars['ID']['input'];
-  participants: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
-}>;
-
-
-export type ChatSwitchParticipantsMutation = { __typename?: 'Mutation', chatSwitchParticipants: { __typename?: 'Chat', _id: string, title: string, participants?: Array<{ __typename?: 'User', avatar: string, nick: string, _id: string } | null> | null, owner?: { __typename?: 'User', _id: string } | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null } };
-
-export type ChatSwitchMessageMutationVariables = Exact<{
-  chatId: Scalars['ID']['input'];
-  messageId: Scalars['ID']['input'];
-}>;
-
-
-export type ChatSwitchMessageMutation = { __typename?: 'Mutation', chatSwitchMessage: { __typename?: 'Chat', _id: string, title: string, owner?: { __typename?: 'User', _id: string } | null, participants?: Array<{ __typename?: 'User', _id: string } | null> | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null } };
-
-export type ChatDeleteByIdMutationVariables = Exact<{
-  _id: Scalars['ID']['input'];
-}>;
-
-
-export type ChatDeleteByIdMutation = { __typename?: 'Mutation', chatDeleteById: { __typename?: 'Chat', _id: string, title: string, owner?: { __typename?: 'User', _id: string } | null, participants?: Array<{ __typename?: 'User', _id: string } | null> | null, messagesUnreadCount?: Array<{ __typename?: 'MessagesUnreadCount', count: number, user: { __typename?: 'User', _id: string } } | null> | null } };
-
-export type CoreCommentFieldsFragment = { __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } };
-
-export type CommentsByIdsQueryVariables = Exact<{
-  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
-}>;
-
-
-export type CommentsByIdsQuery = { __typename?: 'Query', commentsByIds?: Array<{ __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } }> | null };
-
-export type CommentRepliesQueryVariables = Exact<{
-  _id: Scalars['ID']['input'];
-}>;
-
-
-export type CommentRepliesQuery = { __typename?: 'Query', commentReplies?: Array<{ __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } }> | null };
-
-export type CommentsByPostIdQueryVariables = Exact<{
-  _id: Scalars['ID']['input'];
-  offset: Scalars['Int']['input'];
-  limit: Scalars['Int']['input'];
-}>;
-
-
-export type CommentsByPostIdQuery = { __typename?: 'Query', commentsByPostId?: Array<{ __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } }> | null };
-
-export type CommentCreateMutationVariables = Exact<{
-  input: AddCommentInput;
-}>;
-
-
-export type CommentCreateMutation = { __typename?: 'Mutation', commentCreate: { __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } } };
-
-export type CommentDeleteByIdMutationVariables = Exact<{
-  _id: Scalars['ID']['input'];
-}>;
-
-
-export type CommentDeleteByIdMutation = { __typename?: 'Mutation', commentDeleteById: { __typename?: 'Comment', _id: string } };
 
 export type ModerationActionValidateQueryVariables = Exact<{
   input: ModerateActionInput;
@@ -1051,7 +687,7 @@ export type ModerationActionDeleteMutationVariables = Exact<{
 
 export type ModerationActionDeleteMutation = { __typename?: 'Mutation', moderationActionDelete: { __typename?: 'ModerationAction', _id: string } };
 
-export type CoreNotificationFieldsFragment = { __typename?: 'Notification', _id: string, text: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, comment?: { __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } } | null };
+export type CoreNotificationFieldsFragment = { __typename?: 'Notification', _id: string, text: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null };
 
 export type NotificationsQueryVariables = Exact<{
   receiverId: Scalars['ID']['input'];
@@ -1061,7 +697,7 @@ export type NotificationsQueryVariables = Exact<{
 }>;
 
 
-export type NotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationsWithCount', count: number, notifications?: Array<{ __typename?: 'Notification', _id: string, text: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } | null, comment?: { __typename?: 'Comment', _id: string, text: string, isReply?: boolean | null, createdAt: string, replies?: Array<{ __typename?: 'Comment', _id: string, text: string, createdAt: string, owner?: { __typename?: 'User', _id: string, avatar: string, nick: string } | null }> | null, post: { __typename?: 'Post', _id: string } } | null }> | null } };
+export type NotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationsWithCount', count: number, notifications?: Array<{ __typename?: 'Notification', _id: string, text: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null }> | null } };
 
 export type NotificationCreateMutationVariables = Exact<{
   input: CreateNotificationInput;
@@ -1098,7 +734,7 @@ export type NotificationsMarkAsReadByIdsMutationVariables = Exact<{
 
 export type NotificationsMarkAsReadByIdsMutation = { __typename?: 'Mutation', notificationsMarkAsReadByIds: { __typename?: 'NotificationCount', count: number } };
 
-export type CorePlaylistFieldsFragment = { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null };
+export type CorePlaylistFieldsFragment = { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
 
 export type PlaylistsByOwnerIdQueryVariables = Exact<{
   owner: Scalars['ID']['input'];
@@ -1107,7 +743,7 @@ export type PlaylistsByOwnerIdQueryVariables = Exact<{
 }>;
 
 
-export type PlaylistsByOwnerIdQuery = { __typename?: 'Query', playlistsByOwnerId: { __typename?: 'PlaylistsWithCount', count: number, playlists?: Array<{ __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null }> | null } };
+export type PlaylistsByOwnerIdQuery = { __typename?: 'Query', playlistsByOwnerId: { __typename?: 'PlaylistsWithCount', count: number, playlists?: Array<{ __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null }> | null } };
 
 export type PlaylistsPublicAvailableQueryVariables = Exact<{
   offset: Scalars['Int']['input'];
@@ -1115,30 +751,30 @@ export type PlaylistsPublicAvailableQueryVariables = Exact<{
 }>;
 
 
-export type PlaylistsPublicAvailableQuery = { __typename?: 'Query', playlistsPublicAvailable: { __typename?: 'PlaylistsWithCount', count: number, playlists?: Array<{ __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null }> | null } };
+export type PlaylistsPublicAvailableQuery = { __typename?: 'Query', playlistsPublicAvailable: { __typename?: 'PlaylistsWithCount', count: number, playlists?: Array<{ __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null }> | null } };
 
 export type PlaylistCreateMutationVariables = Exact<{
   input: CreatePlaylistInput;
 }>;
 
 
-export type PlaylistCreateMutation = { __typename?: 'Mutation', playlistCreate: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null } };
+export type PlaylistCreateMutation = { __typename?: 'Mutation', playlistCreate: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type PlaylistSwicthTrackMutationVariables = Exact<{
   input: SwitchTrackInPlaylistInput;
 }>;
 
 
-export type PlaylistSwicthTrackMutation = { __typename?: 'Mutation', playlistSwicthTrack: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null } };
+export type PlaylistSwicthTrackMutation = { __typename?: 'Mutation', playlistSwicthTrack: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
-export type CorePostFieldsFragment = { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null };
+export type CorePostFieldsFragment = { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null };
 
 export type PostQueryVariables = Exact<{
   _id: Scalars['ID']['input'];
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } };
+export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type PostsQueryVariables = Exact<{
   offset: Scalars['Int']['input'];
@@ -1146,7 +782,7 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null } };
+export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type PostsByOwnerQueryVariables = Exact<{
   owner: Scalars['ID']['input'];
@@ -1155,7 +791,7 @@ export type PostsByOwnerQueryVariables = Exact<{
 }>;
 
 
-export type PostsByOwnerQuery = { __typename?: 'Query', postsByOwner: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null } };
+export type PostsByOwnerQuery = { __typename?: 'Query', postsByOwner: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type PostsSavedByUserQueryVariables = Exact<{
   user: Scalars['ID']['input'];
@@ -1164,28 +800,28 @@ export type PostsSavedByUserQueryVariables = Exact<{
 }>;
 
 
-export type PostsSavedByUserQuery = { __typename?: 'Query', postsSavedByUser: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null } };
+export type PostsSavedByUserQuery = { __typename?: 'Query', postsSavedByUser: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type PostsByTitleQueryVariables = Exact<{
   input: PostsByTitleInput;
 }>;
 
 
-export type PostsByTitleQuery = { __typename?: 'Query', postsByTitle?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null };
+export type PostsByTitleQuery = { __typename?: 'Query', postsByTitle?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
 
 export type PostsByIdsQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
-export type PostsByIdsQuery = { __typename?: 'Query', postsByIds?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null };
+export type PostsByIdsQuery = { __typename?: 'Query', postsByIds?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
 
 export type PostsMostPopularQueryVariables = Exact<{
   date: Scalars['Date']['input'];
 }>;
 
 
-export type PostsMostPopularQuery = { __typename?: 'Query', postsMostPopular?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null };
+export type PostsMostPopularQuery = { __typename?: 'Query', postsMostPopular?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
 
 export type PostsByCategoryQueryVariables = Exact<{
   category: Scalars['String']['input'];
@@ -1194,14 +830,14 @@ export type PostsByCategoryQueryVariables = Exact<{
 }>;
 
 
-export type PostsByCategoryQuery = { __typename?: 'Query', postsByCategory: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null }> | null } };
+export type PostsByCategoryQuery = { __typename?: 'Query', postsByCategory: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type PostCreateMutationVariables = Exact<{
   input: AddPostInput;
 }>;
 
 
-export type PostCreateMutation = { __typename?: 'Mutation', postCreate: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } };
+export type PostCreateMutation = { __typename?: 'Mutation', postCreate: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type PostDeleteByIdMutationVariables = Exact<{
   _id: Scalars['ID']['input'];
@@ -1215,14 +851,14 @@ export type PostSwitchLikeMutationVariables = Exact<{
 }>;
 
 
-export type PostSwitchLikeMutation = { __typename?: 'Mutation', postSwitchLike: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } };
+export type PostSwitchLikeMutation = { __typename?: 'Mutation', postSwitchLike: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type PostSwicthInSavedMutationVariables = Exact<{
   input: SwitchLikeOrPostInSavedInput;
 }>;
 
 
-export type PostSwicthInSavedMutation = { __typename?: 'Mutation', postSwicthInSaved: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, commentsAllowed: boolean, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null, comments?: Array<{ __typename?: 'Comment', _id: string }> | null } };
+export type PostSwicthInSavedMutation = { __typename?: 'Mutation', postSwicthInSaved: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type ReportCreateMutationVariables = Exact<{
   input: CreateReportInput;
@@ -1328,13 +964,9 @@ export const CorePostFieldsFragmentDoc = gql`
   likedBy {
     _id
   }
-  comments {
-    _id
-  }
   createdAt
   image
   audio
-  commentsAllowed
   downloadsAllowed
   category
 }
@@ -1372,63 +1004,6 @@ export const CoreBattleFieldsFragmentDoc = gql`
   post2Score
 }
     ${CorePostFieldsFragmentDoc}`;
-export const CoreChatMessageFieldsFragmentDoc = gql`
-    fragment CoreChatMessageFields on ChatMessage {
-  _id
-  owner {
-    _id
-  }
-  chat {
-    _id
-  }
-  text
-  image
-  video
-  audio
-  file
-  spotify
-  createdAt
-}
-    `;
-export const CoreChatFieldsFragmentDoc = gql`
-    fragment CoreChatFields on Chat {
-  _id
-  title
-  owner {
-    _id
-  }
-  participants {
-    _id
-  }
-  messagesUnreadCount {
-    user {
-      _id
-    }
-    count
-  }
-}
-    `;
-export const CoreCommentFieldsFragmentDoc = gql`
-    fragment CoreCommentFields on Comment {
-  _id
-  text
-  isReply
-  replies {
-    _id
-    owner {
-      _id
-      avatar
-      nick
-    }
-    text
-    createdAt
-  }
-  post {
-    _id
-  }
-  createdAt
-}
-    `;
 export const CoreNotificationFieldsFragmentDoc = gql`
     fragment CoreNotificationFields on Notification {
   _id
@@ -1443,15 +1018,11 @@ export const CoreNotificationFieldsFragmentDoc = gql`
   post {
     ...CorePostFields
   }
-  comment {
-    ...CoreCommentFields
-  }
   text
   checked
   createdAt
 }
-    ${CorePostFieldsFragmentDoc}
-${CoreCommentFieldsFragmentDoc}`;
+    ${CorePostFieldsFragmentDoc}`;
 export const CorePlaylistFieldsFragmentDoc = gql`
     fragment CorePlaylistFields on Playlist {
   _id
@@ -1593,754 +1164,6 @@ export function useBattleCreateMutation(baseOptions?: Apollo.MutationHookOptions
 export type BattleCreateMutationHookResult = ReturnType<typeof useBattleCreateMutation>;
 export type BattleCreateMutationResult = Apollo.MutationResult<BattleCreateMutation>;
 export type BattleCreateMutationOptions = Apollo.BaseMutationOptions<BattleCreateMutation, BattleCreateMutationVariables>;
-export const ChatMessageDocument = gql`
-    query chatMessage($_id: ID!) {
-  chatMessage(_id: $_id) {
-    ...CoreChatMessageFields
-    owner {
-      avatar
-      nick
-    }
-  }
-}
-    ${CoreChatMessageFieldsFragmentDoc}`;
-
-/**
- * __useChatMessageQuery__
- *
- * To run a query within a React component, call `useChatMessageQuery` and pass it any options that fit your needs.
- * When your component renders, `useChatMessageQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useChatMessageQuery({
- *   variables: {
- *      _id: // value for '_id'
- *   },
- * });
- */
-export function useChatMessageQuery(baseOptions: Apollo.QueryHookOptions<ChatMessageQuery, ChatMessageQueryVariables> & ({ variables: ChatMessageQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ChatMessageQuery, ChatMessageQueryVariables>(ChatMessageDocument, options);
-      }
-export function useChatMessageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatMessageQuery, ChatMessageQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ChatMessageQuery, ChatMessageQueryVariables>(ChatMessageDocument, options);
-        }
-export function useChatMessageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ChatMessageQuery, ChatMessageQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ChatMessageQuery, ChatMessageQueryVariables>(ChatMessageDocument, options);
-        }
-export type ChatMessageQueryHookResult = ReturnType<typeof useChatMessageQuery>;
-export type ChatMessageLazyQueryHookResult = ReturnType<typeof useChatMessageLazyQuery>;
-export type ChatMessageSuspenseQueryHookResult = ReturnType<typeof useChatMessageSuspenseQuery>;
-export type ChatMessageQueryResult = Apollo.QueryResult<ChatMessageQuery, ChatMessageQueryVariables>;
-export const ChatMessagesByChatIdDocument = gql`
-    query chatMessagesByChatId($_id: ID!, $offset: Int!, $limit: Int!) {
-  chatMessagesByChatId(_id: $_id, offset: $offset, limit: $limit) {
-    ...CoreChatMessageFields
-    owner {
-      avatar
-      nick
-    }
-    reply {
-      ...CoreChatMessageFields
-      owner {
-        avatar
-        nick
-      }
-    }
-  }
-}
-    ${CoreChatMessageFieldsFragmentDoc}`;
-
-/**
- * __useChatMessagesByChatIdQuery__
- *
- * To run a query within a React component, call `useChatMessagesByChatIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useChatMessagesByChatIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useChatMessagesByChatIdQuery({
- *   variables: {
- *      _id: // value for '_id'
- *      offset: // value for 'offset'
- *      limit: // value for 'limit'
- *   },
- * });
- */
-export function useChatMessagesByChatIdQuery(baseOptions: Apollo.QueryHookOptions<ChatMessagesByChatIdQuery, ChatMessagesByChatIdQueryVariables> & ({ variables: ChatMessagesByChatIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ChatMessagesByChatIdQuery, ChatMessagesByChatIdQueryVariables>(ChatMessagesByChatIdDocument, options);
-      }
-export function useChatMessagesByChatIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatMessagesByChatIdQuery, ChatMessagesByChatIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ChatMessagesByChatIdQuery, ChatMessagesByChatIdQueryVariables>(ChatMessagesByChatIdDocument, options);
-        }
-export function useChatMessagesByChatIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ChatMessagesByChatIdQuery, ChatMessagesByChatIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ChatMessagesByChatIdQuery, ChatMessagesByChatIdQueryVariables>(ChatMessagesByChatIdDocument, options);
-        }
-export type ChatMessagesByChatIdQueryHookResult = ReturnType<typeof useChatMessagesByChatIdQuery>;
-export type ChatMessagesByChatIdLazyQueryHookResult = ReturnType<typeof useChatMessagesByChatIdLazyQuery>;
-export type ChatMessagesByChatIdSuspenseQueryHookResult = ReturnType<typeof useChatMessagesByChatIdSuspenseQuery>;
-export type ChatMessagesByChatIdQueryResult = Apollo.QueryResult<ChatMessagesByChatIdQuery, ChatMessagesByChatIdQueryVariables>;
-export const ChatMessageCreateDocument = gql`
-    mutation chatMessageCreate($input: ChatMessageCreateInput!) {
-  chatMessageCreate(input: $input) {
-    ...CoreChatMessageFields
-    owner {
-      avatar
-      nick
-    }
-    reply {
-      ...CoreChatMessageFields
-      owner {
-        avatar
-        nick
-      }
-    }
-  }
-}
-    ${CoreChatMessageFieldsFragmentDoc}`;
-export type ChatMessageCreateMutationFn = Apollo.MutationFunction<ChatMessageCreateMutation, ChatMessageCreateMutationVariables>;
-
-/**
- * __useChatMessageCreateMutation__
- *
- * To run a mutation, you first call `useChatMessageCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatMessageCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatMessageCreateMutation, { data, loading, error }] = useChatMessageCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useChatMessageCreateMutation(baseOptions?: Apollo.MutationHookOptions<ChatMessageCreateMutation, ChatMessageCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatMessageCreateMutation, ChatMessageCreateMutationVariables>(ChatMessageCreateDocument, options);
-      }
-export type ChatMessageCreateMutationHookResult = ReturnType<typeof useChatMessageCreateMutation>;
-export type ChatMessageCreateMutationResult = Apollo.MutationResult<ChatMessageCreateMutation>;
-export type ChatMessageCreateMutationOptions = Apollo.BaseMutationOptions<ChatMessageCreateMutation, ChatMessageCreateMutationVariables>;
-export const ChatMessageDeleteByIdDocument = gql`
-    mutation chatMessageDeleteById($_id: ID!) {
-  chatMessageDeleteById(_id: $_id) {
-    ...CoreChatMessageFields
-  }
-}
-    ${CoreChatMessageFieldsFragmentDoc}`;
-export type ChatMessageDeleteByIdMutationFn = Apollo.MutationFunction<ChatMessageDeleteByIdMutation, ChatMessageDeleteByIdMutationVariables>;
-
-/**
- * __useChatMessageDeleteByIdMutation__
- *
- * To run a mutation, you first call `useChatMessageDeleteByIdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatMessageDeleteByIdMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatMessageDeleteByIdMutation, { data, loading, error }] = useChatMessageDeleteByIdMutation({
- *   variables: {
- *      _id: // value for '_id'
- *   },
- * });
- */
-export function useChatMessageDeleteByIdMutation(baseOptions?: Apollo.MutationHookOptions<ChatMessageDeleteByIdMutation, ChatMessageDeleteByIdMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatMessageDeleteByIdMutation, ChatMessageDeleteByIdMutationVariables>(ChatMessageDeleteByIdDocument, options);
-      }
-export type ChatMessageDeleteByIdMutationHookResult = ReturnType<typeof useChatMessageDeleteByIdMutation>;
-export type ChatMessageDeleteByIdMutationResult = Apollo.MutationResult<ChatMessageDeleteByIdMutation>;
-export type ChatMessageDeleteByIdMutationOptions = Apollo.BaseMutationOptions<ChatMessageDeleteByIdMutation, ChatMessageDeleteByIdMutationVariables>;
-export const ChatMessageUpdateDocument = gql`
-    mutation chatMessageUpdate($input: ChatMessageUpdateInput!) {
-  chatMessageUpdate(input: $input) {
-    ...CoreChatMessageFields
-  }
-}
-    ${CoreChatMessageFieldsFragmentDoc}`;
-export type ChatMessageUpdateMutationFn = Apollo.MutationFunction<ChatMessageUpdateMutation, ChatMessageUpdateMutationVariables>;
-
-/**
- * __useChatMessageUpdateMutation__
- *
- * To run a mutation, you first call `useChatMessageUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatMessageUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatMessageUpdateMutation, { data, loading, error }] = useChatMessageUpdateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useChatMessageUpdateMutation(baseOptions?: Apollo.MutationHookOptions<ChatMessageUpdateMutation, ChatMessageUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatMessageUpdateMutation, ChatMessageUpdateMutationVariables>(ChatMessageUpdateDocument, options);
-      }
-export type ChatMessageUpdateMutationHookResult = ReturnType<typeof useChatMessageUpdateMutation>;
-export type ChatMessageUpdateMutationResult = Apollo.MutationResult<ChatMessageUpdateMutation>;
-export type ChatMessageUpdateMutationOptions = Apollo.BaseMutationOptions<ChatMessageUpdateMutation, ChatMessageUpdateMutationVariables>;
-export const ChatDocument = gql`
-    query chat($_id: ID!, $userId: ID) {
-  chat(_id: $_id, userId: $userId) {
-    ...CoreChatFields
-    participants {
-      avatar
-      nick
-    }
-  }
-}
-    ${CoreChatFieldsFragmentDoc}`;
-
-/**
- * __useChatQuery__
- *
- * To run a query within a React component, call `useChatQuery` and pass it any options that fit your needs.
- * When your component renders, `useChatQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useChatQuery({
- *   variables: {
- *      _id: // value for '_id'
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useChatQuery(baseOptions: Apollo.QueryHookOptions<ChatQuery, ChatQueryVariables> & ({ variables: ChatQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ChatQuery, ChatQueryVariables>(ChatDocument, options);
-      }
-export function useChatLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatQuery, ChatQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ChatQuery, ChatQueryVariables>(ChatDocument, options);
-        }
-export function useChatSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ChatQuery, ChatQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ChatQuery, ChatQueryVariables>(ChatDocument, options);
-        }
-export type ChatQueryHookResult = ReturnType<typeof useChatQuery>;
-export type ChatLazyQueryHookResult = ReturnType<typeof useChatLazyQuery>;
-export type ChatSuspenseQueryHookResult = ReturnType<typeof useChatSuspenseQuery>;
-export type ChatQueryResult = Apollo.QueryResult<ChatQuery, ChatQueryVariables>;
-export const ChatsByIdsDocument = gql`
-    query chatsByIds($ids: [ID!]!) {
-  chatsByIds(ids: $ids) {
-    ...CoreChatFields
-    participants {
-      avatar
-      nick
-    }
-  }
-}
-    ${CoreChatFieldsFragmentDoc}`;
-
-/**
- * __useChatsByIdsQuery__
- *
- * To run a query within a React component, call `useChatsByIdsQuery` and pass it any options that fit your needs.
- * When your component renders, `useChatsByIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useChatsByIdsQuery({
- *   variables: {
- *      ids: // value for 'ids'
- *   },
- * });
- */
-export function useChatsByIdsQuery(baseOptions: Apollo.QueryHookOptions<ChatsByIdsQuery, ChatsByIdsQueryVariables> & ({ variables: ChatsByIdsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ChatsByIdsQuery, ChatsByIdsQueryVariables>(ChatsByIdsDocument, options);
-      }
-export function useChatsByIdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatsByIdsQuery, ChatsByIdsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ChatsByIdsQuery, ChatsByIdsQueryVariables>(ChatsByIdsDocument, options);
-        }
-export function useChatsByIdsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ChatsByIdsQuery, ChatsByIdsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ChatsByIdsQuery, ChatsByIdsQueryVariables>(ChatsByIdsDocument, options);
-        }
-export type ChatsByIdsQueryHookResult = ReturnType<typeof useChatsByIdsQuery>;
-export type ChatsByIdsLazyQueryHookResult = ReturnType<typeof useChatsByIdsLazyQuery>;
-export type ChatsByIdsSuspenseQueryHookResult = ReturnType<typeof useChatsByIdsSuspenseQuery>;
-export type ChatsByIdsQueryResult = Apollo.QueryResult<ChatsByIdsQuery, ChatsByIdsQueryVariables>;
-export const ChatsUserRelatedByUserIdDocument = gql`
-    query chatsUserRelatedByUserId($_id: ID!) {
-  chatsUserRelatedByUserId(_id: $_id) {
-    ...CoreChatFields
-    participants {
-      avatar
-      nick
-    }
-  }
-}
-    ${CoreChatFieldsFragmentDoc}`;
-
-/**
- * __useChatsUserRelatedByUserIdQuery__
- *
- * To run a query within a React component, call `useChatsUserRelatedByUserIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useChatsUserRelatedByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useChatsUserRelatedByUserIdQuery({
- *   variables: {
- *      _id: // value for '_id'
- *   },
- * });
- */
-export function useChatsUserRelatedByUserIdQuery(baseOptions: Apollo.QueryHookOptions<ChatsUserRelatedByUserIdQuery, ChatsUserRelatedByUserIdQueryVariables> & ({ variables: ChatsUserRelatedByUserIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ChatsUserRelatedByUserIdQuery, ChatsUserRelatedByUserIdQueryVariables>(ChatsUserRelatedByUserIdDocument, options);
-      }
-export function useChatsUserRelatedByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatsUserRelatedByUserIdQuery, ChatsUserRelatedByUserIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ChatsUserRelatedByUserIdQuery, ChatsUserRelatedByUserIdQueryVariables>(ChatsUserRelatedByUserIdDocument, options);
-        }
-export function useChatsUserRelatedByUserIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ChatsUserRelatedByUserIdQuery, ChatsUserRelatedByUserIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ChatsUserRelatedByUserIdQuery, ChatsUserRelatedByUserIdQueryVariables>(ChatsUserRelatedByUserIdDocument, options);
-        }
-export type ChatsUserRelatedByUserIdQueryHookResult = ReturnType<typeof useChatsUserRelatedByUserIdQuery>;
-export type ChatsUserRelatedByUserIdLazyQueryHookResult = ReturnType<typeof useChatsUserRelatedByUserIdLazyQuery>;
-export type ChatsUserRelatedByUserIdSuspenseQueryHookResult = ReturnType<typeof useChatsUserRelatedByUserIdSuspenseQuery>;
-export type ChatsUserRelatedByUserIdQueryResult = Apollo.QueryResult<ChatsUserRelatedByUserIdQuery, ChatsUserRelatedByUserIdQueryVariables>;
-export const ChatCreateDocument = gql`
-    mutation chatCreate($input: ChatCreateInput!) {
-  chatCreate(input: $input) {
-    ...CoreChatFields
-  }
-}
-    ${CoreChatFieldsFragmentDoc}`;
-export type ChatCreateMutationFn = Apollo.MutationFunction<ChatCreateMutation, ChatCreateMutationVariables>;
-
-/**
- * __useChatCreateMutation__
- *
- * To run a mutation, you first call `useChatCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatCreateMutation, { data, loading, error }] = useChatCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useChatCreateMutation(baseOptions?: Apollo.MutationHookOptions<ChatCreateMutation, ChatCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatCreateMutation, ChatCreateMutationVariables>(ChatCreateDocument, options);
-      }
-export type ChatCreateMutationHookResult = ReturnType<typeof useChatCreateMutation>;
-export type ChatCreateMutationResult = Apollo.MutationResult<ChatCreateMutation>;
-export type ChatCreateMutationOptions = Apollo.BaseMutationOptions<ChatCreateMutation, ChatCreateMutationVariables>;
-export const ChatUpdateDocument = gql`
-    mutation chatUpdate($input: ChatUpdateInput!) {
-  chatUpdate(input: $input) {
-    ...CoreChatFields
-  }
-}
-    ${CoreChatFieldsFragmentDoc}`;
-export type ChatUpdateMutationFn = Apollo.MutationFunction<ChatUpdateMutation, ChatUpdateMutationVariables>;
-
-/**
- * __useChatUpdateMutation__
- *
- * To run a mutation, you first call `useChatUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatUpdateMutation, { data, loading, error }] = useChatUpdateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useChatUpdateMutation(baseOptions?: Apollo.MutationHookOptions<ChatUpdateMutation, ChatUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatUpdateMutation, ChatUpdateMutationVariables>(ChatUpdateDocument, options);
-      }
-export type ChatUpdateMutationHookResult = ReturnType<typeof useChatUpdateMutation>;
-export type ChatUpdateMutationResult = Apollo.MutationResult<ChatUpdateMutation>;
-export type ChatUpdateMutationOptions = Apollo.BaseMutationOptions<ChatUpdateMutation, ChatUpdateMutationVariables>;
-export const ChatReadAllMessagesDocument = gql`
-    mutation chatReadAllMessages($chatId: ID!, $userId: ID!) {
-  chatReadAllMessages(chatId: $chatId, userId: $userId) {
-    _id
-  }
-}
-    `;
-export type ChatReadAllMessagesMutationFn = Apollo.MutationFunction<ChatReadAllMessagesMutation, ChatReadAllMessagesMutationVariables>;
-
-/**
- * __useChatReadAllMessagesMutation__
- *
- * To run a mutation, you first call `useChatReadAllMessagesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatReadAllMessagesMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatReadAllMessagesMutation, { data, loading, error }] = useChatReadAllMessagesMutation({
- *   variables: {
- *      chatId: // value for 'chatId'
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useChatReadAllMessagesMutation(baseOptions?: Apollo.MutationHookOptions<ChatReadAllMessagesMutation, ChatReadAllMessagesMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatReadAllMessagesMutation, ChatReadAllMessagesMutationVariables>(ChatReadAllMessagesDocument, options);
-      }
-export type ChatReadAllMessagesMutationHookResult = ReturnType<typeof useChatReadAllMessagesMutation>;
-export type ChatReadAllMessagesMutationResult = Apollo.MutationResult<ChatReadAllMessagesMutation>;
-export type ChatReadAllMessagesMutationOptions = Apollo.BaseMutationOptions<ChatReadAllMessagesMutation, ChatReadAllMessagesMutationVariables>;
-export const ChatSwitchParticipantsDocument = gql`
-    mutation chatSwitchParticipants($chatId: ID!, $participants: [ID!]!) {
-  chatSwitchParticipants(chatId: $chatId, participants: $participants) {
-    ...CoreChatFields
-    participants {
-      avatar
-      nick
-    }
-  }
-}
-    ${CoreChatFieldsFragmentDoc}`;
-export type ChatSwitchParticipantsMutationFn = Apollo.MutationFunction<ChatSwitchParticipantsMutation, ChatSwitchParticipantsMutationVariables>;
-
-/**
- * __useChatSwitchParticipantsMutation__
- *
- * To run a mutation, you first call `useChatSwitchParticipantsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatSwitchParticipantsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatSwitchParticipantsMutation, { data, loading, error }] = useChatSwitchParticipantsMutation({
- *   variables: {
- *      chatId: // value for 'chatId'
- *      participants: // value for 'participants'
- *   },
- * });
- */
-export function useChatSwitchParticipantsMutation(baseOptions?: Apollo.MutationHookOptions<ChatSwitchParticipantsMutation, ChatSwitchParticipantsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatSwitchParticipantsMutation, ChatSwitchParticipantsMutationVariables>(ChatSwitchParticipantsDocument, options);
-      }
-export type ChatSwitchParticipantsMutationHookResult = ReturnType<typeof useChatSwitchParticipantsMutation>;
-export type ChatSwitchParticipantsMutationResult = Apollo.MutationResult<ChatSwitchParticipantsMutation>;
-export type ChatSwitchParticipantsMutationOptions = Apollo.BaseMutationOptions<ChatSwitchParticipantsMutation, ChatSwitchParticipantsMutationVariables>;
-export const ChatSwitchMessageDocument = gql`
-    mutation chatSwitchMessage($chatId: ID!, $messageId: ID!) {
-  chatSwitchMessage(chatId: $chatId, messageId: $messageId) {
-    ...CoreChatFields
-  }
-}
-    ${CoreChatFieldsFragmentDoc}`;
-export type ChatSwitchMessageMutationFn = Apollo.MutationFunction<ChatSwitchMessageMutation, ChatSwitchMessageMutationVariables>;
-
-/**
- * __useChatSwitchMessageMutation__
- *
- * To run a mutation, you first call `useChatSwitchMessageMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatSwitchMessageMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatSwitchMessageMutation, { data, loading, error }] = useChatSwitchMessageMutation({
- *   variables: {
- *      chatId: // value for 'chatId'
- *      messageId: // value for 'messageId'
- *   },
- * });
- */
-export function useChatSwitchMessageMutation(baseOptions?: Apollo.MutationHookOptions<ChatSwitchMessageMutation, ChatSwitchMessageMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatSwitchMessageMutation, ChatSwitchMessageMutationVariables>(ChatSwitchMessageDocument, options);
-      }
-export type ChatSwitchMessageMutationHookResult = ReturnType<typeof useChatSwitchMessageMutation>;
-export type ChatSwitchMessageMutationResult = Apollo.MutationResult<ChatSwitchMessageMutation>;
-export type ChatSwitchMessageMutationOptions = Apollo.BaseMutationOptions<ChatSwitchMessageMutation, ChatSwitchMessageMutationVariables>;
-export const ChatDeleteByIdDocument = gql`
-    mutation chatDeleteById($_id: ID!) {
-  chatDeleteById(_id: $_id) {
-    ...CoreChatFields
-  }
-}
-    ${CoreChatFieldsFragmentDoc}`;
-export type ChatDeleteByIdMutationFn = Apollo.MutationFunction<ChatDeleteByIdMutation, ChatDeleteByIdMutationVariables>;
-
-/**
- * __useChatDeleteByIdMutation__
- *
- * To run a mutation, you first call `useChatDeleteByIdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChatDeleteByIdMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [chatDeleteByIdMutation, { data, loading, error }] = useChatDeleteByIdMutation({
- *   variables: {
- *      _id: // value for '_id'
- *   },
- * });
- */
-export function useChatDeleteByIdMutation(baseOptions?: Apollo.MutationHookOptions<ChatDeleteByIdMutation, ChatDeleteByIdMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChatDeleteByIdMutation, ChatDeleteByIdMutationVariables>(ChatDeleteByIdDocument, options);
-      }
-export type ChatDeleteByIdMutationHookResult = ReturnType<typeof useChatDeleteByIdMutation>;
-export type ChatDeleteByIdMutationResult = Apollo.MutationResult<ChatDeleteByIdMutation>;
-export type ChatDeleteByIdMutationOptions = Apollo.BaseMutationOptions<ChatDeleteByIdMutation, ChatDeleteByIdMutationVariables>;
-export const CommentsByIdsDocument = gql`
-    query commentsByIds($ids: [ID!]!) {
-  commentsByIds(ids: $ids) {
-    ...CoreCommentFields
-    owner {
-      _id
-      avatar
-      nick
-    }
-  }
-}
-    ${CoreCommentFieldsFragmentDoc}`;
-
-/**
- * __useCommentsByIdsQuery__
- *
- * To run a query within a React component, call `useCommentsByIdsQuery` and pass it any options that fit your needs.
- * When your component renders, `useCommentsByIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCommentsByIdsQuery({
- *   variables: {
- *      ids: // value for 'ids'
- *   },
- * });
- */
-export function useCommentsByIdsQuery(baseOptions: Apollo.QueryHookOptions<CommentsByIdsQuery, CommentsByIdsQueryVariables> & ({ variables: CommentsByIdsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CommentsByIdsQuery, CommentsByIdsQueryVariables>(CommentsByIdsDocument, options);
-      }
-export function useCommentsByIdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CommentsByIdsQuery, CommentsByIdsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CommentsByIdsQuery, CommentsByIdsQueryVariables>(CommentsByIdsDocument, options);
-        }
-export function useCommentsByIdsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CommentsByIdsQuery, CommentsByIdsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<CommentsByIdsQuery, CommentsByIdsQueryVariables>(CommentsByIdsDocument, options);
-        }
-export type CommentsByIdsQueryHookResult = ReturnType<typeof useCommentsByIdsQuery>;
-export type CommentsByIdsLazyQueryHookResult = ReturnType<typeof useCommentsByIdsLazyQuery>;
-export type CommentsByIdsSuspenseQueryHookResult = ReturnType<typeof useCommentsByIdsSuspenseQuery>;
-export type CommentsByIdsQueryResult = Apollo.QueryResult<CommentsByIdsQuery, CommentsByIdsQueryVariables>;
-export const CommentRepliesDocument = gql`
-    query commentReplies($_id: ID!) {
-  commentReplies(_id: $_id) {
-    ...CoreCommentFields
-    owner {
-      _id
-      avatar
-      nick
-    }
-  }
-}
-    ${CoreCommentFieldsFragmentDoc}`;
-
-/**
- * __useCommentRepliesQuery__
- *
- * To run a query within a React component, call `useCommentRepliesQuery` and pass it any options that fit your needs.
- * When your component renders, `useCommentRepliesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCommentRepliesQuery({
- *   variables: {
- *      _id: // value for '_id'
- *   },
- * });
- */
-export function useCommentRepliesQuery(baseOptions: Apollo.QueryHookOptions<CommentRepliesQuery, CommentRepliesQueryVariables> & ({ variables: CommentRepliesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CommentRepliesQuery, CommentRepliesQueryVariables>(CommentRepliesDocument, options);
-      }
-export function useCommentRepliesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CommentRepliesQuery, CommentRepliesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CommentRepliesQuery, CommentRepliesQueryVariables>(CommentRepliesDocument, options);
-        }
-export function useCommentRepliesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CommentRepliesQuery, CommentRepliesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<CommentRepliesQuery, CommentRepliesQueryVariables>(CommentRepliesDocument, options);
-        }
-export type CommentRepliesQueryHookResult = ReturnType<typeof useCommentRepliesQuery>;
-export type CommentRepliesLazyQueryHookResult = ReturnType<typeof useCommentRepliesLazyQuery>;
-export type CommentRepliesSuspenseQueryHookResult = ReturnType<typeof useCommentRepliesSuspenseQuery>;
-export type CommentRepliesQueryResult = Apollo.QueryResult<CommentRepliesQuery, CommentRepliesQueryVariables>;
-export const CommentsByPostIdDocument = gql`
-    query commentsByPostId($_id: ID!, $offset: Int!, $limit: Int!) {
-  commentsByPostId(_id: $_id, offset: $offset, limit: $limit) {
-    ...CoreCommentFields
-    owner {
-      _id
-      avatar
-      nick
-    }
-  }
-}
-    ${CoreCommentFieldsFragmentDoc}`;
-
-/**
- * __useCommentsByPostIdQuery__
- *
- * To run a query within a React component, call `useCommentsByPostIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useCommentsByPostIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCommentsByPostIdQuery({
- *   variables: {
- *      _id: // value for '_id'
- *      offset: // value for 'offset'
- *      limit: // value for 'limit'
- *   },
- * });
- */
-export function useCommentsByPostIdQuery(baseOptions: Apollo.QueryHookOptions<CommentsByPostIdQuery, CommentsByPostIdQueryVariables> & ({ variables: CommentsByPostIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CommentsByPostIdQuery, CommentsByPostIdQueryVariables>(CommentsByPostIdDocument, options);
-      }
-export function useCommentsByPostIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CommentsByPostIdQuery, CommentsByPostIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CommentsByPostIdQuery, CommentsByPostIdQueryVariables>(CommentsByPostIdDocument, options);
-        }
-export function useCommentsByPostIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CommentsByPostIdQuery, CommentsByPostIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<CommentsByPostIdQuery, CommentsByPostIdQueryVariables>(CommentsByPostIdDocument, options);
-        }
-export type CommentsByPostIdQueryHookResult = ReturnType<typeof useCommentsByPostIdQuery>;
-export type CommentsByPostIdLazyQueryHookResult = ReturnType<typeof useCommentsByPostIdLazyQuery>;
-export type CommentsByPostIdSuspenseQueryHookResult = ReturnType<typeof useCommentsByPostIdSuspenseQuery>;
-export type CommentsByPostIdQueryResult = Apollo.QueryResult<CommentsByPostIdQuery, CommentsByPostIdQueryVariables>;
-export const CommentCreateDocument = gql`
-    mutation commentCreate($input: AddCommentInput!) {
-  commentCreate(input: $input) {
-    ...CoreCommentFields
-  }
-}
-    ${CoreCommentFieldsFragmentDoc}`;
-export type CommentCreateMutationFn = Apollo.MutationFunction<CommentCreateMutation, CommentCreateMutationVariables>;
-
-/**
- * __useCommentCreateMutation__
- *
- * To run a mutation, you first call `useCommentCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCommentCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [commentCreateMutation, { data, loading, error }] = useCommentCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCommentCreateMutation(baseOptions?: Apollo.MutationHookOptions<CommentCreateMutation, CommentCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CommentCreateMutation, CommentCreateMutationVariables>(CommentCreateDocument, options);
-      }
-export type CommentCreateMutationHookResult = ReturnType<typeof useCommentCreateMutation>;
-export type CommentCreateMutationResult = Apollo.MutationResult<CommentCreateMutation>;
-export type CommentCreateMutationOptions = Apollo.BaseMutationOptions<CommentCreateMutation, CommentCreateMutationVariables>;
-export const CommentDeleteByIdDocument = gql`
-    mutation commentDeleteById($_id: ID!) {
-  commentDeleteById(_id: $_id) {
-    _id
-  }
-}
-    `;
-export type CommentDeleteByIdMutationFn = Apollo.MutationFunction<CommentDeleteByIdMutation, CommentDeleteByIdMutationVariables>;
-
-/**
- * __useCommentDeleteByIdMutation__
- *
- * To run a mutation, you first call `useCommentDeleteByIdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCommentDeleteByIdMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [commentDeleteByIdMutation, { data, loading, error }] = useCommentDeleteByIdMutation({
- *   variables: {
- *      _id: // value for '_id'
- *   },
- * });
- */
-export function useCommentDeleteByIdMutation(baseOptions?: Apollo.MutationHookOptions<CommentDeleteByIdMutation, CommentDeleteByIdMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CommentDeleteByIdMutation, CommentDeleteByIdMutationVariables>(CommentDeleteByIdDocument, options);
-      }
-export type CommentDeleteByIdMutationHookResult = ReturnType<typeof useCommentDeleteByIdMutation>;
-export type CommentDeleteByIdMutationResult = Apollo.MutationResult<CommentDeleteByIdMutation>;
-export type CommentDeleteByIdMutationOptions = Apollo.BaseMutationOptions<CommentDeleteByIdMutation, CommentDeleteByIdMutationVariables>;
 export const ModerationActionValidateDocument = gql`
     query moderationActionValidate($input: ModerateActionInput!) {
   moderationActionValidate(input: $input) {

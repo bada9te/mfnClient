@@ -9,7 +9,6 @@ import {httpGetCurrentUser} from "@/utils/http-requests/auth";
 import userReducer from "@/lib/redux/slices/user";
 import playerReducer from "@/lib/redux/slices/player";
 import storagePersist from "redux-persist/lib/storage";
-import createCommentReducer from "./slices/create-comment";
 
 
 const userPersistConfig = {
@@ -26,7 +25,6 @@ const rootReducer = combineReducers({
     user: persistReducer(userPersistConfig, userReducer),
     bottomBar: bottomBarReducer,
     player: persistReducer(playerPersistConfig, playerReducer),
-    createComment: createCommentReducer,
     asyncInitialState: asyncInitialState.innerReducer,
 });
 
