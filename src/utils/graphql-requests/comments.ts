@@ -54,8 +54,8 @@ export const COMMENTS_REPLIES_BY_COMMENT_ID = gql`
 
 export const COMMENTS_BY_POST_ID = gql`
     ${CORE_COMMENT_FIELDS}
-    query commentsByPostId($_id: ID!) {
-        commentsByPostId(_id: $_id) {
+    query commentsByPostId($_id: ID!, $offset: Int!, $limit: Int!) {
+        commentsByPostId(_id: $_id, offset: $offset limit: $limit) {
             ...CoreCommentFields
             owner {
                 _id

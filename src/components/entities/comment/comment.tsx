@@ -1,4 +1,6 @@
-export default function Comment() {
+import { Comment as TComment } from "@/utils/graphql-requests/generated/schema";
+
+export default function Comment({data}: {data: TComment}) {
     return (
         <article className="card p-6 text-base rounded-lg ">
             <footer className="flex justify-between items-center mb-2">

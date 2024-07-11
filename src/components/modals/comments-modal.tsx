@@ -27,8 +27,8 @@ export default function CommentsModal({postData, button}: {postData: Post, butto
 
                     <h4 className="font-bold text-lg">{postData?.title} - Comments</h4>
 
-                    <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
-                        <CommentsContainer/>
+                    <div className="flex-1 min-h-full w-full flex justify-center items-center overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
+                        <CommentsContainer postId={postData?._id}/>
                     </div>
 
                     <div className="modal-action"> 

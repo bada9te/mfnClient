@@ -652,6 +652,8 @@ export type QueryCommentsByIdsArgs = {
 
 export type QueryCommentsByPostIdArgs = {
   _id: Scalars['ID']['input'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
 };
 
 
@@ -1007,6 +1009,8 @@ export type CommentRepliesQuery = { __typename?: 'Query', commentReplies?: Array
 
 export type CommentsByPostIdQueryVariables = Exact<{
   _id: Scalars['ID']['input'];
+  offset: Scalars['Int']['input'];
+  limit: Scalars['Int']['input'];
 }>;
 
 
@@ -2225,8 +2229,8 @@ export type CommentRepliesLazyQueryHookResult = ReturnType<typeof useCommentRepl
 export type CommentRepliesSuspenseQueryHookResult = ReturnType<typeof useCommentRepliesSuspenseQuery>;
 export type CommentRepliesQueryResult = Apollo.QueryResult<CommentRepliesQuery, CommentRepliesQueryVariables>;
 export const CommentsByPostIdDocument = gql`
-    query commentsByPostId($_id: ID!) {
-  commentsByPostId(_id: $_id) {
+    query commentsByPostId($_id: ID!, $offset: Int!, $limit: Int!) {
+  commentsByPostId(_id: $_id, offset: $offset, limit: $limit) {
     ...CoreCommentFields
     owner {
       _id
@@ -2250,6 +2254,8 @@ export const CommentsByPostIdDocument = gql`
  * const { data, loading, error } = useCommentsByPostIdQuery({
  *   variables: {
  *      _id: // value for '_id'
+ *      offset: // value for 'offset'
+ *      limit: // value for 'limit'
  *   },
  * });
  */
