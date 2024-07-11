@@ -9,6 +9,7 @@ import NotificationsContainerSkeleton from "@/components/containers/notification
 import NotificationsContainer from "@/components/containers/notifications-container/notifications-container";
 
 export default function Notifications({params}: {params: { page: number }}) {
+    const receiver = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
     return (
         <>
             <NotificationsTabsBattles activeTab={"read"}/>
@@ -21,7 +22,7 @@ export default function Notifications({params}: {params: { page: number }}) {
                         <PreloadQuery
                             query={NOTIFICATIONS_QUERY}
                             variables={{
-                                receiverId: cookies().get(nextConfig.env?.userIdCookieKey as string)?.value, 
+                                receiverId: receiver, 
                                 checked: false, 
                                 offset: (params.page - 1) * 12, 
                                 limit: 12
@@ -33,7 +34,7 @@ export default function Notifications({params}: {params: { page: number }}) {
                                     offset={(params.page - 1) * 12}
                                     limit={12}
                                     checked={false}
-                                    receiverId={cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string}
+                                    receiverId={receiver}
                                 />
                             </Suspense>
                         </PreloadQuery>

@@ -22,13 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dracula">
-    <body className={inter.className}>
+    <body>
         <ApolloWrapper>
             <SnackbarProvider maxSnack={5}>
                 <ReduxProvider>
                     <AppBar/>
-                    <div className={`grid grid-cols-[auto] lg:grid-cols-[320px_auto_320px] grid-rows-1`}>
-                        <div className="hidden xl:block">
+                    <div className="grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1">
+                        <div className="hidden lg:block">
                             <div className="card bg-base-100 shadow-xl w-full main-layout-card rounded-none">
                                 <div className="overflow-y-auto flex flex-col gap-10 no-scrollbar py-8">
                                     {
@@ -55,16 +55,7 @@ export default function RootLayout({
                                 </div>
                             </div>
                         </div>
-                        <div className={`hidden xl:block col-auto max-w-80`}>
-                            <div className="card bg-base-100 w-full main-layout-card rounded-none">
-                                <div className="overflow-y-auto p-0 no-scrollbar pb-10">
-                                    <div className="h-[80px] flex justify-between items-center text-white px-5">
-                                        <p className="font-bold text-xl">In player:</p>
-                                    </div>
-                                    <CurrentTrackRightBar/>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                     <BottomNav/>
                 </ReduxProvider>
@@ -74,3 +65,17 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+/*
+<div className={`hidden xl:block col-auto max-w-80`}>
+    <div className="card bg-base-100 w-full main-layout-card rounded-none">
+        <div className="overflow-y-auto p-0 no-scrollbar pb-10">
+            <div className="h-[80px] flex justify-between items-center text-white px-5">
+                <p className="font-bold text-xl">In player:</p>
+            </div>
+            <CurrentTrackRightBar/>
+        </div>
+    </div>
+</div>
+*/

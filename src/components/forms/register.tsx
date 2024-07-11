@@ -39,7 +39,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <form className="card-body text-white" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body glass bg-gray-950 rounded-2xl shadow-2xl text-white" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Register</div>
             <div className="form-control">
                 <label className="label">

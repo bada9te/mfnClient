@@ -116,7 +116,7 @@ export default function PostUploadForm() {
     }
 
     return (
-        <form className="card-body text-white glass bg-gray-950 rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-white glass bg-gray-950 rounded-2xl shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Post stup</div>
             <div className="form-control">
                 <label className="label">

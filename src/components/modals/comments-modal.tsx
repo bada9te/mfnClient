@@ -16,7 +16,7 @@ export default function CommentsModal({postData, button}: {postData: Post, butto
                 onClick: handleOpen,
             })}
             <dialog ref={ref} className="modal no-scrollbar">
-                <form method="dialog" className="modal-backdrop">
+                <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button>close</button>
                 </form>
                 <div className="modal-box text-gray-300 max-w-[600px] min-h-screen no-scrollbar text-start flex flex-col rounded-none">
