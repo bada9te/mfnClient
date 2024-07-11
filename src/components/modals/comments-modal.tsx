@@ -32,7 +32,7 @@ export default function CommentsModal({postData, button}: {postData: Post, butto
                     </div>
 
                     <div className="modal-action"> 
-                        <AddCommentForm/>
+                        <AddCommentForm postId={postData?._id}/>
                     </div>
                 </div>
             </dialog>

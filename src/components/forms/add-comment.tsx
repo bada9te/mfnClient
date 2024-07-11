@@ -1,16 +1,37 @@
 "use client"
+import { useAppSelector } from "@/lib/redux/store";
+import { useCommentCreateMutation } from "@/utils/graphql-requests/generated/schema";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
     text: string;
 }
 
-export default function AddCommentForm() {
+export default function AddCommentForm({postId}: {postId: string}) {
     const {handleSubmit, formState: {errors}, register, reset} = useForm<Inputs>();
+    const [addComment] = useCommentCreateMutation();
+    const user = useAppSelector(state => state.user.user);
+    const createCommentSlice = useAppSelector(state => state.createComment);
 
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
-        console.log(data);
+        const input = {
+            post: postId,
+            owner: user._id,
+            text: data.text,
+            isReply: createCommentSlice?.isReplyTo ? true : false,
+        }
+
+        if (createCommentSlice?.isReplyTo) {
+            // @ts-ignore
+            input.isReplyTo = createCommentSlice?.isReplyTo;
+        }
+
+        addComment({
+            variables: {
+                input,
+            }
+        });
     }
 
     return (
