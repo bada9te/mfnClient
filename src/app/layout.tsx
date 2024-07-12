@@ -29,7 +29,7 @@ export default function RootLayout({
                     <AppBar/>
                     <div className="grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1">
                         <div className="hidden lg:block">
-                            <div className="card bg-base-300 shadow-xl w-full main-layout-card rounded-none glass">
+                            <div className="card w-full main-layout-card rounded-none">
                                 <div className="overflow-y-auto flex flex-col gap-10 no-scrollbar py-8">
                                     {
                                         genres.map((gen, i) => {
@@ -46,7 +46,7 @@ export default function RootLayout({
                             </div>
                         </div>
                         <div className={`col-auto flex-1`}>
-                            <div className="card shadow-xl w-full main-layout-card rounded-none glass">
+                            <div className="card w-full main-layout-card rounded-none">
                                 <div className="card-body overflow-y-auto p-0 gap-0 no-scrollbar">
                                     {children}
                                     <div className="p-0 md:p-8">

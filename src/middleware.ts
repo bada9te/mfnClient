@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
 
     if (pathname === '/logout') {
         console.log("awddadhkawdhaku")
-        const res = NextResponse.redirect(new URL('/feed/1', request.url));
+        const res = NextResponse.next();
         res.cookies.set(jwtCookieKey, "", {
             expires: new Date(0),
             path: '/',
@@ -24,6 +24,7 @@ export function middleware(request: NextRequest) {
             path: '/',
             domain: nextConfig.env?.serverDomain,
         });
+        
         
         return res;
     }

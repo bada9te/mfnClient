@@ -24,7 +24,7 @@ export default function PlayerModal({button}: {button: React.ReactElement}) {
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button onClick={onClose}>close</button>
                 </form>
-                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-[600px] md:max-w-[600px] md:w-[600px] md:max-h-96 no-scrollbar text-start flex flex-col">
+                <div className="modal-box glass text-gray-300 max-w-[350px] w-[100vw] h-[600px] md:max-w-[600px] md:w-[600px] md:max-h-96 no-scrollbar text-start flex flex-col">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

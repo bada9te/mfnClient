@@ -7,7 +7,7 @@ export default function AppBar() {
         <div className="navbar sticky top-0 z-40 text-white glass bg-[#3c8d88]">
             <div className="navbar-start">
                 <div className="dropdown max-h-screen block lg:hidden">
-                    <div tabIndex={0} role="button" className="btn btn-ghost">
+                    <div tabIndex={0} role="button" className="btn btn-ghost glass mr-1">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -15,7 +15,7 @@ export default function AppBar() {
                         </svg>
                     </div>
                     <ul tabIndex={0}
-                        className="menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex flex-col flex-nowrap">
+                        className="glass bg-base-300 menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow rounded-box w-52 flex flex-col flex-nowrap">
                         <li><Link href={"/feed/1"}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
@@ -117,7 +117,7 @@ export default function AppBar() {
                                 </svg>
                                 Battles
                             </summary>
-                            <ul className="p-2">
+                            <ul className="p-2 glass bg-base-300">
                                 <li><Link href={"/battles/in-progress/1"}>In progress</Link></li>
                                 <li><Link href={"/battles/finished/1"}>Finished</Link></li>
                                 <li><Link href={"/battles/create"}>Create new</Link></li>
@@ -134,7 +134,7 @@ export default function AppBar() {
                                 </svg>
                                 Playlists
                             </summary>
-                            <ul className="p-2">
+                            <ul className="p-2 glass bg-base-300">
                                 <li><Link href={"/playlists/explore/1"}>Explore</Link></li>
                                 <li><Link href={"/playlists/my-playlists/1"}>My playlists</Link></li>
                                 <li><Link href={"/playlists/create"}>Create new</Link></li>
@@ -152,7 +152,7 @@ export default function AppBar() {
                                 </svg>
                                 Categories
                             </summary>
-                            <ul className="p-2">
+                            <ul className="p-2 glass bg-base-300">
                                 <li><Link href={"/categories/country/1"}>Country</Link></li>
                                 <li><Link href={"/categories/pop/1"}>Pop</Link></li>
                                 <li><Link href={"/categories/classical/1"}>Classical</Link></li>

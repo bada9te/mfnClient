@@ -17,7 +17,7 @@ export default function CategoryLeftBar(props: {
     }
 
     return (
-        <div className={`card rounded-2xl w-fit max-w-80 bg-cover bg-center text-white max-h-52 mx-10 shadow-2xl`} style={{ backgroundImage: `url(${bgImage})` }}>
+        <div className={`card rounded-2xl w-fit max-w-80 bg-cover bg-center text-white max-h-52 ml-5 shadow-2xl`} style={{ backgroundImage: `url(${bgImage})` }}>
             <div className="card-body glass rounded-2xl">
                 <div className="flex flex-row gap-4">
                     <div className="avatar">
