@@ -14,7 +14,7 @@ export default function Profile({params}: {params: { page: number }}) {
     const myId = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
 
     return (
-        <div className="w-full m-0 md:mx-8 md:mt-8">
+        <>
             <PreloadQuery
                 query={USER_QUERY}
                 variables={{
@@ -51,6 +51,6 @@ export default function Profile({params}: {params: { page: number }}) {
                     </div>
                 </div>
             </HeroWrapper>
-        </div>
+        </>
     );
 }

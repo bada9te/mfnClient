@@ -1,6 +1,10 @@
 "use client"
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
+import { useSnackbar } from "notistack";
+import { useUserPrepareAccountToRestoreMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
+import { setUser } from "@/lib/redux/slices/user";
 
 type InputsNickname = {
     nickname: string;
@@ -12,7 +16,10 @@ type InputsDescription = {
 
 type InputsEmail = {
     oldEmail: string;
-    newEmail: string;
+};
+
+type InputsPassword = {
+    oldPassword: string;
 };
 
 
@@ -20,20 +27,90 @@ export default function ProfileEditForm() {
     const { register: registerNick, handleSubmit: handleSubmitNick, formState: {errors: errorsNick} } = useForm<InputsNickname>();
     const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
     const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail} } = useForm<InputsEmail>();
+    const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>()
+    const { enqueueSnackbar } = useSnackbar();
+    const [ updateUser ] = useUserUpdateMutation();
+    const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();
+    const user = useAppSelector(state => state.user.user);
+    const dispatch = useAppDispatch();
+
+    const dispatchUser = (what: string, value: string) => {
+        // @ts-ignore
+        dispatch(setUser({ ...user, [what]: value }));
+    }
 
     // nick
     const onSubmitNick: SubmitHandler<InputsNickname> = async(data) => {
-        console.log(data)
+        enqueueSnackbar("Updaing nickname...", {autoHideDuration: 1500});
+        await updateUser({
+            variables: {
+                input: {
+                    _id: user?._id as string,
+                    what: "nick",
+                    value: data.nickname,
+                }
+            }
+        }).then(_ => {
+            dispatchUser("nick", data.nickname);
+            enqueueSnackbar("Nickname updated", {variant: 'success', autoHideDuration: 2000});
+        }).catch(_ => {
+            enqueueSnackbar("Nickname can not be updated", {variant: 'error', autoHideDuration: 3000});
+        });
     };
+
+    
 
     // desc
     const onSubmitDescription: SubmitHandler<InputsDescription> = async(data) => {
-        console.log(data)
+        enqueueSnackbar("Updating description...", {autoHideDuration: 1500});
+        await updateUser({
+            variables: {
+                input: {
+                    _id: user?._id as string,
+                    what: "description",
+                    value: data.description,
+                }
+            }
+        }).then(_ => {
+            dispatchUser("description", data.description);
+            enqueueSnackbar("Description updated", {variant: 'success', autoHideDuration: 2000});
+        }).catch(_ => {
+            enqueueSnackbar("Description can not be updated", {variant: 'error', autoHideDuration: 3000});
+        });
     }
 
     // email
     const onSubmitEmail: SubmitHandler<InputsEmail> = async(data) => {
-        console.log(data)
+        enqueueSnackbar("Doing important stuff...", {autoHideDuration: 1500});
+        await prepareToRestore({
+            variables: {
+                input: {
+                    email: user?.local?.email as string,
+                    type: "email",
+                }
+            }
+        }).then(_ => {
+            enqueueSnackbar("Restoration email sent", {autoHideDuration: 2000, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Email can not be updated", {autoHideDuration: 3000, variant: 'error'});
+        });
+    }
+
+    // passwd
+    const onSubmitPassword: SubmitHandler<InputsPassword> = async(data) => {
+        enqueueSnackbar("Doing important stuff...", {autoHideDuration: 1500});
+        await prepareToRestore({
+            variables: {
+                input: {
+                    email: user?.local?.email as string,
+                    type: "password"
+                }
+            }
+        }).then(_ => {
+            enqueueSnackbar("Restoration email sent", {autoHideDuration: 2000, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Password can not be updated", {autoHideDuration: 3000, variant: 'error'});
+        });
     }
 
     return (
@@ -91,16 +168,26 @@ export default function ProfileEditForm() {
             <div className="divider divider-primary">Email</div>
 
             <form onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
+                
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Old Email</span>
+                        <span className="label-text">Email</span>
                     </label>
-                    <input type="text" placeholder="Old email" className="input input-bordered shadow-md w-full" {
-                        ...registerEmail("oldEmail", {
-                            pattern: {value: formsConstants.emailRegex, message: "Email address is not valid"},
-                            required: { value: true, message: "This field is required" },
-                        })
-                    }/>
+                    <div className="join w-full">
+                        <input type="text" placeholder="Old email" className="input input-bordered shadow-md w-full" {
+                            ...registerEmail("oldEmail", {
+                                pattern: {value: formsConstants.emailRegex, message: "Email address is not valid"},
+                                required: { value: true, message: "This field is required" },
+                                validate: (value) => {
+                                    const userEmail = user?.local?.email as string;
+                                    if (userEmail !== value) {
+                                        return "Wrong email address"
+                                    }
+                                }
+                            })
+                        }/>
+                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Request</button>
+                    </div>
                     {
                         errorEmail.oldEmail &&
                         <label className="label">
@@ -108,28 +195,33 @@ export default function ProfileEditForm() {
                         </label>
                     }
                 </div>
+            </form>
+
+            <div className="divider divider-primary">Password</div>
+
+            <form onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">New Email</span>
+                        <span className="label-text">Password</span>
                     </label>
-                    <div className="join w-full">
-                        <input type="text" placeholder="New email" className="input input-bordered shadow-md w-full" {
-                            ...registerEmail("newEmail", {
-                                pattern: {value: formsConstants.emailRegex, message: "Email address is not valid"},
-                                required: { value: true, message: "This field is required" },
+                    <div className="join">
+                        <input type="text" placeholder="Old password" className="join-item input input-bordered shadow-md w-full" {
+                            ...registerPassword("oldPassword", {
+                                minLength: { value: 8, message: "Min length must be 8" },
+                                maxLength: { value: 20, message: "Max length must be 20" },
+                                required: { value: true, message: "This field is required" }
                             })
                         }/>
-                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Save</button>
+                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Request</button>
                     </div>
                     {
-                        errorEmail.newEmail &&
+                        errorsPassword.oldPassword &&
                         <label className="label">
-                            <span className="label-text">{errorEmail.newEmail.message}</span>
+                            <span className="label-text text-error">{errorsPassword.oldPassword.message}</span>
                         </label>
                     }
                 </div>
             </form>
-
 
             <div className="divider divider-primary">Socials</div>
             <button className="btn btn-error glass bg-error">Connect google</button>

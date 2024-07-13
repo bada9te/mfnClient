@@ -10,6 +10,8 @@ import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/curre
 import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
+import NextTopLoader from "nextjs-toploader";
+import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,44 +25,57 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dracula">
     <body>
-        <ApolloWrapper>
-            <SnackbarProvider maxSnack={5}>
-                <ReduxProvider>
-                    <AppBar/>
-                    <div className="grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1">
-                        <div className="hidden lg:block">
-                            <div className="card w-full main-layout-card rounded-none">
-                                <div className="overflow-y-auto flex flex-col gap-10 no-scrollbar py-8">
-                                    {
-                                        genres.map((gen, i) => {
-                                            return (
-                                                <CategoryLeftBar
-                                                    key={i}
-                                                    title={gen.title}
-                                                    bgImage={gen.bg}
-                                                />
-                                            );
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div className={`col-auto flex-1`}>
-                            <div className="card w-full main-layout-card rounded-none">
-                                <div className="card-body overflow-y-auto p-0 gap-0 no-scrollbar">
-                                    {children}
-                                    <div className="p-0 md:p-8">
-                                        <Footer/>
+        <RainbowkitAppProvider>
+            <ApolloWrapper>
+                <SnackbarProvider maxSnack={5}>
+                    <ReduxProvider>
+                        <AppBar/>
+                        <div className="grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1">
+                            <div className="hidden lg:block">
+                                <div className="card w-full main-layout-card rounded-none">
+                                    <div className="overflow-y-auto flex flex-col gap-10 no-scrollbar py-8">
+                                        {
+                                            genres.map((gen, i) => {
+                                                return (
+                                                    <CategoryLeftBar
+                                                        key={i}
+                                                        title={gen.title}
+                                                        bgImage={gen.bg}
+                                                    />
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </div>
                             </div>
+                            <div className={`col-auto flex-1`}>
+                                <div className="card w-full main-layout-card rounded-none">
+                                    <div className="card-body overflow-y-auto p-0 gap-0 no-scrollbar">
+                                        <NextTopLoader 
+                                            color="#ff80c9"
+                                            initialPosition={0.18}
+                                            crawlSpeed={200}
+                                            height={5}
+                                            crawl={true}
+                                            showSpinner={false}
+                                            easing="ease"
+                                            speed={300}
+                                            //shadow="0 0 10px #2299DD,0 0 5px #2299DD",
+                                        />
+                                        {children}
+                                        <div className="p-0 md:p-8">
+                                            <Footer/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
-                        
-                    </div>
-                    <BottomNav/>
-                </ReduxProvider>
-            </SnackbarProvider>
-        </ApolloWrapper>
+                        <BottomNav/>
+                    </ReduxProvider>
+                </SnackbarProvider>
+            </ApolloWrapper>
+        </RainbowkitAppProvider>
     </body>
     </html>
   );

@@ -14,20 +14,20 @@ export default function BarTabsPlaylists(props: {
 
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full rounded-none bg-base-100">
+        <div role="tablist" className="tabs tabs-boxed w-full rounded-none md:rounded-xl bg-base-100 m-0 md:mx-8 md:mt-8">
             <a 
                 role="tab" 
-                className={`tab ${activeTab === "explore" && "tab-active"}`}
+                className={`tab ${activeTab === "explore" && "tab-active glass"}`}
                 onClick={() => handleNavigate("explore", true)}
             >Explore</a>
             <a 
                 role="tab" 
-                className={`tab ${activeTab === "my-playlists" && "tab-active"}`}
+                className={`tab ${activeTab === "my-playlists" && "tab-active glass"}`}
                 onClick={() => handleNavigate("my-playlists", true)}
             >My playlists</a>
             <a 
                 role="tab" 
-                className={`tab ${activeTab === "create" && "tab-active"}`} 
+                className={`tab ${activeTab === "create" && "tab-active glass"}`} 
                 onClick={() => handleNavigate("create")}
             >Create new</a>
         </div>

@@ -14,15 +14,15 @@ export default function BarTabsBattles(props: {
 
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full rounded-none bg-base-100">
+        <div role="tablist" className="tabs tabs-boxed w-full rounded-none md:rounded-xl bg-base-100 m-0 md:mx-8 md:mt-8">
             <a 
                 role="tab" 
-                className={`tab ${activeTab === "in-progress" && "tab-active"}`} 
+                className={`tab ${activeTab === "in-progress" && "tab-active glass"}`} 
                 onClick={() => handleNavigate("in-progress", true)}
             >In progress</a>
             <a 
                 role="tab" 
-                className={`tab ${activeTab === "finished" && "tab-active"}`} 
+                className={`tab ${activeTab === "finished" && "tab-active glass"}`} 
                 onClick={() => handleNavigate("finished", true)}
             >Finished</a>
             <a 
