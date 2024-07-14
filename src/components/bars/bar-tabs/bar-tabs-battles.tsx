@@ -14,7 +14,7 @@ export default function BarTabsBattles(props: {
 
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full rounded-none md:rounded-xl bg-base-100 m-0 md:mx-8 md:mt-8">
+        <div role="tablist" className="tabs tabs-boxed w-full rounded-none md:rounded-xl bg-black glass m-0 md:mx-8 md:mt-8">
             <a 
                 role="tab" 
                 className={`tab ${activeTab === "in-progress" && "tab-active glass"}`} 

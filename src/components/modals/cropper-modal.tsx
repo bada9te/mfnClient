@@ -1,6 +1,5 @@
 "use client"
-import { useReactiveVar } from "@apollo/client/index.js";
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '@/utils/cropper/cropper';
 
@@ -60,7 +59,7 @@ export default function ImageCropperModal(props: {
 
                 <div className="modal-action z-50"> 
                     <button className="btn bg-black glass" onClick={handleCancelImageCropping}>Cancel</button>
-                    <button className="btn btn-primary glass bg-pink-500" onClick={handleImageCropping}>Submit</button>
+                    <button className="btn btn-primary glass " onClick={handleImageCropping}>Submit</button>
                 </div>
             </div>
         </dialog>

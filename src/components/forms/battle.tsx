@@ -5,7 +5,7 @@ const PostPlaceholder = () => {
     return (
         <div className="border-2 border-dashed border-white w-64 md:w-80 h-96 rounded-2xl flex flex-col justify-center items-center glass relative">
             <InfoImage text="Select yout track" />
-            <button className="mt-5 btn btn-sm btn-primary glass bg-pink-500 absolute bottom-0 w-full rounded-b-2xl rounded-t-none">Select</button>
+            <button className="mt-5 btn btn-sm btn-primary glass  absolute bottom-0 w-full rounded-b-2xl rounded-t-none text-white">Select</button>
         </div>
     );
 }
@@ -35,7 +35,7 @@ export default function BattleForm() {
 
 
             <div className="form-control mt-5">
-                <button className="btn btn-primary glass bg-pink-500">Create battle</button>
+                <button className="btn btn-primary glass text-white">Create battle</button>
             </div>
         </form>
     );

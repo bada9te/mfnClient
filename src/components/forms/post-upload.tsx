@@ -190,7 +190,7 @@ export default function PostUploadForm() {
                 </div>
                 <input 
                     type="file" 
-                    className="file-input file-input-bordered w-full glass file:glass file:bg-pink-500 placeholder:text-gray-200" 
+                    className="file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
                     onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
                     {...register("image", {
                         required: { value: true, message: "This field is required" }
@@ -209,7 +209,7 @@ export default function PostUploadForm() {
                     <span className="label-text">Track audio</span>
                     <span className="label-text-alt">.mp3, .wav</span>
                 </div>
-                <input type="file" className="file-input file-input-bordered w-full glass file:glass file:bg-pink-500" {
+                <input type="file" className="file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
                     ...register("audio", {
                         required: { value: true, message: "This field is required" }
                     })
@@ -249,7 +249,7 @@ export default function PostUploadForm() {
             </div>
 
             <div className="form-control mt-4">
-                <button className="btn btn-primary glass bg-pink-500">Upload</button>
+                <button className="btn btn-primary glass text-white">Upload</button>
             </div>
         </form>
         </>

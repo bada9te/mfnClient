@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import ProfileButton from "@/components/common/profile-button/profile-button";
-
+//bg-[#3c8d88]
 export default function AppBar() {
     return (
-        <div className="navbar sticky top-0 z-40 text-white glass bg-[#3c8d88]">
+        <div className="navbar sticky top-0 z-40 text-white glass bg-black">
             <div className="navbar-start">
                 <div className="dropdown max-h-screen block lg:hidden">
                     <div tabIndex={0} role="button" className="btn btn-ghost glass mr-1">

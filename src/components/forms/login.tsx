@@ -89,7 +89,7 @@ export default function LoginForm() {
             </div>
 
             <div className="form-control mt-4">
-                <button className="btn btn-primary glass bg-pink-500">Login</button>
+                <button className="btn btn-primary glass ">Login</button>
             </div>
             <label className="label flex flex-col gap-3 justify-start items-start">
                 <Link href="/register" className="label-text-alt link link-hover">Not registered

@@ -33,9 +33,9 @@ export default function Pagination(props: {
 
     return (
         <div className="join w-full flex justify-center">
-            <button className="join-item btn" onClick={() => handleClick(-1)}>«</button>
-            <button className="join-item btn">{page}</button>
-            <button className="join-item btn" disabled={page > maxPage} onClick={() => handleClick(1)}>»</button>
+            <button className="join-item btn btn-primary glass bg-black text-white" onClick={() => handleClick(-1)}>«</button>
+            <button className="join-item btn btn-primary glass bg-black text-white">{page}</button>
+            <button className="join-item btn btn-primary glass bg-black text-white disabled:opacity-95" disabled={page > maxPage} onClick={() => handleClick(1)}>»</button>
         </div>
     );
 }

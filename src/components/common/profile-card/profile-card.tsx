@@ -36,12 +36,12 @@ export default function ProfileCard(props: {
                             !isEditable
                             ?
                             <>
-                                <button className="btn btn-primary w-full md:w-96 glass bg-pink-500">Subscribe</button>
+                                <button className="btn btn-primary w-full md:w-96 glass text-white">Subscribe</button>
                             </>
                             :
                             <>
-                                <button className="btn btn-primary w-full md:w-96 glass bg-pink-500">Change avatar</button>
-                                <button className="btn btn-primary w-full md:w-96 glass bg-pink-500">Change background</button>
+                                <button className="btn btn-primary w-full md:w-96 glass text-white">Change avatar</button>
+                                <button className="btn btn-primary w-full md:w-96 glass text-white">Change background</button>
                             </>
                         }
                     </div>

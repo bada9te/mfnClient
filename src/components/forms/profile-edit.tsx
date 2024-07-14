@@ -130,7 +130,7 @@ export default function ProfileEditForm() {
                                 required: { value: true, message: "This field is required" },
                             })
                         }/>
-                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Save</button>
+                        <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
                     </div>
                     {
                         errorsNick.nickname &&
@@ -154,7 +154,7 @@ export default function ProfileEditForm() {
                                 required: { value: true, message: "This field is required" },
                             })
                         }/>
-                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Save</button>
+                        <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
                     </div>
                     {
                         errorDescr.description &&
@@ -186,7 +186,7 @@ export default function ProfileEditForm() {
                                 }
                             })
                         }/>
-                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Request</button>
+                        <button className="btn btn-primary join-item glass text-white" type="submit">Request</button>
                     </div>
                     {
                         errorEmail.oldEmail &&
@@ -212,7 +212,7 @@ export default function ProfileEditForm() {
                                 required: { value: true, message: "This field is required" }
                             })
                         }/>
-                        <button className="btn btn-primary join-item glass bg-pink-500" type="submit">Request</button>
+                        <button className="btn btn-primary join-item glass text-white" type="submit">Request</button>
                     </div>
                     {
                         errorsPassword.oldPassword &&

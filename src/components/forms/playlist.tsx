@@ -43,7 +43,7 @@ export default function PlaylistForm() {
             </div>
 
             <div className="form-control mt-4">
-                <button className="btn btn-primary glass bg-pink-500">Create playlist</button>
+                <button className="btn btn-primary glass text-white">Create playlist</button>
             </div>
         </form>
     );
