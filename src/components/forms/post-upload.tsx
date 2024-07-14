@@ -7,6 +7,9 @@ import {Post, PostsByOwnerQuery, PostsQuery, usePostCreateMutation} from "@/util
 import {POSTS_BY_OWNER_QUERY, POSTS_QUERY} from "@/utils/graphql-requests/posts";
 import {useAppSelector} from "@/lib/redux/store";
 import {useRouter} from "next/navigation";
+import { useRef, useState } from "react";
+import ImageCropperModal from "../modals/cropper-modal";
+import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
 
 type Inputs = {
     title: string;
@@ -18,11 +21,32 @@ type Inputs = {
 }
 
 export default function PostUploadForm() {
-    const { formState: {errors}, register, handleSubmit, reset } = useForm<Inputs>()
+    const { formState: {errors}, register, handleSubmit, reset, resetField } = useForm<Inputs>()
     const { enqueueSnackbar } = useSnackbar();
     const [ createPost ] = usePostCreateMutation();
     const currentUser = useAppSelector(state => state.user.user);
     const router = useRouter();
+    const cropperModalRef = useRef<HTMLDialogElement | null>(null);
+    const [ imageURL, setImageURL ] = useState<string>("");
+    const [ croppedBlob, setCroppedBlob ] = useState<IBlob | null>(null);
+
+    const handlePicture = (file: File | null) => {
+        if (file !== null) {
+            setImageURL(URL.createObjectURL(file));
+            // open cropper
+            cropperModalRef.current && cropperModalRef.current.showModal();
+        }
+    }
+
+    // get cropped (as callback)
+    const handleImageCropModalClose = async(image: string | null) => {
+        if (!image) {
+            resetField("image");
+        } else {
+            const blob = await fetch(image).then(a => a.blob()) as IBlob;
+            setCroppedBlob(blob);
+        }
+    }
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
@@ -34,7 +58,7 @@ export default function PostUploadForm() {
             }).catch(err => {
                 enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
             }),
-            httpSaveFile(data?.image?.[0] as File).then(({data}) => {
+            httpSaveFile(blobToFile(croppedBlob as IBlob, new Date().getTime().toString())).then(({data}) => {
                 uploadedImageName = data.data.filename;
             }).catch(err => {
                 enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
@@ -114,6 +138,13 @@ export default function PostUploadForm() {
     }
 
     return (
+        <>
+        <ImageCropperModal
+            image={imageURL}
+            imageType="post-image"
+            refDialog={cropperModalRef}
+            handleImageCropModalClose={handleImageCropModalClose}
+        />
         <form className="card-body text-white glass bg-black rounded-2xl shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Post stup</div>
             <div className="form-control">
@@ -157,11 +188,14 @@ export default function PostUploadForm() {
                     <span className="label-text">Track image</span>
                     <span className="label-text-alt">.jpg, .png</span>
                 </div>
-                <input type="file" className="file-input file-input-bordered w-full glass file:glass file:bg-pink-500 placeholder:text-gray-200" {
-                    ...register("image", {
+                <input 
+                    type="file" 
+                    className="file-input file-input-bordered w-full glass file:glass file:bg-pink-500 placeholder:text-gray-200" 
+                    onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
+                    {...register("image", {
                         required: { value: true, message: "This field is required" }
-                    })
-                }/>
+                    })}
+                />
                 {
                     errors.image &&
                     <label className="label">
@@ -218,5 +252,6 @@ export default function PostUploadForm() {
                 <button className="btn btn-primary glass bg-pink-500">Upload</button>
             </div>
         </form>
+        </>
     );
 }

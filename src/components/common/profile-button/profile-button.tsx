@@ -7,7 +7,7 @@ import { useAccount } from "wagmi";
 
 export default function ProfileButton() {
     // Use the useSelector hook to get the user state from redux store
-    const user = useAppSelector(state => state.user.user);
+    const user = useAppSelector(state => state.user?.user);
     const [isMounted, setIsMounted] = useState(false);
     const { openConnectModal } = useConnectModal();
     const { openAccountModal } = useAccountModal();

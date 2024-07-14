@@ -44,8 +44,9 @@ const loadStore = async(getCurrentState: any) => {
                 })
             })
             .catch(err => {
+                localStorage.removeItem("persist:user");
                 console.log("Initial state can not be loaded:", err.message);
-                resolve({...getCurrentState()});
+                resolve({...getCurrentState(), user: {user: null}});
             });
     });
 };
