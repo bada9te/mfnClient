@@ -76,31 +76,61 @@ export default function Post(props: {
 
     return (
         <div className={`card w-fit md:${fullWidth ? 'w-full rounded-none' : 'w-80 max-w-80'} bg-black shadow-xl text-white glass`}>
+            <div className="m-3 flex flex-row gap-3 cursor-pointer">
+                <div className="dropdown w-full dropdown-end">
+                    <button 
+                        className="
+                        btn btn-primary
+                        text-white font-bold 
+                        flex items-center 
+                        justify-center rounded-full p-1
+                        shadow-lg glass w-full"
+                        role="button"
+                    >
+                        <div className="avatar p-0">
+                            <div className="w-10 rounded-full shadow-lg">
+                                <img
+                                    src={data?.owner?.avatar ? `${nextConfig.env?.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
+                            </div>
+                        </div>
+                        <p className="text-primary drop-shadow-lg pr-5">{data?.owner?.nick}</p>
+                    </button>
+                    <ul tabIndex={0} className="dropdown-content menu glass bg-black rounded-box z-[1] w-52 p-2 mt-3 shadow">
+                        <li><a>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+                                <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z" />
+                            </svg>
+                            Open profile
+                        </a></li>
+                        <li><a>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+                                <path d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z" />
+                                <path d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z" />
+                            </svg>
+                            Copy link
+                        </a></li>
+                        <li><a>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+                                <path d="M3.5 2.75a.75.75 0 0 0-1.5 0v14.5a.75.75 0 0 0 1.5 0v-4.392l1.657-.348a6.449 6.449 0 0 1 4.271.572 7.948 7.948 0 0 0 5.965.524l2.078-.64A.75.75 0 0 0 18 12.25v-8.5a.75.75 0 0 0-.904-.734l-2.38.501a7.25 7.25 0 0 1-4.186-.363l-.502-.2a8.75 8.75 0 0 0-5.053-.439l-1.475.31V2.75Z" />
+                            </svg>
+                            Report
+                        </a></li>
+                    </ul>
+                </div>
+                
+            </div>
             <figure><img
-                className="max-h-[180px] w-full"
+                className="max-h-[180px] w-full min-w-80"
                 src={data?.image ? `${nextConfig.env?.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
                 alt="Shoes"/>
             </figure>
 
-            <div className="absolute m-5 flex flex-row gap-3 cursor-pointer">
-                <div className="avatar">
-                    <div className="w-10 rounded-full shadow-lg">
-                        <img
-                            src={data?.owner?.avatar ? `${nextConfig.env?.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
-                    </div>
-                </div>
-                <div className="text-white w-fit font-bold px-4 flex items-center justify-center rounded-full shadow-lg glass">
-                    <p className="text-primary drop-shadow-lg">{data?.owner?.nick}</p>
-                </div>
-            </div>
-
-
-            <div className="card-body text-start pb-2">
-                <h2 className="card-title">
+            <div className="card-body text-start p-5">
+                <h2 className="card-title text-2xl">
                     {data?.title}
                     <div className="badge badge-secondary glass bg-purple-500">{data?.category}</div>
                 </h2>
-                <p>{data?.description}</p>
+                <p className="text-lg">{data?.description}</p>
             </div>
 
             <div className="stats glass mx-2 mt-2 rounded-lg thin-scrollbar">
@@ -141,11 +171,11 @@ export default function Post(props: {
                 </div>
             </div>
 
-            <div className="card-actions justify-end p-2 flex flex-row">
+            <div className="card-actions justify-end pt-2 flex flex-row">
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?
-                        <button className="btn btn-primary w-full glass bg-pink-500 rounded-lg" onClick={handlePauseCLick}>
+                        <button className="btn btn-primary w-full glass bg-red-500 text-white rounded-none rounded-b-2xl" onClick={handlePauseCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">
                                 <path fillRule="evenodd"
@@ -155,7 +185,7 @@ export default function Post(props: {
                             Pause
                         </button>
                         :
-                        <button className="btn btn-primary w-full glass bg-pink-500 rounded-lg" onClick={handlePlayCLick}>
+                        <button className="btn btn-primary w-full glass text-white rounded-none rounded-b-2xl" onClick={handlePlayCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
                                 <path
