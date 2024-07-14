@@ -17,13 +17,13 @@ export default function SupportForm() {
     }
 
     return (
-        <form className="card-body glass bg-gray-950 rounded-2xl shadow-2xl text-white" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body glass bg-black rounded-2xl shadow-2xl text-white" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Support details</div>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Email</span>
                 </label>
-                <input type="email" placeholder="email" className="input input-bordered" 
+                <input type="email" placeholder="email" className="input input-bordered glass placeholder:text-gray-200" 
                     {...register("email", {
                         pattern: { value: formsConstants.emailRegex, message: "Email address is not valid" },
                         required: { value: true, message: "Email address is required" }
@@ -40,7 +40,7 @@ export default function SupportForm() {
                 <label className="label">
                     <span className="label-text">Contact reason</span>
                 </label>
-                <select className="select select-bordered w-full" {
+                <select className="select select-bordered w-full glass bg-[#3b3b3b]" {
                     ...register("contactReason", {
                         required: {value: true, message: "This field is required"}
                     })
@@ -60,7 +60,7 @@ export default function SupportForm() {
                 <label className="label">
                     <span className="label-text">Details</span>
                 </label>
-                <textarea className="textarea textarea-bordered resize-none" rows={4} placeholder="Details" {
+                <textarea className="textarea textarea-bordered resize-none glass placeholder:text-gray-200" rows={4} placeholder="Details" {
                     ...register("details", {
                         minLength: {value: 10, message: "Min length must be 10"},
                         required: {value: true, message: "This field is required"},

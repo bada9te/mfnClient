@@ -38,13 +38,13 @@ export default function LoginForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="card-body text-white glass bg-gray-950 rounded-2xl shadow-2xl" noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} className="card-body text-white glass bg-black rounded-2xl shadow-2xl" noValidate>
             <div className="divider divider-primary">Sign in</div>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Email</span>
                 </label>
-                <input type="email" placeholder="email" className="input input-bordered shadow-md" {
+                <input type="email" placeholder="email" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                     ...register("email", {
                         pattern: formsConstants.emailRegex,
                         required: true
@@ -62,7 +62,7 @@ export default function LoginForm() {
                 <label className="label">
                     <span className="label-text">Password</span>
                 </label>
-                <input type="password" placeholder="password" className="input input-bordered shadow-md"
+                <input type="password" placeholder="password" className="input input-bordered shadow-md glass placeholder:text-gray-200"
                     {...register("password", {
                         minLength: { value: 8, message: "Min length must be 8" },
                         maxLength: { value: 20, message: "Max length must be 20" },

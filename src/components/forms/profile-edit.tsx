@@ -114,7 +114,7 @@ export default function ProfileEditForm() {
     }
 
     return (
-        <div className="bg-gray-950 card-body text-white rounded-none md:rounded-2xl shadow-2xl glass">
+        <div className="bg-black card-body text-white rounded-none md:rounded-2xl shadow-2xl glass">
             <div className="divider divider-primary">Basics</div>
 
             <form onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
@@ -123,7 +123,7 @@ export default function ProfileEditForm() {
                         <span className="label-text">Profile nickname</span>
                     </label>
                     <div className="join w-full">
-                        <input type="text" placeholder="Nickname" className="input input-bordered shadow-md w-full" {
+                        <input type="text" placeholder="Nickname" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
                             ...registerNick("nickname", {
                                 minLength: { value: 4, message: "Min length must be 4" },
                                 maxLength: { value: 20, message: "Max length must be 20" },
@@ -147,7 +147,7 @@ export default function ProfileEditForm() {
                         <span className="label-text">Profile description</span>
                     </label>
                     <div className="join w-full">
-                        <input type="text" placeholder="Description" className="input input-bordered shadow-md w-full" {
+                        <input type="text" placeholder="Description" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
                             ...registerDescr("description", {
                                 minLength: { value: 4, message: "Min length must be 4" },
                                 maxLength: { value: 40, message: "Max length must be 40" },
@@ -174,7 +174,7 @@ export default function ProfileEditForm() {
                         <span className="label-text">Email</span>
                     </label>
                     <div className="join w-full">
-                        <input type="text" placeholder="Old email" className="input input-bordered shadow-md w-full" {
+                        <input type="text" placeholder="Old email" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
                             ...registerEmail("oldEmail", {
                                 pattern: {value: formsConstants.emailRegex, message: "Email address is not valid"},
                                 required: { value: true, message: "This field is required" },
@@ -205,7 +205,7 @@ export default function ProfileEditForm() {
                         <span className="label-text">Password</span>
                     </label>
                     <div className="join">
-                        <input type="text" placeholder="Old password" className="join-item input input-bordered shadow-md w-full" {
+                        <input type="text" placeholder="Old password" className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
                             ...registerPassword("oldPassword", {
                                 minLength: { value: 8, message: "Min length must be 8" },
                                 maxLength: { value: 20, message: "Max length must be 20" },

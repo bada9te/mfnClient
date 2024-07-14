@@ -26,7 +26,9 @@ const config: Config = {
   daisyui: {
     themes: [
       "dark",
-      "dracula"
+      "dracula",
+      "black",
+      "forest"
     ],
   },
 };

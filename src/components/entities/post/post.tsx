@@ -75,7 +75,7 @@ export default function Post(props: {
     }
 
     return (
-        <div className={`card w-fit md:${fullWidth ? 'w-full rounded-none' : 'w-80 max-w-80'} bg-base-300 shadow-xl text-white glass`}>
+        <div className={`card w-fit md:${fullWidth ? 'w-full rounded-none' : 'w-80 max-w-80'} bg-black shadow-xl text-white glass`}>
             <figure><img
                 className="max-h-[180px] w-full"
                 src={data?.image ? `${nextConfig.env?.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}

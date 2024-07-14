@@ -23,7 +23,7 @@ export default function LeftBarDrawer(props: {
                    onChange={e => handleOpen(e)}/>
             <div className="drawer-side pt-16 z-10">
                 <label htmlFor="my-drawer-tracks" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-80 md:w-[360px] min-h-full text-base-content glass bg-base-300">
+                <ul className="menu p-4 w-80 md:w-[360px] min-h-full text-base-content glass bg-black">
                     {/* Sidebar content here */}
                     <li><a>Track Item 1</a></li>
                     <li><a>Track Item 2</a></li>

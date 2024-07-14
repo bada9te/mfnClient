@@ -39,13 +39,13 @@ export default function RegisterForm() {
     }
 
     return (
-        <form className="card-body glass bg-gray-950 rounded-2xl shadow-2xl text-white" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body glass bg-black rounded-2xl shadow-2xl text-white" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Register</div>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Email</span>
                 </label>
-                <input type="email" placeholder="Email" className="input input-bordered shadow-md" {
+                <input type="email" placeholder="Email" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                     ...register("email", {
                         pattern: formsConstants.emailRegex,
                         required: true
@@ -62,7 +62,7 @@ export default function RegisterForm() {
                 <label className="label">
                 <span className="label-text">Nickname</span>
                 </label>
-                <input type="text" placeholder="Nickname" className="input input-bordered shadow-md" {
+                <input type="text" placeholder="Nickname" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                     ...register("nickname", {
                         minLength: { value: 4, message: "Min length must be 4" },
                         maxLength: { value: 20, message: "Max length must be 20" },
@@ -81,7 +81,7 @@ export default function RegisterForm() {
                 <label className="label">
                 <span className="label-text">Password</span>
                 </label>
-                <input type="password" placeholder="Password" className="input input-bordered shadow-md" {
+                <input type="password" placeholder="Password" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                     ...register("password", {
                         minLength: { value: 8, message: "Min length must be 8" },
                         maxLength: { value: 20, message: "Max length must be 20" },
@@ -99,7 +99,7 @@ export default function RegisterForm() {
                 <label className="label">
                     <span className="label-text">Repeat Password</span>
                 </label>
-                <input type="password" placeholder="Repeat password" className="input input-bordered shadow-md" {
+                <input type="password" placeholder="Repeat password" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                     ...register("repeatPassword", {
                         validate: (value) => {
                             const { password } = getValues();

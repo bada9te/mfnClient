@@ -14,13 +14,13 @@ export default function PlaylistForm() {
     }
 
     return (
-        <form className="card-body text-white glass bg-gray-950 rounded-2xl shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-white glass bg-black rounded-2xl shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Playlist setup</div>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Playlist title</span>
                 </label>
-                <input type="text" placeholder="Title" className="input input-bordered shadow-md" {
+                <input type="text" placeholder="Title" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                     ...register("title", {
                         required: { value: true, message: "This field is required" }
                     })

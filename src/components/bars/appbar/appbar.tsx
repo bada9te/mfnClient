@@ -117,7 +117,7 @@ export default function AppBar() {
                                 </svg>
                                 Battles
                             </summary>
-                            <ul className="p-2 glass bg-base-300">
+                            <ul className="p-2 glass bg-black">
                                 <li><Link href={"/battles/in-progress/1"}>In progress</Link></li>
                                 <li><Link href={"/battles/finished/1"}>Finished</Link></li>
                                 <li><Link href={"/battles/create"}>Create new</Link></li>
@@ -134,7 +134,7 @@ export default function AppBar() {
                                 </svg>
                                 Playlists
                             </summary>
-                            <ul className="p-2 glass bg-base-300">
+                            <ul className="p-2 glass bg-black">
                                 <li><Link href={"/playlists/explore/1"}>Explore</Link></li>
                                 <li><Link href={"/playlists/my-playlists/1"}>My playlists</Link></li>
                                 <li><Link href={"/playlists/create"}>Create new</Link></li>
@@ -152,7 +152,7 @@ export default function AppBar() {
                                 </svg>
                                 Categories
                             </summary>
-                            <ul className="p-2 glass bg-base-300">
+                            <ul className="p-2 glass bg-black">
                                 <li><Link href={"/categories/country/1"}>Country</Link></li>
                                 <li><Link href={"/categories/pop/1"}>Pop</Link></li>
                                 <li><Link href={"/categories/classical/1"}>Classical</Link></li>

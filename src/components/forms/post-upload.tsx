@@ -114,13 +114,13 @@ export default function PostUploadForm() {
     }
 
     return (
-        <form className="card-body text-white glass bg-gray-950 rounded-2xl shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-white glass bg-black rounded-2xl shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Post stup</div>
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Track title</span>
                 </label>
-                <input type="text" placeholder="Track title" className="input input-bordered shadow-md" {
+                <input type="text" placeholder="Track title" className="input input-bordered shadow-md glass" {
                     ...register("title", {
                         maxLength: { value: 15, message: "Max length must be 15" },
                         required: { value: true, message: "This field is required" }
@@ -138,7 +138,7 @@ export default function PostUploadForm() {
                 <label className="label">
                     <span className="label-text">Track description</span>
                 </label>
-                <input type="text" placeholder="Track description" className="input input-bordered shadow-md" {
+                <input type="text" placeholder="Track description" className="input input-bordered shadow-md glass" {
                     ...register("description", {
                         maxLength: { value: 25, message: "Max length must be 25" },
                         required: { value: true, message: "This field is required" }
@@ -157,7 +157,7 @@ export default function PostUploadForm() {
                     <span className="label-text">Track image</span>
                     <span className="label-text-alt">.jpg, .png</span>
                 </div>
-                <input type="file" className="file-input file-input-bordered w-full" {
+                <input type="file" className="file-input file-input-bordered w-full glass file:bg-black" {
                     ...register("image", {
                         required: { value: true, message: "This field is required" }
                     })
@@ -175,7 +175,7 @@ export default function PostUploadForm() {
                     <span className="label-text">Track audio</span>
                     <span className="label-text-alt">.mp3, .wav</span>
                 </div>
-                <input type="file" className="file-input file-input-bordered w-full" {
+                <input type="file" className="file-input file-input-bordered w-full glass file:bg-black" {
                     ...register("audio", {
                         required: { value: true, message: "This field is required" }
                     })
@@ -192,7 +192,7 @@ export default function PostUploadForm() {
                 <div className="label">
                     <span className="label-text">Genre</span>
                 </div>
-                <select className="select select-bordered" {
+                <select className="select select-bordered glass bg-[#3b3b3b]" {
                     ...register("genre", {
                         required: { value: true, message: "This field is required" }
                     })

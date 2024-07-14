@@ -6,7 +6,6 @@ import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
 import Footer from "@/components/common/footer/footer";
 import CategoryLeftBar from "@/components/bars/category-leftbar/category-leftbar";
 import {genres} from "@/config/categories";
-import CurrentTrackRightBar from "@/components/bars/current-track-rightbar/current-track-rightbar";
 import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
@@ -33,7 +32,7 @@ export default function RootLayout({
                         <div className="grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1">
                             <div className="hidden lg:block">
                                 <div className="card w-full main-layout-card rounded-none">
-                                    <div className="overflow-y-auto flex flex-col gap-10 no-scrollbar py-8">
+                                    <div className="overflow-y-auto flex flex-col gap-8 no-scrollbar py-8">
                                         {
                                             genres.map((gen, i) => {
                                                 return (
