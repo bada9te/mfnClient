@@ -1,20 +1,8 @@
-"use client"
-import {useEffect, useState} from "react";
-
 export default function CategoryLeftBar(props: {
     title: string;
     bgImage: string;
 }) {
     const { title, bgImage } = props;
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
-    if (!isMounted) {
-        return <></>
-    }
 
     return (
         <div className={`card rounded-2xl w-fit max-w-80 bg-cover bg-center shadow-none text-white max-h-52 ml-5`} style={{ backgroundImage: `url(${bgImage})` }}>
