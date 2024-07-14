@@ -15,7 +15,7 @@ export default function AppBar() {
                         </svg>
                     </div>
                     <ul tabIndex={0}
-                        className="glass bg-base-300 menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow rounded-box w-52 flex flex-col flex-nowrap">
+                        className="glass bg-black menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow rounded-box w-52 flex flex-col flex-nowrap">
                         <li><Link href={"/feed/1"}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">

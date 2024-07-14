@@ -129,7 +129,7 @@ export default function RegisterForm() {
                 }
             </div>
             <div className="form-control mt-4">
-                <button className="btn btn-primary glass ">Register</button>
+                <button className="btn btn-primary glass text-white">Register</button>
             </div>
             <label className="label flex flex-col gap-3 justify-start items-start">
                 <Link href="/login" className="label-text-alt link link-hover">Already have an account?</Link>

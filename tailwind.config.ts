@@ -25,10 +25,18 @@ const config: Config = {
   ],
   daisyui: {
     themes: [
-      "dark",
-      "dracula",
-      "black",
-      "forest"
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["dracula"],
+          ".btn-primary:hover": {
+            "background-color": "#1ba39c",
+            "border-color": "#1ba39c",
+          },
+          ".divider-primary::before, .divider-primary::after": {
+            "background-color": "#1ba39c",
+          },
+        }
+      }
     ],
   },
 };

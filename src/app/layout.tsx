@@ -51,7 +51,7 @@ export default function RootLayout({
                                 <div className="card w-full main-layout-card rounded-none">
                                     <div className="card-body overflow-y-auto p-0 gap-0 no-scrollbar">
                                         <NextTopLoader 
-                                            color="#ff80c9"
+                                            color="#1ba39c"
                                             initialPosition={0.18}
                                             crawlSpeed={200}
                                             height={5}

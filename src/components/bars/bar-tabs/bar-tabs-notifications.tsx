@@ -14,15 +14,15 @@ export default function NotificationsTabsBattles(props: {
 
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full rounded-none md:rounded-xl bg-base-100 m-0 md:mx-8 md:mt-8">
+        <div role="tablist" className="tabs tabs-boxed w-full rounded-none md:rounded-xl bg-black glass m-0 md:mx-8 md:mt-8">
             <a 
                 role="tab" 
-                className={`tab ${activeTab === "new" && "tab-active glass"}`}
+                className={`tab ${activeTab === "new" && "glass bg-[#1ba39c]"}`}
                 onClick={() => handleNavigate("new", true)}
             >New</a>
             <a 
                 role="tab" 
-                className={`tab ${activeTab === "read" && "tab-active glass"}`}
+                className={`tab ${activeTab === "read" && "glass bg-[#1ba39c]"}`}
                 onClick={() => handleNavigate("read", true)}
             >Reviewed</a>
         </div>
