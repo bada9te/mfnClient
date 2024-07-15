@@ -77,13 +77,13 @@ export default function Post(props: {
     return (
         <div className={`card w-fit md:${fullWidth ? 'w-full rounded-none' : 'w-80 max-w-80'} bg-black shadow-xl text-white glass`}>
             <div className="m-3 flex flex-row gap-3 cursor-pointer">
-                <div className="dropdown w-full dropdown-end">
+                <div className="dropdown w-full dropdown-end text-start">
                     <button 
                         className="
                         btn btn-primary
                         text-white font-bold 
                         flex items-center 
-                        justify-center rounded-full p-1
+                        justify-start rounded-full p-1
                         shadow-lg glass w-full"
                         role="button"
                     >
@@ -93,7 +93,7 @@ export default function Post(props: {
                                     src={data?.owner?.avatar ? `${nextConfig.env?.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
                             </div>
                         </div>
-                        <p className="text-primary drop-shadow-lg pr-5">{data?.owner?.nick}</p>
+                        <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>
                     </button>
                     <ul tabIndex={0} className="dropdown-content menu glass bg-black rounded-box z-[1] w-52 p-2 mt-3 shadow">
                         <li><a>
@@ -134,7 +134,7 @@ export default function Post(props: {
             </div>
 
             <div className="stats glass mx-2 mt-2 rounded-lg thin-scrollbar">
-                <div className="stat">
+                <div className="stat text-center">
                     <div className={`cursor-pointer ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-green-500"}`} onClick={handleSwitchLike}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +152,7 @@ export default function Post(props: {
                     <div className="stat-value text-primary">{data.likedBy?.length}</div>
                 </div>
 
-                <div className="stat">
+                <div className="stat text-center">
                     <div className={`cursor-pointer ${data?.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`} onClick={handleSwitchInSaved}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

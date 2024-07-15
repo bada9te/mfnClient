@@ -1,13 +1,19 @@
 "use client"
-import {useAppDispatch} from "@/lib/redux/store";
+import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
 import {setTab} from "@/lib/redux/slices/bottom-bar";
-import React, {LegacyRef} from "react";
+import React, {LegacyRef, useEffect, useState} from "react";
+import { usePostsByTitleLazyQuery, Post as TPost } from "@/utils/graphql-requests/generated/schema";
+import Post from "@/components/entities/post/post";
+import InfoImage from "@/components/info-image/info-image";
 
 export default function LeftBarDrawer(props: {
     reference: LegacyRef<HTMLInputElement> | undefined
 }) {
     const { reference } = props;
     const dispatch = useAppDispatch();
+    const user = useAppSelector(state => state.user?.user);
+    const [sq, setSq] = useState("");
+    const [ fetchPostsByTitle, {data, loading} ] = usePostsByTitleLazyQuery();
 
     const handleOpen = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
@@ -17,16 +23,33 @@ export default function LeftBarDrawer(props: {
         }
     }
 
+    useEffect(() => {
+        if (sq.length > 0) {
+            const timeout = setTimeout(() => {
+                fetchPostsByTitle({
+                    variables: {
+                        input: {
+                            title: sq,
+                        }
+                    }
+                });
+            }, 750);
+            return () => {
+                clearInterval(timeout);
+            }
+        }
+    }, [sq]);
+
     return (
         <div className="drawer">
             <input ref={reference} id="my-drawer-tracks" type="checkbox" className="drawer-toggle w-full"
                    onChange={e => handleOpen(e)}/>
-            <div className="drawer-side pt-16 z-10">
+            <div className="drawer-side pt-16 z-10 no-scrollbar">
                 <label htmlFor="my-drawer-tracks" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu w-80 md:w-[360px] min-h-full text-base-content glass bg-black">
+                <ul className="menu w-92 md:w-[360px] min-h-full text-base-content glass bg-black">
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
-                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder="Search" />
+                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder="Search" onChange={e => setSq(e.target.value)}/>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 16 16"
@@ -38,9 +61,21 @@ export default function LeftBarDrawer(props: {
                             clipRule="evenodd" />
                         </svg>
                     </label>
+
+                    <div className="flex flex-col w-full items-center gap-8 py-5">
+                        {
+                            data?.postsByTitle && data?.postsByTitle?.length > 0
+                            ?
+                            data?.postsByTitle?.map((p, k) => {
+                                return (
+                                    <Post key={k} data={p as TPost}/>
+                                );
+                            })
+                            :
+                            <InfoImage text="Search"/>
+                        }
+                    </div>
                     
-                    <li><a>Track Item 1</a></li>
-                    <li><a>Track Item 2</a></li>
                 </ul>
             </div>
         </div>
