@@ -5,13 +5,13 @@ import React, {LegacyRef, useEffect, useState} from "react";
 import { usePostsByTitleLazyQuery, Post as TPost } from "@/utils/graphql-requests/generated/schema";
 import Post from "@/components/entities/post/post";
 import InfoImage from "@/components/info-image/info-image";
+import PostSkeleton from "@/components/entities/post/post-skeleton";
 
 export default function LeftBarDrawer(props: {
     reference: LegacyRef<HTMLInputElement> | undefined
 }) {
     const { reference } = props;
     const dispatch = useAppDispatch();
-    const user = useAppSelector(state => state.user?.user);
     const [sq, setSq] = useState("");
     const [ fetchPostsByTitle, {data, loading} ] = usePostsByTitleLazyQuery();
 
@@ -46,7 +46,7 @@ export default function LeftBarDrawer(props: {
                    onChange={e => handleOpen(e)}/>
             <div className="drawer-side pt-16 z-10 no-scrollbar">
                 <label htmlFor="my-drawer-tracks" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu w-92 md:w-[360px] min-h-full text-base-content glass bg-black">
+                <ul className="menu p-4 w-92 md:w-[360px] min-h-full text-base-content glass bg-black">
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
                         <input type="text" className="w-fit placeholder:text-gray-200" placeholder="Search" onChange={e => setSq(e.target.value)}/>
@@ -62,23 +62,38 @@ export default function LeftBarDrawer(props: {
                         </svg>
                     </label>
 
-                    <div className="flex flex-col w-full items-center gap-8 py-5">
+                    <div className="flex flex-col w-full items-center gap-8 py-5 flex-1">
                         {
-                            data?.postsByTitle && data?.postsByTitle?.length > 0
-                            ?
-                            data?.postsByTitle?.map((p, k) => {
-                                return (
-                                    <Post key={k} data={p as TPost}/>
-                                );
-                            })
-                            :
-                            <InfoImage text="Search"/>
+                            (() => {
+                                if (!loading) {
+                                    if (data?.postsByTitle && data?.postsByTitle?.length > 0) {
+                                        return (
+                                            <>
+                                                {
+                                                    data?.postsByTitle?.map((p, k) => {
+                                                        return (
+                                                            <Post key={k} data={p as TPost}/>
+                                                        );
+                                                    })
+                                                }
+                                            </>
+                                        );
+                                    } else {
+                                        return (<InfoImage text="Search for tracks"/>);
+                                    }
+                                } else {
+                                    return (
+                                        <>
+                                            <PostSkeleton/>
+                                            <PostSkeleton/>
+                                        </>
+                                    );
+                                }
+                            })()
                         }
                     </div>
-                    
                 </ul>
             </div>
         </div>
-
     );
 }

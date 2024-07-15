@@ -2,7 +2,7 @@ export default function InfoImage(props: {
     text: string;
 }) {
     return (
-        <div className="w-full flex justify-center items-center flex-col gap-4">
+        <div className="w-full flex justify-center items-center flex-col gap-4 flex-1">
             <img
                 src={'/assets/icons/logo_clear.png'}
                 alt={'logo'}

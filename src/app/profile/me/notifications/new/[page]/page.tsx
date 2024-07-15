@@ -1,19 +1,19 @@
-import NotificationsTabsBattles from "@/components/bars/bar-tabs/bar-tabs-notifications";
+import NotificationsTabs from "@/components/bars/bar-tabs/bar-tabs-notifications";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import { PreloadQuery } from "@/lib/apollo/client";
 import { NOTIFICATIONS_QUERY } from "@/utils/graphql-requests/notifications";
 import { cookies } from "next/headers";
 import nextConfig from "@/../next.config.mjs";
-import { Suspense } from "react";
 import NotificationsContainerSkeleton from "@/components/containers/notifications-container/notifications-container-skeleton";
 import NotificationsContainer from "@/components/containers/notifications-container/notifications-container";
+import { Suspense } from "react";
 
 
 export default function Notifications({params}: {params: { page: number }}) {
     const receiver = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
     return (
         <>
-            <NotificationsTabsBattles activeTab={"new"}/>
+            <NotificationsTabs activeTab={"new"}/>
             <HeroWrapper
                 title="Unread notifications"
                 description="Unread notifications"

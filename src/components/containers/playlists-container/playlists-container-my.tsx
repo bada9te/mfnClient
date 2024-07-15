@@ -38,7 +38,7 @@ export default function PlaylistsContainerOwner(props: TPaginationProps & { owne
                     <Pagination page={page} maxPage={Number(data?.playlistsByOwnerId.count as number / limit)} />
                 </>
                 :
-                <InfoImage text={"No public playlists found"}/>
+                <InfoImage text={"No playlists found"}/>
             }
         </>
     );
