@@ -114,7 +114,7 @@ export default function ProfileEditForm() {
     }
 
     return (
-        <div className="bg-black card-body text-white rounded-none md:rounded-2xl shadow-2xl glass">
+        <div className="bg-black card-body text-white rounded-none shadow-2xl glass">
             <div className="divider divider-primary">Basics</div>
 
             <form onSubmit={handleSubmitNick(onSubmitNick)} noValidate>

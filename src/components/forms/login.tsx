@@ -38,7 +38,7 @@ export default function LoginForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="card-body text-white glass bg-black rounded-2xl shadow-2xl" noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} className="card-body text-white glass bg-black shadow-2xl" noValidate>
             <div className="divider divider-primary">Sign in</div>
             <div className="form-control relative">
                 <label className="label">

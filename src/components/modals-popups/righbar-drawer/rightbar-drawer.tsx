@@ -5,6 +5,7 @@ import {useAppDispatch} from "@/lib/redux/store";
 import { User, useUsersByNicknameLazyQuery } from "@/utils/graphql-requests/generated/schema";
 import {LegacyRef, useEffect, useState} from "react";
 import RightbarDrawerUser from "./rigthbar-drawer-user/rightbar-drawer-user";
+import RightbarDrawerUserSkeleton from "./rigthbar-drawer-user/rightbar-drawer-user-skeleton";
 
 export default function RightBarDrawer(props: {
     reference: LegacyRef<HTMLInputElement> | undefined
@@ -42,7 +43,7 @@ export default function RightBarDrawer(props: {
         <div className="drawer drawer-end">
             <input ref={reference} id="my-drawer-people" type="checkbox" className="drawer-toggle" onChange={e => handleOpen(e)}/>
 
-            <div className="drawer-side pt-16 z-10">
+            <div className="drawer-side pt-16 z-10 no-scrollbar">
                 <label htmlFor="my-drawer-people" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-92 md:w-[360px] min-h-full text-base-content glass bg-black">
                     {/* Sidebar content here */}
@@ -69,7 +70,11 @@ export default function RightBarDrawer(props: {
                                                 {
                                                     data?.usersByNickname?.map((u, k) => {
                                                         return (
+                                                            <>
                                                             <RightbarDrawerUser key={k} data={u as User} />
+                                                            <RightbarDrawerUserSkeleton/>
+                                                            </>
+
                                                         );
                                                     })
                                                 }

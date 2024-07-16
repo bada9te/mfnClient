@@ -37,7 +37,7 @@ const config: Config = {
     themes: [
       {
         light: {
-          ...require("daisyui/src/theming/themes")["dracula"],
+          ...require("daisyui/src/theming/themes")["black"],
           ".btn-primary:hover": {
             "background-color": "#1ba39c",
             "border-color": "#1ba39c",

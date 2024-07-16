@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-        <footer className="footer p-10 glass text-neutral-content rounded-none md:rounded-2xl shadow-2xl">
+        <footer className="footer p-10 glass text-neutral-content rounded-none shadow-2xl">
             <aside>
                 <Image className="rounded-full" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
                 <p>Music From Nothing<br/>Providing reliable tech since 1992</p>

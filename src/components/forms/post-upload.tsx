@@ -145,7 +145,7 @@ export default function PostUploadForm() {
             refDialog={cropperModalRef}
             handleImageCropModalClose={handleImageCropModalClose}
         />
-        <form className="card-body text-white glass bg-black rounded-2xl shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="card-body text-white glass bg-black shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="divider divider-primary">Post stup</div>
             <div className="form-control">
                 <label className="label">

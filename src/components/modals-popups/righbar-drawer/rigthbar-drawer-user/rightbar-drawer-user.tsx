@@ -22,7 +22,7 @@ export default function RightbarDrawerUser({data}: {data: User}) {
                     <div className="badge glass">{data.subscribedOn?.length} following</div>
                 </div>
             </div>
-            <a href={`/profile/${data._id}/1`} className="btn btn-primary glass rounded-t-none rounded-b-xl text-white">Profile</a>
+            <a href={`/profile/${data._id}/1`} className="btn btn-primary glass text-white">Profile</a>
         </div>
     );
 }

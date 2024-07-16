@@ -3,16 +3,16 @@ import InfoImage from "../info-image/info-image";
 
 const PostPlaceholder = () => {
     return (
-        <div className="border-2 border-dashed border-white w-64 md:w-80 h-96 rounded-2xl flex flex-col justify-center items-center glass relative">
+        <div className="border-2 border-dashed border-white w-64 md:w-80 h-96 flex flex-col justify-center items-center glass relative">
             <InfoImage text="Select yout track" />
-            <button className="mt-5 btn btn-sm btn-primary glass  absolute bottom-0 w-full rounded-b-2xl rounded-t-none text-white">Select</button>
+            <button className="mt-5 btn btn-sm btn-primary glass  absolute bottom-0 w-full text-white">Select</button>
         </div>
     );
 }
 
 export default function BattleForm() {
     return (
-        <form className="card-body w-full text-white glass bg-black rounded-2xl shadow-2xl">
+        <form className="card-body w-full text-white glass bg-black shadow-2xl">
             <div className="divider divider-primary">New battle setup</div>
             <div className="form-control">
                 <label className="label">
