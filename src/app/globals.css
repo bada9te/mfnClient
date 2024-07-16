@@ -50,6 +50,20 @@ body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+  .animated-box::before {
+    @apply content-[''] shadow-cyan-400 shadow-2xl absolute top-[-240px] left-[150px] w-[100px] h-[800px] bg-gradient-to-r from-[#66c1bd] to-[#3ab0aa] animate-fullSpin
+  }
+  .animated-box::after {
+    @apply content-[''] absolute inset-0.5 rounded-2xl
+  }
+
+  .animated-box-tools::before {
+    @apply content-[''] shadow-cyan-400 shadow-2xl absolute top-[-700px] left-[47%] w-[100px] h-[1700px] bg-gradient-to-r from-[#66c1bd] to-[#3ab0aa] animate-fullSpin
+  }
+  .animated-box-tools::after {
+    @apply content-[''] absolute inset-0.5 rounded-2xl
+  }
 }
 
 .main-layout-card {
