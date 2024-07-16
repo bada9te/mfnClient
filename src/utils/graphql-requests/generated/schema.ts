@@ -98,7 +98,6 @@ export type CreateReportInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   message: Scalars['String']['input'];
   reportOwner?: InputMaybe<Scalars['ID']['input']>;
-  reportedComment?: InputMaybe<Scalars['ID']['input']>;
   reportedPost?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -895,7 +894,7 @@ export type UsersByNicknameQueryVariables = Exact<{
 }>;
 
 
-export type UsersByNicknameQuery = { __typename?: 'Query', usersByNickname: Array<{ __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string }> };
+export type UsersByNicknameQuery = { __typename?: 'Query', usersByNickname: Array<{ __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null }> };
 
 export type UsersByIdsQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
@@ -2307,6 +2306,12 @@ export const UsersByNicknameDocument = gql`
     query usersByNickname($nick: String!) {
   usersByNickname(nick: $nick) {
     ...CoreUserFileds
+    subscribedOn {
+      _id
+    }
+    subscribers {
+      _id
+    }
   }
 }
     ${CoreUserFiledsFragmentDoc}`;

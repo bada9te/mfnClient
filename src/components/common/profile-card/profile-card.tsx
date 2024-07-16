@@ -27,8 +27,8 @@ export default function ProfileCard(props: {
                 <div>
                     <h2 className="card-title flex flex-col md:flex-row">
                         {data.user.nick}
-                        <div className="badge badge-secondary glass bg-secondary">{data.user.subscribers?.length} followers</div>
-                        <div className="badge badge-accent glass bg-accent">{data.user.subscribedOn?.length} following</div>
+                        <div className="badge glass bg-[#1ba39c]">{data.user.subscribers?.length} followers</div>
+                        <div className="badge glass">{data.user.subscribedOn?.length} following</div>
                     </h2>
                     <p className="mt-3 md:mt-0">{data.user.description}</p>
                     <div className="card-actions justify-start mt-3">

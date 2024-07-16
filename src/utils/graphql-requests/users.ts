@@ -33,6 +33,12 @@ export const USERS_BY_NICKNAME_QUERY = gql`
     query usersByNickname($nick: String!) {
         usersByNickname(nick: $nick) {
             ...CoreUserFileds
+            subscribedOn {
+                _id
+            }
+            subscribers {
+                _id
+            }
         }
     }
 `;
