@@ -2,8 +2,9 @@
 import InfoImage from "@/components/info-image/info-image";
 import {setTab} from "@/lib/redux/slices/bottom-bar";
 import {useAppDispatch} from "@/lib/redux/store";
-import { useUsersByNicknameLazyQuery } from "@/utils/graphql-requests/generated/schema";
+import { User, useUsersByNicknameLazyQuery } from "@/utils/graphql-requests/generated/schema";
 import {LegacyRef, useEffect, useState} from "react";
+import RightbarDrawerUser from "./rigthbar-drawer-user/rightbar-drawer-user";
 
 export default function RightBarDrawer(props: {
     reference: LegacyRef<HTMLInputElement> | undefined
@@ -68,7 +69,7 @@ export default function RightBarDrawer(props: {
                                                 {
                                                     data?.usersByNickname?.map((u, k) => {
                                                         return (
-                                                            <p key={k}>{u._id}</p>
+                                                            <RightbarDrawerUser key={k} data={u as User} />
                                                         );
                                                     })
                                                 }
