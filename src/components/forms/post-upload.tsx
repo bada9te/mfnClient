@@ -10,6 +10,7 @@ import {useRouter} from "next/navigation";
 import { useRef, useState } from "react";
 import ImageCropperModal from "../modals/cropper-modal";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
+import { revalidatePathAction } from "@/actions/revalidation";
 
 type Inputs = {
     title: string;
@@ -131,6 +132,7 @@ export default function PostUploadForm() {
         }).then(() => {
             reset();
             enqueueSnackbar("Post created", { autoHideDuration: 1500, variant: 'success' });
+            revalidatePathAction(`/profile/me/1`, 'page');
             router.replace(`/profile/me/1`)
         }).catch(() => {
             enqueueSnackbar("Post can not be uploaded", { autoHideDuration: 3000, variant: 'error' });

@@ -30,8 +30,8 @@ export default function PlaylistForm() {
         }).then(_ => {
             enqueueSnackbar("Playlist created", {variant: 'success', autoHideDuration: 2000});
             reset();
-            revalidatePathAction("/playlists/my-playlists/1", "page");
-            revalidatePathAction("/playlists/explore/1", "page");
+            revalidatePathAction("/playlists/my-playlists", "page");
+            revalidatePathAction("/playlists/explore", "page");
         }).catch(_ => {
             enqueueSnackbar("Playlist can not be created", {variant: 'error', autoHideDuration: 3000});
         })
