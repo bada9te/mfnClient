@@ -6,8 +6,9 @@ import {
     Post as TPost
 } from "@/utils/graphql-requests/generated/schema";
 import Pagination from "@/components/common/pagination/pagination";
-import InfoImage from "@/components/info-image/info-image";
+import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
+
 
 export default function PlaylistsContainerPublic(props: TPaginationProps) {
     const { offset, limit, page } = props;
@@ -27,7 +28,7 @@ export default function PlaylistsContainerPublic(props: TPaginationProps) {
                     {
                         data?.playlistsPublicAvailable.playlists?.map((playlist, key) => {
                             return (
-                                <Playlist key={key} title={"Playlist1"} posts={playlist.tracks?.map((post, keyP) => {
+                                <Playlist key={key} title={playlist.title} posts={playlist.tracks?.map((post, keyP) => {
                                     return (
                                         <Post data={post as TPost} key={keyP}/>
                                     );

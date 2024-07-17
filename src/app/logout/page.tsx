@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/redux/store";
 import { setUser } from "@/lib/redux/slices/user";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import InfoImage from "@/components/info-image/info-image";
+import InfoImage from "@/components/common/info-image/info-image";
 
 export default function LogoutPage() {
     const router = useRouter();

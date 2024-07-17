@@ -1,6 +1,6 @@
 "use client"
-import LeftBarDrawer from "@/components/modals-popups/leftbar-drawer/leftbar-drawer"
-import RightBarDrawer from "@/components/modals-popups/righbar-drawer/rightbar-drawer";
+import LeftBarDrawer from "@/components/modals/leftbar-drawer/leftbar-drawer"
+import RightBarDrawer from "@/components/modals/righbar-drawer/rightbar-drawer";
 import Link from "next/link";
 import {useAppSelector} from "@/lib/redux/store";
 import {usePathname} from "next/navigation";

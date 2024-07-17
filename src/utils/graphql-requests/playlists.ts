@@ -5,11 +5,6 @@ export const CORE_PLAYLIST_FIELDS = gql`
     ${CORE_POST_FIELDS}
     fragment CorePlaylistFields on Playlist {
         _id
-        owner {
-            _id
-            nick
-            avatar
-        }
         title
         tracks {
             ...CorePostFields
@@ -31,6 +26,11 @@ export const PLAYLISTS_BY_OWNER_ID_QUERY = gql`
         playlistsByOwnerId(owner: $owner, offset: $offset, limit: $limit) {
             playlists {
                 ...CorePlaylistFields
+                owner {
+                    _id
+                    nick
+                    avatar
+                }
             }
             count
         }
@@ -43,6 +43,11 @@ export const PLAYLISTS_PUBLIC_AWAILABLE_QUERY = gql`
         playlistsPublicAvailable(offset: $offset, limit: $limit) {
             playlists {
                 ...CorePlaylistFields
+                owner {
+                    _id
+                    nick
+                    avatar
+                }
             }
             count
         }
@@ -66,6 +71,11 @@ export const PLAYLIST_SWICTH_TRACK_MUTATION = gql`
     mutation playlistSwicthTrack($input: SwitchTrackInPlaylistInput!) {
         playlistSwicthTrack(input: $input) {
             ...CorePlaylistFields
+            owner {
+                _id
+                nick
+                avatar
+            }
         }
     }
 `;

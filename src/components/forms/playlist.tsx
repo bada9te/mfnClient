@@ -1,4 +1,8 @@
 "use client"
+import { revalidatePathAction } from "@/actions/revalidation";
+import { useAppSelector } from "@/lib/redux/store";
+import { usePlaylistCreateMutation } from "@/utils/graphql-requests/generated/schema";
+import { useSnackbar } from "notistack";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 type Inputs = {
@@ -7,10 +11,30 @@ type Inputs = {
 }
 
 export default function PlaylistForm() {
-    const { handleSubmit, register, formState: {errors} } = useForm<Inputs>();
+    const { handleSubmit, register, formState: {errors}, reset } = useForm<Inputs>();
+    const user = useAppSelector(state => state.user.user);
+    const {enqueueSnackbar} = useSnackbar();
+
+    const [ createPlaylist ] = usePlaylistCreateMutation();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
-
+        enqueueSnackbar("Creating playlist...", {autoHideDuration: 1500});
+        createPlaylist({
+            variables: {
+                input: {
+                    title: data.title,
+                    public: data.publiclyAvailable,
+                    owner: user._id
+                }
+            }
+        }).then(_ => {
+            enqueueSnackbar("Playlist created", {variant: 'success', autoHideDuration: 2000});
+            reset();
+            revalidatePathAction("/playlists/my-playlists/1", "page");
+            revalidatePathAction("/playlists/explore/1", "page");
+        }).catch(_ => {
+            enqueueSnackbar("Playlist can not be created", {variant: 'error', autoHideDuration: 3000});
+        })
     }
 
     return (

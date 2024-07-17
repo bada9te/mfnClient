@@ -76,14 +76,14 @@ export default function Post(props: {
 
     return (
         <div className={`card w-fit md:${fullWidth ? 'w-full rounded-none' : 'w-80 max-w-80'} bg-black shadow-xl text-white glass`}>
-            <div className="m-3 flex flex-row gap-3 cursor-pointer">
+            <div className="m-2 flex flex-row gap-3 cursor-pointer">
                 <div className="dropdown w-full dropdown-end text-start">
                     <button 
                         className="
                         btn btn-primary
                         text-white font-bold 
                         flex items-center 
-                        justify-start rounded-full p-1
+                        justify-start p-1
                         shadow-lg glass w-full"
                         role="button"
                     >
@@ -128,12 +128,12 @@ export default function Post(props: {
             <div className="card-body text-start p-5">
                 <h2 className="card-title text-2xl">
                     {data?.title}
-                    <div className="badge badge-secondary glass bg-purple-500">{data?.category}</div>
+                    <div className="badge badge-secondary glass bg-[#1ba39c] text-white">{data?.category}</div>
                 </h2>
                 <p className="text-lg">{data?.description}</p>
             </div>
 
-            <div className="stats glass mx-2 mt-2 rounded-lg thin-scrollbar">
+            <div className="stats glass mx-2 mt-2 thin-scrollbar">
                 <div className="stat text-center">
                     <div className={`cursor-pointer ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-green-500"}`} onClick={handleSwitchLike}>
                         <svg
@@ -175,7 +175,7 @@ export default function Post(props: {
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?
-                        <button className="btn btn-primary w-full glass bg-red-500 text-white rounded-none rounded-b-2xl" onClick={handlePauseCLick}>
+                        <button className="btn btn-primary w-full glass bg-red-500 text-white rounded-none" onClick={handlePauseCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">
                                 <path fillRule="evenodd"
@@ -185,7 +185,7 @@ export default function Post(props: {
                             Pause
                         </button>
                         :
-                        <button className="btn btn-primary w-full glass text-white rounded-none rounded-b-2xl" onClick={handlePlayCLick}>
+                        <button className="btn btn-primary w-full glass text-white rounded-none" onClick={handlePlayCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
                                 <path

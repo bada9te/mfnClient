@@ -2,7 +2,7 @@
 import {Post as TPost, usePostsSavedByUserSuspenseQuery, usePostsSuspenseQuery} from "@/utils/graphql-requests/generated/schema";
 import Post from "@/components/entities/post/post";
 import Pagination from "@/components/common/pagination/pagination";
-import InfoImage from "@/components/info-image/info-image";
+import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
 
 

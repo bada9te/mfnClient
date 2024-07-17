@@ -1,3 +1,4 @@
+import InfoImage from "@/components/common/info-image/info-image";
 import React from "react";
 
 export default function Playlist(props: {
@@ -6,14 +7,23 @@ export default function Playlist(props: {
 }) {
     const { posts, title } = props;
     return (
-        <div className="collapse collapse-plus bg-base-200 rounded-2xl shadow-md">
+        <div className="collapse collapse-plus bg-black glass shadow-2xl">
             <input type="checkbox" name="my-accordion-3"/>
-            <div className="collapse-title text-xl font-medium">
-                {title}
+            <div className="collapse-title text-xl font-medium text-start">
+                <span className="flex flex-row items-center">
+                    {title} 
+                    {' '}
+                    (
+                        {posts?.length} 
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 ml-1">
+                            <path fillRule="evenodd" d="M17.721 1.599a.75.75 0 0 1 .279.583v11.29a2.25 2.25 0 0 1-1.774 2.2l-2.041.44a2.216 2.216 0 0 1-.938-4.332l2.662-.577a.75.75 0 0 0 .591-.733V6.112l-8 1.73v7.684a2.25 2.25 0 0 1-1.774 2.2l-2.042.44a2.216 2.216 0 1 1-.935-4.331l2.659-.573A.75.75 0 0 0 7 12.529V4.236a.75.75 0 0 1 .591-.733l9.5-2.054a.75.75 0 0 1 .63.15Z" clipRule="evenodd" />
+                        </svg>
+                    )
+                </span>
             </div>
             <div className="collapse-content">
                 <div className="py-2 join join-horizontal w-full flex justify-center">
-                    <button className="btn btn-accent join-item">
+                    <button className="btn btn-sm btn-primary glass join-item text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"
@@ -22,7 +32,7 @@ export default function Playlist(props: {
                         </svg>
                         <span className="hidden md:block">Add track</span>
                     </button>
-                    <button className="btn btn-warning join-item">
+                    <button className="btn btn-sm btn-primary glass join-item text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"
@@ -31,7 +41,7 @@ export default function Playlist(props: {
                         </svg>
                         <span className="hidden md:block">Remove track</span>
                     </button>
-                    <button className="btn btn-neutral join-item">
+                    <button className="btn btn-sm btn-primary glass join-item text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path
@@ -41,7 +51,7 @@ export default function Playlist(props: {
                         </svg>
                         <span className="hidden md:block">Share playlist</span>
                     </button>
-                    <button className="btn btn-error join-item">
+                    <button className="btn btn-sm btn-error glass join-item text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"
@@ -57,6 +67,7 @@ export default function Playlist(props: {
                             <div key={index}>{post}</div>
                         ))
                     }
+                    {posts?.length === 0 && <InfoImage text="No tracks yet"/>}
                 </div>
             </div>
         </div>

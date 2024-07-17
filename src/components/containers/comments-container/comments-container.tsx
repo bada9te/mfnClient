@@ -1,6 +1,6 @@
 import Comment from "@/components/entities/comment/comment";
 import CommentSkeleton from "@/components/entities/comment/comment-skeleton";
-import InfoImage from "@/components/info-image/info-image";
+import InfoImage from "@/components/common/info-image/info-image";
 import { Comment as TComment, useCommentsByPostIdLazyQuery, useCommentsByPostIdQuery, useCommentsByPostIdSuspenseQuery } from "@/utils/graphql-requests/generated/schema";
 import { useEffect } from "react";
 import CommentsContainerSkeleton from "./comments-container-skeleton";

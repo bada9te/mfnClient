@@ -1,7 +1,7 @@
 "use client"
 import {TPaginationProps} from "@/types/pagination";
 import {useNotificationsSuspenseQuery} from "@/utils/graphql-requests/generated/schema";
-import InfoImage from "@/components/info-image/info-image";
+import InfoImage from "@/components/common/info-image/info-image";
 import Notification from "@/components/entities/notification/notification";
 import Pagination from "@/components/common/pagination/pagination";
 

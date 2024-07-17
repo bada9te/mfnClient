@@ -733,7 +733,7 @@ export type NotificationsMarkAsReadByIdsMutationVariables = Exact<{
 
 export type NotificationsMarkAsReadByIdsMutation = { __typename?: 'Mutation', notificationsMarkAsReadByIds: { __typename?: 'NotificationCount', count: number } };
 
-export type CorePlaylistFieldsFragment = { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
+export type CorePlaylistFieldsFragment = { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
 
 export type PlaylistsByOwnerIdQueryVariables = Exact<{
   owner: Scalars['ID']['input'];
@@ -757,7 +757,7 @@ export type PlaylistCreateMutationVariables = Exact<{
 }>;
 
 
-export type PlaylistCreateMutation = { __typename?: 'Mutation', playlistCreate: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type PlaylistCreateMutation = { __typename?: 'Mutation', playlistCreate: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type PlaylistSwicthTrackMutationVariables = Exact<{
   input: SwitchTrackInPlaylistInput;
@@ -1025,11 +1025,6 @@ export const CoreNotificationFieldsFragmentDoc = gql`
 export const CorePlaylistFieldsFragmentDoc = gql`
     fragment CorePlaylistFields on Playlist {
   _id
-  owner {
-    _id
-    nick
-    avatar
-  }
   title
   tracks {
     ...CorePostFields
@@ -1490,6 +1485,11 @@ export const PlaylistsByOwnerIdDocument = gql`
   playlistsByOwnerId(owner: $owner, offset: $offset, limit: $limit) {
     playlists {
       ...CorePlaylistFields
+      owner {
+        _id
+        nick
+        avatar
+      }
     }
     count
   }
@@ -1535,6 +1535,11 @@ export const PlaylistsPublicAvailableDocument = gql`
   playlistsPublicAvailable(offset: $offset, limit: $limit) {
     playlists {
       ...CorePlaylistFields
+      owner {
+        _id
+        nick
+        avatar
+      }
     }
     count
   }
@@ -1611,6 +1616,11 @@ export const PlaylistSwicthTrackDocument = gql`
     mutation playlistSwicthTrack($input: SwitchTrackInPlaylistInput!) {
   playlistSwicthTrack(input: $input) {
     ...CorePlaylistFields
+    owner {
+      _id
+      nick
+      avatar
+    }
   }
 }
     ${CorePlaylistFieldsFragmentDoc}`;

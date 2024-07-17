@@ -2,7 +2,7 @@
 import Battle from "@/components/entities/battle/battle";
 import Post from "@/components/entities/post/post";
 import {useBattlesByStatusSuspenseQuery} from "@/utils/graphql-requests/generated/schema";
-import InfoImage from "@/components/info-image/info-image";
+import InfoImage from "@/components/common/info-image/info-image";
 import Pagination from "@/components/common/pagination/pagination";
 import {TPaginationProps} from "@/types/pagination";
 
