@@ -27,7 +27,7 @@ export default function ProfileEditForm() {
     const { register: registerNick, handleSubmit: handleSubmitNick, formState: {errors: errorsNick} } = useForm<InputsNickname>();
     const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
     const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail} } = useForm<InputsEmail>();
-    const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>()
+    const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>();
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useUserUpdateMutation();
     const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();

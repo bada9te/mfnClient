@@ -1,4 +1,5 @@
-import {applyMiddleware, combineReducers, compose, configureStore, Tuple} from "@reduxjs/toolkit";
+"use client"
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 // @ts-ignore
 import bottomBarReducer from "@/lib/redux/slices/bottom-bar";

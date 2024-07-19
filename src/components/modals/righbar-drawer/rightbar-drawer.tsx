@@ -70,10 +70,7 @@ export default function RightBarDrawer(props: {
                                                 {
                                                     data?.usersByNickname?.map((u, k) => {
                                                         return (
-                                                            <>
                                                             <RightbarDrawerUser key={k} data={u as User} />
-                                                            <RightbarDrawerUserSkeleton/>
-                                                            </>
 
                                                         );
                                                     })
@@ -86,7 +83,8 @@ export default function RightBarDrawer(props: {
                                 } else {
                                     return (
                                         <>
-                                            CODE CODE CODE
+                                            <RightbarDrawerUserSkeleton/>
+                                            <RightbarDrawerUserSkeleton/>
                                         </>
                                     );
                                 }
