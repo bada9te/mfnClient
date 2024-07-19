@@ -5,6 +5,7 @@ import {formsConstants} from "@/config/forms";
 import {useSnackbar} from "notistack";
 import {useUserCreateMutation} from "@/utils/graphql-requests/generated/schema";
 import {useRouter} from 'next/navigation';
+import FormsSocials from "../common/forms-socials/forms-socials";
 
 type Inputs = {
     email: string;
@@ -131,6 +132,9 @@ export default function RegisterForm() {
             <div className="form-control mt-4">
                 <button className="btn btn-primary glass text-white">Register</button>
             </div>
+
+            <FormsSocials/>
+
             <label className="label flex flex-col gap-3 justify-start items-start">
                 <Link href="/login" className="label-text-alt link link-hover">Already have an account?</Link>
             </label>

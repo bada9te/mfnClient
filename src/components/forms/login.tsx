@@ -9,6 +9,7 @@ import {useAppDispatch} from "@/lib/redux/store";
 import {setUser} from "@/lib/redux/slices/user";
 import {setCookie} from "cookies-next";
 import nextConfig from "../../../next.config.mjs";
+import FormsSocials from "../common/forms-socials/forms-socials";
 
 
 type Inputs = {
@@ -91,6 +92,9 @@ export default function LoginForm() {
             <div className="form-control mt-4">
                 <button className="btn btn-primary glass text-white">Login</button>
             </div>
+
+            <FormsSocials/>
+
             <label className="label flex flex-col gap-3 justify-start items-start">
                 <Link href="/register" className="label-text-alt link link-hover">Not registered
                     yet?</Link>
