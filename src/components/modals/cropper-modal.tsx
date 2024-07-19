@@ -8,7 +8,7 @@ export default function ImageCropperModal(props: {
     refDialog: React.MutableRefObject<HTMLDialogElement | null>
     image: any;
     handleImageCropModalClose: (b: string | null) => void;
-    imageType: "post-image" | "background"
+    imageType: "post-image" | "background" | "avatar"
 }) {
     const {image, handleImageCropModalClose, imageType, refDialog} = props;
 

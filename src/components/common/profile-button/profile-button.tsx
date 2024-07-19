@@ -4,6 +4,7 @@ import { useAccountModal, useChainModal, useConnectModal } from "@rainbow-me/rai
 import {useEffect, useState} from "react";
 // @ts-ignore
 import { useAccount } from "wagmi";
+import config from "@/../next.config.mjs";
 
 export default function ProfileButton() {
     // Use the useSelector hook to get the user state from redux store
@@ -40,7 +41,7 @@ export default function ProfileButton() {
                         height={40}
                         alt="Avatar"
                         className="rounded-full"
-                        src={user?.avatar?.length ? user?.avatar : "/assets/icons/logo_clear.png"}
+                        src={user?.avatar?.length ? `${config.env?.serverBase}/files/${user.avatar}` : "/assets/icons/logo_clear.png"}
                     />
                 </div>
             </div>

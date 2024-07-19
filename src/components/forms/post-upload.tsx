@@ -29,11 +29,13 @@ export default function PostUploadForm() {
     const router = useRouter();
     const cropperModalRef = useRef<HTMLDialogElement | null>(null);
     const [ imageURL, setImageURL ] = useState<string>("");
+    const [ imageFile, setImageFile ] = useState<File | null>(null);
     const [ croppedBlob, setCroppedBlob ] = useState<IBlob | null>(null);
 
     const handlePicture = (file: File | null) => {
         if (file !== null) {
             setImageURL(URL.createObjectURL(file));
+            setImageFile(file);
             // open cropper
             cropperModalRef.current && cropperModalRef.current.showModal();
         }
@@ -59,7 +61,7 @@ export default function PostUploadForm() {
             }).catch(err => {
                 enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
             }),
-            httpSaveFile(blobToFile(croppedBlob as IBlob, new Date().getTime().toString())).then(({data}) => {
+            httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`)).then(({data}) => {
                 uploadedImageName = data.data.filename;
             }).catch(err => {
                 enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
