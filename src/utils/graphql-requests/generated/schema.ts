@@ -759,6 +759,13 @@ export type PlaylistCreateMutationVariables = Exact<{
 
 export type PlaylistCreateMutation = { __typename?: 'Mutation', playlistCreate: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
+export type PlaylistDeleteByIdMutationVariables = Exact<{
+  _id: Scalars['ID']['input'];
+}>;
+
+
+export type PlaylistDeleteByIdMutation = { __typename?: 'Mutation', playlistDeleteById: { __typename?: 'Playlist', _id: string } };
+
 export type PlaylistSwicthTrackMutationVariables = Exact<{
   input: SwitchTrackInPlaylistInput;
 }>;
@@ -1612,6 +1619,39 @@ export function usePlaylistCreateMutation(baseOptions?: Apollo.MutationHookOptio
 export type PlaylistCreateMutationHookResult = ReturnType<typeof usePlaylistCreateMutation>;
 export type PlaylistCreateMutationResult = Apollo.MutationResult<PlaylistCreateMutation>;
 export type PlaylistCreateMutationOptions = Apollo.BaseMutationOptions<PlaylistCreateMutation, PlaylistCreateMutationVariables>;
+export const PlaylistDeleteByIdDocument = gql`
+    mutation playlistDeleteById($_id: ID!) {
+  playlistDeleteById(_id: $_id) {
+    _id
+  }
+}
+    `;
+export type PlaylistDeleteByIdMutationFn = Apollo.MutationFunction<PlaylistDeleteByIdMutation, PlaylistDeleteByIdMutationVariables>;
+
+/**
+ * __usePlaylistDeleteByIdMutation__
+ *
+ * To run a mutation, you first call `usePlaylistDeleteByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePlaylistDeleteByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [playlistDeleteByIdMutation, { data, loading, error }] = usePlaylistDeleteByIdMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function usePlaylistDeleteByIdMutation(baseOptions?: Apollo.MutationHookOptions<PlaylistDeleteByIdMutation, PlaylistDeleteByIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PlaylistDeleteByIdMutation, PlaylistDeleteByIdMutationVariables>(PlaylistDeleteByIdDocument, options);
+      }
+export type PlaylistDeleteByIdMutationHookResult = ReturnType<typeof usePlaylistDeleteByIdMutation>;
+export type PlaylistDeleteByIdMutationResult = Apollo.MutationResult<PlaylistDeleteByIdMutation>;
+export type PlaylistDeleteByIdMutationOptions = Apollo.BaseMutationOptions<PlaylistDeleteByIdMutation, PlaylistDeleteByIdMutationVariables>;
 export const PlaylistSwicthTrackDocument = gql`
     mutation playlistSwicthTrack($input: SwitchTrackInPlaylistInput!) {
   playlistSwicthTrack(input: $input) {

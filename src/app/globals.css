@@ -64,6 +64,23 @@ body {
   .animated-box-tools::after {
     @apply content-[''] absolute inset-0.5 rounded-2xl
   }
+
+
+  .pulsar-shadow {
+    animation: pulsar-shadow-animation 6s infinite;
+  }
+  
+  @keyframes pulsar-shadow-animation {
+    0% {
+      box-shadow: none;
+    }
+    50% {
+      box-shadow: 0 0 20px #1ba39c; /* Tailwind’s shadow-2xl equivalent */
+    }
+    100% {
+      box-shadow: none;
+    }
+  }
 }
 
 .main-layout-card {
@@ -94,3 +111,6 @@ select {
   text-indent: 1px;
   text-overflow: '';
 }
+
+
+

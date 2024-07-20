@@ -5,14 +5,15 @@ import nextConfig from '../next.config.mjs';
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-    const isLoggedIn = cookies().get(process.env.NEXT_PUBLIC_SESSION_COOKIE_KEY as string);
-    const pathname = request.nextUrl.pathname;
-
     const jwtCookieKey = nextConfig.env?.userSessionCookieKey as string;
     const userIdCookieKey = nextConfig.env?.userIdCookieKey as string;
 
+
+    const isLoggedIn = cookies().get(jwtCookieKey);
+    const pathname = request.nextUrl.pathname;
+
+
     if (pathname === '/logout') {
-        console.log("awddadhkawdhaku")
         const res = NextResponse.next();
         res.cookies.set(jwtCookieKey, "", {
             expires: new Date(0),

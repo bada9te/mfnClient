@@ -27,7 +27,7 @@ export default function PlaylistsContainerOwner(props: TPaginationProps & { owne
                     {
                         data?.playlistsByOwnerId.playlists?.map((playlist, key) => {
                             return (
-                                <Playlist key={key} title={playlist.title} posts={playlist.tracks?.map((post, keyP) => {
+                                <Playlist key={key} _id={playlist._id} title={playlist.title} posts={playlist.tracks?.map((post, keyP) => {
                                     return (
                                         <Post data={post as TPost} key={keyP}/>
                                     );

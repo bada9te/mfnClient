@@ -1,11 +1,34 @@
+import { revalidatePathAction } from "@/actions/revalidation";
 import InfoImage from "@/components/common/info-image/info-image";
+import SelectTrackModal from "@/components/modals/select-track-modal";
+import { usePlaylistDeleteByIdMutation } from "@/utils/graphql-requests/generated/schema";
+import { useSnackbar } from "notistack";
 import React from "react";
 
 export default function Playlist(props: {
+    _id: string;
     title: string;
     posts: React.ReactNode[] | undefined;
 }) {
-    const { posts, title } = props;
+    const { posts, title, _id } = props;
+    const [ deletePlaylist ] = usePlaylistDeleteByIdMutation({
+        variables: {
+            _id
+        }
+    });
+    const { enqueueSnackbar } = useSnackbar();
+
+    const handleSelfDelete = () => {
+        enqueueSnackbar("Deleting playlist...", {autoHideDuration: 1500});
+        deletePlaylist().then(_ => {
+            enqueueSnackbar("Playlist deleted", {autoHideDuration: 2000, variant: 'success'});
+            revalidatePathAction("/playlists/my-playlists", "page");
+            revalidatePathAction("/playlists/explore", "page");
+        }).catch(_ => {
+            enqueueSnackbar("Playlist deletion error, pls try again later", {autoHideDuration: 3000, variant: 'error'});
+        });
+    }
+
     return (
         <div className="collapse collapse-plus bg-black glass shadow-2xl">
             <input type="checkbox" name="my-accordion-3"/>
@@ -23,15 +46,20 @@ export default function Playlist(props: {
             </div>
             <div className="collapse-content">
                 <div className="py-2 join join-horizontal w-full flex justify-center">
-                    <button className="btn btn-sm btn-primary glass join-item text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                             className="size-5">
-                            <path fillRule="evenodd"
-                                  d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-11.25a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"
-                                  clipRule="evenodd"/>
-                        </svg>
-                        <span className="hidden md:block">Add track</span>
-                    </button>
+                    <SelectTrackModal
+                        button={
+                            <button className="btn btn-sm btn-primary glass join-item text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    className="size-5">
+                                    <path fillRule="evenodd"
+                                        d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-11.25a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"
+                                        clipRule="evenodd"/>
+                                </svg>
+                                <span className="hidden md:block">Add track</span>
+                            </button>
+                        }
+                    />
+                    
                     <button className="btn btn-sm btn-primary glass join-item text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
@@ -51,7 +79,7 @@ export default function Playlist(props: {
                         </svg>
                         <span className="hidden md:block">Share playlist</span>
                     </button>
-                    <button className="btn btn-sm btn-error glass join-item text-white">
+                    <button className="btn btn-sm btn-error glass join-item text-white" onClick={handleSelfDelete}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">
                             <path fillRule="evenodd"

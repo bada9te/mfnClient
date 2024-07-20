@@ -149,113 +149,116 @@ export default function PostUploadForm() {
             refDialog={cropperModalRef}
             handleImageCropModalClose={handleImageCropModalClose}
         />
-        <form className="card-body text-white glass bg-black shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
-            <div className="divider divider-primary">Post stup</div>
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text">Track title</span>
-                </label>
-                <input type="text" placeholder="Track title" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
-                    ...register("title", {
-                        maxLength: { value: 15, message: "Max length must be 15" },
-                        required: { value: true, message: "This field is required" }
-                    })
-                }/>
-                {
-                    errors.title &&
-                    <label className="label">
-                        <span className="label-text text-error">{errors.title.message}</span>
-                    </label>
-                }
-            </div>
+        <div className="card overflow-hidden bg-black shadow-xl glass">
 
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text">Track description</span>
-                </label>
-                <input type="text" placeholder="Track description" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
-                    ...register("description", {
-                        maxLength: { value: 25, message: "Max length must be 25" },
-                        required: { value: true, message: "This field is required" }
-                    })
-                }/>
-                {
-                    errors.description &&
+            <form className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+                <div className="divider divider-primary">Post stup</div>
+                <div className="form-control">
                     <label className="label">
-                        <span className="label-text text-error">{errors.description.message}</span>
+                        <span className="label-text">Track title</span>
                     </label>
-                }
-            </div>
-
-            <label className="form-control w-full">
-                <div className="label">
-                    <span className="label-text">Track image</span>
-                    <span className="label-text-alt">.jpg, .png</span>
-                </div>
-                <input 
-                    type="file" 
-                    className="file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
-                    onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
-                    {...register("image", {
-                        required: { value: true, message: "This field is required" }
-                    })}
-                />
-                {
-                    errors.image &&
-                    <label className="label">
-                        <span className="label-text text-error">{errors.image.message}</span>
-                    </label>
-                }
-            </label>
-
-            <label className="form-control w-full">
-                <div className="label">
-                    <span className="label-text">Track audio</span>
-                    <span className="label-text-alt">.mp3, .wav</span>
-                </div>
-                <input type="file" className="file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
-                    ...register("audio", {
-                        required: { value: true, message: "This field is required" }
-                    })
-                }/>
-                {
-                    errors.audio &&
-                    <label className="label">
-                        <span className="label-text text-error">{errors.audio.message}</span>
-                    </label>
-                }
-            </label>
-
-            <label className="form-control w-full">
-                <div className="label">
-                    <span className="label-text">Genre</span>
-                </div>
-                <select className="btn text-start glass bg-[#3b3b3b]" {
-                    ...register("genre", {
-                        required: { value: true, message: "This field is required" }
-                    })
-                }>
-                    {
-                        genres.map((gen, key) => {
-                            return <option className="bg-[#272727] text-lg" key={key} value={gen.title}>{gen.title}</option>
+                    <input type="text" placeholder="Track title" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                        ...register("title", {
+                            maxLength: { value: 15, message: "Max length must be 15" },
+                            required: { value: true, message: "This field is required" }
                         })
-                    }
-                </select>
-            </label>
-
-            <div className="form-control mt-4">
-                <label className="label cursor-pointer">
-                    <span className="label-text">Downloads allowed</span>
-                    <input type="checkbox" className="checkbox checkbox-primary" {
-                        ...register("downloadsAllowed")
                     }/>
-                </label>
-            </div>
+                    {
+                        errors.title &&
+                        <label className="label">
+                            <span className="label-text text-error">{errors.title.message}</span>
+                        </label>
+                    }
+                </div>
 
-            <div className="form-control mt-4">
-                <button className="btn btn-primary glass text-white">Upload</button>
-            </div>
-        </form>
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text">Track description</span>
+                    </label>
+                    <input type="text" placeholder="Track description" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                        ...register("description", {
+                            maxLength: { value: 25, message: "Max length must be 25" },
+                            required: { value: true, message: "This field is required" }
+                        })
+                    }/>
+                    {
+                        errors.description &&
+                        <label className="label">
+                            <span className="label-text text-error">{errors.description.message}</span>
+                        </label>
+                    }
+                </div>
+
+                <label className="form-control w-full">
+                    <div className="label">
+                        <span className="label-text">Track image</span>
+                        <span className="label-text-alt">.jpg, .png</span>
+                    </div>
+                    <input 
+                        type="file" 
+                        className="file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
+                        onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
+                        {...register("image", {
+                            required: { value: true, message: "This field is required" }
+                        })}
+                    />
+                    {
+                        errors.image &&
+                        <label className="label">
+                            <span className="label-text text-error">{errors.image.message}</span>
+                        </label>
+                    }
+                </label>
+
+                <label className="form-control w-full">
+                    <div className="label">
+                        <span className="label-text">Track audio</span>
+                        <span className="label-text-alt">.mp3, .wav</span>
+                    </div>
+                    <input type="file" className="file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
+                        ...register("audio", {
+                            required: { value: true, message: "This field is required" }
+                        })
+                    }/>
+                    {
+                        errors.audio &&
+                        <label className="label">
+                            <span className="label-text text-error">{errors.audio.message}</span>
+                        </label>
+                    }
+                </label>
+
+                <label className="form-control w-full">
+                    <div className="label">
+                        <span className="label-text">Genre</span>
+                    </div>
+                    <select className="btn text-start glass bg-[#3b3b3b]" {
+                        ...register("genre", {
+                            required: { value: true, message: "This field is required" }
+                        })
+                    }>
+                        {
+                            genres.map((gen, key) => {
+                                return <option className="bg-[#272727] text-lg" key={key} value={gen.title}>{gen.title}</option>
+                            })
+                        }
+                    </select>
+                </label>
+
+                <div className="form-control mt-4">
+                    <label className="label cursor-pointer">
+                        <span className="label-text">Downloads allowed</span>
+                        <input type="checkbox" className="checkbox checkbox-primary" {
+                            ...register("downloadsAllowed")
+                        }/>
+                    </label>
+                </div>
+
+                <div className="form-control mt-4">
+                    <button className="btn btn-primary glass text-white">Upload</button>
+                </div>
+            </form>
+        </div>
         </>
     );
 }

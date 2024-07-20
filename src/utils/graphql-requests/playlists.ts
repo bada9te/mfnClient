@@ -66,6 +66,15 @@ export const PLAYLIST_CREATE_MUTATION = gql`
     }
 `;
 
+export const PLAYLIST_DELETE_BY_ID_MUTATION = gql`
+    ${CORE_PLAYLIST_FIELDS}
+    mutation playlistDeleteById($_id: ID!) {
+        playlistDeleteById(_id: $_id) {
+            _id
+        }
+    }
+`;
+
 export const PLAYLIST_SWICTH_TRACK_MUTATION = gql`
     ${CORE_PLAYLIST_FIELDS}
     mutation playlistSwicthTrack($input: SwitchTrackInPlaylistInput!) {
