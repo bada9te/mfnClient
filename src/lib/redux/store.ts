@@ -9,17 +9,34 @@ import * as asyncInitialState from 'redux-async-initial-state';
 import {httpGetCurrentUser} from "@/utils/http-requests/auth";
 import userReducer from "@/lib/redux/slices/user";
 import playerReducer from "@/lib/redux/slices/player";
-import storagePersist from "redux-persist/lib/storage";
+//import storagePersist from "redux-persist/lib/storage";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+
+const createNoopStorage = () => {
+  return {
+    getItem(_key: any) {
+      return Promise.resolve(null);
+    },
+    setItem(_key:any, value:any) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key:any) {
+      return Promise.resolve();
+    },
+  };
+};
+
+const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
 
 
 const userPersistConfig = {
     key: 'user',
-    storage: storagePersist,
+    storage,
 };
 
 const playerPersistConfig = {
     key: 'player',
-    storage: storagePersist,
+    storage,
 }
 
 const rootReducer = combineReducers({

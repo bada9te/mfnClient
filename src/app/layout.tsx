@@ -68,7 +68,6 @@ export default function RootLayout({
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
                         <BottomNav/>
                     </ReduxProvider>

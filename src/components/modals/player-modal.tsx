@@ -33,13 +33,8 @@ export default function PlayerModal({button}: {button: React.ReactElement}) {
 
                     <h4 className="font-bold text-lg">In Player</h4>
 
-                    <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
+                    <div className="flex-1 h-fit w-full flex justify-center items-end overflow-y-auto overflow-x-hidden mt-5 no-scrollbar">
                         <AudioPlayer/>
-                    </div>
-
-                    <div className="modal-action"> 
-                        <button className="btn">BTN</button>
-                        <button className="btn">BTN</button>
                     </div>
                 </div>
             </dialog>

@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 // @ts-ignore
 import { useAccount } from "wagmi";
 import config from "@/../next.config.mjs";
+import Link from "next/link";
 
 export default function ProfileButton() {
     // Use the useSelector hook to get the user state from redux store
@@ -50,7 +51,7 @@ export default function ProfileButton() {
             {user?._id ? (
                 <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 glass bg-black">
                     <li>
-                        <a href="/profile/me/1" className="justify-between">
+                        <Link href="/profile/me/1" className="justify-between">
                             <div className="flex flex-wrap gap-1">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +65,7 @@ export default function ProfileButton() {
                                 Profile
                             </div>
                             <span className="badge">New</span>
-                        </a>
+                        </Link>
                     </li>
                     {
                         account.address
@@ -122,7 +123,7 @@ export default function ProfileButton() {
                         
                     }
                     <li>
-                        <a href="/profile/me/notifications/new/1" className="justify-between">
+                        <Link href="/profile/me/notifications/new/1" className="justify-between">
                             <div className="flex flex-wrap gap-1">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -139,10 +140,10 @@ export default function ProfileButton() {
                                 Notifications
                             </div>
                             <span className="badge">10</span>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/profile/me/edit">
+                        <Link href="/profile/me/edit">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
@@ -156,10 +157,10 @@ export default function ProfileButton() {
                                 />
                             </svg>
                             Edit profile
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/profile/me/saved/1">
+                        <Link href="/profile/me/saved/1">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
@@ -173,10 +174,10 @@ export default function ProfileButton() {
                                 />
                             </svg>
                             Saved posts
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/support">
+                        <Link href="/support">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
@@ -190,10 +191,10 @@ export default function ProfileButton() {
                                 />
                             </svg>
                             Support
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/logout">
+                        <Link href="/logout">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
@@ -212,13 +213,13 @@ export default function ProfileButton() {
                                 />
                             </svg>
                             Logout
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             ) : (
                 <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 glass bg-black">
                     <li>
-                        <a href="/support">
+                        <Link href="/support">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
@@ -232,10 +233,10 @@ export default function ProfileButton() {
                                 />
                             </svg>
                             Support
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/login">
+                        <Link href="/login">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
@@ -249,7 +250,7 @@ export default function ProfileButton() {
                                 />
                             </svg>
                             Login
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             )}
