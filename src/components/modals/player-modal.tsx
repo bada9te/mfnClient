@@ -1,6 +1,7 @@
 import { setTab } from "@/lib/redux/slices/bottom-bar";
 import { useAppDispatch } from "@/lib/redux/store";
 import React, { useRef } from "react";
+import AudioPlayer from "../common/player/player";
 
 export default function PlayerModal({button}: {button: React.ReactElement}) {
     const ref = useRef<HTMLDialogElement | null>(null);
@@ -33,7 +34,7 @@ export default function PlayerModal({button}: {button: React.ReactElement}) {
                     <h4 className="font-bold text-lg">In Player</h4>
 
                     <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
-                        DATA
+                        <AudioPlayer/>
                     </div>
 
                     <div className="modal-action"> 
