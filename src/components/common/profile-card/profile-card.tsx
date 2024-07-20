@@ -22,6 +22,9 @@ export default function ProfileCard(props: {
     const user = useAppSelector(state => state.user.user);
     const dispatch = useAppDispatch();
     const { enqueueSnackbar } = useSnackbar();
+    const refAvatar = useRef<HTMLInputElement | null>(null);
+    const refBackground = useRef<HTMLInputElement | null>(null);
+
 
     const [ updateUser ] = useUserUpdateMutation();
 
@@ -50,6 +53,7 @@ export default function ProfileCard(props: {
 
             switch (imageType) {
                 case "avatar":
+                    refAvatar.current && (refAvatar.current.value = "")
                     dispatch(setUserAvatar(data.data.filename));
                     updateUser({
                         variables: {
@@ -62,6 +66,7 @@ export default function ProfileCard(props: {
                     });
                     break;
                 case "background": 
+                    refBackground.current && (refBackground.current.value = "");
                     dispatch(setUserBackground(data.data.filename));
                     updateUser({
                         variables: {
@@ -122,6 +127,7 @@ export default function ProfileCard(props: {
                                             <span className="label-text-alt">.jpg, .png</span>
                                         </div>
                                         <input 
+                                            ref={refAvatar}
                                             type="file" 
                                             className="file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
                                             onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null, "avatar")}
@@ -134,6 +140,7 @@ export default function ProfileCard(props: {
                                             <span className="label-text-alt">.jpg, .png</span>
                                         </div>
                                         <input 
+                                            ref={refBackground}
                                             type="file" 
                                             className="file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
                                             onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null, "background")}
