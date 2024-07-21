@@ -3,11 +3,13 @@ import React from 'react'
 import ReactHowler from 'react-howler'
 import raf from 'raf' // requestAnimationFrame polyfill
 import PlayerTrackInfo from './player-track-info'
+import { store } from '@/lib/redux/store'
+import { setIsLoop, setIsMute, setIsPlaying } from '@/lib/redux/slices/player'
 
 class AudioPlayer extends React.Component {
   constructor (props) {
     super(props)
-
+    
     this.state = {
       playing: false,
       loaded: false,
@@ -37,6 +39,7 @@ class AudioPlayer extends React.Component {
   }
 
   handleToggle () {
+    store.dispatch(setIsPlaying(!this.state.playing));
     this.setState({
       playing: !this.state.playing
     })
@@ -50,6 +53,7 @@ class AudioPlayer extends React.Component {
   }
 
   handleOnPlay () {
+    store.dispatch(setIsPlaying(true));
     this.setState({
       playing: true
     })
@@ -57,6 +61,7 @@ class AudioPlayer extends React.Component {
   }
 
   handleOnEnd () {
+    store.dispatch(setIsPlaying(false));
     this.setState({
       playing: false
     })
@@ -64,7 +69,8 @@ class AudioPlayer extends React.Component {
   }
 
   handleStop () {
-    this.player.stop()
+    this.player.stop();
+    store.dispatch(setIsPlaying(false));
     this.setState({
       playing: false // Need to update our local state so we don't immediately invoke autoplay
     })
@@ -72,12 +78,14 @@ class AudioPlayer extends React.Component {
   }
 
   handleLoopToggle () {
+    store.dispatch(setIsLoop(!this.state.loop));
     this.setState({
       loop: !this.state.loop
     })
   }
 
   handleMuteToggle () {
+    store.dispatch(setIsMute(!this.state.mute));
     this.setState({
       mute: !this.state.mute
     })

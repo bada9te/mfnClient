@@ -2,15 +2,17 @@ import {Post} from "@/utils/graphql-requests/generated/schema";
 import {createSlice} from "@reduxjs/toolkit";
 
 export interface IPlayerSlice {
-    post: Post | null;
-    isLoop: boolean;
     isPlaying: boolean;
+    isLoop: boolean;
+    isMute: boolean;
+    post: Post | null;
 }
 
 
 const initialState: IPlayerSlice = {
     isPlaying: false,
     isLoop: false,
+    isMute: false,
     post: null
 };
 
@@ -35,6 +37,9 @@ export const playerSlice = createSlice({
         },
         setIsLoop: (state, action) => {
             state.isLoop = action.payload;
+        },
+        setIsMute: (state, action) => {
+            state.isMute = action.payload;
         }
     },
 });
@@ -43,5 +48,6 @@ export const {
     setIsPlaying,
     setPost,
     setIsLoop,
+    setIsMute,
 } = playerSlice.actions;
 export default playerSlice.reducer;

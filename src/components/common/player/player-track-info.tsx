@@ -1,31 +1,82 @@
+"use client"
 import config from "@/../next.config.mjs";
-import { usePostsByIdsLazyQuery, User } from "@/utils/graphql-requests/generated/schema";
-import { useEffect } from "react";
+import { useAppSelector } from "@/lib/redux/store";
+import { usePostsByIdsLazyQuery, usePostSwicthInSavedMutation, usePostSwitchLikeMutation, User } from "@/utils/graphql-requests/generated/schema";
+import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 
 
 export default function PlayerTrackInfo() {
+    const post = useAppSelector(state => state.player.post);
+    const user = useAppSelector(state => state.user.user);
+    const { enqueueSnackbar } = useSnackbar();
     const [fetchPostsDataByIds, {data, loading}] = usePostsByIdsLazyQuery();
+    const [isMounted, setIsMounted] = useState(false);
+    const [switchLike] = usePostSwitchLikeMutation({
+        variables: {
+            input: {
+                userId: user?._id as string,
+                postId: post?._id as string,
+            }
+        }
+    });
+    const [switchInSaved] = usePostSwicthInSavedMutation({
+        variables: {
+            input: {
+                userId: user?._id as string,
+                postId: post?._id as string,
+            }
+        }
+    })
+
+    // on like click
+    const handleSwitchLike = async() => {
+        if (!user?._id) {
+            enqueueSnackbar("Not authenticated", {autoHideDuration: 1000});
+            return;
+        }
+        await switchLike();
+    }
+
+    // on save click
+    const handleSwitchInSaved = async() => {
+        if (!user?._id) {
+            enqueueSnackbar("Not authenticated", {autoHideDuration: 1000});
+            return;
+        }
+        await switchInSaved();
+    }
 
     useEffect(() => {
-        fetchPostsDataByIds({
-            variables: {
-                ids: ['66819f3c2746e06bf102dd7a']
-            }
-        });
-    }, [])
+        if (post && post?._id) {
+            fetchPostsDataByIds({
+                variables: {
+                    ids: [post._id]
+                }
+            });
+        }
+    }, [post]);
 
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return;
+    }
+    
     return (
         <div className="flex h-auto flex-col flex-1 gap-1">
             <div className="flex flex-row mb-3 gap-3">
                 <img 
-                    src={`${config.env?.serverBase}/files/pngtree-abstract-bg-image_914283.png`}
+                    src={post?.image ? `${config.env?.serverBase}/files/${post.image}` : 'assets/bgs/defaultProfileBg.png'}
                     className="shadow-2xl max-h-[180px] h-[180px] max-w-80" 
                 />
-
                 <div className="flex flex-col gap-1">
                     <div className="stats glass thin-scrollbar h-36">
                         <div className="stat text-center p-3 px-5">
-                            <div className={`cursor-pointer`}>
+                            <div className={`cursor-pointer`} onClick={handleSwitchLike}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -39,11 +90,11 @@ export default function PlayerTrackInfo() {
                                 </svg>
                             </div>
                             <div className="stat-title">Total Likes</div>
-                            <div className="stat-value text-primary">0X</div>
+                            <div className="stat-value text-primary">{post?.likedBy?.length || 0}</div>
                         </div>
 
                         <div className="stat text-center p-3">
-                            <div className={`cursor-pointer`}>
+                            <div className={`cursor-pointer`} onClick={handleSwitchInSaved}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -57,7 +108,7 @@ export default function PlayerTrackInfo() {
                             </svg>
                             </div>
                             <div className="stat-title">Total Saves</div>
-                            <div className="stat-value text-primary">0X</div>
+                            <div className="stat-value text-primary">{post?.savedBy?.length || 0}</div>
                         </div>
                     </div>
 
