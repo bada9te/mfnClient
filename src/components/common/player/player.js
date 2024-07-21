@@ -4,7 +4,7 @@ import ReactHowler from 'react-howler'
 import raf from 'raf' // requestAnimationFrame polyfill
 import PlayerTrackInfo from './player-track-info'
 import { store } from '@/lib/redux/store'
-import { setIsLoop, setIsMute, setIsPlaying } from '@/lib/redux/slices/player'
+import { setIsLoop, setIsMute, setIsPlaying, setVolume } from '@/lib/redux/slices/player'
 
 class AudioPlayer extends React.Component {
   constructor (props) {
@@ -103,6 +103,10 @@ class AudioPlayer extends React.Component {
     })
 
     this.player.seek(e.target.value)
+  }
+
+  handleMouseUpVolume (e) {
+    store.dispatch(setVolume(parseFloat(e.target.value)));
   }
 
   handleSeekingChange (e) {
@@ -222,6 +226,7 @@ class AudioPlayer extends React.Component {
                 step='.01'
                 value={this.state.volume}
                 onChange={e => this.setState({ volume: parseFloat(e.target.value) })}
+                onMouseUp={this.handleMouseUpVolume}
                 className="range range-xs" 
               />
             </label>
