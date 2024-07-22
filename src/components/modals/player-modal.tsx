@@ -1,11 +1,17 @@
+"use client"
 import { setTab } from "@/lib/redux/slices/bottom-bar";
 import { useAppDispatch } from "@/lib/redux/store";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AudioPlayer from "../common/player/player";
 
 export default function PlayerModal({button}: {button: React.ReactElement}) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const dispatch = useAppDispatch();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, [])
 
     const handleOpen = () => {
         dispatch(setTab("player"));
@@ -14,6 +20,10 @@ export default function PlayerModal({button}: {button: React.ReactElement}) {
 
     const onClose = () => {
         dispatch(setTab(null));
+    }
+
+    if (!isMounted) {
+        return;
     }
 
     return (

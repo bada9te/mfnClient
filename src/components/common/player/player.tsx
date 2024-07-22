@@ -10,118 +10,118 @@ import ReactHowler from 'react-howler'
 import PlayerTrackInfo from "./player-track-info";
 
 export default function AudioPlayer() {
-    const {isPlaying, isLoop, isMute, volume, post} = useAppSelector(state => state.player);
+  const { isPlaying, isLoop, isMute, volume, post } = useAppSelector(state => state.player);
+  const [loaded, setIsLoaded] = useState(false);
+  const [seek, setSeek] = useState(0.0);
+  const [rate, setRate] = useState(1);
+  const [isSeeking, setIsSeeking] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [playerVol, setPlayerVol] = useState(volume);
+  const dispatch = useAppDispatch();
+  const playerRef = useRef<any>(null);
 
-    const [loaded, setIsLoaded] = useState(false);
-    const [seek, setSeek] = useState(0.0);
-    const [rate, setRate] = useState(1);
-    const [isSeeking, setIsSeeking] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
-    const [duration, setDuration] = useState(0);
-    const [player, setPlayer] = useState<null | any>(null);
-    const [playerVol, setPlayerVol] = useState(volume);
-    const dispatch = useAppDispatch();
-
-    const renderSeekPos = () => {
-        if (isSeeking && player) {
-            setSeek(player.seek());
-        }
-        if (isPlaying) {
-            _raf = raf(renderSeekPos);
-        }
-    }
-    
-    let _raf = raf(renderSeekPos);
-
-    useEffect(() => {
-        setIsMounted(true);
-        return () => {
-            raf.cancel(_raf);
-        }
-    }, []);
-
-    const handleToggle = () => {
-        dispatch(setIsPlaying(!isPlaying));
-    }
-
-    const handleOnLoad = () => {
-        setIsLoaded(true);
-        player && setDuration(player.duration());
+  const renderSeekPos = () => {
+      if (isPlaying && playerRef.current) {
+          setSeek(playerRef.current.seek());
       }
-    
-    const handleOnPlay = () => {
-        dispatch(setIsPlaying(true));
-        renderSeekPos();
-    }
-    
-    const handleOnEnd = () => {
-        dispatch(setIsPlaying(false));
-        clearRAF();
-    }
+      _raf = raf(renderSeekPos);
+  };
 
-    const clearRAF = () => {
-        raf.cancel(_raf)
-    }
-    
-    const handleStop = () => {
-        player && player.stop();
-        dispatch(setIsPlaying(false));
-        renderSeekPos();
-    }
-    
-    const handleLoopToggle = () => {
-        dispatch(setIsLoop(!isLoop));
-    }
-    
-    const handleMuteToggle = () => {
-        dispatch(setIsMute(!isMute));
-    }
-    
-    const handleMouseDownSeek = () => {
-        setIsSeeking(true);
-    }
-    
-    const handleMouseUpSeek = (e: any) => {
-        setIsSeeking(false);
-        player && player.seek(e.target.value);
-    }
-    
-    const handleMouseUpVolume = (e: any) => {
-        dispatch(setVolume(parseFloat(e.target.value)));
-    }
-    
-    const handleSeekingChange = (e: any) => {
-        setSeek(parseFloat(e.target.value));
-    }
-    
-    const handleRate = (e: any) => {
-        const rate = parseFloat(e.target.value);
-        player && player.rate(rate);
-        setRate(rate);
-    }
+  let _raf = raf(renderSeekPos);
 
-    const handleVolumeChange = (e: any) => {
+  useEffect(() => {
+      if (isPlaying) {
+          renderSeekPos();
+      }
+      return () => {
+          raf.cancel(_raf);
+      };
+  }, [isPlaying]);
+
+  const handleToggle = () => {
+      dispatch(setIsPlaying(!isPlaying));
+  };
+
+  const handleOnLoad = () => {
+      setIsLoaded(true);
+      if (playerRef.current) {
+          setDuration(playerRef.current.duration());
+      }
+  };
+
+  const handleOnPlay = () => {
+      dispatch(setIsPlaying(true));
+  };
+
+  const handleOnEnd = () => {
+      dispatch(setIsPlaying(false));
+      raf.cancel(_raf);
+  };
+
+  const handleStop = () => {
+      if (playerRef.current) {
+          playerRef.current.stop();
+      }
+      dispatch(setIsPlaying(false));
+      raf.cancel(_raf);
+  };
+
+  const handleLoopToggle = () => {
+      dispatch(setIsLoop(!isLoop));
+  };
+
+  const handleMuteToggle = () => {
+      dispatch(setIsMute(!isMute));
+  };
+
+  const handleMouseDownSeek = () => {
+      setIsSeeking(true);
+  };
+
+  const handleMouseUpSeek = (e: any) => {
+      setIsSeeking(false);
+      if (playerRef.current) {
+          playerRef.current.seek(e.target.value);
+      }
+  };
+
+  const handleMouseUpVolume = (e: any) => {
+      dispatch(setVolume(parseFloat(e.target.value)));
+  };
+
+  const handleSeekingChange = (e: any) => {
+      setSeek(parseFloat(e.target.value));
+  };
+
+  const handleRate = (e: any) => {
+      const rate = parseFloat(e.target.value);
+      if (playerRef.current) {
+          playerRef.current.rate(rate);
+      }
+      setRate(rate);
+  };
+
+  const handleVolumeChange = (e: any) => {
       setPlayerVol(parseFloat(e.target.value));
-    }
+  };
 
+  if (!post) {
+      return <InfoImage text='Track is not selected' />;
+  }
 
-    if (!isMounted) {
-        return;
-    }
-
-    return (
-        <div className='full-control w-full'>
+  return (
+      <div className='full-control w-full'>
           <ReactHowler
-            src={[`http://localhost:8000/files/${post.audio}`]}
-            playing={isPlaying}
-            onLoad={handleOnLoad}
-            onPlay={handleOnPlay}
-            onEnd={handleOnEnd}
-            loop={isLoop}
-            mute={isMute}
-            volume={playerVol}
-            ref={(ref: any) => setPlayer(ref)}
-            usingWebAudio={true}
+              src={[`http://localhost:8000/files/${post.audio}`]}
+              playing={isPlaying}
+              onLoad={handleOnLoad}
+              onPlay={handleOnPlay}
+              onEnd={handleOnEnd}
+              loop={isLoop}
+              mute={isMute}
+              volume={playerVol}
+              ref={playerRef}
+              usingWebAudio={true}
           />
   
           {
