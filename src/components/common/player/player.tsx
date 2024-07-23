@@ -20,93 +20,84 @@ export default function AudioPlayer() {
   const dispatch = useAppDispatch();
   const playerRef = useRef<any>(null);
 
-  const renderSeekPos = () => {
-      if (isPlaying && playerRef.current) {
-          setSeek(playerRef.current.seek());
-      }
-      _raf = raf(renderSeekPos);
-  };
-
-  let _raf = raf(renderSeekPos);
-
   useEffect(() => {
-      if (isPlaying) {
-          renderSeekPos();
-      }
+    if (isPlaying && playerRef.current) {
+      const intervalId = setInterval(() => {
+        if (!isSeeking) {
+          setSeek(playerRef.current.seek());
+        }
+      }, 10);
+
       return () => {
-          raf.cancel(_raf);
+        clearInterval(intervalId);
       };
-  }, [isPlaying]);
+    }
+  }, [isPlaying, isSeeking]);
 
   const handleToggle = () => {
-      dispatch(setIsPlaying(!isPlaying));
+    dispatch(setIsPlaying(!isPlaying));
   };
 
   const handleOnLoad = () => {
-      setIsLoaded(true);
-      if (playerRef.current) {
-          setDuration(playerRef.current.duration());
-      }
+    setIsLoaded(true);
+    if (playerRef.current) {
+      setDuration(playerRef.current.duration());
+    }
   };
 
   const handleOnPlay = () => {
-      dispatch(setIsPlaying(true));
+    dispatch(setIsPlaying(true));
   };
 
   const handleOnEnd = () => {
-      dispatch(setIsPlaying(false));
-      raf.cancel(_raf);
+    dispatch(setIsPlaying(false));
   };
 
   const handleStop = () => {
-      if (playerRef.current) {
-          playerRef.current.stop();
-      }
-      dispatch(setIsPlaying(false));
-      raf.cancel(_raf);
+    if (playerRef.current) {
+      playerRef.current.stop();
+    }
+    dispatch(setIsPlaying(false));
   };
 
   const handleLoopToggle = () => {
-      dispatch(setIsLoop(!isLoop));
+    dispatch(setIsLoop(!isLoop));
   };
 
   const handleMuteToggle = () => {
-      dispatch(setIsMute(!isMute));
+    dispatch(setIsMute(!isMute));
   };
 
   const handleMouseDownSeek = () => {
-      setIsSeeking(true);
+    setIsSeeking(true);
   };
 
-  const handleMouseUpSeek = (e: any) => {
-      setIsSeeking(false);
-      if (playerRef.current) {
-          playerRef.current.seek(e.target.value);
-      }
-  };
-
-  const handleMouseUpVolume = (e: any) => {
-      dispatch(setVolume(parseFloat(e.target.value)));
+  const handleMouseUpSeek = () => {
+    setIsSeeking(false);
+    if (playerRef.current) {
+      playerRef.current.seek(seek);
+    }
   };
 
   const handleSeekingChange = (e: any) => {
-      setSeek(parseFloat(e.target.value));
+    setSeek(parseFloat(e.target.value));
   };
 
   const handleRate = (e: any) => {
-      const rate = parseFloat(e.target.value);
-      if (playerRef.current) {
-          playerRef.current.rate(rate);
-      }
-      setRate(rate);
+    const rate = parseFloat(e.target.value);
+    if (playerRef.current) {
+      playerRef.current.rate(rate);
+    }
+    setRate(rate);
   };
 
   const handleVolumeChange = (e: any) => {
-      setPlayerVol(parseFloat(e.target.value));
+    setPlayerVol(parseFloat(e.target.value));
+    dispatch(setVolume(parseFloat(e.target.value)));
   };
 
   if (!post) {
-      return <InfoImage text='Track is not selected' />;
+    return <InfoImage text='Track is not selected' />;
   }
 
   return (
@@ -202,7 +193,7 @@ export default function AudioPlayer() {
                       value={playerVol}
                       // @ts-ignore
                       onChange={handleVolumeChange}
-                      onMouseUp={handleMouseUpVolume}
+                      //onMouseUp={handleMouseUpVolume}
                       className="range range-xs" 
                     />
                   </label>
