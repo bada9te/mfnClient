@@ -606,8 +606,8 @@ export type SwitchTrackInPlaylistInput = {
 
 export type TwoUsers = {
   __typename?: 'TwoUsers';
-  user1: User;
-  user2: User;
+  subscribeOn: User;
+  subscriber: User;
 };
 
 export type UpdatePostInput = {
@@ -929,7 +929,7 @@ export type UserSwitchSubscriptionMutationVariables = Exact<{
 }>;
 
 
-export type UserSwitchSubscriptionMutation = { __typename?: 'Mutation', userSwitchSubscription: { __typename?: 'TwoUsers', user1: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null }, user2: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } } };
+export type UserSwitchSubscriptionMutation = { __typename?: 'Mutation', userSwitchSubscription: { __typename?: 'TwoUsers', subscriber: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null }, subscribeOn: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } } };
 
 export type UserUpdateMutationVariables = Exact<{
   input: UpdateUserInput;
@@ -2512,7 +2512,7 @@ export type UserDeleteByIdMutationOptions = Apollo.BaseMutationOptions<UserDelet
 export const UserSwitchSubscriptionDocument = gql`
     mutation userSwitchSubscription($input: SwitchSubscriptionOnUserInput!) {
   userSwitchSubscription(input: $input) {
-    user1 {
+    subscriber {
       ...CoreUserFileds
       subscribedOn {
         _id
@@ -2521,7 +2521,7 @@ export const UserSwitchSubscriptionDocument = gql`
         _id
       }
     }
-    user2 {
+    subscribeOn {
       ...CoreUserFileds
       subscribedOn {
         _id

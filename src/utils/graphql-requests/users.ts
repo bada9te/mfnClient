@@ -79,7 +79,7 @@ export const USER_SWITCH_SUBSCRIPTION_MUTATION = gql`
     ${CORE_USER_FIELDS}
     mutation userSwitchSubscription($input: SwitchSubscriptionOnUserInput!) {
         userSwitchSubscription(input: $input) {
-            user1 {
+            subscriber {
                 ...CoreUserFileds
                 subscribedOn {
                     _id
@@ -88,7 +88,7 @@ export const USER_SWITCH_SUBSCRIPTION_MUTATION = gql`
                     _id
                 }
             }
-            user2 {
+            subscribeOn {
                 ...CoreUserFileds
                 subscribedOn {
                     _id
