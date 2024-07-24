@@ -76,7 +76,7 @@ export default function SelectTrackModal({
                                     <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
                                         {
                                             data.postsByTitle.map((p, k) => {
-                                                return <Post key={k} data={p as TPost}/>
+                                                return <Post key={k} data={p as TPost} isSelecting/>
                                             })
                                         }
                                     </div>
