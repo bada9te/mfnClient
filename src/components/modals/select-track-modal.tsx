@@ -9,7 +9,9 @@ import PostsContainerSkeleton from "../containers/posts-container/posts-containe
 
 
 export default function SelectTrackModal({
-    button
+    button,
+    userIsOwner,
+    handleSelect,
 }: {
     button: React.ReactElement, 
     userIsOwner: boolean,
@@ -30,6 +32,11 @@ export default function SelectTrackModal({
         dispatch(setTab(null));
     }
 
+    const handleSelectTrack = (a: TPost) => {
+        ref.current && ref.current.close();
+        handleSelect(a);
+    }
+
 
     const handleSearch = () => {
         inputRef.current && inputRef.current.value.length &&
@@ -43,8 +50,6 @@ export default function SelectTrackModal({
             }
         });
     }
-
-
 
     return (
         <>
@@ -76,7 +81,7 @@ export default function SelectTrackModal({
                                     <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
                                         {
                                             data.postsByTitle.map((p, k) => {
-                                                return <Post key={k} data={p as TPost} isSelecting/>
+                                                return <Post key={k} data={p as TPost} handleSelect={handleSelectTrack}/>
                                             })
                                         }
                                     </div>
@@ -91,13 +96,13 @@ export default function SelectTrackModal({
 
                     <div className="modal-action z-50"> 
                         <div className="join w-full">
-                            <input ref={inputRef} className="input input-bordered join-item w-full glass bg-black placeholder:text-gray-200" placeholder="Track title" />
                             <button onClick={handleSearch} className="btn join-item btn-primary glass text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                     <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
                                 </svg>
                                 Search
                             </button>
+                            <input ref={inputRef} className="input input-bordered join-item w-full glass bg-black placeholder:text-gray-200" placeholder="Track title" />
                         </div>
                     </div>
                 </div>

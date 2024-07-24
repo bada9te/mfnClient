@@ -16,10 +16,10 @@ import {useSnackbar} from "notistack";
 export default function Post(props: {
     fullWidth?: boolean;
     data: TPost;
-    isSelecting?: boolean;
-    isRemoving?: boolean;
+    handleSelect?: (a: TPost) => void;
+    handleRemove?: (a: TPost) => void;
 }) {
-    const { fullWidth, data, isSelecting, isRemoving } = props;
+    const { fullWidth, data, handleSelect, handleRemove } = props;
     const dispatch = useAppDispatch();
     const player = useAppSelector(state => state.player);
     const user = useAppSelector(state => state.user.user);
@@ -185,8 +185,8 @@ export default function Post(props: {
             </div>
             <div className="bg-black absolute bottom-[-32px] flex items-center">
                 {
-                    isSelecting &&
-                    <button className="btn btn-sm btn-success w-fit glass text-white bg-green-900">
+                    handleSelect &&
+                    <button className="btn btn-sm btn-success w-fit glass text-white bg-green-900" onClick={() => handleSelect(data)}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
                         </svg>
@@ -194,8 +194,8 @@ export default function Post(props: {
                     </button>
                 }
                 {
-                    isRemoving &&
-                    <button className="btn btn-sm btn-error w-fit bottom-[-32px] glass bg-red-900 text-white">
+                    handleRemove &&
+                    <button className="btn btn-sm btn-error w-fit bottom-[-32px] glass bg-red-900 text-white" onClick={() => handleRemove(data)}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clipRule="evenodd" />
                         </svg>
