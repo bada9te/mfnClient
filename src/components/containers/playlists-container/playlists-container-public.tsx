@@ -28,11 +28,7 @@ export default function PlaylistsContainerPublic(props: TPaginationProps) {
                     {
                         data?.playlistsPublicAvailable.playlists?.map((playlist, key) => {
                             return (
-                                <Playlist key={key} _id={playlist._id} title={playlist.title} posts={playlist.tracks?.map((post, keyP) => {
-                                    return (
-                                        <Post data={post as TPost} key={keyP}/>
-                                    );
-                                })}/>
+                                <Playlist key={key} _id={playlist._id} title={playlist.title} posts={playlist.tracks as TPost[]}/>
                             );
                         })
                     }

@@ -1,14 +1,15 @@
 import { revalidatePathAction } from "@/actions/revalidation";
 import InfoImage from "@/components/common/info-image/info-image";
 import SelectTrackModal from "@/components/modals/select-track-modal";
-import { Post, usePlaylistDeleteByIdMutation, usePlaylistSwicthTrackMutation } from "@/utils/graphql-requests/generated/schema";
+import { Post as TPost, usePlaylistDeleteByIdMutation, usePlaylistSwicthTrackMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
-import React from "react";
+import React, { useState } from "react";
+import Post from "../post/post";
 
 export default function Playlist(props: {
     _id: string;
     title: string;
-    posts: React.ReactNode[] | undefined;
+    posts: TPost[];
 }) {
     const { posts, title, _id } = props;
     const [ deletePlaylist ] = usePlaylistDeleteByIdMutation({
@@ -18,6 +19,7 @@ export default function Playlist(props: {
     });
     const [ swicthTrack ] = usePlaylistSwicthTrackMutation();
     const { enqueueSnackbar } = useSnackbar();
+    const [ isRemovingTrack, setIsRemovingTrack ] = useState(false);
 
     const handleSelfDelete = () => {
         enqueueSnackbar("Deleting playlist...", {autoHideDuration: 1500});
@@ -30,7 +32,7 @@ export default function Playlist(props: {
         });
     }
 
-    const handleSwitchTrack = (post: Post) => {
+    const handleSwitchTrack = (post: TPost) => {
         enqueueSnackbar("Processing...", {autoHideDuration: 1500});
         swicthTrack({
             variables: {
@@ -82,7 +84,7 @@ export default function Playlist(props: {
                             }
                         />
                         
-                        <button className="btn btn-sm btn-primary glass join-item text-white">
+                        <button className={`btn btn-sm glass join-item ${isRemovingTrack ? 'btn-error bg-red-900' : 'btn-primary'} text-white`} onClick={() => setIsRemovingTrack(!isRemovingTrack)}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 className="size-5">
                                 <path fillRule="evenodd"
@@ -115,7 +117,11 @@ export default function Playlist(props: {
                 <div className="flex flex-wrap gap-5 md:gap-3 justify-around mb-10 mt-5">
                     {
                         posts?.map((post, index) => (
-                            <div key={index}>{post}</div>
+                            !isRemovingTrack 
+                            ? 
+                            <Post data={post} key={index}/>
+                            :
+                            <Post data={post} key={index} handleRemove={handleSwitchTrack}/>
                         ))
                     }
                     {posts?.length === 0 && <InfoImage text="No tracks yet"/>}
