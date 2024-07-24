@@ -1,35 +1,29 @@
 "use client"
-import { useRouter } from "next/navigation";
+
+import Link from "next/link";
 
 export default function BarTabsPlaylists(props: {
     activeTab: "explore" | "my-playlists" | "create";
 }) {
     const { activeTab } = props;
 
-    const router = useRouter();
-
-    const handleNavigate = (a: typeof activeTab, counterPage?: boolean) => {
-        router.replace(`/playlists/${a}${counterPage ? '/1' : ''}`);
-    };
-
-
     return (
         <div role="tablist" className="tabs tabs-boxed w-full rounded-none bg-black glass m-0 md:mx-8 md:mt-8">
-            <a 
+            <Link 
                 role="tab" 
                 className={`tab ${activeTab === "explore" && "glass bg-[#1ba39c]"}`}
-                onClick={() => handleNavigate("explore", true)}
-            >Explore</a>
-            <a 
+                href="/playlists/explore/1"
+            >Explore</Link>
+            <Link 
                 role="tab" 
                 className={`tab ${activeTab === "my-playlists" && "glass bg-[#1ba39c]"}`}
-                onClick={() => handleNavigate("my-playlists", true)}
-            >My playlists</a>
-            <a 
+                href="/playlists/my-playlists/1"
+            >My playlists</Link>
+            <Link 
                 role="tab" 
                 className={`tab ${activeTab === "create" && "glass bg-[#1ba39c]"}`} 
-                onClick={() => handleNavigate("create")}
-            >Create new</a>
+                href="/playlists/create"
+            >Create new</Link>
         </div>
     );
 }

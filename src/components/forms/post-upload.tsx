@@ -81,60 +81,11 @@ export default function PostUploadForm() {
                     category:         data.genre,
                 },
             },
-            update: (cache, { data }) => {
-                const postData = JSON.parse(JSON.stringify(data?.postCreate));
-                postData.owner = {
-                    _id: currentUser?._id,
-                    avatar: currentUser?.avatar,
-                    nick: currentUser?.nick,
-                };
-
-                // function to update array of posts
-                const updatePosts = (cachedArray: Post[], post: Post) => {
-                    const cachedPosts = JSON.parse(JSON.stringify(cachedArray));
-                    if (cachedPosts.length >= 12) {
-                        cachedPosts.pop();
-                    }
-                    cachedPosts.unshift(post);
-                    return cachedPosts;
-                };
-
-                // update owner posts query
-                const cachedData = cache.readQuery({
-                    query: POSTS_BY_OWNER_QUERY,
-                    variables: { owner: currentUser?._id, offset: 0, limit: 12 }
-                }) as PostsByOwnerQuery;
-                if (cachedData) {
-                    const posts = updatePosts(cachedData.postsByOwner.posts as Post[], postData);
-                    cache.writeQuery({
-                        query: POSTS_BY_OWNER_QUERY,
-                        variables: { owner: currentUser?._id, offset: 0, limit: 12 },
-                        data: {
-                            postsByOwner: { posts, count: posts.length + 1 }
-                        }
-                    });
-                }
-
-                // update default posts query
-                const postsCachedData = cache.readQuery({
-                    query: POSTS_QUERY,
-                    variables: { offset: 0, limit: 12 }
-                }) as PostsQuery;
-                if (postsCachedData) {
-                    const posts = updatePosts(postsCachedData.posts.posts as Post[], postData);
-                    cache.writeQuery({
-                        query: POSTS_QUERY,
-                        variables: { offset: 0, limit: 12 },
-                        data: {
-                            posts: { posts, count: posts.length + 1 }
-                        }
-                    });
-                }
-            }
         }).then(() => {
             reset();
             enqueueSnackbar("Post created", { autoHideDuration: 1500, variant: 'success' });
             revalidatePathAction(`/profile/me/1`, 'page');
+            revalidatePathAction('/feed/1', 'page');
             router.replace(`/profile/me/1`)
         }).catch(() => {
             enqueueSnackbar("Post can not be uploaded", { autoHideDuration: 3000, variant: 'error' });

@@ -8,7 +8,13 @@ import InfoImage from "../common/info-image/info-image";
 import PostsContainerSkeleton from "../containers/posts-container/posts-container-skeleton";
 
 
-export default function SelectTrackModal({button}: {button: React.ReactElement}) {
+export default function SelectTrackModal({
+    button
+}: {
+    button: React.ReactElement, 
+    userIsOwner: boolean,
+    handleSelect: (a: TPost) => void;
+}) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const dispatch = useAppDispatch();
