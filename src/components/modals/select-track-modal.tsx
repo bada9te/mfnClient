@@ -1,3 +1,4 @@
+"use client"
 import { setTab } from "@/lib/redux/slices/bottom-bar";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import { Post as TPost, usePostsByTitleLazyQuery } from "@/utils/graphql-requests/generated/schema";
@@ -30,7 +31,7 @@ export default function SelectTrackModal({button}: {button: React.ReactElement})
             variables: {
                 input: {
                     userId: user._id,
-                    userIsOwner: false,
+                    userIsOwner: true,
                     title: inputRef.current.value
                 }
             }
