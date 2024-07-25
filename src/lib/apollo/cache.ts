@@ -11,11 +11,8 @@ const cache = new InMemoryCache({
                         return incoming;
                     },
                 },
-                savedBy: {
-                    merge(_, incoming) {
-                        return incoming;
-                    },
-                }
+                
+
             },
         },
         PostsWithCount: {

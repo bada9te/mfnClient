@@ -28,7 +28,7 @@ function makeClient() {
     // use the `ApolloClient` from "@apollo/experimental-nextjs-app-support"
     return new ApolloClient({
         // use the `InMemoryCache` from "@apollo/experimental-nextjs-app-support"
-        cache: new InMemoryCache(),
+        cache: cache,
         link: httpLink,
     });
 }
