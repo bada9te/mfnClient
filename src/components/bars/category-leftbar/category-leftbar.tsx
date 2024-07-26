@@ -3,8 +3,9 @@ import Link from "next/link";
 export default function CategoryLeftBar(props: {
     title: string;
     bgImage: string;
+    iconImage: string;
 }) {
-    const { title, bgImage } = props;
+    const { title, bgImage, iconImage } = props;
 
     return (
         <div className={`card w-fit max-w-80 bg-cover bg-center shadow-none text-white max-h-52 ml-5`} style={{ backgroundImage: `url(${bgImage})` }}>
@@ -12,7 +13,7 @@ export default function CategoryLeftBar(props: {
                 <div className="flex flex-row gap-4">
                     <div className="avatar">
                         <div className="w-10 rounded-full">
-                            <img src="/assets/icons/logo_clear.png"/>
+                            <img src={iconImage}/>
                         </div>
                     </div>
                     <h2 className="card-title">{title}</h2>

@@ -29,7 +29,7 @@ export default function PostsContainerSaved(props: TPaginationProps & { userId: 
                     <Pagination page={page} maxPage={Number(data?.postsSavedByUser.count as number / limit)}/>
                 </>
                 :
-                <InfoImage text={"No saved tracks yet"}/>
+                <InfoImage text={"No tracks yet"} image="/assets/icons/logo_clear.png"/>
             }
         </>
     );

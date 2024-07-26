@@ -29,7 +29,7 @@ export default function PostsContainerProfile(props: TPaginationProps & { profil
                     { !paginationHidden && <Pagination page={page} maxPage={Number(data?.postsByOwner.count as number / limit)}/> }
                 </>
                 :
-                <InfoImage text={"No tracks yet"}/>
+                <InfoImage text={"No tracks yet"} image="/assets/icons/logo_clear.png"/>
             }
         </>
     );

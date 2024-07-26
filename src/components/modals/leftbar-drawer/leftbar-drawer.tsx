@@ -79,7 +79,7 @@ export default function LeftBarDrawer(props: {
                                             </>
                                         );
                                     } else {
-                                        return (<InfoImage text="Search for tracks"/>);
+                                        return (<InfoImage text="Search for tracks" image="/assets/icons/logo_clear.png"/>);
                                     }
                                 } else {
                                     return (

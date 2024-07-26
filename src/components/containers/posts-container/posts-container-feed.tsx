@@ -29,7 +29,7 @@ export default function PostsContainerFeed(props: TPaginationProps) {
                     <Pagination page={page} maxPage={Number(data?.posts.count as number / limit)}/>
                 </>
                 :
-                <InfoImage text={"No tracks yet"}/>
+                <InfoImage text={"No tracks yet"} image="/assets/icons/logo_clear.png"/>
             }
         </>
     );

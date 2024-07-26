@@ -31,7 +31,7 @@ export default function NotificationsContainer(props: TPaginationProps & { check
                     <Pagination page={page} maxPage={Number(data?.notifications.count as number / limit)}/>
                 </>
                 :
-                <InfoImage text={"No notifications yet"}/>
+                <InfoImage text={"No notifications yet"} image="/assets/icons/text.png"/>
             }
         </>
     );

@@ -124,7 +124,7 @@ export default function Playlist(props: {
                             <Post data={post} key={index} handleRemove={handleSwitchTrack}/>
                         ))
                     }
-                    {posts?.length === 0 && <InfoImage text="No tracks yet"/>}
+                    {posts?.length === 0 && <InfoImage text="No tracks yet" image="/assets/icons/logo_playlist.png"/>}
                 </div>
             </div>
         </div>

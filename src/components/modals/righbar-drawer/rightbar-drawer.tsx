@@ -78,7 +78,7 @@ export default function RightBarDrawer(props: {
                                             </>
                                         );
                                     } else {
-                                        return (<InfoImage text="Search for users"/>);
+                                        return (<InfoImage text="Search for users" image="/assets/icons/logo_person.png"/>);
                                     }
                                 } else {
                                     return (
