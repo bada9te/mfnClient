@@ -11,6 +11,7 @@ import {setIsPlaying, setPost} from "@/lib/redux/slices/player";
 import {useEffect, useState} from "react";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
 import {useSnackbar} from "notistack";
+import config from "@/../next.config.mjs";
 
 
 export default function Post(props: {
@@ -50,6 +51,9 @@ export default function Post(props: {
             enqueueSnackbar("Not authenticated", {autoHideDuration: 1000});
             return;
         }
+        if (handleRemove) {
+            return;
+        }
         await switchLike({
             variables: {
                 input: {
@@ -66,6 +70,9 @@ export default function Post(props: {
             enqueueSnackbar("Not authenticated", {autoHideDuration: 1000});
             return;
         }
+        if (handleRemove) {
+            return;
+        }
         await switchInSaved({
             variables: {
                 input: {
@@ -74,6 +81,11 @@ export default function Post(props: {
                 }
             }
         });
+    }
+
+    const handleLinkCopy = () => {
+        navigator.clipboard.writeText(`${window.location.origin}/post/${data._id}/${data.owner._id}`);
+        enqueueSnackbar("Link copied", {variant: 'success', autoHideDuration: 1500});
     }
 
     return (
@@ -104,13 +116,13 @@ export default function Post(props: {
                             </svg>
                             Open profile
                         </a></li>
-                        <li><a>
+                        <li><button onClick={handleLinkCopy}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                                 <path d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z" />
                                 <path d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z" />
                             </svg>
                             Copy link
-                        </a></li>
+                        </button></li>
                         <li><a>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                                 <path d="M3.5 2.75a.75.75 0 0 0-1.5 0v14.5a.75.75 0 0 0 1.5 0v-4.392l1.657-.348a6.449 6.449 0 0 1 4.271.572 7.948 7.948 0 0 0 5.965.524l2.078-.64A.75.75 0 0 0 18 12.25v-8.5a.75.75 0 0 0-.904-.734l-2.38.501a7.25 7.25 0 0 1-4.186-.363l-.502-.2a8.75 8.75 0 0 0-5.053-.439l-1.475.31V2.75Z" />
@@ -135,9 +147,12 @@ export default function Post(props: {
                 <p className="text-lg">{data?.description}</p>
             </div>
 
-            <div className="stats glass mx-2 mt-2 thin-scrollbar">
+            <div className={`stats glass mx-2 mt-2 thin-scrollbar ${handleRemove && "opacity-60"}`}>
                 <div className="stat text-center">
-                    <div className={`cursor-pointer ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-red-500"}`} onClick={handleSwitchLike}>
+                    <div 
+                        className={`${!handleRemove && 'cursor-pointer'} ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-red-500"}`} 
+                        onClick={handleSwitchLike}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" 
                         viewBox="0 0 24 24" fill="currentColor" className="inline-block h-8 w-8">
                             <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
@@ -148,7 +163,10 @@ export default function Post(props: {
                 </div>
 
                 <div className="stat text-center">
-                    <div className={`cursor-pointer ${data?.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`} onClick={handleSwitchInSaved}>
+                    <div 
+                        className={`${!handleRemove && 'cursor-pointer'} ${data?.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`} 
+                        onClick={handleSwitchInSaved}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" 
                         viewBox="0 0 24 24" fill="currentColor" className="inline-block h-8 w-8">
                             <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clipRule="evenodd" />

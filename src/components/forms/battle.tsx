@@ -71,13 +71,13 @@ export default function BattleForm() {
         <div className="card overflow-hidden bg-black shadow-xl glass">
             <div className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl">
                 <div className="divider divider-primary">New battle setup</div>
-                <div className="flex flex-wrap gap-5 mt-5 w-full justify-around">
+                <div className="flex flex-wrap gap-5 mt-5 w-full justify-around mb-10">
                     <div className="flex flex-col gap-3">
                         <p className='font-bold text-lg'>Your track</p>
                         {
                             post1
                             ?
-                            <Post data={post1}/>
+                            <Post data={post1} handleRemove={() => setPost1(null)}/>
                             :
                             <PostPlaceholder
                                 userIsOwner={true}
@@ -91,7 +91,7 @@ export default function BattleForm() {
                         {
                             post2
                             ?
-                            <Post data={post2}/>
+                            <Post data={post2} handleRemove={() => setPost2(null)}/>
                             :
                             <PostPlaceholder
                                 userIsOwner={false}

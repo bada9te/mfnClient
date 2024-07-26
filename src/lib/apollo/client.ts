@@ -8,7 +8,7 @@ import cache from "@/lib/apollo/cache";
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({
-    cache: cache,
+    cache: new InMemoryCache(),
     link: new HttpLink({
       // this needs to be an absolute url, as relative urls cannot be used in SSR
       uri: process.env.NEXT_PUBLIC_SERVER_BASE_GQL,

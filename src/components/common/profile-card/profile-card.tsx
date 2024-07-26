@@ -13,8 +13,9 @@ import { useSnackbar } from "notistack";
 export default function ProfileCard(props: {
     isEditable?: boolean;
     userId: string;
+    disableMargins?: boolean;
 }) {
-    const { isEditable, userId } = props;
+    const { isEditable, userId, disableMargins } = props;
     const [ imageURL, setImageURL ] = useState<string>("");
     const [ imageType, setImageType ] = useState<"avatar" | "background">("avatar");
     const [ file, setFile ] = useState<File | null>(null);
@@ -113,7 +114,7 @@ export default function ProfileCard(props: {
                 refDialog={cropperModalRef}
                 handleImageCropModalClose={handleImageCropModalClose}
             />
-            <div className="m-0 md:mx-8 md:mt-8 card w-full max-h-screen text-white rounded-none shadow-2xl glass">
+            <div className={`${!disableMargins && 'm-0 md:mx-8 md:mt-8'} card w-full max-h-screen text-white rounded-none shadow-2xl glass`}>
                 <figure className="max-h-48">
                     <img className="w-full" src={data.user.background.length ? `${config.env?.serverBase}/files/${data.user.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
                 </figure>

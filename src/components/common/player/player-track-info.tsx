@@ -1,7 +1,8 @@
 "use client"
 import config from "@/../next.config.mjs";
 import { useAppSelector } from "@/lib/redux/store";
-import { usePostsByIdsLazyQuery, usePostSwicthInSavedMutation, usePostSwitchLikeMutation } from "@/utils/graphql-requests/generated/schema";
+import { usePostSwicthInSavedMutation, usePostSwitchLikeMutation, usePostLazyQuery } from "@/utils/graphql-requests/generated/schema";
+import Link from "next/link";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
@@ -10,7 +11,7 @@ export default function PlayerTrackInfo() {
     const post = useAppSelector(state => state.player.post);
     const user = useAppSelector(state => state.user.user);
     const { enqueueSnackbar } = useSnackbar();
-    const [fetchPostsDataByIds, {data, loading}] = usePostsByIdsLazyQuery();
+    const [fetchPostData, {data, loading}] = usePostLazyQuery();
     const [isMounted, setIsMounted] = useState(false);
 
     const [switchLike] = usePostSwitchLikeMutation({
@@ -50,9 +51,9 @@ export default function PlayerTrackInfo() {
 
     useEffect(() => {
         if (post && post?._id) {
-            fetchPostsDataByIds({
+            fetchPostData({
                 variables: {
-                    ids: [post._id]
+                    _id: post._id
                 }
             });
         }
@@ -71,40 +72,40 @@ export default function PlayerTrackInfo() {
         <div className="flex h-auto flex-col flex-1 gap-1">
             <div className="flex flex-row mb-3 gap-3">
                 <img 
-                    src={data?.postsByIds?.[0]?.image ? `${config.env?.serverBase}/files/${data.postsByIds[0].image}` : 'assets/bgs/defaultProfileBg.png'}
+                    src={data?.post?.image ? `${config.env?.serverBase}/files/${data.post.image}` : 'assets/bgs/defaultProfileBg.png'}
                     className="shadow-2xl max-h-[180px] h-[180px] max-w-80" 
                 />
                 <div className="flex flex-col gap-1">
                     <div className="stats glass thin-scrollbar h-36">
                         <div className="stat text-center p-3 px-5">
-                            <div className={`cursor-pointer ${data?.postsByIds?.[0]?.likedBy?.find((i) => i._id === user?._id) && "text-red-500"}`} onClick={handleSwitchLike}>
+                            <div className={`cursor-pointer ${data?.post?.likedBy?.find((i) => i._id === user?._id) && "text-red-500"}`} onClick={handleSwitchLike}>
                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                 viewBox="0 0 24 24" fill="currentColor" className="inline-block h-8 w-8">
                                     <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                                 </svg>
                             </div>
                             <div className="stat-title">Total Likes</div>
-                            <div className="stat-value text-primary">{data?.postsByIds?.[0]?.likedBy?.length || 0}</div>
+                            <div className="stat-value text-primary">{data?.post?.likedBy?.length || 0}</div>
                         </div>
 
                         <div className="stat text-center p-3">
-                            <div className={`cursor-pointer ${data?.postsByIds?.[0]?.savedBy?.find((i) => i._id === user?._id) && "text-yellow-500"}`} onClick={handleSwitchInSaved}>
+                            <div className={`cursor-pointer ${data?.post?.savedBy?.find((i) => i._id === user?._id) && "text-yellow-500"}`} onClick={handleSwitchInSaved}>
                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                 viewBox="0 0 24 24" fill="currentColor" className="inline-block h-8 w-8">
                                     <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clipRule="evenodd" />
                                 </svg>
                             </div>
                             <div className="stat-title">Total Saves</div>
-                            <div className="stat-value text-primary">{data?.postsByIds?.[0]?.savedBy?.length || 0}</div>
+                            <div className="stat-value text-primary">{data?.post?.savedBy?.length || 0}</div>
                         </div>
                     </div>
 
-                    <button className="btn btn-primary glass btn-sm text-white">
+                    <Link className="btn btn-primary glass btn-sm text-white" href={`/post/${data?.post._id}/${data?.post.owner._id}`}>
                         Track details
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                             <path fillRule="evenodd" d="M15.28 9.47a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L13.69 10 9.97 6.28a.75.75 0 0 1 1.06-1.06l4.25 4.25ZM6.03 5.22l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L8.69 10 4.97 6.28a.75.75 0 0 1 1.06-1.06Z" clipRule="evenodd" />
                         </svg>
-                    </button>
+                    </Link>
                 </div>
             </div>
 
@@ -126,8 +127,8 @@ export default function PlayerTrackInfo() {
                         </svg>
                     </button>
                 </div>
-                <p className="text-white text-2xl font-bold">Track title</p>
-                <p className="text-white text-md font-bold">Track description</p>
+                <p className="text-white text-2xl font-bold">{data?.post?.title}</p>
+                <p className="text-white text-md font-bold">{data?.post?.description}</p>
             </div>
         </div>
     );

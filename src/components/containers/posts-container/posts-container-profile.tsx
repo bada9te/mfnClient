@@ -7,7 +7,7 @@ import {TPaginationProps} from "@/types/pagination";
 
 
 export default function PostsContainerProfile(props: TPaginationProps & { profileId: string }) {
-    const { offset, limit, page, profileId } = props;
+    const { offset, limit, page, profileId, paginationHidden } = props;
 
     const { data } = usePostsByOwnerSuspenseQuery({
         variables: {
@@ -26,7 +26,7 @@ export default function PostsContainerProfile(props: TPaginationProps & { profil
                             return (<Post key={key} data={post as TPost}/>)
                         })
                     }
-                    <Pagination page={page} maxPage={Number(data?.postsByOwner.count as number / limit)}/>
+                    { !paginationHidden && <Pagination page={page} maxPage={Number(data?.postsByOwner.count as number / limit)}/> }
                 </>
                 :
                 <InfoImage text={"No tracks yet"}/>
