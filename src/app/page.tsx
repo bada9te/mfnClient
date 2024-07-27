@@ -73,7 +73,7 @@ export default function Page() {
     return (
         <>
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
-                <div className="flex flex-col justify-start items-center gap-4 h-fit">
+                <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-10">
                     <img src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
                     <p className="text-4xl md:text-5xl font-bold text-center flex-0">Welcome to Music From Nothing</p>
                     <p className="text-xl text-center h-fit">The music-streaming platform</p>
@@ -92,13 +92,21 @@ export default function Page() {
                         </button>
                     </div>
                 </div>
-                <img src="/assets/drawings/drawing-1.png" alt="drawing-1" className="w-80 absolute bottom-0 right-0 opacity-75"/>
-                <img src="/assets/drawings/drawing-2.png" alt="drawing-2" className="w-80 absolute bottom-0 left-0 opacity-75"/>
+                <img 
+                    src="/assets/drawings/drawing-1.png" 
+                    alt="drawing-1" 
+                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 right-0"
+                />
+                <img 
+                    src="/assets/drawings/drawing-2.png" 
+                    alt="drawing-2" 
+                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 left-0"
+                />
             </div>
 
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
                 <p className="text-center p-10 pb-16 font-bold text-4xl md:text-5xl">Compose, arrange, and produce your unique tunes effortlessly with our web app.</p>
-                <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit">
+                <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit mb-48 lg:mb-56">
                     {
                         cardsData1.map((data, key) => {
                             return (
@@ -113,7 +121,11 @@ export default function Page() {
                         })
                     }
                 </div>
-                <img src="/assets/drawings/drawing-4.png" alt="drawing-4" className="absolute bottom-0 w-96 right-28 opacity-75"/>
+                <img 
+                    src="/assets/drawings/drawing-4.png" 
+                    alt="drawing-4" 
+                    className="absolute bottom-0 w-52 lg:w-96 right-16 lg:right-28"
+                />
             </div>
 
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
