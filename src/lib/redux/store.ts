@@ -1,4 +1,3 @@
-"use client"
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 // @ts-ignore
@@ -9,7 +8,6 @@ import * as asyncInitialState from 'redux-async-initial-state';
 import {httpGetCurrentUser} from "@/utils/http-requests/auth";
 import userReducer from "@/lib/redux/slices/user";
 import playerReducer from "@/lib/redux/slices/player";
-//import storagePersist from "redux-persist/lib/storage";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 const createNoopStorage = () => {
@@ -62,7 +60,7 @@ const loadStore = async(getCurrentState: any) => {
                 })
             })
             .catch(err => {
-                console.log("Initial state can not be loaded:", err.message);
+                // console.log("Initial state can not be loaded:", err.message);
                 resolve({...getCurrentState(), user: {user: null}});
             });
     });

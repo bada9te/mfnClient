@@ -11,6 +11,7 @@ import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import NextTopLoader from "nextjs-toploader";
 import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
+import { Suspense } from "react";
 
 
 const inter = Inter({ subsets: ["latin"] });
