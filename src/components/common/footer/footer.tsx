@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
     return (
@@ -7,6 +8,29 @@ export default function Footer() {
                 <Image className="rounded-full" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
                 <p>Music From Nothing<br/>Providing reliable tech since 1992</p>
             </aside>
+            <nav>
+                <h6 className="footer-title">Quick nav</h6>
+                <div className="flex flex-wrap gap-4 max-w-72">
+                    <Link href={"/"} className="hover:text-white">
+                        Home
+                    </Link>
+                    <Link href={"/battles/in-progress/1"} className="hover:text-white">
+                        Battles
+                    </Link>
+                    <Link href={"/playlists/explore/1"} className="hover:text-white">
+                        Playlists
+                    </Link>
+                    <Link href={"/profile/me/upload"} className="hover:text-white">
+                        New post
+                    </Link>
+                    <Link href={"/support"} className="hover:text-white">
+                        Support
+                    </Link>
+                    <Link href={"/faq"} className="hover:text-white">
+                        FAQ
+                    </Link>
+                </div>
+            </nav> 
             <nav>
                 <h6 className="footer-title">Social</h6>
                 <div className="grid grid-flow-col gap-4">
@@ -32,8 +56,9 @@ export default function Footer() {
                         </svg>
                     </a>
                 </div>
-            </nav>
-            <img src="/assets/drawings/drawing-3.png" alt="drawing-3" className="w-44 absolute bottom-4 md:bottom-0 right-0"/>
+            </nav>    
+
+            <img src="/assets/drawings/drawing-3.png" alt="drawing-3" className="w-44 absolute bottom-4 md:bottom-0 right-0"/>           
         </footer>
     );
 }
