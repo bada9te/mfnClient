@@ -33,6 +33,7 @@ export default function Footer() {
                     </a>
                 </div>
             </nav>
+            <img src="/assets/drawings/drawing-3.png" alt="drawing-3" className="w-72 absolute bottom-[-30px] right-10 opacity-75"/>
         </footer>
     );
 }

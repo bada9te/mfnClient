@@ -93,6 +93,7 @@ export default function Page() {
                     </div>
                 </div>
                 <img src="/assets/drawings/drawing-1.png" alt="drawing-1" className="w-80 absolute bottom-0 right-0 opacity-75"/>
+                <img src="/assets/drawings/drawing-2.png" alt="drawing-2" className="w-80 absolute bottom-0 left-0 opacity-75"/>
             </div>
 
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
@@ -112,7 +113,7 @@ export default function Page() {
                         })
                     }
                 </div>
-                <img src="/assets/drawings/drawing-1.png" alt="drawing-1" className="w-80 absolute bottom-0 right-0 opacity-75"/>
+                <img src="/assets/drawings/drawing-4.png" alt="drawing-4" className="absolute bottom-0 w-96 right-28 opacity-75"/>
             </div>
 
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
