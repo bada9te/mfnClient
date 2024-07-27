@@ -11,9 +11,10 @@ export default function HeroWrapper(props: {
                 <div className="flex w-full flex-col items-center justify-center py-10">
                     <h1 className="mb-5 text-5xl font-bold text-center">{title}</h1>
                     <p className="mb-5 text-center">{description}</p>
-                    <div className="hero-content text-center w-full">
+                    <div className="hero-content text-center w-full z-10">
                         {children}
                     </div>
+                    <img src="/assets/figures/notes.png" alt="notes" className="z-0 absolute bottom-0 left-0 w-72"/>
                 </div>
             </div>
         </div>

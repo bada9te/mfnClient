@@ -99,7 +99,7 @@ export default function LoginForm() {
                 <label className="label flex flex-col gap-3 justify-start items-start">
                     <Link href="/register" className="label-text-alt link link-hover">Not registered
                         yet?</Link>
-                    <Link href="/register" className="label-text-alt link link-hover">Forgot
+                    <Link href="/account-restore/email-verification" className="label-text-alt link link-hover">Forgot
                         password?</Link>
                 </label>
             </form>

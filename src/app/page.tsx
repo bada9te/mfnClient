@@ -92,6 +92,7 @@ export default function Page() {
                         </button>
                     </div>
                 </div>
+                <img src="/assets/drawings/drawing-1.png" alt="drawing-1" className="w-80 absolute bottom-0 right-0 opacity-75"/>
             </div>
 
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
@@ -111,6 +112,7 @@ export default function Page() {
                         })
                     }
                 </div>
+                <img src="/assets/drawings/drawing-1.png" alt="drawing-1" className="w-80 absolute bottom-0 right-0 opacity-75"/>
             </div>
 
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">

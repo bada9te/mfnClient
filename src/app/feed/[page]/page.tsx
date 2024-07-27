@@ -13,7 +13,7 @@ export default async function Feed({params}: {params: { page: number }}) {
             description="The newest tracks from users"
         >
             <div className="card w-full">
-                <div className="flex flex-wrap justify-center md:justify-around gap-5">
+                <div className="flex flex-wrap justify-center md:justify-around gap-5 z-10">
                     <PreloadQuery
                         query={POSTS_QUERY}
                         variables={{
