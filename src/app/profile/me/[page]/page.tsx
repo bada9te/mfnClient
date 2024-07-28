@@ -26,8 +26,8 @@ export default function Profile({params}: {params: { page: number }}) {
                 </Suspense>
             </PreloadQuery>
             <HeroWrapper
-                title=""
-                description=""
+                title="My tracks"
+                description="The list of uploaded tracks"
             >
                 <div className="card w-full">
                     <div className="flex flex-wrap justify-center md:justify-around gap-5">

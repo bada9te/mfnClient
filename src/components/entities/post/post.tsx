@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
 import {useSnackbar} from "notistack";
 import config from "@/../next.config.mjs";
+import Link from "next/link";
 
 
 export default function Post(props: {
@@ -19,8 +20,9 @@ export default function Post(props: {
     data: TPost;
     handleSelect?: (a: TPost) => void;
     handleRemove?: (a: TPost) => void;
+    editable?: boolean
 }) {
-    const { fullWidth, data, handleSelect, handleRemove } = props;
+    const { fullWidth, data, handleSelect, handleRemove, editable } = props;
     const dispatch = useAppDispatch();
     const player = useAppSelector(state => state.player);
     const user = useAppSelector(state => state.user.user);
@@ -110,12 +112,12 @@ export default function Post(props: {
                         <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>
                     </button>
                     <ul tabIndex={0} className="dropdown-content menu glass bg-black rounded-box z-[1] w-52 p-2 mt-3 shadow">
-                        <li><a>
+                        <li><Link href={data?.owner?._id === user._id ? "/profile/me/1" : `/profile/${data.owner._id}/1`}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                                 <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z" />
                             </svg>
                             Open profile
-                        </a></li>
+                        </Link></li>
                         <li><button onClick={handleLinkCopy}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                                 <path d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z" />
@@ -129,6 +131,17 @@ export default function Post(props: {
                             </svg>
                             Report
                         </a></li>
+                        {
+                            editable
+                            &&
+                            <li><Link href={`profile/me/edit/post/${data._id}`}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                                     <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                                    <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                                </svg>
+                                Edit
+                            </Link></li>
+                        }
                     </ul>
                 </div>
                 
