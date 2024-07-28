@@ -20,7 +20,9 @@ type Inputs = {
     downloadsAllowed: boolean;
 }
 
-export default function PostUploadForm() {
+export default function PostEditForm(props: {posId: string}) {
+    const { posId } = props;
+    const user = useAppSelector(state => state.user.user);
     const { formState: {errors}, register, handleSubmit, reset, resetField } = useForm<Inputs>()
     const { enqueueSnackbar } = useSnackbar();
     const [ createPost ] = usePostCreateMutation();
