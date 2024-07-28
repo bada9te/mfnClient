@@ -1,5 +1,4 @@
 "use client"
-import { Inter } from "next/font/google";
 import "./globals.css";
 import AppBar from "@/components/bars/appbar/appbar";
 import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
@@ -19,17 +18,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark">
+    <html lang="en" data-theme="black">
     <body>
         <RainbowkitAppProvider>
             <ApolloWrapper>
                 <SnackbarProvider maxSnack={5}>
                     <ReduxProvider>
-                        <AppBar/>
-                        <div className="grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1">
+                    <div className="min-h-screen flex flex-col">
+                        {/* AppBar */}
+                        <div className="bg-gray-800 text-white">
+                            {/* AppBar content goes here */}
+                            <AppBar/>
+                        </div>
+
+                        {/* Grid layout */}
+                        <div className="flex-1 grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1 overflow-hidden">
+                            {/* Left sidebar (hidden on smaller screens) */}
                             <div className="hidden lg:block">
-                                <div className="card w-full main-layout-card rounded-none">
-                                    <div className="overflow-y-auto flex flex-col gap-8 no-scrollbar py-8">
+                                <div className="card w-full max-h-[calc(100vh-125px)] rounded-none">
+                                    <div className="overflow-y-auto flex flex-col gap-8 py-8 no-scrollbar">
                                         {
                                             genres.map((gen, i) => {
                                                 return (
@@ -45,9 +52,11 @@ export default function RootLayout({
                                     </div>
                                 </div>
                             </div>
-                            <div className={`col-auto flex-1`}>
-                                <div className="card w-full main-layout-card rounded-none">
-                                    <div className="card-body overflow-y-auto p-0 gap-0 no-scrollbar">
+
+                            {/* Main content area */}
+                            <div className="col-auto flex-1 overflow-y-auto max-h-[calc(100vh-125px)] no-scrollbar">
+                                <div className="card w-full rounded-none ">
+                                    <div className="card-body p-0 gap-0 no-scrollbar">
                                         <NextTopLoader 
                                             color="#1ba39c"
                                             initialPosition={0.18}
@@ -67,7 +76,14 @@ export default function RootLayout({
                                 </div>
                             </div>
                         </div>
-                        <BottomNav/>
+
+                        {/* Bottom navigation bar */}
+                        <div className="bg-gray-800 text-white">
+                            {/* BottomNav content goes here */}
+                            <BottomNav/>
+                        </div>
+                    </div>
+                        
                     </ReduxProvider>
                 </SnackbarProvider>
             </ApolloWrapper>

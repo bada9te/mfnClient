@@ -1,3 +1,4 @@
+"use client"
 // Import the necessary functions from redux store or wherever they are defined
 import { useAppSelector } from "@/lib/redux/store";
 import { useAccountModal, useChainModal, useConnectModal } from "@rainbow-me/rainbowkit";
@@ -22,11 +23,7 @@ export default function ProfileButton() {
 
     if (!isMounted) {
         return (
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar text-black">
-                <div className="w-10 rounded-full">
-                    <div className="skeleton rounded-full w-10 h-10"></div>
-                </div>
-            </div>
+            <></>
         );
     }
 

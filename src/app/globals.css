@@ -28,6 +28,7 @@ html {
 
 body {
   color: rgb(var(--foreground-rgb));
+  scroll-behavior: smooth;
 }
 
 
@@ -81,36 +82,32 @@ body {
       box-shadow: none;
     }
   }
-}
-
-.main-layout-card {
-  height: calc(100vh - 125px);
-  max-height: calc(100vh - 125px);
-}
-
-@keyframes gradient-animation {
-  0% {
-    background-position: 0% 50%;
+  
+  .main-layout-card {
+    height: calc(100vh - 125px);
+    max-height: calc(100vh - 125px);
   }
-  50% {
-    background-position: 100% 50%;
+  
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
-  100% {
-    background-position: 0% 50%;
+  
+  .btm-nav > *:where(.active) {
+    background-color: transparent;
+  }
+  
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
   }
 }
-
-.btm-nav > *:where(.active) {
-  background-color: transparent;
-}
-
-
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  text-indent: 1px;
-  text-overflow: '';
-}
-
-
-
