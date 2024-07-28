@@ -57,9 +57,7 @@ export default function PostEditForm(props: {posId: string}) {
     } = useForm<InputsAudio>();
     const [updatePostMutation] = usePostUpdateMutation();
 
-
     const { enqueueSnackbar } = useSnackbar();
-    const [ createPost ] = usePostCreateMutation();
     const cropperModalRef = useRef<HTMLDialogElement | null>(null);
     const [ imageURL, setImageURL ] = useState<string>("");
     const [ imageFile, setImageFile ] = useState<File | null>(null);
@@ -84,6 +82,26 @@ export default function PostEditForm(props: {posId: string}) {
         }
     }
 
+    // TITLE
+    const onSubmitTitle: SubmitHandler<InputsTitle> = async(data) => {
+        updatePost("title", data.title);
+    }
+
+    // DESCR
+    const onSubmitDescr: SubmitHandler<InputsDescr> = async(data) => {
+        updatePost("description", data.description);
+    }
+
+    // AUDIO
+    const onSubmitAudio: SubmitHandler<InputsAudio> = async(data) => {
+        enqueueSnackbar("Uploading...", {autoHideDuration: 1500});
+        let uploadedAudioName;
+        await httpSaveFile(data.audio[0]).then(data => {
+            uploadedAudioName = data.data.filename;
+        })
+        updatePost("audio", String(uploadedAudioName));
+    }
+
     // IMAGE
     const onSubmitImage: SubmitHandler<InputsImage> = async(data) => {
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
@@ -94,6 +112,16 @@ export default function PostEditForm(props: {posId: string}) {
             enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
         }),
         updatePost("image", String(uploadedImageName));
+    }
+    
+    // DOWNLOADS ALLOWED
+    const onDownloadsAllowedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        updatePost("downloadsAllowed", String(e.target.value));
+    }
+
+    // GENRE
+    const onGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        updatePost("genre", String(e.target.value));
     }
 
     const updatePost = async(what: string, value: string) => {
@@ -125,14 +153,14 @@ export default function PostEditForm(props: {posId: string}) {
             <div className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl">
                 <div className="divider divider-primary">Post edit</div>
 
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <form onSubmit={handleSubmitTitle(onSubmitTitle)} noValidate>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Track title</span>
                         </label>
                         <div className="join w-full">
                             <input type="text" placeholder="Track title" className="join-item input input-bordered shadow-md glass placeholder:text-gray-200 w-full" {
-                                ...register("title", {
+                                ...registerTitle("title", {
                                     maxLength: { value: 15, message: "Max length must be 15" },
                                     required: { value: true, message: "This field is required" }
                                 })
@@ -140,22 +168,22 @@ export default function PostEditForm(props: {posId: string}) {
                             <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
                         </div>
                         {
-                            errors.title &&
+                            errorTitle.title &&
                             <label className="label">
-                                <span className="label-text text-error">{errors.title.message}</span>
+                                <span className="label-text text-error">{errorTitle.title.message}</span>
                             </label>
                         }
                     </div>
                 </form>
                 
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <form onSubmit={handleSubmitDescr(onSubmitDescr)} noValidate>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Track description</span>
                         </label>
                         <div className="join w-full">
                             <input type="text" placeholder="Track description" className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
-                                ...register("description", {
+                                ...registerDescr("description", {
                                     maxLength: { value: 25, message: "Max length must be 25" },
                                     required: { value: true, message: "This field is required" }
                                 })
@@ -163,9 +191,9 @@ export default function PostEditForm(props: {posId: string}) {
                             <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
                         </div>
                         {
-                            errors.description &&
+                            errorDescr.description &&
                             <label className="label">
-                                <span className="label-text text-error">{errors.description.message}</span>
+                                <span className="label-text text-error">{errorDescr.description.message}</span>
                             </label>
                         }
                     </div>
@@ -197,7 +225,7 @@ export default function PostEditForm(props: {posId: string}) {
                     </label>
                 </form>
                 
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <form onSubmit={handleSubmitAudio(onSubmitAudio)} noValidate>
                     <label className="form-control w-full">
                         <div className="label">
                             <span className="label-text">Track audio</span>
@@ -205,16 +233,16 @@ export default function PostEditForm(props: {posId: string}) {
                         </div>
                         <div className="join join-vertical">
                             <input type="file" className="join-item file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
-                                ...register("audio", {
+                                ...registerAudio("audio", {
                                     required: { value: true, message: "This field is required" }
                                 })
                             }/>
                             <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">Save new audio</button>
                         </div>
                         {
-                            errors.audio &&
+                            errorAudio.audio &&
                             <label className="label">
-                                <span className="label-text text-error">{errors.audio.message}</span>
+                                <span className="label-text text-error">{errorAudio.audio.message}</span>
                             </label>
                         }
                     </label>
@@ -224,11 +252,7 @@ export default function PostEditForm(props: {posId: string}) {
                     <div className="label">
                         <span className="label-text">Genre</span>
                     </div>
-                    <select className="btn text-start glass bg-[#3b3b3b]" {
-                        ...register("genre", {
-                            required: { value: true, message: "This field is required" }
-                        })
-                    }>
+                    <select className="btn text-start glass bg-[#3b3b3b]" onChange={onGenreChange}>
                         {
                             genres.map((gen, key) => {
                                 return <option className="bg-[#272727] text-lg" key={key} value={gen.title}>{gen.title}</option>
@@ -240,9 +264,7 @@ export default function PostEditForm(props: {posId: string}) {
                 <div className="form-control mt-4">
                     <label className="label cursor-pointer">
                         <span className="label-text">Downloads allowed</span>
-                        <input type="checkbox" className="checkbox checkbox-primary" {
-                            ...register("downloadsAllowed")
-                        }/>
+                        <input type="checkbox" className="checkbox checkbox-primary" onChange={onDownloadsAllowedChange}/>
                     </label>
                 </div>
             </div>

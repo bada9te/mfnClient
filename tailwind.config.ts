@@ -36,7 +36,7 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        light: {
+        dark: {
           ...require("daisyui/src/theming/themes")["black"],
           ".btn-primary:hover": {
             "background-color": "#1ba39c",
@@ -46,7 +46,7 @@ const config: Config = {
             "background-color": "#1ba39c",
           },
         }
-      }
+      },
     ],
   },
 };
