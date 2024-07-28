@@ -189,3 +189,17 @@ export const POST_SWITCH_IN_SAVED_MUTATION = gql`
         }
     }
 `;
+
+export const POST_UPDATE_BY_ID_MUTATION = gql`
+    ${CORE_POST_FIELDS}
+    mutation postUpdate($input: UpdatePostInput!) {
+        postUpdate(input: $input) {
+            ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
+        }
+    }
+`;

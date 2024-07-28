@@ -101,7 +101,7 @@ export default function PostUploadForm() {
         />
         <div className="card overflow-hidden bg-black shadow-xl glass">
             <form className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="divider divider-primary">Post stup</div>
+                <div className="divider divider-primary">Post setup</div>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Track title</span>

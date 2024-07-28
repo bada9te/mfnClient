@@ -3,7 +3,7 @@ import {genres} from "@/config/categories";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
 import {httpSaveFile} from "@/utils/http-requests/files";
-import {usePostCreateMutation} from "@/utils/graphql-requests/generated/schema";
+import {usePostCreateMutation, usePostUpdateMutation} from "@/utils/graphql-requests/generated/schema";
 import {useAppSelector} from "@/lib/redux/store";
 import {useRouter} from "next/navigation";
 import { useRef, useState } from "react";
@@ -11,23 +11,55 @@ import ImageCropperModal from "../modals/cropper-modal";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
 import { revalidatePathAction } from "@/actions/revalidation";
 
-type Inputs = {
+type InputsTitle = {
     title: string;
+}
+
+type InputsDescr = {
     description: string;
+}
+
+type InputsImage = {
     image: File[];
+}
+
+type InputsAudio = {
     audio: File[];
-    genre: string;
-    downloadsAllowed: boolean;
 }
 
 export default function PostEditForm(props: {posId: string}) {
     const { posId } = props;
     const user = useAppSelector(state => state.user.user);
-    const { formState: {errors}, register, handleSubmit, reset, resetField } = useForm<Inputs>()
+    const { 
+        formState: {errors: errorTitle}, 
+        register: registerTitle, 
+        handleSubmit: handleSubmitTitle, 
+        reset: resetTitle 
+    } = useForm<InputsTitle>();
+    const { 
+        formState: {errors: errorDescr}, 
+        register: registerDescr, 
+        handleSubmit: handleSubmitDescr, 
+        reset: resetDescr
+    } = useForm<InputsDescr>();
+    const { 
+        formState: {errors: errorImage}, 
+        register: registerImage, 
+        handleSubmit: handleSubmitImage, 
+        reset: resetImage,
+        resetField: resetFieldImage
+    } = useForm<InputsImage>();
+    const { 
+        formState: {errors: errorAudio}, 
+        register: registerAudio, 
+        handleSubmit: handleSubmitAudio, 
+        reset: resetAudio
+    } = useForm<InputsAudio>();
+    const [updatePostMutation] = usePostUpdateMutation();
+
+
     const { enqueueSnackbar } = useSnackbar();
     const [ createPost ] = usePostCreateMutation();
-    const currentUser = useAppSelector(state => state.user.user);
-    const router = useRouter();
     const cropperModalRef = useRef<HTMLDialogElement | null>(null);
     const [ imageURL, setImageURL ] = useState<string>("");
     const [ imageFile, setImageFile ] = useState<File | null>(null);
@@ -45,51 +77,39 @@ export default function PostEditForm(props: {posId: string}) {
     // get cropped (as callback)
     const handleImageCropModalClose = async(image: string | null) => {
         if (!image) {
-            resetField("image");
+            resetFieldImage("image");
         } else {
             const blob = await fetch(image).then(a => a.blob()) as IBlob;
             setCroppedBlob(blob);
         }
     }
 
-    const onSubmit: SubmitHandler<Inputs> = async(data) => {
+    // IMAGE
+    const onSubmitImage: SubmitHandler<InputsImage> = async(data) => {
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
-        let uploadedAudioName, uploadedImageName;
+        let uploadedImageName;
+        await httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`)).then(({data}) => {
+            uploadedImageName = data.data.filename;
+        }).catch(err => {
+            enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
+        }),
+        updatePost("image", String(uploadedImageName));
+    }
 
-        await Promise.all([
-            httpSaveFile(data?.audio?.[0] as File).then(({data}) => {
-                uploadedAudioName = data.data.filename;
-            }).catch(err => {
-                enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
-            }),
-            httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`)).then(({data}) => {
-                uploadedImageName = data.data.filename;
-            }).catch(err => {
-                enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
-            }),
-        ]);
-
-        // upload the post itself
-        await createPost({
+    const updatePost = async(what: string, value: string) => {
+        enqueueSnackbar("Updating...", {autoHideDuration: 1500})
+        updatePostMutation({
             variables: {
                 input: {
-                    owner:            currentUser?._id as string,
-                    title:            data.title,
-                    description:      data.description,
-                    audio:            uploadedAudioName as unknown as string,
-                    image:            uploadedImageName as unknown as string,
-                    downloadsAllowed: data.downloadsAllowed,
-                    category:         data.genre,
-                },
-            },
-        }).then(() => {
-            reset();
-            enqueueSnackbar("Post created", { autoHideDuration: 1500, variant: 'success' });
-            revalidatePathAction(`/profile/me/1`, 'page');
-            revalidatePathAction('/feed/1', 'page');
-            router.replace(`/profile/me/1`)
-        }).catch(() => {
-            enqueueSnackbar("Post can not be uploaded", { autoHideDuration: 3000, variant: 'error' });
+                    post: posId,
+                    what,
+                    value
+                }
+            }
+        }).then(_ => {
+            enqueueSnackbar("Updated", {autoHideDuration: 1500, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", {autoHideDuration: 2000, variant: 'error'});
         });
     }
 
@@ -102,82 +122,103 @@ export default function PostEditForm(props: {posId: string}) {
             handleImageCropModalClose={handleImageCropModalClose}
         />
         <div className="card overflow-hidden bg-black shadow-xl glass">
-            <form className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="divider divider-primary">Post stup</div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Track title</span>
-                    </label>
-                    <input type="text" placeholder="Track title" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
-                        ...register("title", {
-                            maxLength: { value: 15, message: "Max length must be 15" },
-                            required: { value: true, message: "This field is required" }
-                        })
-                    }/>
-                    {
-                        errors.title &&
-                        <label className="label">
-                            <span className="label-text text-error">{errors.title.message}</span>
-                        </label>
-                    }
-                </div>
+            <div className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl">
+                <div className="divider divider-primary">Post edit</div>
 
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Track description</span>
-                    </label>
-                    <input type="text" placeholder="Track description" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
-                        ...register("description", {
-                            maxLength: { value: 25, message: "Max length must be 25" },
-                            required: { value: true, message: "This field is required" }
-                        })
-                    }/>
-                    {
-                        errors.description &&
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <div className="form-control">
                         <label className="label">
-                            <span className="label-text text-error">{errors.description.message}</span>
+                            <span className="label-text">Track title</span>
                         </label>
-                    }
-                </div>
-
-                <label className="form-control w-full">
-                    <div className="label">
-                        <span className="label-text">Track image</span>
-                        <span className="label-text-alt">.jpg, .png</span>
+                        <div className="join w-full">
+                            <input type="text" placeholder="Track title" className="join-item input input-bordered shadow-md glass placeholder:text-gray-200 w-full" {
+                                ...register("title", {
+                                    maxLength: { value: 15, message: "Max length must be 15" },
+                                    required: { value: true, message: "This field is required" }
+                                })
+                            }/>
+                            <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
+                        </div>
+                        {
+                            errors.title &&
+                            <label className="label">
+                                <span className="label-text text-error">{errors.title.message}</span>
+                            </label>
+                        }
                     </div>
-                    <input 
-                        type="file" 
-                        className="file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
-                        onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
-                        {...register("image", {
-                            required: { value: true, message: "This field is required" }
-                        })}
-                    />
-                    {
-                        errors.image &&
+                </form>
+                
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <div className="form-control">
                         <label className="label">
-                            <span className="label-text text-error">{errors.image.message}</span>
+                            <span className="label-text">Track description</span>
                         </label>
-                    }
-                </label>
-
-                <label className="form-control w-full">
-                    <div className="label">
-                        <span className="label-text">Track audio</span>
-                        <span className="label-text-alt">.mp3, .wav</span>
+                        <div className="join w-full">
+                            <input type="text" placeholder="Track description" className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
+                                ...register("description", {
+                                    maxLength: { value: 25, message: "Max length must be 25" },
+                                    required: { value: true, message: "This field is required" }
+                                })
+                            }/>
+                            <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
+                        </div>
+                        {
+                            errors.description &&
+                            <label className="label">
+                                <span className="label-text text-error">{errors.description.message}</span>
+                            </label>
+                        }
                     </div>
-                    <input type="file" className="file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
-                        ...register("audio", {
-                            required: { value: true, message: "This field is required" }
-                        })
-                    }/>
-                    {
-                        errors.audio &&
-                        <label className="label">
-                            <span className="label-text text-error">{errors.audio.message}</span>
-                        </label>
-                    }
-                </label>
+                </form>
+                
+                <form onSubmit={handleSubmitImage(onSubmitImage)} noValidate>
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text">Track image</span>
+                            <span className="label-text-alt">.jpg, .png</span>
+                        </div>
+                        <div className="join join-vertical">
+                            <input 
+                                type="file" 
+                                className="join-item file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
+                                onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
+                                {...registerImage("image", {
+                                    required: { value: true, message: "This field is required" }
+                                })}
+                            />
+                            <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">Save new image</button>
+                        </div>
+                        {
+                            errorImage.image &&
+                            <label className="label">
+                                <span className="label-text text-error">{errorImage.image.message}</span>
+                            </label>
+                        }
+                    </label>
+                </form>
+                
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text">Track audio</span>
+                            <span className="label-text-alt">.mp3, .wav</span>
+                        </div>
+                        <div className="join join-vertical">
+                            <input type="file" className="join-item file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
+                                ...register("audio", {
+                                    required: { value: true, message: "This field is required" }
+                                })
+                            }/>
+                            <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">Save new audio</button>
+                        </div>
+                        {
+                            errors.audio &&
+                            <label className="label">
+                                <span className="label-text text-error">{errors.audio.message}</span>
+                            </label>
+                        }
+                    </label>
+                </form>
 
                 <label className="form-control w-full">
                     <div className="label">
@@ -204,11 +245,7 @@ export default function PostEditForm(props: {posId: string}) {
                         }/>
                     </label>
                 </div>
-
-                <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">Upload</button>
-                </div>
-            </form>
+            </div>
         </div>
         </>
     );

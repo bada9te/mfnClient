@@ -866,6 +866,13 @@ export type PostSwicthInSavedMutationVariables = Exact<{
 
 export type PostSwicthInSavedMutation = { __typename?: 'Mutation', postSwicthInSaved: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
+export type PostUpdateMutationVariables = Exact<{
+  input: UpdatePostInput;
+}>;
+
+
+export type PostUpdateMutation = { __typename?: 'Mutation', postUpdate: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+
 export type ReportCreateMutationVariables = Exact<{
   input: CreateReportInput;
 }>;
@@ -2207,6 +2214,44 @@ export function usePostSwicthInSavedMutation(baseOptions?: Apollo.MutationHookOp
 export type PostSwicthInSavedMutationHookResult = ReturnType<typeof usePostSwicthInSavedMutation>;
 export type PostSwicthInSavedMutationResult = Apollo.MutationResult<PostSwicthInSavedMutation>;
 export type PostSwicthInSavedMutationOptions = Apollo.BaseMutationOptions<PostSwicthInSavedMutation, PostSwicthInSavedMutationVariables>;
+export const PostUpdateDocument = gql`
+    mutation postUpdate($input: UpdatePostInput!) {
+  postUpdate(input: $input) {
+    ...CorePostFields
+    owner {
+      _id
+      avatar
+      nick
+    }
+  }
+}
+    ${CorePostFieldsFragmentDoc}`;
+export type PostUpdateMutationFn = Apollo.MutationFunction<PostUpdateMutation, PostUpdateMutationVariables>;
+
+/**
+ * __usePostUpdateMutation__
+ *
+ * To run a mutation, you first call `usePostUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postUpdateMutation, { data, loading, error }] = usePostUpdateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePostUpdateMutation(baseOptions?: Apollo.MutationHookOptions<PostUpdateMutation, PostUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostUpdateMutation, PostUpdateMutationVariables>(PostUpdateDocument, options);
+      }
+export type PostUpdateMutationHookResult = ReturnType<typeof usePostUpdateMutation>;
+export type PostUpdateMutationResult = Apollo.MutationResult<PostUpdateMutation>;
+export type PostUpdateMutationOptions = Apollo.BaseMutationOptions<PostUpdateMutation, PostUpdateMutationVariables>;
 export const ReportCreateDocument = gql`
     mutation reportCreate($input: CreateReportInput!) {
   reportCreate(input: $input) {
