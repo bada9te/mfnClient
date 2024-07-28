@@ -97,7 +97,7 @@ export default function AudioPlayer() {
   };
 
   if (!post) {
-    return <InfoImage text='Track is not selected' />;
+    return <InfoImage text='Track is not selected' image="/assets/icons/logo_clear.png" />;
   }
 
   return (
@@ -201,7 +201,7 @@ export default function AudioPlayer() {
               </div>
             </>
             :
-            <InfoImage text='Track is not selected'/>
+            <InfoImage text='Track is not selected' image="/assets/icons/logo_clear.png"/>
           }
         </div>
     )

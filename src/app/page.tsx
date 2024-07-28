@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const cardsData1 = [
     {
         id: 'explore',
@@ -74,8 +76,8 @@ export default function Page() {
         <>
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
                 <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-10">
-                    <img src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
-                    <p className="text-4xl md:text-5xl font-bold text-center flex-0">Welcome to Music From Nothing</p>
+                    <Image width={1000} height={1000}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
+                    <p className="text-4xl md:text-5xl font-bold text-center flex-0 px-5">Welcome to Music From Nothing</p>
                     <p className="text-xl text-center h-fit">The music-streaming platform</p>
                     <div className="join">
                         <button className="join-item btn btn-primary glass text-white">
@@ -92,27 +94,32 @@ export default function Page() {
                         </button>
                     </div>
                 </div>
-                <img 
+                <Image width={1000} height={1000}  
                     src="/assets/drawings/drawing-1.png" 
                     alt="drawing-1" 
-                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 right-0"
+                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 right-0 opacity-70"
                 />
-                <img 
+                <Image width={1000} height={1000}  
                     src="/assets/drawings/drawing-2.png" 
                     alt="drawing-2" 
-                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 left-0"
+                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 left-0 opacity-70"
                 />
             </div>
 
-            <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
-                <p className="text-center p-10 pb-16 font-bold text-4xl md:text-5xl">Compose, arrange, and produce your unique tunes effortlessly with our web app.</p>
+            <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none relative">
+                <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">Compose, arrange</p>
+                <p className="text-center pb-20 font-bold text-xl md:text-xl z-10 px-5">and produce your unique tunes effortlessly with our web app.</p>
+                <Image width={1000} height={1000}  src="/assets/figures/cube.svg" alt="cube" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
+                <Image width={1000} height={1000}  src="/assets/figures/rhombus.svg" alt="rhombus" className="w-32 rotate-12 absolute bottom-24 mix-blend-luminosity left-3 z-0 opacity-70"/>
+                <Image width={1000} height={1000}  src="/assets/figures/pyramid.svg" alt="pyramid" className="w-32 md:w-64 rotate-12 absolute bottom-0 mix-blend-luminosity left-24 z-0 opacity-70"/>
+                
                 <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit mb-48 lg:mb-56">
                     {
                         cardsData1.map((data, key) => {
                             return (
                                 <div key={key} className="card animated-box overflow-hidden bg-[#535353] w-80 h-64 md:w-96 shadow-xl">
                                     <div className="card-body bg-black hover:bg-[#1ba39c] glass z-50 m-1">
-                                        <img src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
+                                        <Image width={1000} height={1000}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
                                         <h2 className="card-title mt-2">{data.title}</h2>
                                         <p>{data.description}</p>
                                     </div>
@@ -121,22 +128,26 @@ export default function Page() {
                         })
                     }
                 </div>
-                <img 
+                <Image width={1000} height={1000}  
                     src="/assets/drawings/drawing-4.png" 
                     alt="drawing-4" 
-                    className="absolute bottom-0 w-52 lg:w-96 right-16 lg:right-28"
+                    className="absolute bottom-0 w-52 lg:w-96 right-16 lg:right-28 opacity-70"
                 />
             </div>
 
             <div className="flex flex-col items-center text-white py-10 glass m-0 md:mx-8 md:mt-8 border-none rounded-none">
-                <p className="text-center p-10 pb-16 font-bold text-4xl md:text-5xl">Purpose of the platform and author information</p>
+                <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">Purpose of the platform</p>
+                <p className="text-center pb-16 font-bold text-xl md:text-xl z-10">and author information</p>
+                <Image width={1000} height={1000}  src="/assets/figures/waterball.svg" alt="waterball" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
+                <Image width={1000} height={1000}  src="/assets/figures/water.svg" alt="water" className="w-48 absolute bottom-3 mix-blend-luminosity right-3 z-0 opacity-70"/>
+                <Image width={1000} height={1000}  src="/assets/figures/chip.svg" alt="chip" className="w-64 absolute bottom-72 mix-blend-luminosity left-5 z-0 opacity-70"/>
                 <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit">
                     {
                         cardsData2.map((data, key) => {
                             return (
                                 <div key={key} className="card animated-box overflow-hidden bg-[#535353] w-80 min-h-64 md:w-96 shadow-xl">
                                     <div className="card-body bg-black hover:bg-[#1ba39c] glass z-50 m-1">
-                                        <img src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
+                                        <Image width={1000} height={1000}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
                                         <h2 className="card-title mt-2">{data.title}</h2>
                                         <p>{data.description}</p>
                                     </div>

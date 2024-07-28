@@ -24,7 +24,7 @@ export default function PlaylistForm() {
                 input: {
                     title: data.title,
                     public: data.publiclyAvailable,
-                    owner: user._id
+                    owner: user?._id as string
                 }
             }
         }).then(_ => {

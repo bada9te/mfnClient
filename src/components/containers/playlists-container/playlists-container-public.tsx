@@ -35,7 +35,7 @@ export default function PlaylistsContainerPublic(props: TPaginationProps) {
                     <Pagination page={page} maxPage={Number(data?.playlistsPublicAvailable.count as number / limit)} />
                 </>
                 :
-                <InfoImage text={"No public playlists found"}/>
+                <InfoImage text={"No public playlists found"} image="/assets/icons/logo_playlist.png"/>
             }
         </>
     );

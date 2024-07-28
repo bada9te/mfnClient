@@ -44,7 +44,7 @@ export default function LeftBarDrawer(props: {
         <div className="drawer">
             <input ref={reference} id="my-drawer-tracks" type="checkbox" className="drawer-toggle w-full"
                    onChange={e => handleOpen(e)}/>
-            <div className="drawer-side pt-16 z-10 no-scrollbar">
+            <div className="drawer-side pt-16 z-30 no-scrollbar">
                 <label htmlFor="my-drawer-tracks" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-92 md:w-[360px] min-h-full text-base-content glass bg-black">
                     {/* Sidebar content here */}

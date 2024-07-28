@@ -15,7 +15,7 @@ const PostPlaceholder = (props: {
     return (
         <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center glass relative">
             <div className="flex flex-col h-full justify-center items-center">
-                <InfoImage text="Select yout track" />
+                <InfoImage text="Select yout track" image="/assets/icons/logo_clear.png"/>
             </div>
             <SelectTrackModal
                 handleSelect={props.handleSelect}

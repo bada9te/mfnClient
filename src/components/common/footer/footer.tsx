@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <footer className="footer p-10 glass text-neutral-content rounded-none shadow-2xl">
+        <footer className="footer p-10 glass text-neutral-content rounded-none shadow-2xl overflow-hidden">
             <aside>
                 <Image className="rounded-full" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
                 <p>Music From Nothing<br/>Providing reliable tech since 1992</p>
@@ -58,7 +58,9 @@ export default function Footer() {
                 </div>
             </nav>    
 
-            <img src="/assets/drawings/drawing-3.png" alt="drawing-3" className="w-44 absolute bottom-4 md:bottom-0 right-0"/>           
+            <Image width={500} height={500} src="/assets/drawings/drawing-3.png" alt="drawing-3" className="w-44 absolute bottom-4 md:bottom-0 right-0"/>  
+            <Image width={500} height={500} src="/assets/figures/cube-rounded.svg" alt="cube-rounded" className="w-32 rotate-12 absolute top-3 md:top-32 mix-blend-luminosity right-3 md:right-96 z-0 opacity-70"/>         
+            <Image width={500} height={500} src="/assets/figures/bubble.svg" alt="bubble" className="w-16 absolute top-32 mix-blend-luminosity right-3 md:left-72 z-0 opacity-70"/>
         </footer>
     );
 }

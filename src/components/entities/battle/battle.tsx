@@ -59,9 +59,13 @@ export default function Battle(props: {
                         </div>
                         <div className="stat place-items-center">
                             <span className="countdown font-mono text-2xl">
-                                <span style={{"--value":10}}></span>h
-                                <span style={{"--value":24}}></span>m
-                                <span style={{"--value":12}}></span>s
+                                {
+                                    /*
+                                        <span style={{"--value":10}}></span>h
+                                        <span style={{"--value":24}}></span>m
+                                        <span style={{"--value":12}}></span>s
+                                    */
+                                }
                             </span>
                         </div>
                         <div className="stat place-items-center">

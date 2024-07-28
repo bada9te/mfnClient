@@ -43,7 +43,7 @@ export default function SelectTrackModal({
         searchTracksByTitle({
             variables: {
                 input: {
-                    userId: user._id,
+                    userId: user?._id as string,
                     userIsOwner: true,
                     title: inputRef.current.value
                 }
@@ -87,7 +87,7 @@ export default function SelectTrackModal({
                                     </div>
                                     :
                                     <div className="flex-1 min-h-full w-full flex justify-center items-center overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
-                                        <InfoImage text="No tracks yet, input the search query and click 'Search' to start searching"/>
+                                        <InfoImage text="No tracks yet, input the search query and click 'Search' to start searching" image="/assets/icons/logo_clear.png"/>
                                     </div>
                                 }
                             </>

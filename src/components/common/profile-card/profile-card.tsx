@@ -31,7 +31,7 @@ export default function ProfileCard(props: {
     const [ switchSubscription ] = useUserSwitchSubscriptionMutation({
         variables: {
             input: {
-                subscriberId: user?._id,
+                subscriberId: user?._id as string,
                 userId,
             }
         }
@@ -66,7 +66,7 @@ export default function ProfileCard(props: {
     // get cropped (as callback)
     const handleImageCropModalClose = useCallback(async(image: string | null) => {
         if (image) {
-            enqueueSnackbar("Updating progile...", { autoHideDuration: 1500 });
+            enqueueSnackbar("Updating profile...", { autoHideDuration: 1500 });
             const blob = await fetch(image).then(a => a.blob()) as IBlob;
             const {data} = await httpSaveFile(blobToFile(blob, `${new Date().getTime().toString()}${file?.name || ""}`));
 
@@ -77,7 +77,7 @@ export default function ProfileCard(props: {
                     updateUser({
                         variables: {
                             input: {
-                                _id: user._id,
+                                _id: user?._id as string,
                                 what: "avatar",
                                 value: data.data.filename
                             }
@@ -90,7 +90,7 @@ export default function ProfileCard(props: {
                     updateUser({
                         variables: {
                             input: {
-                                _id: user._id,
+                                _id: user?._id as string,
                                 what: "background",
                                 value: data.data.filename
                             }
@@ -141,7 +141,7 @@ export default function ProfileCard(props: {
                                             if (data.user._id == userId) {
                                                 return;
                                             } else {
-                                                if (data.user.subscribers?.includes(user?._id)) {
+                                                if (user?._id && data.user.subscribers?.map(i => i._id)?.includes(user._id)) {
                                                     return (
                                                         <button className="btn btn-primary w-full md:w-96 glass text-white" onClick={handleSubscriptionChange}>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">

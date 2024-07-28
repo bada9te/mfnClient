@@ -26,7 +26,7 @@ export default function LogoutPage() {
             title="Logout"
             description="You will be logged out soon"
         >
-            <InfoImage text="Logging out..."></InfoImage>
+            <InfoImage text="Logging out..." image="/assets/icons/logo_clear.png"></InfoImage>
         </HeroWrapper>
         
     );

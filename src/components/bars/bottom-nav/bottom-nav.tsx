@@ -31,7 +31,7 @@ export default function BottomNav() {
         <>
             {/* @ts-ignore */}
             <LeftBarDrawer reference={leftbarOpenerRef}/>
-            <div className="btm-nav text-white bg-black glass">
+            <div className="btm-nav text-white bg-black glass z-20">
                 <button className={`${bottomBarTab === "tracks" ? "active" : ""} active:bg-black`} onClick={() => handleOpen("left")}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                         <path fillRule="evenodd"
