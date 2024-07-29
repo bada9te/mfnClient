@@ -20,6 +20,20 @@ export const CORE_PLAYLIST_FIELDS = gql`
 `;
 
 // Q
+export const PLAYLIST_QUERY = gql`
+    ${CORE_PLAYLIST_FIELDS}
+    query playlist($_id: ID!) {
+        playlist(_id: $_id) {
+            ...CorePlaylistFields
+            owner {
+                _id
+                nick
+                avatar
+            }
+        }
+    }
+`
+
 export const PLAYLISTS_BY_OWNER_ID_QUERY = gql`
     ${CORE_PLAYLIST_FIELDS}
     query playlistsByOwnerId($owner: ID!, $offset: Int!, $limit: Int!) {

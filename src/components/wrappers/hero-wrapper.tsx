@@ -10,6 +10,7 @@ export default function HeroWrapper(props: {
             <div className={`hero min-h-screen rounded-none shadow-2xl text-white glass`}>
                 <div className="flex w-full flex-col items-center justify-center py-10 relative">
                     <img src="/assets/figures/pyramid.svg" alt="pyramid" className="z-0 absolute top-0 left-72 lg:left-96 w-48 opacity-70"/>
+                    <img src="/assets/figures/triangle.svg" alt="triangle" className="z-0 absolute top-0 right-72 lg:right-96 w-24 rotate-90 opacity-70"/>
                     <h1 className="mb-5 text-5xl font-bold text-center z-10">{title}</h1>
                     <p className="mb-5 text-center z-10">{description}</p>
                     <div className="hero-content text-center w-full z-10 mt-5">

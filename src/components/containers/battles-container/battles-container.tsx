@@ -5,6 +5,7 @@ import {Post as TPost, useBattlesByStatusSuspenseQuery} from "@/utils/graphql-re
 import InfoImage from "@/components/common/info-image/info-image";
 import Pagination from "@/components/common/pagination/pagination";
 import {TPaginationProps} from "@/types/pagination";
+import BattleSkeleton from "@/components/entities/battle/battles-skeleton";
 
 export default function BattlesContainer(props: TPaginationProps & { finished: boolean; }) {
     const {offset, limit, finished, page} = props;

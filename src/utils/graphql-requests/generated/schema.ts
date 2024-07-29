@@ -408,6 +408,7 @@ export type Query = {
   moderationActionValidate: ModerationAction;
   notifications: NotificationsWithCount;
   notificationsByIds?: Maybe<Array<Notification>>;
+  playlist: Playlist;
   playlistsByOwnerId: PlaylistsWithCount;
   playlistsByTitle?: Maybe<Array<Playlist>>;
   playlistsPublicAvailable: PlaylistsWithCount;
@@ -455,6 +456,11 @@ export type QueryNotificationsArgs = {
 
 export type QueryNotificationsByIdsArgs = {
   ids: Array<Scalars['ID']['input']>;
+};
+
+
+export type QueryPlaylistArgs = {
+  _id: Scalars['ID']['input'];
 };
 
 
@@ -734,6 +740,13 @@ export type NotificationsMarkAsReadByIdsMutationVariables = Exact<{
 export type NotificationsMarkAsReadByIdsMutation = { __typename?: 'Mutation', notificationsMarkAsReadByIds: { __typename?: 'NotificationCount', count: number } };
 
 export type CorePlaylistFieldsFragment = { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
+
+export type PlaylistQueryVariables = Exact<{
+  _id: Scalars['ID']['input'];
+}>;
+
+
+export type PlaylistQuery = { __typename?: 'Query', playlist: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type PlaylistsByOwnerIdQueryVariables = Exact<{
   owner: Scalars['ID']['input'];
@@ -1494,6 +1507,51 @@ export function useNotificationsMarkAsReadByIdsMutation(baseOptions?: Apollo.Mut
 export type NotificationsMarkAsReadByIdsMutationHookResult = ReturnType<typeof useNotificationsMarkAsReadByIdsMutation>;
 export type NotificationsMarkAsReadByIdsMutationResult = Apollo.MutationResult<NotificationsMarkAsReadByIdsMutation>;
 export type NotificationsMarkAsReadByIdsMutationOptions = Apollo.BaseMutationOptions<NotificationsMarkAsReadByIdsMutation, NotificationsMarkAsReadByIdsMutationVariables>;
+export const PlaylistDocument = gql`
+    query playlist($_id: ID!) {
+  playlist(_id: $_id) {
+    ...CorePlaylistFields
+    owner {
+      _id
+      nick
+      avatar
+    }
+  }
+}
+    ${CorePlaylistFieldsFragmentDoc}`;
+
+/**
+ * __usePlaylistQuery__
+ *
+ * To run a query within a React component, call `usePlaylistQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePlaylistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePlaylistQuery({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function usePlaylistQuery(baseOptions: Apollo.QueryHookOptions<PlaylistQuery, PlaylistQueryVariables> & ({ variables: PlaylistQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PlaylistQuery, PlaylistQueryVariables>(PlaylistDocument, options);
+      }
+export function usePlaylistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PlaylistQuery, PlaylistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PlaylistQuery, PlaylistQueryVariables>(PlaylistDocument, options);
+        }
+export function usePlaylistSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PlaylistQuery, PlaylistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PlaylistQuery, PlaylistQueryVariables>(PlaylistDocument, options);
+        }
+export type PlaylistQueryHookResult = ReturnType<typeof usePlaylistQuery>;
+export type PlaylistLazyQueryHookResult = ReturnType<typeof usePlaylistLazyQuery>;
+export type PlaylistSuspenseQueryHookResult = ReturnType<typeof usePlaylistSuspenseQuery>;
+export type PlaylistQueryResult = Apollo.QueryResult<PlaylistQuery, PlaylistQueryVariables>;
 export const PlaylistsByOwnerIdDocument = gql`
     query playlistsByOwnerId($owner: ID!, $offset: Int!, $limit: Int!) {
   playlistsByOwnerId(owner: $owner, offset: $offset, limit: $limit) {
