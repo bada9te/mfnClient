@@ -35,8 +35,8 @@ export default function RootLayout({
                         <div className="flex-1 grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1 overflow-hidden">
                             {/* Left sidebar (hidden on smaller screens) */}
                             <div className="hidden lg:block">
-                                <div className="card w-full max-h-[calc(100vh-125px)] rounded-none">
-                                    <div className="overflow-y-auto flex flex-col gap-8 py-8 no-scrollbar">
+                                <div className="card w-full max-h-[calc(100vh-125px)] rounded-none fixed top-16 left-0">
+                                    <div className="overflow-y-auto flex flex-col gap-8 py-10 ml-8 no-scrollbar">
                                         {
                                             genres.map((gen, i) => {
                                                 return (
@@ -54,9 +54,9 @@ export default function RootLayout({
                             </div>
 
                             {/* Main content area */}
-                            <div className="col-auto flex-1 overflow-y-auto max-h-[calc(100vh-125px)] no-scrollbar">
-                                <div className="card w-full rounded-none ">
-                                    <div className="card-body p-0 gap-0 no-scrollbar">
+                            <div className="col-auto flex-1 no-scrollbar">
+                                <div className="card w-full rounded-none my-14 md:my-[72px]">
+                                    <div className="card-body p-0 gap-0">
                                         <NextTopLoader 
                                             color="#1ba39c"
                                             initialPosition={0.18}
