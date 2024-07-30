@@ -8,6 +8,7 @@ import { httpSaveFile } from "@/utils/http-requests/files";
 import { useCallback, useRef, useState } from "react";
 import config from "@/../next.config.mjs";
 import { useSnackbar } from "notistack";
+import ProfileProgress from "./profile-progress/profile-progress";
 
 const ShareBtn = (props: {
     handleClick: () => void;
@@ -126,23 +127,23 @@ export default function ProfileCard(props: {
                 refDialog={cropperModalRef}
                 handleImageCropModalClose={handleImageCropModalClose}
             />
-            <div className={`${!disableMargins && 'm-0 md:mx-8 md:mt-8'} card w-full max-h-screen text-white rounded-none shadow-2xl glass`}>
+            <div className={`${!disableMargins && 'm-0 md:mx-8 md:mt-8'} card w-full text-white rounded-none shadow-2xl glass`}>
                 <figure className="max-h-48">
                     <img className="w-full" src={data.user.background.length ? `${config.env?.serverBase}/files/${data.user.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
                 </figure>
-                <div className="card-body flex flex-col md:flex-row gap-5">
+                <div className="card-body flex flex-col  gap-5">
                     <div className="avatar flex justify-center">
                         <div className="w-32 h-32 mask mask-hexagon">
                             <img src={data.user.avatar.length ? `${config.env?.serverBase}/files/${data.user.avatar}` : "/assets/icons/logo_clear.png"} alt="avatar" />
                         </div>
                     </div>
                     <div>
-                        <h2 className="card-title flex flex-col md:flex-row">
+                        <h2 className="card-title flex flex-col md:flex-row justify-center items-center mb-2">
                             {data.user.nick}
                             <div className="badge glass bg-[#1ba39c] text-white">{data.user.subscribers?.length} followers</div>
                             <div className="badge glass">{data.user.subscribedOn?.length} following</div>
                         </h2>
-                        <p className="mt-3 md:mt-0">{data.user.description}</p>
+                        <p className="mt-3 md:mt-0 text-center">{data.user.description}</p>
                         <div className="card-actions justify-start mt-3">
                             {
                                 !isEditable
@@ -210,6 +211,7 @@ export default function ProfileCard(props: {
                             }
                         </div>
                     </div>
+                    <ProfileProgress/>
                 </div>
             </div>
         </>
