@@ -58,9 +58,9 @@ export default function Footer() {
                 </div>
             </nav>    
 
-            <Image width={500} height={500} src="/assets/drawings/drawing-3.png" alt="drawing-3" className="w-44 absolute bottom-4 md:bottom-0 right-0"/>  
-            <Image width={500} height={500} src="/assets/figures/cube-rounded.svg" alt="cube-rounded" className="w-32 rotate-12 absolute top-3 md:top-32 mix-blend-luminosity right-3 md:right-96 z-0 opacity-70"/>         
-            <Image width={500} height={500} src="/assets/figures/bubble.svg" alt="bubble" className="w-16 absolute top-32 mix-blend-luminosity right-3 md:left-72 z-0 opacity-70"/>
+            <Image width={190} height={190} src="/assets/drawings/drawing-3.png" alt="drawing-3" className="absolute bottom-4 md:bottom-0 right-0"/>  
+            <Image width={130} height={130} src="/assets/figures/cube-rounded.svg" alt="cube-rounded" className="rotate-12 absolute top-3 md:top-32 mix-blend-luminosity right-3 md:right-96 z-0 opacity-70"/>         
+            <Image width={70} height={70} src="/assets/figures/bubble.svg" alt="bubble" className="absolute top-32 mix-blend-luminosity right-3 md:left-72 z-0 opacity-70"/>
         </footer>
     );
 }

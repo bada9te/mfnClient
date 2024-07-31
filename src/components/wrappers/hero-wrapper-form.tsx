@@ -21,8 +21,8 @@ export default function HeroWrapperForm(props: {
                                 src="/assets/figures/cube.svg" 
                                 alt="drawing-1" 
                                 className="w-48 absolute top-3 right-56 lg:right-96 z-0 opacity-75"
-                                width={500}
-                                height={500}
+                                width={400}
+                                height={400}
                             />
                         <div className={`card shrink-0 w-full ${!fullWidth && "max-w-md"} shadow-2xl bg-base-100`}>
                             {children}
@@ -33,15 +33,15 @@ export default function HeroWrapperForm(props: {
                     src="/assets/drawings/drawing-1.png" 
                     alt="drawing-1" 
                     className="w-48 md:w-64 lg:w-80 absolute bottom-0 right-0 opacity-75"
-                    width={1000}
-                    height={1000}
+                    width={500}
+                    height={500}
                 />
                 <Image 
                     src="/assets/drawings/drawing-5.png" 
                     alt="drawing-2" 
                     className="w-48 md:w-64 lg:w-96 absolute bottom-0 left-0 opacity-75"
-                    width={1000}
-                    height={1000}
+                    width={500}
+                    height={500}
                 />
             </div>
         </div>
