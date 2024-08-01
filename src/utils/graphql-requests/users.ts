@@ -7,6 +7,7 @@ export const CORE_USER_FIELDS = gql`
         description
         avatar
         background
+        achievements
     }
 `;
 

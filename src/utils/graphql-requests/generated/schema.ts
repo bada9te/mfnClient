@@ -32,6 +32,18 @@ export type AccountRestoreInput = {
   verifyToken: Scalars['String']['input'];
 };
 
+export type Achievement = {
+  __typename?: 'Achievement';
+  _id: Scalars['ID']['output'];
+  achievement: Scalars['String']['output'];
+  count: Scalars['Int']['output'];
+  description: Scalars['String']['output'];
+  posNumber: Scalars['Int']['output'];
+  rarity: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+};
+
 export type AddNewBattleByPostsIdsInput = {
   post1: Scalars['ID']['input'];
   post2: Scalars['ID']['input'];
@@ -404,6 +416,9 @@ export type PrepareAccountToRestoreInput = {
 
 export type Query = {
   __typename?: 'Query';
+  achievementsByIds?: Maybe<Array<Achievement>>;
+  achievementsByPos?: Maybe<Array<Achievement>>;
+  allAchievements?: Maybe<Array<Achievement>>;
   battlesByStatus: BattlesWithCount;
   moderationActionValidate: ModerationAction;
   notifications: NotificationsWithCount;
@@ -431,6 +446,16 @@ export type Query = {
   usersByIds: Array<User>;
   usersByNickname: Array<User>;
   whoAmI?: Maybe<User>;
+};
+
+
+export type QueryAchievementsByIdsArgs = {
+  ids: Array<Scalars['ID']['input']>;
+};
+
+
+export type QueryAchievementsByPosArgs = {
+  pos: Array<Scalars['Int']['input']>;
 };
 
 
@@ -631,6 +656,7 @@ export type UpdateUserInput = {
 export type User = {
   __typename?: 'User';
   _id: Scalars['ID']['output'];
+  achievements?: Maybe<Array<Scalars['Int']['output']>>;
   avatar: Scalars['String']['output'];
   background: Scalars['String']['output'];
   description: Scalars['String']['output'];
@@ -907,35 +933,35 @@ export type SupportRequestCloseMutationVariables = Exact<{
 
 export type SupportRequestCloseMutation = { __typename?: 'Mutation', supportRequestClose: { __typename?: 'SupportRequest', _id: string } };
 
-export type CoreUserFiledsFragment = { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string };
+export type CoreUserFiledsFragment = { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null };
 
 export type UserQueryVariables = Exact<{
   _id: Scalars['ID']['input'];
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type UsersByNicknameQueryVariables = Exact<{
   nick: Scalars['String']['input'];
 }>;
 
 
-export type UsersByNicknameQuery = { __typename?: 'Query', usersByNickname: Array<{ __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null }> };
+export type UsersByNicknameQuery = { __typename?: 'Query', usersByNickname: Array<{ __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null }> };
 
 export type UsersByIdsQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
-export type UsersByIdsQuery = { __typename?: 'Query', usersByIds: Array<{ __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string }> };
+export type UsersByIdsQuery = { __typename?: 'Query', usersByIds: Array<{ __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null }> };
 
 export type UserCreateMutationVariables = Exact<{
   input: AddUserInput;
 }>;
 
 
-export type UserCreateMutation = { __typename?: 'Mutation', userCreate: { __typename?: 'UserWithAction', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string }, action: { __typename?: 'ModerationAction', _id: string } } };
+export type UserCreateMutation = { __typename?: 'Mutation', userCreate: { __typename?: 'UserWithAction', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null }, action: { __typename?: 'ModerationAction', _id: string } } };
 
 export type UserDeleteByIdMutationVariables = Exact<{
   _id: Scalars['ID']['input'];
@@ -949,14 +975,14 @@ export type UserSwitchSubscriptionMutationVariables = Exact<{
 }>;
 
 
-export type UserSwitchSubscriptionMutation = { __typename?: 'Mutation', userSwitchSubscription: { __typename?: 'TwoUsers', subscriber: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null }, subscribeOn: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } } };
+export type UserSwitchSubscriptionMutation = { __typename?: 'Mutation', userSwitchSubscription: { __typename?: 'TwoUsers', subscriber: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null }, subscribeOn: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } } };
 
 export type UserUpdateMutationVariables = Exact<{
   input: UpdateUserInput;
 }>;
 
 
-export type UserUpdateMutation = { __typename?: 'Mutation', userUpdate: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string } };
+export type UserUpdateMutation = { __typename?: 'Mutation', userUpdate: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null } };
 
 export type UserPrepareAccountToRestoreMutationVariables = Exact<{
   input: PrepareAccountToRestoreInput;
@@ -1072,6 +1098,7 @@ export const CoreUserFiledsFragmentDoc = gql`
   description
   avatar
   background
+  achievements
 }
     `;
 export const BattlesByStatusDocument = gql`
