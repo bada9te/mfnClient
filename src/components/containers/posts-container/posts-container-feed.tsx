@@ -15,6 +15,8 @@ export default function PostsContainerFeed(props: TPaginationProps) {
         }
     });
 
+    console.log(data)
+
     return (
         <>
             {
