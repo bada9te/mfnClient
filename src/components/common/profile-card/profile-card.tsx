@@ -211,7 +211,7 @@ export default function ProfileCard(props: {
                             }
                         </div>
                     </div>
-                    <ProfileProgress/>
+                    <ProfileProgress userId={userId}/>
                 </div>
             </div>
         </>

@@ -1,6 +1,14 @@
+import { useAppSelector } from "@/lib/redux/store";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function ProfileProgress() {
+export default function ProfileProgress(props: {
+    userId: string;
+}) {
+    const {userId} = props;
+    const user = useAppSelector(state => state.user.user);
+
+
     return (
         <div className="stats stats-vertical lg:stats-horizontal bg-black glass text-primary-content max-w-full">
             <div className="stat">
@@ -20,7 +28,7 @@ export default function ProfileProgress() {
                 <div className="stat-title text-center">Challanges completed</div>
                 <div className="stat-value text-center">0/10</div>
                 <div className="stat-actions">
-                    <button className="btn btn-sm btn-primary glass text-white w-full">List of challenges</button>
+                    <Link href={`/profile/${user?._id === userId ? "me" : userId}/achievements`} className="btn btn-sm btn-primary glass text-white w-full">List of challenges</Link>
                 </div>
             </div>
 

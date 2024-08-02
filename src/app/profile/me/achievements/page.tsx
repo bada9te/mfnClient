@@ -2,6 +2,8 @@ import { cookies } from "next/headers";
 import nextConfig from "../../../../../next.config.mjs";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import { Suspense } from "react";
+import AchievementsContainer from "@/components/containers/achievements-container/achievements-container";
+import AchievementsContainerSkeleton from "@/components/containers/achievements-container/achievements-container-skeleton";
 
 export default function Challenges() {
     const currentUser = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
@@ -13,8 +15,8 @@ export default function Challenges() {
         >
             <div className="card w-full">
                 <div className="flex flex-wrap justify-center md:justify-around gap-5">
-                    <Suspense fallback={"Fetching cahllenges..."}>
-                        DATA
+                    <Suspense fallback={<AchievementsContainerSkeleton/>}>
+                        <AchievementsContainer/>
                     </Suspense>
                 </div>
             </div>
