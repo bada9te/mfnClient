@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import AchievementsContainer from "@/components/containers/achievements-container/achievements-container";
 import AchievementsContainerSkeleton from "@/components/containers/achievements-container/achievements-container-skeleton";
 import { PreloadQuery } from "@/lib/apollo/client";
-import { USER_QUERY } from "@/utils/graphql-requests/users";
 import { ACHIEVEMENTS_ALL_QUERY } from "@/utils/graphql-requests/achievements";
 
 export default function Challenges() {

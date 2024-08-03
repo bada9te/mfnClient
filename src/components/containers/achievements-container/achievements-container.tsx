@@ -1,6 +1,6 @@
 "use client"
 import Achievement from "@/components/entities/achievement/achievement";
-import { useAllAchievementsSuspenseQuery, useUserQuery } from "@/utils/graphql-requests/generated/schema";
+import { useAllAchievementsSuspenseQuery, useUserAchievementsDataQuery, useUserQuery } from "@/utils/graphql-requests/generated/schema";
 import AchievementsContainerSkeleton from "./achievements-container-skeleton";
 
 
@@ -15,13 +15,27 @@ export default function AchievementsContainer(props: {userId: string}) {
         }
     });
 
+    const {data: uuuuuuuu} = useUserAchievementsDataQuery({
+        variables: {
+            _id: userId,
+        }
+    });
+
+    console.log("ACHIEVEMENTS:", uuuuuuuu?.userAchievementsData);
+
     return (
         <>
             {
                 userData && achievements && !userDataLoading
                 ?
                 achievements?.allAchievements?.map((i, key) => {
-                    return (<Achievement data={i} key={key}/>);
+                    return (
+                        <Achievement 
+                            data={i} 
+                            key={key} 
+                            isCompleted={Boolean(uuuuuuuu?.userAchievementsData?.achievements?.includes(Number(i.posNumber)))}
+                        />
+                    );
                 })
                 :
                 <AchievementsContainerSkeleton/>

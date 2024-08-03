@@ -54,6 +54,19 @@ export const USERS_BY_IDS_QUERY = gql`
     }
 `;
 
+export const USER_ACHIEVEMENTS_DATA_QUERY = gql`
+    query userAchievementsData($_id: ID!) {
+        userAchievementsData(_id: $_id) {
+            achievements
+            totalLikes
+            totalSaves
+            maxLikesByPost
+            maxSavesByPost
+            postCount
+        }
+    }
+`;
+
 // M
 export const USER_CREATE_MUTATION = gql`
     ${CORE_USER_FIELDS}
