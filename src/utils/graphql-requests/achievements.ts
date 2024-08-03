@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client/index.js";
 
 export const CORE_ACHIEVEMENT_FIELDS = gql`
     fragment CoreAchievementFields on Achievement {
@@ -7,7 +7,6 @@ export const CORE_ACHIEVEMENT_FIELDS = gql`
         achievement
         description
         type
-        count
         rarity
         posNumber
     }
@@ -16,8 +15,8 @@ export const CORE_ACHIEVEMENT_FIELDS = gql`
 // Q
 export const ACHIEVEMENTS_ALL_QUERY = gql`
     ${CORE_ACHIEVEMENT_FIELDS}
-    query allAchievements() {
-        allAchievements() {
+    query allAchievements {
+        allAchievements {
             ...CoreAchievementFields
         }
     }
@@ -32,7 +31,7 @@ export const ACHIEVEMENTS_BY_IDS_QUERY = gql`
     }
 `;
 
-export const ACHIVEEMENTS_BY_POS = gql`
+export const ACHIEVEMENTS_BY_POS_QUERY = gql`
     ${CORE_ACHIEVEMENT_FIELDS}
     query achievementsByPos($pos: [Int!]!) {
         achievementsByPos(pos: $pos) {

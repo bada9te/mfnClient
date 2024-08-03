@@ -158,7 +158,7 @@ export default function Page() {
                     }
                 </div>
             </div>
-            <Image src={"/assets/bgs/people.png"} alt="people" width={1920} height={640} className="p-0 md:px-8 md:pt-8 opacity-75"/>
+            <Image src={"/assets/bgs/people2.png"} alt="people" width={1920} height={640} className="p-0 md:px-8 md:pt-8 opacity-75"/>
 
         </>
     );
