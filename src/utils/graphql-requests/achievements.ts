@@ -39,3 +39,10 @@ export const ACHIEVEMENTS_BY_POS_QUERY = gql`
         }
     }
 `;
+
+
+export const ACHIEVEMENTS_COUNT_QUERY = gql`
+    query achievemenmtsCount {
+        achievemenmtsCount
+    }
+`;

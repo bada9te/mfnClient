@@ -7,8 +7,9 @@ import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
 import {cookies} from "next/headers";
 import nextConfig from "@/../next.config.mjs";
-import {USER_QUERY} from "@/utils/graphql-requests/users";
+import {USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY} from "@/utils/graphql-requests/users";
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
+
 
 export default function Profile({params}: {params: { page: number }}) {
     const myId = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
@@ -16,14 +17,21 @@ export default function Profile({params}: {params: { page: number }}) {
     return (
         <>
             <PreloadQuery
-                query={USER_QUERY}
+                query={USER_ACHIEVEMENTS_DATA_QUERY}
                 variables={{
-                    _id: myId,
+                    _id: myId
                 }}
             >
-                <Suspense fallback={<ProfileCardSkeleton/>}>
-                    <ProfileCard userId={myId}/>
-                </Suspense>
+                <PreloadQuery
+                    query={USER_QUERY}
+                    variables={{
+                        _id: myId,
+                    }}
+                >
+                    <Suspense fallback={<ProfileCardSkeleton/>}>
+                        <ProfileCard userId={myId}/>
+                    </Suspense>
+                </PreloadQuery>
             </PreloadQuery>
             <HeroWrapper
                 title="My tracks"

@@ -415,6 +415,7 @@ export type PrepareAccountToRestoreInput = {
 
 export type Query = {
   __typename?: 'Query';
+  achievemenmtsCount: Scalars['Int']['output'];
   achievementsByIds?: Maybe<Array<Achievement>>;
   achievementsByPos?: Maybe<Array<Achievement>>;
   allAchievements?: Maybe<Array<Achievement>>;
@@ -708,6 +709,11 @@ export type AchievementsByPosQueryVariables = Exact<{
 
 
 export type AchievementsByPosQuery = { __typename?: 'Query', achievementsByPos?: Array<{ __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null }> | null };
+
+export type AchievemenmtsCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AchievemenmtsCountQuery = { __typename?: 'Query', achievemenmtsCount: number };
 
 export type CoreBattleFieldsFragment = { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null };
 
@@ -1276,6 +1282,43 @@ export type AchievementsByPosQueryHookResult = ReturnType<typeof useAchievements
 export type AchievementsByPosLazyQueryHookResult = ReturnType<typeof useAchievementsByPosLazyQuery>;
 export type AchievementsByPosSuspenseQueryHookResult = ReturnType<typeof useAchievementsByPosSuspenseQuery>;
 export type AchievementsByPosQueryResult = Apollo.QueryResult<AchievementsByPosQuery, AchievementsByPosQueryVariables>;
+export const AchievemenmtsCountDocument = gql`
+    query achievemenmtsCount {
+  achievemenmtsCount
+}
+    `;
+
+/**
+ * __useAchievemenmtsCountQuery__
+ *
+ * To run a query within a React component, call `useAchievemenmtsCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAchievemenmtsCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAchievemenmtsCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAchievemenmtsCountQuery(baseOptions?: Apollo.QueryHookOptions<AchievemenmtsCountQuery, AchievemenmtsCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AchievemenmtsCountQuery, AchievemenmtsCountQueryVariables>(AchievemenmtsCountDocument, options);
+      }
+export function useAchievemenmtsCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AchievemenmtsCountQuery, AchievemenmtsCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AchievemenmtsCountQuery, AchievemenmtsCountQueryVariables>(AchievemenmtsCountDocument, options);
+        }
+export function useAchievemenmtsCountSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AchievemenmtsCountQuery, AchievemenmtsCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AchievemenmtsCountQuery, AchievemenmtsCountQueryVariables>(AchievemenmtsCountDocument, options);
+        }
+export type AchievemenmtsCountQueryHookResult = ReturnType<typeof useAchievemenmtsCountQuery>;
+export type AchievemenmtsCountLazyQueryHookResult = ReturnType<typeof useAchievemenmtsCountLazyQuery>;
+export type AchievemenmtsCountSuspenseQueryHookResult = ReturnType<typeof useAchievemenmtsCountSuspenseQuery>;
+export type AchievemenmtsCountQueryResult = Apollo.QueryResult<AchievemenmtsCountQuery, AchievemenmtsCountQueryVariables>;
 export const BattlesByStatusDocument = gql`
     query battlesByStatus($finished: Boolean!, $offset: Int!, $limit: Int!) {
   battlesByStatus(finished: $finished, offset: $offset, limit: $limit) {

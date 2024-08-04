@@ -3,7 +3,7 @@ import ImageCropperModal from "@/components/modals/cropper-modal";
 import { setUser, setUserAvatar, setUserBackground } from "@/lib/redux/slices/user";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
-import {useUserSuspenseQuery, useUserSwitchSubscriptionMutation, useUserUpdateMutation} from "@/utils/graphql-requests/generated/schema";
+import {useAchievemenmtsCountQuery, UserAchievementsData, useUserAchievementsDataSuspenseQuery, useUserSuspenseQuery, useUserSwitchSubscriptionMutation, useUserUpdateMutation} from "@/utils/graphql-requests/generated/schema";
 import { httpSaveFile } from "@/utils/http-requests/files";
 import { useCallback, useRef, useState } from "react";
 import config from "@/../next.config.mjs";
@@ -53,9 +53,17 @@ export default function ProfileCard(props: {
 
     const { data } = useUserSuspenseQuery({
         variables: {
-            _id: userId
+            _id: userId,
         }
     });
+
+    const { data: achievementsData } = useUserAchievementsDataSuspenseQuery({
+        variables: {
+            _id: userId,
+        }
+    });
+
+    const { data: achievementsCountData } = useAchievemenmtsCountQuery();
 
     const handlePicture = (file: File | null, imageType: "avatar" | "background") => {
         if (file !== null) {
@@ -211,7 +219,11 @@ export default function ProfileCard(props: {
                             }
                         </div>
                     </div>
-                    <ProfileProgress userId={userId}/>
+                    <ProfileProgress 
+                        userId={userId} 
+                        data={achievementsData.userAchievementsData as UserAchievementsData}
+                        achievementsTotal={achievementsCountData?.achievemenmtsCount as number}
+                    />
                 </div>
             </div>
         </>
