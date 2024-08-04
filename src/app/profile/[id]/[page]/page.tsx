@@ -3,22 +3,23 @@ import { PreloadQuery } from "@/lib/apollo/client";
 import { Suspense } from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
-import { POSTS_BY_OWNER_QUERY, POSTS_QUERY } from "@/utils/graphql-requests/posts";
+import { POSTS_BY_OWNER_QUERY } from "@/utils/graphql-requests/posts";
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
+import { USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY } from "@/utils/graphql-requests/users";
+import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
 
 export default function ProfileId({params}: {params: {page: number, id: string}}) {
     return (
         <>
-            <PreloadQuery
-                query={POSTS_QUERY}
-                variables={{
-                    _id: params.id
-                }}
-            >
-                <Suspense fallback={<ProfileCardSkeleton/>}>
-                    <ProfileCard userId={params.id}/>
-                </Suspense>
+            <PreloadQuery query={ACHIEVEMENTS_COUNT_QUERY}>
+                <PreloadQuery query={USER_ACHIEVEMENTS_DATA_QUERY} variables={{ _id: params.id }}>
+                    <PreloadQuery query={USER_QUERY} variables={{ _id: params.id }}>
+                        <Suspense fallback={<ProfileCardSkeleton/>}>
+                            <ProfileCard userId={params.id}/>
+                        </Suspense>
+                    </PreloadQuery>
+                </PreloadQuery>
             </PreloadQuery>
             <HeroWrapper
                 title=""

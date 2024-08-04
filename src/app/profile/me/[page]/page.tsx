@@ -9,6 +9,7 @@ import {cookies} from "next/headers";
 import nextConfig from "@/../next.config.mjs";
 import {USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY} from "@/utils/graphql-requests/users";
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
+import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
 
 
 export default function Profile({params}: {params: { page: number }}) {
@@ -16,21 +17,13 @@ export default function Profile({params}: {params: { page: number }}) {
 
     return (
         <>
-            <PreloadQuery
-                query={USER_ACHIEVEMENTS_DATA_QUERY}
-                variables={{
-                    _id: myId
-                }}
-            >
-                <PreloadQuery
-                    query={USER_QUERY}
-                    variables={{
-                        _id: myId,
-                    }}
-                >
-                    <Suspense fallback={<ProfileCardSkeleton/>}>
-                        <ProfileCard userId={myId}/>
-                    </Suspense>
+            <PreloadQuery query={ACHIEVEMENTS_COUNT_QUERY}>
+                <PreloadQuery query={USER_ACHIEVEMENTS_DATA_QUERY} variables={{ _id: myId }}>
+                    <PreloadQuery query={USER_QUERY} variables={{ _id: myId }}>
+                        <Suspense fallback={<ProfileCardSkeleton/>}>
+                            <ProfileCard userId={myId}/>
+                        </Suspense>
+                    </PreloadQuery>
                 </PreloadQuery>
             </PreloadQuery>
             <HeroWrapper
