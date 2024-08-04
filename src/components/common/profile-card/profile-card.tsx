@@ -3,7 +3,7 @@ import ImageCropperModal from "@/components/modals/cropper-modal";
 import { setUser, setUserAvatar, setUserBackground } from "@/lib/redux/slices/user";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
-import {useAchievemenmtsCountQuery, UserAchievementsData, useUserAchievementsDataSuspenseQuery, useUserSuspenseQuery, useUserSwitchSubscriptionMutation, useUserUpdateMutation} from "@/utils/graphql-requests/generated/schema";
+import {useAchievemenmtsCountQuery, useAchievemenmtsCountSuspenseQuery, UserAchievementsData, useUserAchievementsDataSuspenseQuery, useUserSuspenseQuery, useUserSwitchSubscriptionMutation, useUserUpdateMutation} from "@/utils/graphql-requests/generated/schema";
 import { httpSaveFile } from "@/utils/http-requests/files";
 import { useCallback, useRef, useState } from "react";
 import config from "@/../next.config.mjs";
@@ -63,13 +63,13 @@ export default function ProfileCard(props: {
         }
     });
 
-    const { data: achievementsCountData } = useAchievemenmtsCountQuery();
+    const { data: achievementsCountData } = useAchievemenmtsCountSuspenseQuery();
 
     const handlePicture = (file: File | null, imageType: "avatar" | "background") => {
         if (file !== null) {
             setImageURL(URL.createObjectURL(file));
             setImageType(imageType);
-            setFile(file)
+            setFile(file);
             // open cropper
             cropperModalRef.current && cropperModalRef.current.showModal();
         }
@@ -222,7 +222,7 @@ export default function ProfileCard(props: {
                     <ProfileProgress 
                         userId={userId} 
                         data={achievementsData.userAchievementsData as UserAchievementsData}
-                        achievementsTotal={achievementsCountData?.achievemenmtsCount as number}
+                        achievementsTotal={achievementsCountData.achievemenmtsCount as number}
                     />
                 </div>
             </div>

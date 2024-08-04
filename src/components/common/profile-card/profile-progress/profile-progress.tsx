@@ -1,7 +1,9 @@
+"use client"
 import { useAppSelector } from "@/lib/redux/store";
 import { UserAchievementsData } from "@/utils/graphql-requests/generated/schema";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const RefreshBtn = () => {
     return (
@@ -18,7 +20,15 @@ export default function ProfileProgress(props: {
 }) {
     const {userId, data, achievementsTotal} = props;
     const user = useAppSelector(state => state.user.user);
+    const [isMounted, setIsMounted] = useState(false);
 
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return;
+    }
 
     return (
         <div className="stats stats-vertical lg:stats-horizontal bg-black glass text-primary-content max-w-full">

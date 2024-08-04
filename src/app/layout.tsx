@@ -45,6 +45,7 @@ export default function RootLayout({
                                                         title={gen.title}
                                                         bgImage={gen.bg}
                                                         iconImage={gen.icon}
+                                                        description={gen.description}
                                                     />
                                                 );
                                             })

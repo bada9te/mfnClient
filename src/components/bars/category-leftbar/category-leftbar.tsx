@@ -4,8 +4,9 @@ export default function CategoryLeftBar(props: {
     title: string;
     bgImage: string;
     iconImage: string;
+    description: string;
 }) {
-    const { title, bgImage, iconImage } = props;
+    const { title, bgImage, iconImage, description } = props;
 
     return (
         <div className={`card w-fit max-w-72 bg-cover bg-center shadow-none text-white max-h-52`} style={{ backgroundImage: `url(${bgImage})` }}>
@@ -18,7 +19,7 @@ export default function CategoryLeftBar(props: {
                     </div>
                     <h2 className="card-title">{title}</h2>
                 </div>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <p className="mr-8">{description}</p>
 
                 <div className="absolute top-0 right-0 h-full card-actions justify-end">
                     <Link className="btn btn-primary glass h-full btn-sm rounded-l-none text-white" href={`/categories/${String(title).toLowerCase().replaceAll(' ', '-')}/1`}>

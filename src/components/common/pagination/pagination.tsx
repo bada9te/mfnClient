@@ -31,11 +31,25 @@ export default function Pagination(props: {
         }
     }, [page]);
 
+    console.log(page)
+
     return (
         <div className="join w-full flex justify-center">
-            <button className="join-item btn btn-primary glass bg-black text-white" onClick={() => handleClick(-1)}>«</button>
+            <button 
+                className="join-item btn btn-primary glass bg-black text-white" 
+                disabled={+page === 1} 
+                onClick={() => handleClick(-1)}
+            >
+                «
+            </button>
             <button className="join-item btn btn-primary glass bg-black text-white">{page}</button>
-            <button className="join-item btn btn-primary glass bg-black text-white disabled:opacity-95" disabled={page > maxPage} onClick={() => handleClick(1)}>»</button>
+            <button 
+                className="join-item btn btn-primary glass bg-black text-white disabled:opacity-95" 
+                disabled={page > maxPage} 
+                onClick={() => handleClick(1)}
+            >
+                »
+            </button>
         </div>
     );
 }
