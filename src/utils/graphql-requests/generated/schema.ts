@@ -118,6 +118,23 @@ export type CreateSupportRequestInput = {
   message: Scalars['String']['input'];
 };
 
+export type LinkGoogleOrFacebookInput = {
+  email: Scalars['String']['input'];
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  token: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
+export type LinkTwitterInput = {
+  displayName: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  id: Scalars['String']['input'];
+  token: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
+
 export type MakeBattleVoteInput = {
   battleId: Scalars['ID']['input'];
   postNScore: Scalars['String']['input'];
@@ -169,9 +186,13 @@ export type Mutation = {
   userConfirmAccount: UserWithAction;
   userCreate: UserWithAction;
   userDeleteById: User;
+  userLinkFacebook?: Maybe<User>;
+  userLinkGoogle?: Maybe<User>;
+  userLinkTwitter?: Maybe<User>;
   userPrepareAccountToRestore: UserWithAction;
   userRestoreAccount: UserWithAction;
   userSwitchSubscription: TwoUsers;
+  userUnlinkGoogle?: Maybe<User>;
   userUpdate: User;
 };
 
@@ -307,6 +328,21 @@ export type MutationUserDeleteByIdArgs = {
 };
 
 
+export type MutationUserLinkFacebookArgs = {
+  input: LinkGoogleOrFacebookInput;
+};
+
+
+export type MutationUserLinkGoogleArgs = {
+  input: LinkGoogleOrFacebookInput;
+};
+
+
+export type MutationUserLinkTwitterArgs = {
+  input: LinkTwitterInput;
+};
+
+
 export type MutationUserPrepareAccountToRestoreArgs = {
   input?: InputMaybe<PrepareAccountToRestoreInput>;
 };
@@ -319,6 +355,11 @@ export type MutationUserRestoreAccountArgs = {
 
 export type MutationUserSwitchSubscriptionArgs = {
   input: SwitchSubscriptionOnUserInput;
+};
+
+
+export type MutationUserUnlinkGoogleArgs = {
+  _id: Scalars['ID']['input'];
 };
 
 
@@ -617,6 +658,11 @@ export type Report = {
   reportedPost?: Maybe<Post>;
 };
 
+export type SocialMediaData = {
+  __typename?: 'SocialMediaData';
+  email?: Maybe<Scalars['String']['output']>;
+};
+
 export type SupportRequest = {
   __typename?: 'SupportRequest';
   _id: Scalars['ID']['output'];
@@ -666,11 +712,14 @@ export type User = {
   avatar: Scalars['String']['output'];
   background: Scalars['String']['output'];
   description: Scalars['String']['output'];
-  email: Scalars['String']['output'];
+  facebook?: Maybe<SocialMediaData>;
+  google?: Maybe<SocialMediaData>;
   level: Scalars['Int']['output'];
+  local?: Maybe<SocialMediaData>;
   nick: Scalars['String']['output'];
   subscribedOn?: Maybe<Array<User>>;
   subscribers?: Maybe<Array<User>>;
+  twitter?: Maybe<SocialMediaData>;
 };
 
 export type UserAchievementsData = {
@@ -976,14 +1025,14 @@ export type SupportRequestCloseMutationVariables = Exact<{
 
 export type SupportRequestCloseMutation = { __typename?: 'Mutation', supportRequestClose: { __typename?: 'SupportRequest', _id: string } };
 
-export type CoreUserFiledsFragment = { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number };
+export type CoreUserFieldsFragment = { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number };
 
 export type UserQueryVariables = Exact<{
   _id: Scalars['ID']['input'];
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number, local?: { __typename?: 'SocialMediaData', email?: string | null } | null, google?: { __typename?: 'SocialMediaData', email?: string | null } | null, facebook?: { __typename?: 'SocialMediaData', email?: string | null } | null, twitter?: { __typename?: 'SocialMediaData', email?: string | null } | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type UsersByNicknameQueryVariables = Exact<{
   nick: Scalars['String']['input'];
@@ -1054,6 +1103,34 @@ export type UserRestoreAccountMutationVariables = Exact<{
 
 
 export type UserRestoreAccountMutation = { __typename?: 'Mutation', userRestoreAccount: { __typename?: 'UserWithAction', user: { __typename?: 'User', _id: string }, action: { __typename?: 'ModerationAction', _id: string } } };
+
+export type UserLinkGoogleMutationVariables = Exact<{
+  input: LinkGoogleOrFacebookInput;
+}>;
+
+
+export type UserLinkGoogleMutation = { __typename?: 'Mutation', userLinkGoogle?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
+
+export type UserUnlinkGoogleMutationVariables = Exact<{
+  _id: Scalars['ID']['input'];
+}>;
+
+
+export type UserUnlinkGoogleMutation = { __typename?: 'Mutation', userUnlinkGoogle?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
+
+export type UserLinkFacebookMutationVariables = Exact<{
+  input: LinkGoogleOrFacebookInput;
+}>;
+
+
+export type UserLinkFacebookMutation = { __typename?: 'Mutation', userLinkFacebook?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
+
+export type UserLinkTwitterMutationVariables = Exact<{
+  input: LinkTwitterInput;
+}>;
+
+
+export type UserLinkTwitterMutation = { __typename?: 'Mutation', userLinkTwitter?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
 
 export const CoreAchievementFieldsFragmentDoc = gql`
     fragment CoreAchievementFields on Achievement {
@@ -1152,8 +1229,8 @@ export const CorePlaylistFieldsFragmentDoc = gql`
   createdAt
 }
     ${CorePostFieldsFragmentDoc}`;
-export const CoreUserFiledsFragmentDoc = gql`
-    fragment CoreUserFileds on User {
+export const CoreUserFieldsFragmentDoc = gql`
+    fragment CoreUserFields on User {
   _id
   nick
   description
@@ -2657,7 +2734,19 @@ export type SupportRequestCloseMutationOptions = Apollo.BaseMutationOptions<Supp
 export const UserDocument = gql`
     query user($_id: ID!) {
   user(_id: $_id) {
-    ...CoreUserFileds
+    ...CoreUserFields
+    local {
+      email
+    }
+    google {
+      email
+    }
+    facebook {
+      email
+    }
+    twitter {
+      email
+    }
     subscribedOn {
       _id
     }
@@ -2666,7 +2755,7 @@ export const UserDocument = gql`
     }
   }
 }
-    ${CoreUserFiledsFragmentDoc}`;
+    ${CoreUserFieldsFragmentDoc}`;
 
 /**
  * __useUserQuery__
@@ -2703,7 +2792,7 @@ export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export const UsersByNicknameDocument = gql`
     query usersByNickname($nick: String!) {
   usersByNickname(nick: $nick) {
-    ...CoreUserFileds
+    ...CoreUserFields
     subscribedOn {
       _id
     }
@@ -2712,7 +2801,7 @@ export const UsersByNicknameDocument = gql`
     }
   }
 }
-    ${CoreUserFiledsFragmentDoc}`;
+    ${CoreUserFieldsFragmentDoc}`;
 
 /**
  * __useUsersByNicknameQuery__
@@ -2749,10 +2838,10 @@ export type UsersByNicknameQueryResult = Apollo.QueryResult<UsersByNicknameQuery
 export const UsersByIdsDocument = gql`
     query usersByIds($ids: [ID!]!) {
   usersByIds(ids: $ids) {
-    ...CoreUserFileds
+    ...CoreUserFields
   }
 }
-    ${CoreUserFiledsFragmentDoc}`;
+    ${CoreUserFieldsFragmentDoc}`;
 
 /**
  * __useUsersByIdsQuery__
@@ -2835,14 +2924,14 @@ export const UserCreateDocument = gql`
     mutation userCreate($input: AddUserInput!) {
   userCreate(input: $input) {
     user {
-      ...CoreUserFileds
+      ...CoreUserFields
     }
     action {
       _id
     }
   }
 }
-    ${CoreUserFiledsFragmentDoc}`;
+    ${CoreUserFieldsFragmentDoc}`;
 export type UserCreateMutationFn = Apollo.MutationFunction<UserCreateMutation, UserCreateMutationVariables>;
 
 /**
@@ -2906,7 +2995,7 @@ export const UserSwitchSubscriptionDocument = gql`
     mutation userSwitchSubscription($input: SwitchSubscriptionOnUserInput!) {
   userSwitchSubscription(input: $input) {
     subscriber {
-      ...CoreUserFileds
+      ...CoreUserFields
       subscribedOn {
         _id
       }
@@ -2915,7 +3004,7 @@ export const UserSwitchSubscriptionDocument = gql`
       }
     }
     subscribeOn {
-      ...CoreUserFileds
+      ...CoreUserFields
       subscribedOn {
         _id
       }
@@ -2925,7 +3014,7 @@ export const UserSwitchSubscriptionDocument = gql`
     }
   }
 }
-    ${CoreUserFiledsFragmentDoc}`;
+    ${CoreUserFieldsFragmentDoc}`;
 export type UserSwitchSubscriptionMutationFn = Apollo.MutationFunction<UserSwitchSubscriptionMutation, UserSwitchSubscriptionMutationVariables>;
 
 /**
@@ -2955,10 +3044,10 @@ export type UserSwitchSubscriptionMutationOptions = Apollo.BaseMutationOptions<U
 export const UserUpdateDocument = gql`
     mutation userUpdate($input: UpdateUserInput!) {
   userUpdate(input: $input) {
-    ...CoreUserFileds
+    ...CoreUserFields
   }
 }
-    ${CoreUserFiledsFragmentDoc}`;
+    ${CoreUserFieldsFragmentDoc}`;
 export type UserUpdateMutationFn = Apollo.MutationFunction<UserUpdateMutation, UserUpdateMutationVariables>;
 
 /**
@@ -3099,3 +3188,135 @@ export function useUserRestoreAccountMutation(baseOptions?: Apollo.MutationHookO
 export type UserRestoreAccountMutationHookResult = ReturnType<typeof useUserRestoreAccountMutation>;
 export type UserRestoreAccountMutationResult = Apollo.MutationResult<UserRestoreAccountMutation>;
 export type UserRestoreAccountMutationOptions = Apollo.BaseMutationOptions<UserRestoreAccountMutation, UserRestoreAccountMutationVariables>;
+export const UserLinkGoogleDocument = gql`
+    mutation userLinkGoogle($input: LinkGoogleOrFacebookInput!) {
+  userLinkGoogle(input: $input) {
+    ...CoreUserFields
+  }
+}
+    ${CoreUserFieldsFragmentDoc}`;
+export type UserLinkGoogleMutationFn = Apollo.MutationFunction<UserLinkGoogleMutation, UserLinkGoogleMutationVariables>;
+
+/**
+ * __useUserLinkGoogleMutation__
+ *
+ * To run a mutation, you first call `useUserLinkGoogleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLinkGoogleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLinkGoogleMutation, { data, loading, error }] = useUserLinkGoogleMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLinkGoogleMutation(baseOptions?: Apollo.MutationHookOptions<UserLinkGoogleMutation, UserLinkGoogleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserLinkGoogleMutation, UserLinkGoogleMutationVariables>(UserLinkGoogleDocument, options);
+      }
+export type UserLinkGoogleMutationHookResult = ReturnType<typeof useUserLinkGoogleMutation>;
+export type UserLinkGoogleMutationResult = Apollo.MutationResult<UserLinkGoogleMutation>;
+export type UserLinkGoogleMutationOptions = Apollo.BaseMutationOptions<UserLinkGoogleMutation, UserLinkGoogleMutationVariables>;
+export const UserUnlinkGoogleDocument = gql`
+    mutation userUnlinkGoogle($_id: ID!) {
+  userUnlinkGoogle(_id: $_id) {
+    ...CoreUserFields
+  }
+}
+    ${CoreUserFieldsFragmentDoc}`;
+export type UserUnlinkGoogleMutationFn = Apollo.MutationFunction<UserUnlinkGoogleMutation, UserUnlinkGoogleMutationVariables>;
+
+/**
+ * __useUserUnlinkGoogleMutation__
+ *
+ * To run a mutation, you first call `useUserUnlinkGoogleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserUnlinkGoogleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userUnlinkGoogleMutation, { data, loading, error }] = useUserUnlinkGoogleMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useUserUnlinkGoogleMutation(baseOptions?: Apollo.MutationHookOptions<UserUnlinkGoogleMutation, UserUnlinkGoogleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserUnlinkGoogleMutation, UserUnlinkGoogleMutationVariables>(UserUnlinkGoogleDocument, options);
+      }
+export type UserUnlinkGoogleMutationHookResult = ReturnType<typeof useUserUnlinkGoogleMutation>;
+export type UserUnlinkGoogleMutationResult = Apollo.MutationResult<UserUnlinkGoogleMutation>;
+export type UserUnlinkGoogleMutationOptions = Apollo.BaseMutationOptions<UserUnlinkGoogleMutation, UserUnlinkGoogleMutationVariables>;
+export const UserLinkFacebookDocument = gql`
+    mutation userLinkFacebook($input: LinkGoogleOrFacebookInput!) {
+  userLinkFacebook(input: $input) {
+    ...CoreUserFields
+  }
+}
+    ${CoreUserFieldsFragmentDoc}`;
+export type UserLinkFacebookMutationFn = Apollo.MutationFunction<UserLinkFacebookMutation, UserLinkFacebookMutationVariables>;
+
+/**
+ * __useUserLinkFacebookMutation__
+ *
+ * To run a mutation, you first call `useUserLinkFacebookMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLinkFacebookMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLinkFacebookMutation, { data, loading, error }] = useUserLinkFacebookMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLinkFacebookMutation(baseOptions?: Apollo.MutationHookOptions<UserLinkFacebookMutation, UserLinkFacebookMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserLinkFacebookMutation, UserLinkFacebookMutationVariables>(UserLinkFacebookDocument, options);
+      }
+export type UserLinkFacebookMutationHookResult = ReturnType<typeof useUserLinkFacebookMutation>;
+export type UserLinkFacebookMutationResult = Apollo.MutationResult<UserLinkFacebookMutation>;
+export type UserLinkFacebookMutationOptions = Apollo.BaseMutationOptions<UserLinkFacebookMutation, UserLinkFacebookMutationVariables>;
+export const UserLinkTwitterDocument = gql`
+    mutation userLinkTwitter($input: LinkTwitterInput!) {
+  userLinkTwitter(input: $input) {
+    ...CoreUserFields
+  }
+}
+    ${CoreUserFieldsFragmentDoc}`;
+export type UserLinkTwitterMutationFn = Apollo.MutationFunction<UserLinkTwitterMutation, UserLinkTwitterMutationVariables>;
+
+/**
+ * __useUserLinkTwitterMutation__
+ *
+ * To run a mutation, you first call `useUserLinkTwitterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLinkTwitterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLinkTwitterMutation, { data, loading, error }] = useUserLinkTwitterMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLinkTwitterMutation(baseOptions?: Apollo.MutationHookOptions<UserLinkTwitterMutation, UserLinkTwitterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserLinkTwitterMutation, UserLinkTwitterMutationVariables>(UserLinkTwitterDocument, options);
+      }
+export type UserLinkTwitterMutationHookResult = ReturnType<typeof useUserLinkTwitterMutation>;
+export type UserLinkTwitterMutationResult = Apollo.MutationResult<UserLinkTwitterMutation>;
+export type UserLinkTwitterMutationOptions = Apollo.BaseMutationOptions<UserLinkTwitterMutation, UserLinkTwitterMutationVariables>;

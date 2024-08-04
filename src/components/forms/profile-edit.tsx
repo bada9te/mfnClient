@@ -2,9 +2,14 @@
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
 import { useSnackbar } from "notistack";
-import { useUserPrepareAccountToRestoreMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
+import { useUserLinkGoogleMutation, useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkGoogleMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
-import { setUser } from "@/lib/redux/slices/user";
+import { IUserState, setUser } from "@/lib/redux/slices/user";
+import { httpGetGoogleInfo } from "@/utils/http-requests/auth";
+import Link from "next/link";
+import { useGoogleLogin } from '@react-oauth/google';
+import { useEffect, useState } from "react";
+import { revalidatePathAction } from "@/actions/revalidation";
 
 type InputsNickname = {
     nickname: string;
@@ -23,14 +28,26 @@ type InputsPassword = {
 };
 
 
-export default function ProfileEditForm() {
+export default function ProfileEditForm(props: {
+    userId: string;
+}) {
     const { register: registerNick, handleSubmit: handleSubmitNick, formState: {errors: errorsNick} } = useForm<InputsNickname>();
     const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
     const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail} } = useForm<InputsEmail>();
     const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>();
+    const [ isMounted, setIsMounted ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useUserUpdateMutation();
     const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();
+    const [ linkGoogle ] = useUserLinkGoogleMutation();
+    const [ unlinkGoogle ] = useUserUnlinkGoogleMutation();
+
+    const {data: userData} = useUserSuspenseQuery({
+        variables: {
+            _id: props.userId
+        }
+    });
+
     const user = useAppSelector(state => state.user.user);
     const dispatch = useAppDispatch();
 
@@ -111,6 +128,53 @@ export default function ProfileEditForm() {
         }).catch(_ => {
             enqueueSnackbar("Password can not be updated", {autoHideDuration: 3000, variant: 'error'});
         });
+    }
+
+    const handleGoogle = useGoogleLogin({
+        onSuccess: tokenResponse => {
+            httpGetGoogleInfo(tokenResponse.access_token).then(data => {
+                enqueueSnackbar("Processing...", {autoHideDuration: 1500});
+                linkGoogle({
+                    variables: {
+                        input: {
+                            userId: user._id,
+                            id: data.sub,
+                            token: tokenResponse.access_token,
+                            email: data.email,
+                            name: data.name,
+                        }
+                    }
+                }).then(_ => {
+                    revalidatePathAction("/profile/me/edit", "page");
+                    enqueueSnackbar("Google account linked.", {autoHideDuration: 2500, variant: 'success'});
+                }).catch(_ => {
+                    enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' })
+                });   
+            });
+        },
+    });
+
+    const handleUnlinkGoogle = () => {
+        enqueueSnackbar("Processing...", {autoHideDuration: 1500});
+        unlinkGoogle({
+            variables: {
+                _id: user._id
+            }
+        }).then(_ => {
+            revalidatePathAction("/profile/me/edit", "page");
+            enqueueSnackbar("Google account unlinked.", {autoHideDuration: 2500, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' })
+        }); 
+
+    }
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return;
     }
 
     return (
@@ -225,7 +289,7 @@ export default function ProfileEditForm() {
                 </form>
 
                 <div className="divider divider-primary mt-10">Socials</div>
-                <button className="btn hover:bg-white hover:text-black glass text-white">
+                <button className="btn hover:bg-white hover:text-black glass text-white" onClick={userData.user.google?.email ? () => handleUnlinkGoogle() : () => handleGoogle()}>
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -233,9 +297,9 @@ export default function ProfileEditForm() {
                         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                         <path d="M1 1h22v22H1z" fill="none"/>
                     </svg>
-                    Connect Google
+                    {userData.user.google?.email ? userData.user.google?.email : "Connect Google"}
                 </button>
-                <button className="btn hover:bg-blue-600 glass text-white">
+                <Link className="btn hover:bg-blue-600 glass text-white" href={"http://localhost:8000/auth/facebook"}>
                     <svg fill="#0091ff" height="25px" width="25px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310" stroke="#0091ff">
                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                     <g id="SVGRepo_iconCarrier"> 
@@ -246,13 +310,13 @@ export default function ProfileEditForm() {
                         </g>
                     </svg>
                     Connect Facebook
-                </button>
-                <button className="btn hover:bg-black glass text-white">
+                </Link>
+                <Link className="btn hover:bg-black glass text-white" href={"http://localhost:8000/auth/twitter"}>
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
-                        <path fill="#212121" fill-rule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clip-rule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
+                        <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
                     </svg>
                     Connect Twitter
-                </button>
+                </Link>
             </div>
         </div>
 

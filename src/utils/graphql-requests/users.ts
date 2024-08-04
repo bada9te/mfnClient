@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client/index.js";
 
 export const CORE_USER_FIELDS = gql`
-    fragment CoreUserFileds on User {
+    fragment CoreUserFields on User {
         _id
         nick
         description
@@ -19,7 +19,19 @@ export const USER_QUERY = gql`
     ${CORE_USER_FIELDS}
     query user($_id: ID!) {
         user(_id: $_id) {
-            ...CoreUserFileds
+            ...CoreUserFields
+            local {
+                email
+            }
+            google {
+                email
+            }
+            facebook {
+                email
+            }
+            twitter {
+                email
+            }
             subscribedOn {
                 _id
             }
@@ -34,7 +46,7 @@ export const USERS_BY_NICKNAME_QUERY = gql`
     ${CORE_USER_FIELDS}
     query usersByNickname($nick: String!) {
         usersByNickname(nick: $nick) {
-            ...CoreUserFileds
+            ...CoreUserFields
             subscribedOn {
                 _id
             }
@@ -49,7 +61,7 @@ export const USERS_BY_IDS_QUERY = gql`
     ${CORE_USER_FIELDS}
     query usersByIds($ids: [ID!]!) {
         usersByIds(ids: $ids) {
-            ...CoreUserFileds
+            ...CoreUserFields
         }
     }
 `;
@@ -73,7 +85,7 @@ export const USER_CREATE_MUTATION = gql`
     mutation userCreate($input: AddUserInput!) {
         userCreate(input: $input) {
             user {
-                ...CoreUserFileds
+                ...CoreUserFields
             }
             action {
                 _id
@@ -95,7 +107,7 @@ export const USER_SWITCH_SUBSCRIPTION_MUTATION = gql`
     mutation userSwitchSubscription($input: SwitchSubscriptionOnUserInput!) {
         userSwitchSubscription(input: $input) {
             subscriber {
-                ...CoreUserFileds
+                ...CoreUserFields
                 subscribedOn {
                     _id
                 }
@@ -104,7 +116,7 @@ export const USER_SWITCH_SUBSCRIPTION_MUTATION = gql`
                 }
             }
             subscribeOn {
-                ...CoreUserFileds
+                ...CoreUserFields
                 subscribedOn {
                     _id
                 }
@@ -120,7 +132,7 @@ export const USER_UPDATE_MUTATION = gql`
     ${CORE_USER_FIELDS}
     mutation userUpdate($input: UpdateUserInput!) {
         userUpdate(input: $input) {
-            ...CoreUserFileds
+            ...CoreUserFields
         }
     }
 `;
@@ -148,6 +160,44 @@ export const USER_RESTORE_ACCOUNT_MUTATION = gql`
         userRestoreAccount(input: $input) {
             user { _id }
             action { _id }
+        }
+    }
+`;
+
+
+export const USER_LINK_GOOGLE_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userLinkGoogle($input: LinkGoogleOrFacebookInput!) {
+        userLinkGoogle(input: $input) {
+            ...CoreUserFields
+        }
+    }
+`;
+
+export const USER_UNLINK_GOOGLE_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userUnlinkGoogle($_id: ID!) {
+        userUnlinkGoogle(_id: $_id) {
+            ...CoreUserFields
+        }
+    }
+`;
+
+
+export const USER_LINK_FACEBOOK_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userLinkFacebook($input: LinkGoogleOrFacebookInput!) {
+        userLinkFacebook(input: $input) {
+            ...CoreUserFields
+        }
+    }
+`;
+
+export const USER_LINK_TWITTER_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userLinkTwitter($input: LinkTwitterInput!) {
+        userLinkTwitter(input: $input) {
+            ...CoreUserFields
         }
     }
 `;

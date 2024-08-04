@@ -10,6 +10,7 @@ import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import NextTopLoader from "nextjs-toploader";
 import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 
 export default function RootLayout({
@@ -20,75 +21,77 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="black">
     <body>
-        <RainbowkitAppProvider>
-            <ApolloWrapper>
-                <SnackbarProvider maxSnack={5}>
-                    <ReduxProvider>
-                    <div className="min-h-screen flex flex-col">
-                        {/* AppBar */}
-                        <div className="bg-gray-800 text-white">
-                            {/* AppBar content goes here */}
-                            <AppBar/>
-                        </div>
-
-                        {/* Grid layout */}
-                        <div className="flex-1 grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1 overflow-hidden">
-                            {/* Left sidebar (hidden on smaller screens) */}
-                            <div className="hidden lg:block">
-                                <div className="card w-full max-h-[calc(100vh-125px)] rounded-none fixed top-16 left-0">
-                                    <div className="overflow-y-auto flex flex-col gap-8 py-10 ml-8 no-scrollbar">
-                                        {
-                                            genres.map((gen, i) => {
-                                                return (
-                                                    <CategoryLeftBar
-                                                        key={i}
-                                                        title={gen.title}
-                                                        bgImage={gen.bg}
-                                                        iconImage={gen.icon}
-                                                        description={gen.description}
-                                                    />
-                                                );
-                                            })
-                                        }
-                                    </div>
-                                </div>
+        <GoogleOAuthProvider clientId={"243426492714-4bcuo7n21qn2lth6so5kthh8m1j68h85.apps.googleusercontent.com"}>
+            <RainbowkitAppProvider>
+                <ApolloWrapper>
+                    <SnackbarProvider maxSnack={5}>
+                        <ReduxProvider>
+                        <div className="min-h-screen flex flex-col">
+                            {/* AppBar */}
+                            <div className="bg-gray-800 text-white">
+                                {/* AppBar content goes here */}
+                                <AppBar/>
                             </div>
 
-                            {/* Main content area */}
-                            <div className="col-auto flex-1 no-scrollbar">
-                                <div className="card w-full rounded-none my-14 md:my-[72px]">
-                                    <div className="card-body p-0 gap-0">
-                                        <NextTopLoader 
-                                            color="#1ba39c"
-                                            initialPosition={0.18}
-                                            crawlSpeed={200}
-                                            height={5}
-                                            crawl={true}
-                                            showSpinner={false}
-                                            easing="ease"
-                                            speed={300}
-                                            //shadow="0 0 10px #2299DD,0 0 5px #2299DD",
-                                        />
-                                        {children}
-                                        <div className="p-0 md:p-8">
-                                            <Footer/>
+                            {/* Grid layout */}
+                            <div className="flex-1 grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1 overflow-hidden">
+                                {/* Left sidebar (hidden on smaller screens) */}
+                                <div className="hidden lg:block">
+                                    <div className="card w-full max-h-[calc(100vh-125px)] rounded-none fixed top-16 left-0">
+                                        <div className="overflow-y-auto flex flex-col gap-8 py-10 ml-8 no-scrollbar">
+                                            {
+                                                genres.map((gen, i) => {
+                                                    return (
+                                                        <CategoryLeftBar
+                                                            key={i}
+                                                            title={gen.title}
+                                                            bgImage={gen.bg}
+                                                            iconImage={gen.icon}
+                                                            description={gen.description}
+                                                        />
+                                                    );
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Main content area */}
+                                <div className="col-auto flex-1 no-scrollbar">
+                                    <div className="card w-full rounded-none my-14 md:my-[72px]">
+                                        <div className="card-body p-0 gap-0">
+                                            <NextTopLoader 
+                                                color="#1ba39c"
+                                                initialPosition={0.18}
+                                                crawlSpeed={200}
+                                                height={5}
+                                                crawl={true}
+                                                showSpinner={false}
+                                                easing="ease"
+                                                speed={300}
+                                                //shadow="0 0 10px #2299DD,0 0 5px #2299DD",
+                                            />
+                                            {children}
+                                            <div className="p-0 md:p-8">
+                                                <Footer/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Bottom navigation bar */}
-                        <div className="bg-gray-800 text-white">
-                            {/* BottomNav content goes here */}
-                            <BottomNav/>
+                            {/* Bottom navigation bar */}
+                            <div className="bg-gray-800 text-white">
+                                {/* BottomNav content goes here */}
+                                <BottomNav/>
+                            </div>
                         </div>
-                    </div>
-                        
-                    </ReduxProvider>
-                </SnackbarProvider>
-            </ApolloWrapper>
-        </RainbowkitAppProvider>
+                            
+                        </ReduxProvider>
+                    </SnackbarProvider>
+                </ApolloWrapper>
+            </RainbowkitAppProvider>
+        </GoogleOAuthProvider>
     </body>
     </html>
   );

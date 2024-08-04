@@ -26,6 +26,21 @@ const httpGetCurrentUser = async() => {
     return await axios.get(`${SERVER_BASE}/auth/me`, { withCredentials: true });
 }
 
+const httpGetGoogleInfo = async(accessToken: string) => {
+    try {
+        const response = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        return response.data; // This will contain user info including email
+    } catch (error) {
+        // @ts-ignore
+        console.error('Error fetching user info:', error.response?.data || error.message);
+        throw new Error('Unable to fetch user info');
+    }
+}
+
 
 
 export {
@@ -33,4 +48,5 @@ export {
     httpLogOut,
     httpUpdateSessionUser,
     httpGetCurrentUser,
+    httpGetGoogleInfo,
 }

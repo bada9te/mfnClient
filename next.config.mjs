@@ -2,6 +2,7 @@
 
 const nextConfig = {
     reactStrictMode: false,
+    crossOrigin: "use-credentials",
     env: {
         serverDomain: process.env.NEXT_PUBLIC_SERVER_DOMAIN,
         serverBase: process.env.NEXT_PUBLIC_SERVER_BASE,
