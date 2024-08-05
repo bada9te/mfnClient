@@ -131,7 +131,9 @@ export default function ProfileEditForm(props: {
     }
 
     const handleGoogle = useGoogleLogin({
+        scope: "email",
         onSuccess: tokenResponse => {
+            console.log(tokenResponse)
             httpGetGoogleInfo(tokenResponse.access_token).then(data => {
                 enqueueSnackbar("Processing...", {autoHideDuration: 1500});
                 linkGoogle({

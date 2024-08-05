@@ -125,7 +125,12 @@ export default function ProfileCard(props: {
 
             enqueueSnackbar("Updated", { autoHideDuration: 2000, variant: 'success' });
         }
-    }, [imageType, file])
+    }, [imageType, file]);
+
+    const handleShareClick = () => {
+        navigator.clipboard.writeText(`${window.location.origin}/profile/${userId}/1`);
+        enqueueSnackbar("Link copied", { autoHideDuration: 1500, variant: 'success' });
+    }
 
     return (
         <>
@@ -186,7 +191,7 @@ export default function ProfileCard(props: {
                                             }
                                         })()
                                     }
-                                    <ShareBtn handleClick={() => {}}/>
+                                    <ShareBtn handleClick={handleShareClick}/>
                                 </>
                                 :
                                 <>

@@ -8,6 +8,7 @@ import InfoImage from "../info-image/info-image";
 // @ts-ignore
 import ReactHowler from 'react-howler'
 import PlayerTrackInfo from "./player-track-info";
+import getTimeLeft from "@/utils/common-functions/getTimeLeft";
 
 export default function AudioPlayer() {
   const { isPlaying, isLoop, isMute, volume, post } = useAppSelector(state => state.player);
@@ -141,7 +142,7 @@ export default function AudioPlayer() {
                     </svg>
                   </button>
                   <button 
-                    className={`${isMute && 'bg-black text-red-400'} join-item btn btn-sm btn-primary glass text-white`}
+                    className={`${isMute ? 'bg-black text-red-400' : 'text-white'} join-item btn btn-sm btn-primary glass`}
                     onClick={handleMuteToggle}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
@@ -149,7 +150,7 @@ export default function AudioPlayer() {
                     </svg>
                   </button>
                   <button 
-                    className={`${isLoop && 'bg-black text-green-400'} join-item btn btn-sm btn-primary glass text-white`}
+                    className={`${isLoop ? 'bg-black text-green-400' : "text-white"} join-item btn btn-sm btn-primary glass`}
                     onClick={handleLoopToggle}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
