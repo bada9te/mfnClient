@@ -69,8 +69,8 @@ export default function BattleForm() {
 
     return (
         <div className="card overflow-hidden bg-black shadow-xl glass">
-            <div className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl">
-                <div className="divider divider-primary">New battle setup</div>
+            <div className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl px-0 md:px-4">
+                <div className="divider divider-primary px-4 md:px-0">New battle setup</div>
                 <div className="flex flex-wrap gap-5 mt-5 w-full justify-around mb-10">
                     <div className="flex flex-col gap-3">
                         <p className='font-bold text-lg'>Your track</p>
@@ -101,7 +101,7 @@ export default function BattleForm() {
                     </div>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <div className="form-control">
+                    <div className="form-control px-4 md:px-0">
                         <label className="label">
                             <span className="label-text">Battle title</span>
                         </label>
@@ -124,7 +124,7 @@ export default function BattleForm() {
                         }
                     </div>
 
-                    <div className="form-control mt-5">
+                    <div className="form-control mt-5 px-4 md:px-0">
                         <button type="submit" className="btn btn-primary glass text-white">Create battle</button>
                     </div>
                 </form>

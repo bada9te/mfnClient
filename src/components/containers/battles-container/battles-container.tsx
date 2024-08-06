@@ -19,7 +19,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
     return (
         <>
             {
-                data?.battlesByStatus.battles?.length
+                data?.battlesByStatus.battles?.length || true
                 ?
                 <>
                     {
@@ -27,6 +27,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
                             return (<Battle key={key} post1={<Post data={battle.post1 as TPost}/>} post2={<Post data={battle.post2 as TPost}/>}/>)
                         })
                     }
+                    <BattleSkeleton/>
                     <Pagination page={page} maxPage={Number(data?.battlesByStatus.count as number / limit)}/>
                 </>
                 :

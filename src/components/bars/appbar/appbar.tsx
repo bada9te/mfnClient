@@ -86,12 +86,12 @@ export default function AppBar() {
                         </li>
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">
+                <Link className="btn btn-ghost text-xl" href={'/'}>
                     <Image src={'/assets/logo.png'} alt={'logo'} width={40} height={40}
                            className="rounded-full hidden lg:block"/>
                     <span className="hidden md:flex">Music From Nothing</span>
                     <span className="flex md:hidden">MFN</span>
-                </a>
+                </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
