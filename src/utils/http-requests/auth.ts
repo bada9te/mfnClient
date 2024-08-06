@@ -41,6 +41,17 @@ const httpGetGoogleInfo = async(accessToken: string) => {
     }
 }
 
+const httpGetFacebookInfo = async(accessToken: string, userId: string) => {
+    const url = `https://graph.facebook.com/v20.0/${userId}?access_token=${accessToken}`;
+    return await axios.get(url)
+        .then(response => {
+            console.log('User Data:', response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error.response ? error.response.data : error.message);
+        });
+}
+
 
 
 export {
@@ -49,4 +60,5 @@ export {
     httpUpdateSessionUser,
     httpGetCurrentUser,
     httpGetGoogleInfo,
+    httpGetFacebookInfo,
 }

@@ -193,10 +193,28 @@ export const USER_LINK_FACEBOOK_MUTATION = gql`
     }
 `;
 
+export const USER_UNLINK_FACEBOOK_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userUnlinkFacebook($_id: ID!) {
+        userUnlinkFacebook(_id: $_id) {
+            ...CoreUserFields
+        }
+    }
+`;
+
 export const USER_LINK_TWITTER_MUTATION = gql`
     ${CORE_USER_FIELDS}
     mutation userLinkTwitter($input: LinkTwitterInput!) {
         userLinkTwitter(input: $input) {
+            ...CoreUserFields
+        }
+    }
+`;
+
+export const USER_UNLINK_TWITTER_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userUnlinkTwitter($_id: ID!) {
+        userUnlinkTwitter(_id: $_id) {
             ...CoreUserFields
         }
     }

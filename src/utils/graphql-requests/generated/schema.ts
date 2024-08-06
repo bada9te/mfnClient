@@ -192,7 +192,9 @@ export type Mutation = {
   userPrepareAccountToRestore: UserWithAction;
   userRestoreAccount: UserWithAction;
   userSwitchSubscription: TwoUsers;
+  userUnlinkFacebook?: Maybe<User>;
   userUnlinkGoogle?: Maybe<User>;
+  userUnlinkTwitter?: Maybe<User>;
   userUpdate: User;
 };
 
@@ -358,7 +360,17 @@ export type MutationUserSwitchSubscriptionArgs = {
 };
 
 
+export type MutationUserUnlinkFacebookArgs = {
+  _id: Scalars['ID']['input'];
+};
+
+
 export type MutationUserUnlinkGoogleArgs = {
+  _id: Scalars['ID']['input'];
+};
+
+
+export type MutationUserUnlinkTwitterArgs = {
   _id: Scalars['ID']['input'];
 };
 
@@ -1125,12 +1137,26 @@ export type UserLinkFacebookMutationVariables = Exact<{
 
 export type UserLinkFacebookMutation = { __typename?: 'Mutation', userLinkFacebook?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
 
+export type UserUnlinkFacebookMutationVariables = Exact<{
+  _id: Scalars['ID']['input'];
+}>;
+
+
+export type UserUnlinkFacebookMutation = { __typename?: 'Mutation', userUnlinkFacebook?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
+
 export type UserLinkTwitterMutationVariables = Exact<{
   input: LinkTwitterInput;
 }>;
 
 
 export type UserLinkTwitterMutation = { __typename?: 'Mutation', userLinkTwitter?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
+
+export type UserUnlinkTwitterMutationVariables = Exact<{
+  _id: Scalars['ID']['input'];
+}>;
+
+
+export type UserUnlinkTwitterMutation = { __typename?: 'Mutation', userUnlinkTwitter?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
 
 export const CoreAchievementFieldsFragmentDoc = gql`
     fragment CoreAchievementFields on Achievement {
@@ -3287,6 +3313,39 @@ export function useUserLinkFacebookMutation(baseOptions?: Apollo.MutationHookOpt
 export type UserLinkFacebookMutationHookResult = ReturnType<typeof useUserLinkFacebookMutation>;
 export type UserLinkFacebookMutationResult = Apollo.MutationResult<UserLinkFacebookMutation>;
 export type UserLinkFacebookMutationOptions = Apollo.BaseMutationOptions<UserLinkFacebookMutation, UserLinkFacebookMutationVariables>;
+export const UserUnlinkFacebookDocument = gql`
+    mutation userUnlinkFacebook($_id: ID!) {
+  userUnlinkFacebook(_id: $_id) {
+    ...CoreUserFields
+  }
+}
+    ${CoreUserFieldsFragmentDoc}`;
+export type UserUnlinkFacebookMutationFn = Apollo.MutationFunction<UserUnlinkFacebookMutation, UserUnlinkFacebookMutationVariables>;
+
+/**
+ * __useUserUnlinkFacebookMutation__
+ *
+ * To run a mutation, you first call `useUserUnlinkFacebookMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserUnlinkFacebookMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userUnlinkFacebookMutation, { data, loading, error }] = useUserUnlinkFacebookMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useUserUnlinkFacebookMutation(baseOptions?: Apollo.MutationHookOptions<UserUnlinkFacebookMutation, UserUnlinkFacebookMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserUnlinkFacebookMutation, UserUnlinkFacebookMutationVariables>(UserUnlinkFacebookDocument, options);
+      }
+export type UserUnlinkFacebookMutationHookResult = ReturnType<typeof useUserUnlinkFacebookMutation>;
+export type UserUnlinkFacebookMutationResult = Apollo.MutationResult<UserUnlinkFacebookMutation>;
+export type UserUnlinkFacebookMutationOptions = Apollo.BaseMutationOptions<UserUnlinkFacebookMutation, UserUnlinkFacebookMutationVariables>;
 export const UserLinkTwitterDocument = gql`
     mutation userLinkTwitter($input: LinkTwitterInput!) {
   userLinkTwitter(input: $input) {
@@ -3320,3 +3379,36 @@ export function useUserLinkTwitterMutation(baseOptions?: Apollo.MutationHookOpti
 export type UserLinkTwitterMutationHookResult = ReturnType<typeof useUserLinkTwitterMutation>;
 export type UserLinkTwitterMutationResult = Apollo.MutationResult<UserLinkTwitterMutation>;
 export type UserLinkTwitterMutationOptions = Apollo.BaseMutationOptions<UserLinkTwitterMutation, UserLinkTwitterMutationVariables>;
+export const UserUnlinkTwitterDocument = gql`
+    mutation userUnlinkTwitter($_id: ID!) {
+  userUnlinkTwitter(_id: $_id) {
+    ...CoreUserFields
+  }
+}
+    ${CoreUserFieldsFragmentDoc}`;
+export type UserUnlinkTwitterMutationFn = Apollo.MutationFunction<UserUnlinkTwitterMutation, UserUnlinkTwitterMutationVariables>;
+
+/**
+ * __useUserUnlinkTwitterMutation__
+ *
+ * To run a mutation, you first call `useUserUnlinkTwitterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserUnlinkTwitterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userUnlinkTwitterMutation, { data, loading, error }] = useUserUnlinkTwitterMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useUserUnlinkTwitterMutation(baseOptions?: Apollo.MutationHookOptions<UserUnlinkTwitterMutation, UserUnlinkTwitterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserUnlinkTwitterMutation, UserUnlinkTwitterMutationVariables>(UserUnlinkTwitterDocument, options);
+      }
+export type UserUnlinkTwitterMutationHookResult = ReturnType<typeof useUserUnlinkTwitterMutation>;
+export type UserUnlinkTwitterMutationResult = Apollo.MutationResult<UserUnlinkTwitterMutation>;
+export type UserUnlinkTwitterMutationOptions = Apollo.BaseMutationOptions<UserUnlinkTwitterMutation, UserUnlinkTwitterMutationVariables>;
