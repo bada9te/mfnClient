@@ -2,15 +2,17 @@
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
 import { useSnackbar } from "notistack";
-import { useUserLinkFacebookMutation, useUserLinkGoogleMutation, useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkFacebookMutation, useUserUnlinkGoogleMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
+import { useUserLinkFacebookMutation, useUserLinkGoogleMutation, useUserLinkTwitterMutation, useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkFacebookMutation, useUserUnlinkGoogleMutation, useUserUnlinkTwitterMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
-import { IUserState, setUser } from "@/lib/redux/slices/user";
+import { setUser } from "@/lib/redux/slices/user";
 import { httpGetGoogleInfo } from "@/utils/http-requests/auth";
 import Link from "next/link";
 import { useGoogleLogin } from '@react-oauth/google';
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { revalidatePathAction } from "@/actions/revalidation";
 import FacebookLogin from '@greatsumini/react-facebook-login';
+import TwitterLogin from "react-twitter-login";
+
 
 type InputsNickname = {
     nickname: string;
@@ -45,7 +47,9 @@ export default function ProfileEditForm(props: {
     const [ linkGoogle ] = useUserLinkGoogleMutation();
     const [ unlinkGoogle ] = useUserUnlinkGoogleMutation();
     const [ linkFacebook ] = useUserLinkFacebookMutation();
-    const [ unlinkFacebook ] = useUserUnlinkFacebookMutation()
+    const [ unlinkFacebook ] = useUserUnlinkFacebookMutation();
+    const [ linkTwitter ] = useUserLinkTwitterMutation();
+    const [ unlinkTwitter ] = useUserUnlinkTwitterMutation(); 
 
     const {data: userData} = useUserSuspenseQuery({
         variables: {
@@ -188,9 +192,8 @@ export default function ProfileEditForm(props: {
             linkFacebook({
                 variables: {
                     input: {
-                        id: facebookProfileData.id,
-                        email: facebookProfileData.email,
                         userId: user._id,
+                        id: facebookProfileData.id,
                         name: facebookProfileData.name,
                         token: facebookLoginData.accessToken
                     }
@@ -216,8 +219,43 @@ export default function ProfileEditForm(props: {
         }).then(_ => {
             revalidatePathAction("/profile/me/edit", "page");
             enqueueSnackbar("Facebook account unlinked.", {autoHideDuration: 2500, variant: 'success'});
-        })
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
+        });
     }
+
+    const handleLinkTwitter = (err: any, data: any) => {
+        enqueueSnackbar("Processing...", {autoHideDuration: 1500});
+        linkTwitter({
+            variables: {
+                input: {
+                    userId: user._id,
+                    id: data.user_id,
+                    name: data.screen_name,
+                    token: data.oauth_token,
+                }
+            }
+        }).then(_ => {
+            revalidatePathAction("/profile/me/edit", "page");
+            enqueueSnackbar("Twitter account linked.", {autoHideDuration: 2500, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
+        });
+    };
+
+    const handleUnlinkTwitter = () => {
+        unlinkTwitter({
+            variables: {
+                _id: user._id,
+            }
+        }).then(_ => {
+            revalidatePathAction("/profile/me/edit", "page");
+            enqueueSnackbar("Twitter account unlinked.", {autoHideDuration: 2500, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
+        });
+    }
+
 
     useEffect(() => {
         setIsMounted(true);
@@ -357,7 +395,7 @@ export default function ProfileEditForm(props: {
                     }}
                     onProfileSuccess={onFacebookGetProfileSuccess}
                     render={({ onClick, logout }) => (
-                        <button className="btn hover:bg-blue-600 glass text-white" onClick={userData.user.facebook?.email ? handleUnlinkFacebook : onClick}>
+                        <button className="btn hover:bg-blue-600 glass text-white" onClick={userData.user.facebook?.name ? handleUnlinkFacebook : onClick}>
                             <svg fill="#0091ff" height="25px" width="25px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310" stroke="#0091ff">
                             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                             <g id="SVGRepo_iconCarrier"> 
@@ -367,17 +405,37 @@ export default function ProfileEditForm(props: {
                                 </g> 
                                 </g>
                             </svg>
-                            { userData.user.facebook?.email ? userData.user.facebook?.email : "Connect facebook" }
+                            { userData.user.facebook?.name ? userData.user.facebook?.name : "Connect facebook" }
                         </button>
                     )}
                 />
                 
-                <Link className="btn hover:bg-black glass text-white" href={"http://localhost:8000/auth/twitter"}>
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
-                        <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
-                    </svg>
-                    Connect Twitter
-                </Link>
+                {
+                    userData.user.twitter?.name
+                    ?
+                    <button className="btn hover:bg-black glass text-white w-full" onClick={handleUnlinkTwitter}>
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
+                            <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
+                        </svg>
+                        { userData.user.twitter?.name }
+                    </button>
+                    :
+                    <>
+                        {/* @ts-ignore */}
+                        <TwitterLogin
+                            authCallback={handleLinkTwitter}
+                            //consumerKey={"UyJs4FPvSZD8JuITfXYR1iL95"}
+                            //consumerSecret={"oZgabobtoF3z9D6OzVvuYhFZA8Ih2u3yDVNei0UaVNV6QaFiMx"}
+                        >
+                            <button className="btn hover:bg-black glass text-white w-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
+                                    <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
+                                </svg>
+                                Connect Twitter
+                            </button>
+                        </TwitterLogin>
+                    </>
+                }
             </div>
         </div>
 

@@ -118,7 +118,7 @@ export type CreateSupportRequestInput = {
   message: Scalars['String']['input'];
 };
 
-export type LinkGoogleOrFacebookInput = {
+export type LinkGoogleInput = {
   email: Scalars['String']['input'];
   id: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -126,13 +126,11 @@ export type LinkGoogleOrFacebookInput = {
   userId: Scalars['String']['input'];
 };
 
-export type LinkTwitterInput = {
-  displayName: Scalars['String']['input'];
-  email: Scalars['String']['input'];
+export type LinkTwitterOrFacebookInput = {
   id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   token: Scalars['String']['input'];
   userId: Scalars['String']['input'];
-  username: Scalars['String']['input'];
 };
 
 export type MakeBattleVoteInput = {
@@ -331,17 +329,17 @@ export type MutationUserDeleteByIdArgs = {
 
 
 export type MutationUserLinkFacebookArgs = {
-  input: LinkGoogleOrFacebookInput;
+  input: LinkTwitterOrFacebookInput;
 };
 
 
 export type MutationUserLinkGoogleArgs = {
-  input: LinkGoogleOrFacebookInput;
+  input: LinkGoogleInput;
 };
 
 
 export type MutationUserLinkTwitterArgs = {
-  input: LinkTwitterInput;
+  input: LinkTwitterOrFacebookInput;
 };
 
 
@@ -673,6 +671,7 @@ export type Report = {
 export type SocialMediaData = {
   __typename?: 'SocialMediaData';
   email?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type SupportRequest = {
@@ -1044,7 +1043,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number, local?: { __typename?: 'SocialMediaData', email?: string | null } | null, google?: { __typename?: 'SocialMediaData', email?: string | null } | null, facebook?: { __typename?: 'SocialMediaData', email?: string | null } | null, twitter?: { __typename?: 'SocialMediaData', email?: string | null } | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number, local?: { __typename?: 'SocialMediaData', email?: string | null } | null, google?: { __typename?: 'SocialMediaData', email?: string | null } | null, facebook?: { __typename?: 'SocialMediaData', name?: string | null } | null, twitter?: { __typename?: 'SocialMediaData', name?: string | null } | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type UsersByNicknameQueryVariables = Exact<{
   nick: Scalars['String']['input'];
@@ -1117,7 +1116,7 @@ export type UserRestoreAccountMutationVariables = Exact<{
 export type UserRestoreAccountMutation = { __typename?: 'Mutation', userRestoreAccount: { __typename?: 'UserWithAction', user: { __typename?: 'User', _id: string }, action: { __typename?: 'ModerationAction', _id: string } } };
 
 export type UserLinkGoogleMutationVariables = Exact<{
-  input: LinkGoogleOrFacebookInput;
+  input: LinkGoogleInput;
 }>;
 
 
@@ -1131,7 +1130,7 @@ export type UserUnlinkGoogleMutationVariables = Exact<{
 export type UserUnlinkGoogleMutation = { __typename?: 'Mutation', userUnlinkGoogle?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
 
 export type UserLinkFacebookMutationVariables = Exact<{
-  input: LinkGoogleOrFacebookInput;
+  input: LinkTwitterOrFacebookInput;
 }>;
 
 
@@ -1145,7 +1144,7 @@ export type UserUnlinkFacebookMutationVariables = Exact<{
 export type UserUnlinkFacebookMutation = { __typename?: 'Mutation', userUnlinkFacebook?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
 
 export type UserLinkTwitterMutationVariables = Exact<{
-  input: LinkTwitterInput;
+  input: LinkTwitterOrFacebookInput;
 }>;
 
 
@@ -2768,10 +2767,10 @@ export const UserDocument = gql`
       email
     }
     facebook {
-      email
+      name
     }
     twitter {
-      email
+      name
     }
     subscribedOn {
       _id
@@ -3215,7 +3214,7 @@ export type UserRestoreAccountMutationHookResult = ReturnType<typeof useUserRest
 export type UserRestoreAccountMutationResult = Apollo.MutationResult<UserRestoreAccountMutation>;
 export type UserRestoreAccountMutationOptions = Apollo.BaseMutationOptions<UserRestoreAccountMutation, UserRestoreAccountMutationVariables>;
 export const UserLinkGoogleDocument = gql`
-    mutation userLinkGoogle($input: LinkGoogleOrFacebookInput!) {
+    mutation userLinkGoogle($input: LinkGoogleInput!) {
   userLinkGoogle(input: $input) {
     ...CoreUserFields
   }
@@ -3281,7 +3280,7 @@ export type UserUnlinkGoogleMutationHookResult = ReturnType<typeof useUserUnlink
 export type UserUnlinkGoogleMutationResult = Apollo.MutationResult<UserUnlinkGoogleMutation>;
 export type UserUnlinkGoogleMutationOptions = Apollo.BaseMutationOptions<UserUnlinkGoogleMutation, UserUnlinkGoogleMutationVariables>;
 export const UserLinkFacebookDocument = gql`
-    mutation userLinkFacebook($input: LinkGoogleOrFacebookInput!) {
+    mutation userLinkFacebook($input: LinkTwitterOrFacebookInput!) {
   userLinkFacebook(input: $input) {
     ...CoreUserFields
   }
@@ -3347,7 +3346,7 @@ export type UserUnlinkFacebookMutationHookResult = ReturnType<typeof useUserUnli
 export type UserUnlinkFacebookMutationResult = Apollo.MutationResult<UserUnlinkFacebookMutation>;
 export type UserUnlinkFacebookMutationOptions = Apollo.BaseMutationOptions<UserUnlinkFacebookMutation, UserUnlinkFacebookMutationVariables>;
 export const UserLinkTwitterDocument = gql`
-    mutation userLinkTwitter($input: LinkTwitterInput!) {
+    mutation userLinkTwitter($input: LinkTwitterOrFacebookInput!) {
   userLinkTwitter(input: $input) {
     ...CoreUserFields
   }
