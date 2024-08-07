@@ -8,8 +8,8 @@ import {useRouter} from "next/navigation";
 import {useAppDispatch} from "@/lib/redux/store";
 import {setUser} from "@/lib/redux/slices/user";
 import {setCookie} from "cookies-next";
-import nextConfig from "../../../next.config.mjs";
 import FormsSocials from "../common/forms-socials/forms-socials";
+import envCfg from "@/config/env";
 
 
 type Inputs = {
@@ -29,7 +29,7 @@ export default function LoginForm() {
                 enqueueSnackbar(`Logged in as ${response.nick}`, {variant: 'success', autoHideDuration: 2000});
                 reset();
                 dispatch(setUser(response));
-                setCookie(nextConfig.env?.userIdCookieKey as string, response._id);
+                setCookie(envCfg.userIdCookieKey as string, response._id);
                 router.replace('/feed/1');
             })
             .catch(err => {

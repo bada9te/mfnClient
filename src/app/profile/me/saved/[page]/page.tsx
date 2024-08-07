@@ -5,10 +5,10 @@ import PostsContainerSkeleton from "@/components/containers/posts-container/post
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import PostsContainerSaved from "@/components/containers/posts-container/posts-container-saved";
 import {cookies} from "next/headers";
-import config from "@/../next.config.mjs";
+import envCfg from "@/config/env";
 
 export default function Feed({params}: {params: { page: number }}) {
-    const userId = cookies().get(config.env?.userIdCookieKey as string)?.value as string;
+    const userId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
 
     return (
         <HeroWrapper

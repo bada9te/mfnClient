@@ -2,17 +2,17 @@
 
 import { deleteCookie } from "cookies-next";
 import { useEffect } from "react";
-import nextConfig from "@/../next.config.mjs";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/redux/store";
 import { setUser } from "@/lib/redux/slices/user";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import InfoImage from "@/components/common/info-image/info-image";
+import envCfg from "@/config/env";
 
 export default function LogoutPage() {
     const router = useRouter();
-    const keyID = nextConfig.env?.userIdCookieKey as string;
-    const keySE = nextConfig.env?.userSessionCookieKey as string;
+    const keyID = envCfg.userIdCookieKey as string;
+    const keySE = envCfg.userSessionCookieKey as string;
     const dispatch = useAppDispatch();
     
     useEffect(() => {

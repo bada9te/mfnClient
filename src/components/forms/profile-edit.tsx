@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { revalidatePathAction } from "@/actions/revalidation";
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import TwitterLogin from "react-twitter-login";
+import envCfg from "@/config/env";
 
 
 type InputsNickname = {
@@ -388,7 +389,7 @@ export default function ProfileEditForm(props: {
                     {userData.user.google?.email ? userData.user.google?.email : "Connect Google"}
                 </button>
                 <FacebookLogin
-                    appId="3618736931772900"
+                    appId={envCfg.passportFacebookID as string}
                     onSuccess={onFacebookLoginSuccess}
                     onFail={(error) => {
                         console.log('Login Failed!', error);
@@ -424,8 +425,8 @@ export default function ProfileEditForm(props: {
                         {/* @ts-ignore */}
                         <TwitterLogin
                             authCallback={handleLinkTwitter}
-                            //consumerKey={"UyJs4FPvSZD8JuITfXYR1iL95"}
-                            //consumerSecret={"oZgabobtoF3z9D6OzVvuYhFZA8Ih2u3yDVNei0UaVNV6QaFiMx"}
+                            consumerKey={envCfg.passporttwitterKEY as string}
+                            consumerSecret={envCfg.passportTwitterSECRET as string}
                         >
                             <button className="btn hover:bg-black glass text-white w-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">

@@ -2,15 +2,16 @@ import BarTabsPlaylists from "@/components/bars/bar-tabs/bar-tabs-playlists";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import PlaylistsContainerOwner from "@/components/containers/playlists-container/playlists-container-my";
 import {cookies} from "next/headers";
-import nextConfig from "../../../../../next.config.mjs";
+
 import {PreloadQuery} from "@/lib/apollo/client";
 import {Suspense} from "react";
 import PlaylistsContainerSkeleton from "@/components/containers/playlists-container/playlists-container-skeleton";
 import {PLAYLISTS_BY_OWNER_ID_QUERY} from "@/utils/graphql-requests/playlists";
+import envCfg from "@/config/env";
 
 
 export default function Playlists({params}: {params: {page: number}}) {
-    const myId = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
+    const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
 
     return (
         <>

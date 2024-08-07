@@ -3,14 +3,14 @@ import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import { PreloadQuery } from "@/lib/apollo/client";
 import { NOTIFICATIONS_QUERY } from "@/utils/graphql-requests/notifications";
 import { cookies } from "next/headers";
-import nextConfig from "@/../next.config.mjs";
 import NotificationsContainerSkeleton from "@/components/containers/notifications-container/notifications-container-skeleton";
 import NotificationsContainer from "@/components/containers/notifications-container/notifications-container";
 import { Suspense } from "react";
+import envCfg from "@/config/env";
 
 
 export default function Notifications({params}: {params: { page: number }}) {
-    const receiver = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
+    const receiver = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
     return (
         <>
             <NotificationsTabs activeTab={"new"}/>

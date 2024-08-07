@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import {cookies} from "next/headers";
-import nextConfig from '../next.config.mjs';
+import envCfg from './config/env';
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-    const jwtCookieKey = nextConfig.env?.userSessionCookieKey as string;
-    const userIdCookieKey = nextConfig.env?.userIdCookieKey as string;
+    const jwtCookieKey = envCfg.userSessionCookieKey as string;
+    const userIdCookieKey = envCfg.userIdCookieKey as string;
 
 
     const isLoggedIn = cookies().get(jwtCookieKey);
@@ -18,14 +18,13 @@ export function middleware(request: NextRequest) {
         res.cookies.set(jwtCookieKey, "", {
             expires: new Date(0),
             path: '/',
-            domain: nextConfig.env?.serverDomain,
+            domain: envCfg.serverDomain,
         });
         res.cookies.set(userIdCookieKey, "", {
             expires: new Date(0),
             path: '/',
-            domain: nextConfig.env?.serverDomain,
+            domain: envCfg.serverDomain,
         });
-        
         
         return res;
     }

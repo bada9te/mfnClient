@@ -1,7 +1,7 @@
 import axios from "axios";
-import nextConfig from "../../../next.config.mjs";
+import envCfg from "@/config/env";
 
-const SERVER_BASE = nextConfig.env?.serverBase;
+const SERVER_BASE = envCfg.serverBase;
 
 // login
 const httpLogin = async(email: string, password: string) => {

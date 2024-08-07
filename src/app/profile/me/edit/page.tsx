@@ -1,15 +1,15 @@
 import ProfileCard from "@/components/common/profile-card/profile-card";
 import ProfileEditForm from "@/components/forms/profile-edit";
 import { cookies } from "next/headers";
-import nextConfig from "@/../next.config.mjs";
 import { PreloadQuery } from "@/lib/apollo/client";
 import { Suspense } from "react";
 import { USER_QUERY } from "@/utils/graphql-requests/users";
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
+import envCfg from "@/config/env";
 
 
 export default function EditProfile() {
-    const myId = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string
+    const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string
     return (
         <>
             <PreloadQuery

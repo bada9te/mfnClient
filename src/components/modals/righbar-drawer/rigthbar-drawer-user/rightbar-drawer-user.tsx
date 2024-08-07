@@ -1,17 +1,17 @@
 import { User } from "@/utils/graphql-requests/generated/schema";
-import config from "@/../next.config.mjs";
+import envCfg from "@/config/env";
 
 
 export default function RightbarDrawerUser({data}: {data: User}) {
     return (
         <div className="card w-80 bg-black glass shadow-2xl">
             <figure className="max-h-48">
-                <img className="w-full" src={data.background?.length ? `${config.env?.serverBase}/files/${data.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
+                <img className="w-full" src={data.background?.length ? `${envCfg.serverBase}/files/${data.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
             </figure>
             <div className="card-body">
                 <div className="flex flex-row gap-4 items-center">
                     <img 
-                        src={data.avatar.length ? `${config.env?.serverBase}/files/${data.avatar}` : '/assets/icons/logo_clear.png' }
+                        src={data.avatar.length ? `${envCfg.serverBase}/files/${data.avatar}` : '/assets/icons/logo_clear.png' }
                         alt="avatar"
                         className="w-12 rounded-full"
                     />

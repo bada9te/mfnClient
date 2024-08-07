@@ -1,8 +1,8 @@
 import axios from "axios";
 import {IBlob} from "@/utils/common-functions/blobToFile";
-import nextConfig from "../../../next.config.mjs";
+import envCfg from "@/config/env";
 
-const SERVER_BASE = nextConfig.env?.serverBase;
+const SERVER_BASE = envCfg.serverBase;
 
 const httpSaveFile = async(file: File | IBlob) => {
     const data = new FormData();

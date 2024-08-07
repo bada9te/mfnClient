@@ -1,14 +1,14 @@
 import { cookies } from "next/headers";
-import nextConfig from "../../../../../next.config.mjs";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import { Suspense } from "react";
 import AchievementsContainer from "@/components/containers/achievements-container/achievements-container";
 import AchievementsContainerSkeleton from "@/components/containers/achievements-container/achievements-container-skeleton";
 import { PreloadQuery } from "@/lib/apollo/client";
 import { ACHIEVEMENTS_ALL_QUERY } from "@/utils/graphql-requests/achievements";
+import envCfg from "@/config/env";
 
 export default function Challenges() {
-    const currentUserId = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
+    const currentUserId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
 
     return (
         <HeroWrapper

@@ -6,9 +6,10 @@ import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
 import {useAchievemenmtsCountQuery, useAchievemenmtsCountSuspenseQuery, UserAchievementsData, useUserAchievementsDataSuspenseQuery, useUserSuspenseQuery, useUserSwitchSubscriptionMutation, useUserUpdateMutation} from "@/utils/graphql-requests/generated/schema";
 import { httpSaveFile } from "@/utils/http-requests/files";
 import { useCallback, useRef, useState } from "react";
-import config from "@/../next.config.mjs";
+
 import { useSnackbar } from "notistack";
 import ProfileProgress from "./profile-progress/profile-progress";
+import envCfg from "@/config/env";
 
 const ShareBtn = (props: {
     handleClick: () => void;
@@ -142,12 +143,12 @@ export default function ProfileCard(props: {
             />
             <div className={`${!disableMargins && 'm-0 md:mx-8 md:mt-8'} card w-full text-white rounded-none shadow-2xl glass`}>
                 <figure className="max-h-48">
-                    <img className="w-full" src={data.user.background.length ? `${config.env?.serverBase}/files/${data.user.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
+                    <img className="w-full" src={data.user.background.length ? `${envCfg.serverBase}/files/${data.user.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
                 </figure>
                 <div className="card-body flex flex-col  gap-5">
                     <div className="avatar flex justify-center">
                         <div className="w-32 h-32 mask mask-hexagon">
-                            <img src={data.user.avatar.length ? `${config.env?.serverBase}/files/${data.user.avatar}` : "/assets/icons/logo_clear.png"} alt="avatar" />
+                            <img src={data.user.avatar.length ? `${envCfg.serverBase}/files/${data.user.avatar}` : "/assets/icons/logo_clear.png"} alt="avatar" />
                         </div>
                     </div>
                     <div>

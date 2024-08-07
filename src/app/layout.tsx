@@ -11,6 +11,7 @@ import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import NextTopLoader from "nextjs-toploader";
 import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import envCfg from "@/config/env";
 
 
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="black">
     <body>
-        <GoogleOAuthProvider clientId={"243426492714-4bcuo7n21qn2lth6so5kthh8m1j68h85.apps.googleusercontent.com"}>
+        <GoogleOAuthProvider clientId={envCfg.passportGoogleID as string}>
             <RainbowkitAppProvider>
                 <ApolloWrapper>
                     <SnackbarProvider maxSnack={5}>

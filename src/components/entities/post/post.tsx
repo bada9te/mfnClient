@@ -5,14 +5,13 @@ import {
     usePostSwitchLikeMutation,
     User
 } from "@/utils/graphql-requests/generated/schema";
-import nextConfig from "@/../next.config.mjs";
 import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
 import {setIsPlaying, setPost} from "@/lib/redux/slices/player";
 import {useEffect, useState} from "react";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
 import {useSnackbar} from "notistack";
-import config from "@/../next.config.mjs";
 import Link from "next/link";
+import envCfg from "@/config/env";
 
 
 export default function Post(props: {
@@ -106,7 +105,7 @@ export default function Post(props: {
                         <div className="avatar p-0">
                             <div className="w-10 rounded-full shadow-lg">
                                 <img
-                                    src={data?.owner?.avatar ? `${nextConfig.env?.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
+                                    src={data?.owner?.avatar ? `${envCfg.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
                             </div>
                         </div>
                         <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>
@@ -148,7 +147,7 @@ export default function Post(props: {
             </div>
             <figure><img
                 className="max-h-[180px] w-full min-w-80"
-                src={data?.image ? `${nextConfig.env?.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
+                src={data?.image ? `${envCfg.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
                 alt="image"/>
             </figure>
 

@@ -6,14 +6,14 @@ import PostsContainerSkeleton from "@/components/containers/posts-container/post
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
 import {cookies} from "next/headers";
-import nextConfig from "@/../next.config.mjs";
 import {USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY} from "@/utils/graphql-requests/users";
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
 import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
+import envCfg from "@/config/env";
 
 
 export default function Profile({params}: {params: { page: number }}) {
-    const myId = cookies().get(nextConfig.env?.userIdCookieKey as string)?.value as string;
+    const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
 
     return (
         <>

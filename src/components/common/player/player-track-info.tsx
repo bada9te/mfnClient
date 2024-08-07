@@ -1,5 +1,6 @@
 "use client"
-import config from "@/../next.config.mjs";
+
+import envCfg from "@/config/env";
 import { useAppSelector } from "@/lib/redux/store";
 import { usePostSwicthInSavedMutation, usePostSwitchLikeMutation, usePostLazyQuery } from "@/utils/graphql-requests/generated/schema";
 import Link from "next/link";
@@ -72,7 +73,7 @@ export default function PlayerTrackInfo() {
         <div className="flex h-auto flex-col flex-1 gap-1">
             <div className="flex flex-row mb-3 gap-3">
                 <img 
-                    src={data?.post?.image ? `${config.env?.serverBase}/files/${data.post.image}` : 'assets/bgs/profileDefaultBG.png'}
+                    src={data?.post?.image ? `${envCfg.serverBase}/files/${data.post.image}` : 'assets/bgs/profileDefaultBG.png'}
                     className="shadow-2xl max-h-[180px] h-[180px] max-w-80" 
                 />
                 <div className="flex flex-col gap-1">
