@@ -39,8 +39,8 @@ export default function LoginForm() {
     }
 
     return (
-        <div className="card overflow-hidden bg-black shadow-xl glass">
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl" noValidate>
+        <div className="card overflow-hidden bg-base-300 shadow-xl glass">
+            <form onSubmit={handleSubmit(onSubmit)} className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl" noValidate>
                 <div className="divider divider-primary">Sign in</div>
                 <div className="form-control relative">
                     <label className="label">

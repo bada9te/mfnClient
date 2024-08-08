@@ -12,7 +12,7 @@ export default function Battles() {
                 title="New Battle"
                 description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
             >
-                <div className="card shadow-2xl bg-base-100">
+                <div className="card shadow-2xl bg-base-300">
                     <BattleForm/>
                 </div>
             </HeroWrapperForm>

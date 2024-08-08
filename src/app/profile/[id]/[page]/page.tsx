@@ -25,7 +25,7 @@ export default function ProfileId({params}: {params: {page: number, id: string}}
                 title=""
                 description=""
             >
-                <div className="card shadow-none w-full rounded-none">
+                <div className="card shadow-none w-full ">
                     <div className="flex flex-wrap justify-center md:justify-around gap-5">
                         <PreloadQuery 
                             query={POSTS_BY_OWNER_QUERY}

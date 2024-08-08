@@ -8,15 +8,15 @@ export default function NotificationsTabsBattles(props: {
     const { activeTab } = props;
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full rounded-none bg-black glass m-0 md:mx-8 md:mt-8">
+        <div role="tablist" className="tabs tabs-boxed w-full bg-base-300 glass m-0 md:mx-4 md:mt-4">
             <Link 
                 role="tab" 
-                className={`tab ${activeTab === "new" && "glass bg-[#1ba39c]"}`}
+                className={`tab ${activeTab === "new" && "glass bg-[#bd93f9]"}`}
                 href={"/profile/me/notifications/new/1"}
             >New</Link>
             <Link 
                 role="tab" 
-                className={`tab ${activeTab === "read" && "glass bg-[#1ba39c]"}`}
+                className={`tab ${activeTab === "read" && "glass bg-[#bd93f9]"}`}
                 href={"/profile/me/notifications/read/1"}
             >Reviewed</Link>
         </div>

@@ -37,7 +37,7 @@ export default function Battle(props: {
     }, [])
 
     return (
-        <div className="card bg-base-100 w-full">
+        <div className="card bg-base-300 w-full">
             <div className="card-body justify-center items-center flex flex-col gap-5 p-4">
                 <h2 className="card-title">Post1 vs Post2</h2>
                 <div className="flex flex-wrap gap-5 justify-center items-center flex-col lg:flex-row">

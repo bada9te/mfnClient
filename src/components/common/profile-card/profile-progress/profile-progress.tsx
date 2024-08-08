@@ -31,7 +31,7 @@ export default function ProfileProgress(props: {
     }
 
     return (
-        <div className="stats stats-vertical lg:stats-horizontal bg-black glass text-primary-content max-w-full">
+        <div className="stats stats-vertical lg:stats-horizontal glass max-w-full rounded-2xl text-white">
             <div className="stat relative">
                 <div className="stat-title text-center">Current level</div>
                 <RefreshBtn/>

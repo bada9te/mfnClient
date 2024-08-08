@@ -38,8 +38,8 @@ export default function RootLayout({
                             <div className="flex-1 grid grid-cols-[auto] lg:grid-cols-[320px_auto] grid-rows-1 overflow-hidden">
                                 {/* Left sidebar (hidden on smaller screens) */}
                                 <div className="hidden lg:block">
-                                    <div className="card w-full max-h-[calc(100vh-125px)] rounded-none fixed top-16 left-0">
-                                        <div className="overflow-y-auto flex flex-col gap-8 py-10 ml-8 no-scrollbar">
+                                    <div className="card w-full max-h-[calc(100vh-95px)] fixed top-12 left-0">
+                                        <div className="overflow-y-auto flex flex-col gap-4 py-10 ml-4 no-scrollbar">
                                             {
                                                 genres.map((gen, i) => {
                                                     return (
@@ -59,10 +59,10 @@ export default function RootLayout({
 
                                 {/* Main content area */}
                                 <div className="col-auto flex-1 no-scrollbar">
-                                    <div className="card w-full rounded-none my-14 md:my-[72px]">
+                                    <div className="card w-full  my-14 md:my-[72px]">
                                         <div className="card-body p-0 gap-0">
                                             <NextTopLoader 
-                                                color="#1ba39c"
+                                                color="#bd93f9"
                                                 initialPosition={0.18}
                                                 crawlSpeed={200}
                                                 height={5}
@@ -73,7 +73,7 @@ export default function RootLayout({
                                                 //shadow="0 0 10px #2299DD,0 0 5px #2299DD",
                                             />
                                             {children}
-                                            <div className="p-0 md:p-8">
+                                            <div className="p-0 md:p-4">
                                                 <Footer/>
                                             </div>
                                         </div>
@@ -101,7 +101,7 @@ export default function RootLayout({
 
 /*
 <div className={`hidden xl:block col-auto max-w-80`}>
-    <div className="card bg-base-100 w-full main-layout-card rounded-none">
+    <div className="card bg-base-300 w-full main-layout-card ">
         <div className="overflow-y-auto p-0 no-scrollbar pb-10">
             <div className="h-[80px] flex justify-between items-center text-white px-5">
                 <p className="font-bold text-xl">In player:</p>

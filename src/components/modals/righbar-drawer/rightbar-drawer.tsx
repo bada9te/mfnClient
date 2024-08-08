@@ -45,7 +45,7 @@ export default function RightBarDrawer(props: {
 
             <div className="drawer-side pt-16 z-30 no-scrollbar">
                 <label htmlFor="my-drawer-people" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-92 md:w-[360px] min-h-full text-base-content glass bg-black">
+                <ul className="menu p-4 w-92 md:w-[360px] min-h-full text-base-content glass bg-base-300">
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
                         <input type="text" className="w-fit placeholder:text-gray-200" placeholder="Search" onChange={e => setSq(e.target.value)} />
@@ -60,7 +60,7 @@ export default function RightBarDrawer(props: {
                             clipRule="evenodd" />
                         </svg>
                     </label>
-                    <div className="flex flex-col w-full items-center gap-8 py-5 flex-1">
+                    <div className="flex flex-col w-full items-center gap-8 py-5 flex-1 min-w-80">
                         {
                             (() => {
                                 if (!loading) {

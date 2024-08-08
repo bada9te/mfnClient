@@ -267,8 +267,8 @@ export default function ProfileEditForm(props: {
     }
 
     return (
-        <div className="card overflow-hidden bg-black shadow-xl glass">
-            <div className="bg-black card-body m-1 pulsar-shadow text-white rounded-none shadow-2xl glass">
+        <div className="card overflow-hidden bg-base-300 shadow-xl glass rsm: md:rounded-2xl">
+            <div className="bg-base-300 card-body m-1 pulsar-shadow text-white sm: md:rounded-2xl shadow-2xl glass">
                 <div className="divider divider-primary">Basics</div>
 
                 <form onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
@@ -277,14 +277,14 @@ export default function ProfileEditForm(props: {
                             <span className="label-text">Profile nickname</span>
                         </label>
                         <div className="join w-full">
-                            <input type="text" placeholder="Nickname" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
+                            <input type="text" placeholder="Nickname" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
                                 ...registerNick("nickname", {
                                     minLength: { value: 4, message: "Min length must be 4" },
                                     maxLength: { value: 20, message: "Max length must be 20" },
                                     required: { value: true, message: "This field is required" },
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
+                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">Save</button>
                         </div>
                         {
                             errorsNick.nickname &&
@@ -300,15 +300,15 @@ export default function ProfileEditForm(props: {
                         <label className="label">
                             <span className="label-text">Profile description</span>
                         </label>
-                        <div className="join w-full">
-                            <input type="text" placeholder="Description" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
+                        <div className="join w-full rounded-xl">
+                            <input type="text" placeholder="Description" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
                                 ...registerDescr("description", {
                                     minLength: { value: 4, message: "Min length must be 4" },
                                     maxLength: { value: 40, message: "Max length must be 40" },
                                     required: { value: true, message: "This field is required" },
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
+                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">Save</button>
                         </div>
                         {
                             errorDescr.description &&
@@ -328,7 +328,7 @@ export default function ProfileEditForm(props: {
                             <span className="label-text">Email</span>
                         </label>
                         <div className="join w-full">
-                            <input type="text" placeholder="Old email" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
+                            <input type="text" placeholder="Old email" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
                                 ...registerEmail("oldEmail", {
                                     pattern: {value: formsConstants.emailRegex, message: "Email address is not valid"},
                                     required: { value: true, message: "This field is required" },
@@ -340,7 +340,7 @@ export default function ProfileEditForm(props: {
                                     }
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white" type="submit">Request</button>
+                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">Request</button>
                         </div>
                         {
                             errorEmail.oldEmail &&
@@ -359,14 +359,14 @@ export default function ProfileEditForm(props: {
                             <span className="label-text">Password</span>
                         </label>
                         <div className="join">
-                            <input type="text" placeholder="Old password" className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
+                            <input type="text" placeholder="Old password" className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
                                 ...registerPassword("oldPassword", {
                                     minLength: { value: 8, message: "Min length must be 8" },
                                     maxLength: { value: 20, message: "Max length must be 20" },
                                     required: { value: true, message: "This field is required" }
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white" type="submit">Request</button>
+                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">Request</button>
                         </div>
                         {
                             errorsPassword.oldPassword &&
@@ -378,7 +378,7 @@ export default function ProfileEditForm(props: {
                 </form>
 
                 <div className="divider divider-primary mt-10">Socials</div>
-                <button className="btn hover:bg-white hover:text-black glass text-white" onClick={userData.user.google?.email ? handleUnlinkGoogle : () => handleGoogle()}>
+                <button className="rounded-xl btn hover:bg-white hover:text-black glass text-white" onClick={userData.user.google?.email ? handleUnlinkGoogle : () => handleGoogle()}>
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -396,7 +396,7 @@ export default function ProfileEditForm(props: {
                     }}
                     onProfileSuccess={onFacebookGetProfileSuccess}
                     render={({ onClick, logout }) => (
-                        <button className="btn hover:bg-blue-600 glass text-white" onClick={userData.user.facebook?.name ? handleUnlinkFacebook : onClick}>
+                        <button className="rounded-xl btn hover:bg-blue-600 glass text-white" onClick={userData.user.facebook?.name ? handleUnlinkFacebook : onClick}>
                             <svg fill="#0091ff" height="25px" width="25px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310" stroke="#0091ff">
                             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                             <g id="SVGRepo_iconCarrier"> 
@@ -414,7 +414,7 @@ export default function ProfileEditForm(props: {
                 {
                     userData.user.twitter?.name
                     ?
-                    <button className="btn hover:bg-black glass text-white w-full" onClick={handleUnlinkTwitter}>
+                    <button className="rounded-xl btn hover:bg-base-300 glass text-white w-full" onClick={handleUnlinkTwitter}>
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
                             <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
                         </svg>
@@ -428,7 +428,7 @@ export default function ProfileEditForm(props: {
                             consumerKey={envCfg.passporttwitterKEY as string}
                             consumerSecret={envCfg.passportTwitterSECRET as string}
                         >
-                            <button className="btn hover:bg-black glass text-white w-full">
+                            <button className="rounded-xl btn hover:bg-base-300 glass text-white w-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
                                     <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
                                 </svg>

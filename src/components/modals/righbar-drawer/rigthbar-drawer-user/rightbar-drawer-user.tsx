@@ -4,7 +4,7 @@ import envCfg from "@/config/env";
 
 export default function RightbarDrawerUser({data}: {data: User}) {
     return (
-        <div className="card w-80 bg-black glass shadow-2xl">
+        <div className="card w-80 bg-base-300 glass shadow-2xl">
             <figure className="max-h-48">
                 <img className="w-full" src={data.background?.length ? `${envCfg.serverBase}/files/${data.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
             </figure>

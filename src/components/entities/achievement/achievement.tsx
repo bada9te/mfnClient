@@ -6,14 +6,14 @@ const getColor = (rarity: string) => {
         case "rare": return "bg-green-400";
         case "uncommon": return "bg-pink-400";
         case "legendary": return "bg-yellow-400"
-        default: return "bg-black";
+        default: return "bg-base-300";
     }
 }
 
 export default function Achievement(props: {data: TAchievement, isCompleted: boolean}) {
     const {data, isCompleted} = props;
     return (
-        <div className="card bg-black glass text-neutral-content w-80 relative">
+        <div className="card bg-base-300 glass text-neutral-content w-80 relative">
             <div className={`w-2 h-full ${getColor(data.rarity || "")} absolute glass`}></div>
 
             {

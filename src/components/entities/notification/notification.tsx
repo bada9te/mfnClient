@@ -1,12 +1,13 @@
 export default function Notification() {
     return (
-        <div className="card bg-base-100 shadow-xl w-full text-start">
-            <div className="card-body">
+        <div className="card bg-base-300 shadow-xl w-full text-start glass">
+            <div className="card-body relative">
+                <p className="absolute top-4 right-5">9 days ago</p>
                 <h2 className="card-title">Card title!</h2>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <div className="card-actions justify-end">
                     <div className="join">
-                        <button className="btn btn-error join-item">
+                        <button className="btn btn-error join-item glass text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">
                                 <path fillRule="evenodd"
@@ -15,7 +16,7 @@ export default function Notification() {
                             </svg>
                             Delete
                         </button>
-                        <button className="btn btn-primary join-item">
+                        <button className="btn btn-primary glass text-white join-item">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">
                                 <path

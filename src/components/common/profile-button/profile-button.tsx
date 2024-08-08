@@ -46,7 +46,7 @@ export default function ProfileButton() {
 
             {/* Conditional rendering based on user presence */}
             {user?._id ? (
-                <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 glass bg-black">
+                <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 glass bg-base-300">
                     <li>
                         <Link href="/profile/me/1" className="justify-between">
                             <div className="flex flex-wrap gap-1">
@@ -214,7 +214,7 @@ export default function ProfileButton() {
                     </li>
                 </ul>
             ) : (
-                <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 glass bg-black">
+                <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 glass bg-base-300">
                     <li>
                         <Link href="/support">
                             <svg

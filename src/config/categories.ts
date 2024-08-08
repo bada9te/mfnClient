@@ -8,7 +8,7 @@ export const genres = [
     { 
         title: "Blues",            
         bg: '/assets/bgs/blues-category.jpg',     
-        icon: "/assets/icons/blues.png",
+        icon: "/assets/icons/logo_clear.png",
         description: "Emotionally rich music with expressive guitar and heartfelt lyrics."
     },
     { 

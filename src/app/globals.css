@@ -18,7 +18,7 @@
 }
 
 html {
-  background: linear-gradient(300deg, #1ba39c, #000000, #363636, #1ba39c);
+  background: linear-gradient(300deg, #f776c1, #bd93f9, #ffb86c, #414558);
   background-size: 240% 240%;
   animation: gradient-animation 60s ease infinite;
   transition: all .1s;
@@ -53,14 +53,14 @@ body {
   }
 
   .animated-box::before {
-    @apply content-[''] shadow-cyan-400 shadow-2xl absolute top-[-240px] left-[150px] w-[100px] h-[800px] bg-gradient-to-r from-[#66c1bd] to-[#3ab0aa] animate-fullSpin
+    @apply content-[''] shadow-cyan-400 shadow-2xl absolute top-[-240px] left-[150px] w-[100px] h-[800px] bg-gradient-to-r from-[#66c1bd] to-[#ff79c6] animate-fullSpin
   }
   .animated-box::after {
     @apply content-[''] absolute inset-0.5 rounded-2xl
   }
 
   .animated-box-tools::before {
-    @apply content-[''] shadow-cyan-400 shadow-2xl absolute top-[-700px] left-[47%] w-[100px] h-[1700px] bg-gradient-to-r from-[#66c1bd] to-[#3ab0aa] animate-fullSpin
+    @apply content-[''] shadow-cyan-400 shadow-2xl absolute top-[-700px] left-[47%] w-[100px] h-[1700px] bg-gradient-to-r from-[#66c1bd] to-[#ff79c6] animate-fullSpin
   }
   .animated-box-tools::after {
     @apply content-[''] absolute inset-0.5 rounded-2xl
@@ -76,7 +76,7 @@ body {
       box-shadow: none;
     }
     50% {
-      box-shadow: 0 0 20px #1ba39c; /* Tailwind’s shadow-2xl equivalent */
+      box-shadow: 0 0 20px #ffb86c; /* Tailwind’s shadow-2xl equivalent */
     }
     100% {
       box-shadow: none;

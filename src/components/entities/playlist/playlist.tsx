@@ -58,7 +58,7 @@ export default function Playlist(props: {
     }
 
     return (
-        <div className="collapse collapse-plus bg-black glass shadow-2xl">
+        <div className="collapse collapse-plus bg-base-300 glass shadow-2xl">
             <input type="checkbox" name="my-accordion-3" defaultChecked={expanded}/>
             <div className="collapse-title text-xl font-medium text-start">
                 <span className="flex flex-row items-center">

@@ -15,7 +15,7 @@ export default function PostPage({params}: {params: {id: string, owner: string}}
             description="Nothing to say, have fun :)"
         >
             <div className="card w-full">
-                <div className="flex flex-col-reverse lg:flex-row justify-center items-start gap-5">
+                <div className="flex flex-col-reverse lg:flex-row justify-center items-center lg:items-start gap-5">
                     <PreloadQuery
                         query={POST_QUERY}
                         variables={{

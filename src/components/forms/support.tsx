@@ -17,8 +17,8 @@ export default function SupportForm() {
     }
 
     return (
-        <div className="card overflow-hidden bg-black shadow-xl glass">
-            <form className="card-body pulsar-shadow m-1 glass bg-black shadow-2xl text-white z-50" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <div className="card overflow-hidden bg-base-300 shadow-xl glass">
+            <form className="card-body pulsar-shadow m-1 glass bg-base-300 shadow-2xl text-white z-50 rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="divider divider-primary">Support details</div>
                 <div className="form-control relative">
                     <label className="label">

@@ -142,7 +142,7 @@ export default function AudioPlayer() {
                     </svg>
                   </button>
                   <button 
-                    className={`${isMute ? 'bg-black text-red-400' : 'text-white'} join-item btn btn-sm btn-primary glass`}
+                    className={`${isMute ? 'bg-base-300 text-red-400' : 'text-white'} join-item btn btn-sm btn-primary glass`}
                     onClick={handleMuteToggle}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
@@ -150,7 +150,7 @@ export default function AudioPlayer() {
                     </svg>
                   </button>
                   <button 
-                    className={`${isLoop ? 'bg-black text-green-400' : "text-white"} join-item btn btn-sm btn-primary glass`}
+                    className={`${isLoop ? 'bg-base-300 text-green-400' : "text-white"} join-item btn btn-sm btn-primary glass`}
                     onClick={handleLoopToggle}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">

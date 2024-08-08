@@ -3,7 +3,7 @@ import PostSkeleton from "@/components/entities/post/post-skeleton";
 
 export default function PlaylistSkeleton() {
     return (
-        <div className="collapse collapse-plus bg-black glass rounded-2xl shadow-md">
+        <div className="collapse collapse-plus bg-base-300 glass rounded-2xl shadow-md">
             <input type="checkbox" name="my-accordion-3"/>
             <div className="collapse-title text-xl font-medium">
                 <div className="skeleton w-full h-8 shadow-md shrink-0"></div>

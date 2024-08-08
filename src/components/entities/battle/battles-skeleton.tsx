@@ -2,7 +2,7 @@ import PostSkeleton from "@/components/entities/post/post-skeleton";
 
 export default function BattleSkeleton() {
     return (
-        <div className="card bg-black glass w-full">
+        <div className="card bg-base-300 glass w-full">
             <div className="card-body justify-center items-center flex flex-col gap-5 p-0 md:p-4">
                 <div className="skeleton w-full h-8 shadow-md shrink-0"></div>
                 <div className="flex flex-wrap gap-5 justify-center items-center flex-col lg:flex-row">
@@ -16,7 +16,7 @@ export default function BattleSkeleton() {
                     </div>
 
                     {/* mid */}
-                    <div className="stats stats-vertical shadow-md w-64 glass bg-black">
+                    <div className="stats stats-vertical shadow-md w-64 glass bg-base-300">
                         <div className="stat place-items-center">
                             <div className="skeleton w-full h-20 shadow-md shrink-0"></div>
                         </div>

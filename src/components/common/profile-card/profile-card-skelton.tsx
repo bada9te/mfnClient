@@ -1,6 +1,6 @@
 export default function ProfileCardSkeleton() {
     return (
-        <div className="card w-full max-h-screen bg-base-100 shadow-xl rounded-none text-white">
+        <div className="card w-full max-h-screen bg-base-300 shadow-xl  text-white">
             <div className="skeleton h-40 md:h-48 w-full"></div>
             
             <div className="card-body flex flex-col md:flex-row gap-5">

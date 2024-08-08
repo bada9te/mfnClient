@@ -90,11 +90,12 @@ export default function Post(props: {
     }
 
     return (
-        <div className={`card w-fit md:${fullWidth ? 'w-full rounded-none' : 'w-80 max-w-80'} bg-black shadow-xl max-h-[550px] text-white glass`}>
+        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass`}>
             <div className="m-2 flex flex-row gap-3 cursor-pointer">
                 <div className="dropdown w-full dropdown-end text-start">
                     <button 
                         className="
+                        rounded-full
                         btn btn-primary
                         text-white font-bold 
                         flex items-center 
@@ -110,7 +111,7 @@ export default function Post(props: {
                         </div>
                         <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>
                     </button>
-                    <ul tabIndex={0} className="dropdown-content menu glass bg-black rounded-box z-[1] w-52 p-2 mt-3 shadow">
+                    <ul tabIndex={0} className="dropdown-content menu glass bg-base-300 rounded-box z-[1] w-52 p-2 mt-3 shadow">
                         <li><Link href={data?.owner?._id === user?._id ? "/profile/me/1" : `/profile/${data.owner._id}/1`}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                                 <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z" />
@@ -159,7 +160,7 @@ export default function Post(props: {
                 <p className="text-lg">{data?.description}</p>
             </div>
 
-            <div className={`stats glass mx-2 mt-2 thin-scrollbar ${handleRemove && "opacity-60"}`}>
+            <div className={`stats bg-base-300 glass mx-2 mt-2 thin-scrollbar ${handleRemove && "opacity-60"}`}>
                 <div className="stat text-center">
                     <div 
                         className={`${!handleRemove && 'cursor-pointer'} ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-red-500"}`} 
@@ -193,7 +194,7 @@ export default function Post(props: {
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?
-                        <button className="btn btn-primary w-full glass bg-red-500 text-white rounded-none" onClick={handlePauseCLick}>
+                        <button className="btn btn-primary w-full glass bg-red-500 text-white " onClick={handlePauseCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">
                                 <path fillRule="evenodd"
@@ -203,7 +204,7 @@ export default function Post(props: {
                             Pause
                         </button>
                         :
-                        <button className="btn btn-primary w-full glass text-white rounded-none" onClick={handlePlayCLick}>
+                        <button className="btn btn-primary w-full glass text-white " onClick={handlePlayCLick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="size-5">
                                 <path
@@ -213,7 +214,7 @@ export default function Post(props: {
                         </button>
                 }
             </div>
-            <div className="bg-black absolute bottom-[-32px] flex items-center">
+            <div className="bg-base-300 absolute bottom-[-32px] flex items-center">
                 {
                     handleSelect &&
                     <button className="btn btn-sm btn-success w-fit glass text-white bg-green-900" onClick={() => handleSelect(data)}>

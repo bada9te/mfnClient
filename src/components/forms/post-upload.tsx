@@ -99,8 +99,8 @@ export default function PostUploadForm() {
             refDialog={cropperModalRef}
             handleImageCropModalClose={handleImageCropModalClose}
         />
-        <div className="card overflow-hidden bg-black shadow-xl glass">
-            <form className="card-body m-1 pulsar-shadow text-white glass bg-black shadow-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <div className="card overflow-hidden bg-base-300 shadow-xl glass">
+            <form className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="divider divider-primary">Post setup</div>
                 <div className="form-control">
                     <label className="label">
@@ -145,7 +145,7 @@ export default function PostUploadForm() {
                     </div>
                     <input 
                         type="file" 
-                        className="file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
+                        className="file-input file-input-bordered w-full file:glass file:text-white file: placeholder:text-gray-200" 
                         onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
                         {...register("image", {
                             required: { value: true, message: "This field is required" }
@@ -164,7 +164,7 @@ export default function PostUploadForm() {
                         <span className="label-text">Track audio</span>
                         <span className="label-text-alt">.mp3, .wav</span>
                     </div>
-                    <input type="file" className="file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
+                    <input type="file" className="file-input file-input-bordered w-full file:text-white file:glass file:" {
                         ...register("audio", {
                             required: { value: true, message: "This field is required" }
                         })
@@ -181,14 +181,14 @@ export default function PostUploadForm() {
                     <div className="label">
                         <span className="label-text">Genre</span>
                     </div>
-                    <select className="btn text-start glass bg-[#3b3b3b]" {
+                    <select className="btn text-start glass" {
                         ...register("genre", {
                             required: { value: true, message: "This field is required" }
                         })
                     }>
                         {
                             genres.map((gen, key) => {
-                                return <option className="bg-[#272727] text-lg" key={key} value={gen.title}>{gen.title}</option>
+                                return <option className="text-lg" key={key} value={gen.title}>{gen.title}</option>
                             })
                         }
                     </select>

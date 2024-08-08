@@ -57,7 +57,7 @@ export default function SelectTrackModal({
                 onClick: handleOpen,
             })}
             <dialog ref={ref} className="modal w-full h-full absolute">
-                <div className="modal-box glass rounded-none text-gray-300 min-w-[100vw] min-h-[100vh] no-scrollbar text-start flex flex-col">
+                <div className="modal-box glass  text-gray-300 min-w-[100vw] min-h-[100vh] no-scrollbar text-start flex flex-col">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 p-2">✕</button>
@@ -102,7 +102,7 @@ export default function SelectTrackModal({
                                 </svg>
                                 Search
                             </button>
-                            <input ref={inputRef} className="input input-bordered join-item w-full glass bg-black placeholder:text-gray-200" placeholder="Track title" />
+                            <input ref={inputRef} className="input input-bordered join-item w-full glass bg-base-300 placeholder:text-gray-200" placeholder="Track title" />
                         </div>
                     </div>
                 </div>
