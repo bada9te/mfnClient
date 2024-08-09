@@ -146,6 +146,27 @@ export const POSTS_BY_CATEGORY_QUERY = gql`
     }
 `;
 
+export const POSTS_BY_CATEGORIES_COUNT = gql`
+    query postsByCategoryCount {
+        postsByCategoryCount {
+            country
+            pop
+            classical
+            funk
+            soul
+            hipHop
+            rock
+            electronic
+            latin
+            jazz
+            blues
+            folk
+            metal
+            reggae
+        }
+    }
+`;
+
 
 // M
 export const POST_CREATE_MUTATION = gql`

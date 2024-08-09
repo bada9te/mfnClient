@@ -24,13 +24,13 @@ export const genres = [
         description: "Groovy rhythms and strong beats designed to make you dance."
     },
     { 
-        title: "Soul music",       
+        title: "Soul",       
         bg: '/assets/bgs/soul-category.jpg',      
         icon: "/assets/icons/soul.png",
         description: "Heartfelt vocals and emotional depth, blending gospel and R&B."
     },
     { 
-        title: "Hip hop",          
+        title: "Hip-hop",          
         bg: '/assets/bgs/hip-hop-category.jpg',   
         icon: "/assets/icons/hip-hop.png",
         description: "Rhythmic beats and rapping reflecting urban culture and issues."
@@ -81,6 +81,6 @@ export const genres = [
         title: "Reggae",
         bg: '/assets/bgs/reggae.jpg',     
         icon: "/assets/icons/metal.png",
-        description: "Heavy riffs and powerful vocals, exploring intense themes."
+        description: "Feel the rhythm with soulful melodies and powerful themes of unity."
     }
 ];

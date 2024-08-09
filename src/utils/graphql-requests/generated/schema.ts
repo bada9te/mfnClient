@@ -435,7 +435,7 @@ export type PostsByCategoryCount = {
   blues: Scalars['Int']['output'];
   classical: Scalars['Int']['output'];
   country: Scalars['Int']['output'];
-  electronicMusic: Scalars['Int']['output'];
+  electronic: Scalars['Int']['output'];
   folk: Scalars['Int']['output'];
   funk: Scalars['Int']['output'];
   hipHop: Scalars['Int']['output'];
@@ -443,8 +443,9 @@ export type PostsByCategoryCount = {
   latin: Scalars['Int']['output'];
   metal: Scalars['Int']['output'];
   pop: Scalars['Int']['output'];
+  reggae: Scalars['Int']['output'];
   rock: Scalars['Int']['output'];
-  soulMusic: Scalars['Int']['output'];
+  soul: Scalars['Int']['output'];
 };
 
 export type PostsByTitleInput = {
@@ -979,6 +980,11 @@ export type PostsByCategoryQueryVariables = Exact<{
 
 
 export type PostsByCategoryQuery = { __typename?: 'Query', postsByCategory: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+
+export type PostsByCategoryCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PostsByCategoryCountQuery = { __typename?: 'Query', postsByCategoryCount: { __typename?: 'PostsByCategoryCount', country: number, pop: number, classical: number, funk: number, soul: number, hipHop: number, rock: number, electronic: number, latin: number, jazz: number, blues: number, folk: number, metal: number, reggae: number } };
 
 export type PostCreateMutationVariables = Exact<{
   input: AddPostInput;
@@ -2481,6 +2487,58 @@ export type PostsByCategoryQueryHookResult = ReturnType<typeof usePostsByCategor
 export type PostsByCategoryLazyQueryHookResult = ReturnType<typeof usePostsByCategoryLazyQuery>;
 export type PostsByCategorySuspenseQueryHookResult = ReturnType<typeof usePostsByCategorySuspenseQuery>;
 export type PostsByCategoryQueryResult = Apollo.QueryResult<PostsByCategoryQuery, PostsByCategoryQueryVariables>;
+export const PostsByCategoryCountDocument = gql`
+    query postsByCategoryCount {
+  postsByCategoryCount {
+    country
+    pop
+    classical
+    funk
+    soul
+    hipHop
+    rock
+    electronic
+    latin
+    jazz
+    blues
+    folk
+    metal
+    reggae
+  }
+}
+    `;
+
+/**
+ * __usePostsByCategoryCountQuery__
+ *
+ * To run a query within a React component, call `usePostsByCategoryCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsByCategoryCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsByCategoryCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePostsByCategoryCountQuery(baseOptions?: Apollo.QueryHookOptions<PostsByCategoryCountQuery, PostsByCategoryCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostsByCategoryCountQuery, PostsByCategoryCountQueryVariables>(PostsByCategoryCountDocument, options);
+      }
+export function usePostsByCategoryCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsByCategoryCountQuery, PostsByCategoryCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostsByCategoryCountQuery, PostsByCategoryCountQueryVariables>(PostsByCategoryCountDocument, options);
+        }
+export function usePostsByCategoryCountSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PostsByCategoryCountQuery, PostsByCategoryCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostsByCategoryCountQuery, PostsByCategoryCountQueryVariables>(PostsByCategoryCountDocument, options);
+        }
+export type PostsByCategoryCountQueryHookResult = ReturnType<typeof usePostsByCategoryCountQuery>;
+export type PostsByCategoryCountLazyQueryHookResult = ReturnType<typeof usePostsByCategoryCountLazyQuery>;
+export type PostsByCategoryCountSuspenseQueryHookResult = ReturnType<typeof usePostsByCategoryCountSuspenseQuery>;
+export type PostsByCategoryCountQueryResult = Apollo.QueryResult<PostsByCategoryCountQuery, PostsByCategoryCountQueryVariables>;
 export const PostCreateDocument = gql`
     mutation postCreate($input: AddPostInput!) {
   postCreate(input: $input) {

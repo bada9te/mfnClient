@@ -3,8 +3,6 @@ import "./globals.css";
 import AppBar from "@/components/bars/appbar/appbar";
 import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
 import Footer from "@/components/common/footer/footer";
-import CategoryLeftBar from "@/components/bars/category-leftbar/category-leftbar";
-import {genres} from "@/config/categories";
 import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
@@ -12,6 +10,7 @@ import NextTopLoader from "nextjs-toploader";
 import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import envCfg from "@/config/env";
+import CategoriesContainerLeftbar from "@/components/containers/categories-container/categories-container-leftbar";
 
 
 export default function RootLayout({
@@ -19,6 +18,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" data-theme="black">
     <body>
@@ -40,19 +40,7 @@ export default function RootLayout({
                                 <div className="hidden lg:block">
                                     <div className="card w-full max-h-[calc(100vh-95px)] fixed top-12 left-0">
                                         <div className="overflow-y-auto flex flex-col gap-4 py-10 ml-4 no-scrollbar">
-                                            {
-                                                genres.map((gen, i) => {
-                                                    return (
-                                                        <CategoryLeftBar
-                                                            key={i}
-                                                            title={gen.title}
-                                                            bgImage={gen.bg}
-                                                            iconImage={gen.icon}
-                                                            description={gen.description}
-                                                        />
-                                                    );
-                                                })
-                                            }
+                                            <CategoriesContainerLeftbar/>
                                         </div>
                                     </div>
                                 </div>
