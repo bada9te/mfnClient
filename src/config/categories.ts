@@ -76,5 +76,11 @@ export const genres = [
         bg: '/assets/bgs/metal-category.jpg',     
         icon: "/assets/icons/metal.png",
         description: "Heavy riffs and powerful vocals, exploring intense themes."
+    },
+    {
+        title: "Reggae",
+        bg: '/assets/bgs/reggae.jpg',     
+        icon: "/assets/icons/metal.png",
+        description: "Heavy riffs and powerful vocals, exploring intense themes."
     }
 ];
