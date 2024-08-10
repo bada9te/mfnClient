@@ -1,5 +1,4 @@
 "use client"
-
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store"
 import { useEffect, useRef, useState } from "react";
 import raf from 'raf' // requestAnimationFrame polyfill
@@ -8,7 +7,6 @@ import InfoImage from "../info-image/info-image";
 // @ts-ignore
 import ReactHowler from 'react-howler'
 import PlayerTrackInfo from "./player-track-info";
-import getTimeLeft from "@/utils/common-functions/getTimeLeft";
 import formatTime from "@/utils/common-functions/formatTime";
 
 export default function AudioPlayer() {

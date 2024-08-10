@@ -121,7 +121,7 @@ export default function PostEditForm(props: {posId: string}) {
 
     // GENRE
     const onGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        updatePost("genre", String(e.target.value));
+        updatePost("genre", String(e.target.value.toLowerCase()));
     }
 
     const updatePost = async(what: string, value: string) => {

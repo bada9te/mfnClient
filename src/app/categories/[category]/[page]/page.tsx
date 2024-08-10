@@ -20,7 +20,8 @@ export default function Categories({params}: {params: {category: string, page: n
                         query={POSTS_BY_CATEGORY_QUERY}
                         variables={{
                             offset: (params.page - 1) * 12,
-                            limit: 12
+                            limit: 12,
+                            category: params.category
                         }}
                     >
                         <Suspense fallback={<PostsContainerSkeleton/>}>

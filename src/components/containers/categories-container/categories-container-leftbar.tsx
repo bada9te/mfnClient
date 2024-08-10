@@ -5,8 +5,8 @@ import formatNumber from "@/utils/common-functions/formatNumber";
 import { usePostsByCategoryCountQuery } from "@/utils/graphql-requests/generated/schema";
 
 export default function CategoriesContainerLeftbar() {
-    const { data: postsCountByCategory, loading } = usePostsByCategoryCountQuery();
-    console.log(postsCountByCategory)
+    const { data: postsCountByCategory } = usePostsByCategoryCountQuery();
+
     return (
         <>
             {
@@ -21,10 +21,10 @@ export default function CategoriesContainerLeftbar() {
                             count={formatNumber((() => {
                                 if (gen.title === "Hip-hop") {
                                     // @ts-ignore
-                                    return Number(postsCountByCategory?.postsByCategoryCount["hipHop"])
+                                    return Number(postsCountByCategory?.postsByCategoryCount["hipHop"]) || 0
                                 }
                                 // @ts-ignore
-                                return Number(postsCountByCategory?.postsByCategoryCount[gen.title.toLocaleLowerCase()])
+                                return Number(postsCountByCategory?.postsByCategoryCount[gen.title.toLocaleLowerCase()]) || 0
                             })())}
                         />
                     );

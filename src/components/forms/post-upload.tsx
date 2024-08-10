@@ -77,7 +77,7 @@ export default function PostUploadForm() {
                     audio:            uploadedAudioName as unknown as string,
                     image:            uploadedImageName as unknown as string,
                     downloadsAllowed: data.downloadsAllowed,
-                    category:         data.genre,
+                    category:         data.genre.toLowerCase(),
                 },
             },
         }).then(() => {
