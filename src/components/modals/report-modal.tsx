@@ -24,6 +24,7 @@ export default function ReportModal({button, postId}: {button: React.ReactElemen
             enqueueSnackbar("Report reason is not selected", {variant: 'error', autoHideDuration: 3000});
             return;
         }
+        ref.current && ref.current.close();
         enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
         createReport({
             variables: {
@@ -34,6 +35,7 @@ export default function ReportModal({button, postId}: {button: React.ReactElemen
                 }
             }
         }).then(_ => {
+
             enqueueSnackbar("Report submitted", {variant: 'success', autoHideDuration: 2500});
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'success', autoHideDuration: 3000});
@@ -66,8 +68,8 @@ export default function ReportModal({button, postId}: {button: React.ReactElemen
                             {
                                 reportReasons.map((i, key) => {
                                     return (
-                                        <div className="form-control w-full">
-                                            <div className="card glass w-full" key={key}>
+                                        <div className="form-control w-full" key={key}>
+                                            <div className="card glass w-full">
                                                 <label className="label cursor-pointer flex flex-row m-4">
                                                     <p className="flex flex-col gap-2">
                                                         <span className="card-title">

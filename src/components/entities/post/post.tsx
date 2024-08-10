@@ -13,6 +13,7 @@ import {useSnackbar} from "notistack";
 import Link from "next/link";
 import envCfg from "@/config/env";
 import ReportModal from "@/components/modals/report-modal";
+import formatNumber from "@/utils/common-functions/formatNumber";
 
 
 export default function Post(props: {
@@ -178,7 +179,7 @@ export default function Post(props: {
                         </svg>
                     </div>
                     <div className="stat-title">Total Likes</div>
-                    <div className="stat-value text-primary">{data.likedBy?.length}</div>
+                    <div className="stat-value text-primary">{formatNumber(data.likedBy?.length as number)}</div>
                 </div>
 
                 <div className="stat text-center">
@@ -192,7 +193,7 @@ export default function Post(props: {
                         </svg>
                     </div>
                     <div className="stat-title">Total Saves</div>
-                    <div className="stat-value text-primary">{data.savedBy?.length}</div>
+                    <div className="stat-value text-primary">{formatNumber(data.savedBy?.length as number)}</div>
                 </div>
             </div>
 

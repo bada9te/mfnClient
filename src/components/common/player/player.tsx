@@ -9,6 +9,7 @@ import InfoImage from "../info-image/info-image";
 import ReactHowler from 'react-howler'
 import PlayerTrackInfo from "./player-track-info";
 import getTimeLeft from "@/utils/common-functions/getTimeLeft";
+import formatTime from "@/utils/common-functions/formatTime";
 
 export default function AudioPlayer() {
   const { isPlaying, isLoop, isMute, volume, post } = useAppSelector(state => state.player);
@@ -164,9 +165,9 @@ export default function AudioPlayer() {
               <div className='flex flex-row gap-5'>
                 <div className='seek w-full'>
                   <label>
-                    {seek.toFixed(2)}
+                    {formatTime(seek)}
                     {' / '}
-                    {(duration) ? duration.toFixed(2) : 'XX:XX'}
+                    {(duration) ? formatTime(duration) : 'XX:XX'}
                     <span className='slider-container'>
                       <input 
                         type='range'

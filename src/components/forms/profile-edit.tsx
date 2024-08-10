@@ -148,7 +148,7 @@ export default function ProfileEditForm(props: {
                 linkGoogle({
                     variables: {
                         input: {
-                            userId: user._id,
+                            userId: user?._id as string,
                             id: data.sub,
                             token: tokenResponse.access_token,
                             email: data.email,
@@ -169,7 +169,7 @@ export default function ProfileEditForm(props: {
         enqueueSnackbar("Processing...", {autoHideDuration: 1500});
         unlinkGoogle({
             variables: {
-                _id: user._id
+                _id: user?._id as string
             }
         }).then(_ => {
             revalidatePathAction("/profile/me/edit", "page");
@@ -193,7 +193,7 @@ export default function ProfileEditForm(props: {
             linkFacebook({
                 variables: {
                     input: {
-                        userId: user._id,
+                        userId: user?._id as string,
                         id: facebookProfileData.id,
                         name: facebookProfileData.name,
                         token: facebookLoginData.accessToken
@@ -215,7 +215,7 @@ export default function ProfileEditForm(props: {
         enqueueSnackbar("Processing...", {autoHideDuration: 1500});
         unlinkFacebook({
             variables: {
-                _id: user._id,
+                _id: user?._id as string,
             }
         }).then(_ => {
             revalidatePathAction("/profile/me/edit", "page");
@@ -230,7 +230,7 @@ export default function ProfileEditForm(props: {
         linkTwitter({
             variables: {
                 input: {
-                    userId: user._id,
+                    userId: user?._id as string,
                     id: data.user_id,
                     name: data.screen_name,
                     token: data.oauth_token,
@@ -247,7 +247,7 @@ export default function ProfileEditForm(props: {
     const handleUnlinkTwitter = () => {
         unlinkTwitter({
             variables: {
-                _id: user._id,
+                _id: user?._id as string,
             }
         }).then(_ => {
             revalidatePathAction("/profile/me/edit", "page");

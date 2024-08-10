@@ -26,6 +26,7 @@ export default function LoginForm() {
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         httpLogin(data.email, data.password)
             .then(({data: response}) => {
+                console.log("LOGIN:", response);
                 enqueueSnackbar(`Logged in as ${response.nick}`, {variant: 'success', autoHideDuration: 2000});
                 reset();
                 dispatch(setUser(response));

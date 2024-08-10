@@ -14,15 +14,12 @@ export interface IUserState {
         facebook?: {
             id: string;
             token: string;
-            email: string;
             name: string;
         };
         twitter?: {
             id: string;
             token: string;
-            email: string;
-            displayName: string;
-            username: string;
+            name: string;
         };
         google?: {
             id: string;

@@ -1,6 +1,7 @@
 "use client"
 import CategoryLeftBar from "@/components/bars/category-leftbar/category-leftbar";
 import {genres} from "@/config/categories";
+import formatNumber from "@/utils/common-functions/formatNumber";
 import { usePostsByCategoryCountQuery } from "@/utils/graphql-requests/generated/schema";
 
 export default function CategoriesContainerLeftbar() {
@@ -18,7 +19,7 @@ export default function CategoriesContainerLeftbar() {
                             iconImage={gen.icon}
                             description={gen.description}
                             // @ts-ignore
-                            count={Number(postsCountByCategory?.postsByCategoryCount[gen.title.toLocaleLowerCase()]) || 0}
+                            count={formatNumber(Number(postsCountByCategory?.postsByCategoryCount[gen.title.toLocaleLowerCase()])) || 0}
                         />
                     );
                 })

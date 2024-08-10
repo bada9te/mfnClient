@@ -50,6 +50,7 @@ const loadStore = async(getCurrentState: any) => {
         httpGetCurrentUser()
             .then(response => response.data)
             .then(user => {
+                //console.log(user);
                 resolve({
                     // reuse state that was before loading current user
                     ...getCurrentState(),
@@ -60,6 +61,7 @@ const loadStore = async(getCurrentState: any) => {
                 })
             })
             .catch(err => {
+                //console.log(err)
                 // console.log("Initial state can not be loaded:", err.message);
                 resolve({...getCurrentState(), user: {user: null}});
             });

@@ -141,7 +141,7 @@ export default function ProfileCard(props: {
                 refDialog={cropperModalRef}
                 handleImageCropModalClose={handleImageCropModalClose}
             />
-            <div className={`${!disableMargins && 'm-0 md:mx-8 md:mt-8'} card w-full text-white rounded-none md:rounded-2xl shadow-2xl bg-base-300`}>
+            <div className={`${!disableMargins && 'm-0 md:mx-4 md:mt-4'} card w-full text-white rounded-none md:rounded-2xl shadow-2xl bg-base-300`}>
                 <figure className="max-h-48">
                     <img className="w-full" src={data.user.background.length ? `${envCfg.serverBase}/files/${data.user.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
                 </figure>
