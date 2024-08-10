@@ -5,7 +5,7 @@ import {Post as TPost, useBattlesByStatusSuspenseQuery} from "@/utils/graphql-re
 import InfoImage from "@/components/common/info-image/info-image";
 import Pagination from "@/components/common/pagination/pagination";
 import {TPaginationProps} from "@/types/pagination";
-import BattleSkeleton from "@/components/entities/battle/battles-skeleton";
+
 
 export default function BattlesContainer(props: TPaginationProps & { finished: boolean; }) {
     const {offset, limit, finished, page} = props;
@@ -19,7 +19,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
     return (
         <>
             {
-                data?.battlesByStatus.battles?.length || true
+                data?.battlesByStatus.battles?.length
                 ?
                 <>
                     {
@@ -27,7 +27,6 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
                             return (<Battle key={key} post1={<Post data={battle.post1 as TPost}/>} post2={<Post data={battle.post2 as TPost}/>}/>)
                         })
                     }
-                    <BattleSkeleton/>
                     <Pagination page={page} maxPage={Number(data?.battlesByStatus.count as number / limit)}/>
                 </>
                 :
