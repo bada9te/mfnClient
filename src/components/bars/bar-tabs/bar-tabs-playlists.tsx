@@ -8,7 +8,7 @@ export default function BarTabsPlaylists(props: {
     const { activeTab } = props;
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full bg-base-300 glass m-0 md:mx-4 md:mt-4">
+        <div role="tablist" className="tabs tabs-boxed w-full bg-base-300 glass m-0 mt-3 md:mx-4 md:mt-4 rounded-none md:rounded-xl">
             <Link 
                 role="tab" 
                 className={`tab ${activeTab === "explore" && "glass bg-[#bd93f9]"}`}

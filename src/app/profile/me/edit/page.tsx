@@ -21,7 +21,7 @@ export default function EditProfile() {
                 <Suspense fallback={<ProfileCardSkeleton/>}>
                     <ProfileCard isEditable userId={myId}/>
                 </Suspense>
-                <div className="m-0 md:m-8 md:mb-0 w-full">
+                <div className="m-0 md:m-4 md:mb-0 w-full">
                     <ProfileEditForm userId={myId}/>
                 </div>
             </PreloadQuery>

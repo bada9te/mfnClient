@@ -82,6 +82,7 @@ export default function AppBar() {
                                 <li><Link href={"/categories/blues/1"}>Blues</Link></li>
                                 <li><Link href={"/categories/folk/1"}>Folk</Link></li>
                                 <li><Link href={"/categories/metal/1"}>Metal</Link></li>
+                                <li><Link href={"/categories/reggae/1"}>Reggae</Link></li>
                             </ul>
                         </li>
                     </ul>
@@ -166,6 +167,7 @@ export default function AppBar() {
                                 <li><Link href={"/categories/blues/1"}>Blues</Link></li>
                                 <li><Link href={"/categories/folk/1"}>Folk</Link></li>
                                 <li><Link href={"/categories/metal/1"}>Metal</Link></li>
+                                <li><Link href={"/categories/reggae/1"}>Reggae</Link></li>
                             </ul>
                         </details>
                     </li>

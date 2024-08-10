@@ -3,7 +3,7 @@ export const genres = [
         title: "Pop",              
         bg: '/assets/bgs/pop-category.jpg',       
         icon: "/assets/icons/pop.png",
-        description: "Catchy tunes with memorable melodies and widespread appeal."
+        description: "Catchy tunes with memorable melodies and widespread appeal.",
     },
     { 
         title: "Blues",            

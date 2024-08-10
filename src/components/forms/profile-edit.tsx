@@ -267,7 +267,7 @@ export default function ProfileEditForm(props: {
     }
 
     return (
-        <div className="card overflow-hidden bg-base-300 shadow-xl glass rsm: md:rounded-2xl">
+        <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-none md:rounded-2xl">
             <div className="bg-base-300 card-body m-1 pulsar-shadow text-white sm: md:rounded-2xl shadow-2xl glass">
                 <div className="divider divider-primary">Basics</div>
 
@@ -406,7 +406,7 @@ export default function ProfileEditForm(props: {
                                 </g> 
                                 </g>
                             </svg>
-                            { userData.user.facebook?.name ? userData.user.facebook?.name : "Connect facebook" }
+                            { userData.user.facebook?.name ? userData.user.facebook?.name : "Connect Facebook" }
                         </button>
                     )}
                 />

@@ -6,7 +6,7 @@ import { usePostsByCategoryCountQuery } from "@/utils/graphql-requests/generated
 
 export default function CategoriesContainerLeftbar() {
     const { data: postsCountByCategory, loading } = usePostsByCategoryCountQuery();
-
+    console.log(postsCountByCategory)
     return (
         <>
             {
@@ -18,8 +18,14 @@ export default function CategoriesContainerLeftbar() {
                             bgImage={gen.bg}
                             iconImage={gen.icon}
                             description={gen.description}
-                            // @ts-ignore
-                            count={formatNumber(Number(postsCountByCategory?.postsByCategoryCount[gen.title.toLocaleLowerCase()])) || 0}
+                            count={formatNumber((() => {
+                                if (gen.title === "Hip-hop") {
+                                    // @ts-ignore
+                                    return Number(postsCountByCategory?.postsByCategoryCount["hipHop"])
+                                }
+                                // @ts-ignore
+                                return Number(postsCountByCategory?.postsByCategoryCount[gen.title.toLocaleLowerCase()])
+                            })())}
                         />
                     );
                 })
