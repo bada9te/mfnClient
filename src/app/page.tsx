@@ -75,7 +75,7 @@ const cardsData2 = [
 export default function Page() {
     return (
         <>
-            <div className="flex flex-col items-center text-white py-10 m-0 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative">
+            <div className="flex flex-col items-center text-white py-10 m-0 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-90">
                 <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-10">
                     <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
                     <p className="text-4xl md:text-5xl font-bold text-center flex-0 px-5">Welcome to Music From Nothing</p>
@@ -107,7 +107,7 @@ export default function Page() {
                 />
             </div>
 
-            <div className="flex flex-col items-center text-white py-10 m-0 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl">
+            <div className="flex flex-col items-center text-white py-10 m-0 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl bg-opacity-90">
                 <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">Compose, arrange</p>
                 <p className="text-center pb-20 font-bold text-xl md:text-xl z-10 px-5">and produce your unique tunes effortlessly with our web app.</p>
                 <Image width={300} height={300}  src="/assets/figures/cube.svg" alt="cube" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
@@ -136,7 +136,7 @@ export default function Page() {
                 />
             </div>
 
-            <div className="flex flex-col items-center text-white py-10 m-0 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative">
+            <div className="flex flex-col items-center text-white py-10 m-0 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-90">
                 <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">Purpose of the platform</p>
                 <p className="text-center pb-16 font-bold text-xl md:text-xl z-10">and author information</p>
                 <Image width={300} height={300}  src="/assets/figures/waterball.svg" alt="waterball" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>

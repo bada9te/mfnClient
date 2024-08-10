@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <footer className="footer p-10 bg-base-300 text-neutral-content rounded-none md:rounded-2xl shadow-2xl overflow-hidden relative">
+        <footer className="footer p-10 bg-base-300 text-neutral-content rounded-none md:rounded-2xl shadow-2xl overflow-hidden relative bg-opacity-90">
             <aside>
                 <Image className="rounded-full" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
                 <p>Music From Nothing<br/>Providing reliable tech since 1992</p>

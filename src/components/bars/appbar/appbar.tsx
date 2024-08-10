@@ -4,7 +4,7 @@ import ProfileButton from "@/components/common/profile-button/profile-button";
 //bg-[#3c8d88]
 export default function AppBar() {
     return (
-        <div className="navbar fixed top-0 z-50 text-white glass bg-base-300 row-auto">
+        <div className="navbar fixed top-0 z-50 text-white glass bg-base-300 row-auto bg-opacity-50">
             <div className="navbar-start">
                 <div className="dropdown max-h-screen block lg:hidden">
                     <div tabIndex={0} role="button" className="btn btn-ghost glass mr-1">

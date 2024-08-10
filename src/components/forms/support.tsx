@@ -1,6 +1,8 @@
 "use client"
 import { formsConstants } from "@/config/forms";
+import { useSupportRequestCreateMutation } from "@/utils/graphql-requests/generated/schema";
 import Link from "next/link";
+import { useSnackbar } from "notistack";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
@@ -11,9 +13,25 @@ type Inputs = {
 
 export default function SupportForm() {
     const { register, reset, formState: {errors}, handleSubmit } = useForm<Inputs>();
+    const [ createSupportRequest ] = useSupportRequestCreateMutation();
+    const { enqueueSnackbar } = useSnackbar();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
-        console.log(data);
+        enqueueSnackbar("Submitting...", {autoHideDuration: 1500});
+        createSupportRequest({
+            variables: {
+                input: {
+                    contactReason: data.contactReason,
+                    message: data.details,
+                    email: data.email,
+                }
+            }
+        }).then(_ => {
+            reset();
+            enqueueSnackbar("Sent", {variant: 'success', autoHideDuration: 2500});
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
+        });
     }
 
     return (

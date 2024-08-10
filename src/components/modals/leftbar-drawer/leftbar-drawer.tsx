@@ -6,6 +6,7 @@ import { usePostsByTitleLazyQuery, Post as TPost } from "@/utils/graphql-request
 import Post from "@/components/entities/post/post";
 import InfoImage from "@/components/common/info-image/info-image";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
+import Image from "next/image";
 
 export default function LeftBarDrawer(props: {
     reference: LegacyRef<HTMLInputElement> | undefined
@@ -46,7 +47,9 @@ export default function LeftBarDrawer(props: {
                    onChange={e => handleOpen(e)}/>
             <div className="drawer-side pt-16 z-30 no-scrollbar">
                 <label htmlFor="my-drawer-tracks" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-92 md:w-[360px] min-h-full text-base-content glass bg-base-300">
+                <ul className="menu p-4 w-92 min-h-full text-base-content glass bg-base-300 bg-[url('/assets/bgs/leftbar.png')] bg-cover bg-opacity-20"
+                    style={{ backgroundSize: '400px 935px' }}
+                >
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
                         <input type="text" className="w-fit placeholder:text-gray-200" placeholder="Search" onChange={e => setSq(e.target.value)}/>

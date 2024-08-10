@@ -10,7 +10,7 @@ export default function CategoryLeftBar(props: {
     const { title, bgImage, iconImage, description, count } = props;
 
     return (
-        <div className={`card w-fit max-w-[305px] bg-cover bg-center bg-base-300 shadow-none text-white max-h-52 relative`} 
+        <div className={`card w-fit max-w-[305px] bg-cover bg-center bg-base-300 shadow-none text-white max-h-52 relative bg-opacity-90`} 
             //style={{ backgroundImage: `url(${bgImage})` }}
         >
             
