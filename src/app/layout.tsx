@@ -61,7 +61,7 @@ export default function RootLayout({
                                                 //shadow="0 0 10px #2299DD,0 0 5px #2299DD",
                                             />
                                             {children}
-                                            <div className="p-0 md:p-4">
+                                            <div className="p-2 pb-4 md:p-4">
                                                 <Footer/>
                                             </div>
                                         </div>

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <footer className="footer p-10 bg-base-300 text-neutral-content rounded-none md:rounded-2xl shadow-2xl overflow-hidden relative bg-opacity-80">
+        <footer className="footer p-10 bg-base-300 text-neutral-content rounded-2xl shadow-2xl overflow-hidden relative bg-opacity-80">
             <aside>
                 <Image className="rounded-full" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
                 <p>Music From Nothing<br/>Providing reliable tech since 1992</p>
@@ -33,7 +33,7 @@ export default function Footer() {
             </nav> 
             <nav>
                 <h6 className="footer-title">Social</h6>
-                <div className="grid grid-flow-col gap-4">
+                <div className="grid grid-flow-col gap-4 z-10">
                     <a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                              className="fill-current">
@@ -58,9 +58,10 @@ export default function Footer() {
                 </div>
             </nav>    
 
-            <Image width={190} height={190} src="/assets/drawings/drawing-3.png" alt="drawing-3" className="absolute bottom-4 md:bottom-0 right-0"/>  
-            <Image width={130} height={130} src="/assets/figures/cube-rounded.svg" alt="cube-rounded" className="rotate-12 absolute top-3 md:top-32 mix-blend-luminosity right-3 md:right-96 z-0 opacity-70"/>         
-            <Image width={70} height={70} src="/assets/figures/bubble.svg" alt="bubble" className="absolute top-32 mix-blend-luminosity right-3 md:left-72 z-0 opacity-70"/>
+            <Image width={190} height={190} src="/assets/drawings/drawing-3.png" alt="drawing-3" className="absolute bottom-4 md:bottom-0 right-0 z-10 hidden md:block"/>  
+            <Image width={130} height={130} src="/assets/figures/cube-rounded.svg" alt="cube-rounded" className="rotate-12 absolute top-3 md:top-32 mix-blend-luminosity right-3 md:right-96 z-10 opacity-70"/>         
+            <Image width={70} height={70} src="/assets/figures/bubble.svg" alt="bubble" className="absolute top-32 mix-blend-luminosity right-3 md:left-72 z-10 opacity-70"/>
+            <Image width={700} height={400} src="/assets/bgs/footer-bg-right.png" alt="footer-bg-right" className="absolute bottom-0 right-0 rounded-br-2xl z-0"/>
         </footer>
     );
 }
