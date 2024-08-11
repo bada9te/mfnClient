@@ -1,5 +1,9 @@
 "use client"
-import { useEffect } from "react";
+import { Battle as TBattle, Post as TPost } from "@/utils/graphql-requests/generated/schema";
+import { useEffect, useState } from "react";
+import Post from "../post/post";
+import formatNumber from "@/utils/common-functions/formatNumber";
+import getTimeLeft from "@/utils/common-functions/getTimeLeft";
 
 const DollarIcon = () => {
     return (
@@ -25,62 +29,66 @@ const VoteIcon = () => {
 
 
 export default function Battle(props: {
-    post1: React.ReactNode,
-    post2: React.ReactNode,
-
-
+    battleData: TBattle,
 }) {
-    const {post1, post2} = props;
+    const {battleData} = props;
+    const [timeLeft, setTimeLeft] = useState<{h:number, m:number, s:number}>({h:0, m:0, s:0});
 
     useEffect(() => {
+        if (battleData._id) {
+            const tId = setInterval(() => {
+                setTimeLeft(getTimeLeft(+new Date(+battleData.willFinishAt) - new Date().getTime()));
+            }, 3000);
 
-    }, [])
+            return () => {
+                clearInterval(tId);
+            }
+        }
+    }, [battleData]);
 
     return (
-        <div className="card bg-base-300 w-full">
-            <div className="card-body justify-center items-center flex flex-col gap-5 p-4">
-                <h2 className="card-title">Post1 vs Post2</h2>
+        <div className="card bg-base-300 w-full glass bg-opacity-50 shadow-2xl">
+            <div className="card-body justify-center items-center flex flex-col gap-5 p-4 pt-5">
+                <h2 className="card-title">{battleData.post1?.title} vs {battleData.post2?.title}</h2>
                 <div className="flex flex-wrap gap-5 justify-center items-center flex-col lg:flex-row">
                     {/* left */}
                     <div className="flex flex-nowrap flex-col">
-                        {post1}
-                        <div className="p-2 join join-vertical mt-3">
-                            <button className="btn btn-sm btn-accent w-full join-item"><VoteIcon/>Vote for Post1</button>
-                            <button className="btn btn-sm btn-secondary w-full join-item"><DollarIcon/>Supervote</button>
+                        <Post data={battleData.post1 as TPost}/>
+                        <div className="py-2 join join-vertical mt-3">
+                            <button className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
+                            <button className="btn btn-sm btn-primary text-white glass w-full join-item"><DollarIcon/>Supervote</button>
                         </div>
                     </div>
-
                     {/* mid */}
-                    <div className="stats stats-vertical shadow-md w-64">
+                    <div className="stats stats-vertical shadow-md w-64 glass bg-opacity-50 bg-base-300">
                         <div className="stat place-items-center">
                             <div className="stat-title">Votes</div>
-                            <div className="stat-value">31K</div>
-                            <div className="stat-desc">For Post1</div>
+                            <div className="stat-value">{formatNumber(battleData.post1Score)}</div>
+                            <div className="stat-desc">For {battleData.post1?.title}</div>
                         </div>
                         <div className="stat place-items-center">
                             <span className="countdown font-mono text-2xl">
-                                {
-                                    /*
-                                        <span style={{"--value":10}}></span>h
-                                        <span style={{"--value":24}}></span>m
-                                        <span style={{"--value":12}}></span>s
-                                    */
-                                }
+                                {/* @ts-ignore */}
+                                <span style={{"--value":timeLeft.h}}></span>h:
+                                {/* @ts-ignore */}
+                                <span style={{"--value":timeLeft.m}}></span>m:
+                                {/* @ts-ignore */}
+                                <span style={{"--value":timeLeft.s}}></span>s
                             </span>
                         </div>
                         <div className="stat place-items-center">
                             <div className="stat-title">Votes</div>
-                            <div className="stat-value">31K</div>
-                            <div className="stat-desc">For Post2</div>
+                            <div className="stat-value">{formatNumber(battleData.post2Score)}</div>
+                            <div className="stat-desc">For {battleData.post2?.title}</div>
                         </div>
                     </div>
 
                     {/* right */}
                     <div className="flex flex-nowrap flex-col">
-                        {post2}
-                        <div className="p-2 join join-vertical mt-3">
-                            <button className="btn btn-sm btn-accent w-full join-item"><VoteIcon/>Vote for Post1</button>
-                            <button className="btn btn-sm btn-secondary w-full join-item"><DollarIcon/>Supervote</button>
+                        <Post data={battleData.post2 as TPost}/>
+                        <div className="py-2 join join-vertical mt-3">
+                            <button className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post2?.title}</button>
+                            <button className="btn btn-sm btn-primary text-white glass w-full join-item"><DollarIcon/>Supervote</button>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ const PostPlaceholder = (props: {
     userIsOwner: boolean;
 }) => {
     return (
-        <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center glass relative">
+        <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center glass relative rounded-2xl">
             <div className="flex flex-col h-full justify-center items-center">
                 <InfoImage text="Select yout track" image="/assets/icons/logo_clear.png"/>
             </div>
@@ -56,14 +56,13 @@ export default function BattleForm() {
                 }
             }
         }).then(_ => {
+            reset();
+            setPost1(null);
+            setPost2(null);
             enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
             revalidatePathAction('/battles/in-progress', 'page');
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
-        }).finally(() => {
-            reset();
-            setPost1(null);
-            setPost2(null);
         });
     }
 

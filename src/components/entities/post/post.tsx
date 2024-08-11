@@ -154,7 +154,7 @@ export default function Post(props: {
                 
             </div>
             <figure><img
-                className="max-h-[180px] w-full min-w-80"
+                className="max-h-[180px] w-full min-w-80 min-h-[180px]"
                 src={data?.image ? `${envCfg.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
                 alt="image"/>
             </figure>
@@ -221,7 +221,7 @@ export default function Post(props: {
                         </button>
                 }
             </div>
-            <div className="bg-base-300 absolute bottom-[-32px] flex items-center">
+            <div className="bg-base-300 absolute bottom-[-40px] flex items-center rounded-2xl">
                 {
                     handleSelect &&
                     <button className="btn btn-sm btn-success w-fit glass text-white bg-green-900" onClick={() => handleSelect(data)}>

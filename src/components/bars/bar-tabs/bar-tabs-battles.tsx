@@ -8,7 +8,7 @@ export default function BarTabsBattles(props: {
     const { activeTab } = props;
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full bg-base-300 glass m-0 mt-3 md:mx-4 md:mt-4 rounded-xl">
+        <div role="tablist" className="tabs tabs-boxed w-full bg-base-300 glass m-0 mx-2 mt-4 md:mx-4 md:mt-4 rounded-xl">
             <Link
                 href={"/battles/in-progress/1"}
                 role="tab" 

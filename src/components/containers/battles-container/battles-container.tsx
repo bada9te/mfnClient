@@ -1,7 +1,6 @@
 "use client"
 import Battle from "@/components/entities/battle/battle";
-import Post from "@/components/entities/post/post";
-import {Post as TPost, useBattlesByStatusSuspenseQuery} from "@/utils/graphql-requests/generated/schema";
+import {Battle as TBattle, Post as TPost, useBattlesByStatusSuspenseQuery} from "@/utils/graphql-requests/generated/schema";
 import InfoImage from "@/components/common/info-image/info-image";
 import Pagination from "@/components/common/pagination/pagination";
 import {TPaginationProps} from "@/types/pagination";
@@ -24,7 +23,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
                 <>
                     {
                         data?.battlesByStatus.battles?.map((battle, key) => {
-                            return (<Battle key={key} post1={<Post data={battle.post1 as TPost}/>} post2={<Post data={battle.post2 as TPost}/>}/>)
+                            return (<Battle key={key} battleData={battle as TBattle}/>)
                         })
                     }
                     <Pagination page={page} maxPage={Number(data?.battlesByStatus.count as number / limit)}/>

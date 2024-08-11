@@ -8,8 +8,8 @@ export default function HeroWrapper(props: {
     const { children, title, description } = props;
 
     return (
-        <div className="w-full p-0 md:px-4 md:pt-4">
-            <div className={`hero min-h-screen  md:rounded-2xl shadow-2xl text-white bg-base-300 relative bg-opacity-80`}>
+        <div className="w-full p-2 md:px-4 md:pt-4">
+            <div className={`hero min-h-screen  md:rounded-2xl shadow-2xl text-white bg-base-300 relative bg-opacity-80 rounded-2xl overflow-hidden`}>
                 <div className="flex w-full flex-col items-center justify-center py-10 relative">
                     <img src="/assets/figures/pyramid.svg" alt="pyramid" className="z-0 absolute top-0 left-72 lg:left-96 w-48 opacity-70"/>
                     <img src="/assets/figures/triangle.svg" alt="triangle" className="z-0 absolute top-0 right-72 lg:right-96 w-24 rotate-90 opacity-70"/>
