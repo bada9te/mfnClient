@@ -35,7 +35,21 @@ const config: Config = {
   ],
   daisyui: {
     themes: [
-      "dracula"
+      {
+        dark: {
+          ...require("daisyui/src/theming/themes")["dim"],
+          ".btn-primary:hover": {
+            "background-color": "#1ba39c",
+            "border-color": "#1ba39c",
+          },
+          ".btn": {
+            "border-radius": "14px",
+          },
+          ".divider-primary::before, .divider-primary::after": {
+            "background-color": "#1ba39c",
+          },
+        }
+      }
     ],
   },
 };

@@ -40,7 +40,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <div className="card overflow-hidden bg-base-300 shadow-xl glass">
+        <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <form className="card-body pulsar-shadow m-1 glass bg-base-300 shadow-2xl text-white rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="divider divider-primary">Register</div>
                 <div className="form-control relative">

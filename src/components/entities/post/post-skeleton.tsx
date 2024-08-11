@@ -10,7 +10,7 @@ export default function PostSkeleton(props: {
             </div>
             
 
-            <div className="skeleton w-80 h-[180px] rounded-none"></div>
+            <div className="skeleton w-80 h-[180px] rounded-2xl"></div>
 
             <div className="card-body text-start p-5">
                 <h2 className="card-title">
@@ -22,7 +22,7 @@ export default function PostSkeleton(props: {
             <div className="p-2">
                 <div className="skeleton h-[130px] w-full shadow-md"></div>
             </div>
-            <div className="skeleton h-14 w-full shadow-md rounded-xl"></div>
+            <div className="skeleton h-14 w-full shadow-md rounded-2xl"></div>
         </div>
     );
 }

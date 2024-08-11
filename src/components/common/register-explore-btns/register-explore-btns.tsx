@@ -6,7 +6,7 @@ export default function RegisterExploreBtns() {
     const user = useAppSelector(state => state.user.user);
 
     return (
-        <div className="join w-full max-w-52 flex justify-center z-20">
+        <div className="join w-fit max-w-36 flex justify-center z-20">
             {
                 !user?._id &&
                 <button className="join-item btn btn-primary glass text-white w-full">

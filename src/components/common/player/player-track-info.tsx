@@ -74,7 +74,7 @@ export default function PlayerTrackInfo() {
             <div className="flex flex-row mb-3 gap-3">
                 <img 
                     src={data?.post?.image ? `${envCfg.serverBase}/files/${data.post.image}` : 'assets/bgs/profileDefaultBG.png'}
-                    className="shadow-2xl max-h-[180px] h-[180px] max-w-80 rounded-xl" 
+                    className="shadow-2xl max-h-[180px] h-[180px] max-w-80 rounded-2xl" 
                 />
                 <div className="flex flex-col gap-1">
                     <div className="stats glass thin-scrollbar h-36">

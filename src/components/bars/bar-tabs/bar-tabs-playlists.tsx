@@ -8,20 +8,20 @@ export default function BarTabsPlaylists(props: {
     const { activeTab } = props;
 
     return (
-        <div role="tablist" className="tabs tabs-boxed w-full bg-base-300 glass m-0 mt-3 md:mx-4 md:mt-4 rounded-none md:rounded-xl">
+        <div role="tablist" className="tabs tabs-boxed w-full bg-base-300 glass m-0 mt-3 md:mx-4 md:mt-4 rounded-2xl md:rounded-2xl">
             <Link 
                 role="tab" 
-                className={`tab ${activeTab === "explore" && "glass bg-[#bd93f9]"}`}
+                className={`tab ${activeTab === "explore" && "glass bg-[#1ba39c] text-white"}`}
                 href="/playlists/explore/1"
             >Explore</Link>
             <Link 
                 role="tab" 
-                className={`tab ${activeTab === "my-playlists" && "glass bg-[#bd93f9]"}`}
+                className={`tab ${activeTab === "my-playlists" && "glass bg-[#1ba39c] text-white"}`}
                 href="/playlists/my-playlists/1"
             >My playlists</Link>
             <Link 
                 role="tab" 
-                className={`tab ${activeTab === "create" && "glass bg-[#bd93f9]"}`} 
+                className={`tab ${activeTab === "create" && "glass bg-[#1ba39c] text-white"}`} 
                 href="/playlists/create"
             >Create new</Link>
         </div>

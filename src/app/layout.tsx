@@ -50,7 +50,7 @@ export default function RootLayout({
                                     <div className="card w-full  my-14 md:my-[72px]">
                                         <div className="card-body p-0 gap-0">
                                             <NextTopLoader 
-                                                color="#bd93f9"
+                                                color="#fff"
                                                 initialPosition={0.18}
                                                 crawlSpeed={200}
                                                 height={5}
