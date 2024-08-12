@@ -96,7 +96,7 @@ export default function Page() {
                 <Image width={1920} height={600}
                     src={"/assets/bgs/block-top-bg.png"}
                     alt="block-top-bg"
-                    className="absolute top-0 w-full rounded-t-2xl"
+                    className="absolute top-0 w-full rounded-t-2xl blur-sm"
                 />
             </div>
 
@@ -109,7 +109,7 @@ export default function Page() {
                 <Image width={800} height={800}
                     src={"/assets/bgs/block-top-right-bg.png"}
                     alt="block-top-bg"
-                    className="absolute top-0 right-0 w-48 md:w-[600px] z-0 rounded-tr-2xl"
+                    className="absolute top-0 right-0 w-48 md:w-[600px] z-0 rounded-tr-2xl blur-sm"
                 />
                 <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit mb-48 lg:mb-56">
                     {
@@ -134,7 +134,7 @@ export default function Page() {
                 <Image width={800} height={800}
                     src={"/assets/bgs/block-top-right-bg.png"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 left-0 w-48 md:w-[600px] z-0 rotate-180 rounded-tr-2xl"
+                    className="absolute bottom-0 left-0 w-48 md:w-[600px] z-0 rotate-180 rounded-tr-2xl blur-sm"
                 />
             </div>
 
@@ -162,7 +162,7 @@ export default function Page() {
                 <Image width={1920} height={600}
                     src={"/assets/bgs/block-top-bg.png"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 w-full rotate-180 z-0 rounded-t-2xl"
+                    className="absolute bottom-0 w-full rotate-180 z-0 rounded-t-2xl blur-sm"
                 />
             </div>
             <div className="m-2 md:mx-4 md:mt-4">
