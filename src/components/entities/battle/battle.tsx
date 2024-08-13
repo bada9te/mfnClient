@@ -1,9 +1,11 @@
 "use client"
-import { Battle as TBattle, Post as TPost } from "@/utils/graphql-requests/generated/schema";
+import { Battle as TBattle, Post as TPost, useBattleMakeVoteMutation } from "@/utils/graphql-requests/generated/schema";
 import { useEffect, useState } from "react";
 import Post from "../post/post";
 import formatNumber from "@/utils/common-functions/formatNumber";
 import getTimeLeft from "@/utils/common-functions/getTimeLeft";
+import { useSnackbar } from "notistack";
+import { useAppSelector } from "@/lib/redux/store";
 
 const DollarIcon = () => {
     return (
@@ -33,6 +35,10 @@ export default function Battle(props: {
 }) {
     const {battleData} = props;
     const [timeLeft, setTimeLeft] = useState<{h:number, m:number, s:number}>({h:0, m:0, s:0});
+    const {enqueueSnackbar} = useSnackbar();
+    const user = useAppSelector(state => state.user.user);
+
+    const [makeVote] = useBattleMakeVoteMutation();
 
     useEffect(() => {
         if (battleData._id) {
@@ -46,6 +52,24 @@ export default function Battle(props: {
         }
     }, [battleData]);
 
+    const makeBattleVote = (voteCount: number, postNScore: "post1Score" | "post2Score") => {
+        enqueueSnackbar("Voting...", {autoHideDuration: 1500});
+        makeVote({
+            variables: {
+                input: {
+                    voteCount,
+                    voterId: user?._id as string,
+                    battleId: battleData._id,
+                    postNScore,
+                }
+            }
+        }).then(_ => {
+            enqueueSnackbar("Vote submitted", {autoHideDuration: 2500, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", {autoHideDuration: 4000, variant: 'error'});
+        });
+    }
+
     return (
         <div className="card bg-base-300 w-full glass bg-opacity-50 shadow-2xl">
             <div className="card-body justify-center items-center flex flex-col gap-5 p-4 pt-5">
@@ -55,7 +79,9 @@ export default function Battle(props: {
                     <div className="flex flex-nowrap flex-col">
                         <Post data={battleData.post1 as TPost}/>
                         <div className="py-2 join join-vertical mt-3">
-                            <button className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
+                            <button 
+                                onClick={() => makeBattleVote(1, "post1Score")}
+                                className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
                             <button className="btn btn-sm btn-primary text-white glass w-full join-item"><DollarIcon/>Supervote</button>
                         </div>
                     </div>
@@ -87,7 +113,9 @@ export default function Battle(props: {
                     <div className="flex flex-nowrap flex-col">
                         <Post data={battleData.post2 as TPost}/>
                         <div className="py-2 join join-vertical mt-3">
-                            <button className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post2?.title}</button>
+                            <button
+                                onClick={() => makeBattleVote(1, "post2Score")}
+                                className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post2?.title}</button>
                             <button className="btn btn-sm btn-primary text-white glass w-full join-item"><DollarIcon/>Supervote</button>
                         </div>
                     </div>
