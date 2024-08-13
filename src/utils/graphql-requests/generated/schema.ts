@@ -738,7 +738,9 @@ export type UserAchievementsData = {
   __typename?: 'UserAchievementsData';
   achievements?: Maybe<Array<Scalars['Int']['output']>>;
   maxLikesByPost: Scalars['Int']['output'];
+  maxLikesPostId?: Maybe<Scalars['String']['output']>;
   maxSavesByPost: Scalars['Int']['output'];
+  maxSavesPostId?: Maybe<Scalars['String']['output']>;
   postCount: Scalars['Int']['output'];
   totalLikes: Scalars['Int']['output'];
   totalSaves: Scalars['Int']['output'];
@@ -1070,7 +1072,7 @@ export type UserAchievementsDataQueryVariables = Exact<{
 }>;
 
 
-export type UserAchievementsDataQuery = { __typename?: 'Query', userAchievementsData?: { __typename?: 'UserAchievementsData', achievements?: Array<number> | null, totalLikes: number, totalSaves: number, maxLikesByPost: number, maxSavesByPost: number, postCount: number } | null };
+export type UserAchievementsDataQuery = { __typename?: 'Query', userAchievementsData?: { __typename?: 'UserAchievementsData', achievements?: Array<number> | null, totalLikes: number, totalSaves: number, maxLikesByPost: number, maxSavesByPost: number, postCount: number, maxLikesPostId?: string | null, maxSavesPostId?: string | null } | null };
 
 export type UserCreateMutationVariables = Exact<{
   input: AddUserInput;
@@ -2967,6 +2969,8 @@ export const UserAchievementsDataDocument = gql`
     maxLikesByPost
     maxSavesByPost
     postCount
+    maxLikesPostId
+    maxSavesPostId
   }
 }
     `;

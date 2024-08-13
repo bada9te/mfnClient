@@ -75,6 +75,8 @@ export const USER_ACHIEVEMENTS_DATA_QUERY = gql`
             maxLikesByPost
             maxSavesByPost
             postCount
+            maxLikesPostId
+            maxSavesPostId
         }
     }
 `;

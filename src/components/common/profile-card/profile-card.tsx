@@ -58,12 +58,12 @@ export default function ProfileCard(props: {
         }
     });
 
-    const { data: achievementsData } = useUserAchievementsDataSuspenseQuery({
+    const { data: achievementsData, refetch: refetchAchievementsQuery } = useUserAchievementsDataSuspenseQuery({
         variables: {
             _id: userId,
         }
     });
-
+    
     const { data: achievementsCountData } = useAchievemenmtsCountSuspenseQuery();
 
     const handlePicture = (file: File | null, imageType: "avatar" | "background") => {
@@ -229,6 +229,7 @@ export default function ProfileCard(props: {
                         userId={userId} 
                         data={achievementsData.userAchievementsData as UserAchievementsData}
                         achievementsTotal={achievementsCountData.achievemenmtsCount as number}
+                        refreshStatistics={() => refetchAchievementsQuery({ _id: userId })}
                     />
                 </div>
             </div>

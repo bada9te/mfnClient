@@ -1,13 +1,14 @@
 "use client"
 import { useAppSelector } from "@/lib/redux/store";
-import { UserAchievementsData } from "@/utils/graphql-requests/generated/schema";
+import { UserAchievementsData, UserAchievementsDataQuery } from "@/utils/graphql-requests/generated/schema";
+import { ApolloQueryResult } from "@apollo/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const RefreshBtn = () => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 absolute right-3 top-3 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 absolute left-3 top-3 cursor-pointer">
             <path fillRule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z" clipRule="evenodd" />
         </svg>
     );
@@ -17,8 +18,9 @@ export default function ProfileProgress(props: {
     userId: string;
     data: UserAchievementsData;
     achievementsTotal: number;
+    refreshStatistics: () => Promise<ApolloQueryResult<UserAchievementsDataQuery>>;
 }) {
-    const {userId, data, achievementsTotal} = props;
+    const {userId, data, achievementsTotal, refreshStatistics} = props;
     const user = useAppSelector(state => state.user.user);
     const [isMounted, setIsMounted] = useState(false);
 
@@ -34,7 +36,7 @@ export default function ProfileProgress(props: {
         <div className="stats stats-vertical lg:stats-horizontal glass max-w-full rounded-2xl text-white">
             <div className="stat relative">
                 <div className="stat-title text-center">Current level</div>
-                <RefreshBtn/>
+                <span onClick={refreshStatistics}><RefreshBtn/></span>
                 <div className="stat-value flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/trophy.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
                     3
@@ -48,7 +50,6 @@ export default function ProfileProgress(props: {
 
             <div className="stat relative">
                 <div className="stat-title text-center">Challanges completed</div>
-                <RefreshBtn/>
                 <div className="stat-value text-center">{data.achievements?.length || 0}/{achievementsTotal || '...'}</div>
                 <div className="stat-actions">
                     <Link href={`/profile/${user?._id === userId ? "me" : userId}/achievements`} className="btn btn-sm btn-primary glass text-white w-full">List of challenges</Link>
@@ -57,7 +58,6 @@ export default function ProfileProgress(props: {
 
             <div className="stat relative">
                 <div className="stat-title text-center">Total likes</div>
-                <RefreshBtn/>
                 <div className="stat-value text-center flex items-center justify-center">
                     {data.totalLikes}
                     <svg xmlns="http://www.w3.org/2000/svg" 
@@ -66,13 +66,12 @@ export default function ProfileProgress(props: {
                     </svg>
                 </div>
                 <div className="stat-actions">
-                    <button className="btn btn-sm btn-primary glass text-white w-full">Most liked tracks</button>
+                    <Link href={`/post/${data.maxLikesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">Most liked track</Link>
                 </div>
             </div>
 
             <div className="stat relative">
                 <div className="stat-title text-center">Total saves</div>
-                <RefreshBtn/>
                 <div className="stat-value text-center flex items-center justify-center">
                     {data.totalSaves}
                     <svg xmlns="http://www.w3.org/2000/svg" 
@@ -81,7 +80,7 @@ export default function ProfileProgress(props: {
                     </svg>
                 </div>
                 <div className="stat-actions">
-                    <button className="btn btn-sm btn-primary glass text-white w-full">Most saved tracks</button>
+                    <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">Most saved track</Link>
                 </div>
             </div>
         </div>
