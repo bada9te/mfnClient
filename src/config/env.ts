@@ -27,6 +27,8 @@ const envCfg = {
     facebookAuthURL:    process.env.NEXT_PUBLIC_FACEBOOK_AUTH,
     facebookConnectURL: process.env.NEXT_PUBLIC_FACEBOOK_CONNECT,
     facebookUnlinkURL:  process.env.NEXT_PUBLIC_FACEBOOK_UNLINK,
+
+    mfnContractAddress: process.env.NEXT_PUBLIC_MFN_CONTRACT_ADDRESS,
 }
 
 
