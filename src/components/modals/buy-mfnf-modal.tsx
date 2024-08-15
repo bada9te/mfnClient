@@ -1,15 +1,26 @@
 "use client"
-import { setTab } from "@/lib/redux/slices/bottom-bar";
-import { useAppDispatch } from "@/lib/redux/store";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import TokenAmountCard from "../common/token-amount-card/token-amount-card";
+import { useReadContract, useWriteContract } from "wagmi";
+import { waitForTransactionReceipt } from "@wagmi/core";
+import envCfg from "@/config/env";
+import mfnAbi from "@/config/MusicFromNothingAbi.json";
+import { useSnackbar } from "notistack";
+import { config } from "@/config/wagmi";
 
 
 export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
     const ref = useRef<HTMLDialogElement | null>(null);
-    const dispatch = useAppDispatch();
     const [isMounted, setIsMounted] = useState(false);
     const [selectedPack, setSelectedPack] = useState<null | number>(null);
+    const { enqueueSnackbar } = useSnackbar();
+
+    const { writeContractAsync } = useWriteContract();
+    const { data: tokenPrice } = useReadContract({
+        address: envCfg.mfnContractAddress as `0x${string}`,
+        abi: mfnAbi,
+        functionName: "tokenPrice",
+    });
 
     useEffect(() => {
         setIsMounted(true);
@@ -19,13 +30,31 @@ export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
         ref.current && ref.current.showModal();
     }
 
-    const onClose = () => {
-        dispatch(setTab(null));
+    const handleClose = () => {
+        ref.current && ref.current.close();
     }
 
-    const submitPurchase = () => {
-
-    }
+    const submitPurchase = useCallback(() => {
+        enqueueSnackbar("Pending...", {autoHideDuration: 1500});
+        if (tokenPrice && selectedPack) {
+            writeContractAsync({
+                address: envCfg.mfnContractAddress as `0x${string}`,
+                abi: mfnAbi,
+                functionName: "buyTokens",
+                value: BigInt(selectedPack * Number(tokenPrice))
+            }).then(hash => {
+                handleClose();
+                waitForTransactionReceipt(config, {
+                    hash,
+                    confirmations: 2,
+                }).then(_ => {
+                    enqueueSnackbar("Success, tokens will be added to your MFNT balance soon.", {autoHideDuration: 3000, variant: 'success'});
+                }).catch(_ => {
+                    enqueueSnackbar("Sth went wrong, pls try again later", {autoHideDuration: 4000, variant: 'error'});
+                });
+            });
+        }
+    }, [tokenPrice, selectedPack]);
 
     if (!isMounted) {
         return;

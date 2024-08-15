@@ -14,7 +14,3 @@ export const contractMakeBattleVote = async(battleId: string, amount: number) =>
 
     return data;
 }
-
-export const fetchBalance = async(userAddress: string) => {
-    //const data = await readContract(config, {});
-}

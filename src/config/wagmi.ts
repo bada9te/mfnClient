@@ -1,5 +1,5 @@
-import { createConfig, http } from 'wagmi'
-import { bscTestnet } from 'wagmi/chains'
+import { http, createConfig } from '@wagmi/core'
+import { bscTestnet } from '@wagmi/core/chains'
 
 
 export const config = createConfig({

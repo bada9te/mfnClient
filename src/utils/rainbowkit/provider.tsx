@@ -7,7 +7,7 @@ import {
 
 import {
     bscTestnet,
-} from 'wagmi/chains';
+} from '@wagmi/core/chains';
 import {
     QueryClientProvider,
     QueryClient,

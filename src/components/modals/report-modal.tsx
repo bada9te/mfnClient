@@ -55,7 +55,7 @@ export default function ReportModal({button, postId}: {button: React.ReactElemen
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button>close</button>
                 </form>
-                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col min-h-80">
+                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col min-h-80 glass">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -69,7 +69,7 @@ export default function ReportModal({button, postId}: {button: React.ReactElemen
                                 reportReasons.map((i, key) => {
                                     return (
                                         <div className="form-control w-full" key={key}>
-                                            <div className="card glass w-full">
+                                            <div className="card glass w-full bg-base-300">
                                                 <label className="label cursor-pointer flex flex-row m-4">
                                                     <p className="flex flex-col gap-2">
                                                         <span className="card-title">
