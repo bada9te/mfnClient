@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ProfileButton from "@/components/common/profile-button/profile-button";
-//bg-[#3c8d88]
+
 export default function AppBar() {
     return (
         <div className="navbar fixed top-0 z-50 text-white glass bg-base-300 row-auto bg-opacity-50">
