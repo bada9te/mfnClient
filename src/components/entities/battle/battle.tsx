@@ -6,6 +6,8 @@ import formatNumber from "@/utils/common-functions/formatNumber";
 import getTimeLeft from "@/utils/common-functions/getTimeLeft";
 import { useSnackbar } from "notistack";
 import { useAppSelector } from "@/lib/redux/store";
+import { useWriteContract } from "wagmi";
+import SelectAmountOfMFNTokens from "@/components/modals/select-amount-of-tokens-modal";
 
 const DollarIcon = () => {
     return (
@@ -39,6 +41,7 @@ export default function Battle(props: {
     const user = useAppSelector(state => state.user.user);
 
     const [makeVote] = useBattleMakeVoteMutation();
+    const { writeContractAsync } = useWriteContract();
 
     useEffect(() => {
         if (battleData._id) {
@@ -68,6 +71,10 @@ export default function Battle(props: {
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {autoHideDuration: 4000, variant: 'error'});
         });
+    }
+
+    const makeBattleVoteWithMFNT = (amount: number) => {
+        console.log(amount);
     }
 
     return (
@@ -116,7 +123,10 @@ export default function Battle(props: {
                             <button
                                 onClick={() => makeBattleVote(1, "post2Score")}
                                 className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post2?.title}</button>
-                            <button className="btn btn-sm btn-primary text-white glass w-full join-item"><DollarIcon/>Supervote</button>
+                                <SelectAmountOfMFNTokens 
+                                    button={<button className="btn btn-sm btn-primary text-white glass w-full join-item"><DollarIcon/>Supervote</button>}
+                                    handleClose={makeBattleVoteWithMFNT}
+                                />
                         </div>
                     </div>
                 </div>

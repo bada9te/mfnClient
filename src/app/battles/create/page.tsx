@@ -10,7 +10,8 @@ export default function Battles() {
                 fullWidth
                 bgStyles="bg-[url('/assets/bgs/newBattleFormBG.png')] bg-right"
                 title="New Battle"
-                description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
+                description="Ready to take the stage and lead the next great music showdown? Our Create New page is your gateway to launching a fresh and exciting music battle. Whether you're an artist, a promoter, or just a passionate music fan, this is where your vision for the ultimate music competition begins!"
+                disableMarginsOnMobile
             >
                 <div className="card shadow-2xl bg-base-300">
                     <BattleForm/>

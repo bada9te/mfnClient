@@ -1,8 +1,9 @@
-export default function TokenAmountCard({index, amount, handleSelect}: {index: number, amount: number, handleSelect: () => void,}) {
+export default function TokenAmountCard({index, amount, handleSelect, title}: {index: number, amount: number, handleSelect: () => void, title: string}) {
     return (
         <div className="card bg-base-300 w-full shadow-xl glass">
             <div className="card-body p-2">
                 <h2 className="card-title">Pack #{index}</h2>
+                <div className="glass w-fit p-2 block md:absolute right-0 top-0 bg-[#378a8d] rounded-2xl md:rounded-none md:rounded-tr-2xl md:rounded-bl-2xl shadow-xl text-white font-bold">{title}</div>
                 <p>This pack includes <span className="text-lg font-bold text-[#23d7d3]">{amount} MFNT</span> tokens</p>
                 <div className="card-actions justify-end">
                     <button className="btn btn-primary btn-sm glass text-white w-full" onClick={handleSelect}>

@@ -12,7 +12,8 @@ export default function Battles({params}: {params: {page: number}}) {
             <BarTabsBattles activeTab="finished"/>
             <HeroWrapper
                 title="Finished battles"
-                description="Battles finished description"
+                description="Relive the excitement and magic of our previous music battles! Each event has been a spectacular showcase of talent, creativity, and pure musical energy. Whether you missed out or just want to revisit the unforgettable moments, this page is your gateway to the highlights of past showdowns."
+                disableMarginsOnMobile
             >
                 <div className="card w-full">
                     <div className="flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center w-full gap-10">

@@ -7,6 +7,7 @@ import envCfg from "@/config/env";
 import mfnAbi from "@/config/MusicFromNothingAbi.json";
 import { useSnackbar } from "notistack";
 import { config } from "@/config/wagmi";
+import mfntTokensData from "@/config/mfnt-tokens";
 
 
 export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
@@ -80,8 +81,16 @@ export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
                     <div className="overflow-y-auto mt-5 no-scrollbar py-4">
                         <div className="flex gap-4 flex-wrap justify-center items-center">
                             {
-                                [100, 250, 600, 1200, 1800, 3000].map((i, key) => {
-                                    return <TokenAmountCard index={key + 1} amount={i} key={key} handleSelect={() => setSelectedPack(i)}/>
+                                mfntTokensData.map((i, key) => {
+                                    return (
+                                        <TokenAmountCard 
+                                            title={i.title} 
+                                            index={key + 1} 
+                                            amount={i.amount} 
+                                            key={key} 
+                                            handleSelect={() => setSelectedPack(i.amount)}
+                                        />
+                                    )
                                 })
                             }
                         </div>

@@ -13,7 +13,8 @@ export default function Battles({params}: {params: {page: number}}) {
             <BarTabsBattles activeTab="in-progress"/>
             <HeroWrapper
                 title="Battles in progress"
-                description="Battles in progress description"
+                description="Dive into the heart of musical competition with our Ultimate Music Showdown, where aspiring artists and seasoned performers come together for an unforgettable battle of talent. This is the stage where rhythm meets rivalry, and only the most exceptional will rise to the top!"
+                disableMarginsOnMobile
             >
                 <div className="card w-full">
                     <div className="flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center w-full gap-10">
