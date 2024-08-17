@@ -23,7 +23,7 @@ export default function Notifications({params}: {params: { page: number }}) {
                             query={NOTIFICATIONS_QUERY}
                             variables={{
                                 receiverId: receiver, 
-                                checked: false, 
+                                checked: true, 
                                 offset: (params.page - 1) * 12, 
                                 limit: 12
                             }}
@@ -33,7 +33,7 @@ export default function Notifications({params}: {params: { page: number }}) {
                                     page={params.page}
                                     offset={(params.page - 1) * 12}
                                     limit={12}
-                                    checked={false}
+                                    checked={true}
                                     receiverId={receiver}
                                 />
                             </Suspense>
