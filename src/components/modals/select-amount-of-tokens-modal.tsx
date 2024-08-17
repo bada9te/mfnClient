@@ -2,21 +2,25 @@
 import React, { useEffect, useRef, useState } from "react";
 
 
-export default function SelectAmountOfMFNTokens({button, type, handleClose}: {button: React.ReactElement, type: string, handleClose: (amount: number, type: string) => void;}) {
+export default function SelectAmountOfMFNTokens({button, type, handleClose}: {
+    button: React.ReactElement, 
+    type: "post1Score" | "post2Score", 
+    handleClose: (amount: number, type: "post1Score" | "post2Score") => void;
+}) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const [isMounted, setIsMounted] = useState(false);
     const [enteredAmount, setEnteredAmount] = useState(0);
 
     useEffect(() => {
         setIsMounted(true);
-    }, [])
+    }, []);
 
     const handleOpen = () => {
         ref.current && ref.current.showModal();
     }
 
     const handleCloseModal = () => {
-
+        handleClose(enteredAmount, type);
         ref.current && ref.current.close();
     }
 
@@ -48,8 +52,9 @@ export default function SelectAmountOfMFNTokens({button, type, handleClose}: {bu
                             </label>
                             <input 
                                 type="number" 
-                                placeholder="Title" 
+                                placeholder="MFNT amount" 
                                 className="input input-bordered shadow-md glass placeholder:text-gray-200 text-white" 
+                                onChange={(e) => setEnteredAmount(Number(e.target.value))}
                             />
                         </div>
                     </div>

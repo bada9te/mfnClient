@@ -6,8 +6,12 @@ import formatNumber from "@/utils/common-functions/formatNumber";
 import getTimeLeft from "@/utils/common-functions/getTimeLeft";
 import { useSnackbar } from "notistack";
 import { useAppSelector } from "@/lib/redux/store";
-import { useAccount, useWriteContract } from "wagmi";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
+import { waitForTransactionReceipt } from "@wagmi/core";
 import SelectAmountOfMFNTokens from "@/components/modals/select-amount-of-tokens-modal";
+import envCfg from "@/config/env";
+import mfnAbi from "@/config/MusicFromNothingAbi.json";
+import { config } from "@/config/wagmi";
 
 const DollarIcon = () => {
     return (
@@ -41,7 +45,14 @@ export default function Battle(props: {
     const user = useAppSelector(state => state.user.user);
 
     const [makeVote] = useBattleMakeVoteMutation();
+    const account = useAccount();
     const { writeContractAsync } = useWriteContract();
+    const { data: userBalance } = useReadContract({
+        address: envCfg.mfnContractAddress as `0x${string}`,
+        abi: mfnAbi,
+        functionName: "balanceOf",
+        args: [account.address]
+    });
     const { address } = useAccount();
 
     useEffect(() => {
@@ -74,8 +85,29 @@ export default function Battle(props: {
         });
     }
 
-    const makeBattleVoteWithMFNT = (amount: number, type: string) => {
-        console.log(amount, type);
+    const makeBattleVoteWithMFNT = (amount: number, type:  "post1Score" | "post2Score") => {
+        if (Number(userBalance) < amount) {
+            enqueueSnackbar("Not enough MFNT", {autoHideDuration: 4000, variant: 'error'});
+            return;
+        }
+        enqueueSnackbar("Warning, your balance will be lost if you will not follow the flow in the right way! Process will start in 10 seconds.", { autoHideDuration: 10000, variant: 'warning' });
+
+        setTimeout(() => {
+            writeContractAsync({
+                address: envCfg.mfnContractAddress as `0x${string}`,
+                abi: mfnAbi,
+                functionName: "vote",
+                args: [battleData._id, amount]
+            }).then(async hash => {
+                await waitForTransactionReceipt(config, {
+                    hash,
+                    confirmations: 2
+                });
+                makeBattleVote(amount, type);
+            }).catch(_ => {
+                enqueueSnackbar("Execution error, pls try again later", {autoHideDuration: 4000, variant: 'error'});
+            });
+        }, 10000);   
     }
 
     return (
