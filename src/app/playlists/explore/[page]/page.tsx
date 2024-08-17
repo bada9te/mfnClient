@@ -13,7 +13,7 @@ export default function Playlists({params}: {params: {page: number}}) {
             <BarTabsPlaylists activeTab="explore"/>
             <HeroWrapper
                 title="Explore playlists"
-                description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
+                description="Discover a diverse collection of curated playlists perfect for any occasion. From upbeat anthems to relaxing tunes, explore the ultimate selection of public music mixes that cater to every taste and mood."
             >
 
                 <div className="card w-full">

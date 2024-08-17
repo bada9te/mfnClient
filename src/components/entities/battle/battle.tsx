@@ -6,7 +6,7 @@ import formatNumber from "@/utils/common-functions/formatNumber";
 import getTimeLeft from "@/utils/common-functions/getTimeLeft";
 import { useSnackbar } from "notistack";
 import { useAppSelector } from "@/lib/redux/store";
-import { useWriteContract } from "wagmi";
+import { useAccount, useWriteContract } from "wagmi";
 import SelectAmountOfMFNTokens from "@/components/modals/select-amount-of-tokens-modal";
 
 const DollarIcon = () => {
@@ -42,6 +42,7 @@ export default function Battle(props: {
 
     const [makeVote] = useBattleMakeVoteMutation();
     const { writeContractAsync } = useWriteContract();
+    const { address } = useAccount();
 
     useEffect(() => {
         if (battleData._id) {
@@ -73,8 +74,8 @@ export default function Battle(props: {
         });
     }
 
-    const makeBattleVoteWithMFNT = (amount: number) => {
-        console.log(amount);
+    const makeBattleVoteWithMFNT = (amount: number, type: string) => {
+        console.log(amount, type);
     }
 
     return (
@@ -85,11 +86,15 @@ export default function Battle(props: {
                     {/* left */}
                     <div className="flex flex-nowrap flex-col">
                         <Post data={battleData.post1 as TPost}/>
-                        <div className="py-2 join join-vertical mt-3">
+                        <div className="py-2 flex flex-col gap-2 mt-3">
                             <button 
                                 onClick={() => makeBattleVote(1, "post1Score")}
                                 className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
-                            <button className="btn btn-sm btn-primary text-white glass w-full join-item"><DollarIcon/>Supervote</button>
+                            <SelectAmountOfMFNTokens 
+                                type="post1Score"
+                                button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
+                                handleClose={makeBattleVoteWithMFNT}
+                            />
                         </div>
                     </div>
                     {/* mid */}
@@ -119,12 +124,13 @@ export default function Battle(props: {
                     {/* right */}
                     <div className="flex flex-nowrap flex-col">
                         <Post data={battleData.post2 as TPost}/>
-                        <div className="py-2 join join-vertical mt-3">
+                        <div className="py-2 flex flex-col gap-2 mt-3">
                             <button
                                 onClick={() => makeBattleVote(1, "post2Score")}
                                 className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post2?.title}</button>
                                 <SelectAmountOfMFNTokens 
-                                    button={<button className="btn btn-sm btn-primary text-white glass w-full join-item"><DollarIcon/>Supervote</button>}
+                                    type="post2Score"
+                                    button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
                                     handleClose={makeBattleVoteWithMFNT}
                                 />
                         </div>

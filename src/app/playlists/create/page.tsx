@@ -9,7 +9,7 @@ export default function Playlists() {
             <HeroWrapperForm
                 bgStyles="bg-[url('/assets/bgs/newPlaylistFormBG.png')] bg-right"
                 title="New playlist"
-                description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
+                description="Start building your ideal playlist by setting up a new collection. Organize and name your playlist to match any mood or event, and add tracks later when you're ready. It’s the ultimate way to plan your music journey and ensure you have the perfect soundtrack at your fingertips."
             >
                 <PlaylistForm/>
             </HeroWrapperForm>

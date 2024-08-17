@@ -1,13 +1,11 @@
 "use client"
 import React, { useEffect, useRef, useState } from "react";
-import TokenAmountCard from "../common/token-amount-card/token-amount-card";
-import mfntTokensData from "@/config/mfnt-tokens";
 
 
-export default function SelectAmountOfMFNTokens({button}: {button: React.ReactElement, handleClose: (amount: number) => void;}) {
+export default function SelectAmountOfMFNTokens({button, type, handleClose}: {button: React.ReactElement, type: string, handleClose: (amount: number, type: string) => void;}) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const [isMounted, setIsMounted] = useState(false);
-    const [selectedPack, setSelectedPack] = useState<null | number>(null);
+    const [enteredAmount, setEnteredAmount] = useState(0);
 
     useEffect(() => {
         setIsMounted(true);
@@ -17,7 +15,8 @@ export default function SelectAmountOfMFNTokens({button}: {button: React.ReactEl
         ref.current && ref.current.showModal();
     }
 
-    const handleClose = () => {
+    const handleCloseModal = () => {
+
         ref.current && ref.current.close();
     }
 
@@ -30,8 +29,8 @@ export default function SelectAmountOfMFNTokens({button}: {button: React.ReactEl
             {React.cloneElement(button, {
                 onClick: handleOpen,
             })}
-            <dialog ref={ref} className="modal w-full">
-                <form method="dialog" className="modal-backdrop w-[100vw]">
+            <dialog ref={ref} className="modal w-full no-scrollbar">
+                <form method="dialog" className="modal-backdrop w-[100vw] no-scrollbar">
                     <button>close</button>
                 </form>
                 <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col glass">
@@ -40,18 +39,27 @@ export default function SelectAmountOfMFNTokens({button}: {button: React.ReactEl
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
 
-                    <h4 className="font-bold text-lg">Select amount of the MFNT tokens</h4>
+                    <h4 className="font-bold text-lg">Amount of the MFNT tokens</h4>
 
-                    <div className="overflow-y-auto mt-5 no-scrollbar py-4">
-                        DATA
+                    <div className="py-1">
+                        <div className="form-control px-4 md:px-0">
+                            <label className="label">
+                                <span className="label-text">MFNT Amount</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                placeholder="Title" 
+                                className="input input-bordered shadow-md glass placeholder:text-gray-200 text-white" 
+                            />
+                        </div>
                     </div>
 
                     <div className="modal-action z-50"> 
-                        <button className="btn btn-primary w-full glass text-white" onClick={handleClose} disabled={selectedPack === null}>
+                        <button className="btn btn-primary w-full glass text-white" onClick={handleCloseModal} disabled={enteredAmount === 0}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path d="M2.273 5.625A4.483 4.483 0 0 1 5.25 4.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0 0 18.75 3H5.25a3 3 0 0 0-2.977 2.625ZM2.273 8.625A4.483 4.483 0 0 1 5.25 7.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0 0 18.75 6H5.25a3 3 0 0 0-2.977 2.625ZM5.25 9a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3H15a.75.75 0 0 0-.75.75 2.25 2.25 0 0 1-4.5 0A.75.75 0 0 0 9 9H5.25Z" />
                             </svg>
-                            Select<span className="font-bold text-[#23d7d3]">{selectedPack} MFNT</span>tokens
+                            Select<span className="font-bold text-[#23d7d3]">{enteredAmount} MFNT</span>tokens
                         </button>
                     </div>
                 </div>
