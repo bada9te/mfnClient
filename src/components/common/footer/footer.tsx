@@ -61,7 +61,7 @@ export default function Footer() {
             <Image width={190} height={190} src="/assets/drawings/drawing-3.png" alt="drawing-3" className="absolute bottom-4 md:bottom-0 right-0 z-10 hidden md:block"/>  
             <Image width={130} height={130} src="/assets/figures/cube-rounded.svg" alt="cube-rounded" className="rotate-12 absolute top-3 md:top-32 mix-blend-luminosity right-3 md:right-96 z-10 opacity-70"/>         
             <Image width={70} height={70} src="/assets/figures/bubble.svg" alt="bubble" className="absolute top-32 mix-blend-luminosity right-3 md:left-72 z-10 opacity-70"/>
-            <Image width={700} height={400} src="/assets/bgs/footer-bg-right.png" alt="footer-bg-right" className="absolute bottom-0 right-0 rounded-br-2xl z-0 blur-sm"/>
+            <Image width={700} height={400} src="/assets/bgs/footer-bg-right.png" alt="footer-bg-right" className="absolute bottom-0 right-0 rounded-br-2xl z-0"/>
         </footer>
     );
 }

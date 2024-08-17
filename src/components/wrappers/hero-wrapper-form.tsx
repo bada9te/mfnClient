@@ -11,7 +11,7 @@ export default function HeroWrapperForm(props: {
     const { bgStyles, children, title, description, fullWidth, disableMarginsOnMobile } = props;
 
     return (
-        <div className="w-full p-2 pt-4 md:px-4 md:pt-4">
+        <div className="w-full p-2 pt-6 md:px-4 md:pt-4">
             <div className={`hero min-h-screen h-fit shadow-2xl relative rounded-2xl overflow-hidden`}>
                 <div className="hero-overlay rounded-2xl bg-base-300 bg-opacity-80"></div>
                 <div className="flex w-full flex-col items-center justify-center py-10 z-10 overflow-hidden">
@@ -41,6 +41,13 @@ export default function HeroWrapperForm(props: {
                     src="/assets/drawings/drawing-5.png" 
                     alt="drawing-2" 
                     className="w-48 md:w-64 lg:w-96 absolute bottom-0 left-0 rounded-2xl"
+                    width={500}
+                    height={500}
+                />
+                <Image
+                    src="/assets/bgs/block-top-right-bg.png"
+                    alt="bg-top-right"
+                    className="w-48 md:w-[600px] absolute top-0 right-0"
                     width={500}
                     height={500}
                 />

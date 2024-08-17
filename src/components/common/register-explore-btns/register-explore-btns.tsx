@@ -1,9 +1,19 @@
 "use client"
 
 import { useAppSelector } from "@/lib/redux/store";
+import { useEffect, useState } from "react";
 
 export default function RegisterExploreBtns() {
     const user = useAppSelector(state => state.user.user);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return;
+    }
 
     return (
         <div className="join w-fit max-w-36 flex justify-center z-20">

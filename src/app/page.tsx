@@ -76,7 +76,7 @@ const cardsData2 = [
 export default function Page() {
     return (
         <>
-            <div className="flex flex-col items-center text-white py-10 m-2 mt-4 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 relative">
+            <div className="flex flex-col items-center text-white py-10 m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80">
                 <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-10 relative">
                     <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
                     <p className="text-4xl md:text-5xl font-bold text-center flex-0 px-5 z-20">Welcome to Music From Nothing</p>
@@ -96,7 +96,7 @@ export default function Page() {
                 <Image width={1920} height={600}
                     src={"/assets/bgs/block-top-bg.png"}
                     alt="block-top-bg"
-                    className="absolute top-0 w-full rounded-t-2xl blur-sm"
+                    className="absolute bottom-0 w-full rounded-t-2xl rotate-180"
                 />
             </div>
 
@@ -109,7 +109,7 @@ export default function Page() {
                 <Image width={800} height={800}
                     src={"/assets/bgs/block-top-right-bg.png"}
                     alt="block-top-bg"
-                    className="absolute top-0 right-0 w-48 md:w-[600px] z-0 rounded-tr-2xl blur-sm"
+                    className="absolute top-0 right-0 w-48 md:w-[600px] z-0 rounded-tr-2xl"
                 />
                 <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit mb-48 lg:mb-56">
                     {
@@ -129,16 +129,21 @@ export default function Page() {
                 <Image width={400} height={400}  
                     src="/assets/drawings/drawing-4.png" 
                     alt="drawing-4" 
-                    className="absolute bottom-0 w-52 lg:w-96 right-16 lg:right-28"
+                    className="absolute bottom-0 w-52 lg:w-96 right-16 lg:right-28 z-10"
                 />
                 <Image width={800} height={800}
                     src={"/assets/bgs/block-top-right-bg.png"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 left-0 w-48 md:w-[600px] z-0 rotate-180 rounded-tr-2xl blur-sm"
+                    className="absolute bottom-0 left-0 w-48 md:w-[600px] z-0 rotate-180 rounded-tr-2xl"
                 />
             </div>
 
             <div className="flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80">
+                <Image width={1920} height={600}
+                    src={"/assets/bgs/block-top-bg.png"}
+                    alt="block-top-bg"
+                    className="absolute top-0 w-full rounded-t-2xl"
+                />
                 <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">Purpose of the platform</p>
                 <p className="text-center pb-16 font-bold text-xl md:text-xl z-10">and author information</p>
                 <Image width={300} height={300}  src="/assets/figures/waterball.svg" alt="waterball" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
@@ -162,7 +167,7 @@ export default function Page() {
                 <Image width={1920} height={600}
                     src={"/assets/bgs/block-top-bg.png"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 w-full rotate-180 z-0 rounded-t-2xl blur-sm"
+                    className="absolute bottom-0 w-full rotate-180 z-0 rounded-t-2xl "
                 />
             </div>
             <div className="m-2 md:mx-4 md:mt-4">

@@ -47,7 +47,7 @@ export default function RootLayout({
 
                                 {/* Main content area */}
                                 <div className="col-auto flex-1 no-scrollbar">
-                                    <div className="card w-full  my-14 md:my-[72px]">
+                                    <div className="card w-full my-14 md:my-[72px]">
                                         <div className="card-body p-0 gap-0">
                                             <NextTopLoader 
                                                 color="#fff"
