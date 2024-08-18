@@ -1,5 +1,9 @@
 
 import RegisterExploreBtns from "@/components/common/register-explore-btns/register-explore-btns";
+import DotPattern from "@/components/magicui-components/dot-pattern";
+import FlickeringGrid from "@/components/magicui-components/flickering-grid";
+import Ripple from "@/components/magicui-components/ripple";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 const cardsData1 = [
@@ -76,9 +80,12 @@ const cardsData2 = [
 export default function Page() {
     return (
         <>
-            <div className="flex flex-col items-center text-white py-10 m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80">
-                <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-10 relative">
+            <div className="flex flex-col items-center text-white m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 min-h-[600px]">
+                <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg">
                     <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
+                    <Ripple />
+                </div>
+                <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-32 absolute bottom-0">
                     <p className="text-4xl md:text-5xl font-bold text-center flex-0 px-5 z-20">Welcome to Music From Nothing</p>
                     <p className="text-xl text-center h-fit z-20">The music-streaming platform</p>
                     <RegisterExploreBtns/>
@@ -101,6 +108,11 @@ export default function Page() {
             </div>
 
             <div className="flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl bg-opacity-80">
+                <DotPattern
+                    className={cn(
+                    "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
+                    )}
+                />
                 <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl px-5 z-20">Compose, arrange</p>
                 <p className="text-center pb-20 font-bold text-xl md:text-xl z-20 px-5">and produce your unique tunes effortlessly with our web app.</p>
                 <Image width={300} height={300}  src="/assets/figures/cube.svg" alt="cube" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-10 opacity-70"/>
@@ -115,7 +127,7 @@ export default function Page() {
                     {
                         cardsData1.map((data, key) => {
                             return (
-                                <div key={key} className="card animated-box overflow-hidden bg-base-300 w-80 h-64 md:w-96 shadow-xl rounded-2xl z-0 bg-opacity-40">
+                                <div key={key} className="card animated-box overflow-hidden bg-base-300 w-80 h-64 md:w-96 shadow-xl rounded-2xl z-10 bg-opacity-40">
                                     <div className="card-body bg-base-300 hover:bg-[#1ba39c] z-50 m-1 rounded-2xl glass">
                                         <Image width={100} height={100}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
                                         <h2 className="card-title mt-2">{data.title}</h2>
@@ -139,6 +151,11 @@ export default function Page() {
             </div>
 
             <div className="flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80">
+                <DotPattern
+                    className={cn(
+                    "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
+                    )}
+                />
                 <Image width={1920} height={600}
                     src={"/assets/bgs/block-top-bg.png"}
                     alt="block-top-bg"

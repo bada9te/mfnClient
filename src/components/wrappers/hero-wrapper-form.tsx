@@ -1,4 +1,6 @@
 import Image from "next/image";
+import DotPattern from "../magicui-components/dot-pattern";
+import { cn } from "@/lib/utils";
 
 export default function HeroWrapperForm(props: {
     children: React.ReactNode;
@@ -13,6 +15,11 @@ export default function HeroWrapperForm(props: {
     return (
         <div className="w-full p-2 pt-6 md:px-4 md:pt-4">
             <div className={`hero min-h-screen h-fit shadow-2xl relative rounded-2xl overflow-hidden`}>
+                <DotPattern
+                    className={cn(
+                    "[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]",
+                    )}
+                />
                 <div className="hero-overlay rounded-2xl bg-base-300 bg-opacity-80"></div>
                 <div className="flex w-full flex-col items-center justify-center py-10 z-10 overflow-hidden">
                     <h1 className="mb-5 text-5xl font-bold text-white text-center z-20">{title}</h1>

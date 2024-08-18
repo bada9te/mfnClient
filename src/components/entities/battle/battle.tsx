@@ -119,14 +119,19 @@ export default function Battle(props: {
                     <div className="flex flex-nowrap flex-col">
                         <Post data={battleData.post1 as TPost}/>
                         <div className="py-2 flex flex-col gap-2 mt-3">
-                            <button 
-                                onClick={() => makeBattleVote(1, "post1Score")}
-                                className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
-                            <SelectAmountOfMFNTokens 
-                                type="post1Score"
-                                button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
-                                handleClose={makeBattleVoteWithMFNT}
-                            />
+                            {
+                                !battleData.finished &&
+                                <>
+                                    <button 
+                                        onClick={() => makeBattleVote(1, "post1Score")}
+                                        className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
+                                    <SelectAmountOfMFNTokens 
+                                        type="post1Score"
+                                        button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
+                                        handleClose={makeBattleVoteWithMFNT}
+                                    />
+                                </>
+                            }
                         </div>
                     </div>
                     {/* mid */}
@@ -137,14 +142,36 @@ export default function Battle(props: {
                             <div className="stat-desc">For {battleData.post1?.title}</div>
                         </div>
                         <div className="stat place-items-center">
-                            <span className="countdown font-mono text-2xl">
-                                {/* @ts-ignore */}
-                                <span style={{"--value":timeLeft.h}}></span>h:
-                                {/* @ts-ignore */}
-                                <span style={{"--value":timeLeft.m}}></span>m:
-                                {/* @ts-ignore */}
-                                <span style={{"--value":timeLeft.s}}></span>s
-                            </span>
+                            {
+                                battleData.finished
+                                ?
+                                <span className="font-mono text-2xl">
+                                    {
+                                        (() => {
+                                            if ((battleData.winner?._id == battleData.post1?._id) || (battleData.post1Score > battleData.post2Score)) {
+                                                return battleData.post1?.title;
+                                            }
+
+                                            if ((battleData.winner?._id == battleData.post2?._id) || (battleData.post1Score < battleData.post2Score)) {
+                                                return battleData.post2?.title;
+                                            }
+
+                                            if (battleData.post1Score === battleData.post2Score) {
+                                                return "Draw";
+                                            }
+                                        })()
+                                    }
+                                </span>
+                                :
+                                <span className="countdown font-mono text-2xl">
+                                    {/* @ts-ignore */}
+                                    <span style={{"--value":timeLeft.h}}></span>h:
+                                    {/* @ts-ignore */}
+                                    <span style={{"--value":timeLeft.m}}></span>m:
+                                    {/* @ts-ignore */}
+                                    <span style={{"--value":timeLeft.s}}></span>s
+                                </span>
+                            }
                         </div>
                         <div className="stat place-items-center">
                             <div className="stat-title">Votes</div>
@@ -157,14 +184,23 @@ export default function Battle(props: {
                     <div className="flex flex-nowrap flex-col">
                         <Post data={battleData.post2 as TPost}/>
                         <div className="py-2 flex flex-col gap-2 mt-3">
-                            <button
-                                onClick={() => makeBattleVote(1, "post2Score")}
-                                className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post2?.title}</button>
-                                <SelectAmountOfMFNTokens 
-                                    type="post2Score"
-                                    button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
-                                    handleClose={makeBattleVoteWithMFNT}
-                                />
+                            {
+                                !battleData.finished &&
+                                <>
+                                    <button
+                                        onClick={() => makeBattleVote(1, "post2Score")}
+                                        className="btn btn-sm btn-primary text-white glass w-full join-item"
+                                    >
+                                            <VoteIcon/>Vote for {battleData.post2?.title}
+                                    </button>
+                                    <SelectAmountOfMFNTokens 
+                                        type="post2Score"
+                                        button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
+                                        handleClose={makeBattleVoteWithMFNT}
+                                    />
+                                </>
+                            }
+                            
                         </div>
                     </div>
                 </div>

@@ -76,7 +76,7 @@ body {
       box-shadow: none;
     }
     50% {
-      box-shadow: 0 0 20px #1b8e9d; /* Tailwind’s shadow-2xl equivalent */
+      box-shadow: 0 0 20px #24d8d2; /* Tailwind’s shadow-2xl equivalent */
     }
     100% {
       box-shadow: none;
