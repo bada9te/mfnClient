@@ -12,12 +12,12 @@ export default function Footer() {
                 )}
             />
             <aside>
-                <Image className="rounded-full" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
-                <p>Music From Nothing<br/>Providing reliable tech since 1992</p>
+                <Image className="rounded-full z-10" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
+                <p>Music From Nothing<br/>2024</p>
             </aside>
             <nav>
                 <h6 className="footer-title">Quick nav</h6>
-                <div className="flex flex-wrap gap-4 max-w-72">
+                <div className="flex flex-wrap gap-4 max-w-72 z-20">
                     <Link href={"/"} className="hover:text-white">
                         Home
                     </Link>
