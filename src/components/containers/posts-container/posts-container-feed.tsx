@@ -4,12 +4,13 @@ import Post from "@/components/entities/post/post";
 import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
+import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 
 
 export default function PostsContainerFeed(props: TPaginationProps) {
     const { offset, limit, page } = props;
 
-    const { data } = usePostsSuspenseQuery({
+    const { data, refetch } = usePostsSuspenseQuery({
         variables: {
             offset, limit
         }
@@ -17,6 +18,7 @@ export default function PostsContainerFeed(props: TPaginationProps) {
 
     return (
         <>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit})}/>
             {
                 data?.posts.posts?.length
                 ?

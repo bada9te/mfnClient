@@ -4,12 +4,13 @@ import {Battle as TBattle, Post as TPost, useBattlesByStatusSuspenseQuery} from 
 import InfoImage from "@/components/common/info-image/info-image";
 import Pagination from "@/components/common/pagination/pagination";
 import {TPaginationProps} from "@/types/pagination";
+import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 
 
 export default function BattlesContainer(props: TPaginationProps & { finished: boolean; }) {
     const {offset, limit, finished, page} = props;
 
-    const { data } = useBattlesByStatusSuspenseQuery({
+    const { data, refetch } = useBattlesByStatusSuspenseQuery({
         variables: {
             offset, limit, finished
         },
@@ -17,6 +18,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
 
     return (
         <>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, finished})}/>
             {
                 data?.battlesByStatus.battles?.length
                 ?

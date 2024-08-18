@@ -4,11 +4,12 @@ import {Notification as TNotification, useNotificationsSuspenseQuery} from "@/ut
 import InfoImage from "@/components/common/info-image/info-image";
 import Notification from "@/components/entities/notification/notification";
 import Pagination from "@/components/common/pagination/pagination";
+import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 
 export default function NotificationsContainer(props: TPaginationProps & { checked: boolean, receiverId: string }) {
     const { page, offset, limit, checked, receiverId } = props;
 
-    const { data } = useNotificationsSuspenseQuery({
+    const { data, refetch } = useNotificationsSuspenseQuery({
         variables: {
             checked,
             receiverId: receiverId,
@@ -19,6 +20,12 @@ export default function NotificationsContainer(props: TPaginationProps & { check
 
     return (
         <>
+            <RefreshButtonPerContainer handleClick={() => refetch({
+                checked,
+                receiverId: receiverId,
+                offset,
+                limit
+            })}/>
             {
                 data?.notifications?.notifications?.length
                 ?

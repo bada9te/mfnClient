@@ -5,13 +5,14 @@ import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
 import { useAppSelector } from "@/lib/redux/store";
+import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 
 
 export default function PostsContainerProfile(props: TPaginationProps & { profileId: string }) {
     const { offset, limit, page, profileId, paginationHidden } = props;
     const user = useAppSelector(state => state.user.user);
 
-    const { data } = usePostsByOwnerSuspenseQuery({
+    const { data, refetch } = usePostsByOwnerSuspenseQuery({
         variables: {
             offset, limit, owner: profileId
         }
@@ -19,6 +20,7 @@ export default function PostsContainerProfile(props: TPaginationProps & { profil
 
     return (
         <>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, owner: profileId})}/>
             {
                 data?.postsByOwner.posts?.length
                 ?

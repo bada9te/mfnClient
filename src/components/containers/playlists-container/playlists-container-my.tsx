@@ -8,11 +8,12 @@ import {
 import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
+import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 
 export default function PlaylistsContainerOwner(props: TPaginationProps & { ownerId: string }) {
     const { offset, limit, page, ownerId } = props;
 
-    const { data } = usePlaylistsByOwnerIdSuspenseQuery({
+    const { data, refetch } = usePlaylistsByOwnerIdSuspenseQuery({
         variables: {
             offset, limit, owner: ownerId
         }
@@ -20,8 +21,9 @@ export default function PlaylistsContainerOwner(props: TPaginationProps & { owne
 
     return (
         <>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, owner: ownerId})}/>
             {
-                data?.playlistsByOwnerId.playlists?.length
+                data?.playlistsByOwnerId?.playlists?.length
                 ?
                 <>
                     {

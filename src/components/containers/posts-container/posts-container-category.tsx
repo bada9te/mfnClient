@@ -4,11 +4,12 @@ import {usePostsByCategorySuspenseQuery, Post as TPost} from "@/utils/graphql-re
 import Post from "@/components/entities/post/post";
 import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/common/info-image/info-image";
+import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 
 export default function PostsContainerCategory(props: TPaginationProps & {category: string}) {
     const { page, offset, limit, category } = props;
 
-    const { data } = usePostsByCategorySuspenseQuery({
+    const { data, refetch } = usePostsByCategorySuspenseQuery({
         variables: {
             offset, limit, category
         }
@@ -16,6 +17,7 @@ export default function PostsContainerCategory(props: TPaginationProps & {catego
 
     return (
         <>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, category})}/>
             {
                 data?.postsByCategory.posts?.length
                 ?

@@ -8,12 +8,13 @@ import {
 import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
+import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 
 
 export default function PlaylistsContainerPublic(props: TPaginationProps) {
     const { offset, limit, page } = props;
 
-    const { data } = usePlaylistsPublicAvailableSuspenseQuery({
+    const { data, refetch } = usePlaylistsPublicAvailableSuspenseQuery({
         variables: {
             offset, limit
         }
@@ -21,6 +22,7 @@ export default function PlaylistsContainerPublic(props: TPaginationProps) {
 
     return (
         <>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit})}/>
             {
                 data?.playlistsPublicAvailable.playlists?.length
                 ?
