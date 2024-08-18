@@ -2,6 +2,7 @@
 import RegisterExploreBtns from "@/components/common/register-explore-btns/register-explore-btns";
 import DotPattern from "@/components/magicui-components/dot-pattern";
 import FlickeringGrid from "@/components/magicui-components/flickering-grid";
+import { MarqueeDemo } from "@/components/magicui-components/landing-cards-scrolling";
 import Ripple from "@/components/magicui-components/ripple";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -80,6 +81,7 @@ const cardsData2 = [
 export default function Page() {
     return (
         <>
+            {/* ONE */}
             <div className="flex flex-col items-center text-white m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 min-h-[600px]">
                 <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg">
                     <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
@@ -107,6 +109,7 @@ export default function Page() {
                 />
             </div>
 
+            {/* TWO */}
             <div className="flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl bg-opacity-80">
                 <DotPattern
                     className={cn(
@@ -150,7 +153,15 @@ export default function Page() {
                 />
             </div>
 
-            <div className="flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80">
+
+            {/* THREE */}
+            <div className="py-10 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl bg-opacity-80 max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-352px)]">
+                <MarqueeDemo/>
+            </div>
+
+            
+            {/* FOUR */}
+            <div className="flex flex-col items-center text-white py-20 md:py-40 lg:py-56 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -163,7 +174,7 @@ export default function Page() {
                 />
                 <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">Purpose of the platform</p>
                 <p className="text-center pb-16 font-bold text-xl md:text-xl z-10">and author information</p>
-                <Image width={300} height={300}  src="/assets/figures/waterball.svg" alt="waterball" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
+                <Image width={300} height={300}  src="/assets/figures/waterball.svg" alt="waterball" className="w-32 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
                 <Image width={300} height={300}  src="/assets/figures/water.svg" alt="water" className="z-10 w-48 absolute bottom-3 mix-blend-luminosity right-3 opacity-70"/>
                 <Image width={300} height={300}  src="/assets/figures/chip.svg" alt="chip" className="w-64 absolute bottom-72 mix-blend-luminosity left-5 z-0 opacity-70"/>
                 <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit z-10 mb-20">
@@ -187,6 +198,9 @@ export default function Page() {
                     className="absolute bottom-0 w-full rotate-180 z-0 rounded-t-2xl "
                 />
             </div>
+
+
+            {/* FIVE */}
             <div className="m-2 md:mx-4 md:mt-4">
                 <Image src={"/assets/bgs/people2.png"} alt="people" width={1920} height={640} className="rounded-2xl shadow-2xl"/>
             </div>
