@@ -12,7 +12,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
     const { data } = useBattlesByStatusSuspenseQuery({
         variables: {
             offset, limit, finished
-        }
+        },
     });
 
     return (

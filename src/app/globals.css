@@ -18,7 +18,7 @@
 }
 
 html {
-  background: linear-gradient(300deg, #1ba39c, #000000, #363636, #1ba39c);
+  background: linear-gradient(300deg, #1ba39c, #646464, #363636, #1ba39c);
   background-size: 240% 240%;
   animation: gradient-animation 60s ease infinite;
   transition: all .1s;
