@@ -91,7 +91,7 @@ export default function ProfileCard(props: {
         if (image) {
             enqueueSnackbar("Updating profile...", { autoHideDuration: 1500 });
             const blob = await fetch(image).then(a => a.blob()) as IBlob;
-            const {data} = await httpSaveFile(blobToFile(blob, `${new Date().getTime().toString()}${file?.name || ""}`));
+            const {data} = await httpSaveFile(blobToFile(blob, `${new Date().getTime().toString()}${file?.name || ""}`), "image");
 
             switch (imageType) {
                 case "avatar":

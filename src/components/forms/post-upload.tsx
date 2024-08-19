@@ -55,12 +55,12 @@ export default function PostUploadForm() {
         let uploadedAudioName, uploadedImageName;
 
         await Promise.all([
-            httpSaveFile(data?.audio?.[0] as File).then(({data}) => {
+            httpSaveFile(data?.audio?.[0] as File, "audio").then(({data}) => {
                 uploadedAudioName = data.data.filename;
             }).catch(err => {
                 enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
             }),
-            httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`)).then(({data}) => {
+            httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`), "image").then(({data}) => {
                 uploadedImageName = data.data.filename;
             }).catch(err => {
                 enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });

@@ -4,12 +4,16 @@ import envCfg from "@/config/env";
 
 const SERVER_BASE = envCfg.serverBase;
 
-const httpSaveFile = async(file: File | IBlob) => {
+const httpSaveFile = async(file: File | IBlob, type: "image" | "audio") => {
     const data = new FormData();
     console.log(file)
     data.append("file", file, file.name);
 
-    return await axios.post(`${SERVER_BASE}/files/upload`, data);
+    if (type === "image") {
+        return await axios.post(`${SERVER_BASE}/files/upload-image`, data);
+    } else {
+        return await axios.post(`${SERVER_BASE}/files/upload-audio`, data);
+    }
 }
 
 const httpSaveFileMultiple = async(files: (File | IBlob)[]) => {
