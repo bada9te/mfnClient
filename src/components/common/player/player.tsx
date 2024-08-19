@@ -101,24 +101,23 @@ export default function AudioPlayer() {
   }
 
   return (
-      <div className='full-control w-full'>
-          <ReactHowler
-              src={[`http://localhost:8000/files/${post.audio}`]}
-              playing={isPlaying}
-              onLoad={handleOnLoad}
-              onPlay={handleOnPlay}
-              onEnd={handleOnEnd}
-              loop={isLoop}
-              mute={isMute}
-              volume={playerVol}
-              ref={playerRef}
-              usingWebAudio={true}
-          />
-  
+      <div className='full-control w-full'>  
           {
             post
             ?
             <>
+              <ReactHowler
+                src={[`http://localhost:8000/files/${post.audio}`]}
+                playing={isPlaying}
+                onLoad={handleOnLoad}
+                onPlay={handleOnPlay}
+                onEnd={handleOnEnd}
+                loop={isLoop}
+                mute={isMute}
+                volume={playerVol}
+                ref={playerRef}
+                usingWebAudio={true}
+              />
               <PlayerTrackInfo/>
               <div className="divider divider-primary my-8 md:my-3">
                 <div className='join w-full flex flex-row justify-center'>
