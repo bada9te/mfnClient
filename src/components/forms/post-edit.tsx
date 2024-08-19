@@ -96,7 +96,7 @@ export default function PostEditForm(props: {posId: string}) {
     const onSubmitAudio: SubmitHandler<InputsAudio> = async(data) => {
         enqueueSnackbar("Uploading...", {autoHideDuration: 1500});
         let uploadedAudioName;
-        await httpSaveFile(data.audio[0]).then(data => {
+        await httpSaveFile(data.audio[0], "audio").then(data => {
             uploadedAudioName = data.data.filename;
         })
         updatePost("audio", String(uploadedAudioName));
@@ -106,7 +106,7 @@ export default function PostEditForm(props: {posId: string}) {
     const onSubmitImage: SubmitHandler<InputsImage> = async(data) => {
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
         let uploadedImageName;
-        await httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`)).then(({data}) => {
+        await httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`), "image").then(({data}) => {
             uploadedImageName = data.data.filename;
         }).catch(err => {
             enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
