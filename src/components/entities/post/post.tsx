@@ -155,6 +155,7 @@ export default function Post(props: {
                 
             </div>
             <figure><Image
+                width={400} height={400}
                 className="max-h-[180px] w-full min-w-80 min-h-[180px]"
                 src={data?.image ? `${envCfg.serverFilesEndpoint}/images/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
                 alt="image"/>

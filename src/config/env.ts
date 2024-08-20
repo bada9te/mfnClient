@@ -29,6 +29,7 @@ const envCfg = {
     facebookUnlinkURL:  process.env.NEXT_PUBLIC_FACEBOOK_UNLINK,
 
     mfnContractAddress: process.env.NEXT_PUBLIC_MFN_CONTRACT_ADDRESS,
+    mfnTokenAddress: process.env.NEXT_PUBLIC_MFN_TOKEN_ADDRESS,
 }
 
 

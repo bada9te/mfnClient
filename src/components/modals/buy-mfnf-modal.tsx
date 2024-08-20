@@ -8,6 +8,7 @@ import mfnAbi from "@/config/MusicFromNothingAbi.json";
 import { useSnackbar } from "notistack";
 import { config } from "@/config/wagmi";
 import mfntTokensData from "@/config/mfnt-tokens";
+import { formatEther, parseEther } from "viem";
 
 
 export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
@@ -38,6 +39,7 @@ export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
     const submitPurchase = useCallback(() => {
         enqueueSnackbar("Pending...", {autoHideDuration: 1500});
         if (tokenPrice && selectedPack) {
+            console.log(envCfg.mfnContractAddress)
             writeContractAsync({
                 address: envCfg.mfnContractAddress as `0x${string}`,
                 abi: mfnAbi,
@@ -53,7 +55,7 @@ export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
                 }).catch(_ => {
                     enqueueSnackbar("Sth went wrong, pls try again later", {autoHideDuration: 4000, variant: 'error'});
                 });
-            });
+            }).catch(console.log);
         }
     }, [tokenPrice, selectedPack]);
 

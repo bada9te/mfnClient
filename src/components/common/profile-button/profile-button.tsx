@@ -7,8 +7,8 @@ import {useCallback, useEffect, useState} from "react";
 import { useAccount, useReadContract } from "wagmi";
 import Link from "next/link";
 import envCfg from "@/config/env";
-import mfnAbi from "@/config/MusicFromNothingAbi.json";
-import formatNumber from "@/utils/common-functions/formatNumber";
+import mfnTokenAbi from "@/config/MFNTokenAbi.json";
+//import formatNumber from "@/utils/common-functions/formatNumber";
 import { useSnackbar } from "notistack";
 import BuyMFNTModal from "@/components/modals/buy-mfnf-modal";
 import Image from "next/image";
@@ -23,8 +23,8 @@ export default function ProfileButton() {
     const { enqueueSnackbar } = useSnackbar();
     const account = useAccount();
     const {data: userBalance, refetch: refetchUserBalance} = useReadContract({
-        address: envCfg.mfnContractAddress as `0x${string}`,
-        abi: mfnAbi,
+        address: envCfg.mfnTokenAddress as `0x${string}`,
+        abi: mfnTokenAbi,
         functionName: "balanceOf",
         args: [account.address]
     });
