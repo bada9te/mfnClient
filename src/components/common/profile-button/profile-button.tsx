@@ -11,6 +11,7 @@ import mfnAbi from "@/config/MusicFromNothingAbi.json";
 import formatNumber from "@/utils/common-functions/formatNumber";
 import { useSnackbar } from "notistack";
 import BuyMFNTModal from "@/components/modals/buy-mfnf-modal";
+import Image from "next/image";
 
 export default function ProfileButton() {
     // Use the useSelector hook to get the user state from redux store
@@ -80,12 +81,12 @@ export default function ProfileButton() {
                         <div className="hidden md:block">
                             <p className="font-bold text-lg">{user?._id ? user.nick : "Login"}</p>
                         </div>
-                        <img
-                            width={40}
-                            height={40}
+                        <Image
+                            width={45}
+                            height={45}
                             alt="Avatar"
                             className="rounded-full"
-                            src={user?.avatar?.length ? `${envCfg.serverBase}/files/${user.avatar}` : "/assets/icons/logo_clear.png"}
+                            src={user?.avatar?.length ? `${envCfg.serverFilesEndpoint}/images/${user.avatar}` : "/assets/icons/logo_clear.png"}
                         />
                     </div>
                 </div>

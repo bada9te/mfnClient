@@ -14,6 +14,7 @@ import Link from "next/link";
 import envCfg from "@/config/env";
 import ReportModal from "@/components/modals/report-modal";
 import formatNumber from "@/utils/common-functions/formatNumber";
+import Image from "next/image";
 
 
 export default function Post(props: {
@@ -107,7 +108,7 @@ export default function Post(props: {
                     >
                         <div className="avatar p-0">
                             <div className="w-10 rounded-full shadow-lg">
-                                <img
+                                <Image alt="avatar" width={400} height={400}
                                     src={data?.owner?.avatar ? `${envCfg.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
                             </div>
                         </div>
@@ -153,9 +154,9 @@ export default function Post(props: {
                 </div>
                 
             </div>
-            <figure><img
+            <figure><Image
                 className="max-h-[180px] w-full min-w-80 min-h-[180px]"
-                src={data?.image ? `${envCfg.serverFilesEndpoint}/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
+                src={data?.image ? `${envCfg.serverFilesEndpoint}/images/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
                 alt="image"/>
             </figure>
 

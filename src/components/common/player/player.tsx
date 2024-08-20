@@ -8,6 +8,7 @@ import InfoImage from "../info-image/info-image";
 import ReactHowler from 'react-howler'
 import PlayerTrackInfo from "./player-track-info";
 import formatTime from "@/utils/common-functions/formatTime";
+import envCfg from "@/config/env";
 
 export default function AudioPlayer() {
   const { isPlaying, isLoop, isMute, volume, post } = useAppSelector(state => state.player);
@@ -107,7 +108,7 @@ export default function AudioPlayer() {
             ?
             <>
               <ReactHowler
-                src={[`http://localhost:8000/files/${post.audio}`]}
+                src={[`${envCfg.serverFilesEndpoint}/audios/${post.audio}`]}
                 playing={isPlaying}
                 onLoad={handleOnLoad}
                 onPlay={handleOnPlay}

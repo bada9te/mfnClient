@@ -3,6 +3,7 @@
 import envCfg from "@/config/env";
 import { useAppSelector } from "@/lib/redux/store";
 import { usePostSwicthInSavedMutation, usePostSwitchLikeMutation, usePostLazyQuery } from "@/utils/graphql-requests/generated/schema";
+import Image from "next/image";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -72,8 +73,8 @@ export default function PlayerTrackInfo() {
     return (
         <div className="flex h-auto flex-col flex-1 gap-1">
             <div className="flex flex-row mb-3 gap-3">
-                <img 
-                    src={data?.post?.image ? `${envCfg.serverBase}/files/${data.post.image}` : 'assets/bgs/profileDefaultBG.png'}
+                <Image alt="track-bg" width={400} height={400}
+                    src={data?.post?.image ? `${envCfg.serverFilesEndpoint}/images/${data.post.image}` : '/assets/bgs/profileDefaultBG.png'}
                     className="shadow-2xl max-h-[180px] h-[180px] max-w-80 rounded-2xl" 
                 />
                 <div className="flex flex-col gap-1">

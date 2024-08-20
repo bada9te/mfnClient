@@ -23,7 +23,7 @@ export default function CategoryLeftBar(props: {
                 <div className="flex flex-row gap-4">
                     <div className="avatar">
                         <div className="w-10 rounded-full">
-                            <img src={iconImage}/>
+                            <Image src={iconImage} alt="info-image" width={400} height={400}/>
                         </div>
                     </div>
                     <h2 className="card-title">{title}</h2>

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import Marquee from "./marquee";
 import whishesToUsers from "@/config/whishes-to-users";
+import Image from "next/image";
 
 
 const firstRow = whishesToUsers.slice(0, whishesToUsers.length / 2);
@@ -24,7 +25,7 @@ const ReviewCard = ({
 
         <div className="flex flex-col">
           <div className="flex flex-row items-center gap-2">
-            <img className="rounded-full" width="32" height="32" alt="" src={img} />
+            <Image alt="info-image" width={10} height={10} className="rounded-full" src={img} />
             <figcaption className="text-sm font-medium dark:text-white">
               {title}
             </figcaption>

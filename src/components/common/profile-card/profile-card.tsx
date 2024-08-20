@@ -10,6 +10,7 @@ import { useCallback, useRef, useState } from "react";
 import { useSnackbar } from "notistack";
 import ProfileProgress from "./profile-progress/profile-progress";
 import envCfg from "@/config/env";
+import Image from "next/image";
 
 const ShareBtn = (props: {
     handleClick: () => void;
@@ -143,12 +144,12 @@ export default function ProfileCard(props: {
             />
             <div className={`${!disableMargins && 'm-0 md:mx-4 md:mt-4'} card w-full text-white rounded-2xl md:rounded-2xl shadow-2xl bg-base-300`}>
                 <figure className="max-h-48">
-                    <img className="w-full" src={data.user.background.length ? `${envCfg.serverBase}/files/${data.user.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
+                    <Image width={1000} height={400} className="w-full" src={data.user.background.length ? `${envCfg.serverFilesEndpoint}/images/${data.user.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
                 </figure>
                 <div className="card-body flex flex-col  gap-5">
                     <div className="avatar flex justify-center">
                         <div className="w-32 h-32 mask mask-hexagon">
-                            <img src={data.user.avatar.length ? `${envCfg.serverBase}/files/${data.user.avatar}` : "/assets/icons/logo_clear.png"} alt="avatar" />
+                            <Image width={400} height={400} src={data.user.avatar.length ? `${envCfg.serverFilesEndpoint}/images/${data.user.avatar}` : "/assets/icons/logo_clear.png"} alt="avatar" />
                         </div>
                     </div>
                     <div>
