@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
 
     //console.log("LOG:", isLoggedIn, jwtCookieKey, userIdCookieKey);
     const pathname = request.nextUrl.pathname;
-
+    
 
     if (pathname === '/logout') {
         const res = NextResponse.next();
