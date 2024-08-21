@@ -1,12 +1,49 @@
+import { revalidatePathAction } from "@/actions/revalidation";
 import getTimeSince from "@/utils/common-functions/getTimeSince";
-import { Notification as TNotification } from "@/utils/graphql-requests/generated/schema";
+import { Notification as TNotification, useNotificationDeleteByIdMutation, useNotificationMarkAsReadByIdMutation } from "@/utils/graphql-requests/generated/schema";
 import Link from "next/link";
+import { useSnackbar } from "notistack";
 
 const LinkButton = ({text, url}: {text: string, url: string}) => {
     return (<Link href={url} className="bg-[#1c94a5] glass text-white px-1 shadow-md hover:bg-[#1c95a58e] font-semibold">{text}</Link>);
 }
 
 export default function Notification({data}: {data: TNotification}) {
+    const {enqueueSnackbar} = useSnackbar();
+    const [ deleteNotification ] = useNotificationDeleteByIdMutation();
+    const [ markNotificationAsRead ] = useNotificationMarkAsReadByIdMutation();
+
+    const handleDelete = () => {
+        enqueueSnackbar("Deleting...", {autoHideDuration: 1500});
+        deleteNotification({
+            variables: {
+                _id: data._id
+            }
+        }).then(_ => {
+            enqueueSnackbar("Removed", {autoHideDuration: 2500, variant: 'success'});
+            revalidatePathAction("/profile/me/notifications/new/1", "page");
+            revalidatePathAction("/profile/me/notifications/read/1", "page");
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", {autoHideDuration: 3000, variant: 'error'});
+        });
+    }
+
+    const handleMarkAsRead = () => {
+        enqueueSnackbar("Processing...", {autoHideDuration: 1500});
+        markNotificationAsRead({
+            variables: {
+                _id: data._id
+            }
+        }).then(_ => {
+            enqueueSnackbar("Marked as read", {autoHideDuration: 2500, variant: 'success'});
+            revalidatePathAction("/profile/me/notifications/new/1", "page");
+            revalidatePathAction("/profile/me/notifications/read/1", "page");
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", {autoHideDuration: 3000, variant: 'error'});
+        });
+    }
+
+
     return (
         <div className="card bg-base-300 shadow-xl w-full text-start glass">
             <div className="card-body relative">
@@ -84,7 +121,7 @@ export default function Notification({data}: {data: TNotification}) {
                 </div>
                 <div className="card-actions">
                     <div className="join join-vertical md:join-horizontal w-full md:w-fit">
-                        <button className="btn btn-error join-item btn-sm glass text-white w-full">
+                        <button className="btn btn-error join-item btn-sm glass text-white w-full" onClick={handleDelete}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">
                                 <path fillRule="evenodd"
@@ -93,18 +130,21 @@ export default function Notification({data}: {data: TNotification}) {
                             </svg>
                             Delete
                         </button>
-                        <button className="btn btn-primary btn-sm glass text-white join-item w-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 className="size-6">
-                                <path
-                                    d="M11.644 1.59a.75.75 0 0 1 .712 0l9.75 5.25a.75.75 0 0 1 0 1.32l-9.75 5.25a.75.75 0 0 1-.712 0l-9.75-5.25a.75.75 0 0 1 0-1.32l9.75-5.25Z"/>
-                                <path
-                                    d="m3.265 10.602 7.668 4.129a2.25 2.25 0 0 0 2.134 0l7.668-4.13 1.37.739a.75.75 0 0 1 0 1.32l-9.75 5.25a.75.75 0 0 1-.71 0l-9.75-5.25a.75.75 0 0 1 0-1.32l1.37-.738Z"/>
-                                <path
-                                    d="m10.933 19.231-7.668-4.13-1.37.739a.75.75 0 0 0 0 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 0 0 0-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 0 1-2.134-.001Z"/>
-                            </svg>
-                            Mark as read
-                        </button>
+                        {
+                            !data.checked && 
+                            <button className="btn btn-primary btn-sm glass text-white join-item w-full" onClick={handleMarkAsRead}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    className="size-6">
+                                    <path
+                                        d="M11.644 1.59a.75.75 0 0 1 .712 0l9.75 5.25a.75.75 0 0 1 0 1.32l-9.75 5.25a.75.75 0 0 1-.712 0l-9.75-5.25a.75.75 0 0 1 0-1.32l9.75-5.25Z"/>
+                                    <path
+                                        d="m3.265 10.602 7.668 4.129a2.25 2.25 0 0 0 2.134 0l7.668-4.13 1.37.739a.75.75 0 0 1 0 1.32l-9.75 5.25a.75.75 0 0 1-.71 0l-9.75-5.25a.75.75 0 0 1 0-1.32l1.37-.738Z"/>
+                                    <path
+                                        d="m10.933 19.231-7.668-4.13-1.37.739a.75.75 0 0 0 0 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 0 0 0-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 0 1-2.134-.001Z"/>
+                                </svg>
+                                Mark as read
+                            </button>
+                        }
                     </div>
                 </div>
             </div>
