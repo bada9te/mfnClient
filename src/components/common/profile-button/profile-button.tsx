@@ -13,6 +13,7 @@ import { useSnackbar } from "notistack";
 import BuyMFNTModal from "@/components/modals/buy-mfnf-modal";
 import Image from "next/image";
 
+
 export default function ProfileButton() {
     // Use the useSelector hook to get the user state from redux store
     const user = useAppSelector(state => state.user?.user);
@@ -99,6 +100,7 @@ export default function ProfileButton() {
                         <Link href="/profile/me/1" className="justify-between" legacyBehavior>
                             <a>
                                 <div className="flex flex-wrap gap-1">
+                                    
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20"

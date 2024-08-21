@@ -1,13 +1,14 @@
 import { gql } from "@apollo/client/index.js";
-import { CORE_POST_FIELDS } from "./posts";
+//import { CORE_POST_FIELDS } from "./posts";
 
 
 export const CORE_NOTIFICATION_FIELDS = gql`
-    ${CORE_POST_FIELDS}
     fragment CoreNotificationFields on Notification {
         _id
         receiver {
             _id
+            nick
+            avatar
         }
         sender {
             _id
@@ -15,9 +16,15 @@ export const CORE_NOTIFICATION_FIELDS = gql`
             avatar
         }
         post {
-            ...CorePostFields
+            _id
+            title
+        }
+        battle {
+            _id
+            title
         }
         text
+        type
         checked
         createdAt
     }

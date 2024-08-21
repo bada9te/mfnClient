@@ -1,13 +1,87 @@
+import getTimeSince from "@/utils/common-functions/getTimeSince";
 import { Notification as TNotification } from "@/utils/graphql-requests/generated/schema";
+import Link from "next/link";
 
+const LinkButton = ({text, url}: {text: string, url: string}) => {
+    return (<Link href={url} className="bg-[#1c94a5] glass text-white px-1 shadow-md hover:bg-[#1c95a58e] font-semibold">{text}</Link>);
+}
 
 export default function Notification({data}: {data: TNotification}) {
     return (
         <div className="card bg-base-300 shadow-xl w-full text-start glass">
             <div className="card-body relative">
-                <p className="absolute top-4 right-5">9 days ago</p>
-                <h2 className="card-title">Card title!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <p className="absolute top-4 right-5">{getTimeSince(new Date(+data.createdAt))} ago</p>
+                <h2 className="card-title">
+                    {
+                        (() => {
+                            // "SUBSCRIBED" | "BATTLE_CREATED" | "BATTLE_FINISHED" | "POST_REPORTED" | "POST_CREATED"
+                            switch (data.type) {
+                                case "SUBSCRIBED": return "🤗 New subscriber";
+                                case "BATTLE_CREATED": return "⚔ New battle";
+                                case "BATTLE_FINISHED": return "⚔ Battle finished";
+                                case "POST_REPORTED": return "💀 Bad news";
+                                case "POST_CREATED": return "🎼 New hit!";
+                                case "SYSTEM": return "🤖 System message";
+                                default: return "💣 Unknown"
+                            }
+                        })()
+                    }
+                </h2>
+                <div className="py-2">
+                    {
+                        (() => {
+                            switch (data.type) {
+                                case "SYSTEM": 
+                                    return data.text;
+                                case "POST_CREATED":
+                                    return (
+                                        <>
+                                            {data.text.substring(0, data.text.indexOf('{user}'))}
+                                            <LinkButton url={`/profile/${data.sender._id}/1`} text={`@${data.sender.nick}`} />
+                                            {data.text.substring(data.text.indexOf('{user}') + '{user}'.length, data.text.indexOf('{post}'))}
+                                            <LinkButton url={`/post/${data.post?._id}/${data.sender._id}`} text={`@post - ${data.post?.title}`} />
+                                        </>
+                                    );
+                                case "POST_REPORTED":
+                                    return (
+                                        <>
+                                            {data.text.substring(0, data.text.indexOf('{post}'))}
+                                            <LinkButton url={`/post/${data.post?._id}/${data.sender._id}`} text={`@post - ${data.post?.title}`} />
+                                            {data.text.substring(data.text.indexOf('{post}') + '{post}'.length, data.text.indexOf('"'))}
+                                            <span className="font-semibold">{data.text.substring(data.text.indexOf('"') - 1, data.text.length)}</span>
+                                        </>
+                                    );
+                                case "BATTLE_FINISHED":
+                                    return (
+                                        <>
+                                            {data.text.substring(0, data.text.indexOf('{battle}'))}
+                                            <LinkButton url={`/battles/${data.battle?._id}`} text={`@${data.battle?.title}`} />
+                                            {data.text.substring(data.text.indexOf('{battle}') + '{battle}'.length, data.text.length)}
+                                        </>
+                                    ); 
+                                case "BATTLE_CREATED":
+                                    return (
+                                        <>
+                                            {data.text.substring(0, data.text.indexOf('{battle}'))}
+                                            <LinkButton url={`/battles/${data.battle?._id}`} text={`@${data.battle?.title}`} />
+                                            {data.text.substring(data.text.indexOf('{battle}') + '{battle}'.length, data.text.length)}
+                                        </>
+                                    );
+                                case "SUBSCRIBED": 
+                                    return (
+                                        <>
+                                            {data.text.substring(0, data.text.indexOf('{user}'))}
+                                            <LinkButton url={`/profile/${data.sender._id}/1`} text={`@${data.sender.nick}`} />
+                                            {data.text.substring(data.text.indexOf('{user}') + '{user}'.length, data.text.length)}
+                                        </>
+                                    );
+                                default:
+                                    break;
+                            }
+                        })()
+                    }
+                    
+                </div>
                 <div className="card-actions">
                     <div className="join join-vertical md:join-horizontal w-full md:w-fit">
                         <button className="btn btn-error join-item btn-sm glass text-white w-full">

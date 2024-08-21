@@ -380,12 +380,14 @@ export type MutationUserUpdateArgs = {
 export type Notification = {
   __typename?: 'Notification';
   _id: Scalars['ID']['output'];
+  battle?: Maybe<Battle>;
   checked: Scalars['Boolean']['output'];
   createdAt: Scalars['String']['output'];
   post?: Maybe<Post>;
   receiver: User;
   sender: User;
   text: Scalars['String']['output'];
+  type: Scalars['String']['output'];
 };
 
 export type NotificationCount = {
@@ -824,7 +826,7 @@ export type ModerationActionDeleteMutationVariables = Exact<{
 
 export type ModerationActionDeleteMutation = { __typename?: 'Mutation', moderationActionDelete: { __typename?: 'ModerationAction', _id: string } };
 
-export type CoreNotificationFieldsFragment = { __typename?: 'Notification', _id: string, text: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null };
+export type CoreNotificationFieldsFragment = { __typename?: 'Notification', _id: string, text: string, type: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string, nick: string, avatar: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string } | null, battle?: { __typename?: 'Battle', _id: string, title: string } | null };
 
 export type NotificationsQueryVariables = Exact<{
   receiverId: Scalars['ID']['input'];
@@ -834,7 +836,7 @@ export type NotificationsQueryVariables = Exact<{
 }>;
 
 
-export type NotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationsWithCount', count: number, notifications?: Array<{ __typename?: 'Notification', _id: string, text: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null }> | null } };
+export type NotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationsWithCount', count: number, notifications?: Array<{ __typename?: 'Notification', _id: string, text: string, type: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string, nick: string, avatar: string }, sender: { __typename?: 'User', _id: string, nick: string, avatar: string }, post?: { __typename?: 'Post', _id: string, title: string } | null, battle?: { __typename?: 'Battle', _id: string, title: string } | null }> | null } };
 
 export type NotificationCreateMutationVariables = Exact<{
   input: CreateNotificationInput;
@@ -1232,6 +1234,8 @@ export const CoreNotificationFieldsFragmentDoc = gql`
   _id
   receiver {
     _id
+    nick
+    avatar
   }
   sender {
     _id
@@ -1239,13 +1243,19 @@ export const CoreNotificationFieldsFragmentDoc = gql`
     avatar
   }
   post {
-    ...CorePostFields
+    _id
+    title
+  }
+  battle {
+    _id
+    title
   }
   text
+  type
   checked
   createdAt
 }
-    ${CorePostFieldsFragmentDoc}`;
+    `;
 export const CorePlaylistFieldsFragmentDoc = gql`
     fragment CorePlaylistFields on Playlist {
   _id
