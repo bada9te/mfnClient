@@ -50,6 +50,15 @@ export const BATTLES_BY_STATUS_QUERY = gql`
     }
 `;
 
+export const BATTLE_BY_ID_QUERY = gql`
+    ${CORE_BATTLE_FIELDS}
+    query battleById($_id: ID!) {
+        battleById(_id: $_id) {
+            ...CoreBattleFields
+        }
+    }
+`;
+
 // M
 export const BATTLE_MAKE_VOTE_MUTATION = gql`
     ${CORE_BATTLE_FIELDS}

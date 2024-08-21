@@ -473,6 +473,7 @@ export type Query = {
   achievementsByIds?: Maybe<Array<Achievement>>;
   achievementsByPos?: Maybe<Array<Achievement>>;
   allAchievements?: Maybe<Array<Achievement>>;
+  battleById: Battle;
   battlesByStatus: BattlesWithCount;
   moderationActionValidate: ModerationAction;
   notifications: NotificationsWithCount;
@@ -511,6 +512,11 @@ export type QueryAchievementsByIdsArgs = {
 
 export type QueryAchievementsByPosArgs = {
   pos: Array<Scalars['Int']['input']>;
+};
+
+
+export type QueryBattleByIdArgs = {
+  _id: Scalars['ID']['input'];
 };
 
 
@@ -790,6 +796,13 @@ export type BattlesByStatusQueryVariables = Exact<{
 
 
 export type BattlesByStatusQuery = { __typename?: 'Query', battlesByStatus: { __typename?: 'BattlesWithCount', count: number, battles?: Array<{ __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+
+export type BattleByIdQueryVariables = Exact<{
+  _id: Scalars['ID']['input'];
+}>;
+
+
+export type BattleByIdQuery = { __typename?: 'Query', battleById: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type BattleMakeVoteMutationVariables = Exact<{
   input: MakeBattleVoteInput;
@@ -1484,6 +1497,46 @@ export type BattlesByStatusQueryHookResult = ReturnType<typeof useBattlesByStatu
 export type BattlesByStatusLazyQueryHookResult = ReturnType<typeof useBattlesByStatusLazyQuery>;
 export type BattlesByStatusSuspenseQueryHookResult = ReturnType<typeof useBattlesByStatusSuspenseQuery>;
 export type BattlesByStatusQueryResult = Apollo.QueryResult<BattlesByStatusQuery, BattlesByStatusQueryVariables>;
+export const BattleByIdDocument = gql`
+    query battleById($_id: ID!) {
+  battleById(_id: $_id) {
+    ...CoreBattleFields
+  }
+}
+    ${CoreBattleFieldsFragmentDoc}`;
+
+/**
+ * __useBattleByIdQuery__
+ *
+ * To run a query within a React component, call `useBattleByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBattleByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBattleByIdQuery({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useBattleByIdQuery(baseOptions: Apollo.QueryHookOptions<BattleByIdQuery, BattleByIdQueryVariables> & ({ variables: BattleByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BattleByIdQuery, BattleByIdQueryVariables>(BattleByIdDocument, options);
+      }
+export function useBattleByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BattleByIdQuery, BattleByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BattleByIdQuery, BattleByIdQueryVariables>(BattleByIdDocument, options);
+        }
+export function useBattleByIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BattleByIdQuery, BattleByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BattleByIdQuery, BattleByIdQueryVariables>(BattleByIdDocument, options);
+        }
+export type BattleByIdQueryHookResult = ReturnType<typeof useBattleByIdQuery>;
+export type BattleByIdLazyQueryHookResult = ReturnType<typeof useBattleByIdLazyQuery>;
+export type BattleByIdSuspenseQueryHookResult = ReturnType<typeof useBattleByIdSuspenseQuery>;
+export type BattleByIdQueryResult = Apollo.QueryResult<BattleByIdQuery, BattleByIdQueryVariables>;
 export const BattleMakeVoteDocument = gql`
     mutation battleMakeVote($input: MakeBattleVoteInput!) {
   battleMakeVote(input: $input) {

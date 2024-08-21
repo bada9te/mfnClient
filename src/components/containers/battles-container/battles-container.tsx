@@ -1,6 +1,6 @@
 "use client"
 import Battle from "@/components/entities/battle/battle";
-import {Battle as TBattle, Post as TPost, useBattlesByStatusSuspenseQuery} from "@/utils/graphql-requests/generated/schema";
+import {Battle as TBattle, useBattlesByStatusSuspenseQuery} from "@/utils/graphql-requests/generated/schema";
 import InfoImage from "@/components/common/info-image/info-image";
 import Pagination from "@/components/common/pagination/pagination";
 import {TPaginationProps} from "@/types/pagination";
