@@ -20,14 +20,14 @@ export default function HeroWrapper(props: {
                 />
                 <div className="flex w-full flex-col items-center justify-center py-10 relative">
                     <Image 
-                        src="/assets/figures/pyramid.svg" 
+                        src="/assets/figures/pyramid.png" 
                         alt="pyramid" 
                         className="absolute top-0 left-72 lg:left-96 w-48 opacity-70 z-10"
                         width={500}
                         height={500}
                     />
                     <Image 
-                        src="/assets/figures/triangle.svg" 
+                        src="/assets/figures/triangle.png" 
                         alt="triangle" 
                         className="absolute top-0 right-72 lg:right-96 w-24 rotate-90 opacity-70 z-10"
                         width={500}
@@ -49,7 +49,7 @@ export default function HeroWrapper(props: {
                 <Image
                     src="/assets/bgs/block-top-right-bg.png"
                     alt="bg-top-right"
-                    className="w-48 md:w-[600px] absolute top-0 right-0"
+                    className="w-48 md:w-[600px] absolute top-0 right-0 blur-sm"
                     width={500}
                     height={500}
                 />

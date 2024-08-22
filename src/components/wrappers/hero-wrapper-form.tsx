@@ -26,7 +26,7 @@ export default function HeroWrapperForm(props: {
                     <p className="mb-5 text-white text-center z-20 px-10 md:px-32">{description}</p>
                     <div className={`hero-content text-center w-full z-10 mt-5 ${disableMarginsOnMobile && "p-0 md:p-4"} overflow-hidden`}>
                         <Image 
-                            src="/assets/figures/cube.svg" 
+                            src="/assets/figures/cube.png" 
                             alt="drawing-1" 
                             className="w-48 absolute top-3 right-56 lg:right-96 z-0 "
                             width={400}
@@ -54,7 +54,7 @@ export default function HeroWrapperForm(props: {
                 <Image
                     src="/assets/bgs/block-top-right-bg.png"
                     alt="bg-top-right"
-                    className="w-48 md:w-[600px] absolute top-0 right-0"
+                    className="w-48 md:w-[600px] absolute top-0 right-0 blur-sm"
                     width={500}
                     height={500}
                 />

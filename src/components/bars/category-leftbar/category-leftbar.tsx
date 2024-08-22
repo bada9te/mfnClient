@@ -12,7 +12,7 @@ export default function CategoryLeftBar(props: {
 
     return (
         <div className={`card w-fit max-w-[305px] min-h-48 bg-cover bg-center bg-base-300 shadow-none text-white max-h-52 relative bg-opacity-80 rounded-2xl overflow-hidden glass`}>
-            <Image src={"/assets/bgs/category.png"} alt="category-bg" width={800} height={600} className="absolute bottom-0 left-0 rounded-bl-2xl min-h-48"/>
+            <Image src={"/assets/bgs/category.png"} alt="category-bg" width={800} height={600} className="absolute bottom-0 left-0 rounded-bl-2xl min-h-48 blur-sm"/>
             <div className="card-body relative">
                 <div className="bg-base-300 absolute top-0 left-0 w-fit rounded-br-xl rounded-tl-xl px-3 glass flex flex-row items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">

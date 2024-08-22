@@ -103,9 +103,9 @@ export default function Page() {
                     className="w-48 md:w-64 lg:w-80 absolute bottom-0 left-0 z-20 rounded-2xl"
                 />
                 <Image width={1920} height={600}
-                    src={"/assets/bgs/block-top-bg.png"}
+                    src={"/assets/bgs/block-top-bg.webp"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 w-full rounded-t-2xl rotate-180"
+                    className="absolute bottom-0 w-full rounded-t-2xl rotate-180 blur-sm"
                 />
             </div>
 
@@ -118,13 +118,13 @@ export default function Page() {
                 />
                 <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl px-5 z-20">Compose, arrange</p>
                 <p className="text-center pb-20 font-bold text-xl md:text-xl z-20 px-5">and produce your unique tunes effortlessly with our web app.</p>
-                <Image width={300} height={300}  src="/assets/figures/cube.svg" alt="cube" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-10 opacity-70"/>
-                <Image width={300} height={300}  src="/assets/figures/rhombus.svg" alt="rhombus" className="w-32 rotate-12 absolute bottom-24 mix-blend-luminosity left-3 z-10 opacity-70"/>
-                <Image width={300} height={300}  src="/assets/figures/pyramid.svg" alt="pyramid" className="w-32 md:w-64 rotate-12 absolute bottom-0 mix-blend-luminosity left-24 z-10 opacity-70"/>
+                <Image width={300} height={300}  src="/assets/figures/cube.png" alt="cube" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-10 opacity-70"/>
+                <Image width={300} height={300}  src="/assets/figures/rhombus.png" alt="rhombus" className="w-32 rotate-12 absolute bottom-24 mix-blend-luminosity left-3 z-10 opacity-70"/>
+                <Image width={300} height={300}  src="/assets/figures/pyramid.png" alt="pyramid" className="w-32 md:w-64 rotate-12 absolute bottom-0 mix-blend-luminosity left-24 z-10 opacity-70"/>
                 <Image width={800} height={800}
                     src={"/assets/bgs/block-top-right-bg.png"}
                     alt="block-top-bg"
-                    className="absolute top-0 right-0 w-48 md:w-[600px] z-0 rounded-tr-2xl"
+                    className="absolute top-0 right-0 w-48 md:w-[600px] z-0 rounded-tr-2xl blur-sm"
                 />
                 <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit mb-48 lg:mb-56">
                     {
@@ -149,7 +149,7 @@ export default function Page() {
                 <Image width={800} height={800}
                     src={"/assets/bgs/block-top-right-bg.png"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 left-0 w-48 md:w-[600px] z-0 rotate-180 rounded-tr-2xl"
+                    className="absolute bottom-0 left-0 w-48 md:w-[600px] z-0 rotate-180 rounded-tr-2xl blur"
                 />
             </div>
 
@@ -168,15 +168,15 @@ export default function Page() {
                     )}
                 />
                 <Image width={1920} height={600}
-                    src={"/assets/bgs/block-top-bg.png"}
+                    src={"/assets/bgs/block-top-bg.webp"}
                     alt="block-top-bg"
-                    className="absolute top-0 w-full rounded-t-2xl"
+                    className="absolute top-0 w-full rounded-t-2xl blur-sm"
                 />
                 <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">Purpose of the platform</p>
                 <p className="text-center pb-16 font-bold text-xl md:text-xl z-10">and author information</p>
-                <Image width={300} height={300}  src="/assets/figures/waterball.svg" alt="waterball" className="w-32 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
-                <Image width={300} height={300}  src="/assets/figures/water.svg" alt="water" className="z-10 w-48 absolute bottom-3 mix-blend-luminosity right-3 opacity-70"/>
-                <Image width={300} height={300}  src="/assets/figures/chip.svg" alt="chip" className="w-64 absolute bottom-72 mix-blend-luminosity left-5 z-0 opacity-70"/>
+                <Image width={300} height={300}  src="/assets/figures/waterball.png" alt="waterball" className="w-32 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
+                <Image width={300} height={300}  src="/assets/figures/water.png" alt="water" className="z-10 w-48 absolute bottom-3 mix-blend-luminosity right-3 opacity-70"/>
+                <Image width={300} height={300}  src="/assets/figures/chip.png" alt="chip" className="w-64 absolute bottom-72 mix-blend-luminosity left-5 z-0 opacity-70"/>
                 <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit z-10 mb-20">
                     {
                         cardsData2.map((data, key) => {
@@ -193,9 +193,9 @@ export default function Page() {
                     }
                 </div>
                 <Image width={1920} height={600}
-                    src={"/assets/bgs/block-top-bg.png"}
+                    src={"/assets/bgs/block-top-bg.webp"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 w-full rotate-180 z-0 rounded-t-2xl "
+                    className="absolute bottom-0 w-full rotate-180 z-0 rounded-t-2xl blur-sm"
                 />
             </div>
 
