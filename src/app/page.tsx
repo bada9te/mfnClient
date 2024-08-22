@@ -82,7 +82,7 @@ export default function Page() {
     return (
         <>
             {/* ONE */}
-            <div className="flex flex-col items-center text-white m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 min-h-[600px]">
+            <div className="flex flex-col items-center text-white m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 min-h-[600px] max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-352px)]">
                 <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg">
                     <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
                     <Ripple />
@@ -110,7 +110,7 @@ export default function Page() {
             </div>
 
             {/* TWO */}
-            <div className="flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl bg-opacity-80">
+            <div className="flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl bg-opacity-80 max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-352px)]">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -161,7 +161,7 @@ export default function Page() {
 
             
             {/* FOUR */}
-            <div className="flex flex-col items-center text-white py-20 md:py-40 lg:py-56 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80">
+            <div className="flex flex-col items-center text-white py-20 md:py-40 lg:py-56 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-352px)]">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
