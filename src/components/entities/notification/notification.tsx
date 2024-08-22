@@ -74,16 +74,16 @@ export default function Notification({data}: {data: TNotification}) {
                                     return (
                                         <>
                                             {data.text.substring(0, data.text.indexOf('{user}'))}
-                                            <LinkButton url={`/profile/${data.sender._id}/1`} text={`@${data.sender.nick}`} />
+                                            <LinkButton url={`/profile/${data?.sender?._id}/1`} text={`@${data?.sender?.nick}`} />
                                             {data.text.substring(data.text.indexOf('{user}') + '{user}'.length, data.text.indexOf('{post}'))}
-                                            <LinkButton url={`/post/${data.post?._id}/${data.sender._id}`} text={`@post - ${data.post?.title}`} />
+                                            <LinkButton url={`/post/${data.post?._id}/${data?.sender?._id}`} text={`@post - ${data.post?.title}`} />
                                         </>
                                     );
                                 case "POST_REPORTED":
                                     return (
                                         <>
                                             {data.text.substring(0, data.text.indexOf('{post}'))}
-                                            <LinkButton url={`/post/${data.post?._id}/${data.sender._id}`} text={`@post - ${data.post?.title}`} />
+                                            <LinkButton url={`/post/${data.post?._id}/${data.post?.owner._id}`} text={`@post - ${data.post?.title}`} />
                                             {data.text.substring(data.text.indexOf('{post}') + '{post}'.length, data.text.indexOf('"'))}
                                             <span className="font-semibold">{data.text.substring(data.text.indexOf('"') - 1, data.text.length)}</span>
                                         </>
@@ -108,7 +108,7 @@ export default function Notification({data}: {data: TNotification}) {
                                     return (
                                         <>
                                             {data.text.substring(0, data.text.indexOf('{user}'))}
-                                            <LinkButton url={`/profile/${data.sender._id}/1`} text={`@${data.sender.nick}`} />
+                                            <LinkButton url={`/profile/${data?.sender?._id}/1`} text={`@${data?.sender?.nick}`} />
                                             {data.text.substring(data.text.indexOf('{user}') + '{user}'.length, data.text.length)}
                                         </>
                                     );

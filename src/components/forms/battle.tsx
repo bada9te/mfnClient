@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Post as TPost, useBattleCreateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
 import { revalidatePathAction } from "@/actions/revalidation";
+import { useAppSelector } from "@/lib/redux/store";
 
 const PostPlaceholder = (props: {
     handleSelect: (a: TPost) => void;
@@ -33,6 +34,7 @@ type Inputs = {
 }
 
 export default function BattleForm() {
+    const user = useAppSelector(state => state.user.user);
     const {register, reset, handleSubmit, formState: {errors}} = useForm<Inputs>();
     const [post1, setPost1] = useState<null | TPost>(null);
     const [post2, setPost2] = useState<null | TPost>(null);
@@ -50,6 +52,7 @@ export default function BattleForm() {
         createBattle({
             variables: {
                 input: {
+                    initiator: user?._id as string,
                     post1: post1._id,
                     post2: post2._id,
                     title: data.title,
