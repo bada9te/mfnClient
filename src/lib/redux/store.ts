@@ -49,14 +49,13 @@ const loadStore = async(getCurrentState: any) => {
     return new Promise(resolve => {
         httpGetCurrentUser()
             .then(response => response.data)
-            .then(user => {
-                //console.log(user);
+            .then(userData => {
                 resolve({
                     // reuse state that was before loading current user
                     ...getCurrentState(),
                     // and replace only `user` key
                     user: {
-                        user
+                        ...userData
                     },
                 })
             })

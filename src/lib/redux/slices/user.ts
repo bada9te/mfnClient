@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export interface IUserState {
-    user: {
+    user?: {
         _id: string;
         avatar: string;
         background: string;
@@ -32,11 +32,13 @@ export interface IUserState {
         subscribers: string[];
         updatedAt: string;
         verified: boolean;
-    } | null;
+    };
+    unreadNotifications: number;
 }
 
 const initialState: IUserState = {
-    user: null,
+    user: undefined,
+    unreadNotifications: 0,
 };
 
 export const userSlice = createSlice({
@@ -51,9 +53,17 @@ export const userSlice = createSlice({
         },
         setUserBackground: (state, action) => {
             state.user && (state.user.background = action.payload);
+        },
+        setUnreadNotificationsCount: (state, action) => {
+            state.unreadNotifications = action.payload;
         }
     }
 });
 
-export const { setUser, setUserAvatar, setUserBackground } = userSlice.actions;
+export const { 
+    setUser, 
+    setUserAvatar, 
+    setUserBackground, 
+    setUnreadNotificationsCount
+} = userSlice.actions;
 export default userSlice.reducer;

@@ -83,7 +83,7 @@ export default function Notification({data}: {data: TNotification}) {
                                     return (
                                         <>
                                             {data.text.substring(0, data.text.indexOf('{post}'))}
-                                            <LinkButton url={`/post/${data.post?._id}/${data.post?.owner._id}`} text={`@post - ${data.post?.title}`} />
+                                            <LinkButton url={`/post/${data.post?._id}/${data.receiver._id}`} text={`@post - ${data.post?.title}`} />
                                             {data.text.substring(data.text.indexOf('{post}') + '{post}'.length, data.text.indexOf('"'))}
                                             <span className="font-semibold">{data.text.substring(data.text.indexOf('"') - 1, data.text.length)}</span>
                                         </>

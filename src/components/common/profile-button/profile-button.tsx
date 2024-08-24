@@ -16,7 +16,7 @@ import Image from "next/image";
 
 export default function ProfileButton() {
     // Use the useSelector hook to get the user state from redux store
-    const user = useAppSelector(state => state.user?.user);
+    const user = useAppSelector(state => state.user);
     const [isMounted, setIsMounted] = useState(false);
     const { openConnectModal } = useConnectModal();
     const { openAccountModal } = useAccountModal();
@@ -80,21 +80,21 @@ export default function ProfileButton() {
                 <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 p-0 pl-0 md:pl-2 rounded-full">
                     <div className="rounded-full flex flex-row justify-center items-center gap-4">
                         <div className="hidden md:block">
-                            <p className="font-bold text-lg">{user?._id ? user.nick : "Login"}</p>
+                            <p className="font-bold text-lg">{user?.user?._id ? user?.user?.nick : "Login"}</p>
                         </div>
                         <Image
                             width={45}
                             height={45}
                             alt="Avatar"
                             className="rounded-full"
-                            src={user?.avatar?.length ? `${envCfg.serverFilesEndpoint}/images/${user.avatar}` : "/assets/icons/logo_clear.png"}
+                            src={user?.user?.avatar?.length ? `${envCfg.serverFilesEndpoint}/images/${user?.user?.avatar}` : "/assets/icons/logo_clear.png"}
                         />
                     </div>
                 </div>
             </div>
 
             {/* Conditional rendering based on user presence */}
-            {user?._id ? (
+            {user?.user?._id ? (
                 <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 glass bg-base-300">
                     <li>
                         <Link href="/profile/me/1" className="justify-between" legacyBehavior>
@@ -190,7 +190,7 @@ export default function ProfileButton() {
                                     </svg>
                                     Notifications
                                 </div>
-                                <span className="badge">10</span>
+                                <span className="badge">{user.unreadNotifications}</span>
                             </a>
                         </Link>
                     </li>
