@@ -17,7 +17,7 @@ export default function LogoutPage() {
     
     useEffect(() => {
         localStorage.removeItem("persist:user");
-        dispatch(setUser(null));
+        dispatch(setUser(undefined));
         router.push('/feed/1');
     }, [keyID, keySE]);
 
