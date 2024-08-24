@@ -228,6 +228,7 @@ export default function ProfileCard(props: {
                     </div>
                     <ProfileProgress 
                         userId={userId} 
+                        totalRP={achievementsData.userAchievementsData?.totalRP || 0}
                         data={achievementsData.userAchievementsData as UserAchievementsData}
                         achievementsTotal={achievementsCountData.achievemenmtsCount as number}
                         refreshStatistics={() => refetchAchievementsQuery({ _id: userId })}

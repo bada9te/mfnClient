@@ -9,6 +9,7 @@ export const CORE_ACHIEVEMENT_FIELDS = gql`
         type
         rarity
         posNumber
+        rp
     }
 `;
 

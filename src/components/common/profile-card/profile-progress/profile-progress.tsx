@@ -18,9 +18,10 @@ export default function ProfileProgress(props: {
     userId: string;
     data: UserAchievementsData;
     achievementsTotal: number;
+    totalRP: number;
     refreshStatistics: () => Promise<ApolloQueryResult<UserAchievementsDataQuery>>;
 }) {
-    const {userId, data, achievementsTotal, refreshStatistics} = props;
+    const {userId, data, achievementsTotal, refreshStatistics, totalRP} = props;
     const user = useAppSelector(state => state.user.user);
     const [isMounted, setIsMounted] = useState(false);
 
@@ -39,12 +40,12 @@ export default function ProfileProgress(props: {
                 <span onClick={refreshStatistics}><RefreshBtn/></span>
                 <div className="stat-value flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/trophy.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
-                    3
+                    {Math.floor((totalRP) / 800) + 1}
                 </div>
                 <div className="stat-actions relative">
-                    <span className="font-bold absolute top-[-14px]">40</span>
-                    <span className="font-bold absolute top-[-14px] right-0">126</span>
-                    <progress className="progress w-full min-w-40" value="40" max="100"></progress>
+                    <span className="font-bold absolute top-[-14px]">{totalRP}</span>
+                    <span className="font-bold absolute top-[-14px] right-0">800</span>
+                    <progress className="progress w-full min-w-40" value={totalRP} max={800}></progress>
                 </div>
             </div>
 

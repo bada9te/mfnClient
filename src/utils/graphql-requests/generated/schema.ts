@@ -39,6 +39,7 @@ export type Achievement = {
   description?: Maybe<Scalars['String']['output']>;
   posNumber?: Maybe<Scalars['Int']['output']>;
   rarity?: Maybe<Scalars['String']['output']>;
+  rp?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   type?: Maybe<Scalars['String']['output']>;
 };
@@ -753,6 +754,7 @@ export type UserAchievementsData = {
   maxSavesPostId?: Maybe<Scalars['String']['output']>;
   postCount: Scalars['Int']['output'];
   totalLikes: Scalars['Int']['output'];
+  totalRP: Scalars['Int']['output'];
   totalSaves: Scalars['Int']['output'];
 };
 
@@ -762,26 +764,26 @@ export type UserWithAction = {
   user: User;
 };
 
-export type CoreAchievementFieldsFragment = { __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null };
+export type CoreAchievementFieldsFragment = { __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null, rp?: number | null };
 
 export type AllAchievementsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllAchievementsQuery = { __typename?: 'Query', allAchievements?: Array<{ __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null }> | null };
+export type AllAchievementsQuery = { __typename?: 'Query', allAchievements?: Array<{ __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null, rp?: number | null }> | null };
 
 export type AchievementsByIdsQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
-export type AchievementsByIdsQuery = { __typename?: 'Query', achievementsByIds?: Array<{ __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null }> | null };
+export type AchievementsByIdsQuery = { __typename?: 'Query', achievementsByIds?: Array<{ __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null, rp?: number | null }> | null };
 
 export type AchievementsByPosQueryVariables = Exact<{
   pos: Array<Scalars['Int']['input']> | Scalars['Int']['input'];
 }>;
 
 
-export type AchievementsByPosQuery = { __typename?: 'Query', achievementsByPos?: Array<{ __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null }> | null };
+export type AchievementsByPosQuery = { __typename?: 'Query', achievementsByPos?: Array<{ __typename?: 'Achievement', _id: string, title?: string | null, achievement?: string | null, description?: string | null, type?: string | null, rarity?: string | null, posNumber?: number | null, rp?: number | null }> | null };
 
 export type AchievemenmtsCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1089,7 +1091,7 @@ export type UserAchievementsDataQueryVariables = Exact<{
 }>;
 
 
-export type UserAchievementsDataQuery = { __typename?: 'Query', userAchievementsData?: { __typename?: 'UserAchievementsData', achievements?: Array<number> | null, totalLikes: number, totalSaves: number, maxLikesByPost: number, maxSavesByPost: number, postCount: number, maxLikesPostId?: string | null, maxSavesPostId?: string | null } | null };
+export type UserAchievementsDataQuery = { __typename?: 'Query', userAchievementsData?: { __typename?: 'UserAchievementsData', achievements?: Array<number> | null, totalLikes: number, totalSaves: number, maxLikesByPost: number, maxSavesByPost: number, postCount: number, maxLikesPostId?: string | null, maxSavesPostId?: string | null, totalRP: number } | null };
 
 export type UserCreateMutationVariables = Exact<{
   input: AddUserInput;
@@ -1191,6 +1193,7 @@ export const CoreAchievementFieldsFragmentDoc = gql`
   type
   rarity
   posNumber
+  rp
 }
     `;
 export const CorePostFieldsFragmentDoc = gql`
@@ -3036,6 +3039,7 @@ export const UserAchievementsDataDocument = gql`
     postCount
     maxLikesPostId
     maxSavesPostId
+    totalRP
   }
 }
     `;
