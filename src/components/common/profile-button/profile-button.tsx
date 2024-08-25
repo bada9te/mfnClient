@@ -7,11 +7,10 @@ import {useCallback, useEffect, useState} from "react";
 import { useAccount, useReadContract } from "wagmi";
 import Link from "next/link";
 import envCfg from "@/config/env";
-import usdcTokenAbi from "@/config/USDCTokenAbi.json";
 //import formatNumber from "@/utils/common-functions/formatNumber";
 import { useSnackbar } from "notistack";
-import BuyMFNTModal from "@/components/modals/buy-mfnf-modal";
 import Image from "next/image";
+import { USDCAddresses } from "@/config/wagmi";
 
 
 export default function ProfileButton() {
@@ -24,15 +23,17 @@ export default function ProfileButton() {
     const { enqueueSnackbar } = useSnackbar();
     const account = useAccount();
     const {data: userBalance, refetch: refetchUserBalance} = useReadContract({
-        address: envCfg.usdcTokenAddress as `0x${string}`,
-        abi: usdcTokenAbi,
+        // @ts-ignore
+        address: USDCAddresses[account.chainId]?.address as `0x${string}`,
+        // @ts-ignore
+        abi: USDCAddresses[account.chainId]?.abi,
         functionName: "balanceOf",
         args: [account.address]
     });
 
     const handlebalanceInfoClick = useCallback(() => {
-        enqueueSnackbar(`${Number(userBalance).toString()} MFNT`, {autoHideDuration: 5000});
-    }, [userBalance])
+        enqueueSnackbar(`${userBalance ? (Number(userBalance) / 10**18).toFixed(3) : 0} USDC, on ${account.chain?.name}`, {autoHideDuration: 5000});
+    }, [userBalance]);
 
     const onBalanceRefetch = () => {
         refetchUserBalance();
@@ -57,19 +58,18 @@ export default function ProfileButton() {
                     account.address 
                     &&
                     <span className="join p-4 px-0 w-fit flex z-20 mr-2">
-                        <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce] flex md:hidden" onClick={handlebalanceInfoClick}>
+                        <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce] flex md:hidden rounded-l-xl" onClick={handlebalanceInfoClick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
                                 <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM9 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6.75 8a.75.75 0 0 0 0 1.5h.75v1.75a.75.75 0 0 0 1.5 0v-2.5A.75.75 0 0 0 8.25 8h-1.5Z" clipRule="evenodd" />
                             </svg>
                         </span>
-                        <span className=" badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${(Number(userBalance) / 10**18).toFixed(3)} USDC`}</span>
-                        <BuyMFNTModal button={
-                            <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce]">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
-                                    <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
-                                </svg>
-                            </span>
-                        }/>
+                        <span className="badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${userBalance ? (Number(userBalance) / 10**18).toFixed(3) : 0} USDC`}
+                            <a href="https://www.google.com" target="_blank">
+                                {/* @ts-ignore */}
+                                <Image src={USDCAddresses[account.chainId].icon} alt="chain-logo" width={16} height={16} className="ml-2"/>
+                            </a>    
+                        </span>
+                        
                         <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce]" onClick={() => onBalanceRefetch()}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
                                 <path fillRule="evenodd" d="M13.836 2.477a.75.75 0 0 1 .75.75v3.182a.75.75 0 0 1-.75.75h-3.182a.75.75 0 0 1 0-1.5h1.37l-.84-.841a4.5 4.5 0 0 0-7.08.932.75.75 0 0 1-1.3-.75 6 6 0 0 1 9.44-1.242l.842.84V3.227a.75.75 0 0 1 .75-.75Zm-.911 7.5A.75.75 0 0 1 13.199 11a6 6 0 0 1-9.44 1.241l-.84-.84v1.371a.75.75 0 0 1-1.5 0V9.591a.75.75 0 0 1 .75-.75H5.35a.75.75 0 0 1 0 1.5H3.98l.841.841a4.5 4.5 0 0 0 7.08-.932.75.75 0 0 1 1.025-.273Z" clipRule="evenodd" />
@@ -142,9 +142,8 @@ export default function ProfileButton() {
                                 openChainModal &&
                                 <li>
                                     <button onClick={openChainModal}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                                        <path fillRule="evenodd" d="M11.622 1.602a.75.75 0 0 1 .756 0l2.25 1.313a.75.75 0 0 1-.756 1.295L12 3.118 10.128 4.21a.75.75 0 1 1-.756-1.295l2.25-1.313ZM5.898 5.81a.75.75 0 0 1-.27 1.025l-1.14.665 1.14.665a.75.75 0 1 1-.756 1.295L3.75 8.806v.944a.75.75 0 0 1-1.5 0V7.5a.75.75 0 0 1 .372-.648l2.25-1.312a.75.75 0 0 1 1.026.27Zm12.204 0a.75.75 0 0 1 1.026-.27l2.25 1.312a.75.75 0 0 1 .372.648v2.25a.75.75 0 0 1-1.5 0v-.944l-1.122.654a.75.75 0 1 1-.756-1.295l1.14-.665-1.14-.665a.75.75 0 0 1-.27-1.025Zm-9 5.25a.75.75 0 0 1 1.026-.27L12 11.882l1.872-1.092a.75.75 0 1 1 .756 1.295l-1.878 1.096V15a.75.75 0 0 1-1.5 0v-1.82l-1.878-1.095a.75.75 0 0 1-.27-1.025ZM3 13.5a.75.75 0 0 1 .75.75v1.82l1.878 1.095a.75.75 0 1 1-.756 1.295l-2.25-1.312a.75.75 0 0 1-.372-.648v-2.25A.75.75 0 0 1 3 13.5Zm18 0a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-.372.648l-2.25 1.312a.75.75 0 1 1-.756-1.295l1.878-1.096V14.25a.75.75 0 0 1 .75-.75Zm-9 5.25a.75.75 0 0 1 .75.75v.944l1.122-.654a.75.75 0 1 1 .756 1.295l-2.25 1.313a.75.75 0 0 1-.756 0l-2.25-1.313a.75.75 0 1 1 .756-1.295l1.122.654V19.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
-                                    </svg>
+                                        {/* @ts-ignore */}
+                                        <Image src={USDCAddresses[account.chainId].icon} alt="chain-logo" width={20} height={20}/>
                                         Switch chain
                                     </button>
                                 </li>

@@ -1,26 +1,18 @@
 import '@rainbow-me/rainbowkit/styles.css';
-import {
-    getDefaultConfig,
-    RainbowKitProvider,
-    darkTheme
-} from '@rainbow-me/rainbowkit';
-
-import {
-    bscTestnet, bsc
-} from '@wagmi/core/chains';
-import {
-    QueryClientProvider,
-    QueryClient,
-} from "@tanstack/react-query";
+import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import React from 'react';
 //@ts-ignore
 import { WagmiProvider } from 'wagmi';
+import envCfg from '@/config/env';
+import { mainnetChains, testnetChains } from '@/config/wagmi';
 
 
 const config = getDefaultConfig({
-    appName: "RainbowKit App",
-    projectId: 'aec84fc090cad6ff22325f167a1b60a1',
-    chains: [bscTestnet, bsc],
+    appName: "Music From Nothing",
+    projectId: envCfg.rainbowkitId as string,
+    // @ts-ignore
+    chains: envCfg.envType === "production" ? mainnetChains : testnetChains,
     ssr: true,
 });
 

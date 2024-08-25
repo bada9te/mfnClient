@@ -29,7 +29,9 @@ const envCfg = {
     facebookUnlinkURL:  process.env.NEXT_PUBLIC_FACEBOOK_UNLINK,
 
     mfnContractAddress: process.env.NEXT_PUBLIC_MFN_CONTRACT_ADDRESS,
-    usdcTokenAddress: process.env.NEXT_PUBLIC_USDC_TOKEN_ADDRESS,
+
+    rainbowkitId: process.env.NEXT_PUBLIC_RAINBOWKIT_ID,
+    envType: process.env.NEXT_PUBLIC_ENV_TYPE,
 }
 
 

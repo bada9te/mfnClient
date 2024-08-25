@@ -6,7 +6,7 @@ import {httpLogin} from "@/utils/http-requests/auth";
 import {useSnackbar} from "notistack";
 import {useRouter} from "next/navigation";
 import {useAppDispatch} from "@/lib/redux/store";
-import {setUser} from "@/lib/redux/slices/user";
+import {setUnreadNotificationsCount, setUser} from "@/lib/redux/slices/user";
 import {setCookie} from "cookies-next";
 import FormsSocials from "../common/forms-socials/forms-socials";
 import envCfg from "@/config/env";
@@ -27,9 +27,10 @@ export default function LoginForm() {
         httpLogin(data.email, data.password)
             .then(({data: response}) => {
                 console.log("LOGIN:", response);
-                enqueueSnackbar(`Logged in as ${response.nick}`, {variant: 'success', autoHideDuration: 2000});
+                enqueueSnackbar(`Logged in as ${response.user.nick}`, {variant: 'success', autoHideDuration: 2000});
                 reset();
-                dispatch(setUser(response));
+                dispatch(setUser(response.user));
+                dispatch(setUnreadNotificationsCount(response.unreadNotifications));
                 setCookie(envCfg.userIdCookieKey as string, response._id);
                 router.replace('/feed/1');
             })
