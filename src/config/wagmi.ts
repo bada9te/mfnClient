@@ -4,7 +4,7 @@ import {
   arbitrum,
   avalanche,
   base,
-  polygon
+  polygon,
 } from '@wagmi/core/chains'
 import envCfg from './env';
 import abi97 from "@/config/abis/testnet/USDC-97.json";
