@@ -6,7 +6,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 
 import {
-    bscTestnet,
+    bscTestnet, bsc
 } from '@wagmi/core/chains';
 import {
     QueryClientProvider,
@@ -20,7 +20,7 @@ import { WagmiProvider } from 'wagmi';
 const config = getDefaultConfig({
     appName: "RainbowKit App",
     projectId: 'aec84fc090cad6ff22325f167a1b60a1',
-    chains: [bscTestnet],
+    chains: [bscTestnet, bsc],
     ssr: true,
 });
 

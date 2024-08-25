@@ -7,7 +7,7 @@ import {useCallback, useEffect, useState} from "react";
 import { useAccount, useReadContract } from "wagmi";
 import Link from "next/link";
 import envCfg from "@/config/env";
-import mfnTokenAbi from "@/config/MFNTokenAbi.json";
+import usdcTokenAbi from "@/config/USDCTokenAbi.json";
 //import formatNumber from "@/utils/common-functions/formatNumber";
 import { useSnackbar } from "notistack";
 import BuyMFNTModal from "@/components/modals/buy-mfnf-modal";
@@ -24,8 +24,8 @@ export default function ProfileButton() {
     const { enqueueSnackbar } = useSnackbar();
     const account = useAccount();
     const {data: userBalance, refetch: refetchUserBalance} = useReadContract({
-        address: envCfg.mfnTokenAddress as `0x${string}`,
-        abi: mfnTokenAbi,
+        address: envCfg.usdcTokenAddress as `0x${string}`,
+        abi: usdcTokenAbi,
         functionName: "balanceOf",
         args: [account.address]
     });
@@ -62,7 +62,7 @@ export default function ProfileButton() {
                                 <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM9 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6.75 8a.75.75 0 0 0 0 1.5h.75v1.75a.75.75 0 0 0 1.5 0v-2.5A.75.75 0 0 0 8.25 8h-1.5Z" clipRule="evenodd" />
                             </svg>
                         </span>
-                        <span className=" badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${userBalance} MFNT`}</span>
+                        <span className=" badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${(Number(userBalance) / 10**18).toFixed(3)} USDC`}</span>
                         <BuyMFNTModal button={
                             <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce]">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">

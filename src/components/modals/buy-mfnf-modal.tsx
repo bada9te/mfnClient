@@ -9,6 +9,7 @@ import { useSnackbar } from "notistack";
 import { config } from "@/config/wagmi";
 import mfntTokensData from "@/config/mfnt-tokens";
 import { formatEther, parseEther } from "viem";
+import Image from "next/image";
 
 
 export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
@@ -78,33 +79,20 @@ export default function BuyMFNTModal({button}: {button: React.ReactElement}) {
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
 
-                    <h4 className="font-bold text-lg">Buy MFNT tokens</h4>
+                    <h4 className="font-bold text-lg">Buy USDC tokens</h4>
 
-                    <div className="overflow-y-auto mt-5 no-scrollbar py-4">
-                        <div className="flex gap-4 flex-wrap justify-center items-center">
-                            {
-                                mfntTokensData.map((i, key) => {
-                                    return (
-                                        <TokenAmountCard 
-                                            title={i.title} 
-                                            index={key + 1} 
-                                            amount={i.amount} 
-                                            key={key} 
-                                            handleSelect={() => setSelectedPack(i.amount)}
-                                        />
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
-
-                    <div className="modal-action z-50"> 
-                        <button className="btn btn-primary w-full glass text-white" onClick={submitPurchase} disabled={selectedPack === null}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                                <path d="M2.273 5.625A4.483 4.483 0 0 1 5.25 4.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0 0 18.75 3H5.25a3 3 0 0 0-2.977 2.625ZM2.273 8.625A4.483 4.483 0 0 1 5.25 7.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0 0 18.75 6H5.25a3 3 0 0 0-2.977 2.625ZM5.25 9a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3H15a.75.75 0 0 0-.75.75 2.25 2.25 0 0 1-4.5 0A.75.75 0 0 0 9 9H5.25Z" />
-                            </svg>
-                            Purchase<span className="font-bold text-[#23d7d3]">{selectedPack} MFNT</span>tokens
-                        </button>
+                    <p>There are recommended platforms to purchase USDC, you can also use your favourite one (<span className="font-bold">USDC</span> token must be associated with your <span className="font-bold">BINANCE</span> account)</p>
+                    <p className="font-bold">USDC Token Address:</p>
+                    <a className="font-bold text-[#23c0bd]" href="https://bscscan.com/address/0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d#notes">{envCfg.usdcTokenAddress}</a>
+                    <div className="join join-vertical mt-4">
+                        <a className="join-item btn btn-warning glass text-white" target="_blank" href="https://www.binance.com/en/crypto/buy/USD/USDC">
+                            <Image src={"/assets/icons/binance.png"} width={30} height={30} alt="binance"/>
+                            Binance
+                        </a>
+                        <a className="join-item btn hover:bg-blue-400 glass text-white" target="_blank" href="https://www.coinbase.com/price/usdc">
+                            <Image src={"/assets/icons/coinbase.png"} width={30} height={30} alt="coinbase"/>
+                            Coinbase
+                        </a>
                     </div>
                 </div>
             </dialog>

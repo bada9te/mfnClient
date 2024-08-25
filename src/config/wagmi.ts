@@ -1,10 +1,11 @@
 import { http, createConfig } from '@wagmi/core'
-import { bscTestnet } from '@wagmi/core/chains'
+import { bscTestnet, bsc } from '@wagmi/core/chains'
 
 
 export const config = createConfig({
-  chains: [bscTestnet],
+  chains: [bscTestnet, bsc],
   transports: {
     [bscTestnet.id]: http(),
+    [bsc.id]: http(),
   },
 });
