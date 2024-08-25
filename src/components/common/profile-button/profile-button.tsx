@@ -28,7 +28,7 @@ export default function ProfileButton() {
         // @ts-ignore
         abi: USDCAddresses[account.chainId]?.abi,
         functionName: "balanceOf",
-        args: [account.address]
+        args: [account.address as `0x${string}`]
     });
 
     const handlebalanceInfoClick = useCallback(() => {

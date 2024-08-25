@@ -10,7 +10,7 @@ import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import SelectAmountOfMFNTokens from "@/components/modals/select-amount-of-tokens-modal";
 import envCfg from "@/config/env";
-import mfnAbi from "@/config/MusicFromNothingAbi.json";
+import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
 import { config } from "@/config/wagmi";
 
 const DollarIcon = () => {
