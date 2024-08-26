@@ -11,7 +11,7 @@ import { waitForTransactionReceipt } from "@wagmi/core";
 import SelectAmountOfMFNTokens from "@/components/modals/select-amount-of-tokens-modal";
 import envCfg from "@/config/env";
 import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
-import { config } from "@/config/wagmi";
+import { config, USDCAddresses } from "@/config/wagmi";
 
 const DollarIcon = () => {
     return (
@@ -53,6 +53,13 @@ export default function Battle(props: {
         functionName: "balanceOf",
         args: [account.address]
     });
+    const { data: decimals } = useReadContract({
+        // @ts-ignore
+        address: USDCAddresses[account.chainId]?.address || "0x",
+        // @ts-ignore
+        abi: USDCAddresses[account.chainId]?.abi || [],
+        functionName: "decimals",
+    });
     const { address } = useAccount();
 
     useEffect(() => {
@@ -85,19 +92,32 @@ export default function Battle(props: {
         });
     }
 
-    const makeBattleVoteWithMFNT = (amount: number, type:  "post1Score" | "post2Score") => {
+    const makeBattleVoteWithUSDC = (amount: number, type:  "post1Score" | "post2Score") => {
         if (Number(userBalance) < amount) {
-            enqueueSnackbar("Not enough MFNT", {autoHideDuration: 4000, variant: 'error'});
+            enqueueSnackbar("Not enough USDC", {autoHideDuration: 4000, variant: 'error'});
             return;
         }
-        enqueueSnackbar("Warning, your balance will be lost if you will not follow the flow in the right way! Process will start in 10 seconds.", { autoHideDuration: 10000, variant: 'warning' });
 
-        setTimeout(() => {
-            writeContractAsync({
+        setTimeout(async() => {
+            const approveHash = await writeContractAsync({
+                // @ts-ignore
+                address: USDCAddresses[account.chainId].address,
+                // @ts-ignore
+                abi: USDCAddresses[account.chainId].abi,
+                functionName: "approve",
+                args: [envCfg.mfnContractAddress, amount * 10**decimals],
+            });
+            enqueueSnackbar("Waiting for tx receipt...", {autoHideDuration: 2000});
+            await waitForTransactionReceipt(config, {
+                hash: approveHash,
+                confirmations: 2
+            });
+            enqueueSnackbar("Confirmed, voting with USDC...", {autoHideDuration: 2000});
+            await writeContractAsync({
                 address: envCfg.mfnContractAddress as `0x${string}`,
                 abi: mfnAbi,
                 functionName: "vote",
-                args: [battleData._id, amount]
+                args: [battleData._id, amount * 10**decimals]
             }).then(async hash => {
                 await waitForTransactionReceipt(config, {
                     hash,
@@ -107,7 +127,7 @@ export default function Battle(props: {
             }).catch(_ => {
                 enqueueSnackbar("Execution error, pls try again later", {autoHideDuration: 4000, variant: 'error'});
             });
-        }, 10000);   
+        }, 2);   
     }
 
     return (
@@ -128,7 +148,7 @@ export default function Battle(props: {
                                     <SelectAmountOfMFNTokens 
                                         type="post1Score"
                                         button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
-                                        handleClose={makeBattleVoteWithMFNT}
+                                        handleClose={makeBattleVoteWithUSDC}
                                     />
                                 </>
                             }
@@ -196,7 +216,7 @@ export default function Battle(props: {
                                     <SelectAmountOfMFNTokens 
                                         type="post2Score"
                                         button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
-                                        handleClose={makeBattleVoteWithMFNT}
+                                        handleClose={makeBattleVoteWithUSDC}
                                     />
                                 </>
                             }

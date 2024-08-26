@@ -31,7 +31,7 @@ export default function LoginForm() {
                 reset();
                 dispatch(setUser(response.user));
                 dispatch(setUnreadNotificationsCount(response.unreadNotifications));
-                setCookie(envCfg.userIdCookieKey as string, response._id);
+                setCookie(envCfg.userIdCookieKey as string, response.user._id);
                 router.replace('/feed/1');
             })
             .catch(err => {
