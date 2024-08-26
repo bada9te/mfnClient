@@ -105,7 +105,7 @@ export default function Battle(props: {
                 // @ts-ignore
                 abi: USDCAddresses[account.chainId].abi,
                 functionName: "approve",
-                args: [envCfg.mfnContractAddress, amount * 10**decimals],
+                args: [envCfg.mfnContractAddress, amount * 10**Number(decimals)],
             });
             enqueueSnackbar("Waiting for tx receipt...", {autoHideDuration: 2000});
             await waitForTransactionReceipt(config, {
@@ -117,7 +117,7 @@ export default function Battle(props: {
                 address: envCfg.mfnContractAddress as `0x${string}`,
                 abi: mfnAbi,
                 functionName: "vote",
-                args: [battleData._id, amount * 10**decimals]
+                args: [battleData._id, amount * 10**Number(decimals)]
             }).then(async hash => {
                 await waitForTransactionReceipt(config, {
                     hash,
@@ -143,6 +143,7 @@ export default function Battle(props: {
                                 !battleData.finished &&
                                 <>
                                     <button 
+                                        disabled={battleData.votedBy?.map(i => i._id).includes(user?._id)}
                                         onClick={() => makeBattleVote(1, "post1Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
                                     <SelectAmountOfMFNTokens 
@@ -208,6 +209,7 @@ export default function Battle(props: {
                                 !battleData.finished &&
                                 <>
                                     <button
+                                        disabled={battleData.votedBy?.map(i => i._id).includes(user?._id)}
                                         onClick={() => makeBattleVote(1, "post2Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"
                                     >

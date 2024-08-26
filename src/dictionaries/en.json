@@ -1,0 +1,233 @@
+{
+    "app": {
+        "account-restore": {
+            "restore": {
+                "title": "",
+                "description": ""
+            },
+            "email-verify": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "account-verify": {
+            "title": "",
+            "description": ""
+        },
+        "battles": {
+            "id": {
+                "title": "",
+                "description": ""
+            },
+            "create": {
+                "title": "",
+                "description": ""
+            },
+            "finished": {
+                "title": "",
+                "description": ""
+            },
+            "in-progress": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "categories": {
+            "title": "",
+            "description": ""
+        },
+        "faq": {
+            "title": "",
+            "description": ""
+        },
+        "feed": {
+            "title": "",
+            "description": ""
+        },
+        "login": {
+            "title": "",
+            "description": ""
+        },
+        "logout": {
+            "title": "",
+            "description": ""
+        },
+        "playlists": {
+            "id": {
+                "title": "",
+                "description": ""
+            },
+            "create": {
+                "title": "",
+                "description": ""
+            },
+            "explore": {
+                "title": "",
+                "description": ""
+            },
+            "my-playlists": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "post": {
+            "title": "",
+            "description": ""
+        },
+        "profile": {
+            "id": {
+                "page": {
+                    "title": "",
+                    "description": ""
+                },
+                "achievements": {
+                    "title": "",
+                    "description": ""
+                }
+            },
+            "me": {
+                "page": {
+                    "title": "",
+                    "description": ""
+                },
+                "achievements": {
+                    "title": "",
+                    "description": ""
+                },
+                "edit": {
+                    "title": "",
+                    "description": ""
+                },
+                "notifications": {
+                    "new": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "read": {
+                        "title": "",
+                        "description": ""
+                    }
+                },
+                "saved": {
+                    "title": "",
+                    "description": ""
+                },
+                "upload": {
+                    "title": "",
+                    "description": ""
+                }
+            }
+        },
+        "register": {
+            "title": "",
+            "description": ""
+        },
+        "support": {
+            "title": "",
+            "description": ""
+        }
+    },
+    "components": {
+        "bars": {
+            "appbar": {
+
+            },
+            "bar-tabs": {
+
+            },
+            "bottom-nav": {
+
+            }
+        },
+        "common": {
+            "footer": {
+
+            },
+            "player": {
+                "player": {
+
+                },
+                "track-info": {
+
+                }
+            },
+            "profile-button": {
+
+            },
+            "profile-card": {
+
+            },
+            "refresh-btn-container": {
+
+            },
+            "register-explore-btns": {
+
+            }
+        },
+        "entities": {
+            "achievement": {
+
+            },
+            "battle": {
+
+            },
+            "notification": {
+
+            },
+            "playlist": {
+
+            },
+            "post": {
+
+            }
+        },
+        "forms": {
+            "account-confirmination": {
+
+            },
+            "account-restore": {
+
+            },
+            "battle": {
+
+            },
+            "email-verification": {
+
+            },
+            "login": {
+
+            },
+            "playlist": {
+
+            },
+            "post-edit": {
+
+            },
+            "post-upload": {
+
+            },
+            "profile-edit": {
+
+            },
+            "register": {
+
+            },
+            "support": {
+
+            }
+        },
+        "modals": {
+            "leftbar-drawer": {
+
+            },
+            "rightbar-drawer": {
+                "rightbar-drawer": {
+
+                },
+                "rightbar-drawer-user": {
+
+                }
+            }
+        }
+    }
+}
