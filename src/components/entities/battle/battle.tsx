@@ -143,7 +143,7 @@ export default function Battle(props: {
                                 !battleData.finished &&
                                 <>
                                     <button 
-                                        disabled={battleData.votedBy?.map(i => i._id).includes(user?._id)}
+                                        disabled={battleData.votedBy?.map(i => i._id)?.includes(user?._id as string)}
                                         onClick={() => makeBattleVote(1, "post1Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
                                     <SelectAmountOfMFNTokens 
@@ -209,7 +209,7 @@ export default function Battle(props: {
                                 !battleData.finished &&
                                 <>
                                     <button
-                                        disabled={battleData.votedBy?.map(i => i._id).includes(user?._id)}
+                                        disabled={battleData.votedBy?.map(i => i._id)?.includes(user?._id as string)}
                                         onClick={() => makeBattleVote(1, "post2Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"
                                     >
