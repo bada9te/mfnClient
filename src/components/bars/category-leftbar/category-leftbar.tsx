@@ -9,7 +9,6 @@ export default function CategoryLeftBar(props: {
     count: string;
 }) {
     const { title, bgImage, iconImage, description, count } = props;
-
     return (
         <div className={`card w-fit max-w-[305px] min-h-48 bg-cover bg-center bg-base-300 shadow-none text-white max-h-52 relative bg-opacity-80 rounded-2xl overflow-hidden glass`}>
             <Image src={"/assets/bgs/category.png"} alt="category-bg" width={800} height={600} className="absolute bottom-0 left-0 rounded-bl-2xl min-h-48 blur-sm"/>
