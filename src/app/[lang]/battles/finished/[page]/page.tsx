@@ -5,14 +5,17 @@ import {Suspense} from "react";
 import BattlesContainer from "@/components/containers/battles-container/battles-container";
 import BattlesContainerSkeleton from "@/components/containers/battles-container/battles-container-skeleton";
 import {BATTLES_BY_STATUS_QUERY} from "@/utils/graphql-requests/battles";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function Battles({params}: {params: {page: number}}) {
+export default async function Battles({params}: {params: {page: number, lang: TLang}}) {
+    const dict = await getDictionary(params.lang);
     return (
         <>
             <BarTabsBattles activeTab="finished"/>
             <HeroWrapper
-                title="Finished battles"
-                description="Relive the excitement and magic of our previous music battles! Each event has been a spectacular showcase of talent, creativity, and pure musical energy. Whether you missed out or just want to revisit the unforgettable moments, this page is your gateway to the highlights of past showdowns."
+                title={dict.app.battles.finished.title}
+                description={dict.app.battles.finished.description}
                 disableMarginsOnMobile
             >
                 <div className="card w-full">

@@ -4,13 +4,16 @@ import {PreloadQuery} from "@/lib/apollo/client";
 import {POSTS_QUERY} from "@/utils/graphql-requests/posts";
 import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default async function Feed({params}: {params: { page: number }}) {
+export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
+    const dict = await getDictionary(params.lang);
     return (
         <HeroWrapper
-            title="Recent tracks"
-            description="The newest tracks from users"
+            title={dict.app.feed.title}
+            description={dict.app.feed.description}
         >
             <div className="card w-full">
                 <div className="flex flex-wrap justify-center md:justify-around gap-5 z-10">

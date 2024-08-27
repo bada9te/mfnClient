@@ -5,15 +5,18 @@ import {Suspense} from "react";
 import BattlesContainerSkeleton from "@/components/containers/battles-container/battles-container-skeleton";
 import BattlesContainer from "@/components/containers/battles-container/battles-container";
 import {PreloadQuery} from "@/lib/apollo/client";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function Battles({params}: {params: {page: number}}) {
+export default async function Battles({params}: {params: {page: number, lang: TLang}}) {
+    const dict = await getDictionary(params.lang);
     return (
         <>
             <BarTabsBattles activeTab="in-progress"/>
             <HeroWrapper
-                title="Battles in progress"
-                description="Dive into the heart of musical competition with our Ultimate Music Showdown, where aspiring artists and seasoned performers come together for an unforgettable battle of talent. This is the stage where rhythm meets rivalry, and only the most exceptional will rise to the top!"
+                title={dict.app.battles["in-progress"].title}
+                description={dict.app.battles["in-progress"].description}
                 disableMarginsOnMobile
             >
                 <div className="card w-full">

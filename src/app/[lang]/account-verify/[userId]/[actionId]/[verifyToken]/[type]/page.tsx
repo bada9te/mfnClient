@@ -1,17 +1,21 @@
 import AccountConfirminationForm from "@/components/forms/account-confirmination";
 import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
+import { getDictionary } from "@/dictionaries/dictionaries";
+import { TLang } from "@/types/language";
 
-export default function AccountVerify({params}: {params: {
+export default async function AccountVerify({params}: {params: {
     userId: string;
     actionId: string;
     verifyToken: string;
     type: string;
+    lang: TLang;
 }}) {
+    const dict = await getDictionary(params.lang);
     return (
         <HeroWrapperForm
             bgStyles="bg-[url('/assets/bgs/loginFormBG.png')] bg-left"
-            title="Account confirmination"
-            description="You will be able to sign in into your account after this step"
+            title={dict.app["account-verify"].title}
+            description={dict.app["account-verify"].description}
         >
             <AccountConfirminationForm {...params}/>
         </HeroWrapperForm>

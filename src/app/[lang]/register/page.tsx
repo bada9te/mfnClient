@@ -1,13 +1,15 @@
 import RegisterForm from "@/components/forms/register";
 import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
+import { getDictionary } from "@/dictionaries/dictionaries";
+import { TLang } from "@/types/language";
 
-export default function Login() {
+export default async function Register({params}: {params: {lang: TLang}}) {
+    const dict = await getDictionary(params.lang);
     return (
         <HeroWrapperForm
             bgStyles="bg-[url('/assets/bgs/loginFormBG.png')] bg-left"
-            title="Register new account"
-            description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                        exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi"
+            title={dict.app.register.title}
+            description={dict.app.register.description}
         >
             <RegisterForm/>
         </HeroWrapperForm>

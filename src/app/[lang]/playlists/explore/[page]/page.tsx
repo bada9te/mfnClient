@@ -5,15 +5,18 @@ import {PreloadQuery} from "@/lib/apollo/client";
 import {Suspense} from "react";
 import PlaylistsContainerSkeleton from "@/components/containers/playlists-container/playlists-container-skeleton";
 import {PLAYLISTS_PUBLIC_AWAILABLE_QUERY} from "@/utils/graphql-requests/playlists";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function Playlists({params}: {params: {page: number}}) {
+export default async function Playlists({params}: {params: {page: number, lang: TLang}}) {
+    const dict = await getDictionary(params.lang);
     return (
         <>
             <BarTabsPlaylists activeTab="explore"/>
             <HeroWrapper
-                title="Explore playlists"
-                description="Discover a diverse collection of curated playlists perfect for any occasion. From upbeat anthems to relaxing tunes, explore the ultimate selection of public music mixes that cater to every taste and mood."
+                title={dict.app.playlists.explore.title}
+                description={dict.app.playlists.explore.description}
             >
 
                 <div className="card w-full">

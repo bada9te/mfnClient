@@ -4,13 +4,16 @@ import {Suspense} from "react";
 import {BATTLE_BY_ID_QUERY} from "@/utils/graphql-requests/battles";
 import BattleSkeleton from "@/components/entities/battle/battles-skeleton";
 import BattleContainer from "@/components/containers/battles-container/battle-container";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function Battles({params}: {params: {id: string}}) {
+export default async function Battles({params}: {params: {id: string, lang: TLang}}) {
+    const dict = await getDictionary(params.lang);
     return (
         <>
             <HeroWrapper
-                title="Specific battle"
-                description="Just look at this..."
+                title={dict.app.battles.id.title}
+                description={dict.app.battles.id.description}
                 disableMarginsOnMobile
             >
                 <div className="card w-full">

@@ -2,77 +2,73 @@
     "app": {
         "account-restore": {
             "restore": {
-                "title": "",
+                "title": "Restore your account",
                 "description": ""
             },
             "email-verify": {
-                "title": "",
-                "description": ""
+                "title": "Email verification",
+                "description": "Pls provide the email address that is linked to your account"
             }
         },
         "account-verify": {
-            "title": "",
-            "description": ""
+            "title": "Account confirmination",
+            "description": "You will be able to sign in into your account after this step"
         },
         "battles": {
             "id": {
-                "title": "",
-                "description": ""
+                "title": "Specific battle",
+                "description": "Just look at this..."
             },
             "create": {
-                "title": "",
-                "description": ""
+                "title": "New Battle",
+                "description": "Ready to take the stage and lead the next great music showdown? Our Create New page is your gateway to launching a fresh and exciting music battle. Whether you're an artist, a promoter, or just a passionate music fan, this is where your vision for the ultimate music competition begins!"
             },
             "finished": {
-                "title": "",
-                "description": ""
+                "title": "Finished battles",
+                "description": "Relive the excitement and magic of our previous music battles! Each event has been a spectacular showcase of talent, creativity, and pure musical energy. Whether you missed out or just want to revisit the unforgettable moments, this page is your gateway to the highlights of past showdowns."
             },
             "in-progress": {
-                "title": "",
-                "description": ""
+                "title": "Battles in progress",
+                "description": "Dive into the heart of musical competition with our Ultimate Music Showdown, where aspiring artists and seasoned performers come together for an unforgettable battle of talent. This is the stage where rhythm meets rivalry, and only the most exceptional will rise to the top!"
             }
         },
         "categories": {
-            "title": "",
-            "description": ""
-        },
-        "faq": {
-            "title": "",
-            "description": ""
+            "description-part1": "The newest tracks in",
+            "description-part2": "category"
         },
         "feed": {
-            "title": "",
-            "description": ""
+            "title": "Recent tracks",
+            "description": "The newest tracks from users"
         },
         "login": {
-            "title": "",
+            "title": "Sign in into account",
             "description": ""
         },
         "logout": {
-            "title": "",
-            "description": ""
+            "title": "Logout",
+            "description": "You will be logged out soon"
         },
         "playlists": {
             "id": {
-                "title": "",
-                "description": ""
+                "title": "Specific Playlist",
+                "description": "Nothing to say, have a good day :)"
             },
             "create": {
-                "title": "",
-                "description": ""
+                "title": "New playlist",
+                "description": "Start building your ideal playlist by setting up a new collection. Organize and name your playlist to match any mood or event, and add tracks later when you're ready. It’s the ultimate way to plan your music journey and ensure you have the perfect soundtrack at your fingertips."
             },
             "explore": {
-                "title": "",
-                "description": ""
+                "title": "Explore playlists",
+                "description": "Discover a diverse collection of curated playlists perfect for any occasion. From upbeat anthems to relaxing tunes, explore the ultimate selection of public music mixes that cater to every taste and mood."
             },
             "my-playlists": {
-                "title": "",
-                "description": ""
+                "title": "My playlists",
+                "description": "List of created and saved playlists"
             }
         },
         "post": {
-            "title": "",
-            "description": ""
+            "title": "Specific Track",
+            "description": "Nothing to say, have fun :)"
         },
         "profile": {
             "id": {
@@ -119,12 +115,12 @@
             }
         },
         "register": {
-            "title": "",
+            "title": "Register new account",
             "description": ""
         },
         "support": {
-            "title": "",
-            "description": ""
+            "title": "Feel yourself free to contact us!",
+            "description": "Whether you have questions, need troubleshooting assistance, or seek guidance on using our features, our comprehensive FAQs, contact options, and troubleshooting tips are here to assist you. We're dedicated to ensuring you have a smooth and enjoyable experience, so don’t hesitate to reach out if you need further assistance."
         }
     },
     "components": {
