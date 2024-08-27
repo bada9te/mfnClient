@@ -16,7 +16,7 @@ export default async function Notifications({params}: {params: { page: number, l
     const dict = await getDictionary(params.lang);
     return (
         <>
-            <NotificationsTabs activeTab={"new"}/>
+            <NotificationsTabs activeTab={"new"} dictionary={dict.components}/>
             <HeroWrapper
                 title={dict.app.profile.me.notifications.new.title}
                 description={dict.app.profile.me.notifications.new.description}

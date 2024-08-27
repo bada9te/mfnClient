@@ -11,9 +11,14 @@ import envCfg from "@/config/env";
 import { useSnackbar } from "notistack";
 import Image from "next/image";
 import { USDCAddresses } from "@/config/wagmi";
+import { type getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function ProfileButton() {
+export default function ProfileButton({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     // Use the useSelector hook to get the user state from redux store
     const user = useAppSelector(state => state.user);
     const [isMounted, setIsMounted] = useState(false);
@@ -110,7 +115,7 @@ export default function ProfileButton() {
                                         <path
                                             d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z"/>
                                     </svg>
-                                    Profile
+                                    {dictionary?.common["profile-button"].profile}
                                 </div>
                             </a>
                         </Link>
@@ -144,7 +149,7 @@ export default function ProfileButton() {
                                     <button onClick={openChainModal}>
                                         {/* @ts-ignore */}
                                         <Image src={USDCAddresses[account.chainId].icon} alt="chain-logo" width={20} height={20}/>
-                                        Switch chain
+                                        {dictionary?.common["profile-button"]["switch-chain"]}
                                     </button>
                                 </li>
                             }
@@ -164,7 +169,7 @@ export default function ProfileButton() {
                                             <path
                                                 d="M1 4.25a3.733 3.733 0 0 1 2.25-.75h13.5c.844 0 1.623.279 2.25.75A2.25 2.25 0 0 0 16.75 2H3.25A2.25 2.25 0 0 0 1 4.25ZM1 7.25a3.733 3.733 0 0 1 2.25-.75h13.5c.844 0 1.623.279 2.25.75A2.25 2.25 0 0 0 16.75 5H3.25A2.25 2.25 0 0 0 1 7.25ZM7 8a1 1 0 0 1 1 1 2 2 0 1 0 4 0 1 1 0 0 1 1-1h3.75A2.25 2.25 0 0 1 19 10.25v5.5A2.25 2.25 0 0 1 16.75 18H3.25A2.25 2.25 0 0 1 1 15.75v-5.5A2.25 2.25 0 0 1 3.25 8H7Z"/>
                                         </svg>
-                                        Wallet
+                                        {dictionary?.common["profile-button"].wallet}
                                     </button>
                                 </li>
                             }
@@ -187,7 +192,7 @@ export default function ProfileButton() {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                    Notifications
+                                    {dictionary?.common["profile-button"].notifications}
                                 </div>
                                 <span className="badge">{user.unreadNotifications}</span>
                             </a>
@@ -208,7 +213,7 @@ export default function ProfileButton() {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                Edit profile
+                                {dictionary?.common["profile-button"]["edit-profile"]}
                             </a>
                         </Link>
                     </li>
@@ -227,7 +232,7 @@ export default function ProfileButton() {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                Saved posts
+                                {dictionary?.common["profile-button"].saved}
                             </a>
                         </Link>
                     </li>
@@ -246,7 +251,7 @@ export default function ProfileButton() {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                Support
+                                {dictionary?.common["profile-button"].support}
                             </a>
                         </Link>
                     </li>
@@ -270,7 +275,7 @@ export default function ProfileButton() {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                Logout
+                                {dictionary?.common["profile-button"].logout}
                             </a>
                         </Link>
                     </li>
@@ -292,7 +297,7 @@ export default function ProfileButton() {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                Support
+                                {dictionary?.common["profile-button"].support}
                             </a>
                         </Link>
                     </li>
@@ -311,7 +316,7 @@ export default function ProfileButton() {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                Login
+                                {dictionary?.common["profile-button"].login}
                             </a>
                         </Link>
                     </li>

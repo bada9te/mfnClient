@@ -9,4 +9,5 @@ const dictionaries = {
 }
 
 
-export const getDictionary = async (locale: TLang) => dictionaries[locale]()
+export const getDictionary = async (locale: TLang) =>
+  dictionaries[locale]?.() ?? dictionaries.en();

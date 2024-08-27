@@ -1,9 +1,14 @@
 import DotPattern from "@/components/magicui-components/dot-pattern";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Footer() {
+export default function Footer({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     return (
         <footer className="footer p-10 bg-base-300 text-neutral-content rounded-2xl shadow-2xl overflow-hidden relative bg-opacity-80">
             <DotPattern
@@ -13,10 +18,10 @@ export default function Footer() {
             />
             <aside>
                 <Image className="rounded-full z-10" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
-                <p>Music From Nothing<br/>2024</p>
+                <p>Music From Nothing<br/>{new Date().getFullYear()}</p>
             </aside>
             <nav>
-                <h6 className="footer-title">Quick nav</h6>
+                <h6 className="footer-title">{dictionary?.common.footer["quick-nav"]}</h6>
                 <div className="flex flex-wrap gap-4 max-w-72 z-20">
                     <Link href={"/"} className="hover:text-white">
                         Home

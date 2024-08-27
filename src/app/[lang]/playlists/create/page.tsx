@@ -8,7 +8,7 @@ export default async function Playlists({params}: {params: {lang: TLang}}) {
     const dict = await getDictionary(params.lang);
     return (
         <>
-            <BarTabsPlaylists activeTab="create"/>
+            <BarTabsPlaylists activeTab="create" dictionary={dict.components}/>
             <HeroWrapperForm
                 bgStyles="bg-[url('/assets/bgs/newPlaylistFormBG.png')] bg-right"
                 title={dict.app.playlists.create.title}

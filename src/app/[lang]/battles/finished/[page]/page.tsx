@@ -12,7 +12,7 @@ export default async function Battles({params}: {params: {page: number, lang: TL
     const dict = await getDictionary(params.lang);
     return (
         <>
-            <BarTabsBattles activeTab="finished"/>
+            <BarTabsBattles activeTab="finished" dictionary={dict.components}/>
             <HeroWrapper
                 title={dict.app.battles.finished.title}
                 description={dict.app.battles.finished.description}

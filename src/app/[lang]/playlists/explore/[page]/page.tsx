@@ -13,7 +13,7 @@ export default async function Playlists({params}: {params: {page: number, lang: 
     const dict = await getDictionary(params.lang);
     return (
         <>
-            <BarTabsPlaylists activeTab="explore"/>
+            <BarTabsPlaylists activeTab="explore" dictionary={dict.components}/>
             <HeroWrapper
                 title={dict.app.playlists.explore.title}
                 description={dict.app.playlists.explore.description}

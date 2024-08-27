@@ -8,7 +8,7 @@ export default async function Battles({params}: {params: {lang: TLang}}) {
     const dict = await getDictionary(params.lang);
     return (
         <>
-            <BarTabsBattles activeTab="create"/>
+            <BarTabsBattles activeTab="create" dictionary={dict.components}/>
             <HeroWrapperForm
                 fullWidth
                 bgStyles="bg-[url('/assets/bgs/newBattleFormBG.png')] bg-right"

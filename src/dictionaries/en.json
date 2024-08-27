@@ -128,18 +128,42 @@
     "components": {
         "bars": {
             "appbar": {
-
+                "feed": "Feed",
+                "battles": "Battles",
+                "in-progress": "In progress",
+                "finished": "Finished",
+                "create-new": "Create new",
+                "playlists": "Playlists",
+                "explore": "Explore",
+                "my-playlists": "My playlists",
+                "categories": "Categories"
             },
             "bar-tabs": {
-
+                "bar-tabs-battles": {
+                    "in-progress": "In progress",
+                    "finished": "Finished",
+                    "create-new":"Create new"
+                },
+                "bar-tabs-notifications": {
+                    "new": "New",
+                    "reviewed": "Reviewed"
+                },
+                "bar-tabs-playlists": {
+                    "explore": "Explore",
+                    "my-playlists": "My playlists",
+                    "create-new": "Create new"
+                }
             },
             "bottom-nav": {
-
+                "tracks": "Tracks",
+                "new-post": "New post",
+                "player": "Player",
+                "people": "People"
             }
         },
         "common": {
             "footer": {
-
+                "quick-nav": "Quick nav"
             },
             "player": {
                 "player": {
@@ -150,7 +174,15 @@
                 }
             },
             "profile-button": {
-
+                "profile": "Profile",
+                "switch-chain": "Switch chain",
+                "wallet": "Wallet",
+                "notifications": "Notifications",
+                "edit-profile": "Edit profile",
+                "saved": "Saved posts",
+                "support": "Support",
+                "logout": "Logout",
+                "login": "Login"
             },
             "profile-card": {
 
