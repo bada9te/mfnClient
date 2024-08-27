@@ -8,8 +8,11 @@ import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-s
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import { USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY } from "@/utils/graphql-requests/users";
 import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function ProfileId({params}: {params: {page: number, id: string}}) {
+export default async function ProfileId({params}: {params: {page: number, id: string, lang: TLang}}) {
+    const dict = await getDictionary(params.lang);
     return (
         <>
             <PreloadQuery query={ACHIEVEMENTS_COUNT_QUERY}>
@@ -22,8 +25,8 @@ export default function ProfileId({params}: {params: {page: number, id: string}}
                 </PreloadQuery>
             </PreloadQuery>
             <HeroWrapper
-                title=""
-                description=""
+                title={dict.app.profile.id.page.title}
+                description={dict.app.profile.id.page.description}
             >
                 <div className="card shadow-none w-full ">
                     <div className="flex flex-wrap justify-center md:justify-around gap-5">

@@ -1,5 +1,5 @@
+"use server"
 import { TLang } from '@/types/language'
-import 'server-only'
  
 const dictionaries = {
   "en": () => import('./en.json').then((module) => module.default),

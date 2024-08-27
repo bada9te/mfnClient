@@ -6,14 +6,16 @@ import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import PostsContainerSaved from "@/components/containers/posts-container/posts-container-saved";
 import {cookies} from "next/headers";
 import envCfg from "@/config/env";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function Feed({params}: {params: { page: number }}) {
+export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
     const userId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
-
+    const dict = await getDictionary(params.lang);
     return (
         <HeroWrapper
-            title="Saved tracks"
-            description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
+            title={dict.app.profile.me.saved.title}
+            description={dict.app.profile.me.saved.description}
         >
             <div className="card w-full">
                 <div className="flex flex-wrap justify-center md:justify-around gap-5">

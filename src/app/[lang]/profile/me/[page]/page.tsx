@@ -1,6 +1,6 @@
 import ProfileCard from "@/components/common/profile-card/profile-card";
 import {PreloadQuery} from "@/lib/apollo/client";
-import {POSTS_BY_OWNER_QUERY, POSTS_QUERY} from "@/utils/graphql-requests/posts";
+import {POSTS_BY_OWNER_QUERY} from "@/utils/graphql-requests/posts";
 import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
@@ -10,11 +10,13 @@ import {USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY} from "@/utils/graphql-requests
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
 import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
 import envCfg from "@/config/env";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function Profile({params}: {params: { page: number }}) {
+export default async function Profile({params}: {params: { page: number, lang: TLang }}) {
     const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
-
+    const dict = await getDictionary(params.lang);
     return (
         <>
             <PreloadQuery query={ACHIEVEMENTS_COUNT_QUERY}>
@@ -27,8 +29,8 @@ export default function Profile({params}: {params: { page: number }}) {
                 </PreloadQuery>
             </PreloadQuery>
             <HeroWrapper
-                title="My tracks"
-                description="The list of uploaded tracks"
+                title={dict.app.profile.me.page.title}
+                description={dict.app.profile.me.page.description}
             >
                 <div className="card w-full">
                     <div className="flex flex-wrap justify-center md:justify-around gap-5">

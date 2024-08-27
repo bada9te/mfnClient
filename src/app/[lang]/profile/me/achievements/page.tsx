@@ -6,14 +6,16 @@ import AchievementsContainerSkeleton from "@/components/containers/achievements-
 import { PreloadQuery } from "@/lib/apollo/client";
 import { ACHIEVEMENTS_ALL_QUERY } from "@/utils/graphql-requests/achievements";
 import envCfg from "@/config/env";
+import { getDictionary } from "@/dictionaries/dictionaries";
+import { TLang } from "@/types/language";
 
-export default function Challenges() {
+export default async function Challenges({params}: {params: {lang: TLang}}) {
     const currentUserId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
-
+    const dict = await getDictionary(params.lang);
     return (
         <HeroWrapper
-            title="Challenges"
-            description="The list of challenges progression assosiated to me"
+            title={dict.app.profile.me.achievements.title}
+            description={dict.app.profile.me.achievements.description}
         >
             <div className="card w-full">
                 <div className="flex flex-wrap justify-center md:justify-around gap-5">

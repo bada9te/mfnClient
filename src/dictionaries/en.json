@@ -77,40 +77,42 @@
                     "description": ""
                 },
                 "achievements": {
-                    "title": "",
-                    "description": ""
+                    "title": "Challenges",
+                    "description": "The list of challenges progression assosiated to specific user"
                 }
             },
             "me": {
                 "page": {
-                    "title": "",
-                    "description": ""
+                    "title": "My tracks",
+                    "description": "The list of uploaded tracks"
                 },
                 "achievements": {
-                    "title": "",
-                    "description": ""
+                    "title": "Challenges",
+                    "description": "The list of challenges progression assosiated to me"
                 },
                 "edit": {
-                    "title": "",
-                    "description": ""
+                    "post": {
+                        "title": "Editing post",
+                        "description": "You can edit your selected post using the form below"
+                    }
                 },
                 "notifications": {
                     "new": {
-                        "title": "",
+                        "title": "Unread notifications",
                         "description": ""
                     },
                     "read": {
-                        "title": "",
+                        "title": "Reviewed notifications",
                         "description": ""
                     }
                 },
                 "saved": {
-                    "title": "",
+                    "title": "Saved tracks",
                     "description": ""
                 },
                 "upload": {
-                    "title": "",
-                    "description": ""
+                    "title": "New post",
+                    "description": "Uploading a new hit?"
                 }
             }
         },
