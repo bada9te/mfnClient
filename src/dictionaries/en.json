@@ -221,19 +221,35 @@
         },
         "entities": {
             "achievement": {
-
+                
             },
             "battle": {
-
+                "vote-for": "Vote for",
+                "supervote": "Supervote",
+                "votes": "Votes",
+                "for": "For",
+                "versus": "vs"
             },
             "notification": {
 
             },
             "playlist": {
-
+                "share": "Share playlist",
+                "add-track": "Add track",
+                "remove-track": "Remove track",
+                "delete-playlist": "Delete playlist"
             },
             "post": {
-
+                "open-profile": "Open profile",
+                "copy-link": "Copy link",
+                "report": "Report",
+                "edit": "Edit",
+                "total-likes": "Total Likes",
+                "total-saves": "Total Saves",
+                "pause": "Pause",
+                "play": "Play",
+                "select": "Select",
+                "delete": "Delete"
             }
         },
         "forms": {

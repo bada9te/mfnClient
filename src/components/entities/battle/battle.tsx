@@ -12,6 +12,7 @@ import SelectAmountOfMFNTokens from "@/components/modals/select-amount-of-tokens
 import envCfg from "@/config/env";
 import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
 import { config, USDCAddresses } from "@/config/wagmi";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 const DollarIcon = () => {
     return (
@@ -38,8 +39,9 @@ const VoteIcon = () => {
 
 export default function Battle(props: {
     battleData: TBattle,
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
-    const {battleData} = props;
+    const {battleData, dictionary} = props;
     const [timeLeft, setTimeLeft] = useState<{h:number, m:number, s:number}>({h:0, m:0, s:0});
     const {enqueueSnackbar} = useSnackbar();
     const user = useAppSelector(state => state.user.user);
@@ -133,7 +135,7 @@ export default function Battle(props: {
     return (
         <div className="card bg-base-300 w-full glass bg-opacity-50 shadow-2xl">
             <div className="card-body justify-center items-center flex flex-col gap-5 p-4 pt-5">
-                <h2 className="card-title">{battleData.post1?.title} vs {battleData.post2?.title}</h2>
+                <h2 className="card-title">{battleData.post1?.title} {dictionary.entities.battle.versus} {battleData.post2?.title}</h2>
                 <div className="flex flex-wrap gap-5 justify-center items-center flex-col lg:flex-row">
                     {/* left */}
                     <div className="flex flex-nowrap flex-col">
@@ -145,10 +147,10 @@ export default function Battle(props: {
                                     <button 
                                         disabled={battleData.votedBy?.map(i => i._id)?.includes(user?._id as string)}
                                         onClick={() => makeBattleVote(1, "post1Score")}
-                                        className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>Vote for {battleData.post1?.title}</button>
+                                        className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}</button>
                                     <SelectAmountOfMFNTokens 
                                         type="post1Score"
-                                        button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
+                                        button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
                                         handleClose={makeBattleVoteWithUSDC}
                                     />
                                 </>
@@ -158,9 +160,9 @@ export default function Battle(props: {
                     {/* mid */}
                     <div className="stats stats-vertical shadow-md w-64 glass bg-opacity-50 bg-base-300">
                         <div className="stat place-items-center">
-                            <div className="stat-title">Votes</div>
+                            <div className="stat-title">{dictionary.entities.battle.votes}</div>
                             <div className="stat-value">{formatNumber(battleData.post1Score)}</div>
-                            <div className="stat-desc">For {battleData.post1?.title}</div>
+                            <div className="stat-desc">{dictionary.entities.battle.for} {battleData.post1?.title}</div>
                         </div>
                         <div className="stat place-items-center">
                             {
@@ -195,9 +197,9 @@ export default function Battle(props: {
                             }
                         </div>
                         <div className="stat place-items-center">
-                            <div className="stat-title">Votes</div>
+                            <div className="stat-title">{dictionary.entities.battle.votes}</div>
                             <div className="stat-value">{formatNumber(battleData.post2Score)}</div>
-                            <div className="stat-desc">For {battleData.post2?.title}</div>
+                            <div className="stat-desc">{dictionary.entities.battle.for} {battleData.post2?.title}</div>
                         </div>
                     </div>
 
@@ -213,11 +215,11 @@ export default function Battle(props: {
                                         onClick={() => makeBattleVote(1, "post2Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"
                                     >
-                                            <VoteIcon/>Vote for {battleData.post2?.title}
+                                        <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post2?.title}
                                     </button>
                                     <SelectAmountOfMFNTokens 
                                         type="post2Score"
-                                        button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>Supervote</button>}
+                                        button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
                                         handleClose={makeBattleVoteWithUSDC}
                                     />
                                 </>
