@@ -5,10 +5,11 @@ import InfoImage from "@/components/common/info-image/info-image";
 import Pagination from "@/components/common/pagination/pagination";
 import {TPaginationProps} from "@/types/pagination";
 import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function BattlesContainer(props: TPaginationProps & { finished: boolean; }) {
-    const {offset, limit, finished, page} = props;
+export default function BattlesContainer(props: TPaginationProps & { finished: boolean; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"] }) {
+    const {offset, limit, finished, page, dictionary} = props;
 
     const { data, refetch } = useBattlesByStatusSuspenseQuery({
         variables: {
@@ -18,7 +19,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
 
     return (
         <>
-            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, finished})}/>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, finished})} dictionary={dictionary}/>
             {
                 data?.battlesByStatus.battles?.length
                 ?

@@ -4,7 +4,9 @@ import DotPattern from "@/components/magicui-components/dot-pattern";
 import FlickeringGrid from "@/components/magicui-components/flickering-grid";
 import { MarqueeDemo } from "@/components/magicui-components/landing-cards-scrolling";
 import Ripple from "@/components/magicui-components/ripple";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { cn } from "@/lib/utils";
+import { TLang } from "@/types/language";
 import Image from "next/image";
 
 const cardsData1 = [
@@ -78,7 +80,8 @@ const cardsData2 = [
 ];
 
 
-export default function Page() {
+export default async function Page({params}: {params: {lang: TLang}}) {
+    const dict = await getDictionary(params.lang);
     return (
         <>
             {/* ONE */}
@@ -90,7 +93,7 @@ export default function Page() {
                 <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-32 absolute bottom-0">
                     <p className="text-4xl md:text-5xl font-bold text-center flex-0 px-5 z-20">Welcome to Music From Nothing</p>
                     <p className="text-xl text-center h-fit z-20">The music-streaming platform</p>
-                    <RegisterExploreBtns/>
+                    <RegisterExploreBtns dictionary={dict.components}/>
                 </div>
                 <Image width={400} height={400}  
                     src="/assets/drawings/drawing-1.png" 

@@ -1,6 +1,7 @@
 "use client"
 
 import envCfg from "@/config/env";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
 import { usePostSwicthInSavedMutation, usePostSwitchLikeMutation, usePostLazyQuery } from "@/utils/graphql-requests/generated/schema";
 import Image from "next/image";
@@ -9,7 +10,11 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
 
-export default function PlayerTrackInfo() {
+export default function PlayerTrackInfo({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const post = useAppSelector(state => state.player.post);
     const user = useAppSelector(state => state.user.user);
     const { enqueueSnackbar } = useSnackbar();
@@ -86,7 +91,7 @@ export default function PlayerTrackInfo() {
                                     <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                                 </svg>
                             </div>
-                            <div className="stat-title">Total Likes</div>
+                            <div className="stat-title">{dictionary.common.player["track-info"]["total-likes"]}</div>
                             <div className="stat-value text-primary">{data?.post?.likedBy?.length || 0}</div>
                         </div>
 
@@ -97,13 +102,13 @@ export default function PlayerTrackInfo() {
                                     <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clipRule="evenodd" />
                                 </svg>
                             </div>
-                            <div className="stat-title">Total Saves</div>
+                            <div className="stat-title">{dictionary.common.player["track-info"]["total-saves"]}</div>
                             <div className="stat-value text-primary">{data?.post?.savedBy?.length || 0}</div>
                         </div>
                     </div>
 
                     <Link className="btn btn-primary glass btn-sm text-white" href={`/post/${data?.post._id}/${data?.post.owner._id}`}>
-                        Track details
+                        {dictionary.common.player["track-info"]["track-details"]}
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                             <path fillRule="evenodd" d="M15.28 9.47a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L13.69 10 9.97 6.28a.75.75 0 0 1 1.06-1.06l4.25 4.25ZM6.03 5.22l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L8.69 10 4.97 6.28a.75.75 0 0 1 1.06-1.06Z" clipRule="evenodd" />
                         </svg>

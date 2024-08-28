@@ -33,6 +33,7 @@ export default async function Categories({params}: {params: {category: string, p
                                 limit={12}
                                 page={params.page}
                                 category={params.category}
+                                dictionary={dict.components}
                             />
                         </Suspense>
                     </PreloadQuery>

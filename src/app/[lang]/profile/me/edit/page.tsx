@@ -6,10 +6,13 @@ import { Suspense } from "react";
 import { USER_QUERY } from "@/utils/graphql-requests/users";
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
 import envCfg from "@/config/env";
+import { TLang } from "@/types/language";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function EditProfile() {
-    const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string
+export default async function EditProfile({params}: {params: {lang: TLang}}) {
+    const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
+    const dict = await getDictionary(params.lang);
     return (
         <>
             <PreloadQuery
@@ -19,7 +22,7 @@ export default function EditProfile() {
                 }}
             >
                 <Suspense fallback={<ProfileCardSkeleton/>}>
-                    <ProfileCard isEditable userId={myId}/>
+                    <ProfileCard isEditable userId={myId} dictionary={dict.components}/>
                 </Suspense>
                 <div className="m-0 md:m-4 md:mb-0 w-full">
                     <ProfileEditForm userId={myId}/>

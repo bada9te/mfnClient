@@ -163,14 +163,23 @@
         },
         "common": {
             "footer": {
-                "quick-nav": "Quick nav"
+                "quick-nav": "Quick nav",
+                "social": "Social",
+                "home": "Home",
+                "battles": "Battles",
+                "playlists": "Playlists",
+                "new-post": "New post",
+                "support": "Support",
+                "faq": "FAQ"
             },
             "player": {
                 "player": {
-
+                    "volume": "Volume"
                 },
                 "track-info": {
-
+                    "total-likes": "Total Likes",
+                    "total-saves": "Total Saves",
+                    "track-details": "Track details"
                 }
             },
             "profile-button": {
@@ -185,13 +194,29 @@
                 "login": "Login"
             },
             "profile-card": {
-
+                "profile-progress": {
+                    "level": "Current level",
+                    "challenges": "Challanges completed",
+                    "total-likes": "Total likes",
+                    "total-saves": "Total Saves",
+                    "list-of-challenges": "List of challenges",
+                    "most-liked-track": "Mostly liked track",
+                    "most-saved-tarck": "Mostly saved track"
+                },
+                "followers": "Followers",
+                "following": "Following",
+                "unfollow": "Unfollow",
+                "follow": "Follow",
+                "avatar": "Avatar",
+                "background": "Background",
+                "share": "Share"
             },
             "refresh-btn-container": {
-
+                "refresh": "Refresh"
             },
             "register-explore-btns": {
-
+                "register": "Register",
+                "explore": "Explore"
             }
         },
         "entities": {

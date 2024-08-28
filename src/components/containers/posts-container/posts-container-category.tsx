@@ -5,9 +5,10 @@ import Post from "@/components/entities/post/post";
 import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/common/info-image/info-image";
 import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function PostsContainerCategory(props: TPaginationProps & {category: string}) {
-    const { page, offset, limit, category } = props;
+export default function PostsContainerCategory(props: TPaginationProps & {category: string; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
+    const { page, offset, limit, category, dictionary } = props;
 
     const { data, refetch } = usePostsByCategorySuspenseQuery({
         variables: {
@@ -17,7 +18,7 @@ export default function PostsContainerCategory(props: TPaginationProps & {catego
 
     return (
         <>
-            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, category})}/>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, category})} dictionary={dictionary}/>
             {
                 data?.postsByCategory.posts?.length
                 ?

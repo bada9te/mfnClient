@@ -39,6 +39,7 @@ export default async function Notifications({params}: {params: { page: number, l
                                     limit={12}
                                     checked={false}
                                     receiverId={receiver}
+                                    dictionary={dict.components}
                                 />
                             </Suspense>
                         </PreloadQuery>

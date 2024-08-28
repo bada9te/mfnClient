@@ -9,10 +9,11 @@ import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
 import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function PlaylistsContainerPublic(props: TPaginationProps) {
-    const { offset, limit, page } = props;
+export default function PlaylistsContainerPublic(props: TPaginationProps & {dictionary: Awaited<ReturnType<typeof getDictionary>>["components"] }) {
+    const { offset, limit, page, dictionary } = props;
 
     const { data, refetch } = usePlaylistsPublicAvailableSuspenseQuery({
         variables: {
@@ -22,7 +23,7 @@ export default function PlaylistsContainerPublic(props: TPaginationProps) {
 
     return (
         <>
-            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit})}/>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit})} dictionary={dictionary}/>
             {
                 data?.playlistsPublicAvailable.playlists?.length
                 ?

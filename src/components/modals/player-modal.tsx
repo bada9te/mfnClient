@@ -3,8 +3,9 @@ import { setTab } from "@/lib/redux/slices/bottom-bar";
 import { useAppDispatch } from "@/lib/redux/store";
 import React, { useEffect, useRef, useState } from "react";
 import AudioPlayer from "../common/player/player";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function PlayerModal({button}: {button: React.ReactElement}) {
+export default function PlayerModal({button, dictionary}: {button: React.ReactElement; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const dispatch = useAppDispatch();
     const [isMounted, setIsMounted] = useState(false);
@@ -44,7 +45,7 @@ export default function PlayerModal({button}: {button: React.ReactElement}) {
                     <h4 className="font-bold text-lg">In Player</h4>
 
                     <div className="flex-1 h-fit w-full flex justify-center items-end overflow-y-auto overflow-x-hidden mt-5 no-scrollbar">
-                        <AudioPlayer/>
+                        <AudioPlayer dictionary={dictionary}/>
                     </div>
                 </div>
             </dialog>

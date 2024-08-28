@@ -33,6 +33,7 @@ export default async function Playlists({params}: {params: {page: number, lang: 
                                     page={params.page}
                                     offset={(params.page - 1) * 6}
                                     limit={6}
+                                    dictionary={dict.components}
                                 />
                             </Suspense>
                         </PreloadQuery>

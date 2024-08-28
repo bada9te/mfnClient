@@ -24,27 +24,27 @@ export default function Footer({
                 <h6 className="footer-title">{dictionary?.common.footer["quick-nav"]}</h6>
                 <div className="flex flex-wrap gap-4 max-w-72 z-20">
                     <Link href={"/"} className="hover:text-white">
-                        Home
+                        {dictionary.common.footer.home}
                     </Link>
                     <Link href={"/battles/in-progress/1"} className="hover:text-white">
-                        Battles
+                        {dictionary.common.footer.battles}
                     </Link>
                     <Link href={"/playlists/explore/1"} className="hover:text-white">
-                        Playlists
+                        {dictionary.common.footer.playlists}
                     </Link>
                     <Link href={"/profile/me/upload"} className="hover:text-white">
-                        New post
+                        {dictionary.common.footer["new-post"]}
                     </Link>
                     <Link href={"/support"} className="hover:text-white">
-                        Support
+                        {dictionary.common.footer.support}
                     </Link>
                     <Link href={"/faq"} className="hover:text-white">
-                        FAQ
+                        {dictionary.common.footer.faq}
                     </Link>
                 </div>
             </nav> 
             <nav>
-                <h6 className="footer-title">Social</h6>
+                <h6 className="footer-title">{dictionary.common.footer.social}</h6>
                 <div className="grid grid-flow-col gap-4 z-10">
                     <a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

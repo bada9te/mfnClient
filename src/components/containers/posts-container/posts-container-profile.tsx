@@ -6,10 +6,11 @@ import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
 import { useAppSelector } from "@/lib/redux/store";
 import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function PostsContainerProfile(props: TPaginationProps & { profileId: string }) {
-    const { offset, limit, page, profileId, paginationHidden } = props;
+export default function PostsContainerProfile(props: TPaginationProps & { profileId: string; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"] }) {
+    const { offset, limit, page, profileId, paginationHidden, dictionary } = props;
     const user = useAppSelector(state => state.user.user);
 
     const { data, refetch } = usePostsByOwnerSuspenseQuery({
@@ -20,7 +21,7 @@ export default function PostsContainerProfile(props: TPaginationProps & { profil
 
     return (
         <>
-            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, owner: profileId})}/>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, owner: profileId})} dictionary={dictionary}/>
             {
                 data?.postsByOwner.posts?.length
                 ?

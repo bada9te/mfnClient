@@ -28,7 +28,7 @@ export default async function Feed({params}: {params: { page: number, lang: TLan
                         }}
                     >
                         <Suspense fallback={<PostsContainerSkeleton/>}>
-                            <PostsContainerSaved offset={(params.page - 1) * 12} limit={12} page={params.page} userId={userId}/>
+                            <PostsContainerSaved offset={(params.page - 1) * 12} limit={12} page={params.page} userId={userId} dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
                 </div>

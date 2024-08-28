@@ -55,6 +55,7 @@ export default function BottomNav({
                     <span className="btm-nav-label">{dictionary?.bars["bottom-nav"]["new-post"]}</span>
                 </Link>
                 <PlayerModal
+                    dictionary={dictionary}
                     button={
                         <button className={bottomBarTab === "player" ? "active" : ""}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">

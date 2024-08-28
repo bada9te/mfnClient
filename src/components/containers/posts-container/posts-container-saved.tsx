@@ -5,10 +5,11 @@ import Pagination from "@/components/common/pagination/pagination";
 import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
 import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
-export default function PostsContainerSaved(props: TPaginationProps & { userId: string }) {
-    const { offset, limit, page, userId } = props;
+export default function PostsContainerSaved(props: TPaginationProps & { userId: string; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"] }) {
+    const { offset, limit, page, userId, dictionary } = props;
 
     const { data, refetch } = usePostsSavedByUserSuspenseQuery({
         variables: {
@@ -18,7 +19,7 @@ export default function PostsContainerSaved(props: TPaginationProps & { userId: 
 
     return (
         <>
-            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, user: userId})}/>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, user: userId})} dictionary={dictionary}/>
             {
                 data?.postsSavedByUser.posts?.length
                 ?

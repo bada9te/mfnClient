@@ -34,6 +34,7 @@ export default async function Battles({params}: {params: {page: number, lang: TL
                                     limit={12}
                                     finished={true}
                                     page={params.page}
+                                    dictionary={dict.components}
                                 />
                             </Suspense>
                         </PreloadQuery>

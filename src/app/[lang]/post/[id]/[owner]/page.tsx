@@ -30,7 +30,7 @@ export default async function PostPage({params}: {params: {id: string, owner: st
                         </Suspense>
                     </PreloadQuery>
 
-                    <ProfileCard userId={params.owner} disableMargins/>
+                    <ProfileCard userId={params.owner} disableMargins dictionary={dict.components}/>
                 </div>
                 <div className="divider divider-primary my-10">More tracks</div>
                 <div className="flex flex-wrap justify-center md:justify-around gap-5">
@@ -43,7 +43,7 @@ export default async function PostPage({params}: {params: {id: string, owner: st
                         }}
                     >
                         <Suspense fallback={<PostsContainerSkeleton/>}>
-                            <PostsContainerProfile profileId={params.owner} offset={0} limit={6} page={1} paginationHidden/>
+                            <PostsContainerProfile profileId={params.owner} offset={0} limit={6} page={1} paginationHidden dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
                 </div>

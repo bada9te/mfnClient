@@ -19,7 +19,7 @@ export default async function ProfileId({params}: {params: {page: number, id: st
                 <PreloadQuery query={USER_ACHIEVEMENTS_DATA_QUERY} variables={{ _id: params.id }}>
                     <PreloadQuery query={USER_QUERY} variables={{ _id: params.id }}>
                         <Suspense fallback={<ProfileCardSkeleton/>}>
-                            <ProfileCard userId={params.id}/>
+                            <ProfileCard userId={params.id} dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
                 </PreloadQuery>
@@ -44,6 +44,7 @@ export default async function ProfileId({params}: {params: {page: number, id: st
                                     offset={(params.page - 1) * 12} 
                                     limit={12}
                                     profileId={params.id}
+                                    dictionary={dict.components}
                                 />
                             </Suspense>
                         </PreloadQuery>

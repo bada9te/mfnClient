@@ -38,6 +38,7 @@ export default async function Playlists({params}: {params: {page: number, lang: 
                                     offset={(params.page - 1) * 12}
                                     limit={12}
                                     ownerId={myId}
+                                    dictionary={dict.components}
                                 />
                             </Suspense>
                         </PreloadQuery>

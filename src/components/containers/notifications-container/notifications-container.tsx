@@ -7,9 +7,10 @@ import Pagination from "@/components/common/pagination/pagination";
 import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 import { useSnackbar } from "notistack";
 import { revalidatePathAction } from "@/actions/revalidation";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function NotificationsContainer(props: TPaginationProps & { checked: boolean, receiverId: string }) {
-    const { page, offset, limit, checked, receiverId } = props;
+export default function NotificationsContainer(props: TPaginationProps & { checked: boolean, receiverId: string; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"] }) {
+    const { page, offset, limit, checked, receiverId, dictionary } = props;
     const { enqueueSnackbar } = useSnackbar();
 
     const { data, refetch } = useNotificationsSuspenseQuery({
@@ -59,8 +60,8 @@ export default function NotificationsContainer(props: TPaginationProps & { check
                 checked,
                 receiverId: receiverId,
                 offset,
-                limit
-            })}/>
+                limit,
+            })} dictionary={dictionary}/>
             {
                 data?.notifications?.notifications?.length
                 ?

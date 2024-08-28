@@ -1,4 +1,5 @@
 "use client"
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
 import { UserAchievementsData, UserAchievementsDataQuery } from "@/utils/graphql-requests/generated/schema";
 import { ApolloQueryResult } from "@apollo/client";
@@ -19,9 +20,10 @@ export default function ProfileProgress(props: {
     data: UserAchievementsData;
     achievementsTotal: number;
     totalRP: number;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
     refreshStatistics: () => Promise<ApolloQueryResult<UserAchievementsDataQuery>>;
 }) {
-    const {userId, data, achievementsTotal, refreshStatistics, totalRP} = props;
+    const {userId, data, achievementsTotal, refreshStatistics, totalRP, dictionary} = props;
     const user = useAppSelector(state => state.user.user);
     const [isMounted, setIsMounted] = useState(false);
 
@@ -36,7 +38,7 @@ export default function ProfileProgress(props: {
     return (
         <div className="stats stats-vertical lg:stats-horizontal glass max-w-full rounded-2xl text-white">
             <div className="stat relative">
-                <div className="stat-title text-center">Current level</div>
+                <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"].level}</div>
                 <span onClick={refreshStatistics}><RefreshBtn/></span>
                 <div className="stat-value flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/trophy.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
@@ -50,34 +52,34 @@ export default function ProfileProgress(props: {
             </div>
 
             <div className="stat relative">
-                <div className="stat-title text-center">Challanges completed</div>
+                <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"].challenges}</div>
                 <div className="stat-value text-center flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/challenge.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
                     {data.achievements?.length || 0}/{achievementsTotal || '...'}</div>
                 <div className="stat-actions">
-                    <Link href={`/profile/${user?._id === userId ? "me" : userId}/achievements`} className="btn btn-sm btn-primary glass text-white w-full">List of challenges</Link>
+                    <Link href={`/profile/${user?._id === userId ? "me" : userId}/achievements`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["list-of-challenges"]}</Link>
                 </div>
             </div>
 
             <div className="stat relative">
-                <div className="stat-title text-center">Total likes</div>
+                <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"]["total-likes"]}</div>
                 <div className="stat-value text-center flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/heart.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
                     {data.totalLikes}
                 </div>
                 <div className="stat-actions">
-                    <Link href={`/post/${data.maxLikesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">Most liked track</Link>
+                    <Link href={`/post/${data.maxLikesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["most-liked-track"]}</Link>
                 </div>
             </div>
 
             <div className="stat relative">
-                <div className="stat-title text-center">Total saves</div>
+                <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"]["total-saves"]}</div>
                 <div className="stat-value text-center flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/bookmark.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
                     {data.totalSaves}
                 </div>
                 <div className="stat-actions">
-                    <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">Most saved track</Link>
+                    <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["most-saved-tarck"]}</Link>
                 </div>
             </div>
         </div>

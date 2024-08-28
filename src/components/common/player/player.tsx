@@ -1,7 +1,6 @@
 "use client"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store"
 import { useEffect, useRef, useState } from "react";
-import raf from 'raf' // requestAnimationFrame polyfill
 import { setIsLoop, setIsMute, setIsPlaying, setVolume } from "@/lib/redux/slices/player";
 import InfoImage from "../info-image/info-image";
 // @ts-ignore
@@ -9,8 +8,13 @@ import ReactHowler from 'react-howler'
 import PlayerTrackInfo from "./player-track-info";
 import formatTime from "@/utils/common-functions/formatTime";
 import envCfg from "@/config/env";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function AudioPlayer() {
+export default function AudioPlayer({
+  dictionary
+}: {
+  dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
   const { isPlaying, isLoop, isMute, volume, post } = useAppSelector(state => state.player);
   const [loaded, setIsLoaded] = useState(false);
   const [seek, setSeek] = useState(0.0);
@@ -119,7 +123,7 @@ export default function AudioPlayer() {
                 ref={playerRef}
                 usingWebAudio={true}
               />
-              <PlayerTrackInfo/>
+              <PlayerTrackInfo dictionary={dictionary}/>
               <div className="divider divider-primary my-8 md:my-3">
                 <div className='join w-full flex flex-row justify-center'>
                   <button className='join-item btn btn-sm btn-primary glass text-white' onClick={handleToggle}>
@@ -184,7 +188,7 @@ export default function AudioPlayer() {
   
                 <div className='volume max-w-32'>
                   <label>
-                    Volume: {(playerVol * 100).toFixed(2)}
+                    {dictionary.common.player.player.volume}: {(playerVol * 100).toFixed(2)}
                     <input 
                       type="range" 
                       min='0'
