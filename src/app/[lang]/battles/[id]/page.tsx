@@ -25,7 +25,7 @@ export default async function Battles({params}: {params: {id: string, lang: TLan
                             }}
                         >
                             <Suspense fallback={<BattleSkeleton/>}>
-                                <BattleContainer id={params.id}/>
+                                <BattleContainer id={params.id} dictionary={dict.components}/>
                             </Suspense>
                         </PreloadQuery>
                     </div>

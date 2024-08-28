@@ -23,7 +23,7 @@ export default async function Playlist({params}: {params: {playlistId: string, l
                         }}
                     >
                         <Suspense fallback={<PlaylistSkeleton/>}>
-                            <PlaylistContainer playlistId={params.playlistId}/>
+                            <PlaylistContainer playlistId={params.playlistId} dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
                 </div>

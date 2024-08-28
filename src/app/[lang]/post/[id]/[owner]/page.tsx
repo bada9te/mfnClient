@@ -26,7 +26,7 @@ export default async function PostPage({params}: {params: {id: string, owner: st
                         }}
                     >
                         <Suspense fallback={<PostSkeleton/>}>
-                            <PostContainer postId={params.id}/>
+                            <PostContainer postId={params.id} dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
 

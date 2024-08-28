@@ -26,7 +26,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
                 <>
                     {
                         data?.battlesByStatus.battles?.map((battle, key) => {
-                            return (<Battle key={key} battleData={battle as TBattle}/>)
+                            return (<Battle key={key} battleData={battle as TBattle} dictionary={dictionary}/>)
                         })
                     }
                     <Pagination page={page} maxPage={Number(data?.battlesByStatus.count as number / limit)}/>
