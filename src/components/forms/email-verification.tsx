@@ -1,5 +1,6 @@
 "use client"
 import { formsConstants } from "@/config/forms";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
 import { useUserPrepareAccountToRestoreMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
@@ -9,7 +10,11 @@ type Inputs = {
     email: string,
 }
 
-export default function EmailVerificationForm() {
+export default function EmailVerificationForm({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const { handleSubmit, register, formState: {errors}, reset } = useForm<Inputs>();
     const user = useAppSelector(state => state.user.user);
     const {enqueueSnackbar} = useSnackbar();
@@ -36,15 +41,15 @@ export default function EmailVerificationForm() {
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <form className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="divider divider-primary">Verification</div>
+                <div className="divider divider-primary">{dictionary.forms["email-verification"].verification}</div>
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Your current email</span>
+                        <span className="label-text">{dictionary.forms["email-verification"]["your-current-email"]}</span>
                     </label>
-                    <input type="text" placeholder="Email" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                    <input type="text" placeholder={dictionary.forms["email-verification"].email} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                         ...register("email", {
-                            required: { value: true, message: "This field is required" },
-                            pattern: { value: formsConstants.emailRegex, message: "Email address is not valid" }
+                            required: { value: true, message: dictionary.forms["email-verification"].required },
+                            pattern: { value: formsConstants.emailRegex, message: dictionary.forms["email-verification"]["email-not-valid"] }
                         })
                     }/>
                     {
@@ -56,7 +61,7 @@ export default function EmailVerificationForm() {
                 </div>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">Submit</button>
+                    <button className="btn btn-primary glass text-white">{dictionary.forms["email-verification"].submit}</button>
                 </div>
             </form>
         </div>

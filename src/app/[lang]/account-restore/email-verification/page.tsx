@@ -11,7 +11,7 @@ export default async function EmailVerification({params}: {params: {lang: TLang}
             title={dict.app["account-restore"]["email-verify"].title}
             description={dict.app["account-restore"]["email-verify"].description}
         >
-            <EmailVerificationForm/>
+            <EmailVerificationForm dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

@@ -17,7 +17,7 @@ export default async function Battles({params}: {params: {lang: TLang}}) {
                 disableMarginsOnMobile
             >
                 <div className="card shadow-2xl bg-base-300">
-                    <BattleForm/>
+                    <BattleForm dictionary={dict.components}/>
                 </div>
             </HeroWrapperForm>
         </>

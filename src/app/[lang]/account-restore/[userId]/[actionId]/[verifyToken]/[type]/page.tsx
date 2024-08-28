@@ -18,7 +18,7 @@ export default async function AccountRestore({params}: {params: {
             title={dict.app["account-restore"].restore.title}
             description={dict.app["account-restore"].restore.description}
         >
-            <AccountRestoreForm {...params}/>
+            <AccountRestoreForm {...params} dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

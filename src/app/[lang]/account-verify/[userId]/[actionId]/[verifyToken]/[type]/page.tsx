@@ -17,7 +17,7 @@ export default async function AccountVerify({params}: {params: {
             title={dict.app["account-verify"].title}
             description={dict.app["account-verify"].description}
         >
-            <AccountConfirminationForm {...params}/>
+            <AccountConfirminationForm {...params} dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

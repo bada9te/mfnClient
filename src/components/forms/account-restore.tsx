@@ -1,5 +1,6 @@
 "use client"
 import { formsConstants } from "@/config/forms";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { useUserRestoreAccountMutation } from "@/utils/graphql-requests/generated/schema";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
@@ -16,8 +17,9 @@ export default function AccountRestoreForm(props: {
     actionId: string;
     verifyToken: string;
     type: string;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
-    const { userId, actionId, verifyToken, type } = props;
+    const { userId, actionId, verifyToken, type, dictionary } = props;
     const { handleSubmit, register, formState: {errors}, reset, getValues } = useForm<Inputs>();
     const {enqueueSnackbar} = useSnackbar();
     const router = useRouter();
@@ -48,7 +50,7 @@ export default function AccountRestoreForm(props: {
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <form className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="divider divider-primary">Account restoration</div>
+                <div className="divider divider-primary">{dictionary.forms["account-restore"].restoration}</div>
                 {
                     (() => {
                         if (type === "email") {
@@ -56,12 +58,12 @@ export default function AccountRestoreForm(props: {
                                 <>
                                     <div className="form-control relative">
                                         <label className="label">
-                                            <span className="label-text">New email</span>
+                                            <span className="label-text">{dictionary.forms["account-restore"]["new-email"]}</span>
                                         </label>
-                                        <input type="text" placeholder="Email" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                                        <input type="text" placeholder={dictionary.forms["account-restore"]["new-email"]} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                                             ...register("newValue", {
-                                                required: { value: true, message: "This field is required" },
-                                                pattern: { value: formsConstants.emailRegex, message: "Email address is not valid" }
+                                                required: { value: true, message: dictionary.forms["account-restore"].required },
+                                                pattern: { value: formsConstants.emailRegex, message: dictionary.forms["account-restore"]["email-not-valid"] }
                                             })
                                         }/>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
@@ -79,16 +81,16 @@ export default function AccountRestoreForm(props: {
 
                                     <div className="form-control relative">
                                         <label className="label">
-                                            <span className="label-text">Confirm email</span>
+                                            <span className="label-text">{dictionary.forms["account-restore"]["confirm-email"]}</span>
                                         </label>
-                                            <input type="text" placeholder="Confirm Email" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                                            <input type="text" placeholder={dictionary.forms["account-restore"]["confirm-email"]} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                                                 ...register("email", {
-                                                    required: { value: true, message: "This field is required" },
-                                                    pattern: { value: formsConstants.emailRegex, message: "Email address is not valid" },
+                                                    required: { value: true, message: dictionary.forms["account-restore"].required },
+                                                    pattern: { value: formsConstants.emailRegex, message: dictionary.forms["account-restore"]["email-not-valid"] },
                                                     validate: (value) => {
                                                         const { newValue } = getValues();
                                                         if (newValue !== value) {
-                                                            return "Emails not match";
+                                                            return dictionary.forms["account-restore"]["emails-did-not-match"];
                                                         }
                                                         return true;
                                                     }
@@ -114,13 +116,13 @@ export default function AccountRestoreForm(props: {
                                 <>
                                     <div className="form-control relative">
                                         <label className="label">
-                                            <span className="label-text">New Password</span>
+                                            <span className="label-text">{dictionary.forms["account-restore"]["new-password"]}</span>
                                         </label>
-                                        <input type="password" placeholder="Password" className="input input-bordered shadow-md glass placeholder:text-gray-200"
+                                        <input type="password" placeholder={dictionary.forms["account-restore"]["new-password"]} className="input input-bordered shadow-md glass placeholder:text-gray-200"
                                             {...register("newValue", {
-                                                minLength: { value: 8, message: "Min length must be 8" },
-                                                maxLength: { value: 20, message: "Max length must be 20" },
-                                                required: { value: true, message: "This field is required" }
+                                                minLength: { value: 8, message: `${dictionary.forms["account-restore"]["min-length"]} 8` },
+                                                maxLength: { value: 20, message: `${dictionary.forms["account-restore"]["max-length"]} 20` },
+                                                required: { value: true, message: dictionary.forms["account-restore"].required }
                                             })}
                                         />
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
@@ -136,17 +138,17 @@ export default function AccountRestoreForm(props: {
 
                                     <div className="form-control relative">
                                         <label className="label">
-                                            <span className="label-text">Confirm password</span>
+                                            <span className="label-text">{dictionary.forms["account-restore"]["confirm-password"]}</span>
                                         </label>
-                                        <input type="password" placeholder="Confirm Password" className="input input-bordered shadow-md glass placeholder:text-gray-200"
+                                        <input type="password" placeholder={dictionary.forms["account-restore"]["confirm-password"]} className="input input-bordered shadow-md glass placeholder:text-gray-200"
                                             {...register("confirmPassword", {
-                                                minLength: { value: 8, message: "Min length must be 8" },
-                                                maxLength: { value: 20, message: "Max length must be 20" },
-                                                required: { value: true, message: "This field is required" },
+                                                minLength: { value: 8, message: `${dictionary.forms["account-restore"]["min-length"]} 8` },
+                                                maxLength: { value: 20, message: `${dictionary.forms["account-restore"]["max-length"]} 20` },
+                                                required: { value: true, message: dictionary.forms["account-restore"].required },
                                                 validate: (value) => {
                                                     const { newValue } = getValues();
                                                     if (newValue !== value) {
-                                                        return "Passwords not match"
+                                                        return dictionary.forms["account-restore"]["passwords-did-not-match"]
                                                     }
                                                     return true;
                                                 }
@@ -171,7 +173,7 @@ export default function AccountRestoreForm(props: {
                 
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">Submit</button>
+                    <button className="btn btn-primary glass text-white">{dictionary.forms["account-restore"].submit}</button>
                 </div>
             </form>
         </div>

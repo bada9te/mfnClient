@@ -254,16 +254,44 @@
         },
         "forms": {
             "account-confirmination": {
-
+                "confirmination": "Confirmination",
+                "code": "Confirmination code",
+                "confirm": "Confirm",
+                "required": "This field is required"
             },
             "account-restore": {
-
+                "restoration": "Account restoration",
+                "new-email": "New email",
+                "required": "This field is required",
+                "email-not-valid": "Email address is not valid",
+                "confirm-email": "Confirm email",
+                "emails-did-not-match": "Emails didn't match",
+                "new-password": "New Password",
+                "min-length": "Min length must be",
+                "max-length": "Max length must be",
+                "passwords-did-not-match": "Passwords didn't match",
+                "confirm-password": "Confirm password",
+                "submit": "Submit"
             },
             "battle": {
-
+                "setup": "New battle setup",
+                "your-track": "Your track",
+                "opponents-track": "Oponnent's track",
+                "battle-title": "Battle title",
+                "title-requited": "Title is required",
+                "min-length": "Min length must be",
+                "max-length": "Max length must be",
+                "create": "Create battle",
+                "select-track": "Select yout track",
+                "select": "Select"
             },
             "email-verification": {
-
+                "verification": "Verification",
+                "your-current-email": "Your current email",
+                "email": "Email",
+                "required": "This field is required",
+                "email-not-valid": "Email address is not valid",
+                "submit": "Verify"
             },
             "login": {
 
