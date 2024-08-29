@@ -10,6 +10,7 @@ import {setUnreadNotificationsCount, setUser} from "@/lib/redux/slices/user";
 import {setCookie} from "cookies-next";
 import FormsSocials from "../common/forms-socials/forms-socials";
 import envCfg from "@/config/env";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
 type Inputs = {
@@ -17,7 +18,11 @@ type Inputs = {
     password: string;
 };
 
-export default function LoginForm() {
+export default function LoginForm({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>()
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useAppDispatch();
@@ -45,13 +50,13 @@ export default function LoginForm() {
             <div className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl">
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <div className="divider divider-primary">Sign in</div>
+                    <div className="divider divider-primary">{dictionary.forms.login["sign-in"]}</div>
                     <div className="form-control relative">
                         <label className="label">
-                            <span className="label-text">Email</span>
+                            <span className="label-text">{dictionary.forms.login.email}</span>
                         </label>
 
-                        <input type="email" placeholder="Email" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                        <input type="email" placeholder={dictionary.forms.login.email} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                             ...register("email", {
                                 pattern: formsConstants.emailRegex,
                                 required: true
@@ -66,20 +71,20 @@ export default function LoginForm() {
                         {
                             errors.email &&
                             <label className="label">
-                                <span className="label-text text-error">Email address is not valid</span>
+                                <span className="label-text text-error">{dictionary.forms.login["email-not-valid"]}</span>
                             </label>
                         }
                     </div>
 
                     <div className="form-control relative">
                         <label className="label">
-                            <span className="label-text">Password</span>
+                            <span className="label-text">{dictionary.forms.login.password}</span>
                         </label>
-                        <input type="password" placeholder="Password" className="input input-bordered shadow-md glass placeholder:text-gray-200"
+                        <input type="password" placeholder={dictionary.forms.login.password} className="input input-bordered shadow-md glass placeholder:text-gray-200"
                             {...register("password", {
-                                minLength: { value: 8, message: "Min length must be 8" },
-                                maxLength: { value: 20, message: "Max length must be 20" },
-                                required: { value: true, message: "This field is required" }
+                                minLength: { value: 8, message: `${dictionary.forms.login["min-length"]} 8` },
+                                maxLength: { value: 20, message: `${dictionary.forms.login["max-length"]} 20` },
+                                required: { value: true, message: `${dictionary.forms.login.required}` }
                             })}/>
 
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
@@ -95,14 +100,12 @@ export default function LoginForm() {
                     </div>
 
                     <div className="form-control mt-6">
-                        <button className="btn btn-primary glass text-white">Login</button>
+                        <button className="btn btn-primary glass text-white">{dictionary.forms.login.login}</button>
                     </div>
 
                     <label className="label flex flex-col gap-3 justify-start items-start mt-5">
-                        <Link href="/register" className="label-text-alt link link-hover">Not registered
-                            yet?</Link>
-                        <Link href="/account-restore/email-verification" className="label-text-alt link link-hover">Forgot
-                            password?</Link>
+                        <Link href="/register" className="label-text-alt link link-hover">{dictionary.forms.login["not-registered-yet"]}</Link>
+                        <Link href="/account-restore/email-verification" className="label-text-alt link link-hover">{dictionary.forms.login["forgot-password"]}</Link>
                     </label>
                 </form>
                 <FormsSocials/>

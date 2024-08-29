@@ -28,7 +28,7 @@ export default async function EditPost({params}: {params: {postId: string, lang:
                         </Suspense>
                     </PreloadQuery>
                     
-                    <PostEditForm posId={params.postId}/>
+                    <PostEditForm posId={params.postId} dictionary={dict.components}/>
                 </div>
             </div>
         </HeroWrapper>

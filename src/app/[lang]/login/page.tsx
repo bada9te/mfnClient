@@ -11,7 +11,7 @@ export default async function Login({params}: {params: {lang: TLang}}) {
             title={dict.app.login.title}
             description={dict.app.login.description}
         >
-            <LoginForm/>
+            <LoginForm dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

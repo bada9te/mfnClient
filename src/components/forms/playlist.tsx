@@ -1,5 +1,6 @@
 "use client"
 import { revalidatePathAction } from "@/actions/revalidation";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
 import { usePlaylistCreateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
@@ -10,7 +11,11 @@ type Inputs = {
     publiclyAvailable: boolean;
 }
 
-export default function PlaylistForm() {
+export default function PlaylistForm({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const { handleSubmit, register, formState: {errors}, reset } = useForm<Inputs>();
     const user = useAppSelector(state => state.user.user);
     const {enqueueSnackbar} = useSnackbar();
@@ -40,14 +45,14 @@ export default function PlaylistForm() {
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <form className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="divider divider-primary">Playlist setup</div>
+                <div className="divider divider-primary">{dictionary.forms.playlist.setup}</div>
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Playlist title</span>
+                        <span className="label-text">{dictionary.forms.playlist.title}</span>
                     </label>
-                    <input type="text" placeholder="Title" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                    <input type="text" placeholder={dictionary.forms.playlist.title} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                         ...register("title", {
-                            required: { value: true, message: "This field is required" }
+                            required: { value: true, message: dictionary.forms.playlist.required }
                         })
                     }/>
                     {
@@ -60,7 +65,7 @@ export default function PlaylistForm() {
 
                 <div className="form-control">
                     <label className="label cursor-pointer">
-                    <span className="label-text">Publicly available</span>
+                    <span className="label-text">{dictionary.forms.playlist["public-available"]}</span>
                         <input type="checkbox" className="checkbox checkbox-primary" {
                             ...register("publiclyAvailable")
                         }/>
@@ -68,7 +73,7 @@ export default function PlaylistForm() {
                 </div>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">Create playlist</button>
+                    <button className="btn btn-primary glass text-white">{dictionary.forms.playlist.submit}</button>
                 </div>
             </form>
         </div>

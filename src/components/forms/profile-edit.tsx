@@ -6,13 +6,13 @@ import { useUserLinkFacebookMutation, useUserLinkGoogleMutation, useUserLinkTwit
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import { setUser } from "@/lib/redux/slices/user";
 import { httpGetGoogleInfo } from "@/utils/http-requests/auth";
-import Link from "next/link";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useEffect, useState } from "react";
 import { revalidatePathAction } from "@/actions/revalidation";
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import TwitterLogin from "react-twitter-login";
 import envCfg from "@/config/env";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
 type InputsNickname = {
@@ -34,7 +34,9 @@ type InputsPassword = {
 
 export default function ProfileEditForm(props: {
     userId: string;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
+    const { dictionary } = props;
     const { register: registerNick, handleSubmit: handleSubmitNick, formState: {errors: errorsNick} } = useForm<InputsNickname>();
     const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
     const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail} } = useForm<InputsEmail>();
@@ -269,22 +271,22 @@ export default function ProfileEditForm(props: {
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl md:rounded-2xl">
             <div className="bg-base-300 card-body m-1 pulsar-shadow text-white sm: md:rounded-2xl shadow-2xl glass">
-                <div className="divider divider-primary">Basics</div>
+                <div className="divider divider-primary">{dictionary.forms["profile-edit"].basics}</div>
 
                 <form onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
                     <div className="form-control pt-0">
                         <label className="label">
-                            <span className="label-text">Profile nickname</span>
+                            <span className="label-text">{dictionary.forms["profile-edit"].nickname}</span>
                         </label>
                         <div className="join w-full">
-                            <input type="text" placeholder="Nickname" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                            <input type="text" placeholder={dictionary.forms["profile-edit"].nickname} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
                                 ...registerNick("nickname", {
-                                    minLength: { value: 4, message: "Min length must be 4" },
-                                    maxLength: { value: 20, message: "Max length must be 20" },
-                                    required: { value: true, message: "This field is required" },
+                                    minLength: { value: 4, message: `${dictionary.forms["profile-edit"]["min-length"]} 4` },
+                                    maxLength: { value: 20, message: `${dictionary.forms["profile-edit"]["max-length"]} 20` },
+                                    required: { value: true, message: dictionary.forms["profile-edit"].required },
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">Save</button>
+                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].save}</button>
                         </div>
                         {
                             errorsNick.nickname &&
@@ -298,17 +300,17 @@ export default function ProfileEditForm(props: {
                 <form onSubmit={handleSubmitDescr(onSubmitDescription)} noValidate>
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Profile description</span>
+                            <span className="label-text">{dictionary.forms["profile-edit"].description}</span>
                         </label>
                         <div className="join w-full rounded-2xl">
                             <input type="text" placeholder="Description" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
                                 ...registerDescr("description", {
-                                    minLength: { value: 4, message: "Min length must be 4" },
-                                    maxLength: { value: 40, message: "Max length must be 40" },
-                                    required: { value: true, message: "This field is required" },
+                                    minLength: { value: 4, message: `${dictionary.forms["profile-edit"]["min-length"]} 4` },
+                                    maxLength: { value: 40, message: `${dictionary.forms["profile-edit"]["max-length"]} 40` },
+                                    required: { value: true, message: dictionary.forms["profile-edit"].required },
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">Save</button>
+                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].save}</button>
                         </div>
                         {
                             errorDescr.description &&
@@ -319,28 +321,28 @@ export default function ProfileEditForm(props: {
                     </div>
                 </form>
 
-                <div className="divider divider-primary mt-10">Email</div>
+                <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].email}</div>
 
                 <form onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
                     
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Email</span>
+                            <span className="label-text">{dictionary.forms["profile-edit"].email}</span>
                         </label>
                         <div className="join w-full">
-                            <input type="text" placeholder="Old email" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                            <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
                                 ...registerEmail("oldEmail", {
-                                    pattern: {value: formsConstants.emailRegex, message: "Email address is not valid"},
-                                    required: { value: true, message: "This field is required" },
+                                    pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
+                                    required: { value: true, message: dictionary.forms["profile-edit"].required },
                                     validate: (value) => {
                                         const userEmail = user?.local?.email as string;
                                         if (userEmail !== value) {
-                                            return "Wrong email address"
+                                            return dictionary.forms["profile-edit"]["wrong-email"]
                                         }
                                     }
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">Request</button>
+                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
                         </div>
                         {
                             errorEmail.oldEmail &&
@@ -351,22 +353,22 @@ export default function ProfileEditForm(props: {
                     </div>
                 </form>
 
-                <div className="divider divider-primary mt-10">Password</div>
+                <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].password}</div>
 
                 <form onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Password</span>
+                            <span className="label-text">{dictionary.forms["profile-edit"].password}</span>
                         </label>
                         <div className="join">
-                            <input type="text" placeholder="Old password" className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                            <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
                                 ...registerPassword("oldPassword", {
-                                    minLength: { value: 8, message: "Min length must be 8" },
-                                    maxLength: { value: 20, message: "Max length must be 20" },
-                                    required: { value: true, message: "This field is required" }
+                                    minLength: { value: 8, message: `${dictionary.forms["profile-edit"]["min-length"]} 8` },
+                                    maxLength: { value: 20, message: `${dictionary.forms["profile-edit"]["max-length"]} 20` },
+                                    required: { value: true, message: dictionary.forms["profile-edit"].required },
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">Request</button>
+                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
                         </div>
                         {
                             errorsPassword.oldPassword &&
@@ -377,7 +379,7 @@ export default function ProfileEditForm(props: {
                     </div>
                 </form>
 
-                <div className="divider divider-primary mt-10">Socials</div>
+                <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].socials}</div>
                 <button className="rounded-2xl btn hover:bg-white hover:text-black glass text-white" onClick={userData.user.google?.email ? handleUnlinkGoogle : () => handleGoogle()}>
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -386,7 +388,7 @@ export default function ProfileEditForm(props: {
                         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                         <path d="M1 1h22v22H1z" fill="none"/>
                     </svg>
-                    {userData.user.google?.email ? userData.user.google?.email : "Connect Google"}
+                    {userData.user.google?.email ? userData.user.google?.email : dictionary.forms["profile-edit"]["connect-google"]}
                 </button>
                 <FacebookLogin
                     appId={envCfg.passportFacebookID as string}
@@ -406,7 +408,7 @@ export default function ProfileEditForm(props: {
                                 </g> 
                                 </g>
                             </svg>
-                            { userData.user.facebook?.name ? userData.user.facebook?.name : "Connect Facebook" }
+                            { userData.user.facebook?.name ? userData.user.facebook?.name : dictionary.forms["profile-edit"]["connect-facebook"] }
                         </button>
                     )}
                 />
@@ -432,7 +434,7 @@ export default function ProfileEditForm(props: {
                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
                                     <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
                                 </svg>
-                                Connect Twitter
+                                {dictionary.forms["profile-edit"]["connect-twitter"]}
                             </button>
                         </TwitterLogin>
                     </>

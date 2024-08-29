@@ -14,7 +14,7 @@ export default async function Playlists({params}: {params: {lang: TLang}}) {
                 title={dict.app.playlists.create.title}
                 description={dict.app.playlists.create.description}
             >
-                <PlaylistForm/>
+                <PlaylistForm dictionary={dict.components}/>
             </HeroWrapperForm>
         </>
     );

@@ -10,6 +10,7 @@ import { useRef, useState } from "react";
 import ImageCropperModal from "../modals/cropper-modal";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
 import { revalidatePathAction } from "@/actions/revalidation";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 type Inputs = {
     title: string;
@@ -20,7 +21,11 @@ type Inputs = {
     downloadsAllowed: boolean;
 }
 
-export default function PostUploadForm() {
+export default function PostUploadForm({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const { formState: {errors}, register, handleSubmit, reset, resetField } = useForm<Inputs>()
     const { enqueueSnackbar } = useSnackbar();
     const [ createPost ] = usePostCreateMutation();
@@ -101,15 +106,15 @@ export default function PostUploadForm() {
         />
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <form className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="divider divider-primary">Post setup</div>
+                <div className="divider divider-primary">{dictionary.forms["post-edit-upload"].setup}</div>
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Track title</span>
+                        <span className="label-text">{dictionary.forms["post-edit-upload"].title}</span>
                     </label>
-                    <input type="text" placeholder="Track title" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                    <input type="text" placeholder={dictionary.forms["post-edit-upload"].title} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                         ...register("title", {
-                            maxLength: { value: 15, message: "Max length must be 15" },
-                            required: { value: true, message: "This field is required" }
+                            maxLength: { value: 15, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 15` },
+                            required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                         })
                     }/>
                     {
@@ -122,12 +127,12 @@ export default function PostUploadForm() {
 
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Track description</span>
+                        <span className="label-text">{dictionary.forms["post-edit-upload"].description}</span>
                     </label>
-                    <input type="text" placeholder="Track description" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                    <input type="text" placeholder={dictionary.forms["post-edit-upload"].description} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                         ...register("description", {
-                            maxLength: { value: 25, message: "Max length must be 25" },
-                            required: { value: true, message: "This field is required" }
+                            maxLength: { value: 25, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 25` },
+                            required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                         })
                     }/>
                     {
@@ -140,7 +145,7 @@ export default function PostUploadForm() {
 
                 <label className="form-control w-full">
                     <div className="label">
-                        <span className="label-text">Track image</span>
+                        <span className="label-text">{dictionary.forms["post-edit-upload"].image}</span>
                         <span className="label-text-alt">.jpg, .png</span>
                     </div>
                     <input 
@@ -148,7 +153,7 @@ export default function PostUploadForm() {
                         className="file-input file-input-bordered w-full file:glass file:text-white file: placeholder:text-gray-200" 
                         onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
                         {...register("image", {
-                            required: { value: true, message: "This field is required" }
+                            required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                         })}
                     />
                     {
@@ -161,12 +166,12 @@ export default function PostUploadForm() {
 
                 <label className="form-control w-full">
                     <div className="label">
-                        <span className="label-text">Track audio</span>
+                        <span className="label-text">{dictionary.forms["post-edit-upload"].audio}</span>
                         <span className="label-text-alt">.mp3, .wav</span>
                     </div>
                     <input type="file" className="file-input file-input-bordered w-full file:text-white file:glass file:" {
                         ...register("audio", {
-                            required: { value: true, message: "This field is required" }
+                            required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                         })
                     }/>
                     {
@@ -179,11 +184,11 @@ export default function PostUploadForm() {
 
                 <label className="form-control w-full">
                     <div className="label">
-                        <span className="label-text">Genre</span>
+                        <span className="label-text">{dictionary.forms["post-edit-upload"].genre}</span>
                     </div>
                     <select className="btn text-start glass" {
                         ...register("genre", {
-                            required: { value: true, message: "This field is required" }
+                            required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                         })
                     }>
                         {
@@ -196,7 +201,7 @@ export default function PostUploadForm() {
 
                 <div className="form-control mt-4">
                     <label className="label cursor-pointer">
-                        <span className="label-text">Downloads allowed</span>
+                        <span className="label-text">{dictionary.forms["post-edit-upload"]["downloads-allowed"]}</span>
                         <input type="checkbox" className="checkbox checkbox-primary" {
                             ...register("downloadsAllowed")
                         }/>
@@ -204,7 +209,7 @@ export default function PostUploadForm() {
                 </div>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">Upload</button>
+                    <button className="btn btn-primary glass text-white">{dictionary.forms["post-edit-upload"].submit}</button>
                 </div>
             </form>
         </div>

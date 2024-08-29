@@ -3,13 +3,13 @@ import {genres} from "@/config/categories";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
 import {httpSaveFile} from "@/utils/http-requests/files";
-import {usePostCreateMutation, usePostUpdateMutation} from "@/utils/graphql-requests/generated/schema";
+import {usePostUpdateMutation} from "@/utils/graphql-requests/generated/schema";
 import {useAppSelector} from "@/lib/redux/store";
-import {useRouter} from "next/navigation";
 import { useRef, useState } from "react";
 import ImageCropperModal from "../modals/cropper-modal";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
 import { revalidatePathAction } from "@/actions/revalidation";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 type InputsTitle = {
     title: string;
@@ -27,8 +27,11 @@ type InputsAudio = {
     audio: File[];
 }
 
-export default function PostEditForm(props: {posId: string}) {
-    const { posId } = props;
+export default function PostEditForm(props: {
+    posId: string;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
+    const { posId, dictionary } = props;
     const user = useAppSelector(state => state.user.user);
     const { 
         formState: {errors: errorTitle}, 
@@ -151,21 +154,21 @@ export default function PostEditForm(props: {posId: string}) {
         />
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <div className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl">
-                <div className="divider divider-primary">Post edit</div>
+                <div className="divider divider-primary">{dictionary.forms["post-edit-upload"].edit}</div>
 
                 <form onSubmit={handleSubmitTitle(onSubmitTitle)} noValidate>
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Track title</span>
+                            <span className="label-text">{dictionary.forms["post-edit-upload"].title}</span>
                         </label>
                         <div className="join w-full">
-                            <input type="text" placeholder="Track title" className="join-item input input-bordered shadow-md glass placeholder:text-gray-200 w-full" {
+                            <input type="text" placeholder={dictionary.forms["post-edit-upload"].title} className="join-item input input-bordered shadow-md glass placeholder:text-gray-200 w-full" {
                                 ...registerTitle("title", {
-                                    maxLength: { value: 15, message: "Max length must be 15" },
-                                    required: { value: true, message: "This field is required" }
+                                    maxLength: { value: 15, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 15` },
+                                    required: { value: true, message: `${dictionary.forms["post-edit-upload"].required}` }
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
+                            <button className="btn btn-primary join-item glass text-white" type="submit">{dictionary.forms["post-edit-upload"].save}</button>
                         </div>
                         {
                             errorTitle.title &&
@@ -179,16 +182,16 @@ export default function PostEditForm(props: {posId: string}) {
                 <form onSubmit={handleSubmitDescr(onSubmitDescr)} noValidate>
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Track description</span>
+                            <span className="label-text">{dictionary.forms["post-edit-upload"].description}</span>
                         </label>
                         <div className="join w-full">
-                            <input type="text" placeholder="Track description" className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
+                            <input type="text" placeholder={dictionary.forms["post-edit-upload"].description} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
                                 ...registerDescr("description", {
-                                    maxLength: { value: 25, message: "Max length must be 25" },
-                                    required: { value: true, message: "This field is required" }
+                                    maxLength: { value: 25, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 25` },
+                                    required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                                 })
                             }/>
-                            <button className="btn btn-primary join-item glass text-white" type="submit">Save</button>
+                            <button className="btn btn-primary join-item glass text-white" type="submit">{dictionary.forms["post-edit-upload"].save}</button>
                         </div>
                         {
                             errorDescr.description &&
@@ -202,7 +205,7 @@ export default function PostEditForm(props: {posId: string}) {
                 <form onSubmit={handleSubmitImage(onSubmitImage)} noValidate>
                     <label className="form-control w-full">
                         <div className="label">
-                            <span className="label-text">Track image</span>
+                            <span className="label-text">{dictionary.forms["post-edit-upload"].image}</span>
                             <span className="label-text-alt">.jpg, .png</span>
                         </div>
                         <div className="join join-vertical">
@@ -211,10 +214,10 @@ export default function PostEditForm(props: {posId: string}) {
                                 className="join-item file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
                                 onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
                                 {...registerImage("image", {
-                                    required: { value: true, message: "This field is required" }
+                                    required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                                 })}
                             />
-                            <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">Save new image</button>
+                            <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">{dictionary.forms["post-edit-upload"].save}</button>
                         </div>
                         {
                             errorImage.image &&
@@ -228,16 +231,16 @@ export default function PostEditForm(props: {posId: string}) {
                 <form onSubmit={handleSubmitAudio(onSubmitAudio)} noValidate>
                     <label className="form-control w-full">
                         <div className="label">
-                            <span className="label-text">Track audio</span>
+                            <span className="label-text">{dictionary.forms["post-edit-upload"].audio}</span>
                             <span className="label-text-alt">.mp3, .wav</span>
                         </div>
                         <div className="join join-vertical">
                             <input type="file" className="join-item file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
                                 ...registerAudio("audio", {
-                                    required: { value: true, message: "This field is required" }
+                                    required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                                 })
                             }/>
-                            <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">Save new audio</button>
+                            <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">{dictionary.forms["post-edit-upload"].save}</button>
                         </div>
                         {
                             errorAudio.audio &&
@@ -250,7 +253,7 @@ export default function PostEditForm(props: {posId: string}) {
 
                 <label className="form-control w-full">
                     <div className="label">
-                        <span className="label-text">Genre</span>
+                        <span className="label-text">{dictionary.forms["post-edit-upload"].genre}</span>
                     </div>
                     <select className="btn text-start glass bg-[#3b3b3b]" onChange={onGenreChange}>
                         {
@@ -263,7 +266,7 @@ export default function PostEditForm(props: {posId: string}) {
 
                 <div className="form-control mt-4">
                     <label className="label cursor-pointer">
-                        <span className="label-text">Downloads allowed</span>
+                        <span className="label-text">{dictionary.forms["post-edit-upload"]["downloads-allowed"]}</span>
                         <input type="checkbox" className="checkbox checkbox-primary" onChange={onDownloadsAllowedChange}/>
                     </label>
                 </div>

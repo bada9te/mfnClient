@@ -294,19 +294,58 @@
                 "submit": "Verify"
             },
             "login": {
-
+                "sign-in": "Sign in",
+                "email": "Email",
+                "email-not-valid": "Email address is not valid",
+                "password": "Password",
+                "min-length": "Min length must be",
+                "max-length": "Max length must be",
+                "required": "This field is required",
+                "login": "Login",
+                "not-registered-yet": "Not registered yet?",
+                "forgot-password": "Forgot password?"
             },
             "playlist": {
-
+                "setup": "Playlist setup",
+                "title": "Playlist title",
+                "required": "This field is required",
+                "public-available": "Publically available",
+                "submit": "Create playlist"
             },
-            "post-edit": {
+            "post-edit-upload": {
+                "edit": "Post edit",
+                "title": "Track title",
+                "max-length": "Max length must be",
+                "required": "This field is required",
+                "save": "Save",
+                "description": "Track description",
+                "image": "Track image",
+                "audio": "Track audio",
+                "genre": "Genre",
+                "downloads-allowed": "Downloads allowed",
 
-            },
-            "post-upload": {
-
+                "setup": "Post setup",
+                "submit": "Upload"
             },
             "profile-edit": {
-
+                "basics": "Basics",
+                "nickname": "Profile nickname",
+                "min-length": "Min length must be",
+                "max-length": "Max length must be",
+                "required": "This field is required",
+                "save": "Save",
+                "description": "Profile description",
+                "email": "Email",
+                "old-email": "Old email",
+                "email-not-valid": "Email address is not valid",
+                "wrong-email": "Wrong email address",
+                "request": "Request",
+                "password": "Password",
+                "old-password": "Old password",
+                "socials": "Socials",
+                "connect-google": "Connect Google",
+                "connect-facebook": "Connect Facebook",
+                "connect-twitter": "Connect Twitter"
             },
             "register": {
 

@@ -11,7 +11,7 @@ export default async function UploadNewPost({params}: {params: {lang: TLang}}) {
             title={dict.app.profile.me.upload.title}
             description={dict.app.profile.me.upload.description}
         >
-            <PostUploadForm/>
+            <PostUploadForm dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

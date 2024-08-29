@@ -25,7 +25,7 @@ export default async function EditProfile({params}: {params: {lang: TLang}}) {
                     <ProfileCard isEditable userId={myId} dictionary={dict.components}/>
                 </Suspense>
                 <div className="m-0 md:m-4 md:mb-0 w-full">
-                    <ProfileEditForm userId={myId}/>
+                    <ProfileEditForm userId={myId} dictionary={dict.components}/>
                 </div>
             </PreloadQuery>
         </>
