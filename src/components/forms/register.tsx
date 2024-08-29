@@ -6,6 +6,7 @@ import {useSnackbar} from "notistack";
 import {useUserCreateMutation} from "@/utils/graphql-requests/generated/schema";
 import {useRouter} from 'next/navigation';
 import FormsSocials from "../common/forms-socials/forms-socials";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 type Inputs = {
     email: string;
@@ -14,7 +15,11 @@ type Inputs = {
     repeatPassword: string;
 };
 
-export default function RegisterForm() {
+export default function RegisterForm({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const { getValues, register, handleSubmit, formState: {errors}, reset } = useForm<Inputs>();
     const { enqueueSnackbar } = useSnackbar();
     const [ createUser ] = useUserCreateMutation();
@@ -44,12 +49,12 @@ export default function RegisterForm() {
             <div className="card-body pulsar-shadow m-1 glass bg-base-300 shadow-2xl text-white rounded-2xl">
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <div className="divider divider-primary">Register</div>
+                    <div className="divider divider-primary">{dictionary.forms.register.register}</div>
                     <div className="form-control relative">
                         <label className="label">
-                            <span className="label-text">Email</span>
+                            <span className="label-text">{dictionary.forms.register.email}</span>
                         </label>
-                        <input type="email" placeholder="Email" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                        <input type="email" placeholder={dictionary.forms.register.email} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                             ...register("email", {
                                 pattern: formsConstants.emailRegex,
                                 required: true
@@ -62,19 +67,19 @@ export default function RegisterForm() {
                         {
                             errors.email &&
                             <label className="label">
-                                <span className="label-text text-error">Email address is not valid</span>
+                                <span className="label-text text-error">{dictionary.forms.register["email-not-valid"]}</span>
                             </label>
                         }
                     </div>
                     <div className="form-control relative">
                         <label className="label">
-                        <span className="label-text">Nickname</span>
+                        <span className="label-text">{dictionary.forms.register.nick}</span>
                         </label>
-                        <input type="text" placeholder="Nickname" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                        <input type="text" placeholder={dictionary.forms.register.nick} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                             ...register("nickname", {
-                                minLength: { value: 4, message: "Min length must be 4" },
-                                maxLength: { value: 20, message: "Max length must be 20" },
-                                required: { value: true, message: "This field is required" }
+                                minLength: { value: 4, message: `${dictionary.forms.register["min-length"]} 4` },
+                                maxLength: { value: 20, message: `${dictionary.forms.register["max-length"]} 20` },
+                                required: { value: true, message: dictionary.forms.register.required }
                             })
                         }/>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute top-12 right-3">
@@ -90,13 +95,13 @@ export default function RegisterForm() {
                     </div>
                     <div className="form-control relative">
                         <label className="label">
-                        <span className="label-text">Password</span>
+                        <span className="label-text">{dictionary.forms.register.password}</span>
                         </label>
-                        <input type="password" placeholder="Password" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                        <input type="password" placeholder={dictionary.forms.register.password} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                             ...register("password", {
-                                minLength: { value: 8, message: "Min length must be 8" },
-                                maxLength: { value: 20, message: "Max length must be 20" },
-                                required: { value: true, message: "This field is required" }
+                                minLength: { value: 8, message: `${dictionary.forms.register["min-length"]} 8` },
+                                maxLength: { value: 20, message: `${dictionary.forms.register["max-length"]} 20` },
+                                required: { value: true, message: dictionary.forms.register.required }
                             })}
                         />
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute top-12 right-3">
@@ -111,9 +116,9 @@ export default function RegisterForm() {
                     </div>
                     <div className="form-control relative">
                         <label className="label">
-                            <span className="label-text">Repeat Password</span>
+                            <span className="label-text">{dictionary.forms.register["repeat-password"]}</span>
                         </label>
-                        <input type="password" placeholder="Repeat password" className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                        <input type="password" placeholder={dictionary.forms.register["repeat-password"]} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                             ...register("repeatPassword", {
                                 validate: (value) => {
                                     const { password } = getValues();
@@ -128,16 +133,16 @@ export default function RegisterForm() {
                         {
                             errors.repeatPassword &&
                             <label className="label">
-                                <span className="label-text text-error">Password mismatch</span>
+                                <span className="label-text text-error">{dictionary.forms.register["passwords-mismatch"]}</span>
                             </label>
                         }
                     </div>
                     <div className="form-control mt-6">
-                        <button className="btn btn-primary glass text-white">Register</button>
+                        <button className="btn btn-primary glass text-white">{dictionary.forms.register.register}</button>
                     </div>
 
                     <label className="label flex flex-col gap-3 justify-start items-start mt-5">
-                        <Link href="/login" className="label-text-alt link link-hover">Already have an account?</Link>
+                        <Link href="/login" className="label-text-alt link link-hover">{dictionary.forms.register["have-an-account"]}</Link>
                     </label>
                 </form>
                 <FormsSocials/>

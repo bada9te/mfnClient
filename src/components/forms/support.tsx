@@ -1,5 +1,6 @@
 "use client"
 import { formsConstants } from "@/config/forms";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { useSupportRequestCreateMutation } from "@/utils/graphql-requests/generated/schema";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
@@ -11,7 +12,11 @@ type Inputs = {
     details: string;
 };
 
-export default function SupportForm() {
+export default function SupportForm({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const { register, reset, formState: {errors}, handleSubmit } = useForm<Inputs>();
     const [ createSupportRequest ] = useSupportRequestCreateMutation();
     const { enqueueSnackbar } = useSnackbar();
@@ -37,15 +42,15 @@ export default function SupportForm() {
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <form className="card-body pulsar-shadow m-1 glass bg-base-300 shadow-2xl text-white z-50 rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="divider divider-primary">Support details</div>
+                <div className="divider divider-primary">{dictionary.forms.support["support-details"]}</div>
                 <div className="form-control relative">
                     <label className="label">
-                        <span className="label-text">Email</span>
+                        <span className="label-text">{dictionary.forms.support.email}</span>
                     </label>
-                    <input type="email" placeholder="Email" className="input input-bordered glass placeholder:text-gray-200" 
+                    <input type="email" placeholder={dictionary.forms.support.email} className="input input-bordered glass placeholder:text-gray-200" 
                         {...register("email", {
-                            pattern: { value: formsConstants.emailRegex, message: "Email address is not valid" },
-                            required: { value: true, message: "Email address is required" }
+                            pattern: { value: formsConstants.emailRegex, message: dictionary.forms.support["email-not-valid"] },
+                            required: { value: true, message: dictionary.forms.support.required }
                         })}
                     />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
@@ -61,11 +66,11 @@ export default function SupportForm() {
                 </div>
                 <div className="form-control relative">
                     <label className="label">
-                        <span className="label-text">Contact reason</span>
+                        <span className="label-text">{dictionary.forms.support.reason}</span>
                     </label>
-                    <input type="email" placeholder="Contact reason" className="input input-bordered glass placeholder:text-gray-200" 
+                    <input type="email" placeholder={dictionary.forms.support.reason} className="input input-bordered glass placeholder:text-gray-200" 
                         {...register("contactReason", {
-                            required: {value: true, message: "This field is required"}
+                            required: {value: true, message: dictionary.forms.support.required}
                         })}
                     />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
@@ -80,12 +85,12 @@ export default function SupportForm() {
                 </div>
                 <div className="form-control relative">
                     <label className="label">
-                        <span className="label-text">Details</span>
+                        <span className="label-text">{dictionary.forms.support["support-details"]}</span>
                     </label>
                     <textarea className="textarea textarea-bordered resize-none glass placeholder:text-gray-200" rows={4} placeholder="Details" {
                         ...register("details", {
-                            minLength: {value: 10, message: "Min length must be 10"},
-                            required: {value: true, message: "This field is required"},
+                            minLength: {value: 10, message: `${dictionary.forms.support["min-length"]} 10`},
+                            required: {value: true, message: dictionary.forms.support.required},
                         })
                     }></textarea>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
@@ -101,10 +106,10 @@ export default function SupportForm() {
                     }
                 </div>
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white" type="submit">Send support request</button>
+                    <button className="btn btn-primary glass text-white" type="submit">{dictionary.forms.support.submit}</button>
                 </div>
                 <label className="label flex flex-col gap-3 justify-start items-start">
-                    <Link href="/faq" className="label-text-alt link link-hover">FAQ</Link>
+                    <Link href="/faq" className="label-text-alt link link-hover">{dictionary.forms.support.faq}</Link>
                 </label>
             </form>
         </div>

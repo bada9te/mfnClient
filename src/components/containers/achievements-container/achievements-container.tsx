@@ -21,8 +21,6 @@ export default function AchievementsContainer(props: {userId: string}) {
         }
     });
 
-    console.log("ACHIEVEMENTS:", uuuuuuuu?.userAchievementsData);
-
     return (
         <>
             {

@@ -6,9 +6,11 @@ import { User, useUsersByNicknameLazyQuery } from "@/utils/graphql-requests/gene
 import {LegacyRef, useEffect, useState} from "react";
 import RightbarDrawerUser from "./rigthbar-drawer-user/rightbar-drawer-user";
 import RightbarDrawerUserSkeleton from "./rigthbar-drawer-user/rightbar-drawer-user-skeleton";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 export default function RightBarDrawer(props: {
-    reference: LegacyRef<HTMLInputElement> | undefined
+    reference: LegacyRef<HTMLInputElement> | undefined;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { reference } = props;
     const dispatch = useAppDispatch();
@@ -50,7 +52,7 @@ export default function RightBarDrawer(props: {
                 >
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
-                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder="Search" onChange={e => setSq(e.target.value)} />
+                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder={props.dictionary.modals["rightbar-drawer"]["rightbar-drawer"].search} onChange={e => setSq(e.target.value)} />
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 16 16"
@@ -72,7 +74,7 @@ export default function RightBarDrawer(props: {
                                                 {
                                                     data?.usersByNickname?.map((u, k) => {
                                                         return (
-                                                            <RightbarDrawerUser key={k} data={u as User} />
+                                                            <RightbarDrawerUser key={k} data={u as User} dictionary={props.dictionary}/>
 
                                                         );
                                                     })
@@ -80,7 +82,7 @@ export default function RightBarDrawer(props: {
                                             </>
                                         );
                                     } else {
-                                        return (<InfoImage text="Search for users" image="/assets/icons/logo_person.png"/>);
+                                        return (<InfoImage text={props.dictionary.modals["rightbar-drawer"]["rightbar-drawer"]["info-image"]} image="/assets/icons/logo_person.png"/>);
                                     }
                                 } else {
                                     return (

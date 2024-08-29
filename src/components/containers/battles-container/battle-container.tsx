@@ -20,7 +20,7 @@ export default function BattleContainer({id, dictionary}: {id: string, dictionar
                 ?
                 <Battle battleData={data.battleById as TBattle} dictionary={dictionary}/>
                 :
-                <InfoImage text="battle not found" image="/assets/icons/battle-disk.png"/>
+                <InfoImage text="Battle not found" image="/assets/icons/battle-disk.png"/>
             }
         </>
     );

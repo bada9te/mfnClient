@@ -7,9 +7,11 @@ import Post from "@/components/entities/post/post";
 import InfoImage from "@/components/common/info-image/info-image";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
 import Image from "next/image";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 export default function LeftBarDrawer(props: {
-    reference: LegacyRef<HTMLInputElement> | undefined
+    reference: LegacyRef<HTMLInputElement> | undefined;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { reference } = props;
     const dispatch = useAppDispatch();
@@ -52,7 +54,7 @@ export default function LeftBarDrawer(props: {
                 >
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
-                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder="Search" onChange={e => setSq(e.target.value)}/>
+                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder={props.dictionary.modals["leftbar-drawer"].search} onChange={e => setSq(e.target.value)}/>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 16 16"
@@ -82,7 +84,7 @@ export default function LeftBarDrawer(props: {
                                             </>
                                         );
                                     } else {
-                                        return (<InfoImage text="Search for tracks" image="/assets/icons/logo_clear.png"/>);
+                                        return (<InfoImage text={props.dictionary.modals["leftbar-drawer"]["info-image"]} image="/assets/icons/logo_clear.png"/>);
                                     }
                                 } else {
                                     return (
