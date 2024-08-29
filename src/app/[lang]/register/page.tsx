@@ -11,7 +11,7 @@ export default async function Register({params}: {params: {lang: TLang}}) {
             title={dict.app.register.title}
             description={dict.app.register.description}
         >
-            <RegisterForm/>
+            <RegisterForm dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

@@ -2,6 +2,7 @@
 import React, { useState, useCallback } from "react";
 import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '@/utils/cropper/cropper';
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
 export default function ImageCropperModal(props: {
@@ -9,8 +10,9 @@ export default function ImageCropperModal(props: {
     image: any;
     handleImageCropModalClose: (b: string | null) => void;
     imageType: "post-image" | "background" | "avatar"
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
-    const {image, handleImageCropModalClose, imageType, refDialog} = props;
+    const {image, handleImageCropModalClose, imageType, refDialog, dictionary} = props;
 
     const closeModal = () => {
         refDialog.current && refDialog.current.close();
@@ -42,7 +44,7 @@ export default function ImageCropperModal(props: {
     return (
         <dialog ref={refDialog} className="modal w-full h-full absolute">
             <div className="modal-box glass  text-gray-300 min-w-[100vw] min-h-[100vh] no-scrollbar text-start flex flex-col">
-                <h4 className="font-bold text-lg z-50">Cropping the image</h4>
+                <h4 className="font-bold text-lg z-50">{dictionary.modals.cropper.cropping}</h4>
 
                 <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
                     <Cropper
@@ -58,8 +60,8 @@ export default function ImageCropperModal(props: {
                 </div>
 
                 <div className="modal-action z-50"> 
-                    <button className="btn bg-base-300 glass" onClick={handleCancelImageCropping}>Cancel</button>
-                    <button className="btn btn-primary glass " onClick={handleImageCropping}>Submit</button>
+                    <button className="btn bg-base-300 glass" onClick={handleCancelImageCropping}>{dictionary.modals.cropper.cancel}</button>
+                    <button className="btn btn-primary glass " onClick={handleImageCropping}>{dictionary.modals.cropper.submit}</button>
                 </div>
             </div>
         </dialog>

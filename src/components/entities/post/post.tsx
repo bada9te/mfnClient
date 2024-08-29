@@ -15,6 +15,7 @@ import envCfg from "@/config/env";
 import ReportModal from "@/components/modals/report-modal";
 import formatNumber from "@/utils/common-functions/formatNumber";
 import Image from "next/image";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 
 export default function Post(props: {
@@ -22,9 +23,10 @@ export default function Post(props: {
     data: TPost;
     handleSelect?: (a: TPost) => void;
     handleRemove?: (a: TPost) => void;
-    editable?: boolean
+    editable?: boolean;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
-    const { fullWidth, data, handleSelect, handleRemove, editable } = props;
+    const { fullWidth, data, handleSelect, handleRemove, editable, dictionary } = props;
     const dispatch = useAppDispatch();
     const player = useAppSelector(state => state.player);
     const user = useAppSelector(state => state.user.user);
@@ -129,6 +131,7 @@ export default function Post(props: {
                             Copy link
                         </button></li>
                         <ReportModal
+                            dictionary={dictionary}
                             postId={data._id}
                             button={
                                 <li><button>

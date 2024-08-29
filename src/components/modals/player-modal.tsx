@@ -42,7 +42,7 @@ export default function PlayerModal({button, dictionary}: {button: React.ReactEl
                         <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
 
-                    <h4 className="font-bold text-lg">In Player</h4>
+                    <h4 className="font-bold text-lg">{dictionary.modals.player["in-player"]}</h4>
 
                     <div className="flex-1 h-fit w-full flex justify-center items-end overflow-y-auto overflow-x-hidden mt-5 no-scrollbar">
                         <AudioPlayer dictionary={dictionary}/>

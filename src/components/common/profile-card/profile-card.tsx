@@ -140,6 +140,7 @@ export default function ProfileCard(props: {
     return (
         <>
             <ImageCropperModal
+                dictionary={dictionary}
                 image={imageURL}
                 imageType={imageType}
                 refDialog={cropperModalRef}

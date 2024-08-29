@@ -12,6 +12,6 @@ export default function PostContainer(props: {postId: string; dictionary: Awaite
     });
 
     return (
-        <Post data={data.post as TPost}/>
+        <Post data={data.post as TPost} dictionary={props.dictionary}/>
     );
 }

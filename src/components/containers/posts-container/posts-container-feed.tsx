@@ -26,7 +26,7 @@ export default function PostsContainerFeed(props: TPaginationProps & { dictionar
                 <>
                     {
                         data?.posts.posts?.map((post, key) => {
-                            return (<Post key={key} data={post as TPost}/>)
+                            return (<Post key={key} data={post as TPost} dictionary={dictionary}/>)
                         })
                     }
                     <Pagination page={page} maxPage={Number(data?.posts.count as number / limit)}/>

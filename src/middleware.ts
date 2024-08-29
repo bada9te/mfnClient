@@ -6,7 +6,7 @@ import { match } from '@formatjs/intl-localematcher'
 // @ts-ignore
 import Negotiator from 'negotiator'
 
-let locales = ['en', 'de', 'uk', 'ru'];
+export const locales = ['en', 'de', 'uk', 'ru'];
 
 let protectedRoutes = [
     '/battles/create',

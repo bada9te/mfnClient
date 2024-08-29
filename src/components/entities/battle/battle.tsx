@@ -139,7 +139,7 @@ export default function Battle(props: {
                 <div className="flex flex-wrap gap-5 justify-center items-center flex-col lg:flex-row">
                     {/* left */}
                     <div className="flex flex-nowrap flex-col">
-                        <Post data={battleData.post1 as TPost}/>
+                        <Post data={battleData.post1 as TPost} dictionary={dictionary}/>
                         <div className="py-2 flex flex-col gap-2 mt-3">
                             {
                                 !battleData.finished &&
@@ -149,6 +149,7 @@ export default function Battle(props: {
                                         onClick={() => makeBattleVote(1, "post1Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}</button>
                                     <SelectAmountOfMFNTokens 
+                                        dictionary={dictionary}
                                         type="post1Score"
                                         button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
                                         handleClose={makeBattleVoteWithUSDC}
@@ -205,7 +206,7 @@ export default function Battle(props: {
 
                     {/* right */}
                     <div className="flex flex-nowrap flex-col">
-                        <Post data={battleData.post2 as TPost}/>
+                        <Post data={battleData.post2 as TPost} dictionary={dictionary}/>
                         <div className="py-2 flex flex-col gap-2 mt-3">
                             {
                                 !battleData.finished &&
@@ -218,6 +219,7 @@ export default function Battle(props: {
                                         <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post2?.title}
                                     </button>
                                     <SelectAmountOfMFNTokens 
+                                        dictionary={dictionary}
                                         type="post2Score"
                                         button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
                                         handleClose={makeBattleVoteWithUSDC}

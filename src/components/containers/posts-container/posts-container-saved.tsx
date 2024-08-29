@@ -26,7 +26,7 @@ export default function PostsContainerSaved(props: TPaginationProps & { userId: 
                 <>
                     {
                         data?.postsSavedByUser.posts?.map((post, key) => {
-                            return (<Post key={key} data={post as TPost}/>)
+                            return (<Post key={key} data={post as TPost} dictionary={dictionary}/>)
                         })
                     }
                     <Pagination page={page} maxPage={Number(data?.postsSavedByUser.count as number / limit)}/>

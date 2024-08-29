@@ -25,7 +25,7 @@ export default function PostsContainerCategory(props: TPaginationProps & {catego
                 <>
                     {
                         data?.postsByCategory.posts?.map((post, key) => {
-                            return (<Post key={key} data={post as TPost}/>)
+                            return (<Post key={key} data={post as TPost} dictionary={dictionary}/>)
                         })
                     }
                     <Pagination page={page} maxPage={Number(data?.postsByCategory.count as number / limit)}/>

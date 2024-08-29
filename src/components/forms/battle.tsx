@@ -13,7 +13,7 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 const PostPlaceholder = (props: {
     handleSelect: (a: TPost) => void;
     userIsOwner: boolean;
-    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"];
 }) => {
     return (
         <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center glass relative rounded-2xl">
@@ -21,6 +21,7 @@ const PostPlaceholder = (props: {
                 <InfoImage text={props.dictionary.forms.battle["select-track"]} image="/assets/icons/logo_clear.png"/>
             </div>
             <SelectTrackModal
+                dictionary={props.dictionary}
                 handleSelect={props.handleSelect}
                 userIsOwner={props.userIsOwner}
                 button={
@@ -85,7 +86,7 @@ export default function BattleForm({
                         {
                             post1
                             ?
-                            <Post data={post1} handleRemove={() => setPost1(null)}/>
+                            <Post data={post1} handleRemove={() => setPost1(null)} dictionary={dictionary}/>
                             :
                             <PostPlaceholder
                                 userIsOwner={true}
@@ -100,7 +101,7 @@ export default function BattleForm({
                         {
                             post2
                             ?
-                            <Post data={post2} handleRemove={() => setPost2(null)}/>
+                            <Post data={post2} handleRemove={() => setPost2(null)} dictionary={dictionary}/>
                             :
                             <PostPlaceholder
                                 userIsOwner={false}

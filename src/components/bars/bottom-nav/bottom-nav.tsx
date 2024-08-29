@@ -35,7 +35,7 @@ export default function BottomNav({
     return (
         <>
             {/* @ts-ignore */}
-            <LeftBarDrawer reference={leftbarOpenerRef}/>
+            <LeftBarDrawer reference={leftbarOpenerRef} dictionary={dictionary}/>
             <div className="btm-nav text-white bg-base-300 glass z-50 bg-opacity-50">
                 <button className={`${bottomBarTab === "tracks" ? "active" : ""} active:bg-base-300`} onClick={() => handleOpen("left")}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -80,7 +80,7 @@ export default function BottomNav({
                 </button>
             </div>
             {/* @ts-ignore */}
-            <RightBarDrawer reference={rightbarOpenerRef}/>
+            <RightBarDrawer reference={rightbarOpenerRef} dictionary={dictionary}/>
         </>
     );
 }

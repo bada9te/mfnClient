@@ -1,19 +1,18 @@
 "use client"
-import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
+import {useAppDispatch} from "@/lib/redux/store";
 import {setTab} from "@/lib/redux/slices/bottom-bar";
 import React, {LegacyRef, useEffect, useState} from "react";
 import { usePostsByTitleLazyQuery, Post as TPost } from "@/utils/graphql-requests/generated/schema";
 import Post from "@/components/entities/post/post";
 import InfoImage from "@/components/common/info-image/info-image";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
-import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
 
 export default function LeftBarDrawer(props: {
     reference: LegacyRef<HTMLInputElement> | undefined;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
-    const { reference } = props;
+    const { reference, dictionary } = props;
     const dispatch = useAppDispatch();
     const [sq, setSq] = useState("");
     const [ fetchPostsByTitle, {data, loading} ] = usePostsByTitleLazyQuery();
@@ -54,7 +53,7 @@ export default function LeftBarDrawer(props: {
                 >
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
-                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder={props.dictionary.modals["leftbar-drawer"].search} onChange={e => setSq(e.target.value)}/>
+                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder={dictionary?.modals?.["leftbar-drawer"]?.search} onChange={e => setSq(e.target.value)}/>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 16 16"
@@ -77,14 +76,14 @@ export default function LeftBarDrawer(props: {
                                                 {
                                                     data?.postsByTitle?.map((p, k) => {
                                                         return (
-                                                            <Post key={k} data={p as TPost}/>
+                                                            <Post key={k} data={p as TPost} dictionary={props.dictionary}/>
                                                         );
                                                     })
                                                 }
                                             </>
                                         );
                                     } else {
-                                        return (<InfoImage text={props.dictionary.modals["leftbar-drawer"]["info-image"]} image="/assets/icons/logo_clear.png"/>);
+                                        return (<InfoImage text={props.dictionary?.modals["leftbar-drawer"]["info-image"]} image="/assets/icons/logo_clear.png"/>);
                                     }
                                 } else {
                                     return (

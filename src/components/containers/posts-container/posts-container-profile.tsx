@@ -28,7 +28,7 @@ export default function PostsContainerProfile(props: TPaginationProps & { profil
                 <>
                     {
                         data?.postsByOwner.posts?.map((post, key) => {
-                            return (<Post key={key} data={post as TPost} editable={(user?._id && user._id === profileId) || false}/>)
+                            return (<Post key={key} data={post as TPost} dictionary={dictionary} editable={(user?._id && user._id === profileId) || false}/>)
                         })
                     }
                     { !paginationHidden && <Pagination page={page} maxPage={Number(data?.postsByOwner.count as number / limit)}/> }

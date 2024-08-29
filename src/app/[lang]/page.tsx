@@ -1,7 +1,6 @@
 
 import RegisterExploreBtns from "@/components/common/register-explore-btns/register-explore-btns";
 import DotPattern from "@/components/magicui-components/dot-pattern";
-import FlickeringGrid from "@/components/magicui-components/flickering-grid";
 import { MarqueeDemo } from "@/components/magicui-components/landing-cards-scrolling";
 import Ripple from "@/components/magicui-components/ripple";
 import { getDictionary } from "@/dictionaries/dictionaries";
@@ -12,26 +11,18 @@ import Image from "next/image";
 const cardsData1 = [
     {
         id: 'explore',
-        title: '🎵 Explore',
-        description: "Explore the world of custom music, share, like and comment amazing audio posts.",
         iconUrl: "/assets/icons/logo_clear.png",
     },
     {
         id: 'anywhere',
-        title: '🌐 Anywhere',
-        description: "Anytime: Accessible on desktop, tablet, or mobile – fun knows no bounds.",
         iconUrl: "/assets/icons/logo_clear.png",
     },
     {
         id: 'community',
-        title: '🤝 Community',
-        description: "Connect, collaborate, and be inspired by like-minded creators.",
         iconUrl: "/assets/icons/logo_clear.png",
     },
     {
         id: 'start',
-        title: '🚀 Lets get started',
-        description: `Join "Music from Nothing" today and let the music begin!`,
         iconUrl: "/assets/icons/logo_clear.png",
     },
 ];
@@ -39,41 +30,29 @@ const cardsData1 = [
 const cardsData2 = [
     {
         id: "listening",
-        title: 'Listening to music',
-        description: 'Listen to music and have fun!',
         iconUrl:  "/assets/icons/logo_clear.png"
     },
     {
         id: "musical",
-        title: 'Musical creations sharing',
-        description: 'Share users tracks inside the platform.',
         iconUrl:  "/assets/icons/logo_clear.png"
     },
     {
         id: "musician",
-        title: "Musician's profiling",
-        description: 'The platform provides amazing user profiles which you can customize to your own likes :)',
         iconUrl:  "/assets/icons/logo_clear.png"
     },
     {
         id: "just",
-        title: 'Just for entertaiment and self-study \\*_*/',
-        description: 'This platform was developed by a single person and actually in development.',
         iconUrl:  "/assets/icons/logo_clear.png"
     },
     {
         id: "about",
-        title: 'About the author',
-        description: 'Hi there! I am so happy to see u on my first huge web-project. I am a casual 3rd year student of National University "Zaporizhzhia Polytechnic", Zaporizhzhia, Ukraine. There is no modern web-development classes in my uni however, so I decided to do some self-education stuff.',
         iconUrl:  "/assets/icons/logo_clear.png",
         github: [{ bada9te: 'https://github.com/bada9te' }],
         instagram: [{ bada9te: 'NULL' }],
     },
     {
         id: "gratitude",
-        title: 'Big gratitude',
         iconUrl:  "/assets/icons/logo_clear.png",
-        description: "Want to say great thanks for translation to Deutch (Name Surname) and some technical stuff (Name Surname)",
         github: [],
         instagram: [],
     }
@@ -91,8 +70,8 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     <Ripple />
                 </div>
                 <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-32 absolute bottom-0">
-                    <p className="text-4xl md:text-5xl font-bold text-center flex-0 px-5 z-20">Welcome to Music From Nothing</p>
-                    <p className="text-xl text-center h-fit z-20">The music-streaming platform</p>
+                    <p className="text-4xl md:text-5xl font-bold text-center flex-0 px-5 z-20">{dict.app.landing.welcome.header}</p>
+                    <p className="text-xl text-center h-fit z-20">{dict.app.landing.welcome["subheader"]}</p>
                     <RegisterExploreBtns dictionary={dict.components}/>
                 </div>
                 <Image width={400} height={400}  
@@ -119,8 +98,8 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
                     )}
                 />
-                <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl px-5 z-20">Compose, arrange</p>
-                <p className="text-center pb-20 font-bold text-xl md:text-xl z-20 px-5">and produce your unique tunes effortlessly with our web app.</p>
+                <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl px-5 z-20">{dict.app.landing.compose["header"]}</p>
+                <p className="text-center pb-20 font-bold text-xl md:text-xl z-20 px-5">{dict.app.landing.compose["subheader"]}</p>
                 <Image width={300} height={300}  src="/assets/figures/cube.png" alt="cube" className="w-48 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-10 opacity-70"/>
                 <Image width={300} height={300}  src="/assets/figures/rhombus.png" alt="rhombus" className="w-32 rotate-12 absolute bottom-24 mix-blend-luminosity left-3 z-10 opacity-70"/>
                 <Image width={300} height={300}  src="/assets/figures/pyramid.png" alt="pyramid" className="w-32 md:w-64 rotate-12 absolute bottom-0 mix-blend-luminosity left-24 z-10 opacity-70"/>
@@ -136,8 +115,10 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                                 <div key={key} className="card animated-box overflow-hidden bg-base-300 w-80 h-64 md:w-96 shadow-xl rounded-2xl z-10 bg-opacity-40">
                                     <div className="card-body bg-base-300 hover:bg-[#1ba39c] z-50 m-1 rounded-2xl glass">
                                         <Image width={100} height={100}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
-                                        <h2 className="card-title mt-2">{data.title}</h2>
-                                        <p>{data.description}</p>
+                                        {/* @ts-ignore */}
+                                        <h2 className="card-title mt-2">{dict.app.landing.compose.cards[data.id]?.title || ""}</h2>
+                                        {/* @ts-ignore */}
+                                        <p>{dict.app.landing.compose.cards[data.id]?.description || ""}</p>
                                     </div>
                                 </div>
                             );
@@ -159,7 +140,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
 
             {/* THREE */}
             <div className="py-10 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl bg-opacity-80 max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-352px)]">
-                <MarqueeDemo/>
+                <MarqueeDemo dictionary={dict.app}/>
             </div>
 
             
@@ -175,8 +156,8 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     alt="block-top-bg"
                     className="absolute top-0 w-full rounded-t-2xl blur-sm"
                 />
-                <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">Purpose of the platform</p>
-                <p className="text-center pb-16 font-bold text-xl md:text-xl z-10">and author information</p>
+                <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">{dict.app.landing.purpose.header}</p>
+                <p className="text-center pb-16 font-bold text-xl md:text-xl z-10">{dict.app.landing.purpose.subheader}</p>
                 <Image width={300} height={300}  src="/assets/figures/waterball.png" alt="waterball" className="w-32 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
                 <Image width={300} height={300}  src="/assets/figures/water.png" alt="water" className="z-10 w-48 absolute bottom-3 mix-blend-luminosity right-3 opacity-70"/>
                 <Image width={300} height={300}  src="/assets/figures/chip.png" alt="chip" className="w-64 absolute bottom-72 mix-blend-luminosity left-5 z-0 opacity-70"/>
@@ -187,8 +168,10 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                                 <div key={key} className="card animated-box overflow-hidden bg-base-300 w-80 min-h-64 md:w-96 shadow-xl rounded-2xl z-0 bg-opacity-40">
                                     <div className="card-body bg-base-300 hover:bg-[#1ba39c] z-50 m-1 rounded-2xl glass">
                                         <Image width={100} height={100}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
-                                        <h2 className="card-title mt-2">{data.title}</h2>
-                                        <p>{data.description}</p>
+                                        { /* @ts-ignore */ }
+                                        <h2 className="card-title mt-2">{dict.app.landing.purpose.cards[data.id]?.title || ""}</h2>
+                                        { /* @ts-ignore */ }
+                                        <p>{dict.app.landing.purpose.cards[data.id]?.description || ""}</p>
                                     </div>
                                 </div>
                             );

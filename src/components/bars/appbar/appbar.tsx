@@ -8,7 +8,7 @@ export default function AppBar({
 }: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
-    console.log(dictionary)
+    //console.log(dictionary)
     return (
         <div className="navbar fixed top-0 z-50 text-white glass bg-base-300 row-auto bg-opacity-50">
             <div className="navbar-start">

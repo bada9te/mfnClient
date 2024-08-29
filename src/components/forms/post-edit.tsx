@@ -147,6 +147,7 @@ export default function PostEditForm(props: {
     return (
         <>
         <ImageCropperModal
+            dictionary={dictionary}
             image={imageURL}
             imageType="post-image"
             refDialog={cropperModalRef}

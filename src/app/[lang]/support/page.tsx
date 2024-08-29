@@ -12,7 +12,7 @@ export default async function Support({params}: {params: {lang: TLang}}) {
             title={dict.app.support.title}
             description={dict.app.support.description}
         >
-            <SupportForm/>
+            <SupportForm dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

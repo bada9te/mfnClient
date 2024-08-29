@@ -1,11 +1,13 @@
 "use client"
+import { getDictionary } from "@/dictionaries/dictionaries";
 import React, { useEffect, useRef, useState } from "react";
 
 
-export default function SelectAmountOfMFNTokens({button, type, handleClose}: {
+export default function SelectAmountOfMFNTokens({button, type, handleClose, dictionary}: {
     button: React.ReactElement, 
     type: "post1Score" | "post2Score", 
     handleClose: (amount: number, type: "post1Score" | "post2Score") => void;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const [isMounted, setIsMounted] = useState(false);
@@ -43,16 +45,16 @@ export default function SelectAmountOfMFNTokens({button, type, handleClose}: {
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
 
-                    <h4 className="font-bold text-lg">Amount of the USDC tokens</h4>
+                    <h4 className="font-bold text-lg">{dictionary.modals["select-usdc"]["select-amount"]}</h4>
 
                     <div className="py-1">
                         <div className="form-control px-4 md:px-0">
                             <label className="label">
-                                <span className="label-text">USDC Amount</span>
+                                <span className="label-text">{dictionary.modals["select-usdc"].amount}</span>
                             </label>
                             <input 
                                 type="number" 
-                                placeholder="MFNT amount" 
+                                placeholder={dictionary.modals["select-usdc"].amount} 
                                 className="input input-bordered shadow-md glass placeholder:text-gray-200 text-white" 
                                 onChange={(e) => setEnteredAmount(Number(e.target.value))}
                             />
@@ -64,7 +66,7 @@ export default function SelectAmountOfMFNTokens({button, type, handleClose}: {
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path d="M2.273 5.625A4.483 4.483 0 0 1 5.25 4.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0 0 18.75 3H5.25a3 3 0 0 0-2.977 2.625ZM2.273 8.625A4.483 4.483 0 0 1 5.25 7.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0 0 18.75 6H5.25a3 3 0 0 0-2.977 2.625ZM5.25 9a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3H15a.75.75 0 0 0-.75.75 2.25 2.25 0 0 1-4.5 0A.75.75 0 0 0 9 9H5.25Z" />
                             </svg>
-                            Select<span className="font-bold text-[#23d7d3]">{enteredAmount} USDC</span>tokens
+                            {dictionary.modals["select-usdc"].select}<span className="font-bold text-[#23d7d3]">{enteredAmount} USDC</span>{dictionary.modals["select-usdc"].tokens}
                         </button>
                     </div>
                 </div>

@@ -99,6 +99,7 @@ export default function PostUploadForm({
     return (
         <>
         <ImageCropperModal
+            dictionary={dictionary}
             image={imageURL}
             imageType="post-image"
             refDialog={cropperModalRef}

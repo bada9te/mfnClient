@@ -1,10 +1,19 @@
 "use client"
 import reportReasons from "@/config/report-reasons";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { useReportCreateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useRef, useState } from "react";
 
-export default function ReportModal({button, postId}: {button: React.ReactElement, postId: string}) {
+export default function ReportModal({
+    button,
+    postId,
+    dictionary
+}: {
+    button: React.ReactElement;
+    postId: string;
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const [isMounted, setIsMounted] = useState(false);
     const [selectedRason, setSelectedReason] = useState<string | null>(null);
@@ -61,7 +70,7 @@ export default function ReportModal({button, postId}: {button: React.ReactElemen
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
 
-                    <h4 className="font-bold text-lg">Report</h4>
+                    <h4 className="font-bold text-lg">{dictionary.modals.report.report}</h4>
 
                     <div className="overflow-y-auto mt-5 no-scrollbar py-4">
                         <div className="flex flex-col gap-4">
@@ -89,7 +98,7 @@ export default function ReportModal({button, postId}: {button: React.ReactElemen
                         </div>
                     </div>
 
-                    <button className="btn btn-primary w-full mt-8 glass text-white" onClick={submitReport} disabled={selectedRason === null}>Submit</button>
+                    <button className="btn btn-primary w-full mt-8 glass text-white" onClick={submitReport} disabled={selectedRason === null}>{dictionary.modals.report.submit}</button>
                 </div>
             </dialog>
         </>

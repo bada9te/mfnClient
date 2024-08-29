@@ -92,6 +92,7 @@ export default function Playlist(props: {
                             &&
                             <>
                                 <SelectTrackModal
+                                    dictionary={dictionary}
                                     handleSelect={handleSwitchTrack}
                                     userIsOwner={false}
                                     button={
@@ -133,9 +134,9 @@ export default function Playlist(props: {
                         posts?.map((post, index) => (
                             !isRemovingTrack 
                             ? 
-                            <Post data={post} key={index}/>
+                            <Post data={post} key={index} dictionary={dictionary}/>
                             :
-                            <Post data={post} key={index} handleRemove={handleSwitchTrack}/>
+                            <Post data={post} key={index} handleRemove={handleSwitchTrack} dictionary={dictionary}/>
                         ))
                     }
                     {posts?.length === 0 && <InfoImage text="No tracks yet" image="/assets/icons/logo_playlist.png"/>}
