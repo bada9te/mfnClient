@@ -82,13 +82,15 @@ export default function ReportModal({
                                                 <label className="label cursor-pointer flex flex-row m-4">
                                                     <p className="flex flex-col gap-2">
                                                         <span className="card-title">
-                                                            {i.title}
+                                                            {/* @ts-ignore */}
+                                                            {dictionary.modals.report.cards[i.id].title}
                                                         </span>
                                                         <span className="text-md">
-                                                            {i.description}
+                                                            {/* @ts-ignore */}
+                                                            {dictionary.modals.report.cards[i.id].description}
                                                         </span>
                                                     </p>
-                                                    <input type="radio" name="radio-10" className="radio checked:bg-accent" onClick={() => setSelectedReason(i.title)}/>
+                                                    <input type="radio" name="radio-10" className="radio checked:bg-accent" onClick={() => setSelectedReason(i.id)}/>
                                                 </label>
                                             </div>
                                         </div>

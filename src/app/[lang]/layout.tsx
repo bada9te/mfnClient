@@ -29,7 +29,7 @@ export default async function RootLayout({
             <div className="hidden lg:block">
                 <div className="card w-full max-h-[calc(100vh-95px)] fixed top-12 left-0">
                     <div className="overflow-y-auto flex flex-col gap-4 py-10 ml-4 no-scrollbar">
-                        <CategoriesContainerLeftbar/>
+                        <CategoriesContainerLeftbar dictionary={dict.components}/>
                     </div>
                 </div>
             </div>

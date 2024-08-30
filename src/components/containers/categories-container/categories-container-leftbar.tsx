@@ -1,10 +1,15 @@
 "use client"
 import CategoryLeftBar from "@/components/bars/category-leftbar/category-leftbar";
 import {genres} from "@/config/categories";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import formatNumber from "@/utils/common-functions/formatNumber";
 import { usePostsByCategoryCountQuery } from "@/utils/graphql-requests/generated/schema";
 
-export default function CategoriesContainerLeftbar() {
+export default function CategoriesContainerLeftbar({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     const { data: postsCountByCategory } = usePostsByCategoryCountQuery();
 
     return (
