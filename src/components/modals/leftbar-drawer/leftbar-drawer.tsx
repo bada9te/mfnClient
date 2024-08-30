@@ -40,7 +40,7 @@ export default function LeftBarDrawer(props: {
                 clearInterval(timeout);
             }
         }
-    }, [sq]);
+    }, [sq, fetchPostsByTitle]);
 
     return (
         <div className="drawer">

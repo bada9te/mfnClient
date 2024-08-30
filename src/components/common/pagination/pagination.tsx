@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {usePathname, useRouter} from "next/navigation";
 
 export default function Pagination(props: {
@@ -10,9 +10,9 @@ export default function Pagination(props: {
     const router = useRouter();
     const pathname = usePathname();
 
-    const extractPathWithoutPageIndex = () => {
+    const extractPathWithoutPageIndex = useCallback(() => {
         return pathname.substring(0, pathname.lastIndexOf('/') + 1)
-    }
+    }, [pathname]);
 
     const handleClick = (payload: number) => {
         let newPath = pathname;
@@ -29,7 +29,7 @@ export default function Pagination(props: {
         if (+page === 0) {
             router.replace(extractPathWithoutPageIndex() + 1)
         }
-    }, [page]);
+    }, [page, extractPathWithoutPageIndex, router]);
 
     return (
         <div className="join w-full flex justify-center">

@@ -22,7 +22,7 @@ export default async function LogoutPage({params}: {params: {lang: TLang}}) {
         localStorage.removeItem("persist:user");
         dispatch(setUser(undefined));
         router.push('/feed/1');
-    }, [keyID, keySE]);
+    }, [keyID, keySE, dispatch, router]);
 
     return (
         <HeroWrapper

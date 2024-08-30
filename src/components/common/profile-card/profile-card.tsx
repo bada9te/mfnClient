@@ -130,7 +130,7 @@ export default function ProfileCard(props: {
 
             enqueueSnackbar("Updated", { autoHideDuration: 2000, variant: 'success' });
         }
-    }, [imageType, file]);
+    }, [imageType, file, dispatch, enqueueSnackbar, updateUser, user?._id]);
 
     const handleShareClick = () => {
         navigator.clipboard.writeText(`${window.location.origin}/profile/${userId}/1`);

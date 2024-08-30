@@ -11,14 +11,10 @@ const secondRow = whishesToUsers.slice(whishesToUsers.length / 2);
 const ReviewCard = ({
   id,
   img,
-  title,
-  body,
   dictionary
 }: {
   id: string;
   img: string;
-  title: string;
-  body: string;
   dictionary: Awaited<ReturnType<typeof getDictionary>>["app"]
 }) => {
   return (

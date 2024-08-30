@@ -211,7 +211,7 @@ export default function ProfileEditForm(props: {
             });
                 
         }
-    }, [facebookLoginData, facebookProfileData]);
+    }, [facebookLoginData, facebookProfileData, enqueueSnackbar, linkFacebook, user?._id]);
 
     const handleUnlinkFacebook = () => {
         enqueueSnackbar("Processing...", {autoHideDuration: 1500});

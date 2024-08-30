@@ -39,7 +39,7 @@ export default function RightBarDrawer(props: {
                 clearInterval(timeout);
             }
         }
-    }, [sq]);
+    }, [sq, fetchUsers]);
 
     return (
         <div className="drawer drawer-end">

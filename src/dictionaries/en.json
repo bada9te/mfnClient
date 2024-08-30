@@ -331,7 +331,29 @@
                 "versus": "vs"
             },
             "notification": {
-
+                "ago": "ago",
+                "delete": "Delete",
+                "mark-as-read": "Mark as read",
+                "subscribed": {
+                    "part-1": "Hey, user",
+                    "part-2": "has just subscribed on you"
+                },
+                "battle-created": {
+                    "part-1": "Battle",
+                    "part-2": "was started"
+                },
+                "battle-finished": {
+                    "part-1": "Battle",
+                    "part-2": "is finished"
+                },
+                "post-reported": {
+                    "part-1": "Post",
+                    "part-2": "was reported with the reason"
+                },
+                "new-post": {
+                    "part-1": "Hey, user",
+                    "part-2": "has just uploaded a new track"
+                }
             },
             "playlist": {
                 "share": "Share playlist",
@@ -349,7 +371,8 @@
                 "pause": "Pause",
                 "play": "Play",
                 "select": "Select",
-                "delete": "Delete"
+                "delete": "Delete",
+                "share": "Share"
             }
         },
         "forms": {

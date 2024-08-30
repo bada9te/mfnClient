@@ -38,7 +38,7 @@ export default function ProfileButton({
 
     const handlebalanceInfoClick = useCallback(() => {
         enqueueSnackbar(`${userBalance ? (Number(userBalance) / 10**18).toFixed(3) : 0} USDC, on ${account.chain?.name}`, {autoHideDuration: 5000});
-    }, [userBalance]);
+    }, [userBalance, account.chain?.name, enqueueSnackbar]);
 
     const onBalanceRefetch = () => {
         refetchUserBalance();

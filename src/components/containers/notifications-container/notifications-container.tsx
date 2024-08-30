@@ -94,7 +94,7 @@ export default function NotificationsContainer(props: TPaginationProps & { check
                     </button>
                     {
                         data?.notifications.notifications.map((notification, key) => {
-                            return (<Notification key={key} data={notification as TNotification}/>)
+                            return (<Notification key={key} data={notification as TNotification} dictionary={dictionary}/>)
                         })
                     }
                     <Pagination page={page} maxPage={Number(data?.notifications.count as number / limit)}/>
