@@ -259,7 +259,7 @@ export default function PostEditForm(props: {
                     <select className="btn text-start glass bg-[#3b3b3b]" onChange={onGenreChange}>
                         {
                             genres.map((gen, key) => {
-                                return <option className="bg-[#272727] text-lg" key={key} value={gen.title}>{gen.title}</option>
+                                return <option className="bg-[#272727] text-lg" key={key} value={gen.id}>{gen.id}</option>
                             })
                         }
                     </select>

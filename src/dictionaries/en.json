@@ -321,7 +321,101 @@
         },
         "entities": {
             "achievement": {
-                
+                "1": {
+                    "title": "First Post",
+                    "achievement": "Published your first musical post.",
+                    "description": "Congratulations on sharing your first track or musical content with the world!"
+                },
+                "2": {
+                    "title": "First Like",
+                    "achievement": "Received your first like on a musical post.",
+                    "description": "Your music has struck a chord with at least one listener. Keep sharing!"
+                },
+                "3": {
+                    "title": "First Save",
+                    "achievement": "Your post has been saved to a bookmark for the first time.",
+                    "description": "Someone enjoyed your music so much that they wanted to keep it for later. Well done!"
+                },
+                "4": {
+                    "title": "Growing Audience",
+                    "achievement": "Accumulated 1,000 likes on your posts.",
+                    "description": "Your music is gaining traction! 1,000 likes is a solid start."
+                },
+                "5": {
+                    "title": "Fan Favorite",
+                    "achievement": "Reached 2,500 likes on a single post.",
+                    "description": "Some track has become a favorite among your listeners!"
+                },
+                "6": {
+                    "title": "Bookmark Champion",
+                    "achievement": "Received 1,000 saves on a single post.",
+                    "description": "Your post is a hit with fans who want to keep it handy."
+                },
+                "7": {
+                    "title": "Profile Popularity",
+                    "achievement": "Your profile has received 5,000 total likes on all posts combined.",
+                    "description": "Your content is resonating with the community. Keep it up!"
+                },
+                "8": {
+                    "title": "Content Creator",
+                    "achievement": "Published 100 unique musical posts.",
+                    "description": "You've been consistently sharing your music. This is the mark of a dedicated creator!"
+                },
+                "9": {
+                    "title": "Social Star",
+                    "achievement": "Gained 10,000 total likes on all posts combined.",
+                    "description": "Your music is becoming increasingly popular. You're a rising star!"
+                },
+                "10": {
+                    "title": "Bookmark Enthusiast",
+                    "achievement": "Your posts have received 5,000 total saves.",
+                    "description": "Listeners are finding your music worth keeping in their playlists!"
+                },
+                "11": {
+                    "title": "Profile Influencer",
+                    "achievement": "Reached 20,000 total likes and saves combined.",
+                    "description": "Your influence is growing in the community. Keep engaging and creating!"
+                },
+                "12": {
+                    "title": "Top content creator",
+                    "achievement": "Published 250 unique musical posts.",
+                    "description": "Your contribution to the site is significant. Your dedication to sharing music is commendable!"
+                },
+                "13": {
+                    "title": "Trending Artist",
+                    "achievement": "Achieved 10,000 likes on a single post.",
+                    "description": "Your music is trending and capturing widespread attention."
+                },
+                "14": {
+                    "title": "Legendary Creator",
+                    "achievement": "Reached 50,000 total likes and saves combined.",
+                    "description": "You've established yourself as a prominent and influential figure in the music community!"
+                },
+                "15": {
+                    "title": "Ultimate Fan Engagement",
+                    "achievement": "Received 100,000 likes and saves combined.",
+                    "description": "Your music has captured the hearts of many. You're a beloved artist in our community!"
+                },
+                "16": {
+                    "title": "Master of the Mix",
+                    "achievement": "Created a musical post that reached the top of the site’s featured list.",
+                    "description": "Your content has gained significant recognition and visibility."
+                },
+                "17": {
+                    "title": "Community Favorite",
+                    "achievement": "Earned a spot in the top 10 most liked posts of the month.",
+                    "description": "Your post has resonated strongly with the community. Congratulations on the recognition!"
+                },
+                "18": {
+                    "title": "Influencer Status",
+                    "achievement": "Reached 500,000 total likes and 500,000 saves across all posts.",
+                    "description": "Your influence in the community is undeniable. Your music is making waves!"
+                },
+                "19": {
+                    "title": "Hall of Fame",
+                    "achievement": "Accumulated 1,000,000 total likes and saves combined.",
+                    "description": "You're a legendary figure in our music community. Your impact is substantial and lasting!"
+                }
             },
             "battle": {
                 "vote-for": "Vote for",
@@ -373,6 +467,64 @@
                 "select": "Select",
                 "delete": "Delete",
                 "share": "Share"
+            },
+            "genre": {
+                "pop": {
+                    "title": "Pop",
+                    "description": "Catchy tunes with memorable melodies and widespread appeal."
+                },
+                "blues": {
+                    "title": "Blues",
+                    "description": "Emotionally rich music with expressive guitar and heartfelt lyrics."
+                },
+                "classical": {
+                    "title": "Classical",
+                    "description": "Orchestral music with intricate compositions and historical roots."
+                },
+                "funk": {
+                    "title": "Funk",
+                    "description": "Groovy rhythms and strong beats designed to make you dance."
+                },
+                "soul": {
+                    "title": "Soul",
+                    "description": "Heartfelt vocals and emotional depth, blending gospel and R&B."
+                },
+                "hip-hop": {
+                    "title": "Hip-hop",
+                    "description": "Rhythmic beats and rapping reflecting urban culture and issues."
+                },
+                "country": {
+                    "title": "Country",
+                    "description": "Storytelling lyrics with traditional American folk instrumentation."
+                },
+                "rock": {
+                    "title": "Rock",
+                    "description": "Powerful guitar riffs and diverse styles from classic to alternative."
+                },
+                "electronic": {
+                    "title": "Electronic",
+                    "description": "Synthesized sounds and beats, ranging from ambient to dance."
+                },
+                "jazz": {
+                    "title": "Jazz",
+                    "description": "Improvised and complex music with swing rhythms and brass instruments."
+                },
+                "latin": {
+                    "title": "Latin",
+                    "description": "Rhythmic and lively music from Latin America with vibrant instrumentation."
+                },
+                "folk": {
+                    "title": "Folk",
+                    "description": "Acoustic music that tells stories and reflects cultural traditions."
+                },
+                "metal": {
+                    "title": "Metal",
+                    "description": "Heavy riffs and powerful vocals, exploring intense themes."
+                },
+                "reggae": {
+                    "title": "Reggae",
+                    "description": "Feel the rhythm with soulful melodies and powerful themes of unity."
+                }
             }
         },
         "forms": {

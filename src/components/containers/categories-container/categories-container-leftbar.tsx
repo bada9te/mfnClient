@@ -19,17 +19,19 @@ export default function CategoriesContainerLeftbar({
                     return (
                         <CategoryLeftBar
                             key={i}
-                            title={gen.title}
+                            // @ts-ignore
+                            title={dictionary.entities.genre[gen.id]?.title}
                             bgImage={gen.bg}
                             iconImage={gen.icon}
-                            description={gen.description}
+                            // @ts-ignore
+                            description={dictionary.entities.genre[gen.id]?.description}
                             count={formatNumber((() => {
-                                if (gen.title === "Hip-hop") {
+                                if (gen.id === "hip-hop") {
                                     // @ts-ignore
                                     return Number(postsCountByCategory?.postsByCategoryCount["hipHop"]) || 0
                                 }
                                 // @ts-ignore
-                                return Number(postsCountByCategory?.postsByCategoryCount[gen.title.toLocaleLowerCase()]) || 0
+                                return Number(postsCountByCategory?.postsByCategoryCount[gen.id.toLocaleLowerCase()]) || 0
                             })())}
                         />
                     );

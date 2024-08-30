@@ -43,7 +43,7 @@ export default function RightBarDrawer(props: {
 
     return (
         <div className="drawer drawer-end">
-            <input ref={reference} id="my-drawer-people" type="checkbox" className="drawer-toggle" onChange={e => handleOpen(e)}/>
+            <input ref={reference} id="my-drawer-people" type="checkbox" className="drawer-toggle w-full" onChange={e => handleOpen(e)}/>
 
             <div className="drawer-side pt-16 z-30 no-scrollbar">
                 <label htmlFor="my-drawer-people" aria-label="close sidebar" className="drawer-overlay"></label>
