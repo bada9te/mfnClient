@@ -648,6 +648,9 @@
             }
         },
         "modals": {
+            "localization": {
+                "locale": "Switch locale"
+            },
             "leftbar-drawer": {
                 "search": "Search tracks",
                 "info-image": "Start typing to search tracks"
