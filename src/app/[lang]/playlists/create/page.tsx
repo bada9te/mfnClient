@@ -3,6 +3,12 @@ import PlaylistForm from "@/components/forms/playlist";
 import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Playlist creation',
+    description: 'Playlist creation',
+}
 
 export default async function Playlists({params}: {params: {lang: TLang}}) {
     const dict = await getDictionary(params.lang);

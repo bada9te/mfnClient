@@ -8,7 +8,13 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import { PreloadQuery } from "@/lib/apollo/client";
 import { TLang } from "@/types/language";
 import { POST_QUERY, POSTS_BY_OWNER_QUERY } from "@/utils/graphql-requests/posts";
+import { Metadata } from "next";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Post',
+    description: 'Post',
+}
 
 export default async function PostPage({params}: {params: {id: string, owner: string, lang: TLang}}) {
     const dict = await getDictionary(params.lang);

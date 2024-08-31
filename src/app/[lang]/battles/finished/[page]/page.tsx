@@ -7,6 +7,12 @@ import BattlesContainerSkeleton from "@/components/containers/battles-container/
 import {BATTLES_BY_STATUS_QUERY} from "@/utils/graphql-requests/battles";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Finished battles',
+    description: 'Finished battles',
+}
 
 export default async function Battles({params}: {params: {page: number, lang: TLang}}) {
     const dict = await getDictionary(params.lang);

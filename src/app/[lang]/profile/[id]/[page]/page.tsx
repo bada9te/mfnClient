@@ -10,6 +10,12 @@ import { USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY } from "@/utils/graphql-reques
 import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Profile',
+    description: 'Profile',
+}
 
 export default async function ProfileId({params}: {params: {page: number, id: string, lang: TLang}}) {
     const dict = await getDictionary(params.lang);

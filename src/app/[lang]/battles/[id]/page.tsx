@@ -6,6 +6,12 @@ import BattleSkeleton from "@/components/entities/battle/battles-skeleton";
 import BattleContainer from "@/components/containers/battles-container/battle-container";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Battle',
+    description: 'Battle',
+}
 
 export default async function Battles({params}: {params: {id: string, lang: TLang}}) {
     const dict = await getDictionary(params.lang);

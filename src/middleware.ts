@@ -6,6 +6,7 @@ import { match } from '@formatjs/intl-localematcher'
 // @ts-ignore
 import Negotiator from 'negotiator'
 
+
 export const locales = ['en', 'de', 'uk', 'ru'];
 
 let protectedRoutes = [
@@ -16,6 +17,12 @@ let protectedRoutes = [
 ];
 
 function getLocale(request: NextRequest) {
+    if (cookies().has("language")) {
+        const cookieLANG = cookies().get("language")?.value;
+        if (locales.includes(cookieLANG as string)) {
+            return cookieLANG;
+        }
+    }
     let languages = new Negotiator({ headers: request.headers });
     let defaultLocale = 'en';
     return match(languages, locales, defaultLocale);

@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function CategoryLeftBar(props: {
+    id: string;
     title: string;
     bgImage: string;
     iconImage: string;
     description: string;
     count: string;
 }) {
-    const { title, bgImage, iconImage, description, count } = props;
+    const { title, bgImage, iconImage, description, count, id } = props;
     return (
         <div className={`card w-fit max-w-[305px] min-h-48 bg-cover bg-center bg-base-300 shadow-none text-white max-h-52 relative bg-opacity-80 rounded-2xl overflow-hidden glass`}>
             <Image src={"/assets/bgs/category.png"} alt="category-bg" width={800} height={600} className="absolute bottom-0 left-0 rounded-bl-2xl min-h-48 blur-sm"/>
@@ -30,7 +31,7 @@ export default function CategoryLeftBar(props: {
                 <p className="mr-8">{description}</p>
 
                 <div className="absolute top-0 right-0 h-full card-actions justify-end p-1">
-                    <Link className="btn btn-primary glass h-full btn-sm text-white rounded-2xl" href={`/categories/${String(title).toLowerCase().replaceAll(' ', '-')}/1`}>
+                    <Link className="btn btn-primary glass h-full btn-sm text-white rounded-2xl" href={`/categories/${String(id).toLowerCase().replaceAll(' ', '-')}/1`}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M13.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clipRule="evenodd" />
                             <path fillRule="evenodd" d="M19.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clipRule="evenodd" />

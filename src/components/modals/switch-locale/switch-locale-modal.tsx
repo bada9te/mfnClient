@@ -4,6 +4,7 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import SwitchLocaleItem from "./switch-locale-item/switch-locale-item";
 import { usePathname, useRouter } from "next/navigation";
 import { TLang } from "@/types/language";
+import { setCookie } from "cookies-next";
 
 export default function SwitchLocaleModal({button, dictionary}: {button: React.ReactElement; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
     const ref = useRef<HTMLDialogElement | null>(null);
@@ -28,6 +29,7 @@ export default function SwitchLocaleModal({button, dictionary}: {button: React.R
     }
 
     const onClose = () => {
+        setCookie("language", selectedLocale);
         const path = redirectedPathName(selectedLocale as TLang);
         navigator.replace(path);
     }

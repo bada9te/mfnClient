@@ -8,6 +8,14 @@ import { ACHIEVEMENTS_ALL_QUERY } from "@/utils/graphql-requests/achievements";
 import envCfg from "@/config/env";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Achievements',
+    description: 'The list of challenges',
+}
+
 
 export default async function Challenges({params}: {params: {lang: TLang}}) {
     const currentUserId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;

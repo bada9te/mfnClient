@@ -2,6 +2,12 @@ import PostUploadForm from "@/components/forms/post-upload";
 import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - New post',
+    description: 'Post creation',
+}
 
 export default async function UploadNewPost({params}: {params: {lang: TLang}}) {
     const dict = await getDictionary(params.lang);

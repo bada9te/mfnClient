@@ -8,6 +8,12 @@ import {cookies} from "next/headers";
 import envCfg from "@/config/env";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Feed',
+    description: 'Feed',
+}
 
 export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
     const userId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;

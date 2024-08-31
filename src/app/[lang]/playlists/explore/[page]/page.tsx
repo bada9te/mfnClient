@@ -7,7 +7,12 @@ import PlaylistsContainerSkeleton from "@/components/containers/playlists-contai
 import {PLAYLISTS_PUBLIC_AWAILABLE_QUERY} from "@/utils/graphql-requests/playlists";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Playlists',
+    description: 'Playlists',
+}
 
 export default async function Playlists({params}: {params: {page: number, lang: TLang}}) {
     const dict = await getDictionary(params.lang);

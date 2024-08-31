@@ -2,6 +2,12 @@ import AccountConfirminationForm from "@/components/forms/account-confirmination
 import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Account verification',
+    description: 'Account verification',
+}
 
 export default async function AccountVerify({params}: {params: {
     userId: string;

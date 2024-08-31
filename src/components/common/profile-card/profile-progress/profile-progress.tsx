@@ -79,7 +79,7 @@ export default function ProfileProgress(props: {
                     {data.totalSaves}
                 </div>
                 <div className="stat-actions">
-                    <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["most-saved-tarck"]}</Link>
+                    <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["most-saved-track"]}</Link>
                 </div>
             </div>
         </div>

@@ -10,7 +10,12 @@ import {PLAYLISTS_BY_OWNER_ID_QUERY} from "@/utils/graphql-requests/playlists";
 import envCfg from "@/config/env";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: 'Music From Nothing - My playlists',
+    description: 'My playlists',
+}
 
 export default async function Playlists({params}: {params: {page: number, lang: TLang}}) {
     const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;

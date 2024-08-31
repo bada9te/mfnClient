@@ -8,7 +8,12 @@ import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-s
 import envCfg from "@/config/env";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Profile edit',
+    description: 'Profile edit',
+}
 
 export default async function EditProfile({params}: {params: {lang: TLang}}) {
     const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;

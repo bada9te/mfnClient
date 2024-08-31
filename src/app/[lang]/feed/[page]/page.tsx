@@ -6,7 +6,12 @@ import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Feed',
+    description: 'List of new tracks',
+}
 
 export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
     const dict = await getDictionary(params.lang);

@@ -12,6 +12,13 @@ import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements"
 import envCfg from "@/config/env";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Profile',
+    description: 'Profile',
+}
 
 
 export default async function Profile({params}: {params: { page: number, lang: TLang }}) {

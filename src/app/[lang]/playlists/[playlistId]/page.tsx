@@ -5,7 +5,13 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import { PreloadQuery } from "@/lib/apollo/client";
 import { TLang } from "@/types/language";
 import { PLAYLIST_QUERY } from "@/utils/graphql-requests/playlists";
+import { Metadata } from "next";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Playlist',
+    description: 'Playlist',
+}
 
 export default async function Playlist({params}: {params: {playlistId: string, lang: TLang}}) {
     const dict = await getDictionary(params.lang);

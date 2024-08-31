@@ -6,6 +6,12 @@ import {Suspense} from "react";
 import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Category',
+    description: 'Category',
+}
 
 export default async function Categories({params}: {params: {category: string, page: number, lang: TLang}}) {
     let category = params.category.replaceAll('-', ' ');

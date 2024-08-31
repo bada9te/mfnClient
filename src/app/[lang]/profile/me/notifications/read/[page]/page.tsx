@@ -9,6 +9,12 @@ import NotificationsContainer from "@/components/containers/notifications-contai
 import envCfg from "@/config/env";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Reviewed notifications',
+    description: 'Reviewed notifications',
+}
 
 export default async function Notifications({params}: {params: { page: number, lang: TLang }}) {
     const receiver = cookies().get(envCfg.userIdCookieKey as string)?.value as string;

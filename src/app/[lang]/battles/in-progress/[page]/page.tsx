@@ -7,7 +7,12 @@ import BattlesContainer from "@/components/containers/battles-container/battles-
 import {PreloadQuery} from "@/lib/apollo/client";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: 'Music From Nothing - Live battles',
+    description: 'Battles in progress',
+}
 
 export default async function Battles({params}: {params: {page: number, lang: TLang}}) {
     const dict = await getDictionary(params.lang);

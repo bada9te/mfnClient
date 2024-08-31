@@ -19,6 +19,7 @@ export default function CategoriesContainerLeftbar({
                     return (
                         <CategoryLeftBar
                             key={i}
+                            id={gen.id}
                             // @ts-ignore
                             title={dictionary.entities.genre[gen.id]?.title}
                             bgImage={gen.bg}

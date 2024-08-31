@@ -6,6 +6,7 @@ import Ripple from "@/components/magicui-components/ripple";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { cn } from "@/lib/utils";
 import { TLang } from "@/types/language";
+import { Metadata } from "next";
 import Image from "next/image";
 
 const cardsData1 = [
@@ -58,6 +59,10 @@ const cardsData2 = [
     }
 ];
 
+export const metadata: Metadata = {
+    title: 'Music From Nothing',
+    description: 'The music-streaming platform',
+}
 
 export default async function Page({params}: {params: {lang: TLang}}) {
     const dict = await getDictionary(params.lang);
