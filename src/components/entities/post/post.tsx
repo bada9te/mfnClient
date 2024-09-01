@@ -1,9 +1,9 @@
 "use client"
 import {
     Post as TPost,
-    usePostSwicthInSavedMutation,
-    usePostSwitchLikeMutation,
-    User
+    User,
+    useUserSwitchLikeMutation,
+    useUserSwitchSaveMutation
 } from "@/utils/graphql-requests/generated/schema";
 import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
 import {setIsPlaying, setPost} from "@/lib/redux/slices/player";
@@ -31,8 +31,8 @@ export default function Post(props: {
     const player = useAppSelector(state => state.player);
     const user = useAppSelector(state => state.user.user);
     const [isMounted, setIsMounted] = useState(false);
-    const [switchLike] = usePostSwitchLikeMutation();
-    const [switchInSaved] = usePostSwicthInSavedMutation();
+    const [switchLike] = useUserSwitchLikeMutation();
+    const [switchInSaved] = useUserSwitchSaveMutation();
     const { enqueueSnackbar } = useSnackbar();
 
     const handlePlayCLick = () => {
@@ -175,7 +175,7 @@ export default function Post(props: {
             <div className={`stats bg-base-300 glass mx-2 mt-2 thin-scrollbar bg-opacity-20 ${handleRemove && "opacity-60"}`}>
                 <div className="stat text-center">
                     <div 
-                        className={`${!handleRemove && 'cursor-pointer'} ${data?.likedBy?.find((i: User) => i._id === user?._id) && "text-red-500"}`} 
+                        className={`${!handleRemove && 'cursor-pointer'} ${user?.likedPosts.find((i: string) => i === data._id) && "text-red-500"}`} 
                         onClick={handleSwitchLike}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" 
@@ -184,12 +184,12 @@ export default function Post(props: {
                         </svg>
                     </div>
                     <div className="stat-title">{dictionary.entities.post["total-likes"]}</div>
-                    <div className="stat-value text-primary">{formatNumber(data.likedBy?.length as number)}</div>
+                    <div className="stat-value text-primary">{formatNumber(data.likes as number)}</div>
                 </div>
 
                 <div className="stat text-center">
                     <div 
-                        className={`${!handleRemove && 'cursor-pointer'} ${data?.savedBy?.find((i: User) => i._id === user?._id) && "text-yellow-500"}`} 
+                        className={`${!handleRemove && 'cursor-pointer'} ${user?.savedPosts.find((i: string) => i === data._id) && "text-yellow-500"}`} 
                         onClick={handleSwitchInSaved}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" 
@@ -198,7 +198,7 @@ export default function Post(props: {
                         </svg>
                     </div>
                     <div className="stat-title">{dictionary.entities.post["total-saves"]}</div>
-                    <div className="stat-value text-primary">{formatNumber(data.savedBy?.length as number)}</div>
+                    <div className="stat-value text-primary">{formatNumber(data.saves as number)}</div>
                 </div>
             </div>
 

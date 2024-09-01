@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client/index.js";
+import { CORE_POST_FIELDS } from "./posts";
 
 export const CORE_USER_FIELDS = gql`
     fragment CoreUserFields on User {
@@ -36,6 +37,12 @@ export const USER_QUERY = gql`
                 _id
             }
             subscribers {
+                _id
+            }
+            likedPosts {
+                _id
+            }
+            savedPosts {
                 _id
             }
         }
@@ -219,6 +226,37 @@ export const USER_UNLINK_TWITTER_MUTATION = gql`
     mutation userUnlinkTwitter($_id: ID!) {
         userUnlinkTwitter(_id: $_id) {
             ...CoreUserFields
+        }
+    }
+`;
+
+
+export const USER_SWITCH_LIKE_MUTATION = gql`
+    ${CORE_POST_FIELDS}
+    ${CORE_USER_FIELDS}
+    mutation userSwitchLike($input: SwitchLikeOrPostInSavedInput!) {
+        userSwitchLike(input: $input) {
+            post {
+                ...CorePostFields
+            }
+            user {
+                ...CoreUserFields
+            }
+        }
+    }
+`;
+
+export const USER_SWITCH_SAVE_MUTATION = gql`
+    ${CORE_POST_FIELDS}
+    ${CORE_USER_FIELDS}
+    mutation userSwitchSave($input: SwitchLikeOrPostInSavedInput!) {
+        userSwitchSave(input: $input) {
+            post {
+                ...CorePostFields
+            }
+            user {
+                ...CoreUserFields
+            }
         }
     }
 `;

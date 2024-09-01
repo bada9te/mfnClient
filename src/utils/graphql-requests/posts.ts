@@ -6,12 +6,8 @@ export const CORE_POST_FIELDS = gql`
         _id
         title
         description
-        savedBy {
-            _id
-        }
-        likedBy {
-            _id
-        }
+        saves
+        likes
         createdAt
         image
         audio
@@ -188,28 +184,6 @@ export const POST_DELETE_BY_ID_MUTATION = gql`
     }
 `;
 
-export const POST_SWITCH_LIKE_MUTATION = gql`
-    ${CORE_POST_FIELDS}
-    mutation postSwitchLike($input: SwitchLikeOrPostInSavedInput!) {
-        postSwitchLike(input: $input) {
-            ...CorePostFields
-        }
-    }
-`;
-
-export const POST_SWITCH_IN_SAVED_MUTATION = gql`
-    ${CORE_POST_FIELDS}
-    mutation postSwicthInSaved($input: SwitchLikeOrPostInSavedInput!) {
-        postSwicthInSaved(input: $input) {
-            ...CorePostFields
-            owner {
-                _id
-                avatar
-                nick
-            }
-        }
-    }
-`;
 
 export const POST_UPDATE_BY_ID_MUTATION = gql`
     ${CORE_POST_FIELDS}

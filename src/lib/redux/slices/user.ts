@@ -30,6 +30,8 @@ export interface IUserState {
         nick: string;
         subscribedOn: string[];
         subscribers: string[];
+        likedPosts: string[];
+        savedPosts: string[];
         updatedAt: string;
         verified: boolean;
     };

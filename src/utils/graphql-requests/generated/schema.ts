@@ -177,8 +177,6 @@ export type Mutation = {
   playlistSwicthTrack: Playlist;
   postCreate: Post;
   postDeleteById: Post;
-  postSwicthInSaved: Post;
-  postSwitchLike: Post;
   postUpdate: Post;
   reportClose: Report;
   reportCreate: Report;
@@ -192,6 +190,8 @@ export type Mutation = {
   userLinkTwitter?: Maybe<User>;
   userPrepareAccountToRestore: UserWithAction;
   userRestoreAccount: UserWithAction;
+  userSwitchLike: SwitchLikeOrPostInSavedReturnType;
+  userSwitchSave: SwitchLikeOrPostInSavedReturnType;
   userSwitchSubscription: TwoUsers;
   userUnlinkFacebook?: Maybe<User>;
   userUnlinkGoogle?: Maybe<User>;
@@ -281,16 +281,6 @@ export type MutationPostDeleteByIdArgs = {
 };
 
 
-export type MutationPostSwicthInSavedArgs = {
-  input: SwitchLikeOrPostInSavedInput;
-};
-
-
-export type MutationPostSwitchLikeArgs = {
-  input: SwitchLikeOrPostInSavedInput;
-};
-
-
 export type MutationPostUpdateArgs = {
   input: UpdatePostInput;
 };
@@ -353,6 +343,16 @@ export type MutationUserPrepareAccountToRestoreArgs = {
 
 export type MutationUserRestoreAccountArgs = {
   input: AccountRestoreInput;
+};
+
+
+export type MutationUserSwitchLikeArgs = {
+  input: SwitchLikeOrPostInSavedInput;
+};
+
+
+export type MutationUserSwitchSaveArgs = {
+  input: SwitchLikeOrPostInSavedInput;
 };
 
 
@@ -429,9 +429,9 @@ export type Post = {
   description: Scalars['String']['output'];
   downloadsAllowed: Scalars['Boolean']['output'];
   image: Scalars['String']['output'];
-  likedBy?: Maybe<Array<User>>;
+  likes: Scalars['Int']['output'];
   owner: User;
-  savedBy?: Maybe<Array<User>>;
+  saves: Scalars['Int']['output'];
   title: Scalars['String']['output'];
 };
 
@@ -700,6 +700,12 @@ export type SwitchLikeOrPostInSavedInput = {
   userId: Scalars['ID']['input'];
 };
 
+export type SwitchLikeOrPostInSavedReturnType = {
+  __typename?: 'SwitchLikeOrPostInSavedReturnType';
+  post: Post;
+  user: User;
+};
+
 export type SwitchSubscriptionOnUserInput = {
   subscriberId: Scalars['ID']['input'];
   userId: Scalars['ID']['input'];
@@ -738,8 +744,10 @@ export type User = {
   facebook?: Maybe<SocialMediaData>;
   google?: Maybe<SocialMediaData>;
   level: Scalars['Int']['output'];
+  likedPosts?: Maybe<Array<Post>>;
   local?: Maybe<SocialMediaData>;
   nick: Scalars['String']['output'];
+  savedPosts?: Maybe<Array<Post>>;
   subscribedOn?: Maybe<Array<User>>;
   subscribers?: Maybe<Array<User>>;
   twitter?: Maybe<SocialMediaData>;
@@ -790,7 +798,7 @@ export type AchievemenmtsCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AchievemenmtsCountQuery = { __typename?: 'Query', achievemenmtsCount: number };
 
-export type CoreBattleFieldsFragment = { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null };
+export type CoreBattleFieldsFragment = { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null };
 
 export type BattlesByStatusQueryVariables = Exact<{
   finished: Scalars['Boolean']['input'];
@@ -799,21 +807,21 @@ export type BattlesByStatusQueryVariables = Exact<{
 }>;
 
 
-export type BattlesByStatusQuery = { __typename?: 'Query', battlesByStatus: { __typename?: 'BattlesWithCount', count: number, battles?: Array<{ __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type BattlesByStatusQuery = { __typename?: 'Query', battlesByStatus: { __typename?: 'BattlesWithCount', count: number, battles?: Array<{ __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type BattleByIdQueryVariables = Exact<{
   _id: Scalars['ID']['input'];
 }>;
 
 
-export type BattleByIdQuery = { __typename?: 'Query', battleById: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type BattleByIdQuery = { __typename?: 'Query', battleById: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type BattleMakeVoteMutationVariables = Exact<{
   input: MakeBattleVoteInput;
 }>;
 
 
-export type BattleMakeVoteMutation = { __typename?: 'Mutation', battleMakeVote: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type BattleMakeVoteMutation = { __typename?: 'Mutation', battleMakeVote: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type BattleCreateMutationVariables = Exact<{
   input: AddNewBattleByPostsIdsInput;
@@ -890,14 +898,14 @@ export type NotificationsMarkAsReadByIdsMutationVariables = Exact<{
 
 export type NotificationsMarkAsReadByIdsMutation = { __typename?: 'Mutation', notificationsMarkAsReadByIds: { __typename?: 'NotificationCount', count: number } };
 
-export type CorePlaylistFieldsFragment = { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
+export type CorePlaylistFieldsFragment = { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string } }> | null };
 
 export type PlaylistQueryVariables = Exact<{
   _id: Scalars['ID']['input'];
 }>;
 
 
-export type PlaylistQuery = { __typename?: 'Query', playlist: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type PlaylistQuery = { __typename?: 'Query', playlist: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string } }> | null } };
 
 export type PlaylistsByOwnerIdQueryVariables = Exact<{
   owner: Scalars['ID']['input'];
@@ -906,7 +914,7 @@ export type PlaylistsByOwnerIdQueryVariables = Exact<{
 }>;
 
 
-export type PlaylistsByOwnerIdQuery = { __typename?: 'Query', playlistsByOwnerId: { __typename?: 'PlaylistsWithCount', count: number, playlists?: Array<{ __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null }> | null } };
+export type PlaylistsByOwnerIdQuery = { __typename?: 'Query', playlistsByOwnerId: { __typename?: 'PlaylistsWithCount', count: number, playlists?: Array<{ __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string } }> | null }> | null } };
 
 export type PlaylistsPublicAvailableQueryVariables = Exact<{
   offset: Scalars['Int']['input'];
@@ -914,14 +922,14 @@ export type PlaylistsPublicAvailableQueryVariables = Exact<{
 }>;
 
 
-export type PlaylistsPublicAvailableQuery = { __typename?: 'Query', playlistsPublicAvailable: { __typename?: 'PlaylistsWithCount', count: number, playlists?: Array<{ __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null }> | null } };
+export type PlaylistsPublicAvailableQuery = { __typename?: 'Query', playlistsPublicAvailable: { __typename?: 'PlaylistsWithCount', count: number, playlists?: Array<{ __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string } }> | null }> | null } };
 
 export type PlaylistCreateMutationVariables = Exact<{
   input: CreatePlaylistInput;
 }>;
 
 
-export type PlaylistCreateMutation = { __typename?: 'Mutation', playlistCreate: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type PlaylistCreateMutation = { __typename?: 'Mutation', playlistCreate: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string } }> | null } };
 
 export type PlaylistDeleteByIdMutationVariables = Exact<{
   _id: Scalars['ID']['input'];
@@ -935,16 +943,16 @@ export type PlaylistSwicthTrackMutationVariables = Exact<{
 }>;
 
 
-export type PlaylistSwicthTrackMutation = { __typename?: 'Mutation', playlistSwicthTrack: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type PlaylistSwicthTrackMutation = { __typename?: 'Mutation', playlistSwicthTrack: { __typename?: 'Playlist', _id: string, title: string, public: boolean, createdAt: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string }, tracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string } }> | null } };
 
-export type CorePostFieldsFragment = { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null };
+export type CorePostFieldsFragment = { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string };
 
 export type PostQueryVariables = Exact<{
   _id: Scalars['ID']['input'];
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } };
 
 export type PostsQueryVariables = Exact<{
   offset: Scalars['Int']['input'];
@@ -952,7 +960,7 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null } };
 
 export type PostsByOwnerQueryVariables = Exact<{
   owner: Scalars['ID']['input'];
@@ -961,7 +969,7 @@ export type PostsByOwnerQueryVariables = Exact<{
 }>;
 
 
-export type PostsByOwnerQuery = { __typename?: 'Query', postsByOwner: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type PostsByOwnerQuery = { __typename?: 'Query', postsByOwner: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null } };
 
 export type PostsSavedByUserQueryVariables = Exact<{
   user: Scalars['ID']['input'];
@@ -970,28 +978,28 @@ export type PostsSavedByUserQueryVariables = Exact<{
 }>;
 
 
-export type PostsSavedByUserQuery = { __typename?: 'Query', postsSavedByUser: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type PostsSavedByUserQuery = { __typename?: 'Query', postsSavedByUser: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null } };
 
 export type PostsByTitleQueryVariables = Exact<{
   input: PostsByTitleInput;
 }>;
 
 
-export type PostsByTitleQuery = { __typename?: 'Query', postsByTitle?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
+export type PostsByTitleQuery = { __typename?: 'Query', postsByTitle?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null };
 
 export type PostsByIdsQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
-export type PostsByIdsQuery = { __typename?: 'Query', postsByIds?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
+export type PostsByIdsQuery = { __typename?: 'Query', postsByIds?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null };
 
 export type PostsMostPopularQueryVariables = Exact<{
   date: Scalars['Date']['input'];
 }>;
 
 
-export type PostsMostPopularQuery = { __typename?: 'Query', postsMostPopular?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null };
+export type PostsMostPopularQuery = { __typename?: 'Query', postsMostPopular?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null };
 
 export type PostsByCategoryQueryVariables = Exact<{
   category: Scalars['String']['input'];
@@ -1000,7 +1008,7 @@ export type PostsByCategoryQueryVariables = Exact<{
 }>;
 
 
-export type PostsByCategoryQuery = { __typename?: 'Query', postsByCategory: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type PostsByCategoryQuery = { __typename?: 'Query', postsByCategory: { __typename?: 'PostsWithCount', count: number, posts?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null } };
 
 export type PostsByCategoryCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1012,7 +1020,7 @@ export type PostCreateMutationVariables = Exact<{
 }>;
 
 
-export type PostCreateMutation = { __typename?: 'Mutation', postCreate: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type PostCreateMutation = { __typename?: 'Mutation', postCreate: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string } };
 
 export type PostDeleteByIdMutationVariables = Exact<{
   _id: Scalars['ID']['input'];
@@ -1021,26 +1029,12 @@ export type PostDeleteByIdMutationVariables = Exact<{
 
 export type PostDeleteByIdMutation = { __typename?: 'Mutation', postDeleteById: { __typename?: 'Post', _id: string, title: string } };
 
-export type PostSwitchLikeMutationVariables = Exact<{
-  input: SwitchLikeOrPostInSavedInput;
-}>;
-
-
-export type PostSwitchLikeMutation = { __typename?: 'Mutation', postSwitchLike: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
-
-export type PostSwicthInSavedMutationVariables = Exact<{
-  input: SwitchLikeOrPostInSavedInput;
-}>;
-
-
-export type PostSwicthInSavedMutation = { __typename?: 'Mutation', postSwicthInSaved: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
-
 export type PostUpdateMutationVariables = Exact<{
   input: UpdatePostInput;
 }>;
 
 
-export type PostUpdateMutation = { __typename?: 'Mutation', postUpdate: { __typename?: 'Post', _id: string, title: string, description: string, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string }, savedBy?: Array<{ __typename?: 'User', _id: string }> | null, likedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type PostUpdateMutation = { __typename?: 'Mutation', postUpdate: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } };
 
 export type ReportCreateMutationVariables = Exact<{
   input: CreateReportInput;
@@ -1070,7 +1064,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number, local?: { __typename?: 'SocialMediaData', email?: string | null } | null, google?: { __typename?: 'SocialMediaData', email?: string | null } | null, facebook?: { __typename?: 'SocialMediaData', name?: string | null } | null, twitter?: { __typename?: 'SocialMediaData', name?: string | null } | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number, local?: { __typename?: 'SocialMediaData', email?: string | null } | null, google?: { __typename?: 'SocialMediaData', email?: string | null } | null, facebook?: { __typename?: 'SocialMediaData', name?: string | null } | null, twitter?: { __typename?: 'SocialMediaData', name?: string | null } | null, subscribedOn?: Array<{ __typename?: 'User', _id: string }> | null, subscribers?: Array<{ __typename?: 'User', _id: string }> | null, likedPosts?: Array<{ __typename?: 'Post', _id: string }> | null, savedPosts?: Array<{ __typename?: 'Post', _id: string }> | null } };
 
 export type UsersByNicknameQueryVariables = Exact<{
   nick: Scalars['String']['input'];
@@ -1184,6 +1178,20 @@ export type UserUnlinkTwitterMutationVariables = Exact<{
 
 export type UserUnlinkTwitterMutation = { __typename?: 'Mutation', userUnlinkTwitter?: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } | null };
 
+export type UserSwitchLikeMutationVariables = Exact<{
+  input: SwitchLikeOrPostInSavedInput;
+}>;
+
+
+export type UserSwitchLikeMutation = { __typename?: 'Mutation', userSwitchLike: { __typename?: 'SwitchLikeOrPostInSavedReturnType', post: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string }, user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } } };
+
+export type UserSwitchSaveMutationVariables = Exact<{
+  input: SwitchLikeOrPostInSavedInput;
+}>;
+
+
+export type UserSwitchSaveMutation = { __typename?: 'Mutation', userSwitchSave: { __typename?: 'SwitchLikeOrPostInSavedReturnType', post: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string }, user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } } };
+
 export const CoreAchievementFieldsFragmentDoc = gql`
     fragment CoreAchievementFields on Achievement {
   _id
@@ -1201,12 +1209,8 @@ export const CorePostFieldsFragmentDoc = gql`
   _id
   title
   description
-  savedBy {
-    _id
-  }
-  likedBy {
-    _id
-  }
+  saves
+  likes
   createdAt
   image
   audio
@@ -2676,77 +2680,6 @@ export function usePostDeleteByIdMutation(baseOptions?: Apollo.MutationHookOptio
 export type PostDeleteByIdMutationHookResult = ReturnType<typeof usePostDeleteByIdMutation>;
 export type PostDeleteByIdMutationResult = Apollo.MutationResult<PostDeleteByIdMutation>;
 export type PostDeleteByIdMutationOptions = Apollo.BaseMutationOptions<PostDeleteByIdMutation, PostDeleteByIdMutationVariables>;
-export const PostSwitchLikeDocument = gql`
-    mutation postSwitchLike($input: SwitchLikeOrPostInSavedInput!) {
-  postSwitchLike(input: $input) {
-    ...CorePostFields
-  }
-}
-    ${CorePostFieldsFragmentDoc}`;
-export type PostSwitchLikeMutationFn = Apollo.MutationFunction<PostSwitchLikeMutation, PostSwitchLikeMutationVariables>;
-
-/**
- * __usePostSwitchLikeMutation__
- *
- * To run a mutation, you first call `usePostSwitchLikeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePostSwitchLikeMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [postSwitchLikeMutation, { data, loading, error }] = usePostSwitchLikeMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function usePostSwitchLikeMutation(baseOptions?: Apollo.MutationHookOptions<PostSwitchLikeMutation, PostSwitchLikeMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<PostSwitchLikeMutation, PostSwitchLikeMutationVariables>(PostSwitchLikeDocument, options);
-      }
-export type PostSwitchLikeMutationHookResult = ReturnType<typeof usePostSwitchLikeMutation>;
-export type PostSwitchLikeMutationResult = Apollo.MutationResult<PostSwitchLikeMutation>;
-export type PostSwitchLikeMutationOptions = Apollo.BaseMutationOptions<PostSwitchLikeMutation, PostSwitchLikeMutationVariables>;
-export const PostSwicthInSavedDocument = gql`
-    mutation postSwicthInSaved($input: SwitchLikeOrPostInSavedInput!) {
-  postSwicthInSaved(input: $input) {
-    ...CorePostFields
-    owner {
-      _id
-      avatar
-      nick
-    }
-  }
-}
-    ${CorePostFieldsFragmentDoc}`;
-export type PostSwicthInSavedMutationFn = Apollo.MutationFunction<PostSwicthInSavedMutation, PostSwicthInSavedMutationVariables>;
-
-/**
- * __usePostSwicthInSavedMutation__
- *
- * To run a mutation, you first call `usePostSwicthInSavedMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePostSwicthInSavedMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [postSwicthInSavedMutation, { data, loading, error }] = usePostSwicthInSavedMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function usePostSwicthInSavedMutation(baseOptions?: Apollo.MutationHookOptions<PostSwicthInSavedMutation, PostSwicthInSavedMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<PostSwicthInSavedMutation, PostSwicthInSavedMutationVariables>(PostSwicthInSavedDocument, options);
-      }
-export type PostSwicthInSavedMutationHookResult = ReturnType<typeof usePostSwicthInSavedMutation>;
-export type PostSwicthInSavedMutationResult = Apollo.MutationResult<PostSwicthInSavedMutation>;
-export type PostSwicthInSavedMutationOptions = Apollo.BaseMutationOptions<PostSwicthInSavedMutation, PostSwicthInSavedMutationVariables>;
 export const PostUpdateDocument = gql`
     mutation postUpdate($input: UpdatePostInput!) {
   postUpdate(input: $input) {
@@ -2904,6 +2837,12 @@ export const UserDocument = gql`
       _id
     }
     subscribers {
+      _id
+    }
+    likedPosts {
+      _id
+    }
+    savedPosts {
       _id
     }
   }
@@ -3542,3 +3481,81 @@ export function useUserUnlinkTwitterMutation(baseOptions?: Apollo.MutationHookOp
 export type UserUnlinkTwitterMutationHookResult = ReturnType<typeof useUserUnlinkTwitterMutation>;
 export type UserUnlinkTwitterMutationResult = Apollo.MutationResult<UserUnlinkTwitterMutation>;
 export type UserUnlinkTwitterMutationOptions = Apollo.BaseMutationOptions<UserUnlinkTwitterMutation, UserUnlinkTwitterMutationVariables>;
+export const UserSwitchLikeDocument = gql`
+    mutation userSwitchLike($input: SwitchLikeOrPostInSavedInput!) {
+  userSwitchLike(input: $input) {
+    post {
+      ...CorePostFields
+    }
+    user {
+      ...CoreUserFields
+    }
+  }
+}
+    ${CorePostFieldsFragmentDoc}
+${CoreUserFieldsFragmentDoc}`;
+export type UserSwitchLikeMutationFn = Apollo.MutationFunction<UserSwitchLikeMutation, UserSwitchLikeMutationVariables>;
+
+/**
+ * __useUserSwitchLikeMutation__
+ *
+ * To run a mutation, you first call `useUserSwitchLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserSwitchLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userSwitchLikeMutation, { data, loading, error }] = useUserSwitchLikeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserSwitchLikeMutation(baseOptions?: Apollo.MutationHookOptions<UserSwitchLikeMutation, UserSwitchLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserSwitchLikeMutation, UserSwitchLikeMutationVariables>(UserSwitchLikeDocument, options);
+      }
+export type UserSwitchLikeMutationHookResult = ReturnType<typeof useUserSwitchLikeMutation>;
+export type UserSwitchLikeMutationResult = Apollo.MutationResult<UserSwitchLikeMutation>;
+export type UserSwitchLikeMutationOptions = Apollo.BaseMutationOptions<UserSwitchLikeMutation, UserSwitchLikeMutationVariables>;
+export const UserSwitchSaveDocument = gql`
+    mutation userSwitchSave($input: SwitchLikeOrPostInSavedInput!) {
+  userSwitchSave(input: $input) {
+    post {
+      ...CorePostFields
+    }
+    user {
+      ...CoreUserFields
+    }
+  }
+}
+    ${CorePostFieldsFragmentDoc}
+${CoreUserFieldsFragmentDoc}`;
+export type UserSwitchSaveMutationFn = Apollo.MutationFunction<UserSwitchSaveMutation, UserSwitchSaveMutationVariables>;
+
+/**
+ * __useUserSwitchSaveMutation__
+ *
+ * To run a mutation, you first call `useUserSwitchSaveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserSwitchSaveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userSwitchSaveMutation, { data, loading, error }] = useUserSwitchSaveMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserSwitchSaveMutation(baseOptions?: Apollo.MutationHookOptions<UserSwitchSaveMutation, UserSwitchSaveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserSwitchSaveMutation, UserSwitchSaveMutationVariables>(UserSwitchSaveDocument, options);
+      }
+export type UserSwitchSaveMutationHookResult = ReturnType<typeof useUserSwitchSaveMutation>;
+export type UserSwitchSaveMutationResult = Apollo.MutationResult<UserSwitchSaveMutation>;
+export type UserSwitchSaveMutationOptions = Apollo.BaseMutationOptions<UserSwitchSaveMutation, UserSwitchSaveMutationVariables>;
