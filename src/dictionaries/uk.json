@@ -291,7 +291,8 @@
                 "saved": "Збережені пости",
                 "support": "Підтримка",
                 "logout": "Вийти",
-                "login": "Увійти"
+                "login": "Увійти",
+                "switch-locale": "Мова"
             },
             "profile-card": {
                 "profile-progress": {

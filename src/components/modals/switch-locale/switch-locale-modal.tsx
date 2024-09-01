@@ -71,7 +71,7 @@ export default function SwitchLocaleModal({button, dictionary}: {button: React.R
                             }
                         />
                         <SwitchLocaleItem 
-                            title="Ukrainian" 
+                            title="Українська" 
                             locale="uk" 
                             selected={selectedLocale}
                             localeDescription="UK" 
@@ -81,7 +81,7 @@ export default function SwitchLocaleModal({button, dictionary}: {button: React.R
                             }
                         />
                         <SwitchLocaleItem 
-                            title="Russian" 
+                            title="Русский" 
                             locale="ru" 
                             selected={selectedLocale}
                             localeDescription="RU" 

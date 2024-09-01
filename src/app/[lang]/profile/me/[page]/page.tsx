@@ -13,6 +13,7 @@ import envCfg from "@/config/env";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { Metadata } from "next";
+import PinnedTracks from "@/components/common/profile-card/pinned-tracks/pinned-tarcks";
 
 
 export const metadata: Metadata = {
@@ -41,6 +42,7 @@ export default async function Profile({params}: {params: { page: number, lang: T
             >
                 <div className="card w-full">
                     <div className="flex flex-wrap justify-center md:justify-around gap-5">
+                        <PinnedTracks/>
                         <PreloadQuery
                             query={POSTS_BY_OWNER_QUERY}
                             variables={{

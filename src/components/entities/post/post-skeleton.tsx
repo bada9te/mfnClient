@@ -6,11 +6,11 @@ export default function PostSkeleton(props: {
     return (
         <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass`}>
             <div className="p-2">
-                <div className="skeleton h-14 w-full shadow-md rounded-full"></div>
+                <div className="skeleton h-14 w-full shadow-md rounded-2xl"></div>
             </div>
             
 
-            <div className="skeleton w-80 h-[180px] rounded-2xl"></div>
+            <div className="skeleton w-80 h-[180px] rounded-none"></div>
 
             <div className="card-body text-start p-5">
                 <h2 className="card-title">
@@ -22,7 +22,7 @@ export default function PostSkeleton(props: {
             <div className="p-2">
                 <div className="skeleton h-[130px] w-full shadow-md"></div>
             </div>
-            <div className="skeleton h-14 w-full shadow-md rounded-2xl"></div>
+            <div className="skeleton h-14 w-full shadow-md rounded-2xl rounded-t-none"></div>
         </div>
     );
 }

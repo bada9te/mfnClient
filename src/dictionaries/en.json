@@ -291,7 +291,8 @@
                 "saved": "Saved posts",
                 "support": "Support",
                 "logout": "Logout",
-                "login": "Login"
+                "login": "Login",
+                "switch-locale": "Language"
             },
             "profile-card": {
                 "profile-progress": {
