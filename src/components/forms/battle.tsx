@@ -10,7 +10,7 @@ import { revalidatePathAction } from "@/actions/revalidation";
 import { useAppSelector } from "@/lib/redux/store";
 import { getDictionary } from "@/dictionaries/dictionaries";
 
-const PostPlaceholder = (props: {
+export const PostPlaceholder = (props: {
     handleSelect: (a: TPost) => void;
     userIsOwner: boolean;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"];

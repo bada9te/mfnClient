@@ -42,7 +42,7 @@ export default async function Profile({params}: {params: { page: number, lang: T
             >
                 <div className="card w-full">
                     <div className="flex flex-wrap justify-center md:justify-around gap-5">
-                        <PinnedTracks/>
+                        <PinnedTracks dictionary={dict.components}/>
                         <PreloadQuery
                             query={POSTS_BY_OWNER_QUERY}
                             variables={{
