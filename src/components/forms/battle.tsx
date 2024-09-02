@@ -25,7 +25,7 @@ export const PostPlaceholder = (props: {
                 handleSelect={props.handleSelect}
                 userIsOwner={props.userIsOwner}
                 button={
-                    <button type="button" className="mt-5 btn btn-sm btn-primary glass  absolute bottom-0 w-full text-white">{props.dictionary.forms.battle.select}</button>
+                    <button type="button" className="mt-5 btn btn-sm btn-primary glass rounded-t-none absolute bottom-0 w-full text-white">{props.dictionary.forms.battle.select}</button>
                 }
             />
         </div>

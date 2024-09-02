@@ -1,0 +1,755 @@
+{
+    "app": {
+        "landing": {
+            "welcome": {
+                "header": "Willkommen bei Music From Nothing",
+                "subheader": "Die Musik-Streaming-Plattform"
+            },
+            "compose": {
+                "header": "Komponieren, arrangieren",
+                "subheader": "und produzieren Sie mühelos Ihre einzigartigen Melodien mit unserer Web-App.",
+                "cards": {
+                    "explore": {
+                        "title": "🎵 Entdecken",
+                        "description": "Entdecken Sie die Welt der individuellen Musik, teilen, liken und kommentieren Sie großartige Audio-Posts."
+                    },
+                    "anywhere": {
+                        "title": "🌐 Überall",
+                        "description": "Jederzeit: Zugänglich auf Desktop, Tablet oder Mobilgerät – Spaß kennt keine Grenzen."
+                    },
+                    "community": {
+                        "title": "🤝 Gemeinschaft",
+                        "description": "Verbinden, zusammenarbeiten und lassen Sie sich von gleichgesinnten Kreativen inspirieren."
+                    },
+                    "start": {
+                        "title": "🚀 Los geht's",
+                        "description": "Treten Sie ''Music from Nothing'' bei und lassen Sie die Musik beginnen!"
+                    }
+                }
+            },
+            "purpose": {
+                "header": "Zweck der Plattform",
+                "subheader": "und Informationen über den Autor",
+                "cards": {
+                    "listening": {
+                        "title": "Musik hören",
+                        "description": "Hören Sie Musik und haben Sie Spaß!"
+                    },
+                    "musical": {
+                        "title": "Teilen von musikalischen Kreationen",
+                        "description": "Teilen Sie die Tracks der Benutzer und heben Sie die Stimmung der Empfänger."
+                    },
+                    "musician": {
+                        "title": "Musiker-Profilierung",
+                        "description": "Die Plattform bietet erstaunliche Benutzerprofile, die Sie nach Ihrem Geschmack anpassen können :)"
+                    },
+                    "just": {
+                        "title": "Nur zur Unterhaltung und Selbststudium \\*_*/",
+                        "description": "Diese Plattform wurde von einer einzelnen Person entwickelt und befindet sich noch in der Entwicklung."
+                    },
+                    "about": {
+                        "title": "Über den Autor",
+                        "description": "Hallo! Ich freue mich sehr, Sie auf meinem ersten großen Web-Projekt zu sehen. Ich bin ein normaler 3. Jahr Student an der Nationalen Universität ''Zaporizhzhia Polytechnic'', Saporischschja, Ukraine. Es gibt jedoch keine modernen Web-Entwicklungskurse an meiner Uni, also habe ich beschlossen, mich selbst weiterzubilden."
+                    },
+                    "gratitude": {
+                        "title": "Großer Dank",
+                        "description": "Ich möchte mich herzlich für die Übersetzung ins Deutsche bei (Name Surname) und für einige technische Dinge bei (Name Surname) bedanken."
+                    }
+                }
+            },
+            "whishes": {
+                "discover": {
+                    "title": "Entdecke Neues",
+                    "body": "Entdecke neue Melodien, die deine Seele zum Tanzen und dein Herz zum Singen bringen!"
+                },
+                "embrace": {
+                    "title": "Umarme das",
+                    "body": "Umarme den Rhythmus des Lebens mit jedem Schlag, der dir begegnet!"
+                },
+                "let-the": {
+                    "title": "Lass die",
+                    "body": "Lass die Melodien dich auf eine Reise zu deinem glücklichsten Ort mitnehmen!"
+                },
+                "find": {
+                    "title": "Finde deine",
+                    "body": "Finde deine perfekte Playlist und lass jeden Moment zum unvergesslichen Soundtrack werden!"
+                },
+                "enjoy": {
+                    "title": "Genieße die",
+                    "body": "Genieße die Symphonie der Klänge, die deine Tage heller und deine Nächte ruhiger machen!"
+                },
+                "immerse": {
+                    "title": "Tauche ein",
+                    "body": "Tauche ein in eine Welt, in der jede Note eine Geschichte erzählt und jeder Beat Magie schafft!"
+                },
+                "feel": {
+                    "title": "Fühle den",
+                    "body": "Fühle den Herzschlag der Musik und lass ihn dich zu Momenten reiner Freude führen!"
+                },
+                "chase": {
+                    "title": "Verfolge den",
+                    "body": "Verfolge den Rhythmus und lass ihn dich zu unvergesslichen musikalischen Abenteuern führen!"
+                },
+                "let-your": {
+                    "title": "Lass deinen",
+                    "body": "Lass deinen Geist mit der Harmonie jedes Tracks in die Höhe steigen!"
+                },
+                "savor": {
+                    "title": "Genieße jeden",
+                    "body": "Genieße jeden Klang und jede Melodie, als wären sie ein Festmahl für deine Ohren!"
+                }
+            }
+        },
+        "account-restore": {
+        "restore": {
+            "title": "Stellen Sie Ihr Konto wieder her",
+            "description": ""
+        },
+        "email-verify": {
+            "title": "E-Mail-Verifizierung",
+            "description": "Bitte geben Sie die E-Mail-Adresse an, die mit Ihrem Konto verknüpft ist."
+        }
+    },
+    "account-verify": {
+        "title": "Kontobestätigung",
+        "description": "Sie können sich nach diesem Schritt in Ihr Konto einloggen."
+    },
+    "battles": {
+        "id": {
+            "title": "Spezifische Schlacht",
+            "description": "Schauen Sie sich das mal an..."
+        },
+        "create": {
+            "title": "Neue Schlacht",
+            "description": "Bereit, die Bühne zu betreten und die nächste großartige Musikschlacht zu führen? Unsere Seite 'Neue Schlacht erstellen' ist Ihr Tor zur Einführung eines neuen und aufregenden Musikwettbewerbs. Ob Sie ein Künstler, ein Promoter oder einfach nur ein leidenschaftlicher Musikfan sind, hier beginnt Ihre Vision für den ultimativen Musik-Wettbewerb!"
+        },
+        "finished": {
+            "title": "Beendete Schlachten",
+            "description": "Erleben Sie die Aufregung und Magie unserer früheren Musikschlachten noch einmal! Jedes Event war eine spektakuläre Show voller Talent, Kreativität und purer musikalischer Energie. Ob Sie es verpasst haben oder einfach nur die unvergesslichen Momente noch einmal erleben möchten – diese Seite ist Ihr Tor zu den Highlights vergangener Schlachten."
+        },
+        "in-progress": {
+            "title": "Laufende Schlachten",
+            "description": "Tauchen Sie ein in das Herz des musikalischen Wettbewerbs mit unserem 'Ultimate Music Showdown', wo aufstrebende Künstler und erfahrene Performer für eine unvergessliche Talentschlacht zusammenkommen. Dies ist die Bühne, auf der Rhythmus auf Rivalität trifft, und nur die Außergewöhnlichsten werden sich durchsetzen!"
+        }
+    },
+    "categories": {
+        "description-part1": "Die neuesten Titel in der Kategorie",
+        "description-part2": ""
+    },
+    "feed": {
+        "title": "Neueste Titel",
+        "description": "Die neuesten Titel von Benutzern"
+    },
+    "login": {
+        "title": "In Konto einloggen",
+        "description": ""
+    },
+    "logout": {
+        "title": "Abmelden",
+        "description": "Sie werden bald abgemeldet."
+    },
+    "playlists": {
+        "id": {
+            "title": "Spezifische Playlist",
+            "description": "Nichts zu sagen, hab einen schönen Tag :)"
+        },
+        "create": {
+            "title": "Neue Playlist",
+            "description": "Erstellen Sie Ihre ideale Playlist, indem Sie eine neue Sammlung einrichten. Organisieren und benennen Sie Ihre Playlist passend zu jeder Stimmung oder Veranstaltung und fügen Sie später Tracks hinzu, wenn Sie bereit sind. Es ist der ultimative Weg, Ihre Musikreise zu planen und sicherzustellen, dass Sie den perfekten Soundtrack zur Hand haben."
+        },
+        "explore": {
+            "title": "Playlists erkunden",
+            "description": "Entdecken Sie eine vielfältige Sammlung kuratierter Playlists, die sich perfekt für jede Gelegenheit eignen. Von mitreißenden Hymnen bis hin zu entspannenden Melodien – erkunden Sie die ultimative Auswahl an öffentlichen Musikmischungen, die jedem Geschmack und jeder Stimmung gerecht werden."
+        },
+        "my-playlists": {
+            "title": "Meine Playlists",
+            "description": "Liste der erstellten und gespeicherten Playlists"
+        }
+    },
+    "post": {
+        "title": "Spezifischer Track",
+        "description": "Nichts zu sagen, viel Spaß :)"
+    },
+    "profile": {
+        "id": {
+            "page": {
+                "title": "",
+                "description": ""
+            },
+            "achievements": {
+                "title": "Herausforderungen",
+                "description": "Die Liste des Fortschritts der Herausforderungen, die einem bestimmten Benutzer zugeordnet sind."
+            }
+        },
+        "me": {
+            "page": {
+                "title": "Meine Tracks",
+                "description": "Die Liste der hochgeladenen Tracks"
+            },
+            "achievements": {
+                "title": "Herausforderungen",
+                "description": "Die Liste des Fortschritts der Herausforderungen, die mir zugeordnet sind."
+            },
+            "edit": {
+                "post": {
+                    "title": "Beitrag bearbeiten",
+                    "description": "Sie können Ihren ausgewählten Beitrag mit dem untenstehenden Formular bearbeiten."
+                }
+            },
+            "notifications": {
+                "new": {
+                    "title": "Ungelesene Benachrichtigungen",
+                    "description": ""
+                },
+                "read": {
+                    "title": "Gelesene Benachrichtigungen",
+                    "description": ""
+                }
+            },
+            "saved": {
+                "title": "Gespeicherte Tracks",
+                "description": ""
+            },
+            "upload": {
+                "title": "Neuer Beitrag",
+                "description": "Lädt ihr einen neuen Hit hoch?"
+            }
+            }
+        },
+        "register": {
+            "title": "Neues Konto registrieren",
+            "description": ""
+        },
+        "support": {
+            "title": "Fühlen Sie sich frei, uns zu kontaktieren!",
+        "description": "Egal, ob Sie Fragen haben, Hilfe bei der Fehlerbehebung benötigen oder Unterstützung bei der Nutzung unserer Funktionen suchen, unsere umfassenden FAQs, Kontaktoptionen und Fehlerbehebungstipps stehen Ihnen zur Verfügung. Wir setzen alles daran, Ihnen eine reibungslose und angenehme Erfahrung zu bieten, also zögern Sie nicht, uns zu kontaktieren, wenn Sie weitere Hilfe benötigen."
+        }
+    },
+    "components": {
+        "bars": {
+            "appbar": {
+                "feed": "Feed",
+                "battles": "Schlachten",
+                "in-progress": "In Bearbeitung",
+                "finished": "Beendet",
+                "create-new": "Neu erstellen",
+                "playlists": "Playlists",
+                "explore": "Erkunden",
+                "my-playlists": "Meine Playlists",
+                "categories": "Kategorien"
+            },
+            "bar-tabs": {
+                "bar-tabs-battles": {
+                    "in-progress": "In Bearbeitung",
+                    "finished": "Beendet",
+                    "create-new": "Neu erstellen"
+                },
+                "bar-tabs-notifications": {
+                    "new": "Neu",
+                    "reviewed": "Gelesen"
+                },
+                "bar-tabs-playlists": {
+                    "explore": "Erkunden",
+                    "my-playlists": "Meine Playlists",
+                    "create-new": "Neu erstellen"
+                }
+            },
+            "bottom-nav": {
+                "tracks": "Titel",
+                "new-post": "Neuer Beitrag",
+                "player": "Player",
+                "people": "Menschen"
+            }
+        },
+        "common": {
+            "footer": {
+                "quick-nav": "Schnellzugriff",
+                "social": "Soziale Netzwerke",
+                "home": "Startseite",
+                "battles": "Schlachten",
+                "playlists": "Playlists",
+                "new-post": "Neuer Beitrag",
+                "support": "Support",
+                "faq": "FAQ"
+            },
+            "player": {
+                "player": {
+                    "volume": "Lautstärke"
+                },
+                "track-info": {
+                    "total-likes": "Gesamtanzahl Likes",
+                    "total-saves": "Gesamtanzahl gespeicherte Titel",
+                    "track-details": "Track-Details"
+                }
+            },
+            "profile-button": {
+                "profile": "Profil",
+                "switch-chain": "Kette wechseln",
+                "wallet": "Wallet",
+                "notifications": "Benachrichtigungen",
+                "edit-profile": "Profil bearbeiten",
+                "saved": "Gespeicherte Beiträge",
+                "support": "Support",
+                "logout": "Abmelden",
+                "login": "Anmelden",
+                "switch-locale": "Sprache"
+            },
+            "profile-card": {
+                "profile-progress": {
+                    "level": "Aktuelles Level",
+                    "challenges": "Abgeschlossene Herausforderungen",
+                    "total-likes": "Gesamtanzahl Likes",
+                    "total-saves": "Gesamtanzahl gespeicherte Titel",
+                    "list-of-challenges": "Liste der Herausforderungen",
+                    "most-liked-track": "Am meisten gelikter Track",
+                    "most-saved-track": "Am meisten gespeicherter Track"
+                },
+                "followers": "Follower",
+                "following": "Folge ich",
+                "unfollow": "Entfolgen",
+                "follow": "Folgen",
+                "avatar": "Avatar",
+                "background": "Hintergrund",
+                "share": "Teilen"
+            },
+            "refresh-btn-container": {
+                "refresh": "Aktualisieren"
+            },
+            "register-explore-btns": {
+                "register": "Registrieren",
+                "explore": "Erkunden"
+            }
+        },
+        "entities": {
+            "achievement": {
+            "1": {
+                "title": "Erster Beitrag",
+                "achievement": "Haben Sie Ihren ersten musikalischen Beitrag veröffentlicht.",
+                "description": "Herzlichen Glückwunsch, dass Sie Ihren ersten Track oder musikalischen Inhalt mit der Welt geteilt haben!"
+            },
+            "2": {
+                "title": "Erster Like",
+                "achievement": "Haben Sie Ihren ersten Like auf einem musikalischen Beitrag erhalten.",
+                "description": "Ihre Musik hat einen Hörer berührt. Weiter so!"
+            },
+            "3": {
+                "title": "Erster Save",
+                "achievement": "Ihr Beitrag wurde zum ersten Mal als Lesezeichen gespeichert.",
+                "description": "Jemand hat Ihre Musik so sehr genossen, dass er sie für später speichern wollte. Gut gemacht!"
+            },
+            "4": {
+                "title": "Wachsende Audience",
+                "achievement": "1.000 Likes auf Ihren Beiträgen gesammelt.",
+                "description": "Ihre Musik gewinnt an Fahrt! 1.000 Likes sind ein solider Anfang."
+            },
+            "5": {
+                "title": "Fan-Favorit",
+                "achievement": "2.500 Likes auf einem einzelnen Beitrag erreicht.",
+                "description": "Ein Track ist bei Ihren Hörern besonders beliebt!"
+            },
+            "6": {
+                "title": "Bookmark-Champion",
+                "achievement": "1.000 Saves auf einem einzelnen Beitrag erhalten.",
+                "description": "Ihr Beitrag ist ein Hit bei Fans, die ihn griffbereit haben wollen."
+            },
+            "7": {
+                "title": "Profil-Popularität",
+                "achievement": "Ihr Profil hat insgesamt 5.000 Likes auf allen Beiträgen erhalten.",
+                "description": "Ihre Inhalte kommen in der Community gut an. Weiter so!"
+            },
+            "8": {
+                "title": "Content Creator",
+                "achievement": "100 einzigartige musikalische Beiträge veröffentlicht.",
+                "description": "Sie haben kontinuierlich Ihre Musik geteilt. Das ist ein Zeichen für einen engagierten Creator!"
+            },
+            "9": {
+                "title": "Social Star",
+                "achievement": "10.000 Likes auf allen Beiträgen kombiniert erhalten.",
+                "description": "Ihre Musik wird zunehmend populär. Sie sind ein aufstrebender Stern!"
+            },
+            "10": {
+                "title": "Bookmark-Enthusiast",
+                "achievement": "Ihre Beiträge haben insgesamt 5.000 Saves erhalten.",
+                "description": "Hörer finden Ihre Musik wert, in ihren Playlists gespeichert zu werden!"
+            },
+            "11": {
+                "title": "Profil-Influencer",
+                "achievement": "20.000 Likes und Saves kombiniert erreicht.",
+                "description": "Ihr Einfluss in der Community wächst. Weiter so beim Engagieren und Erstellen!"
+            },
+            "12": {
+                "title": "Top Content Creator",
+                "achievement": "250 einzigartige musikalische Beiträge veröffentlicht.",
+                "description": "Ihr Beitrag zur Seite ist bedeutend. Ihre Hingabe, Musik zu teilen, ist lobenswert!"
+            },
+            "13": {
+                "title": "Trendender Künstler",
+                "achievement": "10.000 Likes auf einem einzelnen Beitrag erreicht.",
+                "description": "Ihre Musik ist im Trend und zieht große Aufmerksamkeit auf sich."
+            },
+            "14": {
+                "title": "Legendärer Creator",
+                "achievement": "50.000 Likes und Saves kombiniert erreicht.",
+                "description": "Sie haben sich als bedeutende und einflussreiche Figur in der Musik-Community etabliert!"
+            },
+            "15": {
+                "title": "Ultimatives Fan-Engagement",
+                "achievement": "100.000 Likes und Saves kombiniert erhalten.",
+                "description": "Ihre Musik hat die Herzen vieler erobert. Sie sind ein beliebter Künstler in unserer Community!"
+            },
+            "16": {
+                "title": "Meister der Mischung",
+                "achievement": "Einen musikalischen Beitrag erstellt, der an die Spitze der hervorgehobenen Liste der Seite gelangte.",
+                "description": "Ihr Inhalt hat erhebliche Anerkennung und Sichtbarkeit gewonnen."
+            },
+            "17": {
+                "title": "Community-Favorit",
+                "achievement": "Einen Platz in den Top 10 der meistgelikten Beiträge des Monats verdient.",
+                "description": "Ihr Beitrag hat stark mit der Community resoniert. Herzlichen Glückwunsch zur Anerkennung!"
+            },
+            "18": {
+                "title": "Influencer-Status",
+                "achievement": "500.000 Likes und 500.000 Saves über alle Beiträge hinweg erreicht.",
+                "description": "Ihr Einfluss in der Community ist unbestreitbar. Ihre Musik macht Wellen!"
+            },
+            "19": {
+                "title": "Ruhmeshalle",
+                "achievement": "1.000.000 Likes und Saves kombiniert erreicht.",
+                "description": "Sie sind eine legendäre Figur in unserer Musik-Community. Ihr Einfluss ist erheblich und bleibend!"
+                }
+            },
+            "battle": {
+               "vote-for": "Abstimmen für",
+                "supervote": "Supervote",
+                "votes": "Abstimmungen",
+                "for": "Für",
+                "versus": "vs"
+            },
+            "notification": {
+                "ago": "vor",
+            "delete": "Löschen",
+            "mark-as-read": "Als gelesen markieren",
+            "subscribed": {
+                "part-1": "Hey, Benutzer",
+                "part-2": "hat gerade dein Abonnent"
+            },
+            "battle-created": {
+                "part-1": "Schlacht",
+                "part-2": "wurde gestartet"
+            },
+            "battle-finished": {
+                "part-1": "Schlacht",
+                "part-2": "ist beendet"
+            },
+            "post-reported": {
+                "part-1": "Beitrag",
+                "part-2": "wurde gemeldet mit dem Grund"
+            },
+            "new-post": {
+                "part-1": "Hey, Benutzer",
+                "part-2": "hat gerade einen neuen Track hochgeladen"
+            }
+        },
+        "playlist": {
+            "share": "Playlist teilen",
+            "add-track": "Track hinzufügen",
+            "remove-track": "Track entfernen",
+            "delete-playlist": "Playlist löschen"
+        },
+        "post": {
+            "open-profile": "Profil öffnen",
+            "copy-link": "Link kopieren",
+            "report": "Melden",
+            "edit": "Bearbeiten",
+            "total-likes": "Gesamtanzahl Likes",
+            "total-saves": "Gesamtanzahl Saves",
+            "pause": "Pause",
+            "play": "Abspielen",
+            "select": "Auswählen",
+            "delete": "Löschen",
+            "share": "Teilen"
+            },
+            "genre": {
+                "pop": {
+        "title": "Pop",
+        "description": "Fesselnde Melodien mit eingängigen Refrains und weit verbreiteter Anziehungskraft."
+    },
+    "blues": {
+        "title": "Blues",
+        "description": "Emotionale Musik mit ausdrucksstarker Gitarre und gefühlvollen Texten."
+    },
+    "classical": {
+        "title": "Klassik",
+        "description": "Orchestrale Musik mit komplexen Kompositionen und historischen Wurzeln."
+    },
+    "funk": {
+        "title": "Funk",
+        "description": "Groovige Rhythmen und starke Beats, die zum Tanzen einladen."
+    },
+    "soul": {
+        "title": "Soul",
+        "description": "Gefühlvolle Vocals und emotionale Tiefe, die Gospel und R&B verbinden."
+    },
+    "hip-hop": {
+        "title": "Hip-Hop",
+        "description": "Rhythmische Beats und Rappen, die städtische Kultur und Probleme widerspiegeln."
+    },
+    "country": {
+        "title": "Country",
+        "description": "Geschichten erzählende Texte mit traditioneller amerikanischer Folk-Instrumentierung."
+    },
+    "rock": {
+        "title": "Rock",
+        "description": "Kraftvolle Gitarrenriffs und vielfältige Stile von klassisch bis alternativ."
+    },
+    "electronic": {
+        "title": "Elektronisch",
+        "description": "Synthesizer-Klänge und Beats, von Ambient bis Dance."
+    },
+    "jazz": {
+        "title": "Jazz",
+        "description": "Improvisierte und komplexe Musik mit Swing-Rhythmen und Blechblasinstrumenten."
+    },
+    "latin": {
+        "title": "Latin",
+        "description": "Rhythmische und lebhafte Musik aus Lateinamerika mit lebhaften Instrumentierungen."
+    },
+    "folk": {
+        "title": "Folk",
+        "description": "Akustische Musik, die Geschichten erzählt und kulturelle Traditionen widerspiegelt."
+    },
+    "metal": {
+        "title": "Metal",
+        "description": "Schwere Riffs und kraftvolle Vocals, die intensive Themen erforschen."
+    },
+    "reggae": {
+        "title": "Reggae",
+        "description": "Fühle den Rhythmus mit gefühlvollen Melodien und kraftvollen Themen der Einheit."
+                }
+            }
+        },
+        "forms": {
+            "account-confirmination": {
+            "confirmination": "Bestätigung",
+            "code": "Bestätigungscode",
+            "confirm": "Bestätigen",
+            "required": "Dieses Feld ist erforderlich"
+        },
+        "account-restore": {
+            "restoration": "Konto-Wiederherstellung",
+            "new-email": "Neue E-Mail",
+            "required": "Dieses Feld ist erforderlich",
+            "email-not-valid": "E-Mail-Adresse ist ungültig",
+            "confirm-email": "E-Mail bestätigen",
+            "emails-did-not-match": "E-Mails stimmen nicht überein",
+            "new-password": "Neues Passwort",
+            "min-length": "Minimale Länge muss sein",
+            "max-length": "Maximale Länge muss sein",
+            "passwords-did-not-match": "Passwörter stimmen nicht überein",
+            "confirm-password": "Passwort bestätigen",
+            "submit": "Absenden"
+        },
+        "battle": {
+            "setup": "Neues Battle erstellen",
+            "your-track": "Dein Track",
+            "opponents-track": "Track des Gegners",
+            "battle-title": "Battle-Titel",
+            "title-requited": "Titel ist erforderlich",
+            "min-length": "Minimale Länge muss sein",
+            "max-length": "Maximale Länge muss sein",
+            "create": "Battle erstellen",
+            "select-track": "Wähle deinen Track aus",
+            "select": "Auswählen"
+        },
+        "email-verification": {
+            "verification": "Verifizierung",
+            "your-current-email": "Deine aktuelle E-Mail",
+            "email": "E-Mail",
+            "required": "Dieses Feld ist erforderlich",
+            "email-not-valid": "E-Mail-Adresse ist ungültig",
+            "submit": "Überprüfen"
+        },
+        "login": {
+            "sign-in": "Einloggen",
+            "email": "E-Mail",
+            "email-not-valid": "E-Mail-Adresse ist ungültig",
+            "password": "Passwort",
+            "min-length": "Minimale Länge muss sein",
+            "max-length": "Maximale Länge muss sein",
+            "required": "Dieses Feld ist erforderlich",
+            "login": "Anmelden",
+            "not-registered-yet": "Noch nicht registriert?",
+            "forgot-password": "Passwort vergessen?"
+            },
+            "playlist": {
+                "setup": "Playlist erstellen",
+                "title": "Playlist-Titel",
+                "required": "Dieses Feld ist erforderlich",
+                "public-available": "Öffentlich verfügbar",
+                "submit": "Playlist erstellen"
+
+            },
+            "post-edit-upload": {
+                "edit": "Beitrag bearbeiten",
+                "title": "Titel des Tracks",
+                "max-length": "Maximale Länge muss sein",
+                "required": "Dieses Feld ist erforderlich",
+                "save": "Speichern",
+                "description": "Track-Beschreibung",
+                "image": "Track-Bild",
+                "audio": "Track-Audio",
+                "genre": "Genre",
+                "downloads-allowed": "Downloads erlaubt",
+                "setup": "Beitrag erstellen",
+                "submit": "Hochladen"
+            },
+            "profile-edit": {
+                "basics": "Grundlagen",
+                "nickname": "Profil-Nickname",
+                "min-length": "Minimale Länge muss sein",
+                "max-length": "Maximale Länge muss sein",
+                "required": "Dieses Feld ist erforderlich",
+                "save": "Speichern",
+                "description": "Profilbeschreibung",
+                "email": "E-Mail",
+                "old-email": "Alte E-Mail",
+                "email-not-valid": "E-Mail-Adresse ist ungültig",
+                "wrong-email": "Falsche E-Mail-Adresse",
+                "request": "Anfrage",
+                "password": "Passwort",
+                "old-password": "Altes Passwort",
+                "socials": "Soziale Netzwerke",
+                "connect-google": "Mit Google verbinden",
+                "connect-facebook": "Mit Facebook verbinden",
+                "connect-twitter": "Mit Twitter verbinden"
+            },
+            "register": {
+                "register": "Registrieren",
+                "email": "E-Mail",
+                "email-not-valid": "E-Mail-Adresse ist ungültig",
+                "nick": "Nickname",
+                "min-length": "Minimale Länge muss sein",
+                "max-length": "Maximale Länge muss sein",
+                "required": "Dieses Feld ist erforderlich",
+                "password": "Passwort",
+                "repeat-password": "Passwort wiederholen",
+                "passwords-mismatch": "Passwörter stimmen nicht überein",
+                "have-an-account": "Schon ein Konto?"
+            },
+            "support": {
+                "support-details": "Support-Details",
+                "reason": "Grund des Kontakts",
+                "email": "E-Mail",
+                "min-length": "Minimale Länge muss sein",
+                "max-length": "Maximale Länge muss sein",
+                "required": "Dieses Feld ist erforderlich",
+                "email-not-valid": "E-Mail-Adresse ist ungültig",
+                "submit": "Support-Anfrage senden",
+                "faq": "FAQ öffnen"
+            }
+        },
+        "modals": {
+            "localization": {
+                "locale": "Sprache wechseln"
+            },
+            "leftbar-drawer": {
+                "search": "Tracks suchen",
+                "info-image": "Beginnen Sie mit der Eingabe, um Tracks zu suchen"
+            },
+            "rightbar-drawer": {
+                "rightbar-drawer": {
+                    "search": "Benutzer suchen",
+                    "info-image": "Beginnen Sie mit der Eingabe, um Benutzer zu suchen"
+                },
+                "rightbar-drawer-user": {
+                    "following": "Folgend",
+                    "followers": "Follower",
+                    "profile": "Profil"
+                }
+            },
+            "cropper": {
+                "cropping": "Bild zuschneiden",
+                "submit": "Zuschneiden",
+                "cancel": "Abbrechen"
+            },
+            "player": {
+                "in-player": "Im Player"
+            },
+            "report": {
+                "report": "Melden",
+                "submit": "Absenden",
+                "cards": {
+                    "copyright": {
+                    "title": "Urheberrechtsverletzung",
+                    "description": "Der Track könnte ohne entsprechende Genehmigung hochgeladen worden sein oder eine Kopie urheberrechtlich geschützten Materials sein."
+                },
+                "explicit": {
+                    "title": "Expliziter Inhalt",
+                    "description": "Der Track enthält explizite oder unangemessene Inhalte, die nicht den Richtlinien der App entsprechen oder als anstößig gelten."
+                },
+                "poor": {
+                    "title": "Schlechte Qualität",
+                    "description": "Die Audioqualität ist sehr schlecht, wie z.B. übermäßiges Rauschen, Verzerrungen oder nicht erkennbar."
+                },
+                "mislabeling": {
+                    "title": "Falsche Kennzeichnung",
+                    "description": "Der Track ist falsch gekennzeichnet, was bedeuten könnte, dass er nicht das ist, was er vorgibt zu sein oder falsch mit dem falschen Künstler, Genre oder Album getaggt ist."
+                },
+                "spam": {
+                    "title": "Spam oder Malware",
+                    "description": "Der Track wird verwendet, um Spam oder Malware zu verbreiten, entweder durch bösartige Links in der Beschreibung oder durch Infektion der Geräte der Benutzer."
+                },
+                "technical": {
+                    "title": "Technische Probleme",
+                    "description": "Benutzer könnten Tracks melden, die nicht abgespielt werden oder technische Probleme haben, die das Benutzererlebnis beeinträchtigen."
+                },
+                "false-info": {
+                    "title": "Irreführende oder falsche Informationen",
+                    "description": "Der Track könnte irreführende oder falsche Informationen in den Metadaten enthalten, wie z.B. falsche Künstlerangaben oder irreführende Beschreibungen."
+                },
+                "redundant": {
+                    "title": "Wiederholte oder redundante Inhalte",
+                    "description": "Der Track ist ein Duplikat oder ist übermäßig ähnlich zu anderen Tracks, was zu unnötiger Unordnung auf der Plattform führt."
+                },
+                "offensive": {
+                    "title": "Anstößige oder schädliche Inhalte",
+                    "description": "Der Track enthält Inhalte, die Hassrede, Gewalt oder andere schädliche Verhaltensweisen fördern."
+                    }
+                }
+            },
+            "select-usdc": {
+                "select-amount": "Menge der USDC-Token",
+                "amount": "USDC-Betrag",
+                "select": "Auswählen",
+                "tokens": "Token"
+            },
+            "select-track": {
+                "selection": "Track-Auswahl",
+                "track-title": "Track-Titel",
+                "search": "Suche",
+                "no-tracks": "Noch keine Tracks, geben Sie die Suchanfrage ein und klicken Sie auf 'Suche', um mit der Suche zu beginnen"
+            }
+        },
+        "containers": {
+            "battles": {
+                "not-found": "Battle wurde nicht gefunden",
+                "not-found-many": {
+                "no": "Keine",
+                "battles-yet": "Battles bisher"
+                }
+            },
+            "notifications": {
+                "not-found-many": "Noch keine Benachrichtigungen",
+                "delete-all": "Alle sichtbaren löschen",
+                "read-all": "Alle sichtbaren als gelesen markieren"
+            },
+            "playlists": {
+            "not-found-many": "Keine Playlists gefunden",
+            "not-found-many-public": "Keine öffentlichen Playlists gefunden"
+        },
+        "posts": {
+            "not-found-many": "Noch keine Tracks"
+            }
+        }
+    }
+}

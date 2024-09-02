@@ -11,7 +11,7 @@ export default function InfoImage(props: {
                 alt={'logo'}
                 width={300}
                 height={300}
-                className="rounded-full w-32"
+                className="rounded-full w-24"
             />
             <span className="font-bold text-center">{props.text}</span>
         </div>
