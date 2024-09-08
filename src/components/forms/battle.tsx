@@ -9,6 +9,10 @@ import { useSnackbar } from "notistack";
 import { revalidatePathAction } from "@/actions/revalidation";
 import { useAppSelector } from "@/lib/redux/store";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { config } from "@/config/wagmi";
+import Image from "next/image";
+import { useAccount, useBalance, useSwitchChain } from "wagmi";
+import ChainImage from "../common/chain-image/chain-image";
 
 export const PostPlaceholder = (props: {
     handleSelect: (a: TPost) => void;
@@ -42,12 +46,22 @@ export default function BattleForm({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const user = useAppSelector(state => state.user.user);
+    const { address, chainId } = useAccount();
+    const { switchChain } = useSwitchChain();
+    const { data: balance } = useBalance({
+        chainId,
+        address
+    });
     const {register, reset, handleSubmit, formState: {errors}} = useForm<Inputs>();
     const [post1, setPost1] = useState<null | TPost>(null);
     const [post2, setPost2] = useState<null | TPost>(null);
     const { enqueueSnackbar } = useSnackbar();
+    const [blockchain, setBlockchain] = useState<undefined | number>(56);
+    const [useBlockChain, setUseBlockchain] = useState(false);
 
     const [createBattle] = useBattleCreateMutation();
+
+    console.log(balance)
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         if (!post1 || !post2) {
@@ -55,15 +69,26 @@ export default function BattleForm({
             return;
         }
 
+        const input = {
+            initiator: user?._id as string,
+            post1: post1._id,
+            post2: post2._id,
+            title: data.title,
+        }
+
+        if (useBlockChain && blockchain) {
+            if (Number(balance?.value) <= 0) {
+                enqueueSnackbar(`Not enough ${balance?.symbol} balance to perform the action`, {variant: 'error', autoHideDuration: 4000});
+                return;
+            }
+            // @ts-ignore
+            input.chainId = blockchain;
+        }
+
         enqueueSnackbar("Creating the battle...", { autoHideDuration: 1500 });
         createBattle({
             variables: {
-                input: {
-                    initiator: user?._id as string,
-                    post1: post1._id,
-                    post2: post2._id,
-                    title: data.title,
-                }
+                input
             }
         }).then(_ => {
             reset();
@@ -134,9 +159,54 @@ export default function BattleForm({
                             </label>
                         }
                     </div>
+                    
+                    {
+                        address?.length &&
+                        <>
+                            <div className="form-control mt-2">
+                                <label className="label cursor-pointer">
+                                <span className="label-text">{dictionary.forms.battle["associate-with-blockchain"]}</span>
+                                    <input type="checkbox" className="checkbox checkbox-primary" onChange={() => setUseBlockchain(!useBlockChain)}/>
+                                </label>
+                            </div>
+                            <div className="w-full items-center justify-center gap-4 flex flex-col md:flex-row">
+                                {
+                                    config.chains.map((chain, key) => {
+                                        return (
+                                            <button 
+                                                key={key} 
+                                                className={`w-12 h-12 rounded-xl ${blockchain === chain.id ? "bg-[#1ba39c]" : "bg-base-300"} shadow-xl flex items-center justify-center glass hover:bg-[#1ba39c] cursor-pointer disabled:opacity-50 disabled:hover:bg-base-300 disabled:cursor-default`}
+                                                disabled={!useBlockChain}
+                                                type="button"
+                                                onClick={() => setBlockchain(chain.id)}
+                                            >
+                                                <ChainImage chainId={chain.id}/>
+                                            </button>
+                                        );
+                                    })
+                                }
+                            </div>
+                        </>
+                    }
 
                     <div className="form-control mt-5 px-4 md:px-0">
-                        <button type="submit" className="btn btn-primary glass text-white">{dictionary.forms.battle.create}</button>
+                        {
+                            (() => {
+                                if (chainId !== blockchain && useBlockChain) {
+                                    return (
+                                        <button type="button" className="btn btn-primary glass text-white" onClick={() => switchChain({ chainId: blockchain as number })}>
+                                            Switch to {config.chains.find(i => i.id === blockchain)?.name}
+                                        </button>
+                                    );
+                                } else {
+                                    return (
+                                        <button type="submit" className="btn btn-primary glass text-white">
+                                            {dictionary.forms.battle.create} {useBlockChain ? `- ${config.chains.find(i => i.id === blockchain)?.name}` : ""}
+                                        </button>
+                                    )
+                                }
+                            })()
+                        }
                     </div>
                 </form>
             </div>

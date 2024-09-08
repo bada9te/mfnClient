@@ -295,6 +295,9 @@
                 "switch-locale": "Язык"
             },
             "profile-card": {
+                "pinned-tracks": {
+                    "pinned": "Закреплённые"
+                },
                 "profile-progress": {
                     "level": "Текущий уровень",
                     "challenges": "Пройденные челленджи",
@@ -559,7 +562,8 @@
                 "max-length": "Максимальная длина должна быть",
                 "create": "Создать сражение",
                 "select-track": "Выберите ваш трек",
-                "select": "Выбрать"
+                "select": "Выбрать",
+                "associate-with-blockchain": "Включить возможность голования с блокчейн"
             },
             "email-verification": {
                 "verification": "Подтверждение",

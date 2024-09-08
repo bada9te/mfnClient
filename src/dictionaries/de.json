@@ -295,6 +295,9 @@
                 "switch-locale": "Sprache"
             },
             "profile-card": {
+                "pinned-tracks": {
+                    "pinned": "Angepinnt"
+                },
                 "profile-progress": {
                     "level": "Aktuelles Level",
                     "challenges": "Abgeschlossene Herausforderungen",
@@ -559,7 +562,8 @@
             "max-length": "Maximale Länge muss sein",
             "create": "Battle erstellen",
             "select-track": "Wähle deinen Track aus",
-            "select": "Auswählen"
+            "select": "Auswählen",
+            "associate-with-blockchain": "Mit Blockchain verknüpfen"
         },
         "email-verification": {
             "verification": "Verifizierung",

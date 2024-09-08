@@ -14,3 +14,5 @@ export const contractMakeBattleVote = async(battleId: string, amount: number) =>
 
     return data;
 }
+
+

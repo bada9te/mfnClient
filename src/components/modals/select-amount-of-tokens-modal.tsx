@@ -48,7 +48,7 @@ export default function SelectAmountOfMFNTokens({button, type, handleClose, dict
                     <h4 className="font-bold text-lg">{dictionary.modals["select-usdc"]["select-amount"]}</h4>
 
                     <div className="py-1">
-                        <div className="form-control px-4 md:px-0">
+                        <div className="form-control md:px-0">
                             <label className="label">
                                 <span className="label-text">{dictionary.modals["select-usdc"].amount}</span>
                             </label>

@@ -34,6 +34,7 @@ export const CORE_BATTLE_FIELDS = gql`
         }
         post1Score
         post2Score
+        chainId
     }
 `;
 

@@ -45,6 +45,7 @@ export type Achievement = {
 };
 
 export type AddNewBattleByPostsIdsInput = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
   initiator: Scalars['ID']['input'];
   post1: Scalars['ID']['input'];
   post2: Scalars['ID']['input'];
@@ -70,6 +71,7 @@ export type AddUserInput = {
 export type Battle = {
   __typename?: 'Battle';
   _id: Scalars['ID']['output'];
+  chainId?: Maybe<Scalars['Int']['output']>;
   createdAt: Scalars['String']['output'];
   finished: Scalars['Boolean']['output'];
   post1?: Maybe<Post>;
@@ -191,6 +193,7 @@ export type Mutation = {
   userPrepareAccountToRestore: UserWithAction;
   userRestoreAccount: UserWithAction;
   userSwitchLike: SwitchLikeOrPostInSavedReturnType;
+  userSwitchPostPinned: User;
   userSwitchSave: SwitchLikeOrPostInSavedReturnType;
   userSwitchSubscription: TwoUsers;
   userUnlinkFacebook?: Maybe<User>;
@@ -351,6 +354,12 @@ export type MutationUserSwitchLikeArgs = {
 };
 
 
+export type MutationUserSwitchPostPinnedArgs = {
+  postId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+
 export type MutationUserSwitchSaveArgs = {
   input: SwitchLikeOrPostInSavedInput;
 };
@@ -389,7 +398,7 @@ export type Notification = {
   post?: Maybe<Post>;
   receiver: User;
   sender?: Maybe<User>;
-  text: Scalars['String']['output'];
+  text?: Maybe<Scalars['String']['output']>;
   type: Scalars['String']['output'];
 };
 
@@ -798,7 +807,7 @@ export type AchievemenmtsCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AchievemenmtsCountQuery = { __typename?: 'Query', achievemenmtsCount: number };
 
-export type CoreBattleFieldsFragment = { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null };
+export type CoreBattleFieldsFragment = { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, chainId?: number | null, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null };
 
 export type BattlesByStatusQueryVariables = Exact<{
   finished: Scalars['Boolean']['input'];
@@ -807,21 +816,21 @@ export type BattlesByStatusQueryVariables = Exact<{
 }>;
 
 
-export type BattlesByStatusQuery = { __typename?: 'Query', battlesByStatus: { __typename?: 'BattlesWithCount', count: number, battles?: Array<{ __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
+export type BattlesByStatusQuery = { __typename?: 'Query', battlesByStatus: { __typename?: 'BattlesWithCount', count: number, battles?: Array<{ __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, chainId?: number | null, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type BattleByIdQueryVariables = Exact<{
   _id: Scalars['ID']['input'];
 }>;
 
 
-export type BattleByIdQuery = { __typename?: 'Query', battleById: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type BattleByIdQuery = { __typename?: 'Query', battleById: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, chainId?: number | null, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type BattleMakeVoteMutationVariables = Exact<{
   input: MakeBattleVoteInput;
 }>;
 
 
-export type BattleMakeVoteMutation = { __typename?: 'Mutation', battleMakeVote: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+export type BattleMakeVoteMutation = { __typename?: 'Mutation', battleMakeVote: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, chainId?: number | null, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
 
 export type BattleCreateMutationVariables = Exact<{
   input: AddNewBattleByPostsIdsInput;
@@ -851,7 +860,7 @@ export type ModerationActionDeleteMutationVariables = Exact<{
 
 export type ModerationActionDeleteMutation = { __typename?: 'Mutation', moderationActionDelete: { __typename?: 'ModerationAction', _id: string } };
 
-export type CoreNotificationFieldsFragment = { __typename?: 'Notification', _id: string, text: string, type: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string, nick: string, avatar: string }, sender?: { __typename?: 'User', _id: string, nick: string, avatar: string } | null, post?: { __typename?: 'Post', _id: string, title: string } | null, battle?: { __typename?: 'Battle', _id: string, title: string } | null };
+export type CoreNotificationFieldsFragment = { __typename?: 'Notification', _id: string, text?: string | null, type: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string, nick: string, avatar: string }, sender?: { __typename?: 'User', _id: string, nick: string, avatar: string } | null, post?: { __typename?: 'Post', _id: string, title: string } | null, battle?: { __typename?: 'Battle', _id: string, title: string } | null };
 
 export type NotificationsQueryVariables = Exact<{
   receiverId: Scalars['ID']['input'];
@@ -861,7 +870,7 @@ export type NotificationsQueryVariables = Exact<{
 }>;
 
 
-export type NotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationsWithCount', count: number, notifications?: Array<{ __typename?: 'Notification', _id: string, text: string, type: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string, nick: string, avatar: string }, sender?: { __typename?: 'User', _id: string, nick: string, avatar: string } | null, post?: { __typename?: 'Post', _id: string, title: string } | null, battle?: { __typename?: 'Battle', _id: string, title: string } | null }> | null } };
+export type NotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationsWithCount', count: number, notifications?: Array<{ __typename?: 'Notification', _id: string, text?: string | null, type: string, checked: boolean, createdAt: string, receiver: { __typename?: 'User', _id: string, nick: string, avatar: string }, sender?: { __typename?: 'User', _id: string, nick: string, avatar: string } | null, post?: { __typename?: 'Post', _id: string, title: string } | null, battle?: { __typename?: 'Battle', _id: string, title: string } | null }> | null } };
 
 export type NotificationCreateMutationVariables = Exact<{
   input: CreateNotificationInput;
@@ -1249,6 +1258,7 @@ export const CoreBattleFieldsFragmentDoc = gql`
   }
   post1Score
   post2Score
+  chainId
 }
     ${CorePostFieldsFragmentDoc}`;
 export const CoreNotificationFieldsFragmentDoc = gql`

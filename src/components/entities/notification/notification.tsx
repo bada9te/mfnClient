@@ -85,7 +85,7 @@ export default function Notification({data, dictionary}: {data: TNotification; d
                                         <>
                                             {dictionary.entities.notification["post-reported"]["part-1"]}
                                             <LinkButton url={`/post/${data.post?._id}/${data.receiver._id}`} text={`@post - ${data.post?.title}`} />
-                                            {data.text.substring(data.text.indexOf('{post}') + '{post}'.length, data.text.indexOf('"'))}
+                                            {dictionary.entities.notification["post-reported"]["part-2"]}
                                             <span className="font-semibold">{dictionary.entities.notification["post-reported"]["part-2"]}</span>
                                         </>
                                     );

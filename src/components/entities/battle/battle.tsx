@@ -13,6 +13,7 @@ import envCfg from "@/config/env";
 import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
 import { config, USDCAddresses } from "@/config/wagmi";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import ChainImage from "@/components/common/chain-image/chain-image";
 
 const DollarIcon = () => {
     return (
@@ -134,8 +135,16 @@ export default function Battle(props: {
 
     return (
         <div className="card bg-base-300 w-full glass bg-opacity-50 shadow-2xl">
-            <div className="card-body justify-center items-center flex flex-col gap-5 p-4 pt-5">
-                <h2 className="card-title">{battleData.post1?.title} {dictionary.entities.battle.versus} {battleData.post2?.title}</h2>
+            <div className="card-body justify-center items-center flex flex-col gap-5 p-4 pt-5 relative">
+                {
+                    battleData.chainId
+                    &&
+                    <div className="absolute top-0 right-0 glass rounded-none rounded-tr-2xl rounded-bl-2xl text-white flex flex-row gap-2 items-center justify-center p-2">
+                        <ChainImage chainId={battleData.chainId}/>
+                        {config.chains.find(i => i.id === battleData.chainId)?.name}
+                    </div>
+                }
+                <h2 className="card-title mt-10 md:mt-0">{battleData.post1?.title} {dictionary.entities.battle.versus} {battleData.post2?.title}</h2>
                 <div className="flex flex-wrap gap-5 justify-center items-center flex-col lg:flex-row">
                     {/* left */}
                     <div className="flex flex-nowrap flex-col">
@@ -148,12 +157,15 @@ export default function Battle(props: {
                                         disabled={battleData.votedBy?.map(i => i._id)?.includes(user?._id as string)}
                                         onClick={() => makeBattleVote(1, "post1Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}</button>
-                                    <SelectAmountOfMFNTokens 
-                                        dictionary={dictionary}
-                                        type="post1Score"
-                                        button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
-                                        handleClose={makeBattleVoteWithUSDC}
-                                    />
+                                    {
+                                        battleData.chainId &&
+                                        <SelectAmountOfMFNTokens 
+                                            dictionary={dictionary}
+                                            type="post1Score"
+                                            button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
+                                            handleClose={makeBattleVoteWithUSDC}
+                                        />
+                                    }
                                 </>
                             }
                         </div>
@@ -218,15 +230,17 @@ export default function Battle(props: {
                                     >
                                         <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post2?.title}
                                     </button>
-                                    <SelectAmountOfMFNTokens 
-                                        dictionary={dictionary}
-                                        type="post2Score"
-                                        button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
-                                        handleClose={makeBattleVoteWithUSDC}
-                                    />
+                                    {
+                                        battleData.chainId &&
+                                        <SelectAmountOfMFNTokens 
+                                            dictionary={dictionary}
+                                            type="post2Score"
+                                            button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
+                                            handleClose={makeBattleVoteWithUSDC}
+                                        />
+                                    }
                                 </>
                             }
-                            
                         </div>
                     </div>
                 </div>
