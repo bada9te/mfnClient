@@ -24,7 +24,7 @@ export default async function RootLayout({
         </div>
 
         {/* Grid layout */}
-        <div className="flex-1 grid grid-cols-[auto_1fr_auto] lg:grid-cols-[320px_auto_80px] grid-rows-1 overflow-hidden">
+        <div className="flex-1 grid grid-cols-[auto_1fr_auto] lg:grid-cols-[320px_auto_120px] grid-rows-1 overflow-hidden">
             {/* Left sidebar (hidden on smaller screens) */}
             <div className="hidden lg:block col-start-1 col-end-2">
                 <div className="card w-full max-h-[calc(100vh-95px)] fixed top-12 left-0">
@@ -58,11 +58,12 @@ export default async function RootLayout({
             
             {/* Right sidebar (hidden on smaller screens) */}
             <div className="hidden lg:block col-start-3 col-end-4">
-                <div className="card w-[80px] max-h-[calc(100vh-95px)] fixed top-12 right-[-5px]">
-                    <div className="overflow-y-auto h-full flex flex-col gap-4 py-10 no-scrollbar">
+                <div className="card w-[100px] max-h-[calc(100vh-95px)] fixed top-12">
+                    <div className="overflow-y-auto flex-col py-10 no-scrollbar">
                         <AvatarGrid/>
                     </div>
                 </div>
+                
             </div>
         </div>
 
