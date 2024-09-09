@@ -502,6 +502,7 @@ export type Query = {
   postsByOwner: PostsWithCount;
   postsByTitle?: Maybe<Array<Post>>;
   postsMostPopular?: Maybe<Array<Post>>;
+  postsMostRecent?: Maybe<Array<Post>>;
   postsSavedByUser: PostsWithCount;
   report?: Maybe<Report>;
   reports?: Maybe<Array<Report>>;
@@ -1023,6 +1024,11 @@ export type PostsByCategoryCountQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type PostsByCategoryCountQuery = { __typename?: 'Query', postsByCategoryCount: { __typename?: 'PostsByCategoryCount', country: number, pop: number, classical: number, funk: number, soul: number, hipHop: number, rock: number, electronic: number, latin: number, jazz: number, blues: number, folk: number, metal: number, reggae: number } };
+
+export type PostsMostRecentQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PostsMostRecentQuery = { __typename?: 'Query', postsMostRecent?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null };
 
 export type PostCreateMutationVariables = Exact<{
   input: AddPostInput;
@@ -2623,6 +2629,50 @@ export type PostsByCategoryCountQueryHookResult = ReturnType<typeof usePostsByCa
 export type PostsByCategoryCountLazyQueryHookResult = ReturnType<typeof usePostsByCategoryCountLazyQuery>;
 export type PostsByCategoryCountSuspenseQueryHookResult = ReturnType<typeof usePostsByCategoryCountSuspenseQuery>;
 export type PostsByCategoryCountQueryResult = Apollo.QueryResult<PostsByCategoryCountQuery, PostsByCategoryCountQueryVariables>;
+export const PostsMostRecentDocument = gql`
+    query postsMostRecent {
+  postsMostRecent {
+    ...CorePostFields
+    owner {
+      _id
+      avatar
+      nick
+    }
+  }
+}
+    ${CorePostFieldsFragmentDoc}`;
+
+/**
+ * __usePostsMostRecentQuery__
+ *
+ * To run a query within a React component, call `usePostsMostRecentQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsMostRecentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsMostRecentQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePostsMostRecentQuery(baseOptions?: Apollo.QueryHookOptions<PostsMostRecentQuery, PostsMostRecentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostsMostRecentQuery, PostsMostRecentQueryVariables>(PostsMostRecentDocument, options);
+      }
+export function usePostsMostRecentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsMostRecentQuery, PostsMostRecentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostsMostRecentQuery, PostsMostRecentQueryVariables>(PostsMostRecentDocument, options);
+        }
+export function usePostsMostRecentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PostsMostRecentQuery, PostsMostRecentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostsMostRecentQuery, PostsMostRecentQueryVariables>(PostsMostRecentDocument, options);
+        }
+export type PostsMostRecentQueryHookResult = ReturnType<typeof usePostsMostRecentQuery>;
+export type PostsMostRecentLazyQueryHookResult = ReturnType<typeof usePostsMostRecentLazyQuery>;
+export type PostsMostRecentSuspenseQueryHookResult = ReturnType<typeof usePostsMostRecentSuspenseQuery>;
+export type PostsMostRecentQueryResult = Apollo.QueryResult<PostsMostRecentQuery, PostsMostRecentQueryVariables>;
 export const PostCreateDocument = gql`
     mutation postCreate($input: AddPostInput!) {
   postCreate(input: $input) {

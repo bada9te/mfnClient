@@ -163,6 +163,20 @@ export const POSTS_BY_CATEGORIES_COUNT = gql`
     }
 `;
 
+export const POSTS_MOST_RECENT_QUERY = gql`
+    ${CORE_POST_FIELDS}
+    query postsMostRecent {
+        postsMostRecent {
+            ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
+        }
+    }
+`;
+
 
 // M
 export const POST_CREATE_MUTATION = gql`

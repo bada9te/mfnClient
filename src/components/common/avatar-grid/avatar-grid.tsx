@@ -1,23 +1,35 @@
+"use client"
+import envCfg from '@/config/env';
+import { usePostsMostRecentQuery } from '@/utils/graphql-requests/generated/schema';
+import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
-const NUM_AVATARS = 25;
-
-const generateRandomAvatars = () => {
-  return Array.from({ length: NUM_AVATARS }, (_, index) => {
-    return `https://avatar.vercel.sh/jack`; 
-  });
-};
 
 const AvatarGrid = () => {
-  const avatars = generateRandomAvatars();
+  const { data: recentTracks, loading } = usePostsMostRecentQuery();
 
   return (
     <>
-        {avatars.map((avatarUrl, index) => (
-        <div key={index} className="rounded-full min-h-14 w-14 bg-white flex items-center justify-center">
-            <img src={avatarUrl} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 object-cover" />
-        </div>
-        ))}
+      {
+        loading
+        ?
+        <>
+          <div className='skeleton w-14 h-14 rounded-full'></div>
+          <div className='skeleton w-14 h-14 rounded-full'></div>
+          <div className='skeleton w-14 h-14 rounded-full'></div>
+          <div className='skeleton w-14 h-14 rounded-full'></div>
+          <div className='skeleton w-14 h-14 rounded-full'></div>
+        </>
+        :
+        <>
+          {recentTracks?.postsMostRecent && recentTracks.postsMostRecent.map((recentTrack, index) => (
+            <Link href={`/profile/${recentTrack.owner._id}/1`} key={index}>
+              <Image src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
+            </Link>
+          ))}
+        </>
+      }
     </>
   );
 };
