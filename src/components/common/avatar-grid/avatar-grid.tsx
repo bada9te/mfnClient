@@ -3,19 +3,44 @@ import envCfg from '@/config/env';
 import { usePostsMostRecentQuery } from '@/utils/graphql-requests/generated/schema';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 const AvatarGrid = () => {
   const { data: recentTracks, loading: mostRecentsLoading } = usePostsMostRecentQuery();
 
-  return (
-    <div className='bg-base-300 glass flex items-center justify-start flex-col gap-4 py-4 pb-6 rounded-2xl shadow-xl'>
+  const [showFollowing, setShowFollowing] = useState(true);
+  const [showRecents, setShowRecents] = useState(true);
 
-     
+  const handleShowFollowingToggle = () => {
+    localStorage.setItem("showFollowingRightbar", JSON.stringify({data: !showFollowing}));
+    setShowFollowing(!showFollowing);
+  }
+
+  const handleShowRecentsToggle = () => {
+    localStorage.setItem("showRecentsRightbar", JSON.stringify({data: !showRecents}));
+    setShowRecents(!showRecents);
+  }
+
+
+  useEffect(() => {
+    const inStorageF = localStorage.getItem("showFollowingRightbar");
+    const inStorageR = localStorage.getItem("showRecentsRightbar");
+
+    if (inStorageF) {
+      setShowFollowing(JSON.parse(inStorageF).data);
+    }
+
+    if (inStorageR) {
+      setShowFollowing(JSON.parse(inStorageR).data);
+    }
+  }, []);
+
+  return (
+    <div className='bg-base-300 glass flex items-center justify-start flex-col gap-4 py-4 pb-6 rounded-2xl shadow-xl min-h-[calc(100vh-175px)]'>
       <div className="form-control">
         <label className="label cursor-pointer p-0 flex items-start justify-start">
-          <input type="checkbox" className="toggle toggle-xs mr-1" defaultChecked />
+          <input type="checkbox" className="toggle toggle-xs mr-1" checked={showFollowing} onChange={() => handleShowFollowingToggle()}/>
           <span className="label-text text-xs">Following</span>
         </label>
       </div>
@@ -48,7 +73,7 @@ const AvatarGrid = () => {
       <div className='divider my-1'></div>
       <div className="form-control">
         <label className="label cursor-pointer p-0 flex items-start justify-start">
-          <input type="checkbox" className="toggle toggle-xs mr-1" defaultChecked />
+          <input type="checkbox" className="toggle toggle-xs mr-1" checked={showRecents} onChange={() => handleShowRecentsToggle()}/>
           <span className="label-text text-xs">Recents</span>
         </label>
       </div>
