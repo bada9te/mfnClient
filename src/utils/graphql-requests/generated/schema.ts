@@ -503,6 +503,7 @@ export type Query = {
   postsByTitle?: Maybe<Array<Post>>;
   postsMostPopular?: Maybe<Array<Post>>;
   postsMostRecent?: Maybe<Array<Post>>;
+  postsMostRecentByFollowing?: Maybe<Array<Post>>;
   postsSavedByUser: PostsWithCount;
   report?: Maybe<Report>;
   reports?: Maybe<Array<Report>>;
@@ -618,6 +619,11 @@ export type QueryPostsByTitleArgs = {
 
 export type QueryPostsMostPopularArgs = {
   date: Scalars['Date']['input'];
+};
+
+
+export type QueryPostsMostRecentByFollowingArgs = {
+  user: Scalars['ID']['input'];
 };
 
 
@@ -1029,6 +1035,13 @@ export type PostsMostRecentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type PostsMostRecentQuery = { __typename?: 'Query', postsMostRecent?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null };
+
+export type PostsMostRecentByFollowingQueryVariables = Exact<{
+  user: Scalars['ID']['input'];
+}>;
+
+
+export type PostsMostRecentByFollowingQuery = { __typename?: 'Query', postsMostRecentByFollowing?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } }> | null };
 
 export type PostCreateMutationVariables = Exact<{
   input: AddPostInput;
@@ -2673,6 +2686,51 @@ export type PostsMostRecentQueryHookResult = ReturnType<typeof usePostsMostRecen
 export type PostsMostRecentLazyQueryHookResult = ReturnType<typeof usePostsMostRecentLazyQuery>;
 export type PostsMostRecentSuspenseQueryHookResult = ReturnType<typeof usePostsMostRecentSuspenseQuery>;
 export type PostsMostRecentQueryResult = Apollo.QueryResult<PostsMostRecentQuery, PostsMostRecentQueryVariables>;
+export const PostsMostRecentByFollowingDocument = gql`
+    query postsMostRecentByFollowing($user: ID!) {
+  postsMostRecentByFollowing(user: $user) {
+    ...CorePostFields
+    owner {
+      _id
+      avatar
+      nick
+    }
+  }
+}
+    ${CorePostFieldsFragmentDoc}`;
+
+/**
+ * __usePostsMostRecentByFollowingQuery__
+ *
+ * To run a query within a React component, call `usePostsMostRecentByFollowingQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsMostRecentByFollowingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsMostRecentByFollowingQuery({
+ *   variables: {
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function usePostsMostRecentByFollowingQuery(baseOptions: Apollo.QueryHookOptions<PostsMostRecentByFollowingQuery, PostsMostRecentByFollowingQueryVariables> & ({ variables: PostsMostRecentByFollowingQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostsMostRecentByFollowingQuery, PostsMostRecentByFollowingQueryVariables>(PostsMostRecentByFollowingDocument, options);
+      }
+export function usePostsMostRecentByFollowingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsMostRecentByFollowingQuery, PostsMostRecentByFollowingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostsMostRecentByFollowingQuery, PostsMostRecentByFollowingQueryVariables>(PostsMostRecentByFollowingDocument, options);
+        }
+export function usePostsMostRecentByFollowingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PostsMostRecentByFollowingQuery, PostsMostRecentByFollowingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostsMostRecentByFollowingQuery, PostsMostRecentByFollowingQueryVariables>(PostsMostRecentByFollowingDocument, options);
+        }
+export type PostsMostRecentByFollowingQueryHookResult = ReturnType<typeof usePostsMostRecentByFollowingQuery>;
+export type PostsMostRecentByFollowingLazyQueryHookResult = ReturnType<typeof usePostsMostRecentByFollowingLazyQuery>;
+export type PostsMostRecentByFollowingSuspenseQueryHookResult = ReturnType<typeof usePostsMostRecentByFollowingSuspenseQuery>;
+export type PostsMostRecentByFollowingQueryResult = Apollo.QueryResult<PostsMostRecentByFollowingQuery, PostsMostRecentByFollowingQueryVariables>;
 export const PostCreateDocument = gql`
     mutation postCreate($input: AddPostInput!) {
   postCreate(input: $input) {

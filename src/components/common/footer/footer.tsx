@@ -44,7 +44,7 @@ export default function Footer({
                 </div>
             </nav> 
             <nav>
-                <h6 className="footer-title">{dictionary.common.footer.social}</h6>
+                <h6 className="footer-title z-10">{dictionary.common.footer.social}</h6>
                 <div className="grid grid-flow-col gap-4 z-10">
                     <a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

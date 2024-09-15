@@ -177,6 +177,20 @@ export const POSTS_MOST_RECENT_QUERY = gql`
     }
 `;
 
+export const POSTS_MOST_RECENT_BY_FOLLOWING_QUERY = gql`
+    ${CORE_POST_FIELDS}
+    query postsMostRecentByFollowing($user: ID!) {
+        postsMostRecentByFollowing(user: $user) {
+            ...CorePostFields
+            owner {
+                _id
+                avatar
+                nick
+            }
+        }
+    }
+`;
+
 
 // M
 export const POST_CREATE_MUTATION = gql`
