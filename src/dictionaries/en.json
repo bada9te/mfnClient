@@ -262,6 +262,12 @@
             }
         },
         "common": {
+            "avatar-grid": {
+                "recent-sub": "Following",
+                "recent-sub-hidden": "Recent tracks by your subscriptions are hidden.",
+                "recent": "Recent",
+                "recent-hidden": "Recent tracks are hidden."
+            },
             "footer": {
                 "quick-nav": "Quick nav",
                 "social": "Social",

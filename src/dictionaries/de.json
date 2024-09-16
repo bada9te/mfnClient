@@ -262,6 +262,12 @@
             }
         },
         "common": {
+            "avatar-grid": {
+                "recent-sub": "Abonnements",
+                "recent-sub-hidden": "Neueste Tracks deiner Abonnements sind ausgeblendet.",
+                "recent": "Neueste",
+                "recent-hidden": "Neueste Tracks sind ausgeblendet."
+            },
             "footer": {
                 "quick-nav": "Schnellzugriff",
                 "social": "Soziale Netzwerke",

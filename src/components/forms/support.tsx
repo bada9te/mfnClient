@@ -108,9 +108,13 @@ export default function SupportForm({
                 <div className="form-control mt-4">
                     <button className="btn btn-primary glass text-white" type="submit">{dictionary.forms.support.submit}</button>
                 </div>
-                <label className="label flex flex-col gap-3 justify-start items-start">
-                    <Link href="/faq" className="label-text-alt link link-hover">{dictionary.forms.support.faq}</Link>
-                </label>
+                {
+                    /*
+                        <label className="label flex flex-col gap-3 justify-start items-start">
+                            <Link href="/faq" className="label-text-alt link link-hover">{dictionary.forms.support.faq}</Link>
+                        </label>
+                    */
+                }
             </form>
         </div>
     );

@@ -60,7 +60,7 @@ export default async function RootLayout({
             <div className="hidden lg:block col-start-3 col-end-4">
                 <div className="card w-[100px] max-h-[calc(100vh-95px)] fixed top-12">
                     <div className="overflow-y-auto flex-col py-10 no-scrollbar">
-                        <AvatarGrid/>
+                        <AvatarGrid dictionary={dict.components}/>
                     </div>
                 </div>
                 
