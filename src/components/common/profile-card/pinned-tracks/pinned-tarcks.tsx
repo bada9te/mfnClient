@@ -23,7 +23,6 @@ export default function PinnedTracks({
     });
 
     const handleSelect = async(a: TPost) => {
-        console.log(a)
         await switchPostPinned({
             variables: {
                 userId: user._id as string,
@@ -34,7 +33,7 @@ export default function PinnedTracks({
     }
 
     return (
-        <div className="w-full md:w-[800px] lg:w-full bg-[#107973] p-0 pb-5 md:p-5 rounded-2xl glass shadow-2xl flex justify-center flex-col items-center">
+        <div className="w-full md:w-[800px] lg:w-full pb-10 bg-[#107973] p-0 md:p-5 rounded-2xl glass shadow-2xl flex justify-center flex-col items-center">
             <p className="font-bold text-4xl text-center md:text-start mt-5 md:mt-0 w-full flex flex-row gap-3 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-8">
                     <path fillRule="evenodd"
@@ -43,12 +42,18 @@ export default function PinnedTracks({
                 </svg>
                 {dictionary.common["profile-card"]["pinned-tracks"].pinned}
             </p>
-            <div className="flex flex-col md:flex-row gap-5 justify-around mt-7 flex-wrap">
+            <div className="flex flex-col md:flex-row gap-5 mb-10 justify-around mt-7 flex-wrap">
                 {
                     pinnedTracks.userPinnedTracks?.map((i, key) => {
-                        return (
-                            <Post key={key} data={i as TPost} dictionary={dictionary}/>
-                        );
+                        if (userId === user._id) {
+                            return (
+                                <Post key={key} data={i as TPost} dictionary={dictionary} handleRemove={handleSelect}/>
+                            );
+                        } else {
+                            return (
+                                <Post key={key} data={i as TPost} dictionary={dictionary}/>
+                            );
+                        }
                     })
                 }
                 
