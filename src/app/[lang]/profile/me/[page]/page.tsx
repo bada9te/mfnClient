@@ -6,7 +6,7 @@ import PostsContainerSkeleton from "@/components/containers/posts-container/post
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
 import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
 import {cookies} from "next/headers";
-import {USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY} from "@/utils/graphql-requests/users";
+import {USER_ACHIEVEMENTS_DATA_QUERY, USER_PINNED_POSTS_QUERY, USER_QUERY} from "@/utils/graphql-requests/users";
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
 import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
 import envCfg from "@/config/env";
@@ -42,7 +42,16 @@ export default async function Profile({params}: {params: { page: number, lang: T
             >
                 <div className="card w-full">
                     <div className="flex flex-wrap justify-center md:justify-around gap-5">
-                        <PinnedTracks dictionary={dict.components}/>
+                        <PreloadQuery
+                            query={USER_PINNED_POSTS_QUERY}
+                            variables={{
+                                _id: myId
+                            }}
+                        >
+                            <Suspense fallback={"LADING..."}>
+                                <PinnedTracks dictionary={dict.components} userId={myId}/>
+                            </Suspense>
+                        </PreloadQuery>
                         <PreloadQuery
                             query={POSTS_BY_OWNER_QUERY}
                             variables={{

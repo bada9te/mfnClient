@@ -89,6 +89,20 @@ export const USER_ACHIEVEMENTS_DATA_QUERY = gql`
     }
 `;
 
+export const USER_PINNED_POSTS_QUERY = gql`
+    ${CORE_POST_FIELDS}
+    query userPinnedTracks($_id: ID!) {
+        userPinnedTracks(_id: $_id) {
+            ...CorePostFields
+            owner {
+                _id
+                nick
+                avatar
+            }
+        }
+    }
+`;
+
 // M
 export const USER_CREATE_MUTATION = gql`
     ${CORE_USER_FIELDS}
@@ -260,3 +274,15 @@ export const USER_SWITCH_SAVE_MUTATION = gql`
         }
     }
 `;
+
+export const USER_SWITCH_POST_PINNED_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userSwitchPostPinned($userId: ID!, $postId: ID!) {
+        userSwitchPostPinned(userId: $userId, postId: $postId) {
+            ...CoreUserFields
+            _id
+            nick
+            avatar
+        }
+    }
+`

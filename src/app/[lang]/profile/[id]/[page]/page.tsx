@@ -6,11 +6,12 @@ import PostsContainerProfile from "@/components/containers/posts-container/posts
 import { POSTS_BY_OWNER_QUERY } from "@/utils/graphql-requests/posts";
 import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
 import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import { USER_ACHIEVEMENTS_DATA_QUERY, USER_QUERY } from "@/utils/graphql-requests/users";
+import { USER_ACHIEVEMENTS_DATA_QUERY, USER_PINNED_POSTS_QUERY, USER_QUERY } from "@/utils/graphql-requests/users";
 import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
 import { TLang } from "@/types/language";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { Metadata } from "next";
+import PinnedTracks from "@/components/common/profile-card/pinned-tracks/pinned-tarcks";
 
 export const metadata: Metadata = {
     title: 'Music From Nothing - Profile',
@@ -36,6 +37,16 @@ export default async function ProfileId({params}: {params: {page: number, id: st
             >
                 <div className="card shadow-none w-full ">
                     <div className="flex flex-wrap justify-center md:justify-around gap-5">
+                        <PreloadQuery
+                            query={USER_PINNED_POSTS_QUERY}
+                            variables={{
+                                _id: params.id
+                            }}
+                        >
+                            <Suspense fallback={"LADING..."}>
+                                <PinnedTracks dictionary={dict.components} userId={params.id}/>
+                            </Suspense>
+                        </PreloadQuery>
                         <PreloadQuery 
                             query={POSTS_BY_OWNER_QUERY}
                             variables={{

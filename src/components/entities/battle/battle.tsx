@@ -134,7 +134,10 @@ export default function Battle(props: {
     }
 
     return (
-        <div className="card bg-base-300 w-full glass bg-opacity-50 shadow-2xl">
+        <div className={
+                `card bg-base-300 w-full glass bg-opacity-50 shadow-2xl 
+                ${battleData.finished && (battleData.post1Score > battleData.post2Score ? "bg-gradient-to-r from-green-400/30 to-red-400/30": "bg-gradient-to-r from-red-400/30 to-green-400/30")}
+            `}>
             <div className="card-body justify-center items-center flex flex-col gap-5 p-4 pt-5 relative">
                 {
                     battleData.chainId

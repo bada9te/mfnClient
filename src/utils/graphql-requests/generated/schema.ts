@@ -512,6 +512,7 @@ export type Query = {
   user: User;
   userAchievementsData?: Maybe<UserAchievementsData>;
   userByEmail: User;
+  userPinnedTracks?: Maybe<Array<Post>>;
   users?: Maybe<Array<User>>;
   usersByIds: Array<User>;
   usersByNickname: Array<User>;
@@ -668,6 +669,11 @@ export type QueryUserAchievementsDataArgs = {
 
 export type QueryUserByEmailArgs = {
   email: Scalars['String']['input'];
+};
+
+
+export type QueryUserPinnedTracksArgs = {
+  _id: Scalars['ID']['input'];
 };
 
 
@@ -1115,6 +1121,13 @@ export type UserAchievementsDataQueryVariables = Exact<{
 
 export type UserAchievementsDataQuery = { __typename?: 'Query', userAchievementsData?: { __typename?: 'UserAchievementsData', achievements?: Array<number> | null, totalLikes: number, totalSaves: number, maxLikesByPost: number, maxSavesByPost: number, postCount: number, maxLikesPostId?: string | null, maxSavesPostId?: string | null, totalRP: number } | null };
 
+export type UserPinnedTracksQueryVariables = Exact<{
+  _id: Scalars['ID']['input'];
+}>;
+
+
+export type UserPinnedTracksQuery = { __typename?: 'Query', userPinnedTracks?: Array<{ __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, nick: string, avatar: string } }> | null };
+
 export type UserCreateMutationVariables = Exact<{
   input: AddUserInput;
 }>;
@@ -1219,6 +1232,14 @@ export type UserSwitchSaveMutationVariables = Exact<{
 
 
 export type UserSwitchSaveMutation = { __typename?: 'Mutation', userSwitchSave: { __typename?: 'SwitchLikeOrPostInSavedReturnType', post: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string }, user: { __typename?: 'User', _id: string, nick: string, description: string, avatar: string, background: string, achievements?: Array<number> | null, level: number } } };
+
+export type UserSwitchPostPinnedMutationVariables = Exact<{
+  userId: Scalars['ID']['input'];
+  postId: Scalars['ID']['input'];
+}>;
+
+
+export type UserSwitchPostPinnedMutation = { __typename?: 'Mutation', userSwitchPostPinned: { __typename?: 'User', _id: string, nick: string, avatar: string, description: string, background: string, achievements?: Array<number> | null, level: number } };
 
 export const CoreAchievementFieldsFragmentDoc = gql`
     fragment CoreAchievementFields on Achievement {
@@ -3133,6 +3154,51 @@ export type UserAchievementsDataQueryHookResult = ReturnType<typeof useUserAchie
 export type UserAchievementsDataLazyQueryHookResult = ReturnType<typeof useUserAchievementsDataLazyQuery>;
 export type UserAchievementsDataSuspenseQueryHookResult = ReturnType<typeof useUserAchievementsDataSuspenseQuery>;
 export type UserAchievementsDataQueryResult = Apollo.QueryResult<UserAchievementsDataQuery, UserAchievementsDataQueryVariables>;
+export const UserPinnedTracksDocument = gql`
+    query userPinnedTracks($_id: ID!) {
+  userPinnedTracks(_id: $_id) {
+    ...CorePostFields
+    owner {
+      _id
+      nick
+      avatar
+    }
+  }
+}
+    ${CorePostFieldsFragmentDoc}`;
+
+/**
+ * __useUserPinnedTracksQuery__
+ *
+ * To run a query within a React component, call `useUserPinnedTracksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserPinnedTracksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserPinnedTracksQuery({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useUserPinnedTracksQuery(baseOptions: Apollo.QueryHookOptions<UserPinnedTracksQuery, UserPinnedTracksQueryVariables> & ({ variables: UserPinnedTracksQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserPinnedTracksQuery, UserPinnedTracksQueryVariables>(UserPinnedTracksDocument, options);
+      }
+export function useUserPinnedTracksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserPinnedTracksQuery, UserPinnedTracksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserPinnedTracksQuery, UserPinnedTracksQueryVariables>(UserPinnedTracksDocument, options);
+        }
+export function useUserPinnedTracksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UserPinnedTracksQuery, UserPinnedTracksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UserPinnedTracksQuery, UserPinnedTracksQueryVariables>(UserPinnedTracksDocument, options);
+        }
+export type UserPinnedTracksQueryHookResult = ReturnType<typeof useUserPinnedTracksQuery>;
+export type UserPinnedTracksLazyQueryHookResult = ReturnType<typeof useUserPinnedTracksLazyQuery>;
+export type UserPinnedTracksSuspenseQueryHookResult = ReturnType<typeof useUserPinnedTracksSuspenseQuery>;
+export type UserPinnedTracksQueryResult = Apollo.QueryResult<UserPinnedTracksQuery, UserPinnedTracksQueryVariables>;
 export const UserCreateDocument = gql`
     mutation userCreate($input: AddUserInput!) {
   userCreate(input: $input) {
@@ -3677,3 +3743,40 @@ export function useUserSwitchSaveMutation(baseOptions?: Apollo.MutationHookOptio
 export type UserSwitchSaveMutationHookResult = ReturnType<typeof useUserSwitchSaveMutation>;
 export type UserSwitchSaveMutationResult = Apollo.MutationResult<UserSwitchSaveMutation>;
 export type UserSwitchSaveMutationOptions = Apollo.BaseMutationOptions<UserSwitchSaveMutation, UserSwitchSaveMutationVariables>;
+export const UserSwitchPostPinnedDocument = gql`
+    mutation userSwitchPostPinned($userId: ID!, $postId: ID!) {
+  userSwitchPostPinned(userId: $userId, postId: $postId) {
+    ...CoreUserFields
+    _id
+    nick
+    avatar
+  }
+}
+    ${CoreUserFieldsFragmentDoc}`;
+export type UserSwitchPostPinnedMutationFn = Apollo.MutationFunction<UserSwitchPostPinnedMutation, UserSwitchPostPinnedMutationVariables>;
+
+/**
+ * __useUserSwitchPostPinnedMutation__
+ *
+ * To run a mutation, you first call `useUserSwitchPostPinnedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserSwitchPostPinnedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userSwitchPostPinnedMutation, { data, loading, error }] = useUserSwitchPostPinnedMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useUserSwitchPostPinnedMutation(baseOptions?: Apollo.MutationHookOptions<UserSwitchPostPinnedMutation, UserSwitchPostPinnedMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserSwitchPostPinnedMutation, UserSwitchPostPinnedMutationVariables>(UserSwitchPostPinnedDocument, options);
+      }
+export type UserSwitchPostPinnedMutationHookResult = ReturnType<typeof useUserSwitchPostPinnedMutation>;
+export type UserSwitchPostPinnedMutationResult = Apollo.MutationResult<UserSwitchPostPinnedMutation>;
+export type UserSwitchPostPinnedMutationOptions = Apollo.BaseMutationOptions<UserSwitchPostPinnedMutation, UserSwitchPostPinnedMutationVariables>;

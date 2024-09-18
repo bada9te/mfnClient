@@ -1,3 +1,4 @@
+import { Post } from "@/utils/graphql-requests/generated/schema";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export interface IUserState {
@@ -58,6 +59,27 @@ export const userSlice = createSlice({
         },
         setUnreadNotificationsCount: (state, action) => {
             state.unreadNotifications = action.payload;
+        },
+        switchPostInLiked: (state, action) => {
+            const posts = JSON.parse(JSON.stringify(state.user?.likedPosts));
+
+            if (posts.includes(action.payload._id)) {
+                state.user && (state.user.likedPosts = posts.filter((i: string) => i !== action.payload._id))
+            } else {
+                posts.push(action.payload._id);
+                state.user && (state.user.likedPosts = posts);
+            }
+        },
+        switchPostInSaved: (state, action) => {
+            const posts = JSON.parse(JSON.stringify(state.user?.savedPosts));
+
+
+            if (posts.includes(action.payload._id)) {
+                state.user && (state.user.savedPosts = posts.filter((i: string) => i !== action.payload._id))
+            } else {
+                posts.push(action.payload._id);
+                state.user && (state.user.savedPosts = posts);
+            }
         }
     }
 });
@@ -66,6 +88,8 @@ export const {
     setUser, 
     setUserAvatar, 
     setUserBackground, 
-    setUnreadNotificationsCount
+    setUnreadNotificationsCount,
+    switchPostInLiked,
+    switchPostInSaved,
 } = userSlice.actions;
 export default userSlice.reducer;
