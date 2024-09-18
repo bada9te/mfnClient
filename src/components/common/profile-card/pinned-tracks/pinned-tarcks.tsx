@@ -25,7 +25,7 @@ export default function PinnedTracks({
     const handleSelect = async(a: TPost) => {
         await switchPostPinned({
             variables: {
-                userId: user._id as string,
+                userId: user?._id as string,
                 postId: a._id
             }
         });
@@ -45,7 +45,7 @@ export default function PinnedTracks({
             <div className="flex flex-col md:flex-row gap-5 mb-10 justify-around mt-7 flex-wrap">
                 {
                     pinnedTracks.userPinnedTracks?.map((i, key) => {
-                        if (userId === user._id) {
+                        if (userId === user?._id) {
                             return (
                                 <Post key={key} data={i as TPost} dictionary={dictionary} handleRemove={handleSelect}/>
                             );

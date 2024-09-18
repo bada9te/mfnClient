@@ -14,6 +14,7 @@ import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
 import { config, USDCAddresses } from "@/config/wagmi";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import ChainImage from "@/components/common/chain-image/chain-image";
+import NetworkInformation from "@/components/modals/network-information";
 
 const DollarIcon = () => {
     return (
@@ -142,10 +143,19 @@ export default function Battle(props: {
                 {
                     battleData.chainId
                     &&
-                    <div className="absolute top-0 right-0 glass rounded-none rounded-tr-2xl rounded-bl-2xl text-white flex flex-row gap-2 items-center justify-center p-2">
-                        <ChainImage chainId={battleData.chainId}/>
-                        {config.chains.find(i => i.id === battleData.chainId)?.name}
-                    </div>
+                    <NetworkInformation 
+                        button={
+                            <div className="cursor-pointer hover:bg-[#19a29b] absolute top-0 right-0 glass rounded-none rounded-tr-2xl rounded-bl-2xl text-white flex flex-row gap-2 items-center justify-center p-2">
+                                <ChainImage chainId={battleData.chainId}/>
+                                {config.chains.find(i => i.id === battleData.chainId)?.name}
+                            </div>
+                        }
+                        dictionary={dictionary}
+                        networkName={config.chains.find(i => i.id === battleData.chainId)?.name || "---"}
+                        post1Title={battleData.post1?.title || "---"}
+                        post2Title={battleData.post2?.title || "---"}
+                    />
+                    
                 }
                 <h2 className="card-title mt-10 md:mt-0">{battleData.post1?.title} {dictionary.entities.battle.versus} {battleData.post2?.title}</h2>
                 <div className="flex flex-wrap gap-5 justify-center items-center flex-col lg:flex-row">
