@@ -114,7 +114,7 @@ export default function Post(props: {
                         <div className="avatar p-0">
                             <div className="w-10 rounded-full shadow-lg">
                                 <Image alt="avatar" width={400} height={400}
-                                    src={data?.owner?.avatar ? `${envCfg.serverFilesEndpoint}/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
+                                    src={data?.owner?.avatar ? `${envCfg.serverFilesEndpoint}/images/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
                             </div>
                         </div>
                         <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>

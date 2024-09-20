@@ -60,8 +60,8 @@ export default function ImageCropperModal(props: {
                 </div>
 
                 <div className="modal-action z-50"> 
-                    <button className="btn bg-base-300 glass" onClick={handleCancelImageCropping}>{dictionary.modals.cropper.cancel}</button>
-                    <button className="btn btn-primary glass " onClick={handleImageCropping}>{dictionary.modals.cropper.submit}</button>
+                    <button className="btn glass btn-primary text-white" onClick={handleCancelImageCropping}>{dictionary.modals.cropper.cancel}</button>
+                    <button className="btn btn-primary glass text-white" onClick={handleImageCropping}>{dictionary.modals.cropper.submit}</button>
                 </div>
             </div>
         </dialog>

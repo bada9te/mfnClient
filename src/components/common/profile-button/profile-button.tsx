@@ -89,7 +89,7 @@ export default function ProfileButton({
                         <div className="hidden md:block">
                             <p className="font-bold text-lg">{user?.user?._id ? user?.user?.nick : "Login"}</p>
                         </div>
-                        <Image
+                        <img
                             width={45}
                             height={45}
                             alt="Avatar"

@@ -122,7 +122,7 @@ const AvatarGrid = ({
             <>
               {recentTracks?.postsMostRecent && recentTracks.postsMostRecent.map((recentTrack, index) => (
                 <Link href={`/profile/${recentTrack.owner._id}/1`} key={index}>
-                  <Image src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
+                  <img src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/images/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
                 </Link>
               ))}
             </>
@@ -130,7 +130,7 @@ const AvatarGrid = ({
         </>
         : 
         <div className='flex flex-col justify-center items-center gap-2'>
-          <Image src={'/assets/icons/logo_clear.png'} alt='logo-clear' width={35} height={35} className='rounded-full shadow-lg'/>
+          <img src={'/assets/icons/logo_clear.png'} alt='logo-clear' width={35} height={35} className='rounded-full shadow-lg'/>
           <p className='text-[10px] text-center px-2'>{dictionary.common['avatar-grid']['recent-hidden']}</p>
         </div>
       }

@@ -39,16 +39,15 @@ export default function ReportModal({
             variables: {
                 input: {
                     reportedPost: postId,
-                    message: "default-report",
+                    message: selectedRason as string,
                     contactReason: selectedRason as string,
                 }
             }
         }).then(_ => {
-
             enqueueSnackbar("Report submitted", {variant: 'success', autoHideDuration: 2500});
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'success', autoHideDuration: 3000});
-        })
+        });
     }
 
     if (!isMounted) {
