@@ -42,7 +42,7 @@ export default function PinnedTracks({
                 </svg>
                 {dictionary.common["profile-card"]["pinned-tracks"].pinned}
             </p>
-            <div className="flex flex-col md:flex-row gap-14 lg:gap-5 mb-10 justify-around mt-7 flex-wrap">
+            <div className="flex flex-col md:flex-row gap-14 mb-10 justify-around mt-7 flex-wrap">
                 {
                     pinnedTracks.userPinnedTracks?.map((i, key) => {
                         if (userId === user?._id) {

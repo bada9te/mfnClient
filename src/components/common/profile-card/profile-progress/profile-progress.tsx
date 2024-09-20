@@ -36,7 +36,7 @@ export default function ProfileProgress(props: {
     }
 
     return (
-        <div className="stats stats-vertical lg:stats-horizontal glass max-w-full rounded-2xl text-white">
+        <div className="stats stats-vertical xl:stats-horizontal glass max-w-full rounded-2xl text-white">
             <div className="stat relative">
                 <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"].level}</div>
                 <span onClick={refreshStatistics}><RefreshBtn/></span>
