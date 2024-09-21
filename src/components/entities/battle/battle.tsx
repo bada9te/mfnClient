@@ -154,6 +154,9 @@ export default function Battle(props: {
                         networkName={config.chains.find(i => i.id === battleData.chainId)?.name || "---"}
                         post1Title={battleData.post1?.title || "---"}
                         post2Title={battleData.post2?.title || "---"}
+                        post1Id={battleData.post1?._id as string}
+                        post2Id={battleData.post2?._id as string}
+                        battleId={battleData._id as string}
                     />
                     
                 }
