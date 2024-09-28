@@ -77,11 +77,24 @@ const AvatarGrid = ({
             </>
             :
             <>
-              {recentTracksByFollowing?.postsMostRecentByFollowing && recentTracksByFollowing.postsMostRecentByFollowing.map((recentTrack, index) => (
-                <Link href={`/profile/${recentTrack.owner._id}/1`} key={index}>
-                  <Image src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
-                </Link>
-              ))}
+              {
+                (() => {
+                  if (recentTracksByFollowing?.postsMostRecentByFollowing?.length) {
+                    return recentTracksByFollowing?.postsMostRecentByFollowing && recentTracksByFollowing.postsMostRecentByFollowing.map((recentTrack, index) => (
+                      <Link href={`/profile/${recentTrack.owner._id}/1`} key={index}>
+                        <Image src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
+                      </Link>
+                    ))
+                  } else {
+                    return (
+                      <div className='flex flex-col justify-center items-center gap-2'>
+                        <Image src={'/assets/icons/logo_clear.png'} alt='logo-clear' width={35} height={35} className='rounded-full shadow-lg'/>
+                        <p className='text-[10px] text-center px-2'>{'\\*-*/'}</p>
+                      </div>
+                    );
+                  }
+                })()
+              }
             </>
           }
         </>
@@ -92,8 +105,8 @@ const AvatarGrid = ({
         </div>
       }
     
-      
       <div className='divider my-0'></div>
+
       <div className="form-control">
         <label className="label cursor-pointer p-0 flex items-start justify-start">
           <input type="checkbox" className="toggle toggle-xs mr-1" checked={showRecents} onChange={() => handleShowRecentsToggle()}/>
@@ -115,11 +128,24 @@ const AvatarGrid = ({
             </>
             :
             <>
-              {recentTracks?.postsMostRecent && recentTracks.postsMostRecent.map((recentTrack, index) => (
-                <Link href={`/profile/${recentTrack.owner._id}/1`} key={index}>
-                  <img src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/images/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
-                </Link>
-              ))}
+              {
+                (() => {
+                  if (recentTracks?.postsMostRecent?.length) {
+                    return recentTracks?.postsMostRecent && recentTracks.postsMostRecent.map((recentTrack, index) => (
+                      <Link href={`/profile/${recentTrack.owner._id}/1`} key={index}>
+                        <img src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/images/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
+                      </Link>
+                    ))
+                  } else {
+                    return (
+                      <div className='flex flex-col justify-center items-center gap-2'>
+                        <Image src={'/assets/icons/logo_clear.png'} alt='logo-clear' width={35} height={35} className='rounded-full shadow-lg'/>
+                        <p className='text-[10px] text-center px-2'>{'\\*-*/'}</p>
+                      </div>
+                    );
+                  }
+                })()
+              }
             </>
           }
         </>

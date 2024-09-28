@@ -29,7 +29,7 @@ export default function AudioPlayer({
     if (isPlaying && playerRef.current) {
       const intervalId = setInterval(() => {
         if (!isSeeking) {
-          setSeek(playerRef.current.seek());
+          setSeek(playerRef.current?.seek());
         }
       }, 10);
 
