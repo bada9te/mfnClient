@@ -66,15 +66,24 @@ export async function middleware(request: NextRequest) {
     }
 
     // if user wants to logout
-    if (request.nextUrl.pathname === `/${urlLocale}/logout`) {
-        const res = NextResponse.redirect(new URL("/", request.url));
-        res.cookies.set("jijoiji", "", {
-            expires: new Date(0),
-            path: '/',
-            domain: envCfg.serverDomain,
-        });
-        return res;
-    }
+    /*
+        if (request.nextUrl.pathname === `/${urlLocale}/logout`) {
+            const res = NextResponse.redirect(new URL(`/${urlLocale}`, request.url));
+            res.cookies.set(envCfg.userIdCookieKey as string, "", {
+                expires: new Date(0),
+                path: '/',
+                domain: envCfg.serverDomain,
+            });
+
+            res.cookies.set(envCfg.userSessionCookieKey as string, "", {
+                expires: new Date(0),
+                path: '/',
+                domain: envCfg.serverDomain,
+            });
+
+            return res;
+        }
+    */
 
     // if user is trying to access auth routes
     if (pathname.startsWith(`${urlLocale}/login`) || pathname.startsWith(`${urlLocale}/register`)) {

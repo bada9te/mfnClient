@@ -19,17 +19,17 @@ export default function RootLayout({
   return (
     <html lang={params.lang} data-theme="black">
       <body>
-        <GoogleOAuthProvider clientId={envCfg.passportGoogleID as string}>
-            <RainbowkitAppProvider>
-                <ApolloWrapper>
-                    <SnackbarProvider maxSnack={5}>
-                        <ReduxProvider>
-                          {children}
-                        </ReduxProvider>
-                    </SnackbarProvider>
-                </ApolloWrapper>
-            </RainbowkitAppProvider>
-        </GoogleOAuthProvider>
+          <GoogleOAuthProvider clientId={envCfg.passportGoogleID as string}>
+              <RainbowkitAppProvider>
+                  <ApolloWrapper>
+                      <SnackbarProvider maxSnack={5}>
+                          <ReduxProvider>
+                            {children}
+                          </ReduxProvider>
+                      </SnackbarProvider>
+                  </ApolloWrapper>
+              </RainbowkitAppProvider>
+          </GoogleOAuthProvider>
     </body>
     </html>
   );

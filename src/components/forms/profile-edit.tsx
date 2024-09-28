@@ -2,16 +2,13 @@
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
 import { useSnackbar } from "notistack";
-import { useUserLinkFacebookMutation, useUserLinkGoogleMutation, useUserLinkTwitterMutation, useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkFacebookMutation, useUserUnlinkGoogleMutation, useUserUnlinkTwitterMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
+import { useUserLinkGoogleMutation, useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkGoogleMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import { setUser } from "@/lib/redux/slices/user";
 import { httpGetGoogleInfo } from "@/utils/http-requests/auth";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useEffect, useState } from "react";
 import { revalidatePathAction } from "@/actions/revalidation";
-import FacebookLogin from '@greatsumini/react-facebook-login';
-import TwitterLogin from "react-twitter-login";
-import envCfg from "@/config/env";
 import { getDictionary } from "@/dictionaries/dictionaries";
 
 
@@ -37,31 +34,66 @@ export default function ProfileEditForm(props: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { dictionary } = props;
-    const { register: registerNick, handleSubmit: handleSubmitNick, formState: {errors: errorsNick} } = useForm<InputsNickname>();
-    const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
-    const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail} } = useForm<InputsEmail>();
-    const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>();
-    const [ isMounted, setIsMounted ] = useState(false);
-    const [ facebookLoginData, setFacebookLoginData ] = useState<any>(null);
-    const [ facebookProfileData, setFacebookProfileData ] = useState<any>(null);
-    const { enqueueSnackbar } = useSnackbar();
-    const [ updateUser ] = useUserUpdateMutation();
-    const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();
-    const [ linkGoogle ] = useUserLinkGoogleMutation();
-    const [ unlinkGoogle ] = useUserUnlinkGoogleMutation();
-    const [ linkFacebook ] = useUserLinkFacebookMutation();
-    const [ unlinkFacebook ] = useUserUnlinkFacebookMutation();
-    const [ linkTwitter ] = useUserLinkTwitterMutation();
-    const [ unlinkTwitter ] = useUserUnlinkTwitterMutation(); 
-
     const {data: userData} = useUserSuspenseQuery({
         variables: {
             _id: props.userId
         }
     });
-
     const user = useAppSelector(state => state.user.user);
     const dispatch = useAppDispatch();
+    const { register: registerNick, handleSubmit: handleSubmitNick, formState: {errors: errorsNick} } = useForm<InputsNickname>();
+    const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
+    const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail} } = useForm<InputsEmail>();
+    const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>();
+    const [ isMounted, setIsMounted ] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
+    const [ updateUser ] = useUserUpdateMutation();
+    const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();
+
+
+    // ##################################### GOOGLE HANDLERS #####################################
+    const [ linkGoogle ] = useUserLinkGoogleMutation();
+    const [ unlinkGoogle ] = useUserUnlinkGoogleMutation();
+    
+    const handleGoogle = useGoogleLogin({
+        scope: "email",
+        onSuccess: tokenResponse => {
+            httpGetGoogleInfo(tokenResponse.access_token).then(data => {
+                console.log({data, tokenResponse})
+                enqueueSnackbar("Processing...", {autoHideDuration: 1500});
+                linkGoogle({
+                    variables: {
+                        input: {
+                            userId: user?._id as string,
+                            id: data.sub,
+                            token: tokenResponse.access_token,
+                            email: data.email,
+                            name: data.name,
+                        }
+                    }
+                }).then(_ => {
+                    revalidatePathAction("/profile/me/edit", "page");
+                    enqueueSnackbar("Google account linked.", {autoHideDuration: 2500, variant: 'success'});
+                }).catch(_ => {
+                    enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' })
+                });   
+            });
+        },
+    });
+
+    const handleUnlinkGoogle = () => {
+        enqueueSnackbar("Processing...", {autoHideDuration: 1500});
+        unlinkGoogle({
+            variables: {
+                _id: user?._id as string
+            }
+        }).then(_ => {
+            revalidatePathAction("/profile/me/edit", "page");
+            enqueueSnackbar("Google account unlinked.", {autoHideDuration: 2500, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
+        }); 
+    }
 
     const dispatchUser = (what: string, value: string) => {
         // @ts-ignore
@@ -142,130 +174,13 @@ export default function ProfileEditForm(props: {
         });
     }
 
-    const handleGoogle = useGoogleLogin({
-        scope: "email",
-        onSuccess: tokenResponse => {
-            httpGetGoogleInfo(tokenResponse.access_token).then(data => {
-                enqueueSnackbar("Processing...", {autoHideDuration: 1500});
-                linkGoogle({
-                    variables: {
-                        input: {
-                            userId: user?._id as string,
-                            id: data.sub,
-                            token: tokenResponse.access_token,
-                            email: data.email,
-                            name: data.name,
-                        }
-                    }
-                }).then(_ => {
-                    revalidatePathAction("/profile/me/edit", "page");
-                    enqueueSnackbar("Google account linked.", {autoHideDuration: 2500, variant: 'success'});
-                }).catch(_ => {
-                    enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' })
-                });   
-            });
-        },
-    });
-
-    const handleUnlinkGoogle = () => {
-        enqueueSnackbar("Processing...", {autoHideDuration: 1500});
-        unlinkGoogle({
-            variables: {
-                _id: user?._id as string
-            }
-        }).then(_ => {
-            revalidatePathAction("/profile/me/edit", "page");
-            enqueueSnackbar("Google account unlinked.", {autoHideDuration: 2500, variant: 'success'});
-        }).catch(_ => {
-            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
-        }); 
-    }
-
-    const onFacebookLoginSuccess = (response: any) => {
-        setFacebookLoginData(response);
-    }
-
-    const onFacebookGetProfileSuccess = (response: any) => {
-        setFacebookProfileData(response)
-    };
-
-    useEffect(() => {
-        if (facebookLoginData && facebookProfileData) {
-            enqueueSnackbar("Processing...", {autoHideDuration: 1500});
-            linkFacebook({
-                variables: {
-                    input: {
-                        userId: user?._id as string,
-                        id: facebookProfileData.id,
-                        name: facebookProfileData.name,
-                        token: facebookLoginData.accessToken
-                    }
-                }
-            }).then(_ => {
-                setFacebookLoginData(null);
-                setFacebookProfileData(null);
-                revalidatePathAction("/profile/me/edit", "page");
-                enqueueSnackbar("Facebook account unlinked.", {autoHideDuration: 2500, variant: 'success'});
-            }).catch(_ => {
-                enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
-            });
-                
-        }
-    }, [facebookLoginData, facebookProfileData, enqueueSnackbar, linkFacebook, user?._id]);
-
-    const handleUnlinkFacebook = () => {
-        enqueueSnackbar("Processing...", {autoHideDuration: 1500});
-        unlinkFacebook({
-            variables: {
-                _id: user?._id as string,
-            }
-        }).then(_ => {
-            revalidatePathAction("/profile/me/edit", "page");
-            enqueueSnackbar("Facebook account unlinked.", {autoHideDuration: 2500, variant: 'success'});
-        }).catch(_ => {
-            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
-        });
-    }
-
-    const handleLinkTwitter = (err: any, data: any) => {
-        enqueueSnackbar("Processing...", {autoHideDuration: 1500});
-        linkTwitter({
-            variables: {
-                input: {
-                    userId: user?._id as string,
-                    id: data.user_id,
-                    name: data.screen_name,
-                    token: data.oauth_token,
-                }
-            }
-        }).then(_ => {
-            revalidatePathAction("/profile/me/edit", "page");
-            enqueueSnackbar("Twitter account linked.", {autoHideDuration: 2500, variant: 'success'});
-        }).catch(_ => {
-            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
-        });
-    };
-
-    const handleUnlinkTwitter = () => {
-        unlinkTwitter({
-            variables: {
-                _id: user?._id as string,
-            }
-        }).then(_ => {
-            revalidatePathAction("/profile/me/edit", "page");
-            enqueueSnackbar("Twitter account unlinked.", {autoHideDuration: 2500, variant: 'success'});
-        }).catch(_ => {
-            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' });
-        });
-    }
-
 
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
-    if (!isMounted) {
-        return;
+    if (!isMounted || !window) {
+        return null;
     }
 
     return (
@@ -379,8 +294,8 @@ export default function ProfileEditForm(props: {
                     </div>
                 </form>
 
-                <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].socials}</div>
-                <button className="rounded-2xl btn hover:bg-white hover:text-black glass text-white" onClick={userData.user.google?.email ? handleUnlinkGoogle : () => handleGoogle()}>
+                
+                <button className="mt-10 rounded-2xl btn hover:bg-white hover:text-black glass text-white" onClick={userData.user.google?.email ? handleUnlinkGoogle : () => handleGoogle()}>
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -390,55 +305,6 @@ export default function ProfileEditForm(props: {
                     </svg>
                     {userData.user.google?.email ? userData.user.google?.email : dictionary.forms["profile-edit"]["connect-google"]}
                 </button>
-                <FacebookLogin
-                    appId={envCfg.passportFacebookID as string}
-                    onSuccess={onFacebookLoginSuccess}
-                    onFail={(error) => {
-                        console.log('Login Failed!', error);
-                    }}
-                    onProfileSuccess={onFacebookGetProfileSuccess}
-                    render={({ onClick, logout }) => (
-                        <button className="rounded-2xl btn hover:bg-blue-600 glass text-white" onClick={userData.user.facebook?.name ? handleUnlinkFacebook : onClick}>
-                            <svg fill="#0091ff" height="25px" width="25px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310" stroke="#0091ff">
-                            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier"> 
-                                <g id="XMLID_834_"> 
-                                    <path id="XMLID_835_" d="M81.703,165.106h33.981V305c0,2.762,2.238,5,5,5h57.616c2.762,0,5-2.238,5-5V165.765h39.064 c2.54,0,4.677-1.906,4.967-4.429l5.933-51.502c0.163-1.417-0.286-2.836-1.234-3.899c-0.949-1.064-2.307-1.673-3.732-1.673h-44.996 V71.978c0-9.732,5.24-14.667,15.576-14.667c1.473,0,29.42,0,29.42,0c2.762,0,5-2.239,5-5V5.037c0-2.762-2.238-5-5-5h-40.545 C187.467,0.023,186.832,0,185.896,0c-7.035,0-31.488,1.381-50.804,19.151c-21.402,19.692-18.427,43.27-17.716,47.358v37.752H81.703 c-2.762,0-5,2.238-5,5v50.844C76.703,162.867,78.941,165.106,81.703,165.106z">
-                                    </path>
-                                </g> 
-                                </g>
-                            </svg>
-                            { userData.user.facebook?.name ? userData.user.facebook?.name : dictionary.forms["profile-edit"]["connect-facebook"] }
-                        </button>
-                    )}
-                />
-                
-                {
-                    userData.user.twitter?.name
-                    ?
-                    <button className="rounded-2xl btn hover:bg-base-300 glass text-white w-full" onClick={handleUnlinkTwitter}>
-                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
-                            <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
-                        </svg>
-                        { userData.user.twitter?.name }
-                    </button>
-                    :
-                    <>
-                        {/* @ts-ignore */}
-                        <TwitterLogin
-                            authCallback={handleLinkTwitter}
-                            consumerKey={envCfg.passporttwitterKEY as string}
-                            consumerSecret={envCfg.passportTwitterSECRET as string}
-                        >
-                            <button className="rounded-2xl btn hover:bg-base-300 glass text-white w-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
-                                    <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
-                                </svg>
-                                {dictionary.forms["profile-edit"]["connect-twitter"]}
-                            </button>
-                        </TwitterLogin>
-                    </>
-                }
             </div>
         </div>
 
