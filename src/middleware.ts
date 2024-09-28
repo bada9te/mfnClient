@@ -35,7 +35,7 @@ export function middleware(request: NextRequest) {
 
     const isLoggedIn = cookies().get(jwtCookieKey);
 
-    console.log({isLoggedIn})
+    console.log({isLoggedIn, jwtCookieKey})
 
     //console.log("LOG:", isLoggedIn, jwtCookieKey, userIdCookieKey);
     const pathname = request.nextUrl.pathname;
