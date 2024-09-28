@@ -35,6 +35,8 @@ export function middleware(request: NextRequest) {
 
     const isLoggedIn = cookies().get(jwtCookieKey);
 
+    console.log({isLoggedIn})
+
     //console.log("LOG:", isLoggedIn, jwtCookieKey, userIdCookieKey);
     const pathname = request.nextUrl.pathname;
 
@@ -100,10 +102,12 @@ export function middleware(request: NextRequest) {
 
 
     const accessingProtectedRoute = protectedRoutes.some(i => {
-        return pathname.startsWith(i);
+        return pathname.includes(i);
     });
 
+    console.log({accessingProtectedRoute, isLoggedIn});
     if (!accessingProtectedRoute || isLoggedIn) {
+        
         if (!pathnameHasLocale) {
             return NextResponse.redirect(request.nextUrl);
         } else {
