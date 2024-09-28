@@ -108,7 +108,7 @@ export default function LoginForm({
                         <Link href="/account-restore/email-verification" className="label-text-alt link link-hover">{dictionary.forms.login["forgot-password"]}</Link>
                     </label>
                 </form>
-                <FormsSocials/>
+                <FormsSocials dictionary={dictionary}/>
             </div>
         </div>
     );

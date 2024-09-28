@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import AudioPlayer from "../common/player/player";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Image from "next/image";
@@ -35,7 +35,7 @@ export default function NetworkInformation({
         battleTokensTransfers2: number 
     } | undefined>(undefined);
 
-    const fetchInfo = async() => {
+    const fetchInfo = useCallback(async() => {
         contractGetAllImportantDataForBattle(
             battleId,
             post1Id,
@@ -49,14 +49,14 @@ export default function NetworkInformation({
                 battleTokensTransfers2: Number(data[3].result),
             });
         });
-    }
+    }, [battleId, post1Id, post2Id, address]);
 
     useEffect(() => {
         if (address) {
             setIsMounted(true);
             fetchInfo();
         }
-    }, [address]);
+    }, [address, fetchInfo]);
 
     const handleOpen = () => {
         fetchInfo();
@@ -89,13 +89,13 @@ export default function NetworkInformation({
                     <h4 className="font-bold text-lg">{networkName}</h4>
 
                     <div className="flex-1 h-fit w-full flex flex-col justify-center items-start overflow-y-auto overflow-x-hidden mt-5 no-scrollbar">
-                        <p className="font-bold mb-2">Total USDC per posts:</p>
+                        <p className="font-bold mb-2">{dictionary.modals["network-information"]["total-per-posts"]}</p>
                         <div className="stats shadow bg-base-300 glass w-full stats-vertical md:stats-horizontal">
                             <div className="stat place-items-center">
                                 <div className="stat-title">{post1Title}</div>
                                 <div className="stat-value text-green-400">{data ? data.totalTokensPerPost1 : "---"}</div>
                                 <div className="stat-desc flex flex-row gap-1 items-center justify-center mt-2">
-                                    <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>Your's: {data && data.battleTokensTransfers1} USDC
+                                    <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>{dictionary.modals["network-information"].your} {data && data.battleTokensTransfers1} USDC
                                 </div>
                             </div>
 
@@ -103,12 +103,12 @@ export default function NetworkInformation({
                                 <div className="stat-title">{post2Title}</div>
                                 <div className="stat-value text-red-400">{data ? data.totalTokensPerPost2 : "---"}</div>
                                 <div className="stat-desc flex flex-row gap-1 items-center justify-center mt-2">
-                                    <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>Your's: {data && data.battleTokensTransfers2} USDC
+                                    <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>{dictionary.modals["network-information"].your} {data && data.battleTokensTransfers2} USDC
                                 </div>
                             </div>
                         </div>
 
-                        <p className="font-bold my-2">Possible USDC withdrawings:</p>
+                        <p className="font-bold my-2">{dictionary.modals["network-information"]["possible-withdraw"]}</p>
 
                         <div className="stats shadow bg-base-300 glass w-full stats-vertical md:stats-horizontal">
                             <div className="stat place-items-center">
@@ -131,7 +131,7 @@ export default function NetworkInformation({
                             </div>
                         </div>
 
-                        <button className="btn btn-primary glass btn-sm w-full text-white mt-5">Withdraw <span className="text-[#25e7de]">00000 USDC</span></button>
+                        <button className="btn btn-primary glass btn-sm w-full text-white mt-5">{dictionary.modals["network-information"].withdraw} <span className="text-[#25e7de]">00000 USDC</span></button>
                     </div>
                 </div>
             </dialog>

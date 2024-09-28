@@ -327,6 +327,9 @@
             "register-explore-btns": {
                 "register": "Register",
                 "explore": "Explore"
+            },
+            "forms-socials": {
+                "use-socials": "Use socials"
             }
         },
         "entities": {
@@ -738,6 +741,12 @@
                 "track-title": "Track title",
                 "search": "Search",
                 "no-tracks": "No tracks yet, input the search query and click 'Search' to start searching"
+            },
+            "network-information": {
+                "withdraw": "Withdraw",
+                "possible-withdraw": "Possible USDC withdrawings:",
+                "total-per-posts": "Total USDC per posts:",
+                "your": "Your:"
             }
         },
         "containers": {

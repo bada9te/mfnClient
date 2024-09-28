@@ -145,7 +145,7 @@ export default function RegisterForm({
                         <Link href="/login" className="label-text-alt link link-hover">{dictionary.forms.register["have-an-account"]}</Link>
                     </label>
                 </form>
-                <FormsSocials/>
+                <FormsSocials dictionary={dictionary}/>
             </div>
         </div>
     );

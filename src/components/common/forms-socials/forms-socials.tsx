@@ -1,7 +1,13 @@
-export default function FormsSocials() {
+import { getDictionary } from "@/dictionaries/dictionaries";
+
+export default function FormsSocials({
+    dictionary
+}: {
+    dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
+}) {
     return (
         <>
-            <div className="divider divider-primary mt-10">Use socials</div>
+            <div className="divider divider-primary mt-10">{dictionary.common["forms-socials"]["use-socials"]}</div>
             <div className="join w-full flex justify-center mb-5">
                 <button className="join-item btn hover:bg-white hover:text-black glass text-white w-16">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">

@@ -327,6 +327,9 @@
             "register-explore-btns": {
                 "register": "Зареєструватися",
                 "explore": "Досліджувати"
+            },
+            "forms-socials": {
+                "use-socials": "Через соц. мережу"
             }
         },
         "entities": {
@@ -737,6 +740,12 @@
                 "track-title": "Назва трека",
                 "search": "Пошук",
                 "no-tracks": "Треків поки немає, введіть запит для пошуку і натисніть 'Пошук', щоб почати шукати"
+            },
+            "network-information": {
+                "withdraw": "Вивід",
+                "possible-withdraw": "Можлива кількість USDC для виводу:",
+                "total-per-posts": "Усього USDC:",
+                "your": "Ваші:"
             }
         },
         "containers": {
