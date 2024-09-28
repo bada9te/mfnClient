@@ -29,13 +29,13 @@ function getLocale(request: NextRequest) {
 }
 
 export function middleware(request: NextRequest) {
-    const jwtCookieKey = envCfg.userSessionCookieKey as string;
+    //const jwtCookieKey = envCfg.userSessionCookieKey as string;
     const userIdCookieKey = envCfg.userIdCookieKey as string;
 
 
-    const isLoggedIn = cookies().get(jwtCookieKey);
+    const isLoggedIn = cookies().get(userIdCookieKey);
 
-    console.log({isLoggedIn, jwtCookieKey})
+    console.log({isLoggedIn})
 
     //console.log("LOG:", isLoggedIn, jwtCookieKey, userIdCookieKey);
     const pathname = request.nextUrl.pathname;
@@ -65,17 +65,11 @@ export function middleware(request: NextRequest) {
     // if user wants to logout
     if (request.nextUrl.pathname === `/${urlLocale}/logout`) { 
         const res = NextResponse.redirect(new URL("/", request.url));
-        res.cookies.set(jwtCookieKey, "", {
-            expires: new Date(0),
-            path: '/',
-            domain: envCfg.serverDomain,
-        });
         res.cookies.set(userIdCookieKey, "", {
             expires: new Date(0),
             path: '/',
             domain: envCfg.serverDomain,
         });
-        
     }
     //console.log("TARGET:", request.nextUrl.pathname)
 
