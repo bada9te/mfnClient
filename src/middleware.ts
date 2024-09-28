@@ -28,88 +28,101 @@ function getLocale(request: NextRequest) {
     return match(languages, locales, defaultLocale);
 }
 
-export function middleware(request: NextRequest) {
-    //const jwtCookieKey = envCfg.userSessionCookieKey as string;
-    const userIdCookieKey = envCfg.userIdCookieKey as string;
 
-
-    const isLoggedIn = cookies().get(userIdCookieKey);
-
-    console.log({isLoggedIn})
-
-    //console.log("LOG:", isLoggedIn, jwtCookieKey, userIdCookieKey);
-    const pathname = request.nextUrl.pathname;
-
-    // check if pathname already has a locale identifier
-    let urlLocale;
-    const pathnameHasLocale = locales.some(
-        (locale) => {
-            if (pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`) {
-                urlLocale = locale;
-                return true;
-            }
-            return false;
-        }
-    );
-    
-    // specify locale if not pre-defined
-    if (!urlLocale) {
-        urlLocale = getLocale(request);
-        //console.log(urlLocale)
-    }
-    if (!pathnameHasLocale) {
-        request.nextUrl.pathname = `/${urlLocale}${pathname}`;
-    }
-    
-    // console.log({urlLocale, path: request.nextUrl.pathname, jwtCookieKey, userIdCookieKey, sd: envCfg.serverDomain,});
-    // if user wants to logout
-    if (request.nextUrl.pathname === `/${urlLocale}/logout`) { 
-        const res = NextResponse.redirect(new URL("/", request.url));
-        res.cookies.set(userIdCookieKey, "", {
-            expires: new Date(0),
-            path: '/',
-            domain: envCfg.serverDomain,
-        });
-    }
-    //console.log("TARGET:", request.nextUrl.pathname)
-
-    // if user is trying to access auth routes
-    if (pathname.startsWith(`${urlLocale}/login`) || pathname.startsWith(`${urlLocale}/register`)) {
-        if (isLoggedIn) {
-            return NextResponse.redirect(new URL(`/${urlLocale}/feed/1`, request.url));
-        }
-
-        if (!pathnameHasLocale) {
-            return NextResponse.redirect(request.nextUrl);
-        } else {
-            return NextResponse.next();
-        }
-    }
-
-    if (isLoggedIn) {
-        if (!pathnameHasLocale) {
-            return NextResponse.redirect(request.nextUrl);
-        } else {
-            return NextResponse.next();
-        }
-    }
-
-
-    const accessingProtectedRoute = protectedRoutes.some(i => {
-        return pathname.includes(i);
+async function getCookies(request: NextRequest) {
+    const apiUrl = `${request.nextUrl.origin}/api/get-server-data`;
+  
+    const apiResponse = await fetch(apiUrl, {
+      headers: {
+        cookie: request.headers.get('cookie') || '', // Pass cookies along if needed
+      },
     });
+  
+    const data = await apiResponse.json();
 
-    console.log({accessingProtectedRoute, isLoggedIn});
-    if (!accessingProtectedRoute || isLoggedIn) {
+    return data;
+}
+
+export function middleware(request: NextRequest) {
+    getCookies(request).then(data => {
+        console.log({data: data.cookie})
+
+        const isLoggedIn = data.cookie.jwt && data.cookie.id;
+
+        //console.log("LOG:", isLoggedIn, jwtCookieKey, userIdCookieKey);
+        const pathname = request.nextUrl.pathname;
+
+        // check if pathname already has a locale identifier
+        let urlLocale;
+        const pathnameHasLocale = locales.some(
+            (locale) => {
+                if (pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`) {
+                    urlLocale = locale;
+                    return true;
+                }
+                return false;
+            }
+        );
         
-        if (!pathnameHasLocale) {
-            return NextResponse.redirect(request.nextUrl);
-        } else {
-            return NextResponse.next();
+        // specify locale if not pre-defined
+        if (!urlLocale) {
+            urlLocale = getLocale(request);
+            //console.log(urlLocale)
         }
-    }
-    
-    return NextResponse.redirect(new URL(`/${urlLocale}/login`, request.url))
+        if (!pathnameHasLocale) {
+            request.nextUrl.pathname = `/${urlLocale}${pathname}`;
+        }
+        
+        // console.log({urlLocale, path: request.nextUrl.pathname, jwtCookieKey, userIdCookieKey, sd: envCfg.serverDomain,});
+        // if user wants to logout
+        if (request.nextUrl.pathname === `/${urlLocale}/logout`) { 
+            const res = NextResponse.redirect(new URL("/", request.url));
+            res.cookies.set("jijoiji", "", {
+                expires: new Date(0),
+                path: '/',
+                domain: envCfg.serverDomain,
+            });
+        }
+        //console.log("TARGET:", request.nextUrl.pathname)
+
+        // if user is trying to access auth routes
+        if (pathname.startsWith(`${urlLocale}/login`) || pathname.startsWith(`${urlLocale}/register`)) {
+            if (isLoggedIn) {
+                return NextResponse.redirect(new URL(`/${urlLocale}/feed/1`, request.url));
+            }
+
+            if (!pathnameHasLocale) {
+                return NextResponse.redirect(request.nextUrl);
+            } else {
+                return NextResponse.next();
+            }
+        }
+
+        if (isLoggedIn) {
+            if (!pathnameHasLocale) {
+                return NextResponse.redirect(request.nextUrl);
+            } else {
+                return NextResponse.next();
+            }
+        }
+
+
+        const accessingProtectedRoute = protectedRoutes.some(i => {
+            return pathname.includes(i);
+        });
+
+        console.log({accessingProtectedRoute, isLoggedIn});
+        if (!accessingProtectedRoute || isLoggedIn) {
+            
+            if (!pathnameHasLocale) {
+                return NextResponse.redirect(request.nextUrl);
+            } else {
+                return NextResponse.next();
+            }
+        }
+        
+        return NextResponse.redirect(new URL(`/${urlLocale}/login`, request.url))
+    });
 }
 
 // See "Matching Paths" below to learn more
