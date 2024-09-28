@@ -103,14 +103,13 @@ export function middleware(request: NextRequest) {
         return pathname.startsWith(i);
     });
 
-    if (!accessingProtectedRoute) {
+    if (!accessingProtectedRoute || isLoggedIn) {
         if (!pathnameHasLocale) {
             return NextResponse.redirect(request.nextUrl);
         } else {
             return NextResponse.next();
         }
     }
-    
     
     return NextResponse.redirect(new URL(`/${urlLocale}/login`, request.url))
 }
