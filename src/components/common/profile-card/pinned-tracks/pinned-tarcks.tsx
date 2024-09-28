@@ -65,16 +65,16 @@ export default function PinnedTracks({
                                 
                                 return Array(amount).fill(0).map((_, key) => {
                                     return (
-                                        <PostPlaceholder key={key} userIsOwner handleSelect={handleSelect} dictionary={dictionary}/>
+                                        <PostPlaceholder key={key} userIsOwner={userId === user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
                                     );
                                 });
                             }
                         } else {
                             return (
                                 <>
-                                    <PostPlaceholder userIsOwner handleSelect={handleSelect} dictionary={dictionary}/>
-                                    <PostPlaceholder userIsOwner handleSelect={handleSelect} dictionary={dictionary}/>
-                                    <PostPlaceholder userIsOwner handleSelect={handleSelect} dictionary={dictionary}/>
+                                    <PostPlaceholder userIsOwner={userId === user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
+                                    <PostPlaceholder userIsOwner={userId === user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
+                                    <PostPlaceholder userIsOwner={userId === user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
                                 </>
                             );
                         }

@@ -37,23 +37,6 @@ export function middleware(request: NextRequest) {
 
     //console.log("LOG:", isLoggedIn, jwtCookieKey, userIdCookieKey);
     const pathname = request.nextUrl.pathname;
-    
-    // if user wants to logout
-    if (pathname === '/logout') {
-        const res = NextResponse.next();
-        res.cookies.set(jwtCookieKey, "", {
-            expires: new Date(0),
-            path: '/',
-            domain: envCfg.serverDomain,
-        });
-        res.cookies.set(userIdCookieKey, "", {
-            expires: new Date(0),
-            path: '/',
-            domain: envCfg.serverDomain,
-        });
-        
-        return res;
-    }
 
     // check if pathname already has a locale identifier
     let urlLocale;
@@ -75,7 +58,23 @@ export function middleware(request: NextRequest) {
     if (!pathnameHasLocale) {
         request.nextUrl.pathname = `/${urlLocale}${pathname}`;
     }
-
+    
+    // console.log({urlLocale, path: request.nextUrl.pathname, jwtCookieKey, userIdCookieKey, sd: envCfg.serverDomain,});
+    // if user wants to logout
+    if (request.nextUrl.pathname === `/${urlLocale}/logout`) { 
+        const res = NextResponse.redirect(new URL("/", request.url));
+        res.cookies.set(jwtCookieKey, "", {
+            expires: new Date(0),
+            path: '/',
+            domain: envCfg.serverDomain,
+        });
+        res.cookies.set(userIdCookieKey, "", {
+            expires: new Date(0),
+            path: '/',
+            domain: envCfg.serverDomain,
+        });
+        
+    }
     //console.log("TARGET:", request.nextUrl.pathname)
 
     // if user is trying to access auth routes
