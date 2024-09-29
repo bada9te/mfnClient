@@ -1,9 +1,8 @@
 "use client"
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import AudioPlayer from "../common/player/player";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Image from "next/image";
-import { contractGetAllImportantDataForBattle } from "@/utils/contract-functions/contract-functions";
+import { contractGetAllImportantDataForBattle, contractGetPossibleWithdrawal } from "@/utils/contract-functions/contract-functions";
 import { useAccount } from "wagmi";
 
 export default function NetworkInformation({
@@ -14,7 +13,8 @@ export default function NetworkInformation({
     post2Title,
     post2Id,
     post1Id,
-    battleId
+    battleId,
+    battleisFInished
 }: {
     networkName: string;
     button: React.ReactElement; 
@@ -24,6 +24,7 @@ export default function NetworkInformation({
     post1Id: string;
     post2Id: string;
     battleId: string;
+    battleisFInished: boolean;
 }) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const [isMounted, setIsMounted] = useState(false);
@@ -34,6 +35,7 @@ export default function NetworkInformation({
         battleTokensTransfers1: number; 
         battleTokensTransfers2: number 
     } | undefined>(undefined);
+    const [possibleWithdrawal, setPossibleWithdrawal] = useState(0);
 
     const fetchInfo = useCallback(async() => {
         contractGetAllImportantDataForBattle(
@@ -48,6 +50,10 @@ export default function NetworkInformation({
                 battleTokensTransfers1: Number(data[2].result),
                 battleTokensTransfers2: Number(data[3].result),
             });
+        });
+
+        contractGetPossibleWithdrawal(battleId).then(data => {
+            setPossibleWithdrawal(Number(data));
         });
     }, [battleId, post1Id, post2Id, address]);
 
@@ -131,7 +137,9 @@ export default function NetworkInformation({
                             </div>
                         </div>
 
-                        <button className="btn btn-primary glass btn-sm w-full text-white mt-5">{dictionary.modals["network-information"].withdraw} <span className="text-[#25e7de]">00000 USDC</span></button>
+                        <button className="btn btn-primary glass btn-sm w-full text-white mt-5" disabled={!battleisFInished || possibleWithdrawal == 0}>
+                            {dictionary.modals["network-information"].withdraw} <span className="text-[#25e7de]">{possibleWithdrawal} USDC</span>
+                        </button>
                     </div>
                 </div>
             </dialog>

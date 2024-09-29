@@ -13,6 +13,7 @@ import { config } from "@/config/wagmi";
 import Image from "next/image";
 import { useAccount, useBalance, useSwitchChain } from "wagmi";
 import ChainImage from "../common/chain-image/chain-image";
+import { contractCreateBattle } from "@/utils/contract-functions/contract-functions";
 
 export const PostPlaceholder = (props: {
     handleSelect: (a: TPost) => void;
@@ -61,8 +62,6 @@ export default function BattleForm({
 
     const [createBattle] = useBattleCreateMutation();
 
-    console.log(balance)
-
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         if (!post1 || !post2) {
             enqueueSnackbar("You probably forgot to select the track", {variant: 'error', autoHideDuration: 3000});
@@ -90,14 +89,24 @@ export default function BattleForm({
             variables: {
                 input
             }
-        }).then(_ => {
-            reset();
-            setPost1(null);
-            setPost2(null);
-            enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
-            revalidatePathAction('/battles/in-progress', 'page');
+        }).then((data) => {
+            contractCreateBattle(
+                data.data?.battleCreate._id as string,
+                input.post1,
+                input.post2,
+                24
+            ).then(() => {
+                reset();
+                setPost1(null);
+                setPost2(null);
+                enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
+            }).catch(_ => {
+                enqueueSnackbar("Error with blockchain interaction", {variant: 'error', autoHideDuration: 3000})
+            })
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
+        }).finally(() => {
+            revalidatePathAction('/battles/in-progress', 'page');
         });
     }
 

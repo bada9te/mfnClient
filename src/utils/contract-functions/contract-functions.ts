@@ -8,6 +8,21 @@ export const DEFAULT_MFN_CONTRACT_CFG = {
     abi: mfnAbi,
 }
 
+export const contractCreateBattle = async(
+    battleId: string, 
+    post1Id: string,
+    post2Id: string,
+    hoursBeforeFinish: number
+) => {
+    const data = await writeContract(config, {
+        ...DEFAULT_MFN_CONTRACT_CFG,
+        functionName: "createBattle",
+        args: [battleId, post1Id, post2Id, hoursBeforeFinish]
+    });
+
+    return data;
+}
+
 export const contractMakeBattleVote = async(
     battleId: string, 
     postId: string, 
@@ -89,12 +104,11 @@ export const contractGetAllImportantDataForBattle = async(
 
 export const contractGetPossibleWithdrawal = async(
     battleId: string,
-    postId: string,
 ) => {
     const data = await readContract(config, {
         ...DEFAULT_MFN_CONTRACT_CFG,
         functionName: "calculateWithdrawalTokensFromBattle",
-        args: [battleId, postId]
+        args: [battleId]
     });
 
     return data;

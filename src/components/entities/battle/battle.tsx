@@ -144,6 +144,7 @@ export default function Battle(props: {
                     battleData.chainId
                     &&
                     <NetworkInformation 
+                        battleisFInished={+new Date(+battleData.willFinishAt) - new Date().getTime() < 0}
                         button={
                             <div className="cursor-pointer hover:bg-[#19a29b] absolute top-0 right-0 glass rounded-none rounded-tr-2xl rounded-bl-2xl text-white flex flex-row gap-2 items-center justify-center p-2">
                                 <ChainImage chainId={battleData.chainId}/>
