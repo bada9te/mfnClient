@@ -35,7 +35,14 @@ export default function ProfileButton({
         // @ts-ignore
         abi: USDCAddresses[account.chainId]?.abi,
         functionName: "balanceOf",
-        args: [account.address as `0x${string}`]
+        args: [account.address]
+    });
+    const {data: decimals} = useReadContract({
+        // @ts-ignore
+        address: USDCAddresses[account.chainId]?.address as `0x${string}`,
+        // @ts-ignore
+        abi: USDCAddresses[account.chainId]?.abi,
+        functionName: "decimals",
     });
 
     const handlebalanceInfoClick = useCallback(() => {
@@ -70,7 +77,7 @@ export default function ProfileButton({
                                 <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM9 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6.75 8a.75.75 0 0 0 0 1.5h.75v1.75a.75.75 0 0 0 1.5 0v-2.5A.75.75 0 0 0 8.25 8h-1.5Z" clipRule="evenodd" />
                             </svg>
                         </span>
-                        <span className="badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${userBalance ? (Number(userBalance) / 10**18).toFixed(3) : 0} USDC`}
+                        <span className="badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${userBalance ? (Number(userBalance) / 10**Number(decimals)).toFixed(3) : 0} USDC`}
                             <a href="https://www.google.com" target="_blank">
                                 {/* @ts-ignore */}
                                 <Image src={USDCAddresses[account.chainId].icon} alt="chain-logo" width={16} height={16} className="ml-2"/>

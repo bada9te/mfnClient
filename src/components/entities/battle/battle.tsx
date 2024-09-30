@@ -52,8 +52,10 @@ export default function Battle(props: {
     const account = useAccount();
     const { writeContractAsync } = useWriteContract();
     const { data: userBalance } = useReadContract({
-        address: envCfg.mfnContractAddress as `0x${string}`,
-        abi: mfnAbi,
+        // @ts-ignore
+        address: USDCAddresses[account.chainId].address as `0x${string}`,
+        // @ts-ignore
+        abi: USDCAddresses[account.chainId].abi,
         functionName: "balanceOf",
         args: [account.address]
     });
@@ -97,7 +99,8 @@ export default function Battle(props: {
     }
 
     const makeBattleVoteWithUSDC = (amount: number, type:  "post1Score" | "post2Score") => {
-        if (Number(userBalance) < amount) {
+        console.log(userBalance)
+        if (Number(userBalance) < amount * 10**Number(decimals)) {
             enqueueSnackbar("Not enough USDC", {autoHideDuration: 4000, variant: 'error'});
             return;
         }
@@ -117,21 +120,26 @@ export default function Battle(props: {
                 confirmations: 2
             });
             enqueueSnackbar("Confirmed, voting with USDC...", {autoHideDuration: 2000});
+
             await writeContractAsync({
                 address: envCfg.mfnContractAddress as `0x${string}`,
                 abi: mfnAbi,
                 functionName: "vote",
-                args: [battleData._id, amount * 10**Number(decimals)]
+                args: [
+                    battleData._id, 
+                    type == "post1Score" ? battleData.post1?._id : battleData.post2?._id, 
+                    amount * 10**Number(decimals)]
             }).then(async hash => {
                 await waitForTransactionReceipt(config, {
                     hash,
                     confirmations: 2
                 });
                 makeBattleVote(amount, type);
-            }).catch(_ => {
+            }).catch(err => {
+                console.log(err);
                 enqueueSnackbar("Execution error, pls try again later", {autoHideDuration: 4000, variant: 'error'});
             });
-        }, 2);   
+        }, 200);   
     }
 
     return (
@@ -144,6 +152,7 @@ export default function Battle(props: {
                     battleData.chainId
                     &&
                     <NetworkInformation 
+                        USDC_decimals={Number(decimals)}
                         battleisFInished={+new Date(+battleData.willFinishAt) - new Date().getTime() < 0}
                         button={
                             <div className="cursor-pointer hover:bg-[#19a29b] absolute top-0 right-0 glass rounded-none rounded-tr-2xl rounded-bl-2xl text-white flex flex-row gap-2 items-center justify-center p-2">
@@ -158,6 +167,7 @@ export default function Battle(props: {
                         post1Id={battleData.post1?._id as string}
                         post2Id={battleData.post2?._id as string}
                         battleId={battleData._id as string}
+                        networkId={battleData.chainId}
                     />
                     
                 }

@@ -100,7 +100,8 @@ export default function BattleForm({
                 setPost1(null);
                 setPost2(null);
                 enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
-            }).catch(_ => {
+            }).catch(err => {
+                console.log(err);
                 enqueueSnackbar("Error with blockchain interaction", {variant: 'error', autoHideDuration: 3000})
             })
         }).catch(_ => {

@@ -69,7 +69,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
     return (
         <>
             {/* ONE */}
-            <div className="flex flex-col items-center text-white m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 min-h-[600px] max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-white m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 min-h-[600px] max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-475px)]">
                 <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg">
                     <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
                     <Ripple />
@@ -80,24 +80,24 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     <RegisterExploreBtns dictionary={dict.components}/>
                 </div>
                 <Image width={400} height={400}  
-                    src="/assets/drawings/drawing-1.png" 
+                    src="/assets/drawings1/drawing-1.png" 
                     alt="drawing-1" 
                     className="w-48 md:w-64 lg:w-80 absolute bottom-0 right-0 z-20 rounded-2xl"
                 />
                 <Image width={400} height={400}  
-                    src="/assets/drawings/drawing-2.png" 
+                    src="/assets/drawings1/drawing-2.png" 
                     alt="drawing-2" 
                     className="w-48 md:w-64 lg:w-80 absolute bottom-0 left-0 z-20 rounded-2xl"
                 />
                 <Image width={1920} height={600}
                     src={"/assets/bgs/block-top-bg.webp"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 w-full rounded-t-2xl rotate-180 blur-sm"
+                    className="absolute bottom-0 w-full rounded-t-2xl blur-sm"
                 />
             </div>
 
             {/* TWO */}
-            <div className="flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl bg-opacity-80 max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl bg-opacity-80 max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-475px)]">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -150,7 +150,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
 
             
             {/* FOUR */}
-            <div className="flex flex-col items-center text-white py-20 md:py-40 lg:py-56 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-white py-20 md:py-40 lg:py-56 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 max-w-[calc(100vw-17px)] md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-475px)]">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -159,7 +159,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                 <Image width={1920} height={600}
                     src={"/assets/bgs/block-top-bg.webp"}
                     alt="block-top-bg"
-                    className="absolute top-0 w-full rounded-t-2xl blur-sm"
+                    className="absolute top-0 w-full rounded-t-2xl blur-sm rotate-180"
                 />
                 <p className="text-center pt-10 pb-3 font-bold text-4xl md:text-5xl z-10 px-5">{dict.app.landing.purpose.header}</p>
                 <p className="text-center pb-16 font-bold text-xl md:text-xl z-10">{dict.app.landing.purpose.subheader}</p>
@@ -186,7 +186,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                 <Image width={1920} height={600}
                     src={"/assets/bgs/block-top-bg.webp"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 w-full rotate-180 z-0 rounded-t-2xl blur-sm"
+                    className="absolute bottom-0 w-full z-0 rounded-t-2xl blur-sm"
                 />
             </div>
 

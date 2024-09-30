@@ -14,7 +14,9 @@ export default function NetworkInformation({
     post2Id,
     post1Id,
     battleId,
-    battleisFInished
+    battleisFInished,
+    networkId,
+    USDC_decimals
 }: {
     networkName: string;
     button: React.ReactElement; 
@@ -25,10 +27,12 @@ export default function NetworkInformation({
     post2Id: string;
     battleId: string;
     battleisFInished: boolean;
+    networkId: number;
+    USDC_decimals: number;
 }) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const [isMounted, setIsMounted] = useState(false);
-    const { address } = useAccount();
+    const { address, chainId } = useAccount();
     const [data, setData] = useState<{ 
         totalTokensPerPost1: number; 
         totalTokensPerPost2: number; 
@@ -38,24 +42,26 @@ export default function NetworkInformation({
     const [possibleWithdrawal, setPossibleWithdrawal] = useState(0);
 
     const fetchInfo = useCallback(async() => {
-        contractGetAllImportantDataForBattle(
-            battleId,
-            post1Id,
-            post2Id,
-            address as `0x${string}`
-        ).then(data => {
-            setData({
-                totalTokensPerPost1: Number(data[0].result),
-                totalTokensPerPost2: Number(data[1].result),
-                battleTokensTransfers1: Number(data[2].result),
-                battleTokensTransfers2: Number(data[3].result),
+        if (chainId == networkId) {
+            contractGetAllImportantDataForBattle(
+                battleId,
+                post1Id,
+                post2Id,
+                address as `0x${string}`
+            ).then(data => {
+                setData({
+                    totalTokensPerPost1: Number(data[0].result) / 10**USDC_decimals,
+                    totalTokensPerPost2: Number(data[1].result) / 10**USDC_decimals,
+                    battleTokensTransfers1: Number(data[2].result) / 10**USDC_decimals,
+                    battleTokensTransfers2: Number(data[3].result) / 10**USDC_decimals,
+                });
             });
-        });
-
-        contractGetPossibleWithdrawal(battleId).then(data => {
-            setPossibleWithdrawal(Number(data));
-        });
-    }, [battleId, post1Id, post2Id, address]);
+    
+            contractGetPossibleWithdrawal(battleId).then(data => {
+                setPossibleWithdrawal(Number(data) / 10**USDC_decimals || 0);
+            });
+        }
+    }, [battleId, post1Id, post2Id, address, networkId, chainId, USDC_decimals]);
 
     useEffect(() => {
         if (address) {

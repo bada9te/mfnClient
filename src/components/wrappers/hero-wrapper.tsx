@@ -40,7 +40,7 @@ export default function HeroWrapper(props: {
                     </div>
                 </div>
                 <Image 
-                    src="/assets/drawings/drawing-5.png" 
+                    src="/assets/drawings1/drawing-5.png" 
                     alt="drawing-2" 
                     className="w-48 md:w-64 lg:w-96 absolute bottom-0 left-0 rounded-2xl"
                     width={500}
