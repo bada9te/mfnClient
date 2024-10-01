@@ -80,19 +80,19 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     <RegisterExploreBtns dictionary={dict.components}/>
                 </div>
                 <Image width={400} height={400}  
-                    src="/assets/drawings1/drawing-1.png" 
+                    src="/assets/drawings/drawing-1.png" 
                     alt="drawing-1" 
                     className="w-48 md:w-64 lg:w-80 absolute bottom-0 right-0 z-20 rounded-2xl"
                 />
                 <Image width={400} height={400}  
-                    src="/assets/drawings1/drawing-2.png" 
+                    src="/assets/drawings/drawing-2.png" 
                     alt="drawing-2" 
                     className="w-48 md:w-64 lg:w-80 absolute bottom-0 left-0 z-20 rounded-2xl"
                 />
                 <Image width={1920} height={600}
-                    src={"/assets/bgs/block-top-bg.webp"}
+                    src={"/assets/bgs/block-top-bg.png"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 w-full rounded-t-2xl blur-sm"
+                    className="absolute bottom-0 w-full rounded-t-2xl"
                 />
             </div>
 
@@ -157,7 +157,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     )}
                 />
                 <Image width={1920} height={600}
-                    src={"/assets/bgs/block-top-bg.webp"}
+                    src={"/assets/bgs/block-top-bg.png"}
                     alt="block-top-bg"
                     className="absolute top-0 w-full rounded-t-2xl blur-sm rotate-180"
                 />
@@ -184,7 +184,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     }
                 </div>
                 <Image width={1920} height={600}
-                    src={"/assets/bgs/block-top-bg.webp"}
+                    src={"/assets/bgs/block-top-bg.png"}
                     alt="block-top-bg"
                     className="absolute bottom-0 w-full z-0 rounded-t-2xl blur-sm"
                 />
