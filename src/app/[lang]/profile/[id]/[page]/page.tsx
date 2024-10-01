@@ -43,7 +43,7 @@ export default async function ProfileId({params}: {params: {page: number, id: st
                                 _id: params.id
                             }}
                         >
-                            <Suspense fallback={"LADING..."}>
+                            <Suspense fallback={"LOADING..."}>
                                 <PinnedTracks dictionary={dict.components} userId={params.id}/>
                             </Suspense>
                         </PreloadQuery>
