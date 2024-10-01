@@ -53,9 +53,9 @@ export default function Battle(props: {
     const { writeContractAsync } = useWriteContract();
     const { data: userBalance } = useReadContract({
         // @ts-ignore
-        address: USDCAddresses[account.chainId].address as `0x${string}`,
+        address: USDCAddresses[account.chainId]?.address as `0x${string}`,
         // @ts-ignore
-        abi: USDCAddresses[account.chainId].abi,
+        abi: USDCAddresses[account.chainId]?.abi,
         functionName: "balanceOf",
         args: [account.address]
     });

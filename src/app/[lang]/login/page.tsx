@@ -16,6 +16,7 @@ export default async function Login({params}: {params: {lang: TLang}}) {
             bgStyles="bg-[url('/assets/bgs/loginFormBG.png')] bg-left"
             title={dict.app.login.title}
             description={dict.app.login.description}
+            fullWidth
         >
             <LoginForm dictionary={dict.components}/>
         </HeroWrapperForm>

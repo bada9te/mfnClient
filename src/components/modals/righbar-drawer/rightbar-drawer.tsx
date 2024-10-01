@@ -47,7 +47,7 @@ export default function RightBarDrawer(props: {
 
             <div className="drawer-side pt-16 z-30 no-scrollbar">
                 <label htmlFor="my-drawer-people" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-92 min-h-full text-base-content glass bg-base-300 bg-[url('/assets/bgs/rightbar.png')] bg-cover bg-opacity-20" 
+                <ul className="menu p-4 w-92 min-h-full text-base-content glass bg-base-300 bg-cover bg-opacity-20" 
                     style={{ backgroundSize: '400px 1000px', backgroundPosition: 'right' }}
                 >
                     {/* Sidebar content here */}

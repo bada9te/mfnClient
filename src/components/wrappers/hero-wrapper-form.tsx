@@ -32,29 +32,15 @@ export default function HeroWrapperForm(props: {
                             width={400}
                             height={400}
                         />
-                        <div className={`card shrink-0 w-full ${!fullWidth && "max-w-md"} shadow-2xl bg-base-300`}>
+                        <div className={`card shrink-0 w-fit ${!fullWidth && "max-w-md"} shadow-2xl bg-base-300`}>
                             {children}
                         </div>
                     </div>
                 </div>
-                <Image 
-                    src="/assets/drawings/drawing-1.png" 
-                    alt="drawing-1" 
-                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 right-0 rounded-2xl"
-                    width={500}
-                    height={500}
-                />
-                <Image 
-                    src="/assets/drawings/drawing-5.png" 
-                    alt="drawing-2" 
-                    className="w-48 md:w-64 lg:w-96 absolute bottom-0 left-0 rounded-2xl"
-                    width={500}
-                    height={500}
-                />
                 <Image
                     src="/assets/bgs/block-top-right-bg.png"
                     alt="bg-top-right"
-                    className="w-48 md:w-[600px] absolute top-0 right-0 blur-sm"
+                    className="w-[200px] md:w-[400px] absolute top-0 right-0 blur-sm"
                     width={500}
                     height={500}
                 />

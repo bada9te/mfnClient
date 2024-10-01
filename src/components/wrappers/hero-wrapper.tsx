@@ -49,7 +49,7 @@ export default function HeroWrapper(props: {
                 <Image
                     src="/assets/bgs/block-top-right-bg.png"
                     alt="bg-top-right"
-                    className="w-48 md:w-[600px] absolute top-0 right-0 blur-sm"
+                    className="w-[200px] md:w-[400px] absolute top-0 right-0 blur-sm"
                     width={500}
                     height={500}
                 />

@@ -89,11 +89,6 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     alt="drawing-2" 
                     className="w-48 md:w-64 lg:w-80 absolute bottom-0 left-0 z-20 rounded-2xl"
                 />
-                <Image width={1920} height={600}
-                    src={"/assets/bgs/block-top-bg.png"}
-                    alt="block-top-bg"
-                    className="absolute bottom-0 w-full rounded-t-2xl"
-                />
             </div>
 
             {/* TWO */}
@@ -138,7 +133,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                 <Image width={800} height={800}
                     src={"/assets/bgs/block-top-right-bg.png"}
                     alt="block-top-bg"
-                    className="absolute bottom-0 left-0 w-48 md:w-[600px] z-0 rotate-180 rounded-tr-2xl blur"
+                    className="absolute bottom-0 left-0 w-48 md:w-[600px] z-0 rotate-180 rounded-tr-2xl blur-sm"
                 />
             </div>
 
