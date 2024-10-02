@@ -39,7 +39,7 @@ export default function AccountConfirminationForm(props: {
 
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
-            <form className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <form className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="divider divider-primary">{dictionary.forms["account-confirmination"].confirmination}</div>
                 <div className="form-control">
                     <label className="label">

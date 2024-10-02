@@ -37,6 +37,13 @@ export default function HeroWrapperForm(props: {
                         </div>
                     </div>
                 </div>
+                <Image 
+                    src="/assets/drawings/drawing-5.png" 
+                    alt="drawing-2" 
+                    className="w-48 md:w-64 lg:w-96 absolute bottom-0 left-0 rounded-2xl"
+                    width={500}
+                    height={500}
+                />
                 <Image
                     src="/assets/bgs/block-top-right-bg.png"
                     alt="bg-top-right"
