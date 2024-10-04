@@ -16,6 +16,7 @@ export default async function Support({params}: {params: {lang: TLang}}) {
             bgStyles="bg-[url('/assets/bgs/supportFormBG.png')] bg-right"
             title={dict.app.support.title}
             description={dict.app.support.description}
+            fullWidth
         >
             <SupportForm dictionary={dict.components}/>
         </HeroWrapperForm>

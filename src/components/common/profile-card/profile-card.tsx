@@ -188,7 +188,7 @@ export default function ProfileCard(props: {
                                                             {dictionary.common["profile-card"].unfollow}
                                                         </button>
                                                     );
-                                                } else {
+                                                } else if (user?._id) {
                                                     return (
                                                         <button className="btn btn-primary w-full glass bg-green-400/20 text-white" onClick={handleSubscriptionChange}>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
