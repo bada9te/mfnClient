@@ -3,7 +3,7 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import Link from "next/link";
 
 
-export default function NotificationsTabsBattles(props: {
+export default function BarTabsNotifications(props: {
     activeTab: "new" | "read";
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
