@@ -242,6 +242,7 @@
                 "bar-tabs-battles": {
                     "in-progress": "В процессе",
                     "finished": "Завершенные",
+                    "mine": "Мои",
                     "create-new": "Создать новое"
                 },
                 "bar-tabs-notifications": {

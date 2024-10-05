@@ -11,10 +11,11 @@ import { waitForTransactionReceipt } from "@wagmi/core";
 import SelectAmountOfMFNTokens from "@/components/modals/select-amount-of-tokens-modal";
 import envCfg from "@/config/env";
 import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
-import { config, USDCAddresses } from "@/config/wagmi";
+import { config, MFNAddresses, USDCAddresses } from "@/config/wagmi";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import ChainImage from "@/components/common/chain-image/chain-image";
 import NetworkInformation from "@/components/modals/network-information";
+import { generateDEFAULT_MFN_CONTRACT_CFG } from "@/utils/contract-functions/contract-functions";
 
 const DollarIcon = () => {
     return (
@@ -45,6 +46,7 @@ export default function Battle(props: {
 }) {
     const {battleData, dictionary} = props;
     const [timeLeft, setTimeLeft] = useState<{h:number, m:number, s:number}>({h:0, m:0, s:0});
+    const [isMounted, setIsMounted] = useState(false);
     const {enqueueSnackbar} = useSnackbar();
     const user = useAppSelector(state => state.user.user);
 
@@ -81,6 +83,7 @@ export default function Battle(props: {
     }, [battleData]);
 
     const makeBattleVote = (voteCount: number, postNScore: "post1Score" | "post2Score") => {
+        console.log("VOTING...")
         enqueueSnackbar("Voting...", {autoHideDuration: 1500});
         makeVote({
             variables: {
@@ -112,7 +115,8 @@ export default function Battle(props: {
                 // @ts-ignore
                 abi: USDCAddresses[account.chainId].abi,
                 functionName: "approve",
-                args: [envCfg.mfnContractAddress, amount * 10**Number(decimals)],
+                // @ts-ignore
+                args: [MFNAddresses[account.chainId], amount * 10**Number(decimals)],
             });
             enqueueSnackbar("Waiting for tx receipt...", {autoHideDuration: 2000});
             await waitForTransactionReceipt(config, {
@@ -122,8 +126,8 @@ export default function Battle(props: {
             enqueueSnackbar("Confirmed, voting with USDC...", {autoHideDuration: 2000});
 
             await writeContractAsync({
-                address: envCfg.mfnContractAddress as `0x${string}`,
-                abi: mfnAbi,
+                // @ts-ignore
+                ...generateDEFAULT_MFN_CONTRACT_CFG(account.chainId),
                 functionName: "vote",
                 args: [
                     battleData._id, 
@@ -140,6 +144,14 @@ export default function Battle(props: {
                 enqueueSnackbar("Execution error, pls try again later", {autoHideDuration: 4000, variant: 'error'});
             });
         }, 200);   
+    }
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, [])
+
+    if (!isMounted) {
+        return;
     }
 
     return (

@@ -10,10 +10,11 @@ import { revalidatePathAction } from "@/actions/revalidation";
 import { useAppSelector } from "@/lib/redux/store";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { config } from "@/config/wagmi";
-import Image from "next/image";
-import { useAccount, useBalance, useSwitchChain } from "wagmi";
+import { useAccount, useBalance, useSwitchChain, useWriteContract } from "wagmi";
+import { waitForTransactionReceipt } from "@wagmi/core";
 import ChainImage from "../common/chain-image/chain-image";
-import { contractCreateBattle } from "@/utils/contract-functions/contract-functions";
+import { generateDEFAULT_MFN_CONTRACT_CFG } from "@/utils/contract-functions/contract-functions";
+
 
 export const PostPlaceholder = (props: {
     handleSelect: (a: TPost) => void;
@@ -47,7 +48,7 @@ export default function BattleForm({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const user = useAppSelector(state => state.user.user);
-    const { address, chainId } = useAccount();
+    const { address, chainId, connector } = useAccount();
     const { switchChain } = useSwitchChain();
     const { data: balance } = useBalance({
         chainId,
@@ -61,6 +62,7 @@ export default function BattleForm({
     const [useBlockChain, setUseBlockchain] = useState(false);
 
     const [createBattle] = useBattleCreateMutation();
+    const { writeContractAsync } = useWriteContract();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         if (!post1 || !post2) {
@@ -90,16 +92,25 @@ export default function BattleForm({
                 input
             }
         }).then((data) => {
-            contractCreateBattle(
-                data.data?.battleCreate._id as string,
-                input.post1,
-                input.post2,
-                24
-            ).then(() => {
-                reset();
-                setPost1(null);
-                setPost2(null);
-                enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
+            writeContractAsync({
+                ...generateDEFAULT_MFN_CONTRACT_CFG(Number(chainId)),
+                functionName: 'createBattle',
+                args: [
+                    data.data?.battleCreate._id as string,
+                    input.post1,
+                    input.post2,
+                    24,
+                ],
+            }).then(async(hash) => {
+                await waitForTransactionReceipt(config, {
+                    hash,
+                    confirmations: 2
+                }).then(() => {
+                    reset();
+                    setPost1(null);
+                    setPost2(null);
+                    enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
+                });
             }).catch(err => {
                 console.log(err);
                 enqueueSnackbar("Error with blockchain interaction", {variant: 'error', autoHideDuration: 3000})

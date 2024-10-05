@@ -25,6 +25,8 @@ export const metadata: Metadata = {
 export default async function Profile({params}: {params: { page: number, lang: TLang }}) {
     const myId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(params.lang);
+
+    console.log({ myId })
     return (
         <>
             <PreloadQuery query={ACHIEVEMENTS_COUNT_QUERY}>

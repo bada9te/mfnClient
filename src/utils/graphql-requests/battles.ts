@@ -60,6 +60,18 @@ export const BATTLE_BY_ID_QUERY = gql`
     }
 `;
 
+export const BATTLES_USER_PARTICIPATED_IN_QUERY = gql`
+    ${CORE_BATTLE_FIELDS}
+    query battlesUserParticipatedIn($userId: ID!, $offset: Int!, $limit: Int!) {
+        battlesUserParticipatedIn(userId: $userId, offset: $offset, limit: $limit) {
+            battles {
+                ...CoreBattleFields
+            }
+            count
+        }
+    }
+`;
+
 // M
 export const BATTLE_MAKE_VOTE_MUTATION = gql`
     ${CORE_BATTLE_FIELDS}

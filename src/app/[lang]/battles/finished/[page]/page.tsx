@@ -36,8 +36,8 @@ export default async function Battles({params}: {params: {page: number, lang: TL
                         >
                             <Suspense fallback={<BattlesContainerSkeleton/>}>
                                 <BattlesContainer
-                                    offset={(params.page - 1) * 12}
-                                    limit={12}
+                                    offset={(params.page - 1) * 6}
+                                    limit={6}
                                     finished={true}
                                     page={params.page}
                                     dictionary={dict.components}

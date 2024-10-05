@@ -487,6 +487,7 @@ export type Query = {
   allAchievements?: Maybe<Array<Achievement>>;
   battleById: Battle;
   battlesByStatus: BattlesWithCount;
+  battlesUserParticipatedIn: BattlesWithCount;
   moderationActionValidate: ModerationAction;
   notifications: NotificationsWithCount;
   notificationsByIds?: Maybe<Array<Notification>>;
@@ -539,6 +540,13 @@ export type QueryBattlesByStatusArgs = {
   finished: Scalars['Boolean']['input'];
   limit: Scalars['Int']['input'];
   offset: Scalars['Int']['input'];
+};
+
+
+export type QueryBattlesUserParticipatedInArgs = {
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 
@@ -837,6 +845,15 @@ export type BattleByIdQueryVariables = Exact<{
 
 
 export type BattleByIdQuery = { __typename?: 'Query', battleById: { __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, chainId?: number | null, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null } };
+
+export type BattlesUserParticipatedInQueryVariables = Exact<{
+  userId: Scalars['ID']['input'];
+  offset: Scalars['Int']['input'];
+  limit: Scalars['Int']['input'];
+}>;
+
+
+export type BattlesUserParticipatedInQuery = { __typename?: 'Query', battlesUserParticipatedIn: { __typename?: 'BattlesWithCount', count: number, battles?: Array<{ __typename?: 'Battle', _id: string, title: string, createdAt: string, willFinishAt: string, finished: boolean, post1Score: number, post2Score: number, chainId?: number | null, post1?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, post2?: { __typename?: 'Post', _id: string, title: string, description: string, saves: number, likes: number, createdAt: string, image: string, audio: string, downloadsAllowed: boolean, category: string, owner: { __typename?: 'User', _id: string, avatar: string, nick: string } } | null, winner?: { __typename?: 'Post', _id: string } | null, votedBy?: Array<{ __typename?: 'User', _id: string }> | null }> | null } };
 
 export type BattleMakeVoteMutationVariables = Exact<{
   input: MakeBattleVoteInput;
@@ -1596,6 +1613,51 @@ export type BattleByIdQueryHookResult = ReturnType<typeof useBattleByIdQuery>;
 export type BattleByIdLazyQueryHookResult = ReturnType<typeof useBattleByIdLazyQuery>;
 export type BattleByIdSuspenseQueryHookResult = ReturnType<typeof useBattleByIdSuspenseQuery>;
 export type BattleByIdQueryResult = Apollo.QueryResult<BattleByIdQuery, BattleByIdQueryVariables>;
+export const BattlesUserParticipatedInDocument = gql`
+    query battlesUserParticipatedIn($userId: ID!, $offset: Int!, $limit: Int!) {
+  battlesUserParticipatedIn(userId: $userId, offset: $offset, limit: $limit) {
+    battles {
+      ...CoreBattleFields
+    }
+    count
+  }
+}
+    ${CoreBattleFieldsFragmentDoc}`;
+
+/**
+ * __useBattlesUserParticipatedInQuery__
+ *
+ * To run a query within a React component, call `useBattlesUserParticipatedInQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBattlesUserParticipatedInQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBattlesUserParticipatedInQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      offset: // value for 'offset'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useBattlesUserParticipatedInQuery(baseOptions: Apollo.QueryHookOptions<BattlesUserParticipatedInQuery, BattlesUserParticipatedInQueryVariables> & ({ variables: BattlesUserParticipatedInQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BattlesUserParticipatedInQuery, BattlesUserParticipatedInQueryVariables>(BattlesUserParticipatedInDocument, options);
+      }
+export function useBattlesUserParticipatedInLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BattlesUserParticipatedInQuery, BattlesUserParticipatedInQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BattlesUserParticipatedInQuery, BattlesUserParticipatedInQueryVariables>(BattlesUserParticipatedInDocument, options);
+        }
+export function useBattlesUserParticipatedInSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BattlesUserParticipatedInQuery, BattlesUserParticipatedInQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BattlesUserParticipatedInQuery, BattlesUserParticipatedInQueryVariables>(BattlesUserParticipatedInDocument, options);
+        }
+export type BattlesUserParticipatedInQueryHookResult = ReturnType<typeof useBattlesUserParticipatedInQuery>;
+export type BattlesUserParticipatedInLazyQueryHookResult = ReturnType<typeof useBattlesUserParticipatedInLazyQuery>;
+export type BattlesUserParticipatedInSuspenseQueryHookResult = ReturnType<typeof useBattlesUserParticipatedInSuspenseQuery>;
+export type BattlesUserParticipatedInQueryResult = Apollo.QueryResult<BattlesUserParticipatedInQuery, BattlesUserParticipatedInQueryVariables>;
 export const BattleMakeVoteDocument = gql`
     mutation battleMakeVote($input: MakeBattleVoteInput!) {
   battleMakeVote(input: $input) {

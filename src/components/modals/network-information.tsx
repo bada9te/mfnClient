@@ -4,6 +4,7 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import Image from "next/image";
 import { contractGetAllImportantDataForBattle, contractGetPossibleWithdrawal } from "@/utils/contract-functions/contract-functions";
 import { useAccount } from "wagmi";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 export default function NetworkInformation({
     button, 
@@ -33,6 +34,7 @@ export default function NetworkInformation({
     const ref = useRef<HTMLDialogElement | null>(null);
     const [isMounted, setIsMounted] = useState(false);
     const { address, chainId } = useAccount();
+    const { openConnectModal } = useConnectModal();
     const [data, setData] = useState<{ 
         totalTokensPerPost1: number; 
         totalTokensPerPost2: number; 
@@ -47,7 +49,8 @@ export default function NetworkInformation({
                 battleId,
                 post1Id,
                 post2Id,
-                address as `0x${string}`
+                address as `0x${string}`,
+                networkId
             ).then(data => {
                 setData({
                     totalTokensPerPost1: Number(data[0].result) / 10**USDC_decimals,
@@ -57,15 +60,24 @@ export default function NetworkInformation({
                 });
             });
     
-            contractGetPossibleWithdrawal(battleId).then(data => {
-                setPossibleWithdrawal(Number(data) / 10**USDC_decimals || 0);
+            contractGetPossibleWithdrawal(battleId, address as string, networkId).then(data => {
+                // @ts-ignore
+                const possibleWithdraw1 = Number(data[0]);
+                // @ts-ignore
+                const possibleWithdraw2 = Number(data[1]);
+
+                if (possibleWithdraw1 > possibleWithdraw2) {
+                    setPossibleWithdrawal(possibleWithdraw1 / 10**USDC_decimals || 0);
+                } else {
+                    setPossibleWithdrawal(possibleWithdraw2 / 10**USDC_decimals || 0);
+                }
             });
         }
     }, [battleId, post1Id, post2Id, address, networkId, chainId, USDC_decimals]);
 
     useEffect(() => {
+        setIsMounted(true);
         if (address) {
-            setIsMounted(true);
             fetchInfo();
         }
     }, [address, fetchInfo]);
@@ -86,7 +98,7 @@ export default function NetworkInformation({
     return (
         <>
             {React.cloneElement(button, {
-                onClick: handleOpen,
+                onClick: address?.length ? handleOpen : openConnectModal
             })}
             <dialog ref={ref} className="modal w-full">
                 <form method="dialog" className="modal-backdrop w-[100vw]">
@@ -105,17 +117,21 @@ export default function NetworkInformation({
                         <div className="stats shadow bg-base-300 glass w-full stats-vertical md:stats-horizontal">
                             <div className="stat place-items-center">
                                 <div className="stat-title">{post1Title}</div>
-                                <div className="stat-value text-green-400">{data ? data.totalTokensPerPost1 : "---"}</div>
+                                <div className="stat-value text-green-400">
+                                    {data ? Number(data.totalTokensPerPost1 || 0) : "---"}
+                                </div>
                                 <div className="stat-desc flex flex-row gap-1 items-center justify-center mt-2">
-                                    <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>{dictionary.modals["network-information"].your} {data && data.battleTokensTransfers1} USDC
+                                    <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>{dictionary.modals["network-information"].your} {data && Number(data.battleTokensTransfers1 || 0)} USDC
                                 </div>
                             </div>
 
                             <div className="stat place-items-center">
                                 <div className="stat-title">{post2Title}</div>
-                                <div className="stat-value text-red-400">{data ? data.totalTokensPerPost2 : "---"}</div>
+                                <div className="stat-value text-red-400">
+                                    {data ? Number(data.totalTokensPerPost2 || 0) : "---"}
+                                </div>
                                 <div className="stat-desc flex flex-row gap-1 items-center justify-center mt-2">
-                                    <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>{dictionary.modals["network-information"].your} {data && data.battleTokensTransfers2} USDC
+                                    <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>{dictionary.modals["network-information"].your} {data && Number(data.battleTokensTransfers2)} USDC
                                 </div>
                             </div>
                         </div>
@@ -126,7 +142,7 @@ export default function NetworkInformation({
                             <div className="stat place-items-center">
                                 <div className="stat-title">{post1Title}</div>
                                 <div className="stat-value text-white">
-                                    { data ? data.battleTokensTransfers1 : '---' }
+                                    { data ? Number(data.battleTokensTransfers1 || 0) : '---' }
                                 </div>
                                 <div className="stat-desc flex flex-row gap-1 items-center justify-center mt-2">
                                     <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>USDC
@@ -135,7 +151,7 @@ export default function NetworkInformation({
                             <div className="stat place-items-center">
                                 <div className="stat-title">{post2Title}</div>
                                 <div className="stat-value text-white">
-                                    { data ? data.battleTokensTransfers2 : '---' }
+                                    { data ? Number(data.battleTokensTransfers2 || 0) : '---' }
                                 </div>
                                 <div className="stat-desc flex flex-row gap-1 items-center justify-center mt-2">
                                     <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={20} height={20}/>USDC
@@ -144,7 +160,7 @@ export default function NetworkInformation({
                         </div>
 
                         <button className="btn btn-primary glass btn-sm w-full text-white mt-5" disabled={!battleisFInished || possibleWithdrawal == 0}>
-                            {dictionary.modals["network-information"].withdraw} <span className="text-[#25e7de]">{possibleWithdrawal} USDC</span>
+                            {dictionary.modals["network-information"].withdraw} <span className="text-[#25e7de]">{String(possibleWithdrawal).slice(0, 7)} USDC</span>
                         </button>
                     </div>
                 </div>

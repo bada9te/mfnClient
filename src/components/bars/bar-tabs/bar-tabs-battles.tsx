@@ -3,8 +3,8 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import Link from "next/link";
 
 
-export default function BarTabsBattles(props: {
-    activeTab: "in-progress" | "finished" | "create";
+export default function (props: {
+    activeTab: "in-progress" | "finished" | "mine" | "create";
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { activeTab, dictionary } = props;
@@ -21,6 +21,11 @@ export default function BarTabsBattles(props: {
                 role="tab" 
                 className={`tab ${activeTab === "finished" && "glass bg-[#1ba39c] text-white"}`} 
             >{dictionary?.bars["bar-tabs"]["bar-tabs-battles"].finished}</Link>
+            <Link
+                href={"/battles/finished/me/1"}
+                role="tab" 
+                className={`tab ${activeTab === "mine" && "glass bg-[#1ba39c] text-white"}`} 
+            >{dictionary?.bars["bar-tabs"]["bar-tabs-battles"].mine}</Link>
             <Link 
                 href={"/battles/create"}
                 role="tab" 

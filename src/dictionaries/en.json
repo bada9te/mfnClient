@@ -242,6 +242,7 @@
                 "bar-tabs-battles": {
                     "in-progress": "In progress",
                     "finished": "Finished",
+                    "mine": "Mine",
                     "create-new":"Create new"
                 },
                 "bar-tabs-notifications": {

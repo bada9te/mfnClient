@@ -1,21 +1,31 @@
-import { config } from "@/config/wagmi"
-import { writeContract, readContract, readContracts } from "@wagmi/core"
+import { config, MFNAddresses } from "@/config/wagmi"
+import { writeContract, readContract, readContracts, getConnectorClient } from "@wagmi/core"
 import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
 import envCfg from "@/config/env";
 
-export const DEFAULT_MFN_CONTRACT_CFG = {
-    address: envCfg.mfnContractAddress as `0x${string}`,
-    abi: mfnAbi,
+export const generateDEFAULT_MFN_CONTRACT_CFG = (chainId: number) => {
+    return {
+        // @ts-ignore
+        address: MFNAddresses[chainId],
+        abi: mfnAbi,
+    }
 }
 
 export const contractCreateBattle = async(
     battleId: string, 
     post1Id: string,
     post2Id: string,
-    hoursBeforeFinish: number
+    hoursBeforeFinish: number,
+    chainId: number,
 ) => {
+    console.log({
+        ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
+        functionName: "createBattle",
+        args: [battleId, post1Id, post2Id, hoursBeforeFinish]
+    });
+    console.log({config})
     const data = await writeContract(config, {
-        ...DEFAULT_MFN_CONTRACT_CFG,
+        ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
         functionName: "createBattle",
         args: [battleId, post1Id, post2Id, hoursBeforeFinish]
     });
@@ -26,10 +36,11 @@ export const contractCreateBattle = async(
 export const contractMakeBattleVote = async(
     battleId: string, 
     postId: string, 
-    amount: number
+    amount: number,
+    chainId: number,
 ) => {
     const data = await writeContract(config, {
-        ...DEFAULT_MFN_CONTRACT_CFG,
+        ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
         functionName: "vote",
         args: [battleId, postId, amount]
     });
@@ -40,10 +51,11 @@ export const contractMakeBattleVote = async(
 export const contractGetTokenTransfersPerPost = async(
     user: string,
     battleId: string, 
-    postId: string
+    postId: string,
+    chainId: number,
 ) => {
     const data = await readContract(config, {
-        ...DEFAULT_MFN_CONTRACT_CFG,
+        ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
         functionName: "battleTokensTransfers",
         args: [user, battleId, postId]
     });
@@ -53,10 +65,11 @@ export const contractGetTokenTransfersPerPost = async(
 
 export const contractGetTotalVotingsPerPost = async(
     battleId: string, 
-    postId: string
+    postId: string,
+    chainId: number,
 ) => {
     const data = await readContract(config, {
-        ...DEFAULT_MFN_CONTRACT_CFG,
+        ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
         functionName: "totalTokensPerPost",
         args: [battleId, postId]
     });
@@ -68,31 +81,32 @@ export const contractGetAllImportantDataForBattle = async(
     battleId: string,
     post1Id: string,
     post2Id: string,
-    user: string
+    user: string,
+    chainId: number,
 ) => {
     const data = await readContracts(config, {
         contracts: [
             // @ts-ignore
             {
-                ...DEFAULT_MFN_CONTRACT_CFG,
+                ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
                 functionName: "totalTokensPerPost",
                 args: [battleId, post1Id]
             },
             // @ts-ignore
             {
-                ...DEFAULT_MFN_CONTRACT_CFG,
+                ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
                 functionName: "totalTokensPerPost",
                 args: [battleId, post2Id]
             },
             // @ts-ignore
             {
-                ...DEFAULT_MFN_CONTRACT_CFG,
+                ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
                 functionName: "battleTokensTransfers",
                 args: [user, battleId, post1Id]
             },
             // @ts-ignore
             {
-                ...DEFAULT_MFN_CONTRACT_CFG,
+                ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
                 functionName: "battleTokensTransfers",
                 args: [user, battleId, post2Id]
             }
@@ -104,11 +118,13 @@ export const contractGetAllImportantDataForBattle = async(
 
 export const contractGetPossibleWithdrawal = async(
     battleId: string,
+    user: string,
+    chainId: number,
 ) => {
     const data = await readContract(config, {
-        ...DEFAULT_MFN_CONTRACT_CFG,
+        ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
         functionName: "calculateWithdrawalTokensFromBattle",
-        args: [battleId]
+        args: [battleId, user]
     });
 
     return data;

@@ -80,7 +80,7 @@ export default function ProfileButton({
                         <span className="badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${userBalance ? (Number(userBalance) / 10**Number(decimals)).toFixed(3) : 0} USDC`}
                             <a href="https://www.google.com" target="_blank">
                                 {/* @ts-ignore */}
-                                <Image src={USDCAddresses[account.chainId].icon} alt="chain-logo" width={16} height={16} className="ml-2"/>
+                                <Image src={USDCAddresses[account.chainId]?.icon} alt="chain-logo" width={16} height={16} className="ml-2"/>
                             </a>    
                         </span>
                         
@@ -148,7 +148,7 @@ export default function ProfileButton({
                                     <li>
                                         <button onClick={openChainModal}>
                                             {/* @ts-ignore */}
-                                            <Image src={USDCAddresses[account.chainId].icon} alt="chain-logo" width={20} height={20}/>
+                                            <Image src={USDCAddresses[account.chainId]?.icon} alt="chain-logo" width={20} height={20}/>
                                             {dictionary?.common["profile-button"]["switch-chain"]}
                                         </button>
                                     </li>
