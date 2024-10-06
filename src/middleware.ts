@@ -43,9 +43,16 @@ async function getCookies(request: NextRequest) {
 }
 
 export async function middleware(request: NextRequest) {
-    const data = await getCookies(request);
+    //const data = await getCookies(request);
 
-    const isLoggedIn = data.cookie.jwt && data.cookie.id;
+    // @ts-ignore
+    let session = cookies().get(envCfg.userSessionCookieKey)?.value;
+    // @ts-ignore
+    let id = cookies().get(envCfg.userIdCookieKey)?.value;
+
+    console.log({id, session})
+
+    const isLoggedIn = session && id;
 
     const pathname = request.nextUrl.pathname;
 
