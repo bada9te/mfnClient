@@ -37,6 +37,8 @@ async function getCookies(request: NextRequest) {
     });
 
     const data = await apiResponse.json();
+
+    console.log({data}, request.nextUrl.origin)
     return data;
 }
 
