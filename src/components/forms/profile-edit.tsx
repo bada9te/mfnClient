@@ -6,7 +6,6 @@ import { useUserLinkGoogleMutation, useUserPrepareAccountToRestoreMutation, useU
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import { setUser } from "@/lib/redux/slices/user";
 import { httpGetGoogleInfo } from "@/utils/http-requests/auth";
-import { useGoogleLogin } from '@react-oauth/google';
 import { useEffect, useState } from "react";
 import { revalidatePathAction } from "@/actions/revalidation";
 import { getDictionary } from "@/dictionaries/dictionaries";
@@ -54,35 +53,8 @@ export default function ProfileEditForm(props: {
 
 
     // ##################################### GOOGLE HANDLERS #####################################
-    const [ linkGoogle ] = useUserLinkGoogleMutation();
     const [ unlinkGoogle ] = useUserUnlinkGoogleMutation();
     
-    const handleGoogle = useGoogleLogin({
-        scope: "email",
-        onSuccess: tokenResponse => {
-            httpGetGoogleInfo(tokenResponse.access_token).then(data => {
-                console.log({data, tokenResponse})
-                enqueueSnackbar("Processing...", {autoHideDuration: 1500});
-                linkGoogle({
-                    variables: {
-                        input: {
-                            userId: user?._id as string,
-                            id: data.sub,
-                            token: tokenResponse.access_token,
-                            email: data.email,
-                            name: data.name,
-                        }
-                    }
-                }).then(_ => {
-                    revalidatePathAction("/profile/me/edit", "page");
-                    enqueueSnackbar("Google account linked.", {autoHideDuration: 2500, variant: 'success'});
-                }).catch(_ => {
-                    enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' })
-                });   
-            });
-        },
-    });
-
     const handleUnlinkGoogle = () => {
         enqueueSnackbar("Processing...", {autoHideDuration: 1500});
         unlinkGoogle({
