@@ -7,6 +7,8 @@ export async function GET(request) {
     const cookieValueID = cookies().get(envCfg.userIdCookieKey)?.value;
     const cookieValueJWT = cookies().get(envCfg.userSessionCookieKey)?.value;
 
+    console.log({cookieValueID, cookieValueJWT})
+
     // You can also perform any other server-side logic here, like fetching from a DB
     return new Response(JSON.stringify({ 
         message: 'Server data', 

@@ -28,7 +28,7 @@ function getLocale(request: NextRequest) {
 }
 
 async function getCookies(request: NextRequest) {
-    const apiUrl = `https://client-nextjs-development.up.railway.app/api/get-server-data`;
+    const apiUrl = `${envCfg.me}/api/get-server-data`;
 
     const apiResponse = await fetch(apiUrl, {
         headers: {
@@ -38,7 +38,6 @@ async function getCookies(request: NextRequest) {
 
     const data = await apiResponse.json();
 
-    console.log({data}, request.nextUrl.origin)
     return data;
 }
 
