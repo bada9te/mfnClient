@@ -28,7 +28,7 @@ function getLocale(request: NextRequest) {
 }
 
 async function getCookies(request: NextRequest) {
-    const apiUrl = `${envCfg.me}/api/get-server-data`;
+    const apiUrl = `${request.nextUrl.origin}/api/get-server-data`;
 
     const apiResponse = await fetch(apiUrl, {
         headers: {
