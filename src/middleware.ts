@@ -29,6 +29,7 @@ function getLocale(request: NextRequest) {
 
 async function getCookies(request: NextRequest) {
     const apiUrl = `${request.nextUrl.origin}/api/get-server-data`;
+    console.log({apiUrl});
 
     const apiResponse = await fetch(apiUrl, {
         headers: {
