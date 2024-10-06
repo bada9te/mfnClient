@@ -14,7 +14,7 @@ export default function RightbarDrawerUser({
     return (
         <div className="card w-80 bg-base-300 glass shadow-2xl">
             <figure className="max-h-48">
-                <Image width={400} height={400} className="w-full" src={data.background?.length ? `${envCfg.serverBase}/files/${data.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
+                <Image width={400} height={400} className="w-full" src={data.background?.length ? `${envCfg.serverFilesEndpoint}/images/${data.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
             </figure>
             <div className="card-body">
                 <div className="flex flex-row gap-4 items-center">

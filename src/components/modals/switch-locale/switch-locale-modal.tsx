@@ -4,7 +4,7 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import SwitchLocaleItem from "./switch-locale-item/switch-locale-item";
 import { usePathname, useRouter } from "next/navigation";
 import { TLang } from "@/types/language";
-import { setCookie } from "cookies-next";
+import { setCookie, getCookie } from "cookies-next";
 
 export default function SwitchLocaleModal({button, dictionary}: {button: React.ReactElement; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
     const ref = useRef<HTMLDialogElement | null>(null);
@@ -21,8 +21,12 @@ export default function SwitchLocaleModal({button, dictionary}: {button: React.R
     };
 
     useEffect(() => {
+        const langCookie = getCookie("language")?.toString();
+        if (langCookie) {
+            setSelectedLocale(langCookie);
+        }
         setIsMounted(true);
-    }, [])
+    }, []);
 
     const handleOpen = () => {
         ref.current && ref.current.showModal();

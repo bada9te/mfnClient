@@ -46,7 +46,7 @@ export default function LeftBarDrawer(props: {
         <div className="drawer">
             <input ref={reference} id="my-drawer-tracks" type="checkbox" className="drawer-toggle w-full"
                    onChange={e => handleOpen(e)}/>
-            <div className="drawer-side pt-16 z-30 no-scrollbar">
+            <div className="drawer-side py-16 z-30 no-scrollbar">
                 <label htmlFor="my-drawer-tracks" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-92 min-h-full text-base-content glass bg-base-300 bg-cover bg-opacity-20"
                     style={{ backgroundSize: '400px 935px' }}
@@ -66,7 +66,7 @@ export default function LeftBarDrawer(props: {
                         </svg>
                     </label>
 
-                    <div className="flex flex-col w-full items-center gap-8 py-5 flex-1 min-w-80">
+                    <div className="flex flex-col w-full items-center gap-8 py-5 flex-1 min-w-80 pb-16">
                         {
                             (() => {
                                 if (!loading) {
