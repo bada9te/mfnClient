@@ -84,7 +84,7 @@ export default function Notification({data, dictionary}: {data: TNotification; d
                                     return (
                                         <>
                                             {dictionary.entities.notification["post-reported"]["part-1"]}
-                                            <LinkButton url={`/post/${data.post?._id}/${data.receiver._id}`} text={`@post - ${data.post?.title}`} />
+                                            <LinkButton url={`/post/${data.post?._id}/${data.receiver?._id}`} text={`@post - ${data.post?.title}`} />
                                             {dictionary.entities.notification["post-reported"]["part-2"]}
                                             {/* @ts-ignore */}
                                             <span className="font-semibold text-red-400"> {dictionary.modals.report.cards[data.text]?.title ? dictionary.modals.report.cards[data.text]?.title : "---"}</span>
