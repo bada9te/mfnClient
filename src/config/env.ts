@@ -3,7 +3,6 @@ const envCfg = {
     serverDomain: process.env.NEXT_PUBLIC_SERVER_DOMAIN,
     serverBase: process.env.NEXT_PUBLIC_SERVER_BASE,
     userIdCookieKey: process.env.NEXT_PUBLIC_USER_ID_COOKIE_KEY,
-    userSessionCookieKey: process.env.NEXT_PUBLIC_SESSION_COOKIE_KEY,
     serverFilesEndpoint: process.env.NEXT_PUBLIC_SERVER_BASE_FILES,
 
     googleAuthURL:    process.env.NEXT_PUBLIC_GOOGLE_AUTH,

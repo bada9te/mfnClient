@@ -81,8 +81,8 @@ const AvatarGrid = ({
                 (() => {
                   if (recentTracksByFollowing?.postsMostRecentByFollowing?.length) {
                     return recentTracksByFollowing?.postsMostRecentByFollowing && recentTracksByFollowing.postsMostRecentByFollowing.map((recentTrack, index) => (
-                      <Link href={`/profile/${recentTrack.owner._id}/1`} key={index}>
-                        <Image src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
+                      <Link href={`/profile/${recentTrack.owner?._id}/1`} key={index}>
+                        <Image src={recentTrack.owner?.avatar ? `${envCfg.serverBase}/files/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
                       </Link>
                     ))
                   } else {
@@ -132,8 +132,8 @@ const AvatarGrid = ({
                 (() => {
                   if (recentTracks?.postsMostRecent?.length) {
                     return recentTracks?.postsMostRecent && recentTracks.postsMostRecent.map((recentTrack, index) => (
-                      <Link href={`/profile/${recentTrack.owner._id}/1`} key={index}>
-                        <img src={recentTrack.owner.avatar ? `${envCfg.serverBase}/files/images/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
+                      <Link href={`/profile/${recentTrack.owner?._id}/1`} key={index}>
+                        <img src={recentTrack.owner?.avatar ? `${envCfg.serverBase}/files/images/${recentTrack.owner?.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
                       </Link>
                     ))
                   } else {

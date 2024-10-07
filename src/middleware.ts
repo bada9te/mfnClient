@@ -10,6 +10,7 @@ export const locales = ['en', 'de', 'uk', 'ru'];
 
 let protectedRoutes = [
     '/battles/create',
+    '/battles/finished/me',
     '/playlists/create',
     '/playlists/my-playlists',
     '/profile/me',
@@ -27,32 +28,8 @@ function getLocale(request: NextRequest) {
     return match(languages, locales, defaultLocale);
 }
 
-async function getCookies(request: NextRequest) {
-    const apiUrl = `${request.nextUrl.origin}/api/get-server-data`;
-    console.log({apiUrl});
-
-    const apiResponse = await fetch(apiUrl, {
-        headers: {
-            cookie: request.headers.get('cookie') || '', // Pass cookies along if needed
-        },
-    });
-
-    const data = await apiResponse.json();
-
-    return data;
-}
-
 export async function middleware(request: NextRequest) {
-    //const data = await getCookies(request);
-
-    // @ts-ignore
-    let session = cookies().get(envCfg.userSessionCookieKey)?.value;
-    // @ts-ignore
-    let id = cookies().get(envCfg.userIdCookieKey)?.value;
-
-    console.log({id, session})
-
-    const isLoggedIn = session && id;
+    const isLoggedIn = cookies().get(envCfg.userIdCookieKey as string)?.value;
 
     const pathname = request.nextUrl.pathname;
 

@@ -13,7 +13,7 @@ const httpLogin = async(email: string, password: string) => {
 
 // log out
 const httpLogOut = async() => {
-    return await axios.get(`${SERVER_BASE}/logout`, { withCredentials: true });
+    return await axios.post(`${SERVER_BASE}/auth/logout`, {}, { withCredentials: true });
 }
 
 // update session user object

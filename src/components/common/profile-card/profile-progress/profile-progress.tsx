@@ -64,22 +64,29 @@ export default function ProfileProgress(props: {
             <div className="stat relative">
                 <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"]["total-likes"]}</div>
                 <div className="stat-value text-center flex flex-wrap mt-1 gap-3 justify-center">
-                    <Image src={"/assets/icons/heart.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
+                    <Image src={"/assets/icons/heart.png"} alt="trophy" width={400} height={400} className="w-10 h-10"/>
                     {data.totalLikes}
                 </div>
                 <div className="stat-actions">
-                    <Link href={`/post/${data.maxLikesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["most-liked-track"]}</Link>
+                    {
+                        data.maxLikesPostId &&
+                        <Link href={`/post/${data.maxLikesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full" >{dictionary.common["profile-card"]["profile-progress"]["most-liked-track"]}</Link>
+                    }
                 </div>
             </div>
 
             <div className="stat relative">
                 <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"]["total-saves"]}</div>
                 <div className="stat-value text-center flex flex-wrap mt-1 gap-3 justify-center">
-                    <Image src={"/assets/icons/bookmark.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
+                    <Image src={"/assets/icons/bookmark.png"} alt="trophy" width={400} height={400} className="w-10 h-10"/>
                     {data.totalSaves}
                 </div>
                 <div className="stat-actions">
-                    <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["most-saved-track"]}</Link>
+                    {
+                        data.maxSavesPostId
+                        &&
+                        <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["most-saved-track"]}</Link>
+                    }
                 </div>
             </div>
         </div>

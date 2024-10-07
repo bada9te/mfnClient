@@ -9,6 +9,8 @@ import {httpGetCurrentUser} from "@/utils/http-requests/auth";
 import userReducer from "@/lib/redux/slices/user";
 import playerReducer from "@/lib/redux/slices/player";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import { deleteCookie, setCookie } from "cookies-next";
+import envCfg from "@/config/env";
 
 const createNoopStorage = () => {
   return {
@@ -50,6 +52,7 @@ const loadStore = async(getCurrentState: any) => {
         httpGetCurrentUser()
             .then(response => response.data)
             .then(userData => {
+                setCookie(envCfg.userIdCookieKey as string, userData.user._id);
                 resolve({
                     // reuse state that was before loading current user
                     ...getCurrentState(),
@@ -60,6 +63,7 @@ const loadStore = async(getCurrentState: any) => {
                 })
             })
             .catch(err => {
+                deleteCookie(envCfg.userIdCookieKey as string);
                 //console.log(err)
                 // console.log("Initial state can not be loaded:", err.message);
                 resolve({...getCurrentState(), user: {user: null}});

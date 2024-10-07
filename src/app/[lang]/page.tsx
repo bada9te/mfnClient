@@ -82,12 +82,12 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                 <Image width={400} height={400}  
                     src="/assets/drawings/drawing-1.png" 
                     alt="drawing-1" 
-                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 right-0 z-20 rounded-2xl"
+                    className="w-48 lg:w-64 absolute bottom-0 right-0 z-20 rounded-2xl"
                 />
                 <Image width={400} height={400}  
                     src="/assets/drawings/drawing-2.png" 
                     alt="drawing-2" 
-                    className="w-48 md:w-64 lg:w-80 absolute bottom-0 left-0 z-20 rounded-2xl"
+                    className="w-48 lg:w-64 absolute bottom-0 left-0 z-20 rounded-2xl"
                 />
             </div>
 
@@ -128,7 +128,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                 <Image width={400} height={400}  
                     src="/assets/drawings/drawing-4.png" 
                     alt="drawing-4" 
-                    className="absolute bottom-0 w-52 lg:w-96 right-16 lg:right-28 z-10"
+                    className="absolute bottom-0 w-48 lg:w-64 right-16 lg:right-28 z-10"
                 />
                 <Image width={800} height={800}
                     src={"/assets/bgs/block-top-right-bg.png"}
