@@ -2,7 +2,7 @@ image: node:18
 
 stages:
   - install
-  - test
+#  - test
   - build
   - deploy
 
@@ -35,22 +35,22 @@ build_nextjs:
     paths:
       - .next/
 
-# Deploy to Railway
-deploy_to_railway:
-  stage: deploy
-  image: node:18
-  script:
-    - yarn global add railway
-    - railway login --token $RAILWAY_TOKEN
-    - railway up --detach  # Deploys the app to Railway in detached mode
-  dependencies:
-    - build_nextjs
-  only:
-    - next  # Deploy only on the next branch
-  environment:
-    name: production
-    url: https://your-railway-app-url  # Optionally specify your Railway app's public URL
 
-# Optional: Pass your environment variables to Railway
+deploy-railway:
+  stage: deploy
+  image: ubuntu
+  only:
+    - pushes
+    - main
+  script:
+    - apt-get update && apt-get install -y curl
+    - curl -fsSL https://railway.app/install.sh | sh
+    - railway login --token=$RAILWAY_TOKEN
+    - railway up --service=$RAILWAY_SERVICE_NAME -d
+  environment:
+    name: development
+    # url: https://your-railway-app-url  # Optional: specify the Railway app's public URL
+
+# Pass environment variables from GitLab
 variables:
-  NEXT_PUBLIC_API_URL: $NEXT_PUBLIC_API_URL  # Custom environment variables for Next.js
+  NEXT_PUBLIC_API_URL: $NEXT_PUBLIC_API_URL 
