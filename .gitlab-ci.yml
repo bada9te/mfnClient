@@ -45,12 +45,6 @@ deploy-railway:
   script:
     - apt-get update && apt-get install -y curl
     - curl -fsSL https://railway.app/install.sh | sh
-    - railway login --token=$RAILWAY_TOKEN
     - railway up --service=$RAILWAY_SERVICE_NAME -d
   environment:
-    name: development
-    # url: https://your-railway-app-url  # Optional: specify the Railway app's public URL
-
-# Pass environment variables from GitLab
-variables:
-  NEXT_PUBLIC_API_URL: $NEXT_PUBLIC_API_URL 
+    name: production
