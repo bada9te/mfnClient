@@ -2,7 +2,7 @@ image: node:18
 
 stages:
   - install
-#  - test
+  - test
   - build
   - deploy
 
