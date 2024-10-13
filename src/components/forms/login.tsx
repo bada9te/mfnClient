@@ -105,8 +105,8 @@ export default function LoginForm({
                         </div>
 
                         <label className="label flex flex-col gap-3 justify-start items-start mt-5">
-                            <Link href="/register" className="label-text-alt link link-hover">{dictionary.forms.login["not-registered-yet"]}</Link>
-                            <Link href="/account-restore/email-verification" className="label-text-alt link link-hover">{dictionary.forms.login["forgot-password"]}</Link>
+                            <Link href={"/register"} className="label-text-alt link link-hover">{dictionary.forms.login["not-registered-yet"]}</Link>
+                            <Link href={"/account-restore/email-verification"} className="label-text-alt link link-hover">{dictionary.forms.login["forgot-password"]}</Link>
                         </label>
                     </form>
                     <FormsSocials dictionary={dictionary}/>
