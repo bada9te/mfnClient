@@ -560,7 +560,8 @@
             "max-length": "Maximale Länge muss sein",
             "passwords-did-not-match": "Passwörter stimmen nicht überein",
             "confirm-password": "Passwort bestätigen",
-            "submit": "Absenden"
+            "submit": "Absenden",
+            "cancel": "Aktion abbrechen"
         },
         "battle": {
             "setup": "Neues Battle erstellen",

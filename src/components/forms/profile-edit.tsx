@@ -43,7 +43,7 @@ export default function ProfileEditForm(props: {
     const dispatch = useAppDispatch();
     const { register: registerNick, handleSubmit: handleSubmitNick, formState: {errors: errorsNick} } = useForm<InputsNickname>();
     const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
-    const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail} } = useForm<InputsEmail>();
+    const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail}, reset: resetEmail } = useForm<InputsEmail>();
     const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>();
     const [ isMounted, setIsMounted ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -156,6 +156,7 @@ export default function ProfileEditForm(props: {
                 }
             }
         }).then(_ => {
+            resetEmail();
             enqueueSnackbar("Restoration email sent", {autoHideDuration: 2000, variant: 'success'});
         }).catch(_ => {
             enqueueSnackbar("Email can not be updated", {autoHideDuration: 3000, variant: 'error'});

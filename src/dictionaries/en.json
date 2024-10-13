@@ -560,7 +560,8 @@
                 "max-length": "Max length must be",
                 "passwords-did-not-match": "Passwords didn't match",
                 "confirm-password": "Confirm password",
-                "submit": "Submit"
+                "submit": "Submit",
+                "cancel": "Cancel action"
             },
             "battle": {
                 "setup": "New battle setup",
