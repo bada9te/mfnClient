@@ -194,7 +194,7 @@ export default function ProfileEditForm(props: {
             <div className="bg-base-300 card-body m-1 pulsar-shadow text-white md:rounded-2xl shadow-2xl glass">
                 <div className="divider divider-primary">{dictionary.forms["profile-edit"].basics}</div>
 
-                <form onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
+                <form role="form" onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
                     <div className="form-control pt-0">
                         <label className="label">
                             <span className="label-text">{dictionary.forms["profile-edit"].nickname}</span>
@@ -218,7 +218,7 @@ export default function ProfileEditForm(props: {
                     </div>
                 </form>
 
-                <form onSubmit={handleSubmitDescr(onSubmitDescription)} noValidate>
+                <form role="form" onSubmit={handleSubmitDescr(onSubmitDescription)} noValidate>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">{dictionary.forms["profile-edit"].description}</span>
@@ -244,7 +244,7 @@ export default function ProfileEditForm(props: {
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].email}</div>
 
-                <form onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
+                <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
                     
                     <div className="form-control">
                         <label className="label">
@@ -276,7 +276,7 @@ export default function ProfileEditForm(props: {
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].password}</div>
 
-                <form onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
+                <form role="form" onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">{dictionary.forms["profile-edit"].password}</span>

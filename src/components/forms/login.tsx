@@ -50,7 +50,7 @@ export default function LoginForm({
         <div className="card bg-base-300 shadow-xl glass rounded-2xl flex flex-row w-fit">
             <div className="flex flex-row">
                 <div className="card-body m-1 text-white glass bg-base-300 shadow-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl pulsar-shadow">
-                    <form onSubmit={handleSubmit(onSubmit)} noValidate className="w-64 md:w-80">
+                    <form role="form" onSubmit={handleSubmit(onSubmit)} noValidate className="w-64 md:w-80">
                         <div className="divider divider-primary">{dictionary.forms.login["sign-in"]}</div>
                         <div className="form-control relative">
                             <label className="label">

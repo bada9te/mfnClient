@@ -4,11 +4,9 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
 import {httpSaveFile} from "@/utils/http-requests/files";
 import {usePostUpdateMutation} from "@/utils/graphql-requests/generated/schema";
-import {useAppSelector} from "@/lib/redux/store";
 import { useRef, useState } from "react";
 import ImageCropperModal from "../modals/cropper-modal";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
-import { revalidatePathAction } from "@/actions/revalidation";
 import { getDictionary } from "@/dictionaries/dictionaries";
 
 type InputsTitle = {
@@ -32,7 +30,6 @@ export default function PostEditForm(props: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { posId, dictionary } = props;
-    const user = useAppSelector(state => state.user.user);
     const { 
         formState: {errors: errorTitle}, 
         register: registerTitle, 
@@ -157,7 +154,7 @@ export default function PostEditForm(props: {
             <div className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl">
                 <div className="divider divider-primary">{dictionary.forms["post-edit-upload"].edit}</div>
 
-                <form onSubmit={handleSubmitTitle(onSubmitTitle)} noValidate>
+                <form role="form" onSubmit={handleSubmitTitle(onSubmitTitle)} noValidate>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">{dictionary.forms["post-edit-upload"].title}</span>
