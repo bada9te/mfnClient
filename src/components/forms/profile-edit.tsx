@@ -43,7 +43,7 @@ export default function ProfileEditForm(props: {
     const dispatch = useAppDispatch();
     const { register: registerNick, handleSubmit: handleSubmitNick, formState: {errors: errorsNick} } = useForm<InputsNickname>();
     const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
-    const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail} } = useForm<InputsEmail>();
+    const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail}, reset: resetEmail } = useForm<InputsEmail>();
     const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>();
     const [ isMounted, setIsMounted ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -156,6 +156,7 @@ export default function ProfileEditForm(props: {
                 }
             }
         }).then(_ => {
+            resetEmail();
             enqueueSnackbar("Restoration email sent", {autoHideDuration: 2000, variant: 'success'});
         }).catch(_ => {
             enqueueSnackbar("Email can not be updated", {autoHideDuration: 3000, variant: 'error'});
@@ -193,7 +194,7 @@ export default function ProfileEditForm(props: {
             <div className="bg-base-300 card-body m-1 pulsar-shadow text-white md:rounded-2xl shadow-2xl glass">
                 <div className="divider divider-primary">{dictionary.forms["profile-edit"].basics}</div>
 
-                <form onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
+                <form role="form" onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
                     <div className="form-control pt-0">
                         <label className="label">
                             <span className="label-text">{dictionary.forms["profile-edit"].nickname}</span>
@@ -217,7 +218,7 @@ export default function ProfileEditForm(props: {
                     </div>
                 </form>
 
-                <form onSubmit={handleSubmitDescr(onSubmitDescription)} noValidate>
+                <form role="form" onSubmit={handleSubmitDescr(onSubmitDescription)} noValidate>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">{dictionary.forms["profile-edit"].description}</span>
@@ -243,7 +244,7 @@ export default function ProfileEditForm(props: {
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].email}</div>
 
-                <form onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
+                <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
                     
                     <div className="form-control">
                         <label className="label">
@@ -275,7 +276,7 @@ export default function ProfileEditForm(props: {
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].password}</div>
 
-                <form onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
+                <form role="form" onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">{dictionary.forms["profile-edit"].password}</span>

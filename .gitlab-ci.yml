@@ -2,7 +2,7 @@ image: node:18
 
 stages:
   - install
-#  - test
+  - test
   - build
   - deploy
 
@@ -16,13 +16,13 @@ install_dependencies:
       - node_modules/
 
 # Run linting and tests
-#run_tests:
-#  stage: test
-#  script:
-#    - yarn lint  # Optional: run this if you have linting configured
-#    - yarn test  # Optional: run this if you have tests
-#  dependencies:
-#   - install_dependencies
+run_tests:
+  stage: test
+  script:
+    - yarn lint
+    - yarn test  
+  dependencies:
+    - install_dependencies
 
 # Build the Next.js app
 build_nextjs:
@@ -36,11 +36,23 @@ build_nextjs:
       - .next/
 
 
+deploy-railway-dev:
+  stage: deploy
+  image: ubuntu
+  only:
+    - dev
+  script:
+    - apt-get update && apt-get install -y curl
+    - curl -fsSL https://railway.app/install.sh | sh
+    - RAILWAY_TOKEN=$RAILWAY_TOKEN_DEV railway up --service=$RAILWAY_SERVICE_NAME_DEV -d
+  environment:
+    name: development
+
+
 deploy-railway:
   stage: deploy
   image: ubuntu
   only:
-    - pushes
     - main
   script:
     - apt-get update && apt-get install -y curl
