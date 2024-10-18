@@ -42,7 +42,7 @@ export default function AccountRestoreForm(props: {
         }).then(_ => {
             reset();
             router.replace('/login');
-            enqueueSnackbar("Done", { autoHideDuration: 4000, variant: 'info' });
+            enqueueSnackbar("Done", { autoHideDuration: 4000, variant: 'success' });
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 3000, variant: 'error' });
         });
@@ -62,7 +62,7 @@ export default function AccountRestoreForm(props: {
         }).then(_ => {
             reset();
             router.replace('/login');
-            enqueueSnackbar("Done", { autoHideDuration: 4000, variant: 'info' });
+            enqueueSnackbar("Done", { autoHideDuration: 4000, variant: 'warning' });
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 3000, variant: 'error' });
         });
@@ -110,10 +110,7 @@ export default function AccountRestoreForm(props: {
                                                     pattern: { value: formsConstants.emailRegex, message: dictionary.forms["account-restore"]["email-not-valid"] },
                                                     validate: (value) => {
                                                         const { newValue } = getValues();
-                                                        if (newValue !== value) {
-                                                            return dictionary.forms["account-restore"]["emails-did-not-match"];
-                                                        }
-                                                        return true;
+                                                        return newValue == value;
                                                     }
                                                 })
                                             }/>
@@ -126,7 +123,7 @@ export default function AccountRestoreForm(props: {
                                         {
                                             errors.email &&
                                             <label className="label">
-                                                <span className="label-text text-error">{errors.email.message}</span>
+                                                <span className="label-text text-error">{dictionary.forms["account-restore"]["emails-did-not-match"]}</span>
                                             </label>
                                         }
                                     </div>
@@ -194,7 +191,7 @@ export default function AccountRestoreForm(props: {
                 
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white" onClick={handleModerationCancel}>
+                    <button type="submit" className="btn btn-primary glass text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
                         </svg>
@@ -203,7 +200,7 @@ export default function AccountRestoreForm(props: {
                 </div>
 
                 <label className="label flex flex-col gap-3 justify-start items-start mt-5">
-                    <button className="btn btn-error btn-sm glass w-full bg-red-600 text-white hover:bg-red-400">
+                    <button className="btn btn-error btn-sm glass w-full bg-red-600 text-white hover:bg-red-400" onClick={handleModerationCancel}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clipRule="evenodd" />
                         </svg>
