@@ -118,6 +118,7 @@ export const USER_CREATE_MUTATION = gql`
     }
 `;
 
+/*
 export const USER_DELETE_BY_ID_MUTATION = gql`
     mutation userDeleteById($_id: ID!) {
         userDeleteById(_id: $_id) {
@@ -125,6 +126,7 @@ export const USER_DELETE_BY_ID_MUTATION = gql`
         }
     }
 `;
+*/
 
 export const USER_SWITCH_SUBSCRIPTION_MUTATION = gql`
     ${CORE_USER_FIELDS}

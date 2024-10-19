@@ -323,7 +323,8 @@
                 "share": "Поделиться"
             },
             "refresh-btn-container": {
-                "refresh": "Обновить"
+                "refresh": "Обновить",
+                "withdraw-all": "Вывести все USDC"
             },
             "register-explore-btns": {
                 "register": "Зарегистрироваться",

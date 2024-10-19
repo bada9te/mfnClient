@@ -193,7 +193,7 @@ export default function Battle(props: {
                                 !battleData.finished &&
                                 <>
                                     <button 
-                                        disabled={battleData.votedBy?.map(i => i._id)?.includes(user?._id as string)}
+                                        disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
                                         onClick={() => makeBattleVote(1, "post1Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}</button>
                                     {
@@ -263,7 +263,7 @@ export default function Battle(props: {
                                 !battleData.finished &&
                                 <>
                                     <button
-                                        disabled={battleData.votedBy?.map(i => i._id)?.includes(user?._id as string)}
+                                        disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
                                         onClick={() => makeBattleVote(1, "post2Score")}
                                         className="btn btn-sm btn-primary text-white glass w-full join-item"
                                     >

@@ -323,7 +323,8 @@
                 "share": "Teilen"
             },
             "refresh-btn-container": {
-                "refresh": "Aktualisieren"
+                "refresh": "Aktualisieren",
+                "withdraw-all": "Alle USDC abheben"
             },
             "register-explore-btns": {
                 "register": "Registrieren",

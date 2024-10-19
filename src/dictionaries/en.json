@@ -323,7 +323,8 @@
                 "share": "Share"
             },
             "refresh-btn-container": {
-                "refresh": "Refresh"
+                "refresh": "Refresh",
+                "withdraw-all": "Withdraw all USDC"
             },
             "register-explore-btns": {
                 "register": "Register",
