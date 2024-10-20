@@ -314,7 +314,7 @@
                     "most-liked-track": "Найулюбленіший трек",
                     "most-saved-track": "Найбільш збережений трек"
                 },
-                "followers": "Передплатники",
+                "followers": "Підписники",
                 "following": "Підписки",
                 "unfollow": "Відписатися",
                 "follow": "Підписатися",
@@ -678,7 +678,7 @@
                 },
                 "rightbar-drawer-user": {
                     "following": "Підписки",
-                    "followers": "Передплатники",
+                    "followers": "Підписники",
                     "profile": "Профіль"
                 }
             },

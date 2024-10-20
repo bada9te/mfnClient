@@ -53,7 +53,7 @@ export default function LeftBarDrawer(props: {
                 >
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
-                        <input type="text" className="w-fit placeholder:text-gray-200" placeholder={dictionary?.modals?.["leftbar-drawer"]?.search} onChange={e => setSq(e.target.value)}/>
+                        <input type="text" className="w-fit placeholder:text-gray-200 text-white" placeholder={dictionary?.modals?.["leftbar-drawer"]?.search} onChange={e => setSq(e.target.value)}/>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 16 16"
