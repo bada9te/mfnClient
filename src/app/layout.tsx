@@ -5,7 +5,7 @@ import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
-import { Anonymous_Pro, DotGothic16, Noto_Sans, Pixelify_Sans, Reggae_One, Train_One } from "next/font/google";
+import { Anonymous_Pro } from "next/font/google";
 
 const font = Anonymous_Pro({
   subsets: ['latin', 'cyrillic'],
