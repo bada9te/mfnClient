@@ -45,33 +45,35 @@ export default function NetworkInformation({
 
     const fetchInfo = useCallback(async() => {
         if (chainId == networkId) {
-            contractGetAllImportantDataForBattle(
-                battleId,
-                post1Id,
-                post2Id,
-                address as `0x${string}`,
-                networkId
-            ).then(data => {
-                setData({
-                    totalTokensPerPost1: Number(data[0].result) / 10**USDC_decimals,
-                    totalTokensPerPost2: Number(data[1].result) / 10**USDC_decimals,
-                    battleTokensTransfers1: Number(data[2].result) / 10**USDC_decimals,
-                    battleTokensTransfers2: Number(data[3].result) / 10**USDC_decimals,
-                });
-            });
+         
+                contractGetAllImportantDataForBattle(
+                    battleId,
+                    post1Id,
+                    post2Id,
+                    address as `0x${string}`,
+                    networkId
+                ).then(data => {
+                    setData({
+                        totalTokensPerPost1: Number(data[0].result) / 10**USDC_decimals,
+                        totalTokensPerPost2: Number(data[1].result) / 10**USDC_decimals,
+                        battleTokensTransfers1: Number(data[2].result) / 10**USDC_decimals,
+                        battleTokensTransfers2: Number(data[3].result) / 10**USDC_decimals,
+                    });
+                }).catch(console.log);
+        
+                contractGetPossibleWithdrawal(battleId, address as string, networkId).then(data => {
+                    // @ts-ignore
+                    const possibleWithdraw1 = Number(data[0]);
+                    // @ts-ignore
+                    const possibleWithdraw2 = Number(data[1]);
     
-            contractGetPossibleWithdrawal(battleId, address as string, networkId).then(data => {
-                // @ts-ignore
-                const possibleWithdraw1 = Number(data[0]);
-                // @ts-ignore
-                const possibleWithdraw2 = Number(data[1]);
-
-                if (possibleWithdraw1 > possibleWithdraw2) {
-                    setPossibleWithdrawal(possibleWithdraw1 / 10**USDC_decimals || 0);
-                } else {
-                    setPossibleWithdrawal(possibleWithdraw2 / 10**USDC_decimals || 0);
-                }
-            });
+                    if (possibleWithdraw1 > possibleWithdraw2) {
+                        setPossibleWithdrawal(possibleWithdraw1 / 10**USDC_decimals || 0);
+                    } else {
+                        setPossibleWithdrawal(possibleWithdraw2 / 10**USDC_decimals || 0);
+                    }
+                }).catch(console.log);
+            
         }
     }, [battleId, post1Id, post2Id, address, networkId, chainId, USDC_decimals]);
 

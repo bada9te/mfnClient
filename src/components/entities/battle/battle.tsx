@@ -83,7 +83,9 @@ export default function Battle(props: {
     }, [battleData]);
 
     const makeBattleVote = (voteCount: number, postNScore: "post1Score" | "post2Score") => {
-        console.log("VOTING...")
+        voteCount = Number(String(voteCount).slice(0, String(voteCount).indexOf('.')))
+
+        console.log("VOTING...", voteCount)
         enqueueSnackbar("Voting...", {autoHideDuration: 1500});
         makeVote({
             variables: {

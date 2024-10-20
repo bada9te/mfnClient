@@ -4,7 +4,7 @@ import InfoImage from "../common/info-image/info-image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SelectTrackModal from "../modals/select-track-modal";
 import { useState } from "react";
-import { Post as TPost, useBattleCreateMutation } from "@/utils/graphql-requests/generated/schema";
+import { Post as TPost, useBattleCreateMutation, useBattleDeleteByIdMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
 import { revalidatePathAction } from "@/actions/revalidation";
 import { useAppSelector } from "@/lib/redux/store";
@@ -62,6 +62,7 @@ export default function BattleForm({
     const [useBlockChain, setUseBlockchain] = useState(false);
 
     const [createBattle] = useBattleCreateMutation();
+    const [deleteBattle] = useBattleDeleteByIdMutation();
     const { writeContractAsync } = useWriteContract();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
@@ -91,12 +92,12 @@ export default function BattleForm({
             variables: {
                 input
             }
-        }).then((data) => {
+        }).then(({data}) => {
             writeContractAsync({
                 ...generateDEFAULT_MFN_CONTRACT_CFG(Number(chainId)),
                 functionName: 'createBattle',
                 args: [
-                    data.data?.battleCreate._id as string,
+                    data?.battleCreate._id as string,
                     input.post1,
                     input.post2,
                     24,
@@ -106,18 +107,23 @@ export default function BattleForm({
                     hash,
                     confirmations: 2
                 }).then(() => {
-                    reset();
                     setPost1(null);
                     setPost2(null);
                     enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
                 });
             }).catch(err => {
                 console.log(err);
-                enqueueSnackbar("Error with blockchain interaction", {variant: 'error', autoHideDuration: 3000})
+                deleteBattle({
+                    variables: {
+                        _id: data?.battleCreate._id as string
+                    }
+                });
+                enqueueSnackbar("Error with blockchain interaction, battle was canceled", {variant: 'error', autoHideDuration: 3000})
             })
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
         }).finally(() => {
+            reset();
             revalidatePathAction('/battles/in-progress', 'page');
         });
     }

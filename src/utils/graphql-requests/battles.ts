@@ -89,3 +89,11 @@ export const BATTLE_CREATE_MUTATTION = gql`
         }
     }
 `;
+
+export const BATTLE_DELETE_BY_ID_MUTATION = gql`
+    mutation battleDeleteById($_id: ID!) {
+        battleDeleteById(_id: $_id) {
+            _id
+        }
+    }
+`;

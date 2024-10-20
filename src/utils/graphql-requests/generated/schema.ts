@@ -864,6 +864,13 @@ export type BattleCreateMutationVariables = Exact<{
 
 export type BattleCreateMutation = { __typename?: 'Mutation', battleCreate: { __typename?: 'Battle', _id: string } };
 
+export type BattleDeleteByIdMutationVariables = Exact<{
+  _id: Scalars['ID']['input'];
+}>;
+
+
+export type BattleDeleteByIdMutation = { __typename?: 'Mutation', battleDeleteById: { __typename?: 'Battle', _id: string } };
+
 export type ModerationActionValidateQueryVariables = Exact<{
   input: ModerateActionInput;
 }>;
@@ -1712,6 +1719,39 @@ export function useBattleCreateMutation(baseOptions?: Apollo.MutationHookOptions
 export type BattleCreateMutationHookResult = ReturnType<typeof useBattleCreateMutation>;
 export type BattleCreateMutationResult = Apollo.MutationResult<BattleCreateMutation>;
 export type BattleCreateMutationOptions = Apollo.BaseMutationOptions<BattleCreateMutation, BattleCreateMutationVariables>;
+export const BattleDeleteByIdDocument = gql`
+    mutation battleDeleteById($_id: ID!) {
+  battleDeleteById(_id: $_id) {
+    _id
+  }
+}
+    `;
+export type BattleDeleteByIdMutationFn = Apollo.MutationFunction<BattleDeleteByIdMutation, BattleDeleteByIdMutationVariables>;
+
+/**
+ * __useBattleDeleteByIdMutation__
+ *
+ * To run a mutation, you first call `useBattleDeleteByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBattleDeleteByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [battleDeleteByIdMutation, { data, loading, error }] = useBattleDeleteByIdMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useBattleDeleteByIdMutation(baseOptions?: Apollo.MutationHookOptions<BattleDeleteByIdMutation, BattleDeleteByIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<BattleDeleteByIdMutation, BattleDeleteByIdMutationVariables>(BattleDeleteByIdDocument, options);
+      }
+export type BattleDeleteByIdMutationHookResult = ReturnType<typeof useBattleDeleteByIdMutation>;
+export type BattleDeleteByIdMutationResult = Apollo.MutationResult<BattleDeleteByIdMutation>;
+export type BattleDeleteByIdMutationOptions = Apollo.BaseMutationOptions<BattleDeleteByIdMutation, BattleDeleteByIdMutationVariables>;
 export const ModerationActionValidateDocument = gql`
     query moderationActionValidate($input: ModerateActionInput!) {
   moderationActionValidate(input: $input) {
