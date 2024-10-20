@@ -271,61 +271,122 @@ export default function ProfileEditForm(props: {
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].email}</div>
 
-                <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
-                    
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms["profile-edit"].email}</span>
-                        </label>
-                        <div className="join w-full">
-                            <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                ...registerEmail("oldEmail", {
-                                    pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
-                                    required: { value: true, message: dictionary.forms["profile-edit"].required },
-                                    validate: (value) => {
-                                        const userEmail = user?.local?.email as string;
-                                        if (userEmail !== value) {
-                                            return dictionary.forms["profile-edit"]["wrong-email"]
-                                        }
-                                    }
-                                })
-                            }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
-                        </div>
-                        {
-                            errorEmail.oldEmail &&
-                            <label className="label">
-                                <span className="label-text text-error">{errorEmail.oldEmail.message}</span>
-                            </label>
-                        }
-                    </div>
-                </form>
+                <>
+                    {
+                        (() => {
+                            if (!userData.user.local?.email) {
+                                return (
+                                    <>
+                                        <label className="label">
+                                            <span className="label-text text-warning">{dictionary.forms["profile-edit"]["email-link-warning"]}</span>
+                                        </label>
+                                        <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
+                                            <div className="form-control">
+                                                <label className="label">
+                                                    <span className="label-text">{dictionary.forms["profile-edit"]["link-email"]}</span>
+                                                </label>
+                                                <div className="join w-full">
+                                                    <input type="text" placeholder={dictionary.forms["profile-edit"]["link-email-new"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                                                        ...registerEmail("oldEmail", {
+                                                            pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
+                                                            required: { value: true, message: dictionary.forms["profile-edit"].required },
+                                                        })
+                                                    }/>
+                                                    <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                                </div>
+                                                {
+                                                    errorEmail.oldEmail &&
+                                                    <label className="label">
+                                                        <span className="label-text text-error">{errorEmail.oldEmail.message}</span>
+                                                    </label>
+                                                }
+                                            </div>
+                                        </form>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
+                                        <div className="form-control">
+                                            <label className="label">
+                                                <span className="label-text">{dictionary.forms["profile-edit"].email}</span>
+                                            </label>
+                                            <div className="join w-full">
+                                                <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                                                    ...registerEmail("oldEmail", {
+                                                        pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
+                                                        required: { value: true, message: dictionary.forms["profile-edit"].required },
+                                                        validate: (value) => {
+                                                            const userEmail = user?.local?.email as string;
+                                                            if (userEmail !== value) {
+                                                                return dictionary.forms["profile-edit"]["wrong-email"]
+                                                            }
+                                                        }
+                                                    })
+                                                }/>
+                                                <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                            </div>
+                                            {
+                                                errorEmail.oldEmail &&
+                                                <label className="label">
+                                                    <span className="label-text text-error">{errorEmail.oldEmail.message}</span>
+                                                </label>
+                                            }
+                                        </div>
+                                    </form>
+                                );
+                            }
+                        })()
+                    }
+                </>
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].password}</div>
 
-                <form role="form" onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms["profile-edit"].password}</span>
-                        </label>
-                        <div className="join">
-                            <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                ...registerPassword("oldPassword", {
-                                    minLength: { value: 8, message: `${dictionary.forms["profile-edit"]["min-length"]} 8` },
-                                    maxLength: { value: 20, message: `${dictionary.forms["profile-edit"]["max-length"]} 20` },
-                                    required: { value: true, message: dictionary.forms["profile-edit"].required },
-                                })
-                            }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
-                        </div>
-                        {
-                            errorsPassword.oldPassword &&
-                            <label className="label">
-                                <span className="label-text text-error">{errorsPassword.oldPassword.message}</span>
-                            </label>
-                        }
-                    </div>
-                </form>
+                
+                <>
+                    {
+                        (() => {
+                            if (!userData.user.local?.email) {
+                                return (
+                                    <>
+                                        <label className="label">
+                                            <span className="label-text text-error">{dictionary.forms["profile-edit"]["password-lack-email"]}</span>
+                                        </label>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <form role="form" onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
+                                        <div className="form-control">
+                                            <label className="label">
+                                                <span className="label-text">{dictionary.forms["profile-edit"].password}</span>
+                                            </label>
+                                            <div className="join">
+                                                <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                                                    ...registerPassword("oldPassword", {
+                                                        minLength: { value: 8, message: `${dictionary.forms["profile-edit"]["min-length"]} 8` },
+                                                        maxLength: { value: 20, message: `${dictionary.forms["profile-edit"]["max-length"]} 20` },
+                                                        required: { value: true, message: dictionary.forms["profile-edit"].required },
+                                                    })
+                                                }/>
+                                                <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                            </div>
+                                            {
+                                                errorsPassword.oldPassword &&
+                                                <label className="label">
+                                                    <span className="label-text text-error">{errorsPassword.oldPassword.message}</span>
+                                                </label>
+                                            }
+                                        </div>
+                                    </form>
+                                );
+                            }
+                        })()
+                    }
+                </>
+                
+
+
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].socials}</div>
                 
