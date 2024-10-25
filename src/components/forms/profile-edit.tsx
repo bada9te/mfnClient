@@ -24,6 +24,10 @@ type InputsEmail = {
     oldEmail: string;
 };
 
+type InputsLinkEmail = {
+    newEmail: string;
+};
+
 type InputsPassword = {
     oldPassword: string;
 };
@@ -45,6 +49,7 @@ export default function ProfileEditForm(props: {
     const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
     const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail}, reset: resetEmail } = useForm<InputsEmail>();
     const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>();
+    const { register: registerLinkEmail, handleSubmit: handleSubmitLinkEmail, formState: {errors: errorslinkEmail} } = useForm<InputsLinkEmail>();
     const [ isMounted, setIsMounted ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useUserUpdateMutation();
@@ -180,6 +185,23 @@ export default function ProfileEditForm(props: {
         });
     }
 
+    // link email
+    const onSubmitLinkEmail: SubmitHandler<InputsLinkEmail> = async(data) => {
+        enqueueSnackbar("Doing important stuff...", {autoHideDuration: 1500});
+        await prepareToRestore({
+            variables: {
+                input: {
+                    email: user?.local?.email as string,
+                    type: "password"
+                }
+            }
+        }).then(_ => {
+            enqueueSnackbar("Restoration email sent", {autoHideDuration: 2000, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Password can not be updated", {autoHideDuration: 3000, variant: 'error'});
+        });
+    }
+
     const buttonMustBeDisabled = (userData: UserQuery) => {
         const disabledList = {
             twitter: false,
@@ -280,14 +302,14 @@ export default function ProfileEditForm(props: {
                                         <label className="label">
                                             <span className="label-text text-warning">{dictionary.forms["profile-edit"]["email-link-warning"]}</span>
                                         </label>
-                                        <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
+                                        <form role="form" onSubmit={handleSubmitLinkEmail(onSubmitLinkEmail)} noValidate>
                                             <div className="form-control">
                                                 <label className="label">
                                                     <span className="label-text">{dictionary.forms["profile-edit"]["link-email"]}</span>
                                                 </label>
                                                 <div className="join w-full">
                                                     <input type="text" placeholder={dictionary.forms["profile-edit"]["link-email-new"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                                        ...registerEmail("oldEmail", {
+                                                        ...registerLinkEmail("newEmail", {
                                                             pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
                                                             required: { value: true, message: dictionary.forms["profile-edit"].required },
                                                         })
@@ -295,9 +317,9 @@ export default function ProfileEditForm(props: {
                                                     <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
                                                 </div>
                                                 {
-                                                    errorEmail.oldEmail &&
+                                                    errorslinkEmail.newEmail &&
                                                     <label className="label">
-                                                        <span className="label-text text-error">{errorEmail.oldEmail.message}</span>
+                                                        <span className="label-text text-error">{errorslinkEmail.newEmail.message}</span>
                                                     </label>
                                                 }
                                             </div>
@@ -342,7 +364,6 @@ export default function ProfileEditForm(props: {
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].password}</div>
 
-                
                 <>
                     {
                         (() => {

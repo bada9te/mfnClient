@@ -66,7 +66,7 @@ export default function ProfileButton({
     }
 
     return (
-        <div className="dropdown dropdown-end text-white">
+        <div className="dropdown dropdown-end">
             <div className="flex flex-row flex-nowrap items-center justify-center">
                 {
                     account.address 

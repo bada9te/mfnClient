@@ -21,29 +21,32 @@ export default function FormsSocials({
 }) {
     const account = useAccount();
     const { openConnectModal } = useConnectModal();
-    const { disconnect } = useDisconnect();
     const { signMessageAsync } = useSignMessage();
-    const { enqueueSnackbar } = useSnackbar();
+    const { enqueueSnackbar }  = useSnackbar();
+    const { disconnect }       = useDisconnect();
     const dispatch = useAppDispatch();
     const router = useRouter();
 
     useEffect(() => {
         if (account.address) {
             const processSigning = async(msg: string) => {
-                const signHex = await signMessageAsync({ message: msg });
-
-                httpWeb3Login(
-                    account.address as string,
-                    msg,
-                    signHex
-                ).then(({data: response}) => {
-                    console.log("LOGIN:", response);
-                    enqueueSnackbar(`Logged in as ${response.user.nick}`, {variant: 'success', autoHideDuration: 2000});
-                    dispatch(setUser(response.user));
-                    dispatch(setUnreadNotificationsCount(response.unreadNotifications));
-                    setCookie(envCfg.userIdCookieKey as string, response.user._id);
-                    router.replace('/feed/1');
-                });
+                try {
+                    const signHex = await signMessageAsync({ message: msg });
+                    httpWeb3Login(
+                        account.address as string,
+                        msg,
+                        signHex
+                    ).then(({data: response}) => {
+                        console.log("LOGIN:", response);
+                        enqueueSnackbar(`Logged in as ${response.user.nick}`, {variant: 'success', autoHideDuration: 2000});
+                        dispatch(setUser(response.user));
+                        dispatch(setUnreadNotificationsCount(response.unreadNotifications));
+                        setCookie(envCfg.userIdCookieKey as string, response.user._id);
+                        router.replace('/feed/1');
+                    });
+                } catch (error) {
+                    console.log(error)
+                }
             };
 
             const message = new Date().getTime().toString();

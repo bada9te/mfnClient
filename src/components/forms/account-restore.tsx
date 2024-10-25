@@ -185,6 +185,31 @@ export default function AccountRestoreForm(props: {
                                     </div>
                                 </>
                             );
+                        } else if (type === "link-email") {
+                            return (
+                                <div className="form-control relative">
+                                    <label className="label">
+                                        <span className="label-text">{dictionary.forms["account-restore"]["new-email"]}</span>
+                                    </label>
+                                    <input type="text" placeholder={dictionary.forms["account-restore"]["new-email"]} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                                        ...register("newValue", {
+                                            required: { value: true, message: dictionary.forms["account-restore"].required },
+                                            pattern: { value: formsConstants.emailRegex, message: dictionary.forms["account-restore"]["email-not-valid"] }
+                                        })
+                                    }/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
+                                            <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                                            <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                                        </svg>
+
+                                    {
+                                        errors.newValue &&
+                                        <label className="label">
+                                            <span className="label-text text-error">{errors.newValue.message}</span>
+                                        </label>
+                                    }
+                                </div>
+                            );
                         }
                     })()
                 }
