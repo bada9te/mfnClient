@@ -10,6 +10,7 @@ import { revalidatePathAction } from "@/actions/revalidation";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Link from "next/link";
 import envCfg from "@/config/env";
+import { setCookie } from "cookies-next";
 
 
 type InputsNickname = {
@@ -29,7 +30,7 @@ type InputsLinkEmail = {
 };
 
 type InputsPassword = {
-    oldPassword: string;
+    oldEmail: string;
 };
 
 
@@ -197,6 +198,11 @@ export default function ProfileEditForm(props: {
                 }
             }
         }).then(_ => {
+            const date = new Date();
+            date.setTime(date.getTime() + (10 * 60 * 1000));
+            setCookie("link-email-request-value", data.newEmail, {
+                expires: date
+            });
             enqueueSnackbar("Email sent", {autoHideDuration: 2000, variant: 'success'});
         }).catch(_ => {
             enqueueSnackbar("Email can not be updated", {autoHideDuration: 3000, variant: 'error'});
@@ -385,18 +391,23 @@ export default function ProfileEditForm(props: {
                                             </label>
                                             <div className="join">
                                                 <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                                    ...registerPassword("oldPassword", {
-                                                        minLength: { value: 8, message: `${dictionary.forms["profile-edit"]["min-length"]} 8` },
-                                                        maxLength: { value: 20, message: `${dictionary.forms["profile-edit"]["max-length"]} 20` },
+                                                    ...registerPassword("oldEmail", {
+                                                        pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
                                                         required: { value: true, message: dictionary.forms["profile-edit"].required },
+                                                        validate: (value) => {
+                                                            const userEmail = user?.local?.email as string;
+                                                            if (userEmail !== value) {
+                                                                return dictionary.forms["profile-edit"]["wrong-email"]
+                                                            }
+                                                        }
                                                     })
                                                 }/>
                                                 <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
                                             </div>
                                             {
-                                                errorsPassword.oldPassword &&
+                                                errorsPassword.oldEmail &&
                                                 <label className="label">
-                                                    <span className="label-text text-error">{errorsPassword.oldPassword.message}</span>
+                                                    <span className="label-text text-error">{errorsPassword.oldEmail.message}</span>
                                                 </label>
                                             }
                                         </div>

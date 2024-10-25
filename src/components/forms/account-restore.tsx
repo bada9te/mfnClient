@@ -2,8 +2,10 @@
 import { formsConstants } from "@/config/forms";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { useModerationActionDeleteMutation, useUserRestoreAccountMutation } from "@/utils/graphql-requests/generated/schema";
+import { getCookie, deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 type Inputs = {
@@ -23,6 +25,7 @@ export default function AccountRestoreForm(props: {
     const { handleSubmit, register, formState: {errors}, reset, getValues } = useForm<Inputs>();
     const {enqueueSnackbar} = useSnackbar();
     const router = useRouter();
+    const [isMounted, setIsMounted] = useState(false);
 
     const [ restoreAccount ] = useUserRestoreAccountMutation();
     const [ deleteModeration ] = useModerationActionDeleteMutation();
@@ -40,6 +43,7 @@ export default function AccountRestoreForm(props: {
                 },
             },
         }).then(_ => {
+            type == "link-email" && deleteCookie("link-email-request-value");
             reset();
             router.replace('/login');
             enqueueSnackbar("Done", { autoHideDuration: 4000, variant: 'success' });
@@ -68,6 +72,15 @@ export default function AccountRestoreForm(props: {
         });
     }
 
+    useEffect(() => {
+        setIsMounted(true);
+    }, [])
+
+    if (!isMounted) {
+        return
+    }
+
+   
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <form role="form" className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -191,17 +204,19 @@ export default function AccountRestoreForm(props: {
                                     <label className="label">
                                         <span className="label-text">{dictionary.forms["account-restore"]["new-email"]}</span>
                                     </label>
-                                    <input type="text" placeholder={dictionary.forms["account-restore"]["new-email"]} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
+                                    <input type="email" placeholder={dictionary.forms["account-restore"]["new-email"]} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
                                         ...register("newValue", {
                                             required: { value: true, message: dictionary.forms["account-restore"].required },
-                                            pattern: { value: formsConstants.emailRegex, message: dictionary.forms["account-restore"]["email-not-valid"] }
+                                            pattern: { value: formsConstants.emailRegex, message: dictionary.forms["account-restore"]["email-not-valid"] },
+                                            validate: (value => {
+                                                return getCookie("link-email-request-value") == value;
+                                            })
                                         })
                                     }/>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
                                             <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
                                             <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
                                         </svg>
-
                                     {
                                         errors.newValue &&
                                         <label className="label">
