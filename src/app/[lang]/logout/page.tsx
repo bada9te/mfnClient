@@ -32,6 +32,6 @@ export default function LogoutPage({params}: {params: {lang: TLang}}) {
     }, [keyID, dispatch, router]);
 
     return (
-        <>Logging out, plase wait...</>
+        <></>
     );
 }
