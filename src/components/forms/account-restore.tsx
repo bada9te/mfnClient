@@ -208,9 +208,9 @@ export default function AccountRestoreForm(props: {
                                         ...register("newValue", {
                                             required: { value: true, message: dictionary.forms["account-restore"].required },
                                             pattern: { value: formsConstants.emailRegex, message: dictionary.forms["account-restore"]["email-not-valid"] },
-                                            validate: (value => {
-                                                return getCookie("link-email-request-value") == value;
-                                            })
+                                            validate: (value) => {
+                                                return getCookie("link-email-request-value") == value
+                                            }
                                         })
                                     }/>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 absolute right-3 top-12">
@@ -220,7 +220,7 @@ export default function AccountRestoreForm(props: {
                                     {
                                         errors.newValue &&
                                         <label className="label">
-                                            <span className="label-text text-error">{errors.newValue.message}</span>
+                                            <span className="label-text text-error">{errors.newValue.message || dictionary.forms["account-restore"]["email-not-valid"]}</span>
                                         </label>
                                     }
                                 </div>
