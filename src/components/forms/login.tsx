@@ -12,7 +12,6 @@ import FormsSocials from "../common/forms-socials/forms-socials";
 import envCfg from "@/config/env";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Image from "next/image";
-import { useEffect } from "react";
 
 
 type Inputs = {

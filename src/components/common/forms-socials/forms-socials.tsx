@@ -1,11 +1,18 @@
 "use client"
 import envCfg from "@/config/env";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { setUnreadNotificationsCount, setUser } from "@/lib/redux/slices/user";
+import { useAppDispatch } from "@/lib/redux/store";
+import { httpWeb3Login } from "@/utils/http-requests/auth";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSnackbar } from "notistack";
 import { useEffect } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect, useSignMessage } from "wagmi";
+
 
 export default function FormsSocials({
     dictionary
@@ -14,12 +21,43 @@ export default function FormsSocials({
 }) {
     const account = useAccount();
     const { openConnectModal } = useConnectModal();
+    const { disconnect } = useDisconnect();
+    const { signMessageAsync } = useSignMessage();
+    const { enqueueSnackbar } = useSnackbar();
+    const dispatch = useAppDispatch();
+    const router = useRouter();
 
     useEffect(() => {
         if (account.address) {
-            // TODO: communicate with server to authenticate with signed msg and address
+            const processSigning = async(msg: string) => {
+                const signHex = await signMessageAsync({ message: msg });
+
+                httpWeb3Login(
+                    account.address as string,
+                    msg,
+                    signHex
+                ).then(({data: response}) => {
+                    console.log("LOGIN:", response);
+                    enqueueSnackbar(`Logged in as ${response.user.nick}`, {variant: 'success', autoHideDuration: 2000});
+                    dispatch(setUser(response.user));
+                    dispatch(setUnreadNotificationsCount(response.unreadNotifications));
+                    setCookie(envCfg.userIdCookieKey as string, response.user._id);
+                    router.replace('/feed/1');
+                });
+            };
+
+            const message = new Date().getTime().toString();
+            processSigning(message);
         }
     }, [account.address]);
+
+    useEffect(() => {
+        try {
+            account.address && disconnect();
+        } catch (error) {
+            console.log("on_web3_logout: No web3 account connected!")
+        }
+    }, []);
 
     return (
         <>
