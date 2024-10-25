@@ -2,7 +2,7 @@
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
 import { useSnackbar } from "notistack";
-import { UserQuery, useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkFacebookMutation, useUserUnlinkGoogleMutation, useUserUnlinkTwitterMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
+import { UserQuery, useUserLinkEmailRequestMutation, useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkFacebookMutation, useUserUnlinkGoogleMutation, useUserUnlinkTwitterMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import { setUser } from "@/lib/redux/slices/user";
 import { useEffect, useState } from "react";
@@ -54,6 +54,7 @@ export default function ProfileEditForm(props: {
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useUserUpdateMutation();
     const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();
+    const [ prepareLinkEmail ] = useUserLinkEmailRequestMutation();
 
 
     // ##################################### GOOGLE HANDLERS #####################################
@@ -188,17 +189,17 @@ export default function ProfileEditForm(props: {
     // link email
     const onSubmitLinkEmail: SubmitHandler<InputsLinkEmail> = async(data) => {
         enqueueSnackbar("Doing important stuff...", {autoHideDuration: 1500});
-        await prepareToRestore({
+        await prepareLinkEmail({
             variables: {
                 input: {
-                    email: user?.local?.email as string,
-                    type: "password"
+                    userId: userData.user._id as string,
+                    email: data.newEmail,
                 }
             }
         }).then(_ => {
-            enqueueSnackbar("Restoration email sent", {autoHideDuration: 2000, variant: 'success'});
+            enqueueSnackbar("Email sent", {autoHideDuration: 2000, variant: 'success'});
         }).catch(_ => {
-            enqueueSnackbar("Password can not be updated", {autoHideDuration: 3000, variant: 'error'});
+            enqueueSnackbar("Email can not be updated", {autoHideDuration: 3000, variant: 'error'});
         });
     }
 

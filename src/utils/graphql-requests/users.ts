@@ -288,3 +288,12 @@ export const USER_SWITCH_POST_PINNED_MUTATION = gql`
         }
     }
 `
+
+export const USER_LINK_EMAIL_REQUEST_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userLinkEmailRequest($input: LinkEmailInput!) {
+        userLinkEmailRequest(input: $input) {
+            _id
+        }
+    }
+`;

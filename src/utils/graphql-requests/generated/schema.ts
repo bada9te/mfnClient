@@ -124,6 +124,11 @@ export type CreateSupportRequestInput = {
   message: Scalars['String']['input'];
 };
 
+export type LinkEmailInput = {
+  email: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
 export type LinkGoogleInput = {
   email: Scalars['String']['input'];
   id: Scalars['String']['input'];
@@ -187,6 +192,7 @@ export type Mutation = {
   supportRequestCreate: SupportRequest;
   userConfirmAccount: UserWithAction;
   userCreate: UserWithAction;
+  userLinkEmailRequest?: Maybe<User>;
   userLinkFacebook?: Maybe<User>;
   userLinkGoogle?: Maybe<User>;
   userLinkTwitter?: Maybe<User>;
@@ -316,6 +322,11 @@ export type MutationUserConfirmAccountArgs = {
 
 export type MutationUserCreateArgs = {
   input: AddUserInput;
+};
+
+
+export type MutationUserLinkEmailRequestArgs = {
+  input: LinkEmailInput;
 };
 
 
@@ -1252,6 +1263,13 @@ export type UserSwitchPostPinnedMutationVariables = Exact<{
 
 
 export type UserSwitchPostPinnedMutation = { __typename?: 'Mutation', userSwitchPostPinned: { __typename?: 'User', _id: string, nick: string, avatar: string, description: string, background: string, achievements?: Array<number> | null, level: number } };
+
+export type UserLinkEmailRequestMutationVariables = Exact<{
+  input: LinkEmailInput;
+}>;
+
+
+export type UserLinkEmailRequestMutation = { __typename?: 'Mutation', userLinkEmailRequest?: { __typename?: 'User', _id: string } | null };
 
 export const CoreAchievementFieldsFragmentDoc = gql`
     fragment CoreAchievementFields on Achievement {
@@ -3837,3 +3855,36 @@ export function useUserSwitchPostPinnedMutation(baseOptions?: Apollo.MutationHoo
 export type UserSwitchPostPinnedMutationHookResult = ReturnType<typeof useUserSwitchPostPinnedMutation>;
 export type UserSwitchPostPinnedMutationResult = Apollo.MutationResult<UserSwitchPostPinnedMutation>;
 export type UserSwitchPostPinnedMutationOptions = Apollo.BaseMutationOptions<UserSwitchPostPinnedMutation, UserSwitchPostPinnedMutationVariables>;
+export const UserLinkEmailRequestDocument = gql`
+    mutation userLinkEmailRequest($input: LinkEmailInput!) {
+  userLinkEmailRequest(input: $input) {
+    _id
+  }
+}
+    `;
+export type UserLinkEmailRequestMutationFn = Apollo.MutationFunction<UserLinkEmailRequestMutation, UserLinkEmailRequestMutationVariables>;
+
+/**
+ * __useUserLinkEmailRequestMutation__
+ *
+ * To run a mutation, you first call `useUserLinkEmailRequestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLinkEmailRequestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLinkEmailRequestMutation, { data, loading, error }] = useUserLinkEmailRequestMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLinkEmailRequestMutation(baseOptions?: Apollo.MutationHookOptions<UserLinkEmailRequestMutation, UserLinkEmailRequestMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserLinkEmailRequestMutation, UserLinkEmailRequestMutationVariables>(UserLinkEmailRequestDocument, options);
+      }
+export type UserLinkEmailRequestMutationHookResult = ReturnType<typeof useUserLinkEmailRequestMutation>;
+export type UserLinkEmailRequestMutationResult = Apollo.MutationResult<UserLinkEmailRequestMutation>;
+export type UserLinkEmailRequestMutationOptions = Apollo.BaseMutationOptions<UserLinkEmailRequestMutation, UserLinkEmailRequestMutationVariables>;
