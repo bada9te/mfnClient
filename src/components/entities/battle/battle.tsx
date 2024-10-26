@@ -194,18 +194,20 @@ export default function Battle(props: {
                             {
                                 !battleData.finished &&
                                 <>
-                                    <button 
-                                        disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
-                                        onClick={() => makeBattleVote(1, "post1Score")}
-                                        className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}</button>
                                     {
-                                        battleData.chainId &&
+                                        battleData.chainId ?
                                         <SelectAmountOfMFNTokens 
                                             dictionary={dictionary}
                                             type="post1Score"
                                             button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
                                             handleClose={makeBattleVoteWithUSDC}
-                                        />
+                                        /> : 
+                                        <button 
+                                            disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
+                                            onClick={() => makeBattleVote(1, "post1Score")}
+                                            className="btn btn-sm btn-primary text-white glass w-full join-item">
+                                                <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}
+                                        </button>
                                     }
                                 </>
                             }
@@ -264,21 +266,21 @@ export default function Battle(props: {
                             {
                                 !battleData.finished &&
                                 <>
-                                    <button
-                                        disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
-                                        onClick={() => makeBattleVote(1, "post2Score")}
-                                        className="btn btn-sm btn-primary text-white glass w-full join-item"
-                                    >
-                                        <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post2?.title}
-                                    </button>
                                     {
-                                        battleData.chainId &&
+                                        battleData.chainId ?
                                         <SelectAmountOfMFNTokens 
                                             dictionary={dictionary}
                                             type="post2Score"
                                             button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
                                             handleClose={makeBattleVoteWithUSDC}
-                                        />
+                                        /> :
+                                        <button
+                                            disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
+                                            onClick={() => makeBattleVote(1, "post2Score")}
+                                            className="btn btn-sm btn-primary text-white glass w-full join-item"
+                                        >
+                                            <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post2?.title}
+                                        </button>
                                     }
                                 </>
                             }
