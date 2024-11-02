@@ -10,6 +10,14 @@ const nextConfig = {
                 hostname: 'avatar.vercel.sh',
             },
             {
+                protocol: 'https',
+                hostname: 'dev-server-nestjs-development.up.railway.app',
+            },
+            {
+                protocol: 'https',
+                hostname: 'server-nestjs-production-bcf6.up.railway.app',
+            },
+            {
                 protocol: 'http',
                 hostname: 'localhost',
             },
