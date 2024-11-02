@@ -32,28 +32,28 @@
                 "subheader": "und Informationen über den Autor",
                 "cards": {
                     "listening": {
-                        "title": "Musik hören",
+                        "title": "🎧 Musik hören",
                         "description": "Hören Sie Musik und haben Sie Spaß!"
                     },
                     "musical": {
-                        "title": "Teilen von musikalischen Kreationen",
+                        "title": "💌 Teilen von musikalischen Kreationen",
                         "description": "Teilen Sie die Tracks der Benutzer und heben Sie die Stimmung der Empfänger."
                     },
                     "musician": {
-                        "title": "Musiker-Profilierung",
+                        "title": "📋 Musiker-Profilierung",
                         "description": "Die Plattform bietet erstaunliche Benutzerprofile, die Sie nach Ihrem Geschmack anpassen können :)"
                     },
                     "just": {
-                        "title": "Nur zur Unterhaltung und Selbststudium \\*_*/",
+                        "title": "💵 Nur zur Unterhaltung und Selbststudium \\*_*/",
                         "description": "Diese Plattform wurde von einer einzelnen Person entwickelt und befindet sich noch in der Entwicklung."
                     },
                     "about": {
-                        "title": "Über den Autor",
-                        "description": "Hallo! Ich freue mich sehr, Sie auf meinem ersten großen Web-Projekt zu sehen. Ich bin ein normaler 3. Jahr Student an der Nationalen Universität ''Zaporizhzhia Polytechnic'', Saporischschja, Ukraine. Es gibt jedoch keine modernen Web-Entwicklungskurse an meiner Uni, also habe ich beschlossen, mich selbst weiterzubilden."
+                        "title": "👨🏻‍💼 Über den Autor",
+                        "description": "Hallo! Ich freue mich sehr, Sie bei meinem ersten großen Webprojekt hier zu haben. Ich interessiere mich leidenschaftlich für Web3-Technologien und alles, was mit Softwareentwicklung zu tun hat. Ich bin auch offen für die Zusammenarbeit an Projekten jeglicher Komplexität! Kontaktieren Sie mich über die untenstehenden Links!"
                     },
                     "gratitude": {
-                        "title": "Großer Dank",
-                        "description": "Ich möchte mich herzlich für die Übersetzung ins Deutsche bei (Name Surname) und für einige technische Dinge bei (Name Surname) bedanken."
+                        "title": "🙏 Großer Dank",
+                        "description": "Ich möchte mich herzlich für die Übersetzung ins Deutsche bei (Bohdan Krol) und für einige technische Dinge bei (Dmytro Rabotiahov) bedanken."
                     }
                 }
             },

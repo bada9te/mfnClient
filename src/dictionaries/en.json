@@ -32,28 +32,28 @@
                 "subheader": "and author information",
                 "cards": {
                     "listening": {
-                        "title": "Listening to music",
+                        "title": "🎧 Listening to music",
                         "description": "Listen to music and have fun!"
                     },
                     "musical": {
-                        "title": "Musical creations sharing",
+                        "title": "💌 Musical creations sharing",
                         "description": "Share users tracks and up the mood the recepients"
                     },
                     "musician": {
-                        "title": "Musician's profiling",
+                        "title": "📋 Musician's profiling",
                         "description": "The platform provides amazing user profiles which you can customize to your own likes :)"
                     },
                     "just": {
-                        "title": "Just for entertaiment and self-study \\*_*/",
+                        "title": "💵 Just for entertaiment and self-study \\*_*/",
                         "description": "This platform was developed by a single person and actually in development."
                     },
                     "about": {
-                        "title": "About the author",
-                        "description": "Hi there! I am so happy to see u on my first huge web-project. I am a casual 3rd year student of National University ''Zaporizhzhia Polytechnic'', Zaporizhzhia, Ukraine. There is no modern web-development classes in my uni however, so I decided to do some self-education stuff."
+                        "title": "👨🏻‍💼 About the author",
+                        "description": "Hello! I’m thrilled to have you here on my first major web project. I’m passionate about Web3 technologies and all things software development. I’m also open to collaborating on projects of any level of complexity! Contact me with links below!"
                     },
                     "gratitude": {
-                        "title": "Big gratitude",
-                        "description": "Want to say great thanks for translation to Deutch (Name Surname) and some technical stuff (Name Surname)"
+                        "title": "🙏 Big gratitude",
+                        "description": "Want to say great thanks for translation to Deutch (Bohdan Krol) and some technical stuff (Dmytro Rabotiahov)"
                     }
                 }
             },
