@@ -4,7 +4,16 @@ const nextConfig = {
     reactStrictMode: false,
     crossOrigin: "use-credentials",
     images: {
-        domains: ['avatar.vercel.sh', 'localhost'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'avatar.vercel.sh',
+            },
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+            },
+        ],
     }
 };
 
