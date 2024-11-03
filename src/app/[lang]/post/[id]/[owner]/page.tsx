@@ -48,7 +48,7 @@ export default async function PostPage({params}: {params: {id: string, owner: st
                     Number(params.owner) ?
                     <>
                         <div className="divider divider-primary my-10">More tracks</div>
-                        <div className="flex flex-wrap justify-center md:justify-around gap-5">
+                        <div className="flex flex-wrap justify-center md:justify-center gap-5 lg:gap-14">
                             <PreloadQuery
                                 query={POSTS_BY_OWNER_QUERY}
                                 variables={{

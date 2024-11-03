@@ -36,7 +36,7 @@ export default async function ProfileId({params}: {params: {page: number, id: st
                 description={dict.app.profile.id.page.description}
             >
                 <div className="card shadow-none w-full ">
-                    <div className="flex flex-wrap justify-center md:justify-around gap-5">
+                    <div className="flex flex-wrap justify-center md:justify-center gap-5 lg:gap-14">
                         <PreloadQuery
                             query={USER_PINNED_POSTS_QUERY}
                             variables={{

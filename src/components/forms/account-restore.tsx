@@ -26,11 +26,13 @@ export default function AccountRestoreForm(props: {
     const {enqueueSnackbar} = useSnackbar();
     const router = useRouter();
     const [isMounted, setIsMounted] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const [ restoreAccount ] = useUserRestoreAccountMutation();
     const [ deleteModeration ] = useModerationActionDeleteMutation();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        setIsLoading(true);
         enqueueSnackbar("Requesting...", {autoHideDuration: 1500});
         await restoreAccount({
             variables: {
@@ -49,6 +51,8 @@ export default function AccountRestoreForm(props: {
             enqueueSnackbar("Done", { autoHideDuration: 4000, variant: 'success' });
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 3000, variant: 'error' });
+        }).finally(() => {
+            setIsLoading(false);
         });
     }
 
@@ -231,7 +235,7 @@ export default function AccountRestoreForm(props: {
                 
 
                 <div className="form-control mt-4">
-                    <button type="submit" className="btn btn-primary glass text-white">
+                    <button type="submit" className="btn btn-primary glass text-white" disabled={isLoading}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
                         </svg>

@@ -1,7 +1,9 @@
 "use client"
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { useUserConfirmAccountMutation } from "@/utils/graphql-requests/generated/schema";
+import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 type Inputs = {
@@ -16,10 +18,12 @@ export default function AccountConfirminationForm(props: {
     const {userId, actionId, dictionary} = props;
     const { handleSubmit, register, formState: {errors}, reset } = useForm<Inputs>();
     const {enqueueSnackbar} = useSnackbar();
-
+    const [ isLoading, setIsLoading ] = useState(false);
     const [ confirmAccount ] = useUserConfirmAccountMutation();
+    const router = useRouter();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        setIsLoading(true);
         enqueueSnackbar("Processing...", {autoHideDuration: 1500});
         await confirmAccount({
             variables: {
@@ -32,8 +36,10 @@ export default function AccountConfirminationForm(props: {
         }).then(_ => {
             reset();
             enqueueSnackbar("Account confirmed", { autoHideDuration: 3000, variant: 'success' });
+            router.replace('/feed/1');
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 3000, variant: 'error' });
+            setIsLoading(false);
         });
     }
 
@@ -59,7 +65,12 @@ export default function AccountConfirminationForm(props: {
                 </div>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">{dictionary.forms["account-confirmination"].confirm}</button>
+                    <button className="btn btn-primary glass text-white" disabled={isLoading}>
+                        {
+                            isLoading && <span className="loading loading-dots loading-sm"></span>
+                        }
+                        {dictionary.forms["account-confirmination"].confirm}
+                    </button>
                 </div>
             </form>
         </div>

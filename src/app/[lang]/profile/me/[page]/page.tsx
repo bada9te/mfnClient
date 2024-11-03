@@ -42,14 +42,14 @@ export default async function Profile({params}: {params: { page: number, lang: T
                 description={dict.app.profile.me.page.description}
             >
                 <div className="card w-full">
-                    <div className="flex flex-wrap justify-center md:justify-around gap-5">
+                    <div className="flex flex-wrap justify-center md:justify-center gap-5 lg:gap-14">
                         <PreloadQuery
                             query={USER_PINNED_POSTS_QUERY}
                             variables={{
                                 _id: myId
                             }}
                         >
-                            <Suspense fallback={"LADING..."}>
+                            <Suspense fallback={<></>}>
                                 <PinnedTracks dictionary={dict.components} userId={myId}/>
                             </Suspense>
                         </PreloadQuery>

@@ -57,6 +57,7 @@ export default function BattleForm({
     const { enqueueSnackbar } = useSnackbar();
     const [blockchain, setBlockchain] = useState<undefined | number>(56);
     const [useBlockChain, setUseBlockchain] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const [createBattle] = useBattleCreateMutation();
     const [deleteBattle] = useBattleDeleteByIdMutation();
@@ -67,6 +68,7 @@ export default function BattleForm({
             enqueueSnackbar("You probably forgot to select the track", {variant: 'error', autoHideDuration: 3000});
             return;
         }
+        setIsLoading(true);
 
         const input = {
             initiator: user?._id as string,
@@ -127,6 +129,7 @@ export default function BattleForm({
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
         }).finally(() => {
             reset();
+            setIsLoading(false);
             revalidatePathAction('/battles/in-progress', 'page');
         });
     }
@@ -230,7 +233,10 @@ export default function BattleForm({
                                     );
                                 } else {
                                     return (
-                                        <button type="submit" className="btn btn-primary glass text-white">
+                                        <button type="submit" className="btn btn-primary glass text-white" disabled={isLoading}>
+                                            {
+                                                isLoading && <span className="loading loading-dots loading-sm"></span>
+                                            }
                                             {dictionary.forms.battle.create} {useBlockChain ? `- ${config.chains.find(i => i.id === blockchain)?.name}` : ""}
                                         </button>
                                     )

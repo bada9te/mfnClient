@@ -4,6 +4,7 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
 import { usePlaylistCreateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 type Inputs = {
@@ -19,10 +20,12 @@ export default function PlaylistForm({
     const { handleSubmit, register, formState: {errors}, reset } = useForm<Inputs>();
     const user = useAppSelector(state => state.user.user);
     const {enqueueSnackbar} = useSnackbar();
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const [ createPlaylist ] = usePlaylistCreateMutation();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        setIsLoading(true);
         enqueueSnackbar("Creating playlist...", {autoHideDuration: 1500});
         createPlaylist({
             variables: {
@@ -39,7 +42,9 @@ export default function PlaylistForm({
             revalidatePathAction("/playlists/explore", "page");
         }).catch(_ => {
             enqueueSnackbar("Playlist can not be created", {variant: 'error', autoHideDuration: 3000});
-        })
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }
 
     return (
@@ -73,7 +78,12 @@ export default function PlaylistForm({
                 </div>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">{dictionary.forms.playlist.submit}</button>
+                    <button className="btn btn-primary glass text-white" disabled={isLoading}>
+                        {
+                            isLoading && <span className="loading loading-dots loading-sm"></span>
+                        }
+                        {dictionary.forms.playlist.submit}
+                    </button>
                 </div>
             </form>
         </div>

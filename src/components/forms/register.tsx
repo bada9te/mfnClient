@@ -8,6 +8,7 @@ import {useRouter} from 'next/navigation';
 import FormsSocials from "../common/forms-socials/forms-socials";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Image from "next/image";
+import { useState } from "react";
 
 type Inputs = {
     email: string;
@@ -25,8 +26,10 @@ export default function RegisterForm({
     const { enqueueSnackbar } = useSnackbar();
     const [ createUser ] = useUserCreateMutation();
     const router = useRouter();
+    const [loading, setIsLoading] = useState(false);
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        setIsLoading(true);
         createUser({
             variables: {
                 input: {
@@ -40,7 +43,8 @@ export default function RegisterForm({
             reset();
             router.replace('/login');
         }).catch(err => {
-            console.log(err.message)
+            console.log(err.message);
+            setIsLoading(false);
             enqueueSnackbar(`Account with this email already exists`, {variant: 'error', autoHideDuration: 3000});
         });
     }
@@ -139,7 +143,12 @@ export default function RegisterForm({
                             }
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary glass text-white">{dictionary.forms.register.register}</button>
+                            <button className="btn btn-primary glass text-white" disabled={loading}>
+                                {
+                                    loading && <span className="loading loading-dots loading-sm"></span>
+                                }
+                                {dictionary.forms.register.register}
+                            </button>
                         </div>
 
                         <label className="label flex flex-col gap-3 justify-start items-start mt-5">

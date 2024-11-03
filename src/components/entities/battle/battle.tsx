@@ -73,7 +73,8 @@ export default function Battle(props: {
     useEffect(() => {
         if (battleData._id) {
             const tId = setInterval(() => {
-                setTimeLeft(getTimeLeft(+new Date(+battleData.willFinishAt) - new Date().getTime()));
+                const timeLeft = getTimeLeft(+new Date(+battleData.willFinishAt) - new Date().getTime());
+                setTimeLeft(timeLeft);
             }, 3000);
 
             return () => {
@@ -196,7 +197,7 @@ export default function Battle(props: {
                         <Post data={battleData.post1 as TPost} dictionary={dictionary}/>
                         <div className="py-2 flex flex-col gap-2 mt-3">
                             {
-                                !battleData.finished &&
+                                !battleData.finished && timeLeft.h >= 0 && timeLeft.m >= 0 && timeLeft.s >= 0 &&
                                 <>
                                     {
                                         battleData.chainId ?
@@ -248,11 +249,11 @@ export default function Battle(props: {
                                 :
                                 <span className="countdown font-mono text-2xl">
                                     {/* @ts-ignore */}
-                                    <span style={{"--value":timeLeft.h}}></span>h:
+                                    <span style={{"--value":(timeLeft.h < 0 ? 0 : timeLeft.h)}}></span>h:
                                     {/* @ts-ignore */}
-                                    <span style={{"--value":timeLeft.m}}></span>m:
+                                    <span style={{"--value":(timeLeft.m < 0 ? 0 : timeLeft.m)}}></span>m:
                                     {/* @ts-ignore */}
-                                    <span style={{"--value":timeLeft.s}}></span>s
+                                    <span style={{"--value":(timeLeft.s < 0 ? 0 : timeLeft.s)}}></span>s
                                 </span>
                             }
                         </div>
@@ -268,7 +269,7 @@ export default function Battle(props: {
                         <Post data={battleData.post2 as TPost} dictionary={dictionary}/>
                         <div className="py-2 flex flex-col gap-2 mt-3">
                             {
-                                !battleData.finished &&
+                                !battleData.finished && timeLeft.h >= 0 && timeLeft.m >= 0 && timeLeft.s >= 0 &&
                                 <>
                                     {
                                         battleData.chainId ?
