@@ -13,6 +13,14 @@ jest.mock('next/headers', () => {
     }
 });
 
+jest.mock("next/navigation", () => ({
+    useRouter() {
+        return {
+            prefetch: () => null
+        };
+    }
+}));
+
 const mocks = [
     {
         request: {
