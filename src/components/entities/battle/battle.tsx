@@ -83,7 +83,9 @@ export default function Battle(props: {
     }, [battleData]);
 
     const makeBattleVote = (voteCount: number, postNScore: "post1Score" | "post2Score") => {
-        voteCount = Number(String(voteCount).slice(0, String(voteCount).indexOf('.')))
+        if (String(voteCount).includes('.')) {
+            voteCount = Number(String(voteCount).slice(0, String(voteCount).indexOf('.')))
+        }
 
         console.log("VOTING...", voteCount)
         enqueueSnackbar("Voting...", {autoHideDuration: 1500});
@@ -118,7 +120,7 @@ export default function Battle(props: {
                 abi: USDCAddresses[account.chainId].abi,
                 functionName: "approve",
                 // @ts-ignore
-                args: [MFNAddresses[account.chainId], amount * 10**Number(decimals)],
+                args: [battleData.contractAddress, amount * 10**Number(decimals)],
             });
             enqueueSnackbar("Waiting for tx receipt...", {autoHideDuration: 2000});
             await waitForTransactionReceipt(config, {
@@ -130,6 +132,7 @@ export default function Battle(props: {
             await writeContractAsync({
                 // @ts-ignore
                 ...generateDEFAULT_MFN_CONTRACT_CFG(account.chainId),
+                address: battleData.contractAddress as `0x${string}`,
                 functionName: "vote",
                 args: [
                     battleData._id, 
@@ -182,6 +185,7 @@ export default function Battle(props: {
                         post2Id={battleData.post2?._id as string}
                         battleId={battleData._id as string}
                         networkId={battleData.chainId}
+                        contractAddress={battleData.contractAddress as string}
                     />
                     
                 }

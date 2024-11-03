@@ -58,6 +58,7 @@ const cardsData2 = [
         iconUrl:  "/assets/icons/logo_clear.png",
         github: { bada9te: 'https://github.com/bada9te' },
         telegram: { bada9te: 'https://t.me/bada9te' },
+        instagram: { bada9te: 'https://www.instagram.com/bada9te/' }
     }
 ];
 
@@ -222,7 +223,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                                                                 bada9te
                                                             </Link>
 
-                                                            <Link href={``} target="_blank" className="btn btn-primary btn-sm glass text-white bg-pink-600">
+                                                            <Link href={`${data.instagram?.bada9te}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-pink-600">
                                                                 <Image src={"/assets/icons/instagram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
                                                                 bada9te
                                                             </Link>

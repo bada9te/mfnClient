@@ -191,15 +191,6 @@ export const USER_RESTORE_ACCOUNT_MUTATION = gql`
 `;
 
 
-export const USER_LINK_GOOGLE_MUTATION = gql`
-    ${CORE_USER_FIELDS}
-    mutation userLinkGoogle($input: LinkGoogleInput!) {
-        userLinkGoogle(input: $input) {
-            ...CoreUserFields
-        }
-    }
-`;
-
 export const USER_UNLINK_GOOGLE_MUTATION = gql`
     ${CORE_USER_FIELDS}
     mutation userUnlinkGoogle($_id: ID!) {
@@ -210,15 +201,6 @@ export const USER_UNLINK_GOOGLE_MUTATION = gql`
 `;
 
 
-export const USER_LINK_FACEBOOK_MUTATION = gql`
-    ${CORE_USER_FIELDS}
-    mutation userLinkFacebook($input: LinkTwitterOrFacebookInput!) {
-        userLinkFacebook(input: $input) {
-            ...CoreUserFields
-        }
-    }
-`;
-
 export const USER_UNLINK_FACEBOOK_MUTATION = gql`
     ${CORE_USER_FIELDS}
     mutation userUnlinkFacebook($_id: ID!) {
@@ -228,14 +210,6 @@ export const USER_UNLINK_FACEBOOK_MUTATION = gql`
     }
 `;
 
-export const USER_LINK_TWITTER_MUTATION = gql`
-    ${CORE_USER_FIELDS}
-    mutation userLinkTwitter($input: LinkTwitterOrFacebookInput!) {
-        userLinkTwitter(input: $input) {
-            ...CoreUserFields
-        }
-    }
-`;
 
 export const USER_UNLINK_TWITTER_MUTATION = gql`
     ${CORE_USER_FIELDS}

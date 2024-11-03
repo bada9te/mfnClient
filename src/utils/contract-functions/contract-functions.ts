@@ -83,30 +83,35 @@ export const contractGetAllImportantDataForBattle = async(
     post2Id: string,
     user: string,
     chainId: number,
+    address: `0x${string}`,
 ) => {
     const data = await readContracts(config, {
         contracts: [
             // @ts-ignore
             {
                 ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
+                address,
                 functionName: "totalTokensPerPost",
                 args: [battleId, post1Id]
             },
             // @ts-ignore
             {
                 ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
+                address,
                 functionName: "totalTokensPerPost",
                 args: [battleId, post2Id]
             },
             // @ts-ignore
             {
                 ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
+                address,
                 functionName: "battleTokensTransfers",
                 args: [user, battleId, post1Id]
             },
             // @ts-ignore
             {
                 ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
+                address,
                 functionName: "battleTokensTransfers",
                 args: [user, battleId, post2Id]
             }
@@ -120,9 +125,11 @@ export const contractGetPossibleWithdrawal = async(
     battleId: string,
     user: string,
     chainId: number,
+    address: `0x${string}`,
 ) => {
     const data = await readContract(config, {
         ...generateDEFAULT_MFN_CONTRACT_CFG(chainId),
+        address,
         functionName: "calculateWithdrawalTokensFromBattle",
         args: [battleId, user]
     });

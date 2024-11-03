@@ -9,7 +9,7 @@ import { useSnackbar } from "notistack";
 import { revalidatePathAction } from "@/actions/revalidation";
 import { useAppSelector } from "@/lib/redux/store";
 import { getDictionary } from "@/dictionaries/dictionaries";
-import { config } from "@/config/wagmi";
+import { config, MFNAddresses } from "@/config/wagmi";
 import { useAccount, useBalance, useSwitchChain, useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import ChainImage from "../common/chain-image/chain-image";
@@ -48,12 +48,9 @@ export default function BattleForm({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const user = useAppSelector(state => state.user.user);
-    const { address, chainId, connector } = useAccount();
+    const { address, chainId } = useAccount();
     const { switchChain } = useSwitchChain();
-    const { data: balance } = useBalance({
-        chainId,
-        address
-    });
+    const { data: balance } = useBalance({ chainId, address });
     const {register, reset, handleSubmit, formState: {errors}} = useForm<Inputs>();
     const [post1, setPost1] = useState<null | TPost>(null);
     const [post2, setPost2] = useState<null | TPost>(null);
@@ -76,7 +73,7 @@ export default function BattleForm({
             post1: post1._id,
             post2: post2._id,
             title: data.title,
-        }
+        };
 
         if (useBlockChain && blockchain) {
             if (Number(balance?.value) <= 0) {
@@ -85,6 +82,8 @@ export default function BattleForm({
             }
             // @ts-ignore
             input.chainId = blockchain;
+            // @ts-ignore
+            input.contractAddress = MFNAddresses[blockchain];
         }
 
         enqueueSnackbar("Creating the battle...", { autoHideDuration: 1500 });
@@ -93,33 +92,37 @@ export default function BattleForm({
                 input
             }
         }).then(({data}) => {
-            writeContractAsync({
-                ...generateDEFAULT_MFN_CONTRACT_CFG(Number(chainId)),
-                functionName: 'createBattle',
-                args: [
-                    data?.battleCreate._id as string,
-                    input.post1,
-                    input.post2,
-                    24,
-                ],
-            }).then(async(hash) => {
-                await waitForTransactionReceipt(config, {
-                    hash,
-                    confirmations: 2
-                }).then(() => {
-                    setPost1(null);
-                    setPost2(null);
-                    enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
-                });
-            }).catch(err => {
-                console.log(err);
-                deleteBattle({
-                    variables: {
-                        _id: data?.battleCreate._id as string
-                    }
-                });
-                enqueueSnackbar("Error with blockchain interaction, battle was canceled", {variant: 'error', autoHideDuration: 3000})
-            })
+            if (useBlockChain) {
+                writeContractAsync({
+                    ...generateDEFAULT_MFN_CONTRACT_CFG(Number(chainId)),
+                    functionName: 'createBattle',
+                    args: [
+                        data?.battleCreate._id as string,
+                        input.post1,
+                        input.post2,
+                        24,
+                    ],
+                }).then(async(hash) => {
+                    await waitForTransactionReceipt(config, {
+                        hash,
+                        confirmations: 2
+                    }).then(() => {
+                        setPost1(null); setPost2(null);
+                        enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
+                    });
+                }).catch(err => {
+                    console.log(err);
+                    deleteBattle({
+                        variables: {
+                            _id: data?.battleCreate._id as string
+                        }
+                    });
+                    enqueueSnackbar("Error with blockchain interaction, battle was canceled", {variant: 'error', autoHideDuration: 3000})
+                })
+            } else {
+                setPost1(null); setPost2(null);
+                enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
+            }
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
         }).finally(() => {

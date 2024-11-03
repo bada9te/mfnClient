@@ -17,6 +17,7 @@ export default function NetworkInformation({
     battleId,
     battleisFInished,
     networkId,
+    contractAddress,
     USDC_decimals
 }: {
     networkName: string;
@@ -29,6 +30,7 @@ export default function NetworkInformation({
     battleId: string;
     battleisFInished: boolean;
     networkId: number;
+    contractAddress: string;
     USDC_decimals: number;
 }) {
     const ref = useRef<HTMLDialogElement | null>(null);
@@ -51,7 +53,8 @@ export default function NetworkInformation({
                     post1Id,
                     post2Id,
                     address as `0x${string}`,
-                    networkId
+                    networkId,
+                    contractAddress as `0x${string}`,
                 ).then(data => {
                     setData({
                         totalTokensPerPost1: Number(data[0].result) / 10**USDC_decimals,
@@ -61,7 +64,12 @@ export default function NetworkInformation({
                     });
                 }).catch(console.log);
         
-                contractGetPossibleWithdrawal(battleId, address as string, networkId).then(data => {
+                contractGetPossibleWithdrawal(
+                    battleId, 
+                    address as string, 
+                    networkId, 
+                    contractAddress as `0x${string}`
+                ).then(data => {
                     // @ts-ignore
                     const possibleWithdraw1 = Number(data[0]);
                     // @ts-ignore
