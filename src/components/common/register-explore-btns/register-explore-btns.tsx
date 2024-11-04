@@ -22,7 +22,7 @@ export default function RegisterExploreBtns({
     }
 
     return (
-        <div className="join w-fit max-w-36 flex justify-center z-20">
+        <div className="join w-fit max-w-60 flex justify-center z-20">
             {
                 !user?._id &&
                 <Link href={'/login'} className="join-item btn btn-primary glass text-white w-full">

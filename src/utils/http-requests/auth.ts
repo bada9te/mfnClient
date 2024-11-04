@@ -16,6 +16,13 @@ const httpLogOut = async() => {
     return await axios.post(`${SERVER_BASE}/auth/logout`, {}, { withCredentials: true });
 }
 
+// web3 login
+const httpWeb3Login = async(address: string, message: string, signed: string) => {
+    return await axios.post(`${SERVER_BASE}/auth/web3`, {
+        address, message, signed
+    }, {withCredentials: true});
+}
+
 // update session user object
 const httpUpdateSessionUser = async(user: any) => {
     return await axios.post(`${SERVER_BASE}/update-session-user`, user)
@@ -56,6 +63,7 @@ const httpGetFacebookInfo = async(accessToken: string, userId: string) => {
 
 export {
     httpLogin,
+    httpWeb3Login,
     httpLogOut,
     httpUpdateSessionUser,
     httpGetCurrentUser,

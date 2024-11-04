@@ -5,7 +5,12 @@ import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
+import { Anonymous_Pro } from "next/font/google";
 
+const font = Anonymous_Pro({
+  subsets: ['latin', 'cyrillic'],
+  weight: '400'
+})
 
 export default function RootLayout({
   children,
@@ -15,8 +20,8 @@ export default function RootLayout({
   params: { lang: TLang }
 }>) {
   return (
-    <html lang={params.lang} data-theme="black">
-      <body>
+    <html lang={params.lang} data-theme="light">
+      <body className={font.className}>
         <RainbowkitAppProvider>
             <ApolloWrapper>
                 <SnackbarProvider maxSnack={5}>

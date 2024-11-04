@@ -4,6 +4,7 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
 import { useUserPrepareAccountToRestoreMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 type Inputs = {
@@ -17,10 +18,11 @@ export default function EmailVerificationForm({
 }) {
     const { handleSubmit, register, formState: {errors}, reset } = useForm<Inputs>();
     const {enqueueSnackbar} = useSnackbar();
-
+    const [ isLoading, setIsLoading ] = useState(false);
     const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        setIsLoading(true);
         enqueueSnackbar("Requesting...", {autoHideDuration: 1500});
         await prepareToRestore({
             variables: {
@@ -34,6 +36,8 @@ export default function EmailVerificationForm({
             enqueueSnackbar("Success, check your email for next steps", { autoHideDuration: 4000, variant: 'info' });
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 3000, variant: 'error' });
+        }).finally(() => {
+            setIsLoading(false);
         });
     }
 
@@ -60,7 +64,12 @@ export default function EmailVerificationForm({
                 </div>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">{dictionary.forms["email-verification"].submit}</button>
+                    <button className="btn btn-primary glass text-white" disabled={isLoading}>
+                        {
+                            isLoading && <span className="loading loading-dots loading-sm"></span>
+                        }
+                        {dictionary.forms["email-verification"].submit}
+                    </button>
                 </div>
             </form>
         </div>

@@ -5,6 +5,7 @@ import { useSupportRequestCreateMutation } from "@/utils/graphql-requests/genera
 import Image from "next/image";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
@@ -21,8 +22,10 @@ export default function SupportForm({
     const { register, reset, formState: {errors}, handleSubmit } = useForm<Inputs>();
     const [ createSupportRequest ] = useSupportRequestCreateMutation();
     const { enqueueSnackbar } = useSnackbar();
+    const [loading, setIsLoading] = useState(false);
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        setIsLoading(true);
         enqueueSnackbar("Submitting...", {autoHideDuration: 1500});
         createSupportRequest({
             variables: {
@@ -37,6 +40,8 @@ export default function SupportForm({
             enqueueSnackbar("Sent", {variant: 'success', autoHideDuration: 2500});
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
+        }).finally(() => {
+            setIsLoading(false);
         });
     }
 
@@ -108,7 +113,12 @@ export default function SupportForm({
                         }
                     </div>
                     <div className="form-control mt-4">
-                        <button className="btn btn-primary glass text-white" type="submit">{dictionary.forms.support.submit}</button>
+                        <button className="btn btn-primary glass text-white" type="submit" disabled={loading}>
+                            {
+                                loading && <span className="loading loading-dots loading-sm"></span>
+                            }
+                            {dictionary.forms.support.submit}
+                        </button>
                     </div>
                     {
                         /*

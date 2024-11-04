@@ -12,6 +12,7 @@ import FormsSocials from "../common/forms-socials/forms-socials";
 import envCfg from "@/config/env";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Image from "next/image";
+import { useState } from "react";
 
 
 type Inputs = {
@@ -28,8 +29,10 @@ export default function LoginForm({
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useAppDispatch();
     const router = useRouter();
+    const [loading, setIsLoading] = useState(false);
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        setIsLoading(true);
         httpLogin(data.email, data.password)
             .then(({data: response}) => {
                 console.log("LOGIN:", response);
@@ -42,6 +45,7 @@ export default function LoginForm({
             })
             .catch(err => {
                 console.log(err.message);
+                setIsLoading(false);
                 enqueueSnackbar("Invalid credentials or maybe account is not verified", {variant: 'error', autoHideDuration: 3000});
             });
     }
@@ -101,7 +105,12 @@ export default function LoginForm({
                         </div>
 
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary glass text-white">{dictionary.forms.login.login}</button>
+                            <button className="btn btn-primary glass text-white" disabled={loading}>
+                                {
+                                    loading && <span className="loading loading-dots loading-sm"></span>
+                                }
+                                {dictionary.forms.login.login}
+                            </button>
                         </div>
 
                         <label className="label flex flex-col gap-3 justify-start items-start mt-5">

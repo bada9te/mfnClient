@@ -35,6 +35,7 @@ export default function PostUploadForm({
     const [ imageURL, setImageURL ] = useState<string>("");
     const [ imageFile, setImageFile ] = useState<File | null>(null);
     const [ croppedBlob, setCroppedBlob ] = useState<IBlob | null>(null);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const handlePicture = (file: File | null) => {
         if (file !== null) {
@@ -56,6 +57,7 @@ export default function PostUploadForm({
     }
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
+        setIsLoading(true);
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
         let uploadedAudioName, uploadedImageName;
 
@@ -64,36 +66,41 @@ export default function PostUploadForm({
                 uploadedAudioName = data.data.filename;
             }).catch(err => {
                 enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
+                setIsLoading(false);
             }),
             httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`), "image").then(({data}) => {
                 uploadedImageName = data.data.filename;
             }).catch(err => {
                 enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
+                setIsLoading(false);
             }),
         ]);
 
         // upload the post itself
-        await createPost({
-            variables: {
-                input: {
-                    owner:            currentUser?._id as string,
-                    title:            data.title,
-                    description:      data.description,
-                    audio:            uploadedAudioName as unknown as string,
-                    image:            uploadedImageName as unknown as string,
-                    downloadsAllowed: data.downloadsAllowed,
-                    category:         data.genre.toLowerCase(),
+        if (uploadedAudioName && uploadedImageName) {
+            await createPost({
+                variables: {
+                    input: {
+                        owner:            currentUser?._id as string,
+                        title:            data.title,
+                        description:      data.description,
+                        audio:            uploadedAudioName as unknown as string,
+                        image:            uploadedImageName as unknown as string,
+                        downloadsAllowed: data.downloadsAllowed,
+                        category:         data.genre.toLowerCase(),
+                    },
                 },
-            },
-        }).then(() => {
-            reset();
-            enqueueSnackbar("Post created", { autoHideDuration: 1500, variant: 'success' });
-            revalidatePathAction(`/profile/me/1`, 'page');
-            revalidatePathAction('/feed/1', 'page');
-            router.replace(`/profile/me/1`)
-        }).catch(() => {
-            enqueueSnackbar("Post can not be uploaded", { autoHideDuration: 3000, variant: 'error' });
-        });
+            }).then(() => {
+                reset();
+                enqueueSnackbar("Post created", { autoHideDuration: 1500, variant: 'success' });
+                revalidatePathAction(`/profile/me/1`, 'page');
+                revalidatePathAction('/feed/1', 'page');
+                router.replace(`/profile/me/1`)
+            }).catch(() => {
+                setIsLoading(false);
+                enqueueSnackbar("Post can not be uploaded", { autoHideDuration: 3000, variant: 'error' });
+            });
+        }
     }
 
     return (
@@ -210,7 +217,12 @@ export default function PostUploadForm({
                 </div>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white">{dictionary.forms["post-edit-upload"].submit}</button>
+                    <button className="btn btn-primary glass text-white" disabled={isLoading}>
+                        {
+                            isLoading && <span className="loading loading-dots loading-sm"></span>
+                        }
+                        {dictionary.forms["post-edit-upload"].submit}
+                    </button>
                 </div>
             </form>
         </div>

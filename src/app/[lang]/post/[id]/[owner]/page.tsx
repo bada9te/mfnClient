@@ -36,23 +36,36 @@ export default async function PostPage({params}: {params: {id: string, owner: st
                         </Suspense>
                     </PreloadQuery>
 
-                    <ProfileCard userId={params.owner} disableMargins dictionary={dict.components}/>
+
+                    {
+                        Number(params.owner) ?
+                        <ProfileCard userId={params.owner} disableMargins dictionary={dict.components}/> :
+                        null
+                    }
                 </div>
-                <div className="divider divider-primary my-10">More tracks</div>
-                <div className="flex flex-wrap justify-center md:justify-around gap-5">
-                    <PreloadQuery
-                        query={POSTS_BY_OWNER_QUERY}
-                        variables={{
-                            owner: params.owner,
-                            offset: 0,
-                            limit: 6
-                        }}
-                    >
-                        <Suspense fallback={<PostsContainerSkeleton/>}>
-                            <PostsContainerProfile profileId={params.owner} offset={0} limit={6} page={1} paginationHidden dictionary={dict.components}/>
-                        </Suspense>
-                    </PreloadQuery>
-                </div>
+
+                {
+                    Number(params.owner) ?
+                    <>
+                        <div className="divider divider-primary my-10">More tracks</div>
+                        <div className="flex flex-wrap justify-center md:justify-center gap-5 lg:gap-14">
+                            <PreloadQuery
+                                query={POSTS_BY_OWNER_QUERY}
+                                variables={{
+                                    owner: params.owner,
+                                    offset: 0,
+                                    limit: 6
+                                }}
+                            >
+                                <Suspense fallback={<PostsContainerSkeleton/>}>
+                                    <PostsContainerProfile profileId={params.owner} offset={0} limit={6} page={1} paginationHidden dictionary={dict.components}/>
+                                </Suspense>
+                            </PreloadQuery>
+                        </div>
+                    </>
+                    :
+                    null
+                }
             </div>
         </HeroWrapper>
     );

@@ -4,12 +4,12 @@ import InfoImage from "../common/info-image/info-image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SelectTrackModal from "../modals/select-track-modal";
 import { useState } from "react";
-import { Post as TPost, useBattleCreateMutation } from "@/utils/graphql-requests/generated/schema";
+import { Post as TPost, useBattleCreateMutation, useBattleDeleteByIdMutation } from "@/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
 import { revalidatePathAction } from "@/actions/revalidation";
 import { useAppSelector } from "@/lib/redux/store";
 import { getDictionary } from "@/dictionaries/dictionaries";
-import { config } from "@/config/wagmi";
+import { config, MFNAddresses } from "@/config/wagmi";
 import { useAccount, useBalance, useSwitchChain, useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import ChainImage from "../common/chain-image/chain-image";
@@ -48,20 +48,19 @@ export default function BattleForm({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const user = useAppSelector(state => state.user.user);
-    const { address, chainId, connector } = useAccount();
+    const { address, chainId } = useAccount();
     const { switchChain } = useSwitchChain();
-    const { data: balance } = useBalance({
-        chainId,
-        address
-    });
+    const { data: balance } = useBalance({ chainId, address });
     const {register, reset, handleSubmit, formState: {errors}} = useForm<Inputs>();
     const [post1, setPost1] = useState<null | TPost>(null);
     const [post2, setPost2] = useState<null | TPost>(null);
     const { enqueueSnackbar } = useSnackbar();
     const [blockchain, setBlockchain] = useState<undefined | number>(56);
     const [useBlockChain, setUseBlockchain] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const [createBattle] = useBattleCreateMutation();
+    const [deleteBattle] = useBattleDeleteByIdMutation();
     const { writeContractAsync } = useWriteContract();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
@@ -69,13 +68,14 @@ export default function BattleForm({
             enqueueSnackbar("You probably forgot to select the track", {variant: 'error', autoHideDuration: 3000});
             return;
         }
+        setIsLoading(true);
 
         const input = {
             initiator: user?._id as string,
             post1: post1._id,
             post2: post2._id,
             title: data.title,
-        }
+        };
 
         if (useBlockChain && blockchain) {
             if (Number(balance?.value) <= 0) {
@@ -84,6 +84,8 @@ export default function BattleForm({
             }
             // @ts-ignore
             input.chainId = blockchain;
+            // @ts-ignore
+            input.contractAddress = MFNAddresses[blockchain];
         }
 
         enqueueSnackbar("Creating the battle...", { autoHideDuration: 1500 });
@@ -91,33 +93,43 @@ export default function BattleForm({
             variables: {
                 input
             }
-        }).then((data) => {
-            writeContractAsync({
-                ...generateDEFAULT_MFN_CONTRACT_CFG(Number(chainId)),
-                functionName: 'createBattle',
-                args: [
-                    data.data?.battleCreate._id as string,
-                    input.post1,
-                    input.post2,
-                    24,
-                ],
-            }).then(async(hash) => {
-                await waitForTransactionReceipt(config, {
-                    hash,
-                    confirmations: 2
-                }).then(() => {
-                    reset();
-                    setPost1(null);
-                    setPost2(null);
-                    enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
-                });
-            }).catch(err => {
-                console.log(err);
-                enqueueSnackbar("Error with blockchain interaction", {variant: 'error', autoHideDuration: 3000})
-            })
+        }).then(({data}) => {
+            if (useBlockChain) {
+                writeContractAsync({
+                    ...generateDEFAULT_MFN_CONTRACT_CFG(Number(chainId)),
+                    functionName: 'createBattle',
+                    args: [
+                        data?.battleCreate._id as string,
+                        input.post1,
+                        input.post2,
+                        24,
+                    ],
+                }).then(async(hash) => {
+                    await waitForTransactionReceipt(config, {
+                        hash,
+                        confirmations: 2
+                    }).then(() => {
+                        setPost1(null); setPost2(null);
+                        enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
+                    });
+                }).catch(err => {
+                    console.log(err);
+                    deleteBattle({
+                        variables: {
+                            _id: data?.battleCreate._id as string
+                        }
+                    });
+                    enqueueSnackbar("Error with blockchain interaction, battle was canceled", {variant: 'error', autoHideDuration: 3000})
+                })
+            } else {
+                setPost1(null); setPost2(null);
+                enqueueSnackbar("Battle created", {autoHideDuration: 2000, variant: 'success'});
+            }
         }).catch(_ => {
             enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
         }).finally(() => {
+            reset();
+            setIsLoading(false);
             revalidatePathAction('/battles/in-progress', 'page');
         });
     }
@@ -221,7 +233,10 @@ export default function BattleForm({
                                     );
                                 } else {
                                     return (
-                                        <button type="submit" className="btn btn-primary glass text-white">
+                                        <button type="submit" className="btn btn-primary glass text-white" disabled={isLoading}>
+                                            {
+                                                isLoading && <span className="loading loading-dots loading-sm"></span>
+                                            }
                                             {dictionary.forms.battle.create} {useBlockChain ? `- ${config.chains.find(i => i.id === blockchain)?.name}` : ""}
                                         </button>
                                     )

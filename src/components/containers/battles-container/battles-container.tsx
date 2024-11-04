@@ -6,10 +6,12 @@ import Pagination from "@/components/common/pagination/pagination";
 import {TPaginationProps} from "@/types/pagination";
 import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { usePathname } from "next/navigation";
 
 
 export default function BattlesContainer(props: TPaginationProps & { finished: boolean; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"] }) {
     const {offset, limit, finished, page, dictionary} = props;
+    const pathname = usePathname();
 
     const { data, refetch } = useBattlesByStatusSuspenseQuery({
         variables: {

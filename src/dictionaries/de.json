@@ -32,28 +32,28 @@
                 "subheader": "und Informationen über den Autor",
                 "cards": {
                     "listening": {
-                        "title": "Musik hören",
+                        "title": "🎧 Musik hören",
                         "description": "Hören Sie Musik und haben Sie Spaß!"
                     },
                     "musical": {
-                        "title": "Teilen von musikalischen Kreationen",
+                        "title": "💌 Teilen von musikalischen Kreationen",
                         "description": "Teilen Sie die Tracks der Benutzer und heben Sie die Stimmung der Empfänger."
                     },
                     "musician": {
-                        "title": "Musiker-Profilierung",
+                        "title": "📋 Musiker-Profilierung",
                         "description": "Die Plattform bietet erstaunliche Benutzerprofile, die Sie nach Ihrem Geschmack anpassen können :)"
                     },
                     "just": {
-                        "title": "Nur zur Unterhaltung und Selbststudium \\*_*/",
+                        "title": "💵 Nur zur Unterhaltung und Selbststudium \\*_*/",
                         "description": "Diese Plattform wurde von einer einzelnen Person entwickelt und befindet sich noch in der Entwicklung."
                     },
                     "about": {
-                        "title": "Über den Autor",
-                        "description": "Hallo! Ich freue mich sehr, Sie auf meinem ersten großen Web-Projekt zu sehen. Ich bin ein normaler 3. Jahr Student an der Nationalen Universität ''Zaporizhzhia Polytechnic'', Saporischschja, Ukraine. Es gibt jedoch keine modernen Web-Entwicklungskurse an meiner Uni, also habe ich beschlossen, mich selbst weiterzubilden."
+                        "title": "👨🏻‍💼 Über den Autor",
+                        "description": "Hallo! Ich freue mich sehr, Sie bei meinem ersten großen Webprojekt hier zu haben. Ich interessiere mich leidenschaftlich für Web3-Technologien und alles, was mit Softwareentwicklung zu tun hat. Ich bin auch offen für die Zusammenarbeit an Projekten jeglicher Komplexität! Kontaktieren Sie mich über die untenstehenden Links!"
                     },
                     "gratitude": {
-                        "title": "Großer Dank",
-                        "description": "Ich möchte mich herzlich für die Übersetzung ins Deutsche bei (Name Surname) und für einige technische Dinge bei (Name Surname) bedanken."
+                        "title": "🙏 Großer Dank",
+                        "description": "Ich möchte mich herzlich für die Übersetzung ins Deutsche bei (Bohdan Krol) und für einige technische Dinge bei (Dmytro Rabotiahov) bedanken."
                     }
                 }
             },
@@ -323,14 +323,15 @@
                 "share": "Teilen"
             },
             "refresh-btn-container": {
-                "refresh": "Aktualisieren"
+                "refresh": "Aktualisieren",
+                "withdraw-all": "Alle USDC abheben"
             },
             "register-explore-btns": {
                 "register": "Registrieren",
                 "explore": "Erkunden"
             },
             "forms-socials": {
-                "use-socials": "Soziale Netzwerke verwenden"
+                "use-socials": "Soziale Netzwerke verwenden / Web-3"
             }
         },
         "entities": {
@@ -626,7 +627,11 @@
                 "required": "Dieses Feld ist erforderlich",
                 "save": "Speichern",
                 "description": "Profilbeschreibung",
+                "email-link-warning": "Es wird dringend empfohlen, eine E-Mail-Adresse zu verknüpfen, um Ihr Konto zu schützen!",
+                "password-lack-email": "Aufgrund fehlender E-Mail-Adresse ist die Passwortwiederherstellung für Ihr Konto noch nicht verfügbar!",
                 "email": "E-Mail",
+                "link-email": "Mailbindung",
+                "link-email-new": "Neue E-Mail",
                 "old-email": "Alte E-Mail",
                 "email-not-valid": "E-Mail-Adresse ist ungültig",
                 "wrong-email": "Falsche E-Mail-Adresse",

@@ -66,7 +66,7 @@ export default function ProfileButton({
     }
 
     return (
-        <div className="dropdown dropdown-end text-white">
+        <div className="dropdown dropdown-end">
             <div className="flex flex-row flex-nowrap items-center justify-center">
                 {
                     account.address 
@@ -78,10 +78,10 @@ export default function ProfileButton({
                             </svg>
                         </span>
                         <span className="badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${userBalance ? (Number(userBalance) / 10**Number(decimals)).toFixed(3) : 0} USDC`}
-                            <a href="https://www.google.com" target="_blank">
+                            
                                 {/* @ts-ignore */}
                                 <Image src={USDCAddresses[account.chainId]?.icon} alt="chain-logo" width={16} height={16} className="ml-2"/>
-                            </a>    
+                               
                         </span>
                         
                         <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce]" onClick={() => onBalanceRefetch()}>

@@ -73,7 +73,8 @@ export default function Battle(props: {
     useEffect(() => {
         if (battleData._id) {
             const tId = setInterval(() => {
-                setTimeLeft(getTimeLeft(+new Date(+battleData.willFinishAt) - new Date().getTime()));
+                const timeLeft = getTimeLeft(+new Date(+battleData.willFinishAt) - new Date().getTime());
+                setTimeLeft(timeLeft);
             }, 3000);
 
             return () => {
@@ -83,7 +84,11 @@ export default function Battle(props: {
     }, [battleData]);
 
     const makeBattleVote = (voteCount: number, postNScore: "post1Score" | "post2Score") => {
-        console.log("VOTING...")
+        if (String(voteCount).includes('.')) {
+            voteCount = Number(String(voteCount).slice(0, String(voteCount).indexOf('.')))
+        }
+
+        console.log("VOTING...", voteCount)
         enqueueSnackbar("Voting...", {autoHideDuration: 1500});
         makeVote({
             variables: {
@@ -116,7 +121,7 @@ export default function Battle(props: {
                 abi: USDCAddresses[account.chainId].abi,
                 functionName: "approve",
                 // @ts-ignore
-                args: [MFNAddresses[account.chainId], amount * 10**Number(decimals)],
+                args: [battleData.contractAddress, amount * 10**Number(decimals)],
             });
             enqueueSnackbar("Waiting for tx receipt...", {autoHideDuration: 2000});
             await waitForTransactionReceipt(config, {
@@ -128,6 +133,7 @@ export default function Battle(props: {
             await writeContractAsync({
                 // @ts-ignore
                 ...generateDEFAULT_MFN_CONTRACT_CFG(account.chainId),
+                address: battleData.contractAddress as `0x${string}`,
                 functionName: "vote",
                 args: [
                     battleData._id, 
@@ -180,6 +186,7 @@ export default function Battle(props: {
                         post2Id={battleData.post2?._id as string}
                         battleId={battleData._id as string}
                         networkId={battleData.chainId}
+                        contractAddress={battleData.contractAddress as string}
                     />
                     
                 }
@@ -190,20 +197,22 @@ export default function Battle(props: {
                         <Post data={battleData.post1 as TPost} dictionary={dictionary}/>
                         <div className="py-2 flex flex-col gap-2 mt-3">
                             {
-                                !battleData.finished &&
+                                !battleData.finished && timeLeft.h >= 0 && timeLeft.m >= 0 && timeLeft.s >= 0 &&
                                 <>
-                                    <button 
-                                        disabled={battleData.votedBy?.map(i => i._id)?.includes(user?._id as string)}
-                                        onClick={() => makeBattleVote(1, "post1Score")}
-                                        className="btn btn-sm btn-primary text-white glass w-full join-item"><VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}</button>
                                     {
-                                        battleData.chainId &&
+                                        battleData.chainId ?
                                         <SelectAmountOfMFNTokens 
                                             dictionary={dictionary}
                                             type="post1Score"
                                             button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
                                             handleClose={makeBattleVoteWithUSDC}
-                                        />
+                                        /> : 
+                                        <button 
+                                            disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
+                                            onClick={() => makeBattleVote(1, "post1Score")}
+                                            className="btn btn-sm btn-primary text-white glass w-full join-item">
+                                                <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}
+                                        </button>
                                     }
                                 </>
                             }
@@ -240,11 +249,11 @@ export default function Battle(props: {
                                 :
                                 <span className="countdown font-mono text-2xl">
                                     {/* @ts-ignore */}
-                                    <span style={{"--value":timeLeft.h}}></span>h:
+                                    <span style={{"--value":(timeLeft.h < 0 ? 0 : timeLeft.h)}}></span>h:
                                     {/* @ts-ignore */}
-                                    <span style={{"--value":timeLeft.m}}></span>m:
+                                    <span style={{"--value":(timeLeft.m < 0 ? 0 : timeLeft.m)}}></span>m:
                                     {/* @ts-ignore */}
-                                    <span style={{"--value":timeLeft.s}}></span>s
+                                    <span style={{"--value":(timeLeft.s < 0 ? 0 : timeLeft.s)}}></span>s
                                 </span>
                             }
                         </div>
@@ -260,23 +269,23 @@ export default function Battle(props: {
                         <Post data={battleData.post2 as TPost} dictionary={dictionary}/>
                         <div className="py-2 flex flex-col gap-2 mt-3">
                             {
-                                !battleData.finished &&
+                                !battleData.finished && timeLeft.h >= 0 && timeLeft.m >= 0 && timeLeft.s >= 0 &&
                                 <>
-                                    <button
-                                        disabled={battleData.votedBy?.map(i => i._id)?.includes(user?._id as string)}
-                                        onClick={() => makeBattleVote(1, "post2Score")}
-                                        className="btn btn-sm btn-primary text-white glass w-full join-item"
-                                    >
-                                        <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post2?.title}
-                                    </button>
                                     {
-                                        battleData.chainId &&
+                                        battleData.chainId ?
                                         <SelectAmountOfMFNTokens 
                                             dictionary={dictionary}
                                             type="post2Score"
                                             button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><DollarIcon/>{dictionary.entities.battle.supervote}</button>}
                                             handleClose={makeBattleVoteWithUSDC}
-                                        />
+                                        /> :
+                                        <button
+                                            disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
+                                            onClick={() => makeBattleVote(1, "post2Score")}
+                                            className="btn btn-sm btn-primary text-white glass w-full join-item"
+                                        >
+                                            <VoteIcon/>{dictionary.entities.battle["vote-for"]} {battleData.post2?.title}
+                                        </button>
                                     }
                                 </>
                             }

@@ -35,6 +35,7 @@ export const CORE_BATTLE_FIELDS = gql`
         post1Score
         post2Score
         chainId
+        contractAddress
     }
 `;
 
@@ -85,6 +86,14 @@ export const BATTLE_MAKE_VOTE_MUTATION = gql`
 export const BATTLE_CREATE_MUTATTION = gql`
     mutation battleCreate($input: AddNewBattleByPostsIdsInput!) {
         battleCreate(input: $input) {
+            _id
+        }
+    }
+`;
+
+export const BATTLE_DELETE_BY_ID_MUTATION = gql`
+    mutation battleDeleteById($_id: ID!) {
+        battleDeleteById(_id: $_id) {
             _id
         }
     }

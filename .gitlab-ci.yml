@@ -33,6 +33,7 @@ build_nextjs:
     - install_dependencies
   artifacts:
     paths:
+      - next.config.mjs
       - .next/
 
 

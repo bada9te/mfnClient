@@ -19,7 +19,7 @@ export default function BattlesContainerUser(props: TPaginationProps & { userId:
 
     return (
         <>
-            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, userId})} dictionary={dictionary}/>
+            <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, userId})} dictionary={dictionary} addWithdrawAllBtn/>
             {
                 data?.battlesUserParticipatedIn.battles?.length
                 ?

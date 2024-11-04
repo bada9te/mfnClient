@@ -10,7 +10,7 @@ export default function AppBar({
 }) {
     //console.log(dictionary)
     return (
-        <div className="navbar fixed top-0 z-50 text-white glass bg-[#1ba39c] row-auto bg-opacity-50">
+        <div className="navbar fixed top-0 z-50 glass bg-[#1ba39c] row-auto bg-opacity-50">
             <div className="navbar-start">
                 <div className="dropdown max-h-screen block lg:hidden">
                     <div tabIndex={0} role="button" className="btn btn-ghost glass mr-1">

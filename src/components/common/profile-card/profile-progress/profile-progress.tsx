@@ -37,8 +37,8 @@ export default function ProfileProgress(props: {
 
     return (
         <div className="stats stats-vertical xl:stats-horizontal glass max-w-full rounded-2xl text-white">
-            <div className="stat relative">
-                <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"].level}</div>
+            <div className="stat relative flex justify-center flex-col gap-1">
+                <div className="stat-title text-center text-wrap max-w-40 self-center">{dictionary.common["profile-card"]["profile-progress"].level}</div>
                 <span onClick={refreshStatistics}><RefreshBtn/></span>
                 <div className="stat-value flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/trophy.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
@@ -51,8 +51,8 @@ export default function ProfileProgress(props: {
                 </div>
             </div>
 
-            <div className="stat relative">
-                <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"].challenges}</div>
+            <div className="stat relative flex justify-center flex-col gap-1">
+                <div className="stat-title text-center max-w-40 text-wrap self-center">{dictionary.common["profile-card"]["profile-progress"].challenges}</div>
                 <div className="stat-value text-center flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/challenge.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
                     {data.achievements?.length || 0}/{achievementsTotal || '...'}</div>
@@ -61,8 +61,8 @@ export default function ProfileProgress(props: {
                 </div>
             </div>
 
-            <div className="stat relative">
-                <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"]["total-likes"]}</div>
+            <div className="stat relative flex justify-center flex-col gap-1">
+                <div className="stat-title text-center max-w-40 text-wrap self-center">{dictionary.common["profile-card"]["profile-progress"]["total-likes"]}</div>
                 <div className="stat-value text-center flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/heart.png"} alt="trophy" width={400} height={400} className="w-10 h-10"/>
                     {data.totalLikes}
@@ -75,8 +75,8 @@ export default function ProfileProgress(props: {
                 </div>
             </div>
 
-            <div className="stat relative">
-                <div className="stat-title text-center">{dictionary.common["profile-card"]["profile-progress"]["total-saves"]}</div>
+            <div className="stat relative flex justify-center flex-col gap-1">
+                <div className="stat-title text-center max-w-40 text-wrap self-center">{dictionary.common["profile-card"]["profile-progress"]["total-saves"]}</div>
                 <div className="stat-value text-center flex flex-wrap mt-1 gap-3 justify-center">
                     <Image src={"/assets/icons/bookmark.png"} alt="trophy" width={400} height={400} className="w-10 h-10"/>
                     {data.totalSaves}

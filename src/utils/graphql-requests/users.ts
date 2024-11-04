@@ -118,6 +118,7 @@ export const USER_CREATE_MUTATION = gql`
     }
 `;
 
+/*
 export const USER_DELETE_BY_ID_MUTATION = gql`
     mutation userDeleteById($_id: ID!) {
         userDeleteById(_id: $_id) {
@@ -125,6 +126,7 @@ export const USER_DELETE_BY_ID_MUTATION = gql`
         }
     }
 `;
+*/
 
 export const USER_SWITCH_SUBSCRIPTION_MUTATION = gql`
     ${CORE_USER_FIELDS}
@@ -189,15 +191,6 @@ export const USER_RESTORE_ACCOUNT_MUTATION = gql`
 `;
 
 
-export const USER_LINK_GOOGLE_MUTATION = gql`
-    ${CORE_USER_FIELDS}
-    mutation userLinkGoogle($input: LinkGoogleInput!) {
-        userLinkGoogle(input: $input) {
-            ...CoreUserFields
-        }
-    }
-`;
-
 export const USER_UNLINK_GOOGLE_MUTATION = gql`
     ${CORE_USER_FIELDS}
     mutation userUnlinkGoogle($_id: ID!) {
@@ -208,15 +201,6 @@ export const USER_UNLINK_GOOGLE_MUTATION = gql`
 `;
 
 
-export const USER_LINK_FACEBOOK_MUTATION = gql`
-    ${CORE_USER_FIELDS}
-    mutation userLinkFacebook($input: LinkTwitterOrFacebookInput!) {
-        userLinkFacebook(input: $input) {
-            ...CoreUserFields
-        }
-    }
-`;
-
 export const USER_UNLINK_FACEBOOK_MUTATION = gql`
     ${CORE_USER_FIELDS}
     mutation userUnlinkFacebook($_id: ID!) {
@@ -226,14 +210,6 @@ export const USER_UNLINK_FACEBOOK_MUTATION = gql`
     }
 `;
 
-export const USER_LINK_TWITTER_MUTATION = gql`
-    ${CORE_USER_FIELDS}
-    mutation userLinkTwitter($input: LinkTwitterOrFacebookInput!) {
-        userLinkTwitter(input: $input) {
-            ...CoreUserFields
-        }
-    }
-`;
 
 export const USER_UNLINK_TWITTER_MUTATION = gql`
     ${CORE_USER_FIELDS}
@@ -286,3 +262,12 @@ export const USER_SWITCH_POST_PINNED_MUTATION = gql`
         }
     }
 `
+
+export const USER_LINK_EMAIL_REQUEST_MUTATION = gql`
+    ${CORE_USER_FIELDS}
+    mutation userLinkEmailRequest($input: LinkEmailInput!) {
+        userLinkEmailRequest(input: $input) {
+            _id
+        }
+    }
+`;

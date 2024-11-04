@@ -1,4 +1,5 @@
 
+import ProjectLinks from "@/components/common/project-links/projects-links";
 import RegisterExploreBtns from "@/components/common/register-explore-btns/register-explore-btns";
 import DotPattern from "@/components/magicui-components/dot-pattern";
 import { MarqueeDemo } from "@/components/magicui-components/landing-cards-scrolling";
@@ -8,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { TLang } from "@/types/language";
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 
 const cardsData1 = [
     {
@@ -46,16 +48,17 @@ const cardsData2 = [
         iconUrl:  "/assets/icons/logo_clear.png"
     },
     {
-        id: "about",
-        iconUrl:  "/assets/icons/logo_clear.png",
-        github: [{ bada9te: 'https://github.com/bada9te' }],
-        instagram: [{ bada9te: 'NULL' }],
-    },
-    {
         id: "gratitude",
         iconUrl:  "/assets/icons/logo_clear.png",
-        github: [],
-        instagram: [],
+        github: { rDrayBen: "https://github.com/rDrayBen", ChadCoder39: "https://github.com/ChadCoder39" },
+        telegram: { rDrayBen: 'https://t.me/rabotiahov', ChadCoder39: 'https://t.me/Yoperniy_teator' },
+    },
+    {
+        id: "about",
+        iconUrl:  "/assets/icons/logo_clear.png",
+        github: { bada9te: 'https://github.com/bada9te' },
+        telegram: { bada9te: 'https://t.me/bada9te' },
+        instagram: { bada9te: 'https://www.instagram.com/bada9te/' }
     }
 ];
 
@@ -108,17 +111,20 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     alt="block-top-bg"
                     className="absolute top-0 right-0 w-48 md:w-[600px] z-0 rounded-tr-2xl blur-sm"
                 />
-                <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit mb-48 lg:mb-56">
+                <div className="flex flex-row flex-wrap justify-center items-start gap-5 h-fit mb-48 lg:mb-56">
                     {
                         cardsData1.map((data, key) => {
                             return (
-                                <div key={key} className="card animated-box overflow-hidden bg-base-300 w-80 h-64 md:w-96 shadow-xl rounded-2xl z-10 bg-opacity-40">
-                                    <div className="card-body bg-base-300 hover:bg-[#1ba39c] z-50 m-1 rounded-2xl glass">
+                                <div key={key} className="card animated-box overflow-hidden bg-base-300 w-80 h-fit min-h-64 md:w-96 shadow-xl rounded-2xl z-10 bg-opacity-40">
+                                    <div className="card-body bg-base-300 hover:bg-[#175a57] transition-all z-50 m-1 rounded-2xl glass">
                                         <Image width={100} height={100}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
                                         {/* @ts-ignore */}
                                         <h2 className="card-title mt-2">{dict.app.landing.compose.cards[data.id]?.title || ""}</h2>
                                         {/* @ts-ignore */}
                                         <p>{dict.app.landing.compose.cards[data.id]?.description || ""}</p>
+
+                                        <div className="h-3"></div>
+                                        { data.id == "start" && <ProjectLinks/> }
                                     </div>
                                 </div>
                             );
@@ -161,18 +167,73 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                 <Image width={300} height={300}  src="/assets/figures/waterball.png" alt="waterball" className="w-32 absolute top-3 mix-blend-luminosity left-10 md:left-48 lg:left-96 z-0 opacity-70"/>
                 <Image width={300} height={300}  src="/assets/figures/water.png" alt="water" className="z-10 w-48 absolute bottom-3 mix-blend-luminosity right-3 opacity-70"/>
                 <Image width={300} height={300}  src="/assets/figures/chip.png" alt="chip" className="w-64 absolute bottom-72 mix-blend-luminosity left-5 z-0 opacity-70"/>
-                <div className="flex flex-row flex-wrap justify-center items-center gap-5 h-fit z-10 mb-20">
+                <div className="flex flex-row flex-wrap justify-center items-start gap-5 h-fit z-10 mb-20">
                     {
                         cardsData2.map((data, key) => {
                             return (
-                                <div key={key} className="card animated-box overflow-hidden bg-base-300 w-80 min-h-64 md:w-96 shadow-xl rounded-2xl z-0 bg-opacity-40">
-                                    <div className="card-body bg-base-300 hover:bg-[#1ba39c] z-50 m-1 rounded-2xl glass">
+                                <div key={key} className="card bg-base-300 w-80 min-h-64 md:w-96 rounded-2xl z-0 bg-opacity-40 border-[#27aaa3] border-[2px] border-dashed">
+                                    <div className="card-body bg-base-300 hover:bg-[#175a57] transition-all z-50 rounded-2xl glass">
                                         <Image width={100} height={100}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
                                         { /* @ts-ignore */ }
                                         <h2 className="card-title mt-2">{dict.app.landing.purpose.cards[data.id]?.title || ""}</h2>
                                         { /* @ts-ignore */ }
                                         <p>{dict.app.landing.purpose.cards[data.id]?.description || ""}</p>
+                                        <div className="h-3"></div>
+                                        {
+                                            (() => {
+                                                if (data.id == "gratitude") {
+                                                    return (
+                                                        <div className="flex flex-row gap-2 flex-wrap">
+
+                                                            <Link href={`${data.telegram?.ChadCoder39}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-[#2294c5]">
+                                                                <Image src={"/assets/icons/telegram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                python_enjoyer1
+                                                            </Link>
+                                                      
+
+                                                            <Link href={`${data.github?.ChadCoder39}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
+                                                                <Image src={"/assets/icons/github-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                ChadCoder39
+                                                            </Link>
+
+                                                            <Link href={`${data.telegram?.rDrayBen}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-[#2294c5]">
+                                                                <Image src={"/assets/icons/telegram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                rabotiahov
+                                                            </Link>
+                                                    
+                                                            <Link href={`${data.github?.rDrayBen}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
+                                                                <Image src={"/assets/icons/github-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                rDrayBen
+                                                            </Link>
+                                                        </div>
+                                                    );
+                                                }
+
+                                                if (data.id == "about") {
+                                                    return (
+                                                        <div className="flex flex-row gap-2 flex-wrap">
+                                                            <Link href={`${data.telegram?.bada9te}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-[#2294c5] hover:bg-[#1f5b75]">
+                                                                <Image src={"/assets/icons/telegram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                bada9te
+                                                            </Link>
+
+
+                                                            <Link href={`${data.github?.bada9te}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
+                                                                <Image src={"/assets/icons/github-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                bada9te
+                                                            </Link>
+
+                                                            <Link href={`${data.instagram?.bada9te}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-pink-600">
+                                                                <Image src={"/assets/icons/instagram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                bada9te
+                                                            </Link>
+                                                        </div>
+                                                    );
+                                                }
+                                            })()
+                                        }
                                     </div>
+
                                 </div>
                             );
                         })

@@ -2,7 +2,7 @@
 import {SubmitHandler, useForm} from "react-hook-form";
 import {formsConstants} from "@/config/forms";
 import { useSnackbar } from "notistack";
-import { useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkFacebookMutation, useUserUnlinkGoogleMutation, useUserUnlinkTwitterMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
+import { UserQuery, useUserLinkEmailRequestMutation, useUserPrepareAccountToRestoreMutation, useUserSuspenseQuery, useUserUnlinkFacebookMutation, useUserUnlinkGoogleMutation, useUserUnlinkTwitterMutation, useUserUpdateMutation } from "@/utils/graphql-requests/generated/schema";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import { setUser } from "@/lib/redux/slices/user";
 import { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import { revalidatePathAction } from "@/actions/revalidation";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Link from "next/link";
 import envCfg from "@/config/env";
+import { setCookie } from "cookies-next";
 
 
 type InputsNickname = {
@@ -24,8 +25,12 @@ type InputsEmail = {
     oldEmail: string;
 };
 
+type InputsLinkEmail = {
+    newEmail: string;
+};
+
 type InputsPassword = {
-    oldPassword: string;
+    oldEmail: string;
 };
 
 
@@ -45,10 +50,12 @@ export default function ProfileEditForm(props: {
     const { register: registerDescr, handleSubmit: handleSubmitDescr, formState: {errors: errorDescr} } = useForm<InputsDescription>();
     const { register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorEmail}, reset: resetEmail } = useForm<InputsEmail>();
     const { register: registerPassword, handleSubmit: handleSubmitPassword, formState: {errors: errorsPassword} } = useForm<InputsPassword>();
+    const { register: registerLinkEmail, handleSubmit: handleSubmitLinkEmail, formState: {errors: errorslinkEmail} } = useForm<InputsLinkEmail>();
     const [ isMounted, setIsMounted ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const [ updateUser ] = useUserUpdateMutation();
     const [ prepareToRestore ] = useUserPrepareAccountToRestoreMutation();
+    const [ prepareLinkEmail ] = useUserLinkEmailRequestMutation();
 
 
     // ##################################### GOOGLE HANDLERS #####################################
@@ -180,6 +187,55 @@ export default function ProfileEditForm(props: {
         });
     }
 
+    // link email
+    const onSubmitLinkEmail: SubmitHandler<InputsLinkEmail> = async(data) => {
+        enqueueSnackbar("Doing important stuff...", {autoHideDuration: 1500});
+        await prepareLinkEmail({
+            variables: {
+                input: {
+                    userId: userData.user._id as string,
+                    email: data.newEmail,
+                }
+            }
+        }).then(_ => {
+            const date = new Date();
+            date.setTime(date.getTime() + (10 * 60 * 1000));
+            setCookie("link-email-request-value", data.newEmail, {
+                expires: date
+            });
+            enqueueSnackbar("Email sent", {autoHideDuration: 2000, variant: 'success'});
+        }).catch(_ => {
+            enqueueSnackbar("Email can not be updated", {autoHideDuration: 3000, variant: 'error'});
+        });
+    }
+
+    const buttonMustBeDisabled = (userData: UserQuery) => {
+        const disabledList = {
+            twitter: false,
+            google: false,
+            facebook: false,
+        }
+
+        const uData = userData.user;
+
+        // unlink twitter have to be disabled if there are no other methods connected
+        if (!uData.google?.email && !uData.facebook?.name && !uData.local?.email) {
+            disabledList.twitter = true;
+        }
+
+        // unlink google have to be disabled if there are no other methods connected
+        if (!uData.twitter?.name && !uData.facebook?.name && !uData.local?.email) {
+            disabledList.google = true;
+        }
+
+        // unlink facebook have to be disabled if there are no other methods connected
+        if (!uData.twitter?.name && !uData.google?.email && !uData.local?.email) {
+            disabledList.facebook = true;
+        }
+
+        return disabledList;
+    }
+
 
     useEffect(() => {
         setIsMounted(true);
@@ -244,61 +300,126 @@ export default function ProfileEditForm(props: {
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].email}</div>
 
-                <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
-                    
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms["profile-edit"].email}</span>
-                        </label>
-                        <div className="join w-full">
-                            <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                ...registerEmail("oldEmail", {
-                                    pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
-                                    required: { value: true, message: dictionary.forms["profile-edit"].required },
-                                    validate: (value) => {
-                                        const userEmail = user?.local?.email as string;
-                                        if (userEmail !== value) {
-                                            return dictionary.forms["profile-edit"]["wrong-email"]
-                                        }
-                                    }
-                                })
-                            }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
-                        </div>
-                        {
-                            errorEmail.oldEmail &&
-                            <label className="label">
-                                <span className="label-text text-error">{errorEmail.oldEmail.message}</span>
-                            </label>
-                        }
-                    </div>
-                </form>
+                <>
+                    {
+                        (() => {
+                            if (!userData.user.local?.email) {
+                                return (
+                                    <>
+                                        <label className="label">
+                                            <span className="label-text text-warning">{dictionary.forms["profile-edit"]["email-link-warning"]}</span>
+                                        </label>
+                                        <form role="form" onSubmit={handleSubmitLinkEmail(onSubmitLinkEmail)} noValidate>
+                                            <div className="form-control">
+                                                <label className="label">
+                                                    <span className="label-text">{dictionary.forms["profile-edit"]["link-email"]}</span>
+                                                </label>
+                                                <div className="join w-full">
+                                                    <input type="text" placeholder={dictionary.forms["profile-edit"]["link-email-new"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                                                        ...registerLinkEmail("newEmail", {
+                                                            pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
+                                                            required: { value: true, message: dictionary.forms["profile-edit"].required },
+                                                        })
+                                                    }/>
+                                                    <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                                </div>
+                                                {
+                                                    errorslinkEmail.newEmail &&
+                                                    <label className="label">
+                                                        <span className="label-text text-error">{errorslinkEmail.newEmail.message}</span>
+                                                    </label>
+                                                }
+                                            </div>
+                                        </form>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
+                                        <div className="form-control">
+                                            <label className="label">
+                                                <span className="label-text">{dictionary.forms["profile-edit"].email}</span>
+                                            </label>
+                                            <div className="join w-full">
+                                                <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                                                    ...registerEmail("oldEmail", {
+                                                        pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
+                                                        required: { value: true, message: dictionary.forms["profile-edit"].required },
+                                                        validate: (value) => {
+                                                            const userEmail = user?.local?.email as string;
+                                                            if (userEmail !== value) {
+                                                                return dictionary.forms["profile-edit"]["wrong-email"]
+                                                            }
+                                                        }
+                                                    })
+                                                }/>
+                                                <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                            </div>
+                                            {
+                                                errorEmail.oldEmail &&
+                                                <label className="label">
+                                                    <span className="label-text text-error">{errorEmail.oldEmail.message}</span>
+                                                </label>
+                                            }
+                                        </div>
+                                    </form>
+                                );
+                            }
+                        })()
+                    }
+                </>
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].password}</div>
 
-                <form role="form" onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms["profile-edit"].password}</span>
-                        </label>
-                        <div className="join">
-                            <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                ...registerPassword("oldPassword", {
-                                    minLength: { value: 8, message: `${dictionary.forms["profile-edit"]["min-length"]} 8` },
-                                    maxLength: { value: 20, message: `${dictionary.forms["profile-edit"]["max-length"]} 20` },
-                                    required: { value: true, message: dictionary.forms["profile-edit"].required },
-                                })
-                            }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
-                        </div>
-                        {
-                            errorsPassword.oldPassword &&
-                            <label className="label">
-                                <span className="label-text text-error">{errorsPassword.oldPassword.message}</span>
-                            </label>
-                        }
-                    </div>
-                </form>
+                <>
+                    {
+                        (() => {
+                            if (!userData.user.local?.email) {
+                                return (
+                                    <>
+                                        <label className="label">
+                                            <span className="label-text text-error">{dictionary.forms["profile-edit"]["password-lack-email"]}</span>
+                                        </label>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <form role="form" onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
+                                        <div className="form-control">
+                                            <label className="label">
+                                                <span className="label-text">{dictionary.forms["profile-edit"].password}</span>
+                                            </label>
+                                            <div className="join">
+                                                <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
+                                                    ...registerPassword("oldEmail", {
+                                                        pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
+                                                        required: { value: true, message: dictionary.forms["profile-edit"].required },
+                                                        validate: (value) => {
+                                                            const userEmail = user?.local?.email as string;
+                                                            if (userEmail !== value) {
+                                                                return dictionary.forms["profile-edit"]["wrong-email"]
+                                                            }
+                                                        }
+                                                    })
+                                                }/>
+                                                <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                            </div>
+                                            {
+                                                errorsPassword.oldEmail &&
+                                                <label className="label">
+                                                    <span className="label-text text-error">{errorsPassword.oldEmail.message}</span>
+                                                </label>
+                                            }
+                                        </div>
+                                    </form>
+                                );
+                            }
+                        })()
+                    }
+                </>
+                
+
+
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].socials}</div>
                 
@@ -310,7 +431,7 @@ export default function ProfileEditForm(props: {
                             </svg>
                             {userData.user.twitter?.name ? userData.user.twitter.name : dictionary.forms["profile-edit"]["connect-twitter"]}
                         </Link>
-                        <button className="btn btn-error join-item glass hover:bg-red-500 text-white w-[60px]" onClick={handleUnlinkTwitter}>
+                        <button disabled={buttonMustBeDisabled(userData).twitter} className="btn btn-error join-item glass hover:bg-red-500 text-white w-[60px]" onClick={handleUnlinkTwitter}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path fillRule="evenodd" d="M19.892 4.09a3.75 3.75 0 0 0-5.303 0l-4.5 4.5c-.074.074-.144.15-.21.229l4.965 4.966a3.75 3.75 0 0 0-1.986-4.428.75.75 0 0 1 .646-1.353 5.253 5.253 0 0 1 2.502 6.944l5.515 5.515a.75.75 0 0 1-1.061 1.06l-18-18.001A.75.75 0 0 1 3.521 2.46l5.294 5.295a5.31 5.31 0 0 1 .213-.227l4.5-4.5a5.25 5.25 0 1 1 7.425 7.425l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.756-1.757a3.75 3.75 0 0 0 0-5.304ZM5.846 11.773a.75.75 0 0 1 0 1.06l-1.757 1.758a3.75 3.75 0 0 0 5.303 5.304l3.129-3.13a.75.75 0 1 1 1.06 1.061l-3.128 3.13a5.25 5.25 0 1 1-7.425-7.426l1.757-1.757a.75.75 0 0 1 1.061 0Zm2.401.26a.75.75 0 0 1 .957.458c.18.512.474.992.885 1.403.31.311.661.555 1.035.733a.75.75 0 0 1-.647 1.354 5.244 5.244 0 0 1-1.449-1.026 5.232 5.232 0 0 1-1.24-1.965.75.75 0 0 1 .46-.957Z" clipRule="evenodd" />
                             </svg>
@@ -318,7 +439,7 @@ export default function ProfileEditForm(props: {
                     </div>
                     
                     <div className="join join-horizontal w-full">
-                        <Link href={envCfg.googleAuthURL as string} className={`btn w-[calc(100%-60px)] join-item glass hover:bg-white text-white hover:text-black ${userData.user.google?.email && 'bg-white/80 text-black'}`}>
+                        <Link href={envCfg.googleAuthURL as string} className={`btn w-[calc(100%-60px)] join-item glass hover:bg-white hover:text-black ${userData.user.google?.email ? 'bg-white/80 text-black' : 'text-white hover:text-black'}`}>
                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -328,7 +449,7 @@ export default function ProfileEditForm(props: {
                             </svg>
                             {userData.user.google?.email ? userData.user.google?.email : dictionary.forms["profile-edit"]["connect-google"]}
                         </Link>
-                        <button className="btn btn-error join-item glass hover:bg-red-500 text-white w-[60px]" onClick={handleUnlinkGoogle}>
+                        <button disabled={buttonMustBeDisabled(userData).google} className="btn btn-error join-item glass hover:bg-red-500 text-white w-[60px]" onClick={handleUnlinkGoogle}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path fillRule="evenodd" d="M19.892 4.09a3.75 3.75 0 0 0-5.303 0l-4.5 4.5c-.074.074-.144.15-.21.229l4.965 4.966a3.75 3.75 0 0 0-1.986-4.428.75.75 0 0 1 .646-1.353 5.253 5.253 0 0 1 2.502 6.944l5.515 5.515a.75.75 0 0 1-1.061 1.06l-18-18.001A.75.75 0 0 1 3.521 2.46l5.294 5.295a5.31 5.31 0 0 1 .213-.227l4.5-4.5a5.25 5.25 0 1 1 7.425 7.425l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.756-1.757a3.75 3.75 0 0 0 0-5.304ZM5.846 11.773a.75.75 0 0 1 0 1.06l-1.757 1.758a3.75 3.75 0 0 0 5.303 5.304l3.129-3.13a.75.75 0 1 1 1.06 1.061l-3.128 3.13a5.25 5.25 0 1 1-7.425-7.426l1.757-1.757a.75.75 0 0 1 1.061 0Zm2.401.26a.75.75 0 0 1 .957.458c.18.512.474.992.885 1.403.31.311.661.555 1.035.733a.75.75 0 0 1-.647 1.354 5.244 5.244 0 0 1-1.449-1.026 5.232 5.232 0 0 1-1.24-1.965.75.75 0 0 1 .46-.957Z" clipRule="evenodd" />
                             </svg>
@@ -336,7 +457,7 @@ export default function ProfileEditForm(props: {
                     </div>
 
                     <div className="join join-horizontal w-full">
-                        <Link href={envCfg.facebookAuthURL as string} className={`btn w-[calc(100%-60px)] join-item glass text-white hover:bg-blue-500 ${userData.user.facebook?.name && 'bg-blue-500'}`}>
+                        <Link tabIndex={undefined} href={envCfg.facebookAuthURL as string} className={`btn w-[calc(100%-60px)] join-item glass text-white hover:bg-blue-500 ${userData.user.facebook?.name && 'bg-blue-500'}`}>
                             <svg fill="#0091ff" height="25px" width="25px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310" stroke="#0091ff">
                             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                             <g id="SVGRepo_iconCarrier"> 
@@ -348,7 +469,7 @@ export default function ProfileEditForm(props: {
                             </svg>
                             { userData.user.facebook?.name ? userData.user.facebook?.name : dictionary.forms["profile-edit"]["connect-facebook"] }
                         </Link>
-                        <button className="btn btn-error join-item glass hover:bg-red-500 text-white w-[60px]" onClick={handleUnlinkFacebook}>
+                        <button disabled={buttonMustBeDisabled(userData).facebook} className="btn btn-error join-item glass hover:bg-red-500 text-white w-[60px]" onClick={handleUnlinkFacebook}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path fillRule="evenodd" d="M19.892 4.09a3.75 3.75 0 0 0-5.303 0l-4.5 4.5c-.074.074-.144.15-.21.229l4.965 4.966a3.75 3.75 0 0 0-1.986-4.428.75.75 0 0 1 .646-1.353 5.253 5.253 0 0 1 2.502 6.944l5.515 5.515a.75.75 0 0 1-1.061 1.06l-18-18.001A.75.75 0 0 1 3.521 2.46l5.294 5.295a5.31 5.31 0 0 1 .213-.227l4.5-4.5a5.25 5.25 0 1 1 7.425 7.425l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.756-1.757a3.75 3.75 0 0 0 0-5.304ZM5.846 11.773a.75.75 0 0 1 0 1.06l-1.757 1.758a3.75 3.75 0 0 0 5.303 5.304l3.129-3.13a.75.75 0 1 1 1.06 1.061l-3.128 3.13a5.25 5.25 0 1 1-7.425-7.426l1.757-1.757a.75.75 0 0 1 1.061 0Zm2.401.26a.75.75 0 0 1 .957.458c.18.512.474.992.885 1.403.31.311.661.555 1.035.733a.75.75 0 0 1-.647 1.354 5.244 5.244 0 0 1-1.449-1.026 5.232 5.232 0 0 1-1.24-1.965.75.75 0 0 1 .46-.957Z" clipRule="evenodd" />
                             </svg>

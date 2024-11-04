@@ -66,8 +66,8 @@ const config: Config = {
           ".divider-primary::before, .divider-primary::after": {
             "background-color": "#1ba39c",
           },
-        }
-      }
+        },
+      },
     ],
   },
 };

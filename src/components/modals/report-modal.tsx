@@ -46,7 +46,7 @@ export default function ReportModal({
         }).then(_ => {
             enqueueSnackbar("Report submitted", {variant: 'success', autoHideDuration: 2500});
         }).catch(_ => {
-            enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'success', autoHideDuration: 3000});
+            enqueueSnackbar("Sth went wrong, pls try again later", {variant: 'error', autoHideDuration: 3000});
         });
     }
 
@@ -89,7 +89,7 @@ export default function ReportModal({
                                                             {dictionary.modals.report.cards[i.id].description}
                                                         </span>
                                                     </p>
-                                                    <input type="radio" name="radio-10" className="radio checked:bg-accent" onClick={() => setSelectedReason(i.id)}/>
+                                                    <input type="radio" name="radio-10" className="radio checked:bg-[#4ba09e]" onClick={() => setSelectedReason(i.id)}/>
                                                 </label>
                                             </div>
                                         </div>

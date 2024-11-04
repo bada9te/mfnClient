@@ -121,7 +121,7 @@ export default function AudioPlayer({
                 mute={isMute}
                 volume={playerVol}
                 ref={playerRef}
-                usingWebAudio={true}
+                //usingWebAudio={true}
               />
               <PlayerTrackInfo dictionary={dictionary}/>
               <div className="divider divider-primary my-8 md:my-3">
