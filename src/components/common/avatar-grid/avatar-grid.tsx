@@ -50,9 +50,10 @@ const AvatarGrid = ({
     if (inStorageR) {
       const prop = JSON.parse(inStorageR).data;
       prop && getmostRecent();
-      setShowFollowing(prop);
+      setShowRecents(prop);
     }
   }, [user]);
+
 
   return (
     <div className='bg-base-300 glass flex items-center justify-start flex-col gap-4 py-4 pb-6 rounded-2xl shadow-xl min-h-[calc(100vh-175px)] text-white'>
