@@ -72,7 +72,7 @@ export default function SelectTrackModal({
                             loading
                             ?
                             <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
-                                <div className="flex flex-row flex-wrap gap-5 w-full justify-center">
+                                <div className="flex flex-row flex-wrap gap-10 w-full justify-center items-start">
                                     <PostsContainerSkeleton/>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@ export default function SelectTrackModal({
                                 {
                                     data?.postsByTitle && data.postsByTitle.length > 0
                                     ?
-                                    <div className="flex-1 min-h-full w-full flex gap-5 justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
+                                    <div className="flex-1 min-h-full w-full flex flex-wrap gap-12 justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
                                         {
                                             data.postsByTitle.map((p, k) => {
                                                 return <Post key={k} data={p as TPost} handleSelect={handleSelectTrack} dictionary={dictionary}/>

@@ -12,7 +12,7 @@ export default function ChainImage({chainId}: {chainId: number}) {
                         case 8453:  return <Image src={"/assets/icons/base.png"} alt="8453" width={30} height={30}/>;
                         case 137:   return <Image src={"/assets/icons/polygon.png"} alt="137" width={30} height={30}/>;
                         default:
-                            break;
+                            return <span>[unknown]</span>
                     }
                 })()
             }

@@ -575,7 +575,8 @@
                 "create": "Create battle",
                 "select-track": "Select yout track",
                 "select": "Select",
-                "associate-with-blockchain": "Associate with blockchain"
+                "associate-with-blockchain": "Associate with blockchain",
+                "connect-wallet": "Connect wallet"
             },
             "email-verification": {
                 "verification": "Verification",

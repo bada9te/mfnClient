@@ -14,6 +14,8 @@ import { useAccount, useBalance, useSwitchChain, useWriteContract } from "wagmi"
 import { waitForTransactionReceipt } from "@wagmi/core";
 import ChainImage from "../common/chain-image/chain-image";
 import { generateDEFAULT_MFN_CONTRACT_CFG } from "@/utils/contract-functions/contract-functions";
+import Image from "next/image";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 
 export const PostPlaceholder = (props: {
@@ -59,6 +61,8 @@ export default function BattleForm({
     const [useBlockChain, setUseBlockchain] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
 
+    const { openConnectModal } = useConnectModal();
+
     const [createBattle] = useBattleCreateMutation();
     const [deleteBattle] = useBattleDeleteByIdMutation();
     const { writeContractAsync } = useWriteContract();
@@ -102,7 +106,7 @@ export default function BattleForm({
                         data?.battleCreate._id as string,
                         input.post1,
                         input.post2,
-                        24,
+                        1,
                     ],
                 }).then(async(hash) => {
                     await waitForTransactionReceipt(config, {
@@ -194,7 +198,8 @@ export default function BattleForm({
                     </div>
                     
                     {
-                        address?.length &&
+                        address?.length 
+                        ?
                         <>
                             <div className="form-control mt-2">
                                 <label className="label cursor-pointer">
@@ -208,7 +213,7 @@ export default function BattleForm({
                                         return (
                                             <button 
                                                 key={key} 
-                                                className={`w-12 h-12 rounded-xl ${blockchain === chain.id ? "bg-[#1ba39c]" : "bg-base-300"} shadow-xl flex items-center justify-center glass hover:bg-[#1ba39c] cursor-pointer disabled:opacity-50 disabled:hover:bg-base-300 disabled:cursor-default`}
+                                                className={`w-12 h-12 rounded-xl ${blockchain === chain.id && useBlockChain ? "bg-[#1ba39c]" : "bg-base-300"} shadow-xl flex items-center justify-center glass hover:bg-[#1ba39c] cursor-pointer disabled:opacity-50 disabled:hover:bg-base-300 disabled:cursor-default`}
                                                 disabled={!useBlockChain}
                                                 type="button"
                                                 onClick={() => setBlockchain(chain.id)}
@@ -220,6 +225,16 @@ export default function BattleForm({
                                 }
                             </div>
                         </>
+                        :
+                        <div className="form-control mt-2 px-4 md:px-0">
+                            <label className="label cursor-pointer">
+                            <span className="label-text">{dictionary.forms.battle["associate-with-blockchain"]}</span>
+                                <button onClick={openConnectModal} className="btn btn-primary btn-sm bg-base-300 glass text-white px-5">
+                                    <Image src={"/assets/icons/ethereum-eth.svg"} width={22} height={22} alt="eth" />
+                                    <span>{dictionary.forms.battle["connect-wallet"]}</span>
+                                </button>
+                            </label>
+                        </div>
                     }
 
                     <div className="form-control mt-5 px-4 md:px-0">

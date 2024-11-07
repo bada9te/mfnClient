@@ -575,7 +575,8 @@
                 "create": "Создать сражение",
                 "select-track": "Выберите ваш трек",
                 "select": "Выбрать",
-                "associate-with-blockchain": "Включить возможность голования с блокчейн"
+                "associate-with-blockchain": "Включить возможность голования с блокчейн",
+                "connect-wallet": "Подключить кошелек"
             },
             "email-verification": {
                 "verification": "Подтверждение",

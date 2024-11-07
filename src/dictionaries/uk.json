@@ -575,7 +575,8 @@
                 "create": "Створити змагання",
                 "select-track": "Оберіть ваш трек",
                 "select": "Оберіть",
-                "associate-with-blockchain": "Увімкнути можливість головсувати із блокчейн"
+                "associate-with-blockchain": "Увімкнути можливість головсувати із блокчейн",
+                "connect-wallet": "Підключити гаманець"
             },
             "email-verification": {
                 "verification": "Підтвердження",
