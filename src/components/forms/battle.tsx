@@ -97,9 +97,9 @@ export default function BattleForm({
             variables: {
                 input
             }
-        }).then(({data}) => {
+        }).then(async ({data}) => {
             if (useBlockChain) {
-                writeContractAsync({
+                await writeContractAsync({
                     ...generateDEFAULT_MFN_CONTRACT_CFG(Number(chainId)),
                     functionName: 'createBattle',
                     args: [
@@ -137,6 +137,7 @@ export default function BattleForm({
             revalidatePathAction('/battles/in-progress', 'page');
         });
     }
+
 
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
@@ -204,7 +205,7 @@ export default function BattleForm({
                             <div className="form-control mt-2">
                                 <label className="label cursor-pointer">
                                 <span className="label-text">{dictionary.forms.battle["associate-with-blockchain"]}</span>
-                                    <input type="checkbox" className="checkbox checkbox-primary" onChange={() => setUseBlockchain(!useBlockChain)}/>
+                                    <input type="checkbox" className="checkbox" onChange={() => setUseBlockchain(!useBlockChain)}/>
                                 </label>
                             </div>
                             <div className="w-full items-center justify-center gap-4 flex flex-col md:flex-row">
