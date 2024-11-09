@@ -66,22 +66,20 @@ export default function ProfileButton({
     }
 
     return (
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end bg-base-300 rounded-xl">
             <div className="flex flex-row flex-nowrap items-center justify-center">
                 {
                     account.address 
                     &&
-                    <span className="join p-4 px-0 w-fit flex z-20 mr-2">
+                    <span className="join p-4 px-0 w-fit flex z-20 mx-2">
                         <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce] flex md:hidden rounded-l-xl" onClick={handlebalanceInfoClick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
                                 <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM9 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6.75 8a.75.75 0 0 0 0 1.5h.75v1.75a.75.75 0 0 0 1.5 0v-2.5A.75.75 0 0 0 8.25 8h-1.5Z" clipRule="evenodd" />
                             </svg>
                         </span>
                         <span className="badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${userBalance ? (Number(userBalance) / 10**Number(decimals)).toFixed(3) : 0} USDC`}
-                            
-                                {/* @ts-ignore */}
-                                <Image src={USDCAddresses[account.chainId]?.icon} alt="chain-logo" width={16} height={16} className="ml-2"/>
-                               
+                            {/* @ts-ignore */}
+                            <Image src={USDCAddresses[account.chainId]?.icon} alt="chain-logo" width={16} height={16} className="ml-2"/>
                         </span>
                         
                         <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce]" onClick={onBalanceRefetch}>
@@ -91,7 +89,7 @@ export default function ProfileButton({
                         </span>
                     </span>
                 }
-                <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 p-0 pl-0 md:pl-2 rounded-full">
+                <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 p-0 pl-0 md:pl-5 rounded-full">
                     <div className="rounded-full flex flex-row justify-center items-center gap-4">
                         <div className="hidden md:block">
                             <p className="font-bold text-lg">{user?.user?._id ? user?.user?.nick : "Login"}</p>

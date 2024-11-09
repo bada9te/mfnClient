@@ -101,7 +101,7 @@ export default function AppBar({
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
+                <ul className="menu menu-horizontal px-1 bg-base-300 rounded-xl">
                     <li><Link href={"/feed/1"}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              className="size-5">

@@ -24,7 +24,7 @@ export const PostPlaceholder = (props: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"];
 }) => {
     return (
-        <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center glass relative rounded-2xl">
+        <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center bg-base-300 relative rounded-2xl">
             <div className="flex flex-col h-full justify-center items-center">
                 <InfoImage text={props.dictionary.forms.battle["select-track"]} image="/assets/icons/logo_clear.png"/>
             </div>
@@ -141,7 +141,7 @@ export default function BattleForm({
 
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
-            <div className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl px-0 md:px-4 rounded-2xl">
+            <div className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl px-4 rounded-2xl">
                 <div className="divider divider-primary px-4 md:px-0">{dictionary.forms.battle.setup}</div>
                 <div className="flex flex-wrap gap-5 mt-5 w-full justify-around mb-10">
                     <div className="flex flex-col gap-3">
@@ -175,28 +175,31 @@ export default function BattleForm({
                     </div>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <div className="form-control px-4 md:px-0">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms.battle["battle-title"]}</span>
+                    <label className="form-control">
+                        <div className="label">
+                            <span className="label-text-alt">{dictionary.forms.battle["battle-title"]}</span>
+                        </div>
+                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <input type="text" placeholder={dictionary.forms.battle["battle-title"]} className="placeholder:text-gray-200 grow" {
+                                ...register("title", {
+                                    required: {value: true, message: dictionary.forms.battle["title-requited"]},
+                                    minLength: {value: 5, message: `${dictionary.forms.battle["min-length"]} 5`},
+                                    maxLength: {value: 20, message: `${dictionary.forms.battle["max-length"]} 20`}
+                                })
+                            }/>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                <path fillRule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625ZM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H8.25Z" clipRule="evenodd" />
+                                <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
+                            </svg>
                         </label>
-                        <input 
-                            type="text" 
-                            placeholder={dictionary.forms.battle["battle-title"]}
-                            className="input input-bordered shadow-md glass placeholder:text-gray-200" 
-                            required
-                            {...register("title", {
-                                required: {value: true, message: dictionary.forms.battle["title-requited"]},
-                                minLength: {value: 5, message: `${dictionary.forms.battle["min-length"]} 5`},
-                                maxLength: {value: 20, message: `${dictionary.forms.battle["max-length"]} 20`}
-                            })}
-                        />
-                        {
-                            errors.title &&
-                            <label className="label">
-                                <span className="text-error">{errors.title.message}</span>
-                            </label>
-                        }
-                    </div>
+                        <div className="label">
+                            {
+                                errors.title &&
+                                <span className="label-text-alt text-error">{errors.title.message}</span>
+                            }
+                        </div>
+                    </label>
                     
                     {
                         address?.length 
@@ -238,20 +241,20 @@ export default function BattleForm({
                         </div>
                     }
 
-                    <div className="form-control mt-5 px-4 md:px-0">
+                    <div className="form-control mt-5 px-0 md:px-0">
                         {
                             (() => {
                                 if (chainId !== blockchain && useBlockChain) {
                                     return (
-                                        <button type="button" className="btn btn-primary glass text-white" onClick={() => switchChain({ chainId: blockchain as number })}>
+                                        <button onClick={() => switchChain({ chainId: blockchain as number })} className="glass group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                                             Switch to {config.chains.find(i => i.id === blockchain)?.name}
                                         </button>
                                     );
                                 } else {
                                     return (
-                                        <button type="submit" className="btn btn-primary glass text-white" disabled={isLoading}>
+                                        <button disabled={isLoading} type="submit" className="glass group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                                             {
-                                                isLoading && <span className="loading loading-dots loading-sm"></span>
+                                                isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                                             }
                                             {dictionary.forms.battle.create} {useBlockChain ? `- ${config.chains.find(i => i.id === blockchain)?.name}` : ""}
                                         </button>

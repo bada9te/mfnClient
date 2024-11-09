@@ -52,7 +52,7 @@ export default function LeftBarDrawer(props: {
                     style={{ backgroundSize: '400px 935px' }}
                 >
                     {/* Sidebar content here */}
-                    <label className="input input-bordered flex items-center justify-between gap-2 glass my-2">
+                    <label className="input input-bordered flex items-center justify-between gap-2 my-2 bg-base-300">
                         <input type="text" className="w-fit placeholder:text-gray-200 text-white" placeholder={dictionary?.modals?.["leftbar-drawer"]?.search} onChange={e => setSq(e.target.value)}/>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

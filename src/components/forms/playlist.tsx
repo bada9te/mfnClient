@@ -78,9 +78,9 @@ export default function PlaylistForm({
                 </div>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white" disabled={isLoading}>
+                    <button disabled={isLoading} type="submit" className="glass group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                         {
-                            isLoading && <span className="loading loading-dots loading-sm"></span>
+                            isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                         }
                         {dictionary.forms.playlist.submit}
                     </button>

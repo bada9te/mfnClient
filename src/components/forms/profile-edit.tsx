@@ -247,55 +247,67 @@ export default function ProfileEditForm(props: {
 
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl md:rounded-2xl mx-2 md:mx-0">
-            <div className="bg-base-300 card-body m-1 pulsar-shadow text-white md:rounded-2xl shadow-2xl glass">
+            <div className="bg-base-300 card-body m-1 pulsar-shadow text-white md:rounded-2xl shadow-2xl glass p-4 md:p-6">
                 <div className="divider divider-primary">{dictionary.forms["profile-edit"].basics}</div>
 
                 <form role="form" onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
-                    <div className="form-control pt-0">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms["profile-edit"].nickname}</span>
-                        </label>
-                        <div className="join w-full">
-                            <input type="text" placeholder={dictionary.forms["profile-edit"].nickname} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                ...registerNick("nickname", {
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text-alt">{dictionary.forms["profile-edit"].nickname}</span>
+                        </div>
+                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <input type="text" placeholder={dictionary.forms["profile-edit"].nickname} className="placeholder:text-gray-200 grow"
+                                {...registerNick("nickname", {
                                     minLength: { value: 4, message: `${dictionary.forms["profile-edit"]["min-length"]} 4` },
                                     maxLength: { value: 20, message: `${dictionary.forms["profile-edit"]["max-length"]} 20` },
                                     required: { value: true, message: dictionary.forms["profile-edit"].required },
-                                })
-                            }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].save}</button>
+                                })}
+                            />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                <path fillRule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625ZM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H8.25Z" clipRule="evenodd" />
+                                <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
+                            </svg>
+                        </label>
+                        <div className="label">
+                            {
+                                errorsNick.nickname &&
+                                <span className="label-text-alt text-error">{errorsNick.nickname.message}</span>
+                            }
                         </div>
-                        {
-                            errorsNick.nickname &&
-                            <label className="label">
-                                <span className="label-text text-error">{errorsNick.nickname.message}</span>
-                            </label>
-                        }
-                    </div>
+                    </label>
+                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                        {dictionary.forms["profile-edit"].save}
+                    </button>
                 </form>
 
                 <form role="form" onSubmit={handleSubmitDescr(onSubmitDescription)} noValidate>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms["profile-edit"].description}</span>
-                        </label>
-                        <div className="join w-full rounded-2xl">
-                            <input type="text" placeholder="Description" className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                ...registerDescr("description", {
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text-alt">{dictionary.forms["profile-edit"].description}</span>
+                        </div>
+                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <input type="text" placeholder={dictionary.forms["profile-edit"].description} className="placeholder:text-gray-200 grow"
+                                {...registerDescr("description", {
                                     minLength: { value: 4, message: `${dictionary.forms["profile-edit"]["min-length"]} 4` },
                                     maxLength: { value: 40, message: `${dictionary.forms["profile-edit"]["max-length"]} 40` },
                                     required: { value: true, message: dictionary.forms["profile-edit"].required },
-                                })
-                            }/>
-                            <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].save}</button>
+                                })}
+                            />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                <path fillRule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625ZM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H8.25Z" clipRule="evenodd" />
+                                <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
+                            </svg>
+                        </label>
+                        <div className="label">
+                            {
+                                errorDescr.description &&
+                                <span className="label-text-alt text-error">{errorDescr.description.message}</span>
+                            }
                         </div>
-                        {
-                            errorDescr.description &&
-                            <label className="label">
-                                <span className="label-text text-error">{errorDescr.description.message}</span>
-                            </label>
-                        }
-                    </div>
+                    </label>
+                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                        {dictionary.forms["profile-edit"].save}
+                    </button>
                 </form>
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].email}</div>
@@ -310,39 +322,46 @@ export default function ProfileEditForm(props: {
                                             <span className="label-text text-warning">{dictionary.forms["profile-edit"]["email-link-warning"]}</span>
                                         </label>
                                         <form role="form" onSubmit={handleSubmitLinkEmail(onSubmitLinkEmail)} noValidate>
-                                            <div className="form-control">
-                                                <label className="label">
-                                                    <span className="label-text">{dictionary.forms["profile-edit"]["link-email"]}</span>
-                                                </label>
-                                                <div className="join w-full">
-                                                    <input type="text" placeholder={dictionary.forms["profile-edit"]["link-email-new"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                                        ...registerLinkEmail("newEmail", {
+                                            <label className="form-control w-full">
+                                                <div className="label">
+                                                    <span className="label-text-alt">{dictionary.forms["profile-edit"]["link-email-new"]}</span>
+                                                </div>
+                                                <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                                    <input type="text" placeholder={dictionary.forms["profile-edit"]["link-email-new"]} className="placeholder:text-gray-200 grow"
+                                                        {...registerLinkEmail("newEmail", {
                                                             pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
                                                             required: { value: true, message: dictionary.forms["profile-edit"].required },
-                                                        })
-                                                    }/>
-                                                    <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                                        })}
+                                                    />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                                        <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                                                        <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                                                    </svg>
+                                                </label>
+                                                <div className="label">
+                                                    {
+                                                        errorslinkEmail.newEmail &&
+                                                        <span className="label-text-alt text-error">{errorslinkEmail.newEmail.message}</span>
+                                                    }
                                                 </div>
-                                                {
-                                                    errorslinkEmail.newEmail &&
-                                                    <label className="label">
-                                                        <span className="label-text text-error">{errorslinkEmail.newEmail.message}</span>
-                                                    </label>
-                                                }
-                                            </div>
+                                            </label>
+                        
+                                            <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                                {dictionary.forms["profile-edit"].request}
+                                            </button>
                                         </form>
                                     </>
                                 );
                             } else {
                                 return (
                                     <form role="form" onSubmit={handleSubmitEmail(onSubmitEmail)} noValidate>
-                                        <div className="form-control">
-                                            <label className="label">
-                                                <span className="label-text">{dictionary.forms["profile-edit"].email}</span>
-                                            </label>
-                                            <div className="join w-full">
-                                                <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                                    ...registerEmail("oldEmail", {
+                                        <label className="form-control w-full">
+                                            <div className="label">
+                                                <span className="label-text-alt">{dictionary.forms["profile-edit"]["old-email"]}</span>
+                                            </div>
+                                            <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                                <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="placeholder:text-gray-200 grow"
+                                                    {...registerEmail("oldEmail", {
                                                         pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
                                                         required: { value: true, message: dictionary.forms["profile-edit"].required },
                                                         validate: (value) => {
@@ -351,17 +370,23 @@ export default function ProfileEditForm(props: {
                                                                 return dictionary.forms["profile-edit"]["wrong-email"]
                                                             }
                                                         }
-                                                    })
-                                                }/>
-                                                <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                                    })}
+                                                />
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                                    <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                                                    <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                                                </svg>
+                                            </label>
+                                            <div className="label">
+                                                {
+                                                    errorEmail.oldEmail &&
+                                                    <span className="label-text-alt text-error">{errorEmail.oldEmail.message}</span>
+                                                }
                                             </div>
-                                            {
-                                                errorEmail.oldEmail &&
-                                                <label className="label">
-                                                    <span className="label-text text-error">{errorEmail.oldEmail.message}</span>
-                                                </label>
-                                            }
-                                        </div>
+                                        </label>
+                                        <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                            {dictionary.forms["profile-edit"].request}
+                                        </button>
                                     </form>
                                 );
                             }
@@ -385,13 +410,13 @@ export default function ProfileEditForm(props: {
                             } else {
                                 return (
                                     <form role="form" onSubmit={handleSubmitPassword(onSubmitPassword)} noValidate>
-                                        <div className="form-control">
-                                            <label className="label">
-                                                <span className="label-text">{dictionary.forms["profile-edit"].password}</span>
-                                            </label>
-                                            <div className="join">
-                                                <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200 rounded-l-xl" {
-                                                    ...registerPassword("oldEmail", {
+                                        <label className="form-control w-full">
+                                            <div className="label">
+                                                <span className="label-text-alt">{dictionary.forms["profile-edit"].password}</span>
+                                            </div>
+                                            <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                                <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="placeholder:text-gray-200 grow"
+                                                    {...registerPassword("oldEmail", {
                                                         pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
                                                         required: { value: true, message: dictionary.forms["profile-edit"].required },
                                                         validate: (value) => {
@@ -400,17 +425,24 @@ export default function ProfileEditForm(props: {
                                                                 return dictionary.forms["profile-edit"]["wrong-email"]
                                                             }
                                                         }
-                                                    })
-                                                }/>
-                                                <button className="btn btn-primary join-item glass text-white rounded-r-xl" type="submit">{dictionary.forms["profile-edit"].request}</button>
+                                                    })}
+                                                />
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                                    <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                                                    <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                                                </svg>
+                                            </label>
+                                            <div className="label">
+                                                {
+                                                    errorsPassword.oldEmail &&
+                                                    <span className="label-text-alt text-error">{errorsPassword.oldEmail.message}</span>
+                                                }
                                             </div>
-                                            {
-                                                errorsPassword.oldEmail &&
-                                                <label className="label">
-                                                    <span className="label-text text-error">{errorsPassword.oldEmail.message}</span>
-                                                </label>
-                                            }
-                                        </div>
+                                        </label>
+
+                                        <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                            {dictionary.forms["profile-edit"].request}
+                                        </button>
                                     </form>
                                 );
                             }
