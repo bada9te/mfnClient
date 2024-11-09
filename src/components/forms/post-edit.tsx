@@ -155,49 +155,64 @@ export default function PostEditForm(props: {
                 <div className="divider divider-primary">{dictionary.forms["post-edit-upload"].edit}</div>
 
                 <form role="form" onSubmit={handleSubmitTitle(onSubmitTitle)} noValidate>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms["post-edit-upload"].title}</span>
-                        </label>
-                        <div className="join w-full">
-                            <input type="text" placeholder={dictionary.forms["post-edit-upload"].title} className="join-item input input-bordered shadow-md glass placeholder:text-gray-200 w-full" {
-                                ...registerTitle("title", {
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text-alt">{dictionary.forms["post-edit-upload"].title}</span>
+                        </div>
+                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <input type="text" placeholder={dictionary.forms["post-edit-upload"].title} className="placeholder:text-gray-200 grow"
+                                {...registerTitle("title", {
                                     maxLength: { value: 15, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 15` },
                                     required: { value: true, message: `${dictionary.forms["post-edit-upload"].required}` }
-                                })
-                            }/>
-                            <button className="btn btn-primary join-item glass text-white" type="submit">{dictionary.forms["post-edit-upload"].save}</button>
+                                })}
+                            />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                                <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                            </svg>
+                        </label>
+                        <div className="label">
+                            {
+                                errorTitle.title &&
+                                <span className="label-text-alt text-error">{errorTitle.title.message}</span>
+                            }
                         </div>
-                        {
-                            errorTitle.title &&
-                            <label className="label">
-                                <span className="label-text text-error">{errorTitle.title.message}</span>
-                            </label>
-                        }
-                    </div>
+                    </label>
+
+                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                        {dictionary.forms["post-edit-upload"].save}
+                    </button>
                 </form>
                 
                 <form onSubmit={handleSubmitDescr(onSubmitDescr)} noValidate>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">{dictionary.forms["post-edit-upload"].description}</span>
-                        </label>
-                        <div className="join w-full">
-                            <input type="text" placeholder={dictionary.forms["post-edit-upload"].description} className="join-item input input-bordered shadow-md w-full glass placeholder:text-gray-200" {
-                                ...registerDescr("description", {
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text-alt">{dictionary.forms["post-edit-upload"].description}</span>
+                        </div>
+                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <input type="text" placeholder={dictionary.forms["post-edit-upload"].description} className="placeholder:text-gray-200 grow"
+                                {...registerDescr("description", {
                                     maxLength: { value: 25, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 25` },
                                     required: { value: true, message: dictionary.forms["post-edit-upload"].required }
-                                })
-                            }/>
-                            <button className="btn btn-primary join-item glass text-white" type="submit">{dictionary.forms["post-edit-upload"].save}</button>
+                                })}
+                            />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                                <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                            </svg>
+                        </label>
+                        <div className="label">
+                            {
+                                errorDescr.description &&
+                                <span className="label-text-alt text-error">{errorDescr.description.message}</span>
+                            }
                         </div>
-                        {
-                            errorDescr.description &&
-                            <label className="label">
-                                <span className="label-text text-error">{errorDescr.description.message}</span>
-                            </label>
-                        }
-                    </div>
+                    </label>
+
+
+                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                        {dictionary.forms["post-edit-upload"].save}
+                    </button>
                 </form>
                 
                 <form onSubmit={handleSubmitImage(onSubmitImage)} noValidate>
@@ -206,17 +221,14 @@ export default function PostEditForm(props: {
                             <span className="label-text">{dictionary.forms["post-edit-upload"].image}</span>
                             <span className="label-text-alt">.jpg, .png</span>
                         </div>
-                        <div className="join join-vertical">
-                            <input 
-                                type="file" 
-                                className="join-item file-input file-input-bordered w-full bg-[#1a1a1a] file:glass file:text-white file: placeholder:text-gray-200" 
-                                onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
-                                {...registerImage("image", {
-                                    required: { value: true, message: dictionary.forms["post-edit-upload"].required }
-                                })}
-                            />
-                            <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">{dictionary.forms["post-edit-upload"].save}</button>
-                        </div>
+                        <input 
+                            type="file" 
+                            className="join-item file-input file-input-bordered w-full bg-base-300 file:text-white placeholder:text-gray-200" 
+                            onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
+                            {...registerImage("image", {
+                                required: { value: true, message: dictionary.forms["post-edit-upload"].required }
+                            })}
+                        />
                         {
                             errorImage.image &&
                             <label className="label">
@@ -224,6 +236,10 @@ export default function PostEditForm(props: {
                             </label>
                         }
                     </label>
+
+                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                        {dictionary.forms["post-edit-upload"].save}
+                    </button>
                 </form>
                 
                 <form onSubmit={handleSubmitAudio(onSubmitAudio)} noValidate>
@@ -232,14 +248,13 @@ export default function PostEditForm(props: {
                             <span className="label-text">{dictionary.forms["post-edit-upload"].audio}</span>
                             <span className="label-text-alt">.mp3, .wav</span>
                         </div>
-                        <div className="join join-vertical">
-                            <input type="file" className="join-item file-input file-input-bordered w-full bg-[#1a1a1a] file:text-white file:glass file:" {
-                                ...registerAudio("audio", {
-                                    required: { value: true, message: dictionary.forms["post-edit-upload"].required }
-                                })
-                            }/>
-                            <button className="btn btn-sm btn-primary join-item glass text-white" type="submit">{dictionary.forms["post-edit-upload"].save}</button>
-                        </div>
+                      
+                        <input type="file" className="join-item file-input file-input-bordered w-full bg-base-300 file:text-white" {
+                            ...registerAudio("audio", {
+                                required: { value: true, message: dictionary.forms["post-edit-upload"].required }
+                            })
+                        }/>
+
                         {
                             errorAudio.audio &&
                             <label className="label">
@@ -247,13 +262,16 @@ export default function PostEditForm(props: {
                             </label>
                         }
                     </label>
+                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                        {dictionary.forms["post-edit-upload"].save}
+                    </button>
                 </form>
 
                 <label className="form-control w-full">
                     <div className="label">
                         <span className="label-text">{dictionary.forms["post-edit-upload"].genre}</span>
                     </div>
-                    <select className="btn text-start glass bg-[#3b3b3b]" onChange={onGenreChange}>
+                    <select className="btn text-start bg-base-300" onChange={onGenreChange}>
                         {
                             genres.map((gen, key) => {
                                 return <option className="bg-[#272727] text-lg" key={key} value={gen.id}>{gen.id}</option>
@@ -265,7 +283,7 @@ export default function PostEditForm(props: {
                 <div className="form-control mt-4">
                     <label className="label cursor-pointer">
                         <span className="label-text">{dictionary.forms["post-edit-upload"]["downloads-allowed"]}</span>
-                        <input type="checkbox" className="checkbox checkbox-primary" onChange={onDownloadsAllowedChange}/>
+                        <input type="checkbox" className="checkbox" onChange={onDownloadsAllowedChange}/>
                     </label>
                 </div>
             </div>
