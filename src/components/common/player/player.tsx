@@ -180,6 +180,8 @@ export default function AudioPlayer({
                         onChange={handleSeekingChange}
                         onMouseDown={handleMouseDownSeek}
                         onMouseUp={handleMouseUpSeek}
+                        onTouchStart={handleMouseDownSeek}
+                        onTouchEnd={handleMouseUpSeek}
                         className="range range-xs" 
                       />
                     </span>

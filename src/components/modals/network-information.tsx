@@ -3,8 +3,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Image from "next/image";
 import { contractGetAllImportantDataForBattle, contractGetPossibleWithdrawal } from "@/utils/contract-functions/contract-functions";
-import { useAccount } from "wagmi";
+import { useAccount, useWriteContract } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
+import { useSnackbar } from "notistack";
+import { waitForTransactionReceipt } from "@wagmi/core";
+import { config } from "@/config/wagmi";
 
 export default function NetworkInformation({
     button, 
@@ -44,6 +48,8 @@ export default function NetworkInformation({
         battleTokensTransfers2: number 
     } | undefined>(undefined);
     const [possibleWithdrawal, setPossibleWithdrawal] = useState(0);
+    const { writeContractAsync } = useWriteContract();
+    const { enqueueSnackbar } = useSnackbar();
 
     const fetchInfo = useCallback(async() => {
         if (chainId == networkId) {
@@ -105,7 +111,30 @@ export default function NetworkInformation({
     }
 
     const onClose = () => {
-        
+        ref.current && ref.current.close();
+    }
+    
+    const handelWithdraw = () => {
+        onClose();
+        enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
+        data && writeContractAsync({
+            address: contractAddress as `0x${string}`,
+            abi: mfnAbi,
+            functionName: "withdrawTokensFromBattle",
+            args: [
+                battleId,
+                data.totalTokensPerPost1 > data.totalTokensPerPost2 ? post1Id : post2Id,
+            ],
+        }).then(async hash => {
+            enqueueSnackbar("Waiting for TX receipt...", { autoHideDuration: 2000 });
+            await waitForTransactionReceipt(config, {
+                hash,
+                confirmations: 2
+            });
+            enqueueSnackbar("TX completed", { autoHideDuration: 3000, variant: 'success' });
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' })
+        });
     }
 
     if (!isMounted) {
@@ -176,7 +205,11 @@ export default function NetworkInformation({
                             </div>
                         </div>
 
-                        <button className="btn btn-primary glass btn-sm w-full text-white mt-5" disabled={!battleisFInished || possibleWithdrawal == 0}>
+                        <button 
+                            className="btn btn-primary glass btn-sm w-full text-white mt-5" 
+                            disabled={!battleisFInished || possibleWithdrawal == 0}
+                            onClick={handelWithdraw}
+                        >
                             {dictionary.modals["network-information"].withdraw} <span className="text-[#25e7de]">{String(possibleWithdrawal).slice(0, 7)} USDC</span>
                         </button>
                     </div>
