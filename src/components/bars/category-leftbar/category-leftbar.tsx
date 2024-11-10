@@ -1,3 +1,4 @@
+import { Calculator, ChevronsRight, Layers } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,10 +15,8 @@ export default function CategoryLeftBar(props: {
         <div className={`card w-fit max-w-[305px] min-h-48 bg-cover bg-center bg-base-300 shadow-none text-white h-full relative bg-opacity-80 rounded-2xl overflow-hidden glass`}>
             <Image src={bgImage} alt="category-bg" width={800} height={600} className="absolute bottom-0 left-0 rounded-bl-2xl min-h-48"/>
             <div className="card-body relative h-full">
-                <div className="bg-base-300 absolute top-0 left-0 w-fit rounded-br-xl rounded-tl-xl px-3 glass flex flex-row items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
-                        <path fillRule="evenodd" d="M5 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H5Zm.75 6a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM5 3.75A.75.75 0 0 1 5.75 3h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 3.75Zm.75 7.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM5 10a.75.75 0 1 1 1.5 0A.75.75 0 0 1 5 10Zm5.25-3a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-.75 3a.75.75 0 0 1 1.5 0v2.25a.75.75 0 0 1-1.5 0V10ZM8 7a.75.75 0 1 0 0 1.5A.75.75 0 0 0 8 7Zm-.75 5.25a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0Zm.75-3a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z" clipRule="evenodd" />
-                    </svg>
+                <div className="bg-base-300 absolute top-0 left-0 w-fit rounded-br-xl rounded-tl-xl p-1 px-2 flex flex-row items-center">
+                    <Calculator size={16} className="mr-1"/>
                     {count}
                 </div>
                 <div className="flex flex-row items-center justify-center gap-4 bg-base-300 rounded-3xl w-fit glass pr-5 bg-opacity-75">
@@ -32,10 +31,7 @@ export default function CategoryLeftBar(props: {
 
                 <div className="absolute top-0 right-0 h-full card-actions justify-end p-1">
                     <Link className="btn glass bg-base-300 btn-sm text-white rounded-2xl" href={`/categories/${String(id).toLowerCase().replaceAll(' ', '-')}/1`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                            <path fillRule="evenodd" d="M13.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clipRule="evenodd" />
-                            <path fillRule="evenodd" d="M19.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clipRule="evenodd" />
-                        </svg>
+                        <ChevronsRight />
                     </Link>
                 </div>
             </div>

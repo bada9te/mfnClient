@@ -5,6 +5,8 @@ import SwitchLocaleItem from "./switch-locale-item/switch-locale-item";
 import { usePathname, useRouter } from "next/navigation";
 import { TLang } from "@/types/language";
 import { setCookie, getCookie } from "cookies-next";
+import MainButton from "@/components/common/main-button/main-button";
+import { X } from "lucide-react";
 
 export default function SwitchLocaleModal({button, dictionary}: {button: React.ReactElement; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
     const ref = useRef<HTMLDialogElement | null>(null);
@@ -56,9 +58,11 @@ export default function SwitchLocaleModal({button, dictionary}: {button: React.R
                     <button onClick={onClose}>close</button>
                 </form>
                 <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col glass">
-                    <form method="dialog">
+                    <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px' }}>
                         {/* if there is a button in form, it will close the modal */}
-                        <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        <MainButton handler={onClose} color="error" width="25px" height="25px" padding="1">
+                            <X/>
+                        </MainButton>
                     </form>
 
                     <h4 className="font-bold text-lg">{dictionary.modals.localization["locale"]}</h4>

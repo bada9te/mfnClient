@@ -7,6 +7,8 @@ import Post from "../entities/post/post";
 import InfoImage from "../common/info-image/info-image";
 import PostsContainerSkeleton from "../containers/posts-container/posts-container-skeleton";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import MainButton from "../common/main-button/main-button";
+import { X } from "lucide-react";
 
 
 export default function SelectTrackModal({
@@ -61,9 +63,11 @@ export default function SelectTrackModal({
             })}
             <dialog ref={ref} className="modal w-full h-full absolute">
                 <div className="modal-box glass  text-gray-300 min-w-[100vw] min-h-[100vh] no-scrollbar text-start flex flex-col">
-                    <form method="dialog">
+                    <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px' }}>
                         {/* if there is a button in form, it will close the modal */}
-                        <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 p-2">✕</button>
+                        <MainButton handler={onClose} color="error" width="25px" height="25px" padding="1">
+                            <X/>
+                        </MainButton>
                     </form>
                     <h4 className="font-bold text-lg z-50 text-white">{dictionary.modals["select-track"].selection}</h4>
 
@@ -81,7 +85,7 @@ export default function SelectTrackModal({
                                 {
                                     data?.postsByTitle && data.postsByTitle.length > 0
                                     ?
-                                    <div className="flex-1 min-h-full w-full flex flex-wrap gap-12 justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
+                                    <div className="flex-1 min-h-full w-full flex flex-wrap gap-16 justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
                                         {
                                             data.postsByTitle.map((p, k) => {
                                                 return <Post key={k} data={p as TPost} handleSelect={handleSelectTrack} dictionary={dictionary}/>

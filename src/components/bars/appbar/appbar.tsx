@@ -77,7 +77,7 @@ export default function AppBar({
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1 bg-base-300 rounded-xl">
+                <ul className="menu menu-horizontal px-1 bg-base-300 bg-opacity-80 rounded-xl">
                     <li><Link href={"/feed/1"}>
                         <Earth/>
                         {dictionary?.bars.appbar.feed}

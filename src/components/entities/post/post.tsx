@@ -17,6 +17,8 @@ import formatNumber from "@/utils/common-functions/formatNumber";
 import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { switchPostInLiked, switchPostInSaved } from "@/lib/redux/slices/user";
+import { Bookmark, CheckCheck, Cog, Flag, Heart, LinkIcon, Pause, PinOff, Play, SquarePlay, User as UserIcon } from "lucide-react";
+import MainButton from "@/components/common/main-button/main-button";
 
 
 export default function Post(props: {
@@ -108,7 +110,7 @@ export default function Post(props: {
                         text-white font-bold 
                         flex items-center 
                         justify-start p-1
-                        shadow-lg glass w-full"
+                        shadow-lg bg-base-300 border-base-300 w-full bg-opacity-80"
                         role="button"
                     >
                         <div className="avatar p-0">
@@ -121,16 +123,11 @@ export default function Post(props: {
                     </button>
                     <ul tabIndex={0} className="dropdown-content menu glass bg-base-300 rounded-box z-[1] w-52 p-2 mt-3 shadow bg-opacity-20">
                         <li><Link href={data?.owner?._id === user?._id ? "/profile/me/1" : `/profile/${data.owner?._id}/1`}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                                <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z" />
-                            </svg>
+                            <UserIcon/>
                             {dictionary.entities.post["open-profile"]}
                         </Link></li>
                         <li><button onClick={handleLinkCopy}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                                <path d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z" />
-                                <path d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z" />
-                            </svg>
+                            <LinkIcon />
                             {dictionary.entities.post.share}
                         </button></li>
                         <ReportModal
@@ -138,9 +135,7 @@ export default function Post(props: {
                             postId={data._id}
                             button={
                                 <li><button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                                        <path d="M3.5 2.75a.75.75 0 0 0-1.5 0v14.5a.75.75 0 0 0 1.5 0v-4.392l1.657-.348a6.449 6.449 0 0 1 4.271.572 7.948 7.948 0 0 0 5.965.524l2.078-.64A.75.75 0 0 0 18 12.25v-8.5a.75.75 0 0 0-.904-.734l-2.38.501a7.25 7.25 0 0 1-4.186-.363l-.502-.2a8.75 8.75 0 0 0-5.053-.439l-1.475.31V2.75Z" />
-                                    </svg>
+                                    <Flag/>
                                     {dictionary.entities.post.report}
                                 </button></li>
                             }
@@ -149,10 +144,7 @@ export default function Post(props: {
                             editable
                             &&
                             <li><Link href={`/profile/me/edit/post/${data._id}`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                                     <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                                    <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                                </svg>
+                                <Cog/>
                                 {dictionary.entities.post.edit}
                             </Link></li>
                         }
@@ -181,10 +173,7 @@ export default function Post(props: {
                         className={`${!handleRemove && 'cursor-pointer'} ${user?.likedPosts.find((i: string) => i === data._id) && "text-red-500"}`} 
                         onClick={handleSwitchLike}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        viewBox="0 0 24 24" fill="currentColor" className="inline-block h-8 w-8">
-                            <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                        </svg>
+                        <Heart className="inline-block h-8 w-8" fill={user?.likedPosts.find((i: string) => i === data._id) ? "#ef4444" : "#b2ccd6"}/>
                     </div>
                     <div className="stat-title">{dictionary.entities.post["total-likes"]}</div>
                     <div className="stat-value text-primary">{formatNumber(data.likes as number)}</div>
@@ -195,58 +184,58 @@ export default function Post(props: {
                         className={`${!handleRemove && 'cursor-pointer'} ${user?.savedPosts.find((i: string) => i === data._id) && "text-yellow-500"}`} 
                         onClick={handleSwitchInSaved}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        viewBox="0 0 24 24" fill="currentColor" className="inline-block h-8 w-8">
-                            <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clipRule="evenodd" />
-                        </svg>
+                        <Bookmark className="inline-block h-8 w-8" fill={user?.savedPosts.find((i: string) => i === data._id) ? "#eab308" : "#b2ccd6"}/>
                     </div>
                     <div className="stat-title">{dictionary.entities.post["total-saves"]}</div>
                     <div className="stat-value text-primary">{formatNumber(data.saves as number)}</div>
                 </div>
             </div>
 
-            <div className="card-actions justify-end pt-2 flex flex-row">
+            <div className="card-actions justify-center pt-2 flex flex-row">
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?
-                        <button className="btn btn-primary w-full glass bg-red-500 text-white " onClick={handlePauseCLick}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 className="size-6">
-                                <path fillRule="evenodd"
-                                      d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z"
-                                      clipRule="evenodd"/>
-                            </svg>
+                        <MainButton
+                            color="error"
+                            handler={handlePauseCLick}
+                        >
+                            <Pause fill="white"/>
                             {dictionary.entities.post.pause}
-                        </button>
+                        </MainButton>
                         :
-                        <button className="btn btn-primary w-full glass text-white " onClick={handlePlayCLick}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                 className="size-5">
-                                <path
-                                    d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z"/>
-                        </svg>
+                        <MainButton
+                            color="primary"
+                            handler={handlePlayCLick}
+                        >
+                            <Play fill="white"/>
                             {dictionary.entities.post.play}
-                        </button>
+                        </MainButton>
                 }
             </div>
-            <div className="bg-base-300 absolute bottom-[-40px] flex items-center rounded-2xl">
+            <div className="bg-base-300 absolute bottom-[-44px] flex items-center rounded-2xl">
                 {
                     handleSelect &&
-                    <button className="btn btn-sm btn-success w-fit glass text-white bg-green-900" onClick={() => handleSelect(data)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                            <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
-                        </svg>
+                    <MainButton
+                        handler={() => handleSelect(data)}
+                        color="success"
+                        height="8"
+                        width="fit"
+                    >
+                        <CheckCheck className="mr-1"/>
                         {dictionary.entities.post.select}
-                    </button>
+                    </MainButton>
                 }
                 {
                     handleRemove &&
-                    <button className="btn btn-sm btn-error w-fit bottom-[-32px] glass bg-red-900 text-white" onClick={() => handleRemove(data)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                            <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clipRule="evenodd" />
-                        </svg>
+                    <MainButton
+                        handler={() => handleRemove(data)}
+                        color="error"
+                        height="8"
+                        width="fit"
+                    >
+                        <PinOff className="mr-1"/>
                         {dictionary.entities.post.delete}
-                    </button>
+                    </MainButton>
                 }
             </div>
         </div>
