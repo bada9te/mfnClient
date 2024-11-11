@@ -52,6 +52,8 @@ const cardsData2 = [
         iconUrl:  "/assets/icons/logo_clear.png",
         github: { rDrayBen: "https://github.com/rDrayBen", ChadCoder39: "https://github.com/ChadCoder39" },
         telegram: { rDrayBen: 'https://t.me/rabotiahov', ChadCoder39: 'https://t.me/Yoperniy_teator' },
+        youtube: { hikaru: 'https://www.youtube.com/@hikaruyoshimura' },
+        x: { hikaru: 'https://x.com/HikaruYoshimura' }
     },
     {
         id: "about",
@@ -197,13 +199,23 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                                                             </Link>
 
                                                             <Link href={`${data.telegram?.rDrayBen}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-[#2294c5]">
-                                                                <Image src={"/assets/icons/telegram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                <Image src={"/assets/icons/telegram-logo.png"} width={20} height={20} alt="git" className="rounded-full"/>
                                                                 rabotiahov
                                                             </Link>
                                                     
                                                             <Link href={`${data.github?.rDrayBen}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
-                                                                <Image src={"/assets/icons/github-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
+                                                                <Image src={"/assets/icons/github-logo.png"} width={20} height={20} alt="git" className="rounded-full"/>
                                                                 rDrayBen
+                                                            </Link>
+
+                                                            <Link href={`${data.youtube?.hikaru}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-red-600">
+                                                                <Image src={"/assets/icons/youtube-logo.png"} width={20} height={20} alt="yt" className="rounded-full"/>
+                                                                hikaruyoshimura
+                                                            </Link>
+
+                                                            <Link href={`${data.x?.hikaru}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
+                                                                <Image src={"/assets/icons/x-logo.png"} width={20} height={20} alt="x" className="rounded-full"/>
+                                                                HikaruYoshimura
                                                             </Link>
                                                         </div>
                                                     );
