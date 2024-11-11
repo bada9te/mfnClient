@@ -3,6 +3,7 @@ import { formsConstants } from "@/config/forms";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
 import { useUserPrepareAccountToRestoreMutation } from "@/utils/graphql-requests/generated/schema";
+import { Mail, MailCheck } from "lucide-react";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
@@ -45,28 +46,33 @@ export default function EmailVerificationForm({
         <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
             <form role="form" className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="divider divider-primary">{dictionary.forms["email-verification"].verification}</div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">{dictionary.forms["email-verification"]["your-current-email"]}</span>
+
+                <label className="form-control w-full max-w-xs">
+                    <div className="label">
+                        <span className="label-text-alt">{dictionary.forms["email-verification"]["your-current-email"]}</span>
+                    </div>
+                    <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <input type="email" placeholder={dictionary.forms["email-verification"].email} className="placeholder:text-gray-200 grow" {
+                            ...register("email", {
+                                required: { value: true, message: dictionary.forms["email-verification"].required },
+                                pattern: { value: formsConstants.emailRegex, message: dictionary.forms["email-verification"]["email-not-valid"] }
+                            })
+                        }/>
+
+                        <MailCheck/>
                     </label>
-                    <input type="text" placeholder={dictionary.forms["email-verification"].email} className="input input-bordered shadow-md glass placeholder:text-gray-200" {
-                        ...register("email", {
-                            required: { value: true, message: dictionary.forms["email-verification"].required },
-                            pattern: { value: formsConstants.emailRegex, message: dictionary.forms["email-verification"]["email-not-valid"] }
-                        })
-                    }/>
-                    {
-                        errors.email &&
-                        <label className="label">
-                            <span className="label-text text-error">{errors.email.message}</span>
-                        </label>
-                    }
-                </div>
+                    <div className="label">
+                        {
+                            errors.email &&
+                            <span className="label-text-alt text-error">{errors.email.message}</span>
+                        }
+                    </div>
+                </label>
 
                 <div className="form-control mt-4">
-                    <button className="btn btn-primary glass text-white" disabled={isLoading}>
+                    <button disabled={isLoading} type="submit" className="glass group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                         {
-                            isLoading && <span className="loading loading-dots loading-sm"></span>
+                            isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                         }
                         {dictionary.forms["email-verification"].submit}
                     </button>

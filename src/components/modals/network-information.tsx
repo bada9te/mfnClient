@@ -3,8 +3,14 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import Image from "next/image";
 import { contractGetAllImportantDataForBattle, contractGetPossibleWithdrawal } from "@/utils/contract-functions/contract-functions";
-import { useAccount } from "wagmi";
+import { useAccount, useWriteContract } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import mfnAbi from "@/config/abis/MusicFromNothingAbi.json";
+import { useSnackbar } from "notistack";
+import { waitForTransactionReceipt } from "@wagmi/core";
+import { config } from "@/config/wagmi";
+import MainButton from "../common/main-button/main-button";
+import { X } from "lucide-react";
 
 export default function NetworkInformation({
     button, 
@@ -44,43 +50,52 @@ export default function NetworkInformation({
         battleTokensTransfers2: number 
     } | undefined>(undefined);
     const [possibleWithdrawal, setPossibleWithdrawal] = useState(0);
+    const { writeContractAsync } = useWriteContract();
+    const { enqueueSnackbar } = useSnackbar();
 
     const fetchInfo = useCallback(async() => {
         if (chainId == networkId) {
-         
-                contractGetAllImportantDataForBattle(
-                    battleId,
-                    post1Id,
-                    post2Id,
-                    address as `0x${string}`,
-                    networkId,
-                    contractAddress as `0x${string}`,
-                ).then(data => {
-                    setData({
-                        totalTokensPerPost1: Number(data[0].result) / 10**USDC_decimals,
-                        totalTokensPerPost2: Number(data[1].result) / 10**USDC_decimals,
-                        battleTokensTransfers1: Number(data[2].result) / 10**USDC_decimals,
-                        battleTokensTransfers2: Number(data[3].result) / 10**USDC_decimals,
-                    });
-                }).catch(console.log);
-        
-                contractGetPossibleWithdrawal(
-                    battleId, 
-                    address as string, 
-                    networkId, 
-                    contractAddress as `0x${string}`
-                ).then(data => {
-                    // @ts-ignore
-                    const possibleWithdraw1 = Number(data[0]);
-                    // @ts-ignore
-                    const possibleWithdraw2 = Number(data[1]);
+            let transfersData = {
+                totalTokensPerPost1: 0,
+                totalTokensPerPost2: 0,
+                battleTokensTransfers1: 0,
+                battleTokensTransfers2: 0,
+            };
+
+            await contractGetAllImportantDataForBattle(
+                battleId,
+                post1Id,
+                post2Id,
+                address as `0x${string}`,
+                networkId,
+                contractAddress as `0x${string}`,
+            ).then(data => {
+                transfersData = {
+                    totalTokensPerPost1: Number(data[0].result) / 10**USDC_decimals,
+                    totalTokensPerPost2: Number(data[1].result) / 10**USDC_decimals,
+                    battleTokensTransfers1: Number(data[2].result) / 10**USDC_decimals,
+                    battleTokensTransfers2: Number(data[3].result) / 10**USDC_decimals,
+                };
+                setData(transfersData);
+            }).catch(console.log);
     
-                    if (possibleWithdraw1 > possibleWithdraw2) {
-                        setPossibleWithdrawal(possibleWithdraw1 / 10**USDC_decimals || 0);
-                    } else {
-                        setPossibleWithdrawal(possibleWithdraw2 / 10**USDC_decimals || 0);
-                    }
-                }).catch(console.log);
+            await contractGetPossibleWithdrawal(
+                battleId, 
+                address as string, 
+                networkId, 
+                contractAddress as `0x${string}`
+            ).then(data => {
+                // @ts-ignore
+                const possibleWithdraw1 = Number(data[0]);
+                // @ts-ignore
+                const possibleWithdraw2 = Number(data[1]);
+
+                if (transfersData.totalTokensPerPost1 > transfersData.totalTokensPerPost2) {
+                    setPossibleWithdrawal(possibleWithdraw1 / 10**USDC_decimals || 0);
+                } else {
+                    setPossibleWithdrawal(possibleWithdraw2 / 10**USDC_decimals || 0);
+                }
+            }).catch(console.log);
             
         }
     }, [battleId, post1Id, post2Id, address, networkId, chainId, USDC_decimals]);
@@ -98,7 +113,30 @@ export default function NetworkInformation({
     }
 
     const onClose = () => {
-        
+        ref.current && ref.current.close();
+    }
+    
+    const handelWithdraw = () => {
+        onClose();
+        enqueueSnackbar("Pending...", { autoHideDuration: 1500 });
+        data && writeContractAsync({
+            address: contractAddress as `0x${string}`,
+            abi: mfnAbi,
+            functionName: "withdrawTokensFromBattle",
+            args: [
+                battleId,
+                data.totalTokensPerPost1 > data.totalTokensPerPost2 ? post1Id : post2Id,
+            ],
+        }).then(async hash => {
+            enqueueSnackbar("Waiting for TX receipt...", { autoHideDuration: 2000 });
+            await waitForTransactionReceipt(config, {
+                hash,
+                confirmations: 2
+            });
+            enqueueSnackbar("TX completed", { autoHideDuration: 3000, variant: 'success' });
+        }).catch(_ => {
+            enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 4000, variant: 'error' })
+        });
     }
 
     if (!isMounted) {
@@ -115,9 +153,11 @@ export default function NetworkInformation({
                     <button onClick={onClose}>close</button>
                 </form>
                 <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col glass">
-                    <form method="dialog">
+                    <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px' }}>
                         {/* if there is a button in form, it will close the modal */}
-                        <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        <MainButton handler={onClose} color="error" width="25px" height="25px" padding="1">
+                            <X/>
+                        </MainButton>
                     </form>
 
                     <h4 className="font-bold text-lg">{networkName}</h4>
@@ -169,7 +209,11 @@ export default function NetworkInformation({
                             </div>
                         </div>
 
-                        <button className="btn btn-primary glass btn-sm w-full text-white mt-5" disabled={!battleisFInished || possibleWithdrawal == 0}>
+                        <button 
+                            className="btn btn-primary glass btn-sm w-full text-white mt-5" 
+                            disabled={!battleisFInished || possibleWithdrawal == 0}
+                            onClick={handelWithdraw}
+                        >
                             {dictionary.modals["network-information"].withdraw} <span className="text-[#25e7de]">{String(possibleWithdrawal).slice(0, 7)} USDC</span>
                         </button>
                     </div>

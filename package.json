@@ -25,7 +25,7 @@
     "cookies-next": "^4.2.1",
     "framer-motion": "^11.3.28",
     "graphql": "^16.8.2",
-    "lucide-react": "^0.428.0",
+    "lucide-react": "^0.456.0",
     "negotiator": "^0.6.3",
     "next": "14.2.4",
     "nextjs-toploader": "^1.6.12",

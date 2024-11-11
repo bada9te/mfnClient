@@ -2,8 +2,10 @@
 import reportReasons from "@/config/report-reasons";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { useReportCreateMutation } from "@/utils/graphql-requests/generated/schema";
+import { X } from "lucide-react";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useRef, useState } from "react";
+import MainButton from "../common/main-button/main-button";
 
 export default function ReportModal({
     button,
@@ -64,9 +66,11 @@ export default function ReportModal({
                     <button>close</button>
                 </form>
                 <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col min-h-80 glass">
-                    <form method="dialog">
+                    <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px' }}>
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        <MainButton handler={() => {}} color="error" width="25px" height="25px" padding="1">
+                            <X/>
+                        </MainButton>
                     </form>
 
                     <h4 className="font-bold text-lg">{dictionary.modals.report.report}</h4>
@@ -77,7 +81,7 @@ export default function ReportModal({
                                 reportReasons.map((i, key) => {
                                     return (
                                         <div className="form-control w-full" key={key}>
-                                            <div className="card glass w-full bg-base-300">
+                                            <div className="card w-full bg-base-300">
                                                 <label className="label cursor-pointer flex flex-row m-4">
                                                     <p className="flex flex-col gap-2">
                                                         <span className="card-title">

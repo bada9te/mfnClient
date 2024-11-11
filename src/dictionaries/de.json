@@ -575,7 +575,8 @@
             "create": "Battle erstellen",
             "select-track": "Wähle deinen Track aus",
             "select": "Auswählen",
-            "associate-with-blockchain": "Mit Blockchain verknüpfen"
+            "associate-with-blockchain": "Mit Blockchain verknüpfen",
+            "connect-wallet": "Wallet verbinden"
         },
         "email-verification": {
             "verification": "Verifizierung",

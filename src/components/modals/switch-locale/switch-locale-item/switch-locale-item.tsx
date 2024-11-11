@@ -25,14 +25,14 @@ export default function SwitchLocaleItem({locale, handleSelect, selected, title,
                     ?
                     <input 
                         type="radio" 
-                        className="radio radio-primary w-4 h-4" 
+                        className="radio w-4 h-4" 
                         checked
                         readOnly
                     />
                     :
                     <input 
                         type="radio" 
-                        className="radio radio-primary w-4 h-4" 
+                        className="radio w-4 h-4" 
                         checked={false}
                         readOnly
                     />
