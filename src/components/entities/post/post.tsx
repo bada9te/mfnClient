@@ -101,8 +101,8 @@ export default function Post(props: {
     }
 
     return (
-        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass overflow-hidden`}>
-            <div className="h-16 flex flex-row gap-3 cursor-pointer">
+        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass rounded-xl`}>
+            <div className="h-16 flex flex-row gap-3 cursor-pointer rounded-t-xl overflow-hidden">
                 <div className="dropdown w-full dropdown-end text-start">
                     <button 
                         className="
@@ -194,7 +194,7 @@ export default function Post(props: {
                 </div>
             </div>
 
-            <div className="card-actions justify-center pt-2 flex flex-row">
+            <div className="card-actions justify-center pt-2 flex flex-row overflow-hidden rounded-xl">
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?
@@ -217,7 +217,7 @@ export default function Post(props: {
             </div>
             <div className="bg-base-300 absolute bottom-[-44px] flex items-center rounded-2xl">
                 {
-                    handleSelect &&
+                    handleSelect && 
                     <MainButton
                         handler={() => handleSelect(data)}
                         color="success"
