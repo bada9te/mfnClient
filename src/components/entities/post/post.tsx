@@ -19,6 +19,7 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 import { switchPostInLiked, switchPostInSaved } from "@/lib/redux/slices/user";
 import { Bookmark, CheckCheck, Cog, Flag, Heart, LinkIcon, Pause, PinOff, Play, SquarePlay, User as UserIcon } from "lucide-react";
 import MainButton from "@/components/common/main-button/main-button";
+import getTimeSince from "@/utils/common-functions/getTimeSince";
 
 
 export default function Post(props: {
@@ -100,16 +101,17 @@ export default function Post(props: {
     }
 
     return (
-        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass`}>
-            <div className="m-2 flex flex-row gap-3 cursor-pointer">
+        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass overflow-hidden`}>
+            <div className="h-16 flex flex-row gap-3 cursor-pointer">
                 <div className="dropdown w-full dropdown-end text-start">
                     <button 
                         className="
-                        rounded-full
-                        btn btn-primary
+                        relative
+                        rounded-none
+                        h-full
                         text-white font-bold 
                         flex items-center 
-                        justify-start p-1
+                        justify-start px-4
                         shadow-lg bg-base-300 border-base-300 w-full bg-opacity-80"
                         role="button"
                     >
@@ -120,6 +122,7 @@ export default function Post(props: {
                             </div>
                         </div>
                         <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>
+                        <span className="absolute top-2 right-2 text-sm text-gray-400">{getTimeSince(new Date(+data.createdAt))}</span>
                     </button>
                     <ul tabIndex={0} className="dropdown-content menu glass bg-base-300 rounded-box z-[1] w-52 p-2 mt-3 shadow bg-opacity-20">
                         <li><Link href={data?.owner?._id === user?._id ? "/profile/me/1" : `/profile/${data.owner?._id}/1`}>
