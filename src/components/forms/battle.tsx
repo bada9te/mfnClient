@@ -25,13 +25,14 @@ export const PostPlaceholder = (props: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"];
     forceBtn?: boolean;
 }) => {
+    console.log("plprops:", {props})
     return (
         <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center bg-base-300 relative rounded-2xl">
             <div className="flex flex-col h-full justify-center items-center">
                 <InfoImage text={props.dictionary.forms.battle["select-track"]} image="/assets/icons/logo_clear.png"/>
             </div>
             {
-                props.userIsOwner || props.forceBtn
+                (props.userIsOwner || props.forceBtn)
                 &&
                 <SelectTrackModal
                     dictionary={props.dictionary}
