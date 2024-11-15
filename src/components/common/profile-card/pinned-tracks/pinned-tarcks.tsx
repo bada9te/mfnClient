@@ -15,6 +15,8 @@ export default function PinnedTracks({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const user = useAppSelector(state => state.user.user);
+
+    console.log({user, userId})
     const [switchPostPinned] = useUserSwitchPostPinnedMutation();
     const {data: pinnedTracks} = useUserPinnedTracksSuspenseQuery({
         variables: {
@@ -72,9 +74,9 @@ export default function PinnedTracks({
                         } else {
                             return (
                                 <>
-                                    <PostPlaceholder userIsOwner={userId === user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
-                                    <PostPlaceholder userIsOwner={userId === user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
-                                    <PostPlaceholder userIsOwner={userId === user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
+                                    <PostPlaceholder userIsOwner={userId == user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
+                                    <PostPlaceholder userIsOwner={userId == user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
+                                    <PostPlaceholder userIsOwner={userId == user?._id} handleSelect={handleSelect} dictionary={dictionary}/>
                                 </>
                             );
                         }

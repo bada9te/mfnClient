@@ -18,6 +18,10 @@ const nextConfig = {
                 hostname: 'server-nestjs-production-bcf6.up.railway.app',
             },
             {
+                protocol: 'https',
+                hostname: 'api.musicfromnothing.app'
+            },
+            {
                 protocol: 'http',
                 hostname: 'localhost',
             },
