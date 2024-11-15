@@ -29,14 +29,18 @@ export const PostPlaceholder = (props: {
             <div className="flex flex-col h-full justify-center items-center">
                 <InfoImage text={props.dictionary.forms.battle["select-track"]} image="/assets/icons/logo_clear.png"/>
             </div>
-            <SelectTrackModal
-                dictionary={props.dictionary}
-                handleSelect={props.handleSelect}
-                userIsOwner={props.userIsOwner}
-                button={
-                    <button type="button" className="mt-5 btn btn-sm btn-primary glass rounded-t-none absolute bottom-0 w-full text-white">{props.dictionary.forms.battle.select}</button>
-                }
-            />
+            {
+                props.userIsOwner
+                &&
+                <SelectTrackModal
+                    dictionary={props.dictionary}
+                    handleSelect={props.handleSelect}
+                    userIsOwner={props.userIsOwner}
+                    button={
+                        <button type="button" className="mt-5 btn btn-sm btn-primary glass rounded-t-none absolute bottom-0 w-full text-white">{props.dictionary.forms.battle.select}</button>
+                    }
+                />
+            }
         </div>
     );
 }

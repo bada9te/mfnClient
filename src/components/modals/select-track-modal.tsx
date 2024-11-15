@@ -61,15 +61,18 @@ export default function SelectTrackModal({
             {React.cloneElement(button, {
                 onClick: handleOpen,
             })}
-            <dialog ref={ref} className="modal w-full h-full absolute">
-                <div className="modal-box glass  text-gray-300 min-w-[100vw] min-h-[100vh] no-scrollbar text-start flex flex-col">
+            <dialog ref={ref} className="modal w-full">
+                <form method="dialog" className="modal-backdrop w-[100vw]">
+                    <button>close</button>
+                </form>
+                <div className="modal-box glass  text-gray-300 w-[100vw] h-fit no-scrollbar text-start flex flex-col">
                     <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px', marginBottom: '24px', zIndex: 10 }}>
                         {/* if there is a button in form, it will close the modal */}
                         <MainButton handler={onClose} color="error" width="25px" height="25px" padding="1">
                             <X/>
                         </MainButton>
                     </form>
-                    <h4 className="font-bold text-lg z-50 text-white">{dictionary.modals["select-track"].selection}</h4>
+                    <h4 className="font-bold text-lg z-50 text-white w-48">{dictionary.modals["select-track"].selection}</h4>
 
                     <div className="flex min-h-full flex-1">
                         {
