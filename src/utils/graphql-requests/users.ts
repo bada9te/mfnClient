@@ -16,6 +16,27 @@ export const CORE_USER_FIELDS = gql`
 
 
 // Q
+export const CURRENT_USER_QUERY = gql`
+    ${CORE_USER_FIELDS}
+    query whoAmI {
+        whoAmI {
+            ...CoreUserFields
+            local {
+                email
+            }
+            google {
+                email
+            }
+            facebook {
+                name
+            }
+            twitter {
+                name
+            }
+        }
+    }
+`;
+
 export const USER_QUERY = gql`
     ${CORE_USER_FIELDS}
     query user($_id: ID!) {

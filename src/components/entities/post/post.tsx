@@ -102,7 +102,7 @@ export default function Post(props: {
 
     return (
         <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass rounded-xl`}>
-            <div className="h-16 flex flex-row gap-3 cursor-pointer rounded-t-xl overflow-hidden">
+            <div className="h-16 flex flex-row gap-3 cursor-pointer rounded-t-xl">
                 <div className="dropdown w-full dropdown-end text-start">
                     <button 
                         className="
@@ -112,6 +112,7 @@ export default function Post(props: {
                         text-white font-bold 
                         flex items-center 
                         justify-start px-4
+                        rounded-t-xl
                         shadow-lg bg-base-300 border-base-300 w-full bg-opacity-80"
                         role="button"
                     >
