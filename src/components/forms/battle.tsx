@@ -23,6 +23,7 @@ export const PostPlaceholder = (props: {
     handleSelect: (a: TPost) => void;
     userIsOwner: boolean;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"];
+    forceBtn?: boolean;
 }) => {
     return (
         <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center bg-base-300 relative rounded-2xl">
@@ -30,7 +31,7 @@ export const PostPlaceholder = (props: {
                 <InfoImage text={props.dictionary.forms.battle["select-track"]} image="/assets/icons/logo_clear.png"/>
             </div>
             {
-                props.userIsOwner
+                props.userIsOwner || props.forceBtn
                 &&
                 <SelectTrackModal
                     dictionary={props.dictionary}
@@ -160,6 +161,7 @@ export default function BattleForm({
                                 userIsOwner={true}
                                 handleSelect={setPost1}
                                 dictionary={dictionary}
+                                forceBtn={true}
                             />
                         }
                     </div>
@@ -175,6 +177,7 @@ export default function BattleForm({
                                 userIsOwner={false}
                                 handleSelect={setPost2}
                                 dictionary={dictionary}
+                                forceBtn={true}
                             />
                         }
                     </div>
