@@ -1,18 +1,16 @@
 "use client"
 import ImageCropperModal from "@/components/modals/cropper-modal";
-import { setUser, setUserAvatar, setUserBackground } from "@/lib/redux/slices/user";
+import { setUserAvatar, setUserBackground } from "@/lib/redux/slices/user";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
-import {useAchievemenmtsCountQuery, useAchievemenmtsCountSuspenseQuery, UserAchievementsData, useUserAchievementsDataSuspenseQuery, useUserSuspenseQuery, useUserSwitchSubscriptionMutation, useUserUpdateMutation} from "@/utils/graphql-requests/generated/schema";
-import { httpSaveFile } from "@/utils/http-requests/files";
-import { useCallback, useRef, useState } from "react";
+import {useAchievemenmtsCountSuspenseQuery, UserAchievementsData, useUserAchievementsDataSuspenseQuery, useUserSuspenseQuery, useUserSwitchSubscriptionMutation, useUserUpdateMutation} from "@/utils/graphql-requests/generated/schema";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useSnackbar } from "notistack";
 import ProfileProgress from "./profile-progress/profile-progress";
-import envCfg from "@/config/env";
 import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
-import { revalidatePathAction } from "@/actions/revalidation";
+
 
 const ShareBtn = (props: {
     handleClick: () => void;
@@ -45,7 +43,8 @@ export default function ProfileCard(props: {
     const { enqueueSnackbar } = useSnackbar();
     const refAvatar = useRef<HTMLInputElement | null>(null);
     const refBackground = useRef<HTMLInputElement | null>(null);
-
+    const [avatar, setAvatar] = useState<string | null>(null);
+    const [bg, setBg] = useState<string | null>(null);
 
     const [ updateUser ] = useUserUpdateMutation();
     const [ switchSubscription ] = useUserSwitchSubscriptionMutation({
@@ -96,31 +95,44 @@ export default function ProfileCard(props: {
         if (image) {
             enqueueSnackbar("Updating profile...", { autoHideDuration: 1500 });
             const blob = await fetch(image).then(a => a.blob()) as IBlob;
-            const {data} = await httpSaveFile(blobToFile(blob, `${new Date().getTime().toString()}${file?.name || ""}`), "image");
+
+            const imageFile = blobToFile(blob, new Date().getTime().toString());
+            
+            const dataImage = new FormData();
+            dataImage.set("file", imageFile);
+            //dataImage.set("groupId", "images");
+            
+            const res = await fetch("/api/files", {
+                method: "POST",
+                body: dataImage,
+            });
+
+            const fileCID = await res.json();
 
             switch (imageType) {
                 case "avatar":
                     refAvatar.current && (refAvatar.current.value = "")
-                    dispatch(setUserAvatar(data.data.filename));
+                    console.log({fileCID})
+                    dispatch(setUserAvatar(fileCID));
                     updateUser({
                         variables: {
                             input: {
                                 _id: user?._id as string,
                                 what: "avatar",
-                                value: data.data.filename
+                                value: fileCID
                             }
                         }
                     });
                     break;
                 case "background": 
                     refBackground.current && (refBackground.current.value = "");
-                    dispatch(setUserBackground(data.data.filename));
+                    dispatch(setUserBackground(fileCID));
                     updateUser({
                         variables: {
                             input: {
                                 _id: user?._id as string,
                                 what: "background",
-                                value: data.data.filename
+                                value: fileCID
                             }
                         }
                     });
@@ -130,10 +142,6 @@ export default function ProfileCard(props: {
             }
 
             enqueueSnackbar("Updated", { autoHideDuration: 2000, variant: 'success' });
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
         }
     }, [imageType, file, dispatch, enqueueSnackbar, updateUser, user?._id]);
 
@@ -141,6 +149,24 @@ export default function ProfileCard(props: {
         navigator.clipboard.writeText(`${window.location.origin}/profile/${userId}/1`);
         enqueueSnackbar("Link copied", { autoHideDuration: 1500, variant: 'success' });
     }
+
+    useEffect(() => {
+        if (data.user?.avatar) {
+            fetch(`/api/files?cid=${data.user?.avatar}`).then(async data => {
+                setAvatar(await data.json())
+            });
+        } else {
+            setAvatar('/assets/icons/logo_clear.png');
+        }
+
+        if (data.user.background) {
+            fetch(`/api/files?cid=${data.user?.background}`).then(async data => {
+                setBg(await data.json())
+            });
+        } else {
+            setBg('/assets/bgs/profileDefaultBG.png');
+        }
+    }, []);
 
     return (
         <>
@@ -152,13 +178,23 @@ export default function ProfileCard(props: {
                 handleImageCropModalClose={handleImageCropModalClose}
             />
             <div className={`m-2 mt-6 md:m-4 mb-0 card w-full text-white rounded-2xl md:rounded-2xl shadow-2xl bg-base-300`}>
-                <figure className="max-h-48">
-                    <img width={1000} height={400} className="w-full" src={data.user.background.length ? `${envCfg.serverFilesEndpoint}/images/${data.user.background}` : "/assets/bgs/profileDefaultBG.png"} alt="background"/>
-                </figure>
+                {
+                    bg ?
+                    <figure className="max-h-48">
+                        <Image width={1000} height={400} className="w-full" src={bg} alt="background"/>
+                    </figure>
+                    :
+                    <div className="skeleton w-full h-[200px] rounded-none"></div>
+                }
                 <div className="card-body flex flex-col  gap-5">
                     <div className="avatar flex justify-center">
                         <div className="w-32 h-32 mask mask-hexagon">
-                            <img width={400} height={400} src={data.user.avatar.length ? `${envCfg.serverFilesEndpoint}/images/${data.user.avatar}` : "/assets/icons/logo_clear.png"} alt="avatar" />
+                            {
+                                avatar ?
+                                <Image width={400} height={400} src={avatar} alt="avatar" />
+                                :
+                                <div className="skeleton w-full h-full rounded-none"></div>
+                            }
                         </div>
                     </div>
                     <div>

@@ -1,9 +1,7 @@
 const envCfg = {
-    me: process.env.NEXT_PUBLIC_ME,
     serverDomain: process.env.NEXT_PUBLIC_SERVER_DOMAIN,
     serverBase: process.env.NEXT_PUBLIC_SERVER_BASE,
     userIdCookieKey: process.env.NEXT_PUBLIC_USER_ID_COOKIE_KEY,
-    serverFilesEndpoint: process.env.NEXT_PUBLIC_SERVER_BASE_FILES,
 
     googleAuthURL:    process.env.NEXT_PUBLIC_GOOGLE_AUTH,
     twitterAuthURL:    process.env.NEXT_PUBLIC_TWITTER_AUTH,
@@ -11,6 +9,9 @@ const envCfg = {
 
     rainbowkitId: process.env.NEXT_PUBLIC_RAINBOWKIT_ID,
     envType: process.env.NEXT_PUBLIC_ENV_TYPE,
+
+    pinataJWT: process.env.PINATA_JWT,
+    IPFSGateway: process.env.NEXT_PUBLIC_IPFS_GATEWAY_URL,
 }
 
 

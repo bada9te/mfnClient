@@ -20,6 +20,7 @@ import { switchPostInLiked, switchPostInSaved } from "@/lib/redux/slices/user";
 import { Bookmark, CheckCheck, Cog, Flag, Heart, LinkIcon, Pause, PinOff, Play, SquarePlay, User as UserIcon } from "lucide-react";
 import MainButton from "@/components/common/main-button/main-button";
 import getTimeSince from "@/utils/common-functions/getTimeSince";
+import { pinata } from "@/utils/ipfs/config";
 
 
 export default function Post(props: {
@@ -38,6 +39,8 @@ export default function Post(props: {
     const [switchLike] = useUserSwitchLikeMutation();
     const [switchInSaved] = useUserSwitchSaveMutation();
     const { enqueueSnackbar } = useSnackbar();
+    const [image, setImage] = useState<string | null>(null);
+    const [avatar, setAvatar] = useState<string | null>(null);
 
     const handlePlayCLick = () => {
         dispatch(setPost(data));
@@ -48,12 +51,27 @@ export default function Post(props: {
     }
 
     useEffect(() => {
+        fetch(`/api/files?cid=${data.image}`).then(async data => {
+            setImage(await data.json())
+        });
+
+        if (data.owner?.avatar) {
+            fetch(`/api/files?cid=${data.owner?.avatar}`).then(async data => {
+                setAvatar(await data.json())
+            });
+        } else {
+            setAvatar('/assets/icons/logo_clear.png');
+        }
+    }, []);
+
+    useEffect(() => {
         setIsMounted(true);
     }, []);
+
+
     if (!isMounted) {
         return (<PostSkeleton/>);
     }
-
 
     // on like click
     const handleSwitchLike = async() => {
@@ -99,6 +117,8 @@ export default function Post(props: {
         navigator.clipboard.writeText(`${window.location.origin}/post/${data._id}/${data.owner?._id}`);
         enqueueSnackbar("Link copied", {variant: 'success', autoHideDuration: 1500});
     }
+        
+
 
     return (
         <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass rounded-xl`}>
@@ -118,8 +138,13 @@ export default function Post(props: {
                     >
                         <div className="avatar p-0">
                             <div className="w-10 rounded-full shadow-lg">
-                                <Image alt="avatar" width={400} height={400}
-                                    src={data?.owner?.avatar ? `${envCfg.serverFilesEndpoint}/images/${data.owner.avatar}` : '/assets/icons/logo_clear.png'}/>
+                                {
+                                    avatar ?
+                                    <Image alt="avatar" width={400} height={400}
+                                        src={avatar}/>  
+                                    :
+                                    <div className="skeleton w-10 h-10 rounded-full"></div>
+                                }
                             </div>
                         </div>
                         <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>
@@ -156,12 +181,18 @@ export default function Post(props: {
                 </div>
                 
             </div>
-            <figure><Image
-                width={400} height={400}
-                className="max-h-[180px] w-full min-w-80 min-h-[180px]"
-                src={data?.image ? `${envCfg.serverFilesEndpoint}/images/${data?.image}` : '/assets/bgs/profileDefaultBG.png'}
-                alt="image"/>
-            </figure>
+            
+            {
+                image ?
+                <figure><Image
+                    width={400} height={400}
+                    className="max-h-[180px] w-full min-w-80 min-h-[180px]"
+                    src={image}
+                    alt="image"/>
+                </figure> :
+                <div className="skeleton w-80 h-[180px] rounded-none"></div>
+            }
+             
 
             <div className="card-body text-start p-5">
                 <h2 className="card-title text-2xl">

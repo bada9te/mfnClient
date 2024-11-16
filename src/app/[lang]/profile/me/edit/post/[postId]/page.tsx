@@ -33,9 +33,8 @@ export default async function EditPost({params}: {params: {postId: string, lang:
                         <Suspense fallback={<PostSkeleton/>}>
                             <PostContainer postId={params.postId} dictionary={dict.components}/>
                         </Suspense>
+                        <PostEditForm posId={params.postId} dictionary={dict.components}/>
                     </PreloadQuery>
-                    
-                    <PostEditForm posId={params.postId} dictionary={dict.components}/>
                 </div>
             </div>
         </HeroWrapper>
