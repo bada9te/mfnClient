@@ -10,6 +10,7 @@ import { useSnackbar } from "notistack";
 import ProfileProgress from "./profile-progress/profile-progress";
 import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
 
 
 const ShareBtn = (props: {
@@ -43,8 +44,6 @@ export default function ProfileCard(props: {
     const { enqueueSnackbar } = useSnackbar();
     const refAvatar = useRef<HTMLInputElement | null>(null);
     const refBackground = useRef<HTMLInputElement | null>(null);
-    const [avatar, setAvatar] = useState<string | null>(null);
-    const [bg, setBg] = useState<string | null>(null);
 
     const [ updateUser ] = useUserUpdateMutation();
     const [ switchSubscription ] = useUserSwitchSubscriptionMutation({
@@ -107,7 +106,8 @@ export default function ProfileCard(props: {
                 body: dataImage,
             });
 
-            const fileCID = await res.json();
+            const jsondata = await res.json();
+            const fileCID = jsondata.url;
 
             switch (imageType) {
                 case "avatar":
@@ -150,24 +150,6 @@ export default function ProfileCard(props: {
         enqueueSnackbar("Link copied", { autoHideDuration: 1500, variant: 'success' });
     }
 
-    useEffect(() => {
-        if (data.user?.avatar) {
-            fetch(`/api/files?cid=${data.user?.avatar}`).then(async data => {
-                setAvatar(await data.json())
-            });
-        } else {
-            setAvatar('/assets/icons/logo_clear.png');
-        }
-
-        if (data.user.background) {
-            fetch(`/api/files?cid=${data.user?.background}`).then(async data => {
-                setBg(await data.json())
-            });
-        } else {
-            setBg('/assets/bgs/profileDefaultBG.png');
-        }
-    }, []);
-
     return (
         <>
             <ImageCropperModal
@@ -178,23 +160,16 @@ export default function ProfileCard(props: {
                 handleImageCropModalClose={handleImageCropModalClose}
             />
             <div className={`m-2 mt-6 md:m-4 mb-0 card w-full text-white rounded-2xl md:rounded-2xl shadow-2xl bg-base-300`}>
-                {
-                    bg ?
-                    <figure className="max-h-48">
-                        <Image width={1000} height={400} className="w-full" src={bg} alt="background"/>
-                    </figure>
-                    :
-                    <div className="skeleton w-full h-[200px] rounded-none"></div>
-                }
+                <figure className="max-h-48">
+                    <Image width={1000} height={400} className="w-full" src={data.user.background ? getIpfsUrl(data.user.background) : '/assets/bgs/clear.png'} alt="background"/>
+                </figure>
+                   
                 <div className="card-body flex flex-col  gap-5">
                     <div className="avatar flex justify-center">
                         <div className="w-32 h-32 mask mask-hexagon">
-                            {
-                                avatar ?
-                                <Image width={400} height={400} src={avatar} alt="avatar" />
-                                :
-                                <div className="skeleton w-full h-full rounded-none"></div>
-                            }
+                            
+                            <Image width={400} height={400} src={data.user.avatar ? getIpfsUrl(data.user.avatar) : '/assets/bgs/clear.png'} alt="avatar" />
+                               
                         </div>
                     </div>
                     <div>

@@ -120,7 +120,8 @@ export default function PostEditForm(props: {
             method: "POST",
             body: dataAudio,
         }).then(async(data) => {
-            updatePost("audio", String(await data.json()));
+            const jsondata = await data.json();
+            updatePost("audio", jsondata.url);
         }).catch((err) => {
             console.log(err);
             enqueueSnackbar("Can't update audio", { variant: 'error', autoHideDuration: 3000 });
@@ -150,7 +151,8 @@ export default function PostEditForm(props: {
             method: "POST",
             body: dataImage,
         }).then(async(data) => {
-            updatePost("image", await data.json());
+            const jsondata = await data.json();
+            updatePost("image", jsondata.url);
         }).catch((err) => {
             console.log(err);
             enqueueSnackbar("Can't update image", { variant: 'error', autoHideDuration: 3000 });

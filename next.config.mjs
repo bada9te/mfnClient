@@ -30,6 +30,10 @@ const nextConfig = {
                 hostname: 'emerald-careful-anaconda-210.mypinata.cloud'
             },
             {
+                protocol: 'https',
+                hostname: 'influential-blue-mockingbird.myfilebase.com'
+            },
+            {
                 protocol: 'http',
                 hostname: 'localhost',
             },

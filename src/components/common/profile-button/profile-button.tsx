@@ -6,7 +6,6 @@ import {useCallback, useEffect, useState} from "react";
 // @ts-ignore
 import { useAccount, useReadContract } from "wagmi";
 import Link from "next/link";
-import envCfg from "@/config/env";
 //import formatNumber from "@/utils/common-functions/formatNumber";
 import { useSnackbar } from "notistack";
 import Image from "next/image";
@@ -14,6 +13,7 @@ import { USDCAddresses } from "@/config/wagmi";
 import { type getDictionary } from "@/dictionaries/dictionaries";
 import SwitchLocaleModal from "@/components/modals/switch-locale/switch-locale-modal";
 import { BadgeHelp, Bell, Bookmark, Cog, DoorOpen, Languages, LogIn, RefreshCcw, User, Wallet } from "lucide-react";
+import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
 
 
 
@@ -29,7 +29,6 @@ export default function ProfileButton({
     const { openAccountModal } = useAccountModal();
     const { openChainModal } = useChainModal();
     const { enqueueSnackbar } = useSnackbar();
-    const [avatar, setAvatar] = useState<string | null>(null);
 
     const account = useAccount();
     const {data: userBalance, refetch: refetchUserBalance} = useReadContract({
@@ -61,13 +60,6 @@ export default function ProfileButton({
         setIsMounted(true);
     }, []);
 
-    useEffect(() => {
-        if (user?.user?._id) {
-            fetch(`/api/files?cid=${user?.user?.avatar}`).then(async data => {
-                setAvatar(await data.json());
-            });
-        }
-    }, []);
 
 
     if (!isMounted) {
@@ -105,24 +97,17 @@ export default function ProfileButton({
                         </div>
 
                         {
-                            user?.user?._id ?
-                            <>
-                                {
-                                    avatar ?
-                                    <Image
-                                        width={34}
-                                        height={34}
-                                        alt="Avatar"
-                                        className="rounded-full"
-                                        src={avatar}
-                                    /> :
-                                    <div className="skeleton h-[34px] w-[34px]"></div>
-                                }
-                            </>
+                            user?.user?._id 
+                            ?
+                            <Image
+                                width={34}
+                                height={34}
+                                alt="Avatar"
+                                className="rounded-full"
+                                src={user?.user?.avatar ? getIpfsUrl(user.user.avatar) : '/assets/bgs/clear.png'}
+                            />   
                             :
-                            
                             <LogIn />
-                            
                         }
                         
                     </div>
