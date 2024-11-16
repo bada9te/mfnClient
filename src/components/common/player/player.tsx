@@ -9,6 +9,7 @@ import PlayerTrackInfo from "./player-track-info";
 import formatTime from "@/utils/common-functions/formatTime";
 import envCfg from "@/config/env";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import { pinata } from "@/utils/ipfs/config";
 
 export default function AudioPlayer({
   dictionary
@@ -24,6 +25,7 @@ export default function AudioPlayer({
   const [playerVol, setPlayerVol] = useState(volume);
   const dispatch = useAppDispatch();
   const playerRef = useRef<any>(null);
+  const [audio, setAudio] = useState<string | null>(null)
 
   useEffect(() => {
     if (isPlaying && playerRef.current) {
@@ -40,7 +42,16 @@ export default function AudioPlayer({
   }, [isPlaying, isSeeking]);
 
   const handleToggle = () => {
-    dispatch(setIsPlaying(!isPlaying));
+    if (isPlaying) {
+      // Pause the audio and retain the seek position
+      dispatch(setIsPlaying(false));
+    } else {
+      // Resume playback from the current seek position
+      if (playerRef.current) {
+        playerRef.current.seek(seek);
+      }
+      dispatch(setIsPlaying(true));
+    }
   };
 
   const handleOnLoad = () => {
@@ -86,6 +97,7 @@ export default function AudioPlayer({
 
   const handleSeekingChange = (e: any) => {
     setSeek(parseFloat(e.target.value));
+    playerRef.current.seek(parseFloat(e.target.value));
   };
 
   const handleRate = (e: any) => {
@@ -101,6 +113,12 @@ export default function AudioPlayer({
     dispatch(setVolume(parseFloat(e.target.value)));
   };
 
+  useEffect(() => {
+    fetch(`/api/files?cid=${post?.audio}`).then(async data => {
+      setAudio(await data.json());
+    });
+  }, []);
+
   if (!post) {
     return <InfoImage text='Track is not selected' image="/assets/icons/logo_clear.png" />;
   }
@@ -112,16 +130,16 @@ export default function AudioPlayer({
             ?
             <>
               <ReactHowler
-                src={[`${envCfg.serverFilesEndpoint}/audios/${post.audio}`]}
+                src={[audio]}
                 playing={isPlaying}
                 onLoad={handleOnLoad}
                 onPlay={handleOnPlay}
                 onEnd={handleOnEnd}
+                ref={playerRef}
                 loop={isLoop}
                 mute={isMute}
                 volume={playerVol}
-                ref={playerRef}
-                //usingWebAudio={true}
+                html5={true}
               />
               <PlayerTrackInfo dictionary={dictionary}/>
               <div className="divider divider-primary my-8 md:my-3">

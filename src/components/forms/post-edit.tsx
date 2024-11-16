@@ -2,8 +2,7 @@
 import {genres} from "@/config/categories";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
-import {httpSaveFile} from "@/utils/http-requests/files";
-import {usePostUpdateMutation} from "@/utils/graphql-requests/generated/schema";
+import {usePostSuspenseQuery, usePostUpdateMutation} from "@/utils/graphql-requests/generated/schema";
 import { useRef, useState } from "react";
 import ImageCropperModal from "../modals/cropper-modal";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
@@ -31,6 +30,12 @@ export default function PostEditForm(props: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { posId, dictionary } = props;
+    const { data: postData } = usePostSuspenseQuery({
+        variables: {
+            _id: posId
+        }
+    });
+
     const { 
         formState: {errors: errorTitle}, 
         register: registerTitle, 
@@ -95,24 +100,61 @@ export default function PostEditForm(props: {
 
     // AUDIO
     const onSubmitAudio: SubmitHandler<InputsAudio> = async(data) => {
+        enqueueSnackbar("Removing previous audio...", {autoHideDuration: 1500});
+        const formDataDelete = new FormData();
+        formDataDelete.set("cid", postData.post.audio);
+
+        await fetch("/api/files", {
+            method: "DELETE",
+            body: formDataDelete,
+        }).catch((err) => {
+            console.log(err);
+        });;
+
         enqueueSnackbar("Uploading...", {autoHideDuration: 1500});
-        let uploadedAudioName;
-        await httpSaveFile(data.audio[0], "audio").then(data => {
-            uploadedAudioName = data.data.filename;
-        })
-        updatePost("audio", String(uploadedAudioName));
+        const dataAudio = new FormData();
+        dataAudio.set("file", data.audio[0]);
+        dataAudio.set("groupId", "audios");
+
+        fetch("/api/files", {
+            method: "POST",
+            body: dataAudio,
+        }).then(async(data) => {
+            updatePost("audio", String(await data.json()));
+        }).catch((err) => {
+            console.log(err);
+            enqueueSnackbar("Can't update audio", { variant: 'error', autoHideDuration: 3000 });
+        });
     }
 
     // IMAGE
     const onSubmitImage: SubmitHandler<InputsImage> = async(data) => {
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
-        let uploadedImageName;
-        await httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`), "image").then(({data}) => {
-            uploadedImageName = data.data.filename;
-        }).catch(err => {
-            enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
-        }),
-        updatePost("image", String(uploadedImageName));
+        const formDataDelete = new FormData();
+        formDataDelete.set("cid", postData.post.image);
+        
+
+        await fetch("/api/files", {
+            method: "DELETE",
+            body: formDataDelete,
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        const processedImage = blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`);
+        const dataImage = new FormData();
+        dataImage.set("file", processedImage);
+        dataImage.set("groupId", "images");
+
+        fetch("/api/files", {
+            method: "POST",
+            body: dataImage,
+        }).then(async(data) => {
+            updatePost("image", await data.json());
+        }).catch((err) => {
+            console.log(err);
+            enqueueSnackbar("Can't update image", { variant: 'error', autoHideDuration: 3000 });
+        });
     }
     
     // DOWNLOADS ALLOWED

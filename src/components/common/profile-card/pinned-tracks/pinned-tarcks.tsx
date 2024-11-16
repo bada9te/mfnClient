@@ -1,11 +1,11 @@
 "use client"
 import { revalidatePathAction } from "@/actions/revalidation";
 import Post from "@/components/entities/post/post";
-import PostSkeleton from "@/components/entities/post/post-skeleton";
 import { PostPlaceholder } from "@/components/forms/battle";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
 import { Post as TPost, useUserPinnedTracksSuspenseQuery, useUserSwitchPostPinnedMutation } from "@/utils/graphql-requests/generated/schema";
+import { useEffect, useState } from "react";
 
 export default function PinnedTracks({
     userId,
@@ -15,8 +15,8 @@ export default function PinnedTracks({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const user = useAppSelector(state => state.user.user);
+    const [isMounted, setIsMounted] = useState(false);
 
-    console.log({user, userId})
     const [switchPostPinned] = useUserSwitchPostPinnedMutation();
     const {data: pinnedTracks} = useUserPinnedTracksSuspenseQuery({
         variables: {
@@ -32,6 +32,14 @@ export default function PinnedTracks({
             }
         });
         revalidatePathAction("/profile/me", "page");
+    }
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return;
     }
 
     return (

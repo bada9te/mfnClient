@@ -2,7 +2,6 @@
 import {genres} from "@/config/categories";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
-import {httpSaveFile} from "@/utils/http-requests/files";
 import {usePostCreateMutation} from "@/utils/graphql-requests/generated/schema";
 import {useAppSelector} from "@/lib/redux/store";
 import {useRouter} from "next/navigation";
@@ -60,33 +59,51 @@ export default function PostUploadForm({
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         setIsLoading(true);
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
-        let uploadedAudioName, uploadedImageName;
+        let uploadedAudioCID, uploadedImageCID;
+
+        const imgConvertedBlob = blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`)
+
+        const dataAudio = new FormData();
+        dataAudio.set("file", data?.audio?.[0]);
+        dataAudio.set("groupId", "audios");
+
+        const dataImage = new FormData();
+        dataImage.set("file", imgConvertedBlob);
+        dataImage.set("groupId", "images");
 
         await Promise.all([
-            httpSaveFile(data?.audio?.[0] as File, "audio").then(({data}) => {
-                uploadedAudioName = data.data.filename;
+            fetch("/api/files", {
+                method: "POST",
+                body: dataAudio,
+            }).then(async(data) => {
+                uploadedAudioCID = await data.json();
             }).catch(err => {
-                enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
+                console.log(err);
+                enqueueSnackbar("Can't upload the audio", { variant: 'error', autoHideDuration: 3000 });
                 setIsLoading(false);
             }),
-            httpSaveFile(blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`), "image").then(({data}) => {
-                uploadedImageName = data.data.filename;
+            fetch("/api/files", {
+                method: "POST",
+                body: dataImage,
+            }).then(async(data) => {
+                uploadedImageCID = await data.json();
             }).catch(err => {
-                enqueueSnackbar(err.response.data.message, { variant: 'error', autoHideDuration: 3000 });
+                console.log(err);
+                enqueueSnackbar("Can't upload the image", { variant: 'error', autoHideDuration: 3000 });
                 setIsLoading(false);
             }),
         ]);
 
         // upload the post itself
-        if (uploadedAudioName && uploadedImageName) {
+        if (uploadedAudioCID && uploadedImageCID) {
             await createPost({
                 variables: {
                     input: {
                         owner:            currentUser?._id as string,
                         title:            data.title,
                         description:      data.description,
-                        audio:            uploadedAudioName as unknown as string,
-                        image:            uploadedImageName as unknown as string,
+                        audio:            uploadedAudioCID,
+                        image:            uploadedImageCID,
                         downloadsAllowed: data.downloadsAllowed,
                         category:         data.genre.toLowerCase(),
                     },

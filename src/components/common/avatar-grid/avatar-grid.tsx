@@ -19,6 +19,7 @@ const AvatarGrid = ({
 
   const [showFollowing, setShowFollowing] = useState(true);
   const [showRecents, setShowRecents] = useState(true);
+  const [urls, setUrls] = useState<string[]>([]);
 
   const handleShowFollowingToggle = () => {
     if (!showFollowing == true && user) {
@@ -53,6 +54,10 @@ const AvatarGrid = ({
       setShowRecents(prop);
     }
   }, [user]);
+
+  useEffect(() => {
+
+  }, [])
 
 
   return (
@@ -134,7 +139,7 @@ const AvatarGrid = ({
                   if (recentTracks?.postsMostRecent?.length) {
                     return recentTracks?.postsMostRecent && recentTracks.postsMostRecent.map((recentTrack, index) => (
                       <Link href={`/profile/${recentTrack.owner?._id}/1`} key={index}>
-                        <img src={recentTrack.owner?.avatar ? `${envCfg.serverBase}/files/images/${recentTrack.owner?.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
+                        <Image src={`https://avatar.vercel.sh/${index}`} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
                       </Link>
                     ))
                   } else {

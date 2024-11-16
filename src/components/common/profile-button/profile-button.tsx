@@ -29,6 +29,8 @@ export default function ProfileButton({
     const { openAccountModal } = useAccountModal();
     const { openChainModal } = useChainModal();
     const { enqueueSnackbar } = useSnackbar();
+    const [avatar, setAvatar] = useState<string | null>(null);
+
     const account = useAccount();
     const {data: userBalance, refetch: refetchUserBalance} = useReadContract({
         // @ts-ignore
@@ -57,6 +59,14 @@ export default function ProfileButton({
 
     useEffect(() => {
         setIsMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (user?.user?._id) {
+            fetch(`/api/files?cid=${user?.user?.avatar}`).then(async data => {
+                setAvatar(await data.json());
+            });
+        }
     }, []);
 
 
@@ -88,18 +98,33 @@ export default function ProfileButton({
                         </span>
                     </span>
                 }
-                <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 p-0 pl-0 md:pl-5 rounded-full">
+                <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 p-0 pl-0 md:pl-5 pr-3 rounded-full">
                     <div className="rounded-full flex flex-row justify-center items-center gap-4">
                         <div className="hidden md:block">
                             <p className="font-bold text-lg">{user?.user?._id ? user?.user?.nick : "Login"}</p>
                         </div>
-                        <img
-                            width={45}
-                            height={45}
-                            alt="Avatar"
-                            className="rounded-full"
-                            src={user?.user?.avatar?.length ? `${envCfg.serverFilesEndpoint}/images/${user?.user?.avatar}` : "/assets/icons/logo_clear.png"}
-                        />
+
+                        {
+                            user?.user?._id ?
+                            <>
+                                {
+                                    avatar ?
+                                    <Image
+                                        width={34}
+                                        height={34}
+                                        alt="Avatar"
+                                        className="rounded-full"
+                                        src={avatar}
+                                    /> :
+                                    <div className="skeleton h-[34px] w-[34px]"></div>
+                                }
+                            </>
+                            :
+                            
+                            <LogIn />
+                            
+                        }
+                        
                     </div>
                 </div>
             </div>

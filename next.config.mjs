@@ -22,6 +22,14 @@ const nextConfig = {
                 hostname: 'api.musicfromnothing.app'
             },
             {
+                protocol: 'https',
+                hostname: 'gateway.pinata.cloud'
+            },
+            {
+                protocol: 'https',
+                hostname: 'emerald-careful-anaconda-210.mypinata.cloud'
+            },
+            {
                 protocol: 'http',
                 hostname: 'localhost',
             },
