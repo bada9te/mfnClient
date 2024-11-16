@@ -76,7 +76,8 @@ export default function PostUploadForm({
                 method: "POST",
                 body: dataAudio,
             }).then(async(data) => {
-                uploadedAudioCID = await data.json();
+                const jsondata = await data.json();
+                uploadedAudioCID = jsondata.url;
             }).catch(err => {
                 console.log(err);
                 enqueueSnackbar("Can't upload the audio", { variant: 'error', autoHideDuration: 3000 });
@@ -86,7 +87,8 @@ export default function PostUploadForm({
                 method: "POST",
                 body: dataImage,
             }).then(async(data) => {
-                uploadedImageCID = await data.json();
+                const jsondata = await data.json();
+                uploadedImageCID = jsondata.url;
             }).catch(err => {
                 console.log(err);
                 enqueueSnackbar("Can't upload the image", { variant: 'error', autoHideDuration: 3000 });

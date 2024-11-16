@@ -1,7 +1,6 @@
 "use client"
 import {
     Post as TPost,
-    User,
     useUserSwitchLikeMutation,
     useUserSwitchSaveMutation
 } from "@/utils/graphql-requests/generated/schema";
@@ -11,16 +10,15 @@ import {useEffect, useState} from "react";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
 import {useSnackbar} from "notistack";
 import Link from "next/link";
-import envCfg from "@/config/env";
 import ReportModal from "@/components/modals/report-modal";
 import formatNumber from "@/utils/common-functions/formatNumber";
 import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { switchPostInLiked, switchPostInSaved } from "@/lib/redux/slices/user";
-import { Bookmark, CheckCheck, Cog, Flag, Heart, LinkIcon, Pause, PinOff, Play, SquarePlay, User as UserIcon } from "lucide-react";
+import { Bookmark, CheckCheck, Cog, Flag, Heart, LinkIcon, Pause, PinOff, Play, User as UserIcon } from "lucide-react";
 import MainButton from "@/components/common/main-button/main-button";
 import getTimeSince from "@/utils/common-functions/getTimeSince";
-import { pinata } from "@/utils/ipfs/config";
+import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
 
 
 export default function Post(props: {
@@ -39,8 +37,6 @@ export default function Post(props: {
     const [switchLike] = useUserSwitchLikeMutation();
     const [switchInSaved] = useUserSwitchSaveMutation();
     const { enqueueSnackbar } = useSnackbar();
-    const [image, setImage] = useState<string | null>(null);
-    const [avatar, setAvatar] = useState<string | null>(null);
 
     const handlePlayCLick = () => {
         dispatch(setPost(data));
@@ -49,20 +45,6 @@ export default function Post(props: {
     const handlePauseCLick = () => {
         dispatch(setIsPlaying(false));
     }
-
-    useEffect(() => {
-        fetch(`/api/files?cid=${data.image}`).then(async data => {
-            setImage(await data.json())
-        });
-
-        if (data.owner?.avatar) {
-            fetch(`/api/files?cid=${data.owner?.avatar}`).then(async data => {
-                setAvatar(await data.json())
-            });
-        } else {
-            setAvatar('/assets/icons/logo_clear.png');
-        }
-    }, []);
 
     useEffect(() => {
         setIsMounted(true);
@@ -138,13 +120,8 @@ export default function Post(props: {
                     >
                         <div className="avatar p-0">
                             <div className="w-10 rounded-full shadow-lg">
-                                {
-                                    avatar ?
-                                    <Image alt="avatar" width={400} height={400}
-                                        src={avatar}/>  
-                                    :
-                                    <div className="skeleton w-10 h-10 rounded-full"></div>
-                                }
+                                <Image alt="avatar" width={400} height={400}
+                                    src={data.owner?.avatar ? getIpfsUrl(data.owner?.avatar) : '/assets/bgs/clear.png'}/>  
                             </div>
                         </div>
                         <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>
@@ -182,17 +159,12 @@ export default function Post(props: {
                 
             </div>
             
-            {
-                image ?
-                <figure><Image
-                    width={400} height={400}
-                    className="max-h-[180px] w-full min-w-80 min-h-[180px]"
-                    src={image}
-                    alt="image"/>
-                </figure> :
-                <div className="skeleton w-80 h-[180px] rounded-none"></div>
-            }
-             
+            <figure><Image
+                width={400} height={400}
+                className="max-h-[180px] w-full min-w-80 min-h-[180px]"
+                src={getIpfsUrl(data.image)}
+                alt="image"/>
+            </figure> 
 
             <div className="card-body text-start p-5">
                 <h2 className="card-title text-2xl">

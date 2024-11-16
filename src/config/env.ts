@@ -10,8 +10,12 @@ const envCfg = {
     rainbowkitId: process.env.NEXT_PUBLIC_RAINBOWKIT_ID,
     envType: process.env.NEXT_PUBLIC_ENV_TYPE,
 
-    pinataJWT: process.env.PINATA_JWT,
-    IPFSGateway: process.env.NEXT_PUBLIC_IPFS_GATEWAY_URL,
+    filebase_FILE_SERVER_URL: process.env.FILE_SERVER_URL,
+    filebase_FILEBASE_BUCKET: process.env.FILEBASE_BUCKET,
+    filebase_FILEBASE_REGION: process.env.FILEBASE_REGION,
+    filebase_FILEBASE_ACCESS_KEY: process.env.FILEBASE_ACCESS_KEY,
+    filebase_FILEBASE_SECRET_KEY: process.env.FILEBASE_SECRET_KEY,
+    filebase_FILEBASE_IPFS_GATEWAY: process.env.NEXT_PUBLIC_FILEBASE_IPFS_GATEWAY,
 }
 
 

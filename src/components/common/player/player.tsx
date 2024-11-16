@@ -7,9 +7,8 @@ import InfoImage from "../info-image/info-image";
 import ReactHowler from 'react-howler'
 import PlayerTrackInfo from "./player-track-info";
 import formatTime from "@/utils/common-functions/formatTime";
-import envCfg from "@/config/env";
 import { getDictionary } from "@/dictionaries/dictionaries";
-import { pinata } from "@/utils/ipfs/config";
+import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
 
 export default function AudioPlayer({
   dictionary
@@ -25,7 +24,6 @@ export default function AudioPlayer({
   const [playerVol, setPlayerVol] = useState(volume);
   const dispatch = useAppDispatch();
   const playerRef = useRef<any>(null);
-  const [audio, setAudio] = useState<string | null>(null)
 
   useEffect(() => {
     if (isPlaying && playerRef.current) {
@@ -113,12 +111,6 @@ export default function AudioPlayer({
     dispatch(setVolume(parseFloat(e.target.value)));
   };
 
-  useEffect(() => {
-    fetch(`/api/files?cid=${post?.audio}`).then(async data => {
-      setAudio(await data.json());
-    });
-  }, []);
-
   if (!post) {
     return <InfoImage text='Track is not selected' image="/assets/icons/logo_clear.png" />;
   }
@@ -130,7 +122,7 @@ export default function AudioPlayer({
             ?
             <>
               <ReactHowler
-                src={[audio]}
+                src={[getIpfsUrl(post.audio)]}
                 playing={isPlaying}
                 onLoad={handleOnLoad}
                 onPlay={handleOnPlay}

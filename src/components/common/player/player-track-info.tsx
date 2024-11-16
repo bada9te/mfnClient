@@ -1,10 +1,9 @@
 "use client"
 
-import envCfg from "@/config/env";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { useAppSelector } from "@/lib/redux/store";
+import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
 import { usePostLazyQuery, Post, useUserSwitchLikeMutation, useUserSwitchSaveMutation } from "@/utils/graphql-requests/generated/schema";
-import { pinata } from "@/utils/ipfs/config";
 import Image from "next/image";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
@@ -21,7 +20,6 @@ export default function PlayerTrackInfo({
     const { enqueueSnackbar } = useSnackbar();
     const [fetchPostData, {data, loading}] = usePostLazyQuery();
     const [isMounted, setIsMounted] = useState(false);
-    const [image, setImage] = useState<string | null>(null);
 
     const [switchLike] = useUserSwitchLikeMutation({
         variables: {
@@ -60,10 +58,6 @@ export default function PlayerTrackInfo({
 
     useEffect(() => {
         if (post && post?._id) {
-            fetch(`/api/files?cid=${post.image}`).then(async data => {
-                setImage(await data.json());
-            });
-
             fetchPostData({
                 variables: {
                     _id: post._id
@@ -84,13 +78,12 @@ export default function PlayerTrackInfo({
     return (
         <div className="flex h-auto flex-col flex-1 gap-1">
             <div className="flex flex-col md:flex-row mb-3 gap-3">
-                {
-                    image &&
-                    <Image alt="track-bg" width={400} height={400}
-                        src={image}
-                        className="shadow-2xl max-h-[180px] h-[180px] max-w-full md:max-w-80 rounded-2xl" 
-                    />
-                }
+                
+                <Image alt="track-bg" width={400} height={400}
+                    src={data?.post.image ? getIpfsUrl(data.post.image) : '/assets/bgs/clear.png'}
+                    className="shadow-2xl max-h-[180px] h-[180px] max-w-full md:max-w-80 rounded-2xl" 
+                />
+                
                 <div className="flex flex-col gap-1 w-full"> 
                     <p className="text-white text-2xl font-bold">{data?.post?.title}</p>
                     <p className="text-white text-md font-bold">{data?.post?.description}</p>
