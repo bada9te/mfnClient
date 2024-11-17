@@ -6,11 +6,11 @@ import { NextRequest } from 'next/server';
 import generateRandomString from '@/utils/common-functions/generateRandomString';
 
 
-const FILE_SERVER_URL = envCfg.filebase_FILE_SERVER_URL;
 const FILEBASE_BUCKET = envCfg.filebase_FILEBASE_BUCKET;
 const FILEBASE_REGION = envCfg.filebase_FILEBASE_REGION;
 const FILEBASE_ACCESS_KEY = envCfg.filebase_FILEBASE_ACCESS_KEY as string;
 const FILEBASE_SECRET_KEY = envCfg.filebase_FILEBASE_SECRET_KEY as string;
+
 
 // Set up AWS S3 client (Filebase in this case)
 const s3 = new S3Client({

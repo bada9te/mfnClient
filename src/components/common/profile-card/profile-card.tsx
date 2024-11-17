@@ -93,10 +93,14 @@ export default function ProfileCard(props: {
     const handleImageCropModalClose = useCallback(async(image: string | null) => {
         if (image) {
             enqueueSnackbar("Updating profile...", { autoHideDuration: 1500 });
-            const blob = await fetch(image).then(a => a.blob()) as IBlob;
 
-            const imageFile = blobToFile(blob, new Date().getTime().toString());
             
+            await fetch(`/api/files?file=${imageType == "avatar" ? data.user.avatar.split('_')[0] : data.user.background.split('_')[0]}`, { method: "DELETE" })
+                .catch(console.log);
+            
+
+            const blob = await fetch(image).then(a => a.blob()) as IBlob;
+            const imageFile = blobToFile(blob, new Date().getTime().toString());
             const dataImage = new FormData();
             dataImage.set("file", imageFile);
             //dataImage.set("groupId", "images");
