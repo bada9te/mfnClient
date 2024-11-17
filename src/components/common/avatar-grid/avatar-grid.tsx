@@ -2,6 +2,7 @@
 import envCfg from '@/config/env';
 import { getDictionary } from '@/dictionaries/dictionaries';
 import { useAppSelector } from '@/lib/redux/store';
+import getIpfsUrl from '@/utils/common-functions/getIpfsUrl';
 import { usePostsMostRecentByFollowingLazyQuery, usePostsMostRecentLazyQuery, usePostsMostRecentQuery } from '@/utils/graphql-requests/generated/schema';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -139,7 +140,7 @@ const AvatarGrid = ({
                   if (recentTracks?.postsMostRecent?.length) {
                     return recentTracks?.postsMostRecent && recentTracks.postsMostRecent.map((recentTrack, index) => (
                       <Link href={`/profile/${recentTrack.owner?._id}/1`} key={index}>
-                        <Image src={`https://avatar.vercel.sh/${index}`} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
+                        <Image src={recentTrack.owner?.avatar ? getIpfsUrl(recentTrack.owner.avatar) : `https://avatar.vercel.sh/${index}`} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
                       </Link>
                     ))
                   } else {

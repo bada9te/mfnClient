@@ -101,15 +101,9 @@ export default function PostEditForm(props: {
     // AUDIO
     const onSubmitAudio: SubmitHandler<InputsAudio> = async(data) => {
         enqueueSnackbar("Removing previous audio...", {autoHideDuration: 1500});
-        const formDataDelete = new FormData();
-        formDataDelete.set("cid", postData.post.audio);
 
-        await fetch("/api/files", {
-            method: "DELETE",
-            body: formDataDelete,
-        }).catch((err) => {
-            console.log(err);
-        });;
+        await fetch(`/api/files?file=${postData.post.audio.split('_')[0]}`, { method: "DELETE" })
+            .catch(console.log);
 
         enqueueSnackbar("Uploading...", {autoHideDuration: 1500});
         const dataAudio = new FormData();
@@ -131,16 +125,9 @@ export default function PostEditForm(props: {
     // IMAGE
     const onSubmitImage: SubmitHandler<InputsImage> = async(data) => {
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
-        const formDataDelete = new FormData();
-        formDataDelete.set("cid", postData.post.image);
-        
 
-        await fetch("/api/files", {
-            method: "DELETE",
-            body: formDataDelete,
-        }).catch((err) => {
-            console.log(err);
-        });
+        await fetch(`/api/files?file=${postData.post.image.split('_')[0]}`, { method: "DELETE" })
+            .catch(console.log);
 
         const processedImage = blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`);
         const dataImage = new FormData();
