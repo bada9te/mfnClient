@@ -1,5 +1,4 @@
 const envCfg = {
-    serverDomain: process.env.NEXT_PUBLIC_SERVER_DOMAIN,
     serverBase: process.env.NEXT_PUBLIC_SERVER_BASE,
     userIdCookieKey: process.env.NEXT_PUBLIC_USER_ID_COOKIE_KEY,
 

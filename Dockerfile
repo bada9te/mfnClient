@@ -1,20 +1,19 @@
-FROM node:latest
+FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package.json .
+COPY package*.json .
 
-RUN yarn
+RUN npm ci
 
 ARG NEXT_PUBLIC_ENV_FILE=.env
 
 COPY $NEXT_PUBLIC_ENV_FILE .env
 
-# Source the .env file to set environment variables
-RUN export $(grep -v '^#' .env | xargs)
-
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
-CMD ["yarn", "start"]
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]
