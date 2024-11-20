@@ -16,12 +16,12 @@ jobs:
         with:
           node-version: "20"
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
       - name: Add .env File
         run: |
           echo "${{ secrets.ENV_PRODUCTION }}" > .env
       - name: Build with Next.js
-        run: yarn build
+        run: npm run build
 
   docker:
     needs: build
