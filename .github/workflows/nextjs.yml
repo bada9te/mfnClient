@@ -19,7 +19,7 @@ jobs:
         run: yarn install
       - name: Add .env File
         run: |
-          echo "${{ secrets.DOTENV_FILE }}" > .env
+          echo "${{ secrets.ENV_PRODUCTION }}" > .env
       - name: Build with Next.js
         run: yarn build
 
@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Add .env File
         run: |
-          echo "${{ secrets.DOTENV_FILE }}" > .env
+          echo "${{ secrets.ENV_PRODUCTION }}" > .env
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
