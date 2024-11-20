@@ -46,6 +46,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: bada9te/mfnClient:latest
+          tags: bada9te/mfnclient:latest
           build-args: |
             --env-file .env
