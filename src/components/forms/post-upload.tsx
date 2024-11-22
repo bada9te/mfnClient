@@ -11,6 +11,7 @@ import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
 import { revalidatePathAction } from "@/actions/revalidation";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { Text } from "lucide-react";
+import validateFile from "@/utils/common-functions/fileValidator";
 
 type Inputs = {
     title: string;
@@ -61,7 +62,31 @@ export default function PostUploadForm({
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
         let uploadedAudioCID, uploadedImageCID;
 
-        const imgConvertedBlob = blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`)
+        const imgConvertedBlob = blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`);
+
+        // validate audio
+        if (data?.audio?.[0]) {
+            const audioValidationFailedMessage = validateFile(data.audio[0], 5);
+            if (audioValidationFailedMessage) {
+                enqueueSnackbar(audioValidationFailedMessage, { variant: 'error', autoHideDuration: 4000 });
+                return;
+            }
+        } else {
+            enqueueSnackbar("Audio file was not applied", { variant: 'error', autoHideDuration: 3000 });
+            return;
+        }
+
+        // validate image
+        if (imgConvertedBlob) {
+            const imageValidationFailedMessage = validateFile(imgConvertedBlob as File, 5);
+            if (imageValidationFailedMessage) {
+                enqueueSnackbar(imageValidationFailedMessage, { variant: 'error', autoHideDuration: 4000 });
+                return;
+            }
+        } else {
+            enqueueSnackbar("Image file was not applied", { variant: 'error', autoHideDuration: 3000 });
+            return;
+        }
 
         const dataAudio = new FormData();
         dataAudio.set("file", data?.audio?.[0]);

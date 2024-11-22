@@ -8,6 +8,7 @@ import ImageCropperModal from "../modals/cropper-modal";
 import blobToFile, { IBlob } from "@/utils/common-functions/blobToFile";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { Text } from "lucide-react";
+import validateFile from "@/utils/common-functions/fileValidator";
 
 type InputsTitle = {
     title: string;
@@ -100,6 +101,18 @@ export default function PostEditForm(props: {
 
     // AUDIO
     const onSubmitAudio: SubmitHandler<InputsAudio> = async(data) => {
+        // validate audio
+        if (data?.audio?.[0]) {
+            const audioValidationFailedMessage = validateFile(data.audio[0], 5);
+            if (audioValidationFailedMessage) {
+                enqueueSnackbar(audioValidationFailedMessage, { variant: 'error', autoHideDuration: 4000 });
+                return;
+            }
+        } else {
+            enqueueSnackbar("Audio file was not applied", { variant: 'error', autoHideDuration: 3000 });
+            return;
+        }
+
         enqueueSnackbar("Removing previous audio...", {autoHideDuration: 1500});
 
         await fetch(`/api/files?file=${postData.post.audio.split('_')[0]}`, { method: "DELETE" })
@@ -124,12 +137,25 @@ export default function PostEditForm(props: {
 
     // IMAGE
     const onSubmitImage: SubmitHandler<InputsImage> = async(data) => {
+        const processedImage = blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`);
+
+        // validate image
+        if (processedImage) {
+            const imageValidationFailedMessage = validateFile(processedImage as File, 5);
+            if (imageValidationFailedMessage) {
+                enqueueSnackbar(imageValidationFailedMessage, { variant: 'error', autoHideDuration: 4000 });
+                return;
+            }
+        } else {
+            enqueueSnackbar("Image file was not applied", { variant: 'error', autoHideDuration: 3000 });
+            return;
+        }
+
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
 
         await fetch(`/api/files?file=${postData.post.image.split('_')[0]}`, { method: "DELETE" })
             .catch(console.log);
 
-        const processedImage = blobToFile(croppedBlob as IBlob, `${new Date().getTime().toString()}${imageFile?.name || ""}`);
         const dataImage = new FormData();
         dataImage.set("file", processedImage);
         dataImage.set("groupId", "images");

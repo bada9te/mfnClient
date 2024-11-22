@@ -11,6 +11,7 @@ import ProfileProgress from "./profile-progress/profile-progress";
 import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
+import validateFile from "@/utils/common-functions/fileValidator";
 
 
 const ShareBtn = (props: {
@@ -93,14 +94,26 @@ export default function ProfileCard(props: {
     const handleImageCropModalClose = useCallback(async(image: string | null) => {
         if (image) {
             enqueueSnackbar("Updating profile...", { autoHideDuration: 1500 });
+            
+            const blob = await fetch(image).then(a => a.blob()) as IBlob;
+            const imageFile = blobToFile(blob, new Date().getTime().toString());
 
+            // validate image
+            if (imageFile) {
+                const imageValidationFailedMessage = validateFile(imageFile as File, 5);
+                if (imageValidationFailedMessage) {
+                    enqueueSnackbar(imageValidationFailedMessage, { variant: 'error', autoHideDuration: 4000 });
+                    return;
+                }
+            } else {
+                enqueueSnackbar("Image file was not applied", { variant: 'error', autoHideDuration: 3000 });
+                return;
+            }
             
             await fetch(`/api/files?file=${imageType == "avatar" ? data.user.avatar.split('_')[0] : data.user.background.split('_')[0]}`, { method: "DELETE" })
                 .catch(console.log);
             
 
-            const blob = await fetch(image).then(a => a.blob()) as IBlob;
-            const imageFile = blobToFile(blob, new Date().getTime().toString());
             const dataImage = new FormData();
             dataImage.set("file", imageFile);
             //dataImage.set("groupId", "images");
