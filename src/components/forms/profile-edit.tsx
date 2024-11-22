@@ -435,9 +435,6 @@ export default function ProfileEditForm(props: {
                         })()
                     }
                 </>
-                
-
-
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].socials}</div>
                 
