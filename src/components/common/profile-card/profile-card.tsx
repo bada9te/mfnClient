@@ -110,55 +110,63 @@ export default function ProfileCard(props: {
                 return;
             }
             
-            await fetch(`/api/files?file=${imageType == "avatar" ? data.user.avatar.split('_')[0] : data.user.background.split('_')[0]}`, { method: "DELETE" })
-                .catch(console.log);
+            if ((imageType == "avatar" && data.user.avatar) || (imageType == "background" && data.user.background))  {
+                await fetch(`/api/files?file=${imageType == "avatar" ? data.user.avatar.split('_')[0] : data.user.background.split('_')[0]}`, { method: "DELETE" })
+                    .catch(console.log);
+            }
             
 
             const dataImage = new FormData();
             dataImage.set("file", imageFile);
             //dataImage.set("groupId", "images");
             
-            const res = await fetch("/api/files", {
-                method: "POST",
-                body: dataImage,
-            });
+            try {
+                const res = await fetch("/api/files", {
+                    method: "POST",
+                    body: dataImage,
+                });
 
-            const jsondata = await res.json();
-            const fileCID = jsondata.url;
+                const jsondata = await res.json();
+                const fileCID = jsondata.url;
 
-            switch (imageType) {
-                case "avatar":
-                    refAvatar.current && (refAvatar.current.value = "")
-                    console.log({fileCID})
-                    dispatch(setUserAvatar(fileCID));
-                    updateUser({
-                        variables: {
-                            input: {
-                                _id: user?._id as string,
-                                what: "avatar",
-                                value: fileCID
+                switch (imageType) {
+                    case "avatar":
+                        refAvatar.current && (refAvatar.current.value = "")
+                        console.log({fileCID})
+                        dispatch(setUserAvatar(fileCID));
+                        updateUser({
+                            variables: {
+                                input: {
+                                    _id: user?._id as string,
+                                    what: "avatar",
+                                    value: fileCID
+                                }
                             }
-                        }
-                    });
-                    break;
-                case "background": 
-                    refBackground.current && (refBackground.current.value = "");
-                    dispatch(setUserBackground(fileCID));
-                    updateUser({
-                        variables: {
-                            input: {
-                                _id: user?._id as string,
-                                what: "background",
-                                value: fileCID
+                        });
+                        break;
+                    case "background": 
+                        refBackground.current && (refBackground.current.value = "");
+                        dispatch(setUserBackground(fileCID));
+                        updateUser({
+                            variables: {
+                                input: {
+                                    _id: user?._id as string,
+                                    what: "background",
+                                    value: fileCID
+                                }
                             }
-                        }
-                    });
-                    break;
-                default:
-                    break;
+                        });
+                        break;
+                    default:
+                        break;
+
+                }
+                enqueueSnackbar("Updated", { autoHideDuration: 2000, variant: 'success' });
+            } catch (error) {
+                enqueueSnackbar("Pls try again later", { autoHideDuration: 2000, variant: 'error' });
             }
 
-            enqueueSnackbar("Updated", { autoHideDuration: 2000, variant: 'success' });
+            
         }
     }, [imageType, file, dispatch, enqueueSnackbar, updateUser, user?._id]);
 

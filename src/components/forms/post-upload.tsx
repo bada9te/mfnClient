@@ -96,6 +96,8 @@ export default function PostUploadForm({
         dataImage.set("file", imgConvertedBlob);
         dataImage.set("groupId", "images");
 
+        let isError = false;
+
         await Promise.all([
             fetch("/api/files", {
                 method: "POST",
@@ -105,6 +107,7 @@ export default function PostUploadForm({
                 uploadedAudioCID = jsondata.url;
             }).catch(err => {
                 console.log(err);
+                isError = true;
                 enqueueSnackbar("Can't upload the audio", { variant: 'error', autoHideDuration: 3000 });
                 setIsLoading(false);
             }),
@@ -116,10 +119,15 @@ export default function PostUploadForm({
                 uploadedImageCID = jsondata.url;
             }).catch(err => {
                 console.log(err);
+                isError = true;
                 enqueueSnackbar("Can't upload the image", { variant: 'error', autoHideDuration: 3000 });
                 setIsLoading(false);
             }),
         ]);
+
+        if (isError) {
+            return;
+        }
 
         // upload the post itself
         if (uploadedAudioCID && uploadedImageCID) {
