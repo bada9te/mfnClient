@@ -161,7 +161,7 @@ export default function Post(props: {
             
             <figure><Image
                 width={400} height={400}
-                className="max-h-[180px] w-full min-w-80 min-h-[180px]"
+                className="max-h-[180px] w-full min-w-80"
                 src={getIpfsUrl(data.image)}
                 alt="image"/>
             </figure> 

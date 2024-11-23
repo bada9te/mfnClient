@@ -1,17 +1,15 @@
-export const acceptableImages = ["jpg", "jpeg", "png"];
-export const acceptableAudios = ["mp3", "wav"];
+export const acceptableImages = ["image/jpg", "image/jpeg", "image/png"];
+export const acceptableAudios = ["audio/mp3", "audio/wav", "audio/mpeg"];
 
 
 export default function validateFile(file: File, maxSizeInMib: number) {
     if (file.size > maxSizeInMib * 1024 * 1024) {
         return `File size must be lower than, ${maxSizeInMib}`;
     }
+    console.log(file);
 
-    const fileNameSplittedWithDot = file.name.split('.');
-    const extension = fileNameSplittedWithDot[fileNameSplittedWithDot.length - 1];
-
-    if (!acceptableImages.includes(extension) || !acceptableAudios.includes(extension)) {
-        return `${extension} is not aceptable file type`;
+    if (!acceptableImages.includes(file.type) && !acceptableAudios.includes(file.type)) {
+        return `${file.type} is not aceptable file type`;
     }
 
     return null;
