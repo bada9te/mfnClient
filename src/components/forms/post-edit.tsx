@@ -103,7 +103,7 @@ export default function PostEditForm(props: {
     const onSubmitAudio: SubmitHandler<InputsAudio> = async(data) => {
         // validate audio
         if (data?.audio?.[0]) {
-            const audioValidationFailedMessage = validateFile(data.audio[0], 5);
+            const audioValidationFailedMessage = validateFile(data.audio[0], 8);
             if (audioValidationFailedMessage) {
                 enqueueSnackbar(audioValidationFailedMessage, { variant: 'error', autoHideDuration: 4000 });
                 return;
