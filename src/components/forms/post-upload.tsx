@@ -66,13 +66,15 @@ export default function PostUploadForm({
 
         // validate audio
         if (data?.audio?.[0]) {
-            const audioValidationFailedMessage = validateFile(data.audio[0], 5);
+            const audioValidationFailedMessage = validateFile(data.audio[0], 10);
             if (audioValidationFailedMessage) {
                 enqueueSnackbar(audioValidationFailedMessage, { variant: 'error', autoHideDuration: 4000 });
+                setIsLoading(false);
                 return;
             }
         } else {
             enqueueSnackbar("Audio file was not applied", { variant: 'error', autoHideDuration: 3000 });
+            setIsLoading(false);
             return;
         }
 
@@ -81,10 +83,12 @@ export default function PostUploadForm({
             const imageValidationFailedMessage = validateFile(imgConvertedBlob as File, 5);
             if (imageValidationFailedMessage) {
                 enqueueSnackbar(imageValidationFailedMessage, { variant: 'error', autoHideDuration: 4000 });
+                setIsLoading(false);
                 return;
             }
         } else {
             enqueueSnackbar("Image file was not applied", { variant: 'error', autoHideDuration: 3000 });
+            setIsLoading(false);
             return;
         }
 
