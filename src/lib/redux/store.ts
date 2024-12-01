@@ -1,3 +1,4 @@
+"use client"
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 // @ts-ignore
@@ -11,19 +12,21 @@ import playerReducer from "@/lib/redux/slices/player";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { deleteCookie, setCookie } from "cookies-next";
 import envCfg from "@/config/env";
+import { disconnect } from '@wagmi/core'
+import { config } from "@/config/wagmi";
 
 const createNoopStorage = () => {
-  return {
-    getItem(_key: any) {
-      return Promise.resolve(null);
-    },
-    setItem(_key:any, value:any) {
-      return Promise.resolve(value);
-    },
-    removeItem(_key:any) {
-      return Promise.resolve();
-    },
-  };
+    return {
+        getItem(_key: any) {
+            return Promise.resolve(null);
+        },
+        setItem(_key:any, value:any) {
+            return Promise.resolve(value);
+        },
+        removeItem(_key:any) {
+            return Promise.resolve();
+        },
+    };
 };
 
 const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
@@ -50,22 +53,27 @@ const rootReducer = combineReducers({
 const loadStore = async(getCurrentState: any) => {
     return new Promise(resolve => {
         httpGetCurrentUser()
-            .then(response => response.data)
-            .then(userData => {
-                setCookie(envCfg.userIdCookieKey as string, userData.user._id);
-                resolve({
-                    // reuse state that was before loading current user
-                    ...getCurrentState(),
-                    // and replace only `user` key
-                    user: {
-                        ...userData
-                    },
-                })
+        .then(response => response.data)
+        .then(userData => {
+            setCookie(envCfg.userIdCookieKey as string, userData.user._id);
+            resolve({
+                // reuse state that was before loading current user
+                ...getCurrentState(),
+                // and replace only `user` key
+                user: {
+                    ...userData
+                },
             })
-            .catch(err => {
-                deleteCookie(envCfg.userIdCookieKey as string);
-                //console.log(err)
-                // console.log("Initial state can not be loaded:", err.message);
+        })
+        .catch(err => {
+            disconnect(config).then(() => {
+                console.log("Wallet disconnected");
+            }).catch(() => {
+                console.log("Wallet disconnection failed");
+            });
+            deleteCookie(envCfg.userIdCookieKey as string);
+            //console.log(err)
+            // console.log("Initial state can not be loaded:", err.message);
                 resolve({...getCurrentState(), user: {user: null}});
             });
     });

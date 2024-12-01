@@ -114,7 +114,7 @@ export default function ProfileButton({
                 </div>
             </div>
 
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-56 glass bg-base-300">
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-56 glass bg-base-content text-black">
                 {/* Conditional rendering based on user presence */}
                 {user?.user?._id ? (
                     <>

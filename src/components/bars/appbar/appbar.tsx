@@ -18,7 +18,7 @@ export default function AppBar({
                         <Menu/>
                     </div>
                     <ul tabIndex={0}
-                        className="glass bg-base-300 menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow rounded-box w-52 flex flex-col flex-nowrap">
+                        className="glass bg-base-content text-black menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow rounded-box w-52 flex flex-col flex-nowrap">
                         <li><Link href={"/feed/1"}>
                             <Earth/>
                             {dictionary?.bars.appbar.feed}
@@ -88,7 +88,7 @@ export default function AppBar({
                                 <Swords/>
                                 {dictionary?.bars.appbar.battles}
                             </summary>
-                            <ul className="p-2 glass bg-base-300">
+                            <ul className="p-2 glass bg-base-content text-black">
                                 <li><Link href={"/battles/in-progress/1"}>{dictionary?.bars.appbar["in-progress"]}</Link></li>
                                 <li><Link href={"/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
                                 <li><Link href={"/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
@@ -101,7 +101,7 @@ export default function AppBar({
                                 <ListMusic/>
                                 {dictionary?.bars.appbar.playlists}
                             </summary>
-                            <ul className="p-2 glass bg-base-300">
+                            <ul className="p-2 glass bg-base-content text-black">
                                 <li><Link href={"/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
                                 <li><Link href={"/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
                                 <li><Link href={"/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
@@ -114,7 +114,7 @@ export default function AppBar({
                                 <ChartBarStacked/>
                                 {dictionary?.bars.appbar.categories}
                             </summary>
-                            <ul className="p-2 glass bg-base-300">
+                            <ul className="p-2 glass bg-base-content text-black">
                                 <li><Link href={"/categories/country/1"}>Country</Link></li>
                                 <li><Link href={"/categories/pop/1"}>Pop</Link></li>
                                 <li><Link href={"/categories/classical/1"}>Classical</Link></li>
