@@ -61,7 +61,7 @@ export default function SelectTrackModal({
             {React.cloneElement(button, {
                 onClick: handleOpen,
             })}
-            <dialog ref={ref} className="modal w-full">
+            <dialog ref={ref} className="modal w-full cursor-default">
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button>close</button>
                 </form>

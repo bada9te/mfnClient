@@ -21,6 +21,7 @@ import getTimeSince from "@/utils/common-functions/getTimeSince";
 import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
 import getAudioDuration from "@/utils/common-functions/getAudiDuration";
 import formatTime from "@/utils/common-functions/formatTime";
+import AddToPlaylistModal from "../../modals/add-to-playlist";
 
 
 export default function Post(props: {
@@ -162,6 +163,19 @@ export default function Post(props: {
                                 {dictionary.entities.post.edit}
                             </Link></li>
                         }
+                        {
+                            user?._id &&
+                            <AddToPlaylistModal
+                                dictionary={dictionary}
+                                postId={data._id}
+                                button={
+                                    <li><button>
+                                        <ListPlus/>
+                                        {dictionary.entities.post["add-to-playlist"]}
+                                    </button></li>
+                                }
+                            />
+                        }
                     </ul>
                 </div>
                 
@@ -213,17 +227,8 @@ export default function Post(props: {
                 </div>
                 
                 <div className="stat shadow-none text-center rounded-lg p-0 relative w-full">
-                    <div className="flex flex-col w-fit gap-2 justify-self-end items-end">
-                        <div className="join join-vertical w-fit">
-                            <button className="join-item btn btn-primary btn-sm m-0 glass text-base-content">
-                                <ListPlus />
-                            </button>
-                            <button className="join-item btn btn-primary btn-sm m-0 glass text-base-content">
-                                <LinkIcon />
-                            </button>
-                        </div>
-                    
-                        <div className="self-end justify-self-end p-1 bg-orange-400 glass rounded-lg flex flex-row items-center justify-center gap-1 text-[#2f343c] w-fit">
+                    <div className="flex flex-col w-full gap-2 justify-self-end items-end justify-end h-full">
+                        <div className="self-end justify-self-end p-1 bg-orange-400 glass rounded-lg flex flex-row items-center justify-center gap-1 text-[#2f343c] w-full">
                             <Clock8 />
                             {formatTime(duration)}
                         </div>

@@ -42,7 +42,7 @@ export default function ImageCropperModal(props: {
     
 
     return (
-        <dialog ref={refDialog} className="modal w-full h-full absolute">
+        <dialog ref={refDialog} className="modal w-full cursor-default h-full absolute">
             <div className="modal-box glass  text-gray-300 min-w-[100vw] min-h-[100vh] no-scrollbar text-start flex flex-col">
                 <h4 className="font-bold text-lg z-50">{dictionary.modals.cropper.cropping}</h4>
 
