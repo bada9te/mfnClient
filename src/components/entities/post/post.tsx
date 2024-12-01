@@ -175,9 +175,13 @@ export default function Post(props: {
             </figure> 
 
             <div className="card-body text-start p-5 relative">
-                <div className="absolute top-3 right-3">
-                    <Image src={'/assets/icons/opensea-logo.png'} className="h-7 w-7" width={100} height={100} alt="opensea"/>
-                </div>
+                {
+                    /*
+                        <div className="absolute top-3 right-3">
+                            <Image src={'/assets/icons/opensea-logo.png'} className="h-7 w-7" width={100} height={100} alt="opensea"/>
+                        </div>
+                    */
+                }
                 <h2 className="card-title text-2xl">
                     {data?.title}
                     <div className="badge badge-secondary glass bg-[#1ba39c] text-white">{data?.category}</div>
