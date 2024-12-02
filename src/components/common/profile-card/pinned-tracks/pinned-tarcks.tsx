@@ -54,7 +54,7 @@ export default function PinnedTracks({
             </p>
             <div className="flex flex-col md:flex-row gap-14 mb-10 justify-around mt-7 flex-wrap">
                 {
-                    pinnedTracks.userPinnedTracks?.map((i, key) => {
+                    pinnedTracks?.userPinnedTracks?.map((i, key) => {
                         if (userId === user?._id) {
                             return (
                                 <Post key={key} data={i as TPost} dictionary={dictionary} handleRemove={handleSelect}/>
@@ -69,9 +69,9 @@ export default function PinnedTracks({
                 
                 {
                     (() => {
-                        if (pinnedTracks.userPinnedTracks?.length) {
-                            if (pinnedTracks.userPinnedTracks.length < 3) {
-                                const amount = 3 - pinnedTracks.userPinnedTracks.length;
+                        if (pinnedTracks?.userPinnedTracks?.length) {
+                            if (pinnedTracks?.userPinnedTracks.length < 3) {
+                                const amount = 3 - pinnedTracks?.userPinnedTracks.length;
                                 
                                 return Array(amount).fill(0).map((_, key) => {
                                     return (

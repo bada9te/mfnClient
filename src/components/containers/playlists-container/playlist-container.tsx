@@ -15,6 +15,12 @@ export default function PlaylistContainer(props: {
     });
 
     return (
-        <Playlist _id={playlistData.playlist._id} title={playlistData.playlist.title} posts={playlistData.playlist.tracks as Post[]} expanded dictionary={props.dictionary}/>
+        <Playlist 
+            _id={playlistData?.playlist._id as string} 
+            title={playlistData?.playlist.title as string} 
+            posts={playlistData?.playlist.tracks as Post[]} 
+            expanded 
+            dictionary={props.dictionary}
+        />
     );
 }

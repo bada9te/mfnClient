@@ -115,7 +115,7 @@ export default function PostEditForm(props: {
 
         enqueueSnackbar("Removing previous audio...", {autoHideDuration: 1500});
 
-        await fetch(`/api/files?file=${postData.post.audio.split('_')[0]}`, { method: "DELETE" })
+        await fetch(`/api/files?file=${postData?.post.audio.split('_')[0]}`, { method: "DELETE" })
             .catch(console.log);
 
         enqueueSnackbar("Uploading...", {autoHideDuration: 1500});
@@ -153,7 +153,7 @@ export default function PostEditForm(props: {
 
         enqueueSnackbar("Uploading...", { autoHideDuration: 1500 });
 
-        await fetch(`/api/files?file=${postData.post.image.split('_')[0]}`, { method: "DELETE" })
+        await fetch(`/api/files?file=${postData?.post.image.split('_')[0]}`, { method: "DELETE" })
             .catch(console.log);
 
         const dataImage = new FormData();
