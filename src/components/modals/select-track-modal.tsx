@@ -18,7 +18,7 @@ export default function SelectTrackModal({
     dictionary
 }: {
     button: React.ReactElement, 
-    userIsOwner: boolean,
+    userIsOwner?: boolean,
     handleSelect: (a: TPost) => void;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
@@ -48,7 +48,7 @@ export default function SelectTrackModal({
         searchTracksByTitle({
             variables: {
                 input: {
-                    userId: user?._id as string,
+                    userId: userIsOwner != undefined ? user?._id as string : undefined,
                     userIsOwner: userIsOwner,
                     title: inputRef.current.value
                 }
@@ -61,7 +61,7 @@ export default function SelectTrackModal({
             {React.cloneElement(button, {
                 onClick: handleOpen,
             })}
-            <dialog ref={ref} className="modal w-full">
+            <dialog ref={ref} className="modal w-full cursor-default">
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button>close</button>
                 </form>

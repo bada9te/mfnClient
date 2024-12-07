@@ -81,7 +81,7 @@ export default function PlayerTrackInfo({
                 
                 <Image alt="track-bg" width={400} height={400}
                     src={data?.post.image ? getIpfsUrl(data.post.image) : '/assets/bgs/clear.png'}
-                    className="shadow-2xl max-h-[180px] h-[180px] max-w-full md:max-w-80 rounded-2xl" 
+                    className="shadow-2xl max-h-[180px] h-[136px] max-w-full md:max-w-80 rounded-2xl" 
                 />
                 
                 <div className="flex flex-col gap-1 w-full"> 

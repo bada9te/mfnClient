@@ -110,7 +110,7 @@ export default function ProfileCard(props: {
                 return;
             }
             
-            if ((imageType == "avatar" && data.user.avatar) || (imageType == "background" && data.user.background))  {
+            if ((imageType == "avatar" && data?.user.avatar) || (imageType == "background" && data?.user.background))  {
                 await fetch(`/api/files?file=${imageType == "avatar" ? data.user.avatar.split('_')[0] : data.user.background.split('_')[0]}`, { method: "DELETE" })
                     .catch(console.log);
             }
@@ -186,24 +186,24 @@ export default function ProfileCard(props: {
             />
             <div className={`m-2 mt-6 md:m-4 mb-0 card w-full text-white rounded-2xl md:rounded-2xl shadow-2xl bg-base-300`}>
                 <figure className="max-h-48">
-                    <Image width={1000} height={400} className="w-full" src={data.user.background ? getIpfsUrl(data.user.background) : '/assets/bgs/clear.png'} alt="background"/>
+                    <Image width={1000} height={400} className="w-full" src={data?.user.background ? getIpfsUrl(data.user.background) : '/assets/bgs/clear.png'} alt="background"/>
                 </figure>
                    
                 <div className="card-body flex flex-col  gap-5">
                     <div className="avatar flex justify-center">
                         <div className="w-32 h-32 mask mask-hexagon">
                             
-                            <Image width={400} height={400} src={data.user.avatar ? getIpfsUrl(data.user.avatar) : '/assets/bgs/clear.png'} alt="avatar" />
+                            <Image width={400} height={400} src={data?.user.avatar ? getIpfsUrl(data.user.avatar) : '/assets/bgs/clear.png'} alt="avatar" />
                                
                         </div>
                     </div>
                     <div>
                         <h2 className="card-title flex flex-col md:flex-row justify-center items-center mb-2">
-                            {data.user.nick}
-                            <div className="badge glass bg-[#1ba39c] text-white">{data.user.subscribers?.length} {dictionary.common["profile-card"].followers}</div>
-                            <div className="badge glass">{data.user.subscribedOn?.length} {dictionary.common["profile-card"].following}</div>
+                            {data?.user.nick}
+                            <div className="badge glass bg-[#1ba39c] text-white">{data?.user.subscribers?.length} {dictionary.common["profile-card"].followers}</div>
+                            <div className="badge glass">{data?.user.subscribedOn?.length} {dictionary.common["profile-card"].following}</div>
                         </h2>
-                        <p className="mt-3 md:mt-0 text-center">{data.user.description}</p>
+                        <p className="mt-3 md:mt-0 text-center">{data?.user.description}</p>
                         <div className="card-actions justify-start mt-3">
                             {
                                 !isEditable
@@ -211,10 +211,10 @@ export default function ProfileCard(props: {
                                 <>
                                     {
                                         (() => {
-                                            if (data.user._id == user?._id) {
+                                            if (data?.user._id == user?._id) {
                                                 return;
                                             } else {
-                                                if (user?._id && data.user.subscribers?.map(i => i._id)?.includes(user._id)) {
+                                                if (user?._id && data?.user.subscribers?.map(i => i._id)?.includes(user._id)) {
                                                     return (
                                                         <button className="btn btn-primary w-full bg-red-400/20 glass text-white" onClick={handleSubscriptionChange}>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -230,7 +230,7 @@ export default function ProfileCard(props: {
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                                                 <path fillRule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
                                                             </svg>
-                                                            {dictionary.common["profile-card"].follow} ({data.user.subscribers?.length})
+                                                            {dictionary.common["profile-card"].follow} ({data?.user.subscribers?.length})
                                                         </button>
                                                         
                                                     );
@@ -273,9 +273,10 @@ export default function ProfileCard(props: {
                     </div>
                     <ProfileProgress 
                         userId={userId} 
-                        totalRP={achievementsData.userAchievementsData?.totalRP || 0}
-                        data={achievementsData.userAchievementsData as UserAchievementsData}
-                        achievementsTotal={achievementsCountData.achievemenmtsCount as number}
+                        totalRP={achievementsData?.userAchievementsData?.totalRP || 0}
+                        data={achievementsData?.userAchievementsData as UserAchievementsData}
+                        achievementsTotal={achievementsCountData?.achievemenmtsCount as number}
+                        // @ts-ignore
                         refreshStatistics={() => refetchAchievementsQuery({ _id: userId })}
                         dictionary={dictionary}
                     />

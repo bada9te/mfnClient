@@ -37,7 +37,7 @@ export default function SelectAmountOfMFNTokens({button, type, handleClose, dict
             {React.cloneElement(button, {
                 onClick: handleOpen,
             })}
-            <dialog ref={ref} className="modal w-full no-scrollbar">
+            <dialog ref={ref} className="modal w-full cursor-default no-scrollbar">
                 <form method="dialog" className="modal-backdrop w-[100vw] no-scrollbar">
                     <button>close</button>
                 </form>

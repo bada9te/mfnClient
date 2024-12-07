@@ -6,7 +6,7 @@ import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import Post from "../post/post";
 import { getDictionary } from "@/dictionaries/dictionaries";
-import { Link } from "lucide-react";
+import { Link, Minus, NotebookTabs, Plus, Trash } from "lucide-react";
 
 export default function Playlist(props: {
     _id: string;
@@ -69,9 +69,7 @@ export default function Playlist(props: {
                     {' '}
                     (
                         {posts?.length} 
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 ml-1">
-                            <path fillRule="evenodd" d="M17.721 1.599a.75.75 0 0 1 .279.583v11.29a2.25 2.25 0 0 1-1.774 2.2l-2.041.44a2.216 2.216 0 0 1-.938-4.332l2.662-.577a.75.75 0 0 0 .591-.733V6.112l-8 1.73v7.684a2.25 2.25 0 0 1-1.774 2.2l-2.042.44a2.216 2.216 0 1 1-.935-4.331l2.659-.573A.75.75 0 0 0 7 12.529V4.236a.75.75 0 0 1 .591-.733l9.5-2.054a.75.75 0 0 1 .63.15Z" clipRule="evenodd" />
-                        </svg>
+                        <NotebookTabs className="ml-1"/>
                     )
                 </span>
             </div>
@@ -89,35 +87,20 @@ export default function Playlist(props: {
                                 <SelectTrackModal
                                     dictionary={dictionary}
                                     handleSelect={handleSwitchTrack}
-                                    userIsOwner={false}
+                                    userIsOwner={undefined}
                                     button={
                                         <button className="btn btn-sm btn-primary glass join-item text-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                                className="size-5">
-                                                <path fillRule="evenodd"
-                                                    d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-11.25a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"
-                                                    clipRule="evenodd"/>
-                                            </svg>
+                                            <Plus className="mr-1"/>
                                             <span className="hidden md:block">{dictionary.entities.playlist["add-track"]}</span>
                                         </button>
                                     }
                                 />
                                 <button className={`btn btn-sm glass join-item ${isRemovingTrack ? 'btn-error bg-red-900' : 'btn-primary'} text-white`} onClick={() => setIsRemovingTrack(!isRemovingTrack)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                        className="size-5">
-                                        <path fillRule="evenodd"
-                                            d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
-                                            clipRule="evenodd"/>
-                                    </svg>
+                                    <Minus className="mr-1"/>
                                     <span className="hidden md:block">{dictionary.entities.playlist["remove-track"]}</span>
                                 </button>
                                 <button className="btn btn-sm btn-error glass join-item text-white" onClick={handleSelfDelete}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                        className="size-5">
-                                        <path fillRule="evenodd"
-                                            d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"
-                                            clipRule="evenodd"/>
-                                    </svg>
+                                    <Trash className="mr-1"/>
                                     <span className="hidden md:block">{dictionary.entities.playlist["delete-playlist"]}</span>
                                 </button>
                             </>

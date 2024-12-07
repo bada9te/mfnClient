@@ -15,10 +15,13 @@ import formatNumber from "@/utils/common-functions/formatNumber";
 import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { switchPostInLiked, switchPostInSaved } from "@/lib/redux/slices/user";
-import { Bookmark, CheckCheck, Cog, Flag, Heart, LinkIcon, Pause, PinOff, Play, User as UserIcon } from "lucide-react";
+import { Bookmark, CheckCheck, Clock8, Cog, Flag, Heart, Link2, LinkIcon, ListPlus, Pause, PinOff, Play, Share, Timer, User as UserIcon } from "lucide-react";
 import MainButton from "@/components/common/main-button/main-button";
 import getTimeSince from "@/utils/common-functions/getTimeSince";
 import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
+import getAudioDuration from "@/utils/common-functions/getAudiDuration";
+import formatTime from "@/utils/common-functions/formatTime";
+import AddToPlaylistModal from "../../modals/add-to-playlist";
 
 
 export default function Post(props: {
@@ -37,6 +40,7 @@ export default function Post(props: {
     const [switchLike] = useUserSwitchLikeMutation();
     const [switchInSaved] = useUserSwitchSaveMutation();
     const { enqueueSnackbar } = useSnackbar();
+    const [duration, setDuration] = useState(0);
 
     const handlePlayCLick = () => {
         dispatch(setPost(data));
@@ -45,6 +49,12 @@ export default function Post(props: {
     const handlePauseCLick = () => {
         dispatch(setIsPlaying(false));
     }
+
+    useEffect(() => {
+        getAudioDuration(getIpfsUrl(data.audio)).then((duration) => {
+            setDuration(duration as number);
+        })
+    }, []);
 
     useEffect(() => {
         setIsMounted(true);
@@ -99,7 +109,6 @@ export default function Post(props: {
         navigator.clipboard.writeText(`${window.location.origin}/post/${data._id}/${data.owner?._id}`);
         enqueueSnackbar("Link copied", {variant: 'success', autoHideDuration: 1500});
     }
-        
 
 
     return (
@@ -154,6 +163,19 @@ export default function Post(props: {
                                 {dictionary.entities.post.edit}
                             </Link></li>
                         }
+                        {
+                            user?._id &&
+                            <AddToPlaylistModal
+                                dictionary={dictionary}
+                                postId={data._id}
+                                button={
+                                    <li><button>
+                                        <ListPlus/>
+                                        {dictionary.entities.post["add-to-playlist"]}
+                                    </button></li>
+                                }
+                            />
+                        }
                     </ul>
                 </div>
                 
@@ -166,39 +188,56 @@ export default function Post(props: {
                 alt="image"/>
             </figure> 
 
-            <div className="card-body text-start p-5">
+            <div className="card-body text-start p-5 relative">
+                {
+                    /*
+                        <div className="absolute top-3 right-3">
+                            <Image src={'/assets/icons/opensea-logo.png'} className="h-7 w-7" width={100} height={100} alt="opensea"/>
+                        </div>
+                    */
+                }
                 <h2 className="card-title text-2xl">
                     {data?.title}
                     <div className="badge badge-secondary glass bg-[#1ba39c] text-white">{data?.category}</div>
                 </h2>
                 <p className="text-lg">{data?.description}</p>
             </div>
-
-            <div className={`stats bg-base-300 glass mx-2 mt-2 thin-scrollbar bg-opacity-20 ${handleRemove && "opacity-60"}`}>
-                <div className="stat text-center">
+            
+            <div className={`flex flex-row gap-2 mx-2 mt-2 thin-scrollbar text-[#b2ccd6] relative ${handleRemove && "opacity-60"}`}>
+                <div className="stat text-center bg-base-300 glass w-fit rounded-lg p-4">
                     <div 
                         className={`${!handleRemove && 'cursor-pointer'} ${user?.likedPosts.find((i: string) => i === data._id) && "text-red-500"}`} 
                         onClick={handleSwitchLike}
                     >
-                        <Heart className="inline-block h-8 w-8" fill={user?.likedPosts.find((i: string) => i === data._id) ? "#ef4444" : "#b2ccd6"}/>
+                        <Heart className="inline-block h-6 w-6 border-0" fill={user?.likedPosts.find((i: string) => i === data._id) ? "#ef4444" : "#b2ccd6"}/>
                     </div>
-                    <div className="stat-title">{dictionary.entities.post["total-likes"]}</div>
-                    <div className="stat-value text-primary">{formatNumber(data.likes as number)}</div>
+                    <div className="stat-title text-base-content">{dictionary.entities.post["total-likes"]}</div>
+                    <div className="text-base-content text-sm font-semibold">{formatNumber(data.likes as number)}</div>
                 </div>
 
-                <div className="stat text-center">
+                <div className="stat text-center bg-base-300 glass w-fit rounded-lg p-4">
                     <div 
                         className={`${!handleRemove && 'cursor-pointer'} ${user?.savedPosts.find((i: string) => i === data._id) && "text-yellow-500"}`} 
                         onClick={handleSwitchInSaved}
                     >
-                        <Bookmark className="inline-block h-8 w-8" fill={user?.savedPosts.find((i: string) => i === data._id) ? "#eab308" : "#b2ccd6"}/>
+                        <Bookmark className="inline-block h-6 w-6" fill={user?.savedPosts.find((i: string) => i === data._id) ? "#eab308" : "#b2ccd6"}/>
                     </div>
-                    <div className="stat-title">{dictionary.entities.post["total-saves"]}</div>
-                    <div className="stat-value text-primary">{formatNumber(data.saves as number)}</div>
+                    <div className="stat-title text-base-content">{dictionary.entities.post["total-saves"]}</div>
+                    <div className="text-base-content text-sm font-semibold">{formatNumber(data.saves as number)}</div>
+                </div>
+                
+                <div className="stat shadow-none text-center rounded-lg p-0 relative w-full">
+                    <div className="flex flex-col w-full gap-2 justify-self-end items-end justify-end h-full">
+                        <div className="self-end justify-self-end p-1 bg-orange-400 glass rounded-lg flex flex-row items-center justify-center gap-1 text-[#2f343c] w-full">
+                            <Clock8 />
+                            {formatTime(duration)}
+                        </div>
+                    </div>
                 </div>
             </div>
+                
 
-            <div className="card-actions justify-center pt-2 flex flex-row overflow-hidden rounded-xl">
+            <div className="card-actions justify-center pt-2 flex flex-row overflow-hidden rounded-xl text-[#20252e]">
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?
@@ -206,7 +245,7 @@ export default function Post(props: {
                             color="error"
                             handler={handlePauseCLick}
                         >
-                            <Pause fill="white"/>
+                            <Pause fill="#20252e" className="mr-1 w-5 h-5"/>
                             {dictionary.entities.post.pause}
                         </MainButton>
                         :
@@ -214,7 +253,7 @@ export default function Post(props: {
                             color="primary"
                             handler={handlePlayCLick}
                         >
-                            <Play fill="white"/>
+                            <Play fill="#20252e" className="mr-1 w-5 h-5"/>
                             {dictionary.entities.post.play}
                         </MainButton>
                 }

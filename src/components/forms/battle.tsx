@@ -26,7 +26,7 @@ export const PostPlaceholder = (props: {
     forceBtn?: boolean;
 }) => {
     return (
-        <div className="border-2 border-dashed border-white w-80 h-[535px] flex flex-col justify-center items-center bg-base-300 relative rounded-2xl">
+        <div className="border-2 border-dashed border-white w-80 h-[474px] flex flex-col justify-center items-center bg-base-300 relative rounded-2xl">
             <div className="flex flex-col h-full justify-center items-center">
                 <InfoImage text={props.dictionary.forms.battle["select-track"]} image="/assets/icons/logo_clear.png"/>
             </div>
@@ -238,7 +238,7 @@ export default function BattleForm({
                         <div className="form-control mt-2 px-4 md:px-0">
                             <label className="label cursor-pointer">
                             <span className="label-text">{dictionary.forms.battle["associate-with-blockchain"]}</span>
-                                <button onClick={openConnectModal} className="btn btn-primary btn-sm bg-base-300 glass text-white px-5">
+                                <button type="button" onClick={openConnectModal} className="btn btn-sm bg-indigo-500 hover:bg-indigo-700 glass text-white px-5">
                                     <Image src={"/assets/icons/ethereum-eth.svg"} width={22} height={22} alt="eth" />
                                     <span>{dictionary.forms.battle["connect-wallet"]}</span>
                                 </button>

@@ -1,10 +1,9 @@
 "use client"
 import { User } from "@/utils/graphql-requests/generated/schema";
-import envCfg from "@/config/env";
 import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
-import { useEffect, useState } from "react";
 import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
+import Link from "next/link";
 
 
 export default function RightbarDrawerUser({
@@ -33,7 +32,7 @@ export default function RightbarDrawerUser({
                     <div className="badge glass text-white">{data.subscribedOn?.length} {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].following}</div>
                 </div>
             </div>
-            <a href={`/profile/${data._id}/1`} className="btn btn-primary glass text-white">{dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].profile}</a>
+            <Link href={`/profile/${data._id}/1`} className="btn btn-primary glass text-white">{dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].profile}</Link>
         </div>
     );
 }

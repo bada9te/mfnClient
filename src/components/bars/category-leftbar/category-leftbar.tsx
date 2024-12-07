@@ -30,7 +30,7 @@ export default function CategoryLeftBar(props: {
                 <p className="mr-8">{description}</p>
 
                 <div className="absolute top-0 right-0 h-full card-actions justify-end p-1">
-                    <Link className="btn glass bg-base-300 btn-sm text-white rounded-2xl" href={`/categories/${String(id).toLowerCase().replaceAll(' ', '-')}/1`}>
+                    <Link className="btn glass bg-base-content text-black btn-sm rounded-2xl hover:text-white" href={`/categories/${String(id).toLowerCase().replaceAll(' ', '-')}/1`}>
                         <ChevronsRight />
                     </Link>
                 </div>

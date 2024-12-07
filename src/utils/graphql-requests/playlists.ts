@@ -102,3 +102,15 @@ export const PLAYLIST_SWICTH_TRACK_MUTATION = gql`
         }
     }
 `;
+
+export const PLAYLISTS_SWITCH_TRACK_MUTATION = gql`
+    ${CORE_PLAYLIST_FIELDS}
+    mutation playlistsSwitchTrack($input: SwitchTrackInPlaylistsInput!) {
+        playlistsSwitchTrack(input: $input) {
+            ...CorePlaylistFields
+            owner {
+                _id
+            }
+        }
+    }
+`;

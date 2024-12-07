@@ -53,7 +53,7 @@ export default function SwitchLocaleModal({button, dictionary}: {button: React.R
             {React.cloneElement(button, {
                 onClick: handleOpen,
             })}
-            <dialog ref={ref} className="modal w-full">
+            <dialog ref={ref} className="modal w-full cursor-default">
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button onClick={onClose}>close</button>
                 </form>
