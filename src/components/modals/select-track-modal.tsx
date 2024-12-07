@@ -18,7 +18,7 @@ export default function SelectTrackModal({
     dictionary
 }: {
     button: React.ReactElement, 
-    userIsOwner: boolean,
+    userIsOwner?: boolean,
     handleSelect: (a: TPost) => void;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {

@@ -90,7 +90,7 @@ export default function ProfileButton({
                         </span>
                     </span>
                 }
-                <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 p-0 pl-0 md:pl-5 pr-3 rounded-full">
+                <div tabIndex={0} role="button" className="btn btn-ghost w-fit m-0 md:px-5 px-3 rounded-full">
                     <div className="rounded-full flex flex-row justify-center items-center gap-4">
                         <div className="hidden md:block">
                             <p className="font-bold text-lg">{user?.user?._id ? user?.user?.nick : "Login"}</p>
