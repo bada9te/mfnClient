@@ -94,7 +94,7 @@ export default function Playlist(props: {
                                 <SelectTrackModal
                                     dictionary={dictionary}
                                     handleSelect={handleSwitchTrack}
-                                    userIsOwner={false}
+                                    userIsOwner={true}
                                     button={
                                         <button className="btn btn-sm btn-primary glass join-item text-white">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
