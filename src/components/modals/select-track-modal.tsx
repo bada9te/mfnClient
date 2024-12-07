@@ -48,7 +48,7 @@ export default function SelectTrackModal({
         searchTracksByTitle({
             variables: {
                 input: {
-                    userId: user?._id as string,
+                    userId: userIsOwner != undefined ? user?._id as string : undefined,
                     userIsOwner: userIsOwner,
                     title: inputRef.current.value
                 }
