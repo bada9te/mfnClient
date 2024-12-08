@@ -6,6 +6,7 @@ import CategoriesContainerLeftbar from "@/components/containers/categories-conta
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
 import AvatarGrid from "@/components/common/avatar-grid/avatar-grid";
+import WeAreUsingCookiesModal from "@/components/modals/cookie-info-modal";
 
 export default async function RootLayout({
   children,
@@ -72,6 +73,8 @@ export default async function RootLayout({
             {/* BottomNav content goes here */}
             <BottomNav dictionary={dict.components}/>
         </div>
+
+        <WeAreUsingCookiesModal/>
     </div>
   );
 }
