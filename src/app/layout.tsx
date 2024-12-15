@@ -5,9 +5,9 @@ import ReduxProvider from "@/lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
 import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
-import { Anonymous_Pro } from "next/font/google";
+import { Anonymous_Pro, Montserrat } from "next/font/google";
 
-const font = Anonymous_Pro({
+const font = Montserrat({
   subsets: ['latin', 'cyrillic'],
   weight: '400'
 })
