@@ -31,7 +31,7 @@ export default async function RootLayout({
             <div className="hidden md:block col-start-1 col-end-2">
                 <div className="card h-screen fixed w-[120px] lg:w-[320px]">
                     <div className="overflow-y-auto flex flex-col gap-4 py-6 pb-20 pl-4 no-scrollbar h-full">
-                        <AlternativeAppbar/>
+                        <AlternativeAppbar dictionary={dict.components}/>
                     </div>
                 </div>
             </div>
