@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
 import Link from "next/link";
+import { UserIcon } from "lucide-react";
 
 
 export default function RightbarDrawerUser({
@@ -14,10 +15,14 @@ export default function RightbarDrawerUser({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     return (
-        <div className="card w-80 bg-base-300 glass shadow-2xl">
-            <figure className="max-h-48">
-                <Image width={400} height={400} className="w-full" src={data.background ? getIpfsUrl(data.background) : '/assets/bgs/clear.png'} alt="background"/>
-            </figure>
+        <div className="card w-80 bg-base-300 shadow-2xl">
+            {
+                /*
+                <figure className="max-h-48">
+                    <Image width={400} height={400} className="w-full max-h-[140px]" src={data.background ? getIpfsUrl(data.background) : '/assets/bgs/clear.png'} alt="background"/>
+                </figure>
+                */
+            }
             <div className="card-body">
                 <div className="flex flex-row gap-4 items-center">
                     <Image width={200} height={200}
@@ -32,7 +37,10 @@ export default function RightbarDrawerUser({
                     <div className="badge glass text-white">{data.subscribedOn?.length} {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].following}</div>
                 </div>
             </div>
-            <Link href={`/profile/${data._id}/1`} className="btn btn-primary glass text-white">{dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].profile}</Link>
+            <Link href={`/profile/${data._id}/1`} className="btn btn-sm w-full shadow-lg text-white m-2">
+                <UserIcon/>
+                {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].profile}
+            </Link>
         </div>
     );
 }

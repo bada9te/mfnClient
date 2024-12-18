@@ -46,9 +46,9 @@ export default function RightBarDrawer(props: {
         <div className="drawer drawer-end">
             <input ref={reference} id="my-drawer-people" type="checkbox" className="drawer-toggle w-full" onChange={e => handleOpen(e)}/>
 
-            <div className="drawer-side py-16 z-30 no-scrollbar">
+            <div className="drawer-side py-16 md:pb-16 md:pt-0 z-30 no-scrollbar">
                 <label htmlFor="my-drawer-people" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-92 min-h-full text-base-content glass bg-base-300 bg-cover bg-opacity-20" 
+                <ul className="menu p-4 w-92 text-base-content bg-base-300 h-max min-h-full" 
                     style={{ backgroundSize: '400px 1000px', backgroundPosition: 'right' }}
                 >
                     {/* Sidebar content here */}
@@ -56,7 +56,7 @@ export default function RightBarDrawer(props: {
                         <input type="text" className="w-fit placeholder:text-gray-200 text-white" placeholder={props.dictionary?.modals["rightbar-drawer"]["rightbar-drawer"].search} onChange={e => setSq(e.target.value)} />
                         <Search />
                     </label>
-                    <div className="flex flex-col w-full items-center gap-8 py-5 flex-1 min-w-80 pb-16">
+                    <div className="no-scrollbar flex flex-col w-full items-center gap-8 py-5 flex-1 min-w-80 max-h-[calc(100vh-220px)] lg:max-h-[calc(100vh-160px)] overflow-y-scroll">
                         {
                             (() => {
                                 if (!loading) {

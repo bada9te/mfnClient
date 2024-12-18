@@ -1,5 +1,5 @@
 "use client"
-import {useAppDispatch} from "@/lib/redux/store";
+import {useAppDispatch, useAppSelector} from "@/lib/redux/store";
 import {setTab} from "@/lib/redux/slices/bottom-bar";
 import React, {LegacyRef, useEffect, useState} from "react";
 import { usePostsByTitleLazyQuery, Post as TPost } from "@/utils/graphql-requests/generated/schema";
@@ -7,13 +7,14 @@ import Post from "@/components/entities/post/post";
 import InfoImage from "@/components/common/info-image/info-image";
 import PostSkeleton from "@/components/entities/post/post-skeleton";
 import { getDictionary } from "@/dictionaries/dictionaries";
-import { Search } from "lucide-react";
+import { CircleX, Search } from "lucide-react";
 
 export default function LeftBarDrawer(props: {
     reference: LegacyRef<HTMLInputElement> | undefined;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { reference, dictionary } = props;
+    const stateTab = useAppSelector(state => state.bottomBar.tab)
     const dispatch = useAppDispatch();
     const [sq, setSq] = useState("");
     const [ fetchPostsByTitle, {data, loading} ] = usePostsByTitleLazyQuery();
@@ -47,9 +48,11 @@ export default function LeftBarDrawer(props: {
         <div className="drawer">
             <input ref={reference} id="my-drawer-tracks" type="checkbox" className="drawer-toggle w-full"
                    onChange={e => handleOpen(e)}/>
-            <div className="drawer-side py-16 z-30 no-scrollbar">
+            <div className="drawer-side py-16 md:pb-16 md:pt-0 z-30 no-scrollbar">
+                
                 <label htmlFor="my-drawer-tracks" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-92 min-h-full text-base-content glass bg-base-300 bg-cover bg-opacity-20"
+
+                <ul className="menu p-4 w-92 text-base-content bg-base-300 h-max min-h-full relative"
                     style={{ backgroundSize: '400px 935px' }}
                 >
                     {/* Sidebar content here */}
@@ -58,7 +61,7 @@ export default function LeftBarDrawer(props: {
                         <Search />
                     </label>
 
-                    <div className="flex flex-col w-full items-center gap-8 py-5 flex-1 min-w-80 pb-16">
+                    <div className="no-scrollbar flex flex-col w-full items-center gap-8 py-5 flex-1 min-w-80 max-h-[calc(100vh-220px)] lg:max-h-[calc(100vh-160px)] overflow-y-scroll">
                         {
                             (() => {
                                 if (!loading) {
@@ -75,7 +78,9 @@ export default function LeftBarDrawer(props: {
                                             </>
                                         );
                                     } else {
-                                        return (<InfoImage text={props.dictionary?.modals["leftbar-drawer"]["info-image"]} image="/assets/icons/logo_clear.png"/>);
+                                        return (
+                                            <InfoImage text={props.dictionary?.modals["leftbar-drawer"]["info-image"]} image="/assets/icons/logo_clear.png"/>
+                                        );
                                     }
                                 } else {
                                     return (
