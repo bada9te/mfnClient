@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useSnackbar } from "notistack";
 
 const LinkButton = ({text, url}: {text: string, url: string}) => {
-    return (<Link href={url} className="bg-[#1c94a5] glass text-white px-1 shadow-md hover:bg-[#1c95a58e] font-semibold">{text}</Link>);
+    return (<Link href={url} className="bg-[#1c94a5]  text-base-content px-1 shadow-md hover:bg-[#1c95a58e] font-semibold">{text}</Link>);
 }
 
 export default function Notification({data, dictionary}: {data: TNotification; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
@@ -47,7 +47,7 @@ export default function Notification({data, dictionary}: {data: TNotification; d
 
 
     return (
-        <div className="card bg-base-300 shadow-xl w-full text-start glass">
+        <div className="card bg-base-300 shadow-xl w-full text-start ">
             <div className="card-body relative">
                 <p className="absolute top-4 right-5">{getTimeSince(new Date(+data.createdAt))} ago</p>
                 <h2 className="card-title">
@@ -124,13 +124,13 @@ export default function Notification({data, dictionary}: {data: TNotification; d
                 </div>
                 <div className="card-actions">
                     <div className="join join-vertical md:join-horizontal w-full md:w-fit">
-                        <button className="btn btn-error join-item btn-sm glass text-white w-full" onClick={handleDelete}>
+                        <button className="btn btn-error join-item btn-sm w-full" onClick={handleDelete}>
                             <Trash2 />
                             {dictionary.entities.notification.delete}
                         </button>
                         {
                             !data.checked && 
-                            <button className="btn btn-primary btn-sm glass text-white join-item w-full" onClick={handleMarkAsRead}>
+                            <button className="btn btn-sm join-item w-full" onClick={handleMarkAsRead}>
                                 <BookOpenCheck />
                                 {dictionary.entities.notification["mark-as-read"]}
                             </button>

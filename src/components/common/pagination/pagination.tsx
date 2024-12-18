@@ -35,15 +35,15 @@ export default function Pagination(props: {
     return (
         <div className="join w-full flex justify-center">
             <button 
-                className="join-item btn btn-primary glass bg-base-300 text-white" 
+                className="join-item btn btn-sm btn-neutral bg-base-300 text-base-content" 
                 disabled={+page === 1} 
                 onClick={() => handleClick(-1)}
             >
                 <ChevronLeft/>
             </button>
-            <button className="join-item btn btn-primary glass bg-base-300 text-white px-5">{page}</button>
+            <button className="join-item btn btn-sm btn-neutral bg-base-300 text-base-content px-5">{page}</button>
             <button 
-                className="join-item btn btn-primary glass bg-base-300 text-white disabled:opacity-95" 
+                className="join-item btn btn-sm btn-neutral bg-base-300 text-base-content" 
                 disabled={page > maxPage} 
                 onClick={() => handleClick(1)}
             >

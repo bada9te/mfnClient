@@ -98,7 +98,7 @@ export default function ProfileButtonAlternative({
                                     />
                                 </button>
 
-                                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-56 glass bg-base-content text-black">
+                                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-56  bg-base-content text-black">
                                     <li>
                                         <Link href="/profile/me/1" className="justify-between" legacyBehavior>
                                             <a>
@@ -208,9 +208,9 @@ export default function ProfileButtonAlternative({
                     </div>
                 </div>
             }
-            <div className="glass flex flex-col bg-base-content w-full rounded-box p-3">
+            <div className="flex flex-col bg-base-300 w-full rounded-box p-3">
                 <div className="flex flex-row gap-1">
-                    <div className="btn btn-neutral btn-sm w-10 h-10">
+                    <div className="btn btn-sm w-10 h-10">
                         <Link href="/support"> 
                             <BadgeHelp/>
                         </Link>
@@ -219,13 +219,13 @@ export default function ProfileButtonAlternative({
                     <SwitchLocaleModal 
                         dictionary={dictionary}
                         button={
-                            <div className="btn btn-neutral btn-sm w-10 h-10">
+                            <div className="btn btn-sm w-10 h-10">
                                 <Languages />
                             </div>
                         }
                     />
 
-                    <div className="btn btn-neutral btn-sm w-44 h-10 flex flex-row gap-2">
+                    <div className="btn btn-sm w-44 h-10 flex flex-row gap-2">
                         {
                             user?.user 
                             ?

@@ -61,7 +61,7 @@ export default function Playlist(props: {
     }
 
     return (
-        <div className="collapse collapse-plus bg-base-300 glass shadow-2xl">
+        <div className="collapse collapse-plus bg-base-100 shadow-2xl">
             <input type="checkbox" name="my-accordion-3" defaultChecked={expanded}/>
             <div className="collapse-title text-xl font-medium text-start">
                 <span className="flex flex-row items-center">
@@ -75,8 +75,8 @@ export default function Playlist(props: {
             </div>
             <div className="collapse-content">
                 <div className="divider divider-primary mb-10">
-                    <div className="py-2 join join-horizontal w-full flex justify-center">
-                        <button className={`btn btn-sm btn-primary glass join-item text-white ${!editable && 'w-full'}`} onClick={handleLinkClick}>
+                    <div className="py-2 join join-horizontal w-full flex justify-center z-20">
+                        <button className={`btn btn-sm join-item ${!editable && 'w-full'}`} onClick={handleLinkClick}>
                             <Link />
                             <span className="hidden md:block">{dictionary.entities.playlist.share}</span>
                         </button>
@@ -89,17 +89,17 @@ export default function Playlist(props: {
                                     handleSelect={handleSwitchTrack}
                                     userIsOwner={undefined}
                                     button={
-                                        <button className="btn btn-sm btn-primary glass join-item text-white">
+                                        <button className="btn btn-sm join-item">
                                             <Plus className="mr-1"/>
                                             <span className="hidden md:block">{dictionary.entities.playlist["add-track"]}</span>
                                         </button>
                                     }
                                 />
-                                <button className={`btn btn-sm glass join-item ${isRemovingTrack ? 'btn-error bg-red-900' : 'btn-primary'} text-white`} onClick={() => setIsRemovingTrack(!isRemovingTrack)}>
+                                <button className={`btn btn-sm join-item ${isRemovingTrack && 'btn-error bg-red-900'}`} onClick={() => setIsRemovingTrack(!isRemovingTrack)}>
                                     <Minus className="mr-1"/>
                                     <span className="hidden md:block">{dictionary.entities.playlist["remove-track"]}</span>
                                 </button>
-                                <button className="btn btn-sm btn-error glass join-item text-white" onClick={handleSelfDelete}>
+                                <button className="btn btn-sm btn-error join-item" onClick={handleSelfDelete}>
                                     <Trash className="mr-1"/>
                                     <span className="hidden md:block">{dictionary.entities.playlist["delete-playlist"]}</span>
                                 </button>

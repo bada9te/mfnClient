@@ -139,7 +139,7 @@ export default function Battle(props: {
 
     return (
         <div className={
-                `card bg-base-300 w-full glass bg-opacity-50 shadow-2xl 
+                `card bg-base-300 w-full shadow-2xl 
                 ${battleData.finished && (battleData.post1Score > battleData.post2Score ? "bg-gradient-to-r from-green-400/30 to-red-400/30": "bg-gradient-to-r from-red-400/30 to-green-400/30")}
             `}>
             <div className="card-body justify-center items-center flex flex-col gap-5 p-4 pt-5 relative">
@@ -150,7 +150,7 @@ export default function Battle(props: {
                         USDC_decimals={Number(decimals)}
                         battleisFInished={+new Date(+battleData.willFinishAt) - new Date().getTime() < 0}
                         button={
-                            <div className="cursor-pointer hover:bg-[#19a29b] absolute top-0 right-0 glass rounded-none rounded-tr-2xl rounded-bl-2xl text-white flex flex-row gap-2 items-center justify-center p-2">
+                            <div className="cursor-pointer hover:bg-[#19a29b] absolute top-0 right-0 rounded-none rounded-tr-2xl rounded-bl-2xl text-base-content flex flex-row gap-2 items-center justify-center p-2">
                                 <ChainImage chainId={battleData.chainId}/>
                                 {config.chains.find(i => i.id === battleData.chainId)?.name}
                             </div>
@@ -181,13 +181,13 @@ export default function Battle(props: {
                                         <SelectAmountOfMFNTokens 
                                             dictionary={dictionary}
                                             type="post1Score"
-                                            button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><BadgeDollarSign />{dictionary.entities.battle.supervote}</button>}
+                                            button={<button className="btn btn-sm  text-base-content w-full  join-item" disabled={!address}><BadgeDollarSign />{dictionary.entities.battle.supervote}</button>}
                                             handleClose={makeBattleVoteWithUSDC}
                                         /> : 
                                         <button 
                                             disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
                                             onClick={() => makeBattleVote(1, "post1Score")}
-                                            className="btn btn-sm btn-primary text-white glass w-full join-item">
+                                            className="btn btn-sm  text-base-content w-full join-item">
                                                 <Gavel />{dictionary.entities.battle["vote-for"]} {battleData.post1?.title}
                                         </button>
                                     }
@@ -196,7 +196,7 @@ export default function Battle(props: {
                         </div>
                     </div>
                     {/* mid */}
-                    <div className="stats stats-vertical shadow-md w-64 glass bg-opacity-50 bg-base-300">
+                    <div className="stats stats-vertical shadow-md w-64 bg-base-300">
                         <div className="stat place-items-center">
                             <div className="stat-title">{dictionary.entities.battle.votes}</div>
                             <div className="stat-value">{formatNumber(battleData.post1Score)}</div>
@@ -253,13 +253,13 @@ export default function Battle(props: {
                                         <SelectAmountOfMFNTokens 
                                             dictionary={dictionary}
                                             type="post2Score"
-                                            button={<button className="btn btn-sm btn-primary text-white glass w-full  join-item" disabled={!address}><BadgeDollarSign />{dictionary.entities.battle.supervote}</button>}
+                                            button={<button className="btn btn-sm  text-base-content w-full  join-item" disabled={!address}><BadgeDollarSign />{dictionary.entities.battle.supervote}</button>}
                                             handleClose={makeBattleVoteWithUSDC}
                                         /> :
                                         <button
                                             disabled={battleData.votedBy?.map(i => i?._id)?.includes(user?._id as string)}
                                             onClick={() => makeBattleVote(1, "post2Score")}
-                                            className="btn btn-sm btn-primary text-white glass w-full join-item"
+                                            className="btn btn-sm  text-base-content w-full join-item"
                                         >
                                             <Gavel />{dictionary.entities.battle["vote-for"]} {battleData.post2?.title}
                                         </button>

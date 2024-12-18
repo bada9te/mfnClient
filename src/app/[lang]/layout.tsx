@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <div className="min-h-screen flex flex-col">
         {/* AppBar */}
-        <div className="block lg:hidden bg-gray-800 text-white">
+        <div className="block lg:hidden bg-gray-800 text-base-content">
             {/* AppBar content goes here */}
             <AppBar dictionary={dict.components}/>
         </div>
@@ -69,7 +69,7 @@ export default async function RootLayout({
         </div>
 
         {/* Bottom navigation bar */}
-        <div className="bg-gray-800 text-white">
+        <div className="bg-gray-800 text-base-content">
             {/* BottomNav content goes here */}
             <BottomNav dictionary={dict.components}/>
         </div>

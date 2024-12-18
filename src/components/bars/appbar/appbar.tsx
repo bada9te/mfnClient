@@ -11,14 +11,14 @@ export default function AppBar({
 }) {
     //console.log(dictionary)
     return (
-        <div className="navbar fixed top-0 z-50 glass bg-[#1ba39c] row-auto bg-opacity-50">
+        <div className="navbar fixed top-0 z-50  bg-[#1ba39c] row-auto">
             <div className="navbar-start">
                 <div className="dropdown max-h-screen block lg:hidden">
-                    <div tabIndex={0} role="button" className="btn btn-ghost glass mr-1">
+                    <div tabIndex={0} role="button" className="btn btn-ghost  mr-1">
                         <Menu/>
                     </div>
                     <ul tabIndex={0}
-                        className="glass bg-base-content text-black menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow rounded-box w-52 flex flex-col flex-nowrap">
+                        className=" bg-base-content text-black menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow rounded-box w-52 flex flex-col flex-nowrap">
                         <li><Link href={"/feed/1"}>
                             <Earth/>
                             {dictionary?.bars.appbar.feed}
@@ -77,7 +77,7 @@ export default function AppBar({
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1 bg-base-300 bg-opacity-80 rounded-xl">
+                <ul className="menu menu-horizontal px-1 bg-base-300 rounded-xl">
                     <li><Link href={"/feed/1"}>
                         <Earth/>
                         {dictionary?.bars.appbar.feed}
@@ -88,7 +88,7 @@ export default function AppBar({
                                 <Swords/>
                                 {dictionary?.bars.appbar.battles}
                             </summary>
-                            <ul className="p-2 glass bg-base-content text-black">
+                            <ul className="p-2  bg-base-content text-black">
                                 <li><Link href={"/battles/in-progress/1"}>{dictionary?.bars.appbar["in-progress"]}</Link></li>
                                 <li><Link href={"/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
                                 <li><Link href={"/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
@@ -101,7 +101,7 @@ export default function AppBar({
                                 <ListMusic/>
                                 {dictionary?.bars.appbar.playlists}
                             </summary>
-                            <ul className="p-2 glass bg-base-content text-black">
+                            <ul className="p-2  bg-base-content text-black">
                                 <li><Link href={"/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
                                 <li><Link href={"/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
                                 <li><Link href={"/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
@@ -114,7 +114,7 @@ export default function AppBar({
                                 <ChartBarStacked/>
                                 {dictionary?.bars.appbar.categories}
                             </summary>
-                            <ul className="p-2 glass bg-base-content text-black">
+                            <ul className="p-2  bg-base-content text-black">
                                 <li><Link href={"/categories/country/1"}>Country</Link></li>
                                 <li><Link href={"/categories/pop/1"}>Pop</Link></li>
                                 <li><Link href={"/categories/classical/1"}>Classical</Link></li>

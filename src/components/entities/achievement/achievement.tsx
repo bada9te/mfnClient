@@ -14,8 +14,8 @@ const getColor = (rarity: string) => {
 export default function Achievement(props: {data: TAchievement, isCompleted: boolean}) {
     const {data, isCompleted} = props;
     return (
-        <div className="card bg-base-300 glass text-neutral-content w-80 relative">
-            <div className={`w-2 h-full ${getColor(data.rarity || "")} absolute glass`}></div>
+        <div className="card bg-base-300  text-neutral-content w-80 relative">
+            <div className={`w-2 h-full ${getColor(data.rarity || "")} absolute `}></div>
 
             {
                 isCompleted

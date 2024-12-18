@@ -37,7 +37,7 @@ export default function BottomNav({
         <>
             {/* @ts-ignore */}
             <LeftBarDrawer reference={leftbarOpenerRef} dictionary={dictionary}/>
-            <div className="btm-nav text-white bg-base-300 glass z-50 bg-opacity-50">
+            <div className="btm-nav text-base-content bg-base-100 z-50">
                 <button className={bottomBarTab === "tracks" ? "active" : ""} onClick={() => handleOpen("left")}>
                     <Music />
                     <span className="btm-nav-label">{dictionary?.bars["bottom-nav"].tracks}</span>

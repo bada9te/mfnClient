@@ -19,7 +19,7 @@ const ShareBtn = (props: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) => {
     return (
-        <button className="btn btn-primary w-full glass text-white" onClick={props.handleClick}>
+        <button className="btn btn-sm w-full  text-base-content" onClick={props.handleClick}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                 <path fillRule="evenodd" d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037.75.75 0 0 1-.646 1.353 5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353 5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037.75.75 0 0 1-.354-1Z" clipRule="evenodd" />
             </svg>
@@ -184,7 +184,7 @@ export default function ProfileCard(props: {
                 refDialog={cropperModalRef}
                 handleImageCropModalClose={handleImageCropModalClose}
             />
-            <div className={`m-2 mt-6 md:m-4 mb-0 card w-full text-white rounded-2xl md:rounded-2xl shadow-2xl bg-base-300`}>
+            <div className={`m-2 mt-6 md:m-4 mb-0 card w-full text-base-content rounded-2xl md:rounded-2xl shadow-2xl bg-base-300`}>
                 <figure className="max-h-48">
                     <Image width={1000} height={400} className="w-full" src={data?.user.background ? getIpfsUrl(data.user.background) : '/assets/bgs/clear.png'} alt="background"/>
                 </figure>
@@ -200,8 +200,8 @@ export default function ProfileCard(props: {
                     <div>
                         <h2 className="card-title flex flex-col md:flex-row justify-center items-center mb-2">
                             {data?.user.nick}
-                            <div className="badge glass bg-[#1ba39c] text-white">{data?.user.subscribers?.length} {dictionary.common["profile-card"].followers}</div>
-                            <div className="badge glass">{data?.user.subscribedOn?.length} {dictionary.common["profile-card"].following}</div>
+                            <div className="badge  bg-[#1ba39c] text-base-content">{data?.user.subscribers?.length} {dictionary.common["profile-card"].followers}</div>
+                            <div className="badge ">{data?.user.subscribedOn?.length} {dictionary.common["profile-card"].following}</div>
                         </h2>
                         <p className="mt-3 md:mt-0 text-center">{data?.user.description}</p>
                         <div className="card-actions justify-start mt-3">
@@ -216,7 +216,7 @@ export default function ProfileCard(props: {
                                             } else {
                                                 if (user?._id && data?.user.subscribers?.map(i => i._id)?.includes(user._id)) {
                                                     return (
-                                                        <button className="btn btn-primary w-full bg-red-400/20 glass text-white" onClick={handleSubscriptionChange}>
+                                                        <button className="btn w-full bg-red-400/20  text-base-content" onClick={handleSubscriptionChange}>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                                                 <path d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v.75c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875v-.75C22.5 3.839 21.66 3 20.625 3H3.375Z" />
                                                                 <path fillRule="evenodd" d="m3.087 9 .54 9.176A3 3 0 0 0 6.62 21h10.757a3 3 0 0 0 2.995-2.824L20.913 9H3.087Zm6.133 2.845a.75.75 0 0 1 1.06 0l1.72 1.72 1.72-1.72a.75.75 0 1 1 1.06 1.06l-1.72 1.72 1.72 1.72a.75.75 0 1 1-1.06 1.06L12 15.685l-1.72 1.72a.75.75 0 1 1-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
@@ -226,7 +226,7 @@ export default function ProfileCard(props: {
                                                     );
                                                 } else if (user?._id) {
                                                     return (
-                                                        <button className="btn btn-primary w-full glass bg-green-400/20 text-white" onClick={handleSubscriptionChange}>
+                                                        <button className="btn w-full bg-green-400/20 text-base-content" onClick={handleSubscriptionChange}>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                                                 <path fillRule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
                                                             </svg>
@@ -250,7 +250,7 @@ export default function ProfileCard(props: {
                                         <input 
                                             ref={refAvatar}
                                             type="file" 
-                                            className="rounded-2xl file-input file-input-bordered w-full file:glass file:text-white file: placeholder:text-gray-200" 
+                                            className="rounded-2xl file-input file-input-bordered w-full file: file:text-base-content file: placeholder:text-gray-200" 
                                             onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null, "avatar")}
                                         />
                                     </label>
@@ -263,7 +263,7 @@ export default function ProfileCard(props: {
                                         <input 
                                             ref={refBackground}
                                             type="file" 
-                                            className="rounded-2xl file-input file-input-bordered w-full file:glass file:text-white file: placeholder:text-gray-200" 
+                                            className="rounded-2xl file-input file-input-bordered w-full file: file:text-base-content file: placeholder:text-gray-200" 
                                             onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null, "background")}
                                         />
                                     </label>

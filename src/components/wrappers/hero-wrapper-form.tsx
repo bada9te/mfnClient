@@ -20,10 +20,10 @@ export default function HeroWrapperForm(props: {
                     "[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]",
                     )}
                 />
-                <div className="hero-overlay rounded-2xl bg-base-300 bg-opacity-80"></div>
+                <div className="hero-overlay rounded-2xl bg-base-300"></div>
                 <div className="flex w-full flex-col items-center justify-center py-10 z-10 overflow-hidden">
-                    <h1 className="mb-5 text-5xl font-bold text-white text-center z-20">{title}</h1>
-                    <p className="mb-5 text-white text-center z-20 px-10 md:px-32">{description}</p>
+                    <h1 className="mb-5 text-5xl font-bold text-base-content text-center z-20">{title}</h1>
+                    <p className="mb-5 text-base-content text-center z-20 px-10 md:px-32">{description}</p>
                     <div className={`hero-content text-center w-full z-10 mt-5 ${disableMarginsOnMobile && "p-0 md:p-4"} overflow-hidden`}>
                         <Image 
                             src="/assets/figures/cube.png" 

@@ -8,7 +8,7 @@ export default function CentralBlock({children, dictionary}: {
 }) {
     return (
         <div className={`col-auto flex-1`}>
-            <div className="card shadow-xl w-full main-layout-card  glass">
+            <div className="card shadow-xl w-full main-layout-card  ">
                 <div className="card-body overflow-y-auto p-0 gap-0 thin-scrollbar">
                     {children}
                     <Footer dictionary={dictionary}/>

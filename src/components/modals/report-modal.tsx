@@ -65,7 +65,7 @@ export default function ReportModal({
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button>close</button>
                 </form>
-                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col min-h-80 glass">
+                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col min-h-80 ">
                     <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px' }}>
                         {/* if there is a button in form, it will close the modal */}
                         <MainButton handler={() => {}} color="error" width="25px" height="25px" padding="1">
@@ -103,7 +103,7 @@ export default function ReportModal({
                         </div>
                     </div>
 
-                    <button className="btn btn-primary w-full mt-8 glass text-white" onClick={submitReport} disabled={selectedRason === null}>{dictionary.modals.report.submit}</button>
+                    <button className="btn  w-full mt-8  text-base-content" onClick={submitReport} disabled={selectedRason === null}>{dictionary.modals.report.submit}</button>
                 </div>
             </dialog>
         </>

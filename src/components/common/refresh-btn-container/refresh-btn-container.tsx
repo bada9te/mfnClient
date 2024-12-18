@@ -25,7 +25,7 @@ export default function RefreshButtonPerContainer({
 
     return (
         <div className="w-full flex flex-col justify-center items-center gap-4">
-            <button className="z-40 btn btn-primary glass btn-sm text-white w-80" onClick={handleClick}>
+            <button className="z-40 btn btn-sm text-base-content w-80" onClick={handleClick}>
                 <RefreshCcw/>
                 {dictionary.common["refresh-btn-container"].refresh}
             </button>
@@ -33,7 +33,7 @@ export default function RefreshButtonPerContainer({
             {
                 addWithdrawAllBtn ?
                 <button 
-                    className="z-40 btn btn-primary glass btn-sm text-white w-80" 
+                    className="z-40 btn btn-sm text-base-content w-80" 
                     onClick={handleClick} 
                     disabled={!possibleWithdrawalFromAllBattles}
                 >

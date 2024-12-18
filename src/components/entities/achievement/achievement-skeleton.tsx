@@ -1,6 +1,6 @@
 export default function AchievementSkeleton() {
     return (
-        <div className="card bg-base-300 glass text-neutral-content w-80 relative">
+        <div className="card bg-base-300  text-neutral-content w-80 relative">
             <div className="w-2 h-full absolute skeleton"></div>
 
             <div className="card-body items-center text-center">

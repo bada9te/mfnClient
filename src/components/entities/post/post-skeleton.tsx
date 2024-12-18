@@ -4,7 +4,7 @@ export default function PostSkeleton(props: {
     const { fullWidth } = props;
 
     return (
-        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass`}>
+        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-base-content `}>
             <div className="p-2">
                 <div className="skeleton h-14 w-full shadow-md rounded-2xl"></div>
             </div>

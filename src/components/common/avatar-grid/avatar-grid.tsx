@@ -62,7 +62,7 @@ const AvatarGrid = ({
 
 
   return (
-    <div className='bg-base-300 flex items-center justify-start flex-col gap-4 py-4 pb-6 rounded-2xl shadow-xl min-h-full text-white bg-opacity-80'>
+    <div className='bg-base-300 flex items-center justify-start flex-col gap-4 py-4 pb-6 rounded-2xl shadow-xl min-h-full text-base-content'>
       <div className="form-control">
         <label className="label cursor-pointer p-0 flex items-start justify-start">
           <input type="checkbox" className="toggle toggle-xs mr-1" checked={showFollowing} onChange={() => handleShowFollowingToggle()}/>

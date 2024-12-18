@@ -53,7 +53,7 @@ export default function RightBarDrawer(props: {
                 >
                     {/* Sidebar content here */}
                     <label className="input input-bordered flex items-center justify-between gap-2 bg-base-300 my-2">
-                        <input type="text" className="w-fit placeholder:text-gray-200 text-white" placeholder={props.dictionary?.modals["rightbar-drawer"]["rightbar-drawer"].search} onChange={e => setSq(e.target.value)} />
+                        <input type="text" className="w-fit placeholder:text-gray-200 text-base-content" placeholder={props.dictionary?.modals["rightbar-drawer"]["rightbar-drawer"].search} onChange={e => setSq(e.target.value)} />
                         <Search />
                     </label>
                     <div className="no-scrollbar flex flex-col w-full items-center gap-8 py-5 flex-1 min-w-80 max-h-[calc(100vh-220px)] lg:max-h-[calc(100vh-160px)] overflow-y-scroll">

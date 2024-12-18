@@ -94,7 +94,7 @@ export default function AddToPlaylistModal({
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button onClick={onClose}>close</button>
                 </form>
-                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col glass">
+                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col ">
                     <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px' }}>
                         {/* if there is a button in form, it will close the modal */}
                         <MainButton handler={onClose} color="error" width="25px" height="25px" padding="1">

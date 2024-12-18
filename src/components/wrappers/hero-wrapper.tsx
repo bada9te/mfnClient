@@ -12,7 +12,7 @@ export default function HeroWrapper(props: {
 
     return (
         <div className="w-full p-2 pt-6 md:px-4 md:pt-4">
-            <div className={`hero min-h-screen md:rounded-2xl shadow-2xl text-white bg-base-300 relative bg-opacity-80 rounded-2xl overflow-hidden`}>
+            <div className={`hero min-h-screen md:rounded-2xl shadow-2xl text-base-content bg-base-300 relative rounded-2xl overflow-hidden`}>
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",

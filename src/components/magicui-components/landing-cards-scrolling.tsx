@@ -23,10 +23,10 @@ const ReviewCard = ({
         "relative w-64 cursor-pointer overflow-hidden rounded-xl border p-4 border-gray-50/[.1] bg-gray-50/[.10] hover:bg-gray-50/[.15]",
       )}
     >
-      <div className="flex flex-col text-white">
+      <div className="flex flex-col text-base-content">
         <div className="flex flex-row items-center gap-2">
           <Image alt="info-image" width={10} height={10} className="rounded-full" src={img} />
-          <figcaption className="text-sm font-medium dark:text-white">
+          <figcaption className="text-sm font-medium dark:text-base-content">
             {/* @ts-ignore */}
             {dictionary.landing.whishes[id].title}
           </figcaption>

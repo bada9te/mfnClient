@@ -26,7 +26,7 @@ export const PostPlaceholder = (props: {
     forceBtn?: boolean;
 }) => {
     return (
-        <div className="border-2 border-dashed border-white w-80 h-[474px] flex flex-col justify-center items-center bg-base-300 relative rounded-2xl">
+        <div className="border-2 border-dashed border-white w-80 h-[360px] flex flex-col justify-center items-center bg-base-100 relative rounded-2xl">
             <div className="flex flex-col h-full justify-center items-center">
                 <InfoImage text={props.dictionary.forms.battle["select-track"]} image="/assets/icons/logo_clear.png"/>
             </div>
@@ -38,7 +38,7 @@ export const PostPlaceholder = (props: {
                     handleSelect={props.handleSelect}
                     userIsOwner={props.userIsOwner}
                     button={
-                        <button type="button" className="mt-5 btn btn-sm btn-primary glass rounded-t-none absolute bottom-0 w-full text-white">{props.dictionary.forms.battle.select}</button>
+                        <button type="button" className="mt-5 btn btn-sm rounded-t-none absolute bottom-0 w-full text-base-content">{props.dictionary.forms.battle.select}</button>
                     }
                 />
             }
@@ -146,8 +146,8 @@ export default function BattleForm({
 
 
     return (
-        <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
-            <div className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl px-4 rounded-2xl">
+        <div className="card overflow-hidden bg-base-300 shadow-xl  rounded-2xl">
+            <div className="card-body m-1 pulsar-shadow text-base-content  bg-base-300 shadow-2xl px-4 rounded-2xl">
                 <div className="divider divider-primary px-4 md:px-0">{dictionary.forms.battle.setup}</div>
                 <div className="flex flex-wrap gap-5 mt-5 w-full justify-around mb-10">
                     <div className="flex flex-col gap-3">
@@ -222,7 +222,7 @@ export default function BattleForm({
                                         return (
                                             <button 
                                                 key={key} 
-                                                className={`w-12 h-12 rounded-xl ${blockchain === chain.id && useBlockChain ? "bg-[#1ba39c]" : "bg-base-300"} shadow-xl flex items-center justify-center glass hover:bg-[#1ba39c] cursor-pointer disabled:opacity-50 disabled:hover:bg-base-300 disabled:cursor-default`}
+                                                className={`w-12 h-12 rounded-xl ${blockchain === chain.id && useBlockChain ? "bg-[#1ba39c]" : "bg-base-300"} shadow-xl flex items-center justify-center  hover:bg-[#1ba39c] cursor-pointer disabled:opacity-50 disabled:hover:bg-base-300 disabled:cursor-default`}
                                                 disabled={!useBlockChain}
                                                 type="button"
                                                 onClick={() => setBlockchain(chain.id)}
@@ -238,7 +238,7 @@ export default function BattleForm({
                         <div className="form-control mt-2 px-4 md:px-0">
                             <label className="label cursor-pointer">
                             <span className="label-text">{dictionary.forms.battle["associate-with-blockchain"]}</span>
-                                <button type="button" onClick={openConnectModal} className="btn btn-sm bg-indigo-500 hover:bg-indigo-700 glass text-white px-5">
+                                <button type="button" onClick={openConnectModal} className="btn btn-sm bg-indigo-500 hover:bg-indigo-700  text-base-content px-5">
                                     <Image src={"/assets/icons/ethereum-eth.svg"} width={22} height={22} alt="eth" />
                                     <span>{dictionary.forms.battle["connect-wallet"]}</span>
                                 </button>
@@ -251,13 +251,13 @@ export default function BattleForm({
                             (() => {
                                 if (chainId !== blockchain && useBlockChain) {
                                     return (
-                                        <button onClick={() => switchChain({ chainId: blockchain as number })} className="glass group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                        <button onClick={() => switchChain({ chainId: blockchain as number })} className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                                             Switch to {config.chains.find(i => i.id === blockchain)?.name}
                                         </button>
                                     );
                                 } else {
                                     return (
-                                        <button disabled={isLoading} type="submit" className="glass group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                        <button disabled={isLoading} type="submit" className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                                             {
                                                 isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                                             }

@@ -74,7 +74,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
     return (
         <>
             {/* ONE */}
-            <div className="overflow-hidden flex flex-col items-center text-white m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 min-h-[600px] max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-base-content m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative min-h-[600px] max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
                 <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg">
                     <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
                     <Ripple />
@@ -97,7 +97,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
             </div>
 
             {/* TWO */}
-            <div className="overflow-hidden flex flex-col items-center text-white py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl bg-opacity-80 max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-base-content py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -117,8 +117,8 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     {
                         cardsData1.map((data, key) => {
                             return (
-                                <div key={key} className="card animated-box overflow-hidden bg-base-300 w-80 h-fit min-h-64 md:w-96 shadow-xl rounded-2xl z-10 bg-opacity-40">
-                                    <div className="card-body bg-base-300 hover:bg-[#175a57] transition-all z-50 m-1 rounded-2xl glass">
+                                <div key={key} className="card animated-box overflow-hidden bg-base-100 w-80 h-fit min-h-64 md:w-96 shadow-xl rounded-2xl z-10">
+                                    <div className="card-body bg-base-100 hover:bg-[#175a57] transition-all z-50 m-1 rounded-2xl ">
                                         <Image width={100} height={100}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
                                         {/* @ts-ignore */}
                                         <h2 className="card-title mt-2">{dict.app.landing.compose.cards[data.id]?.title || ""}</h2>
@@ -147,13 +147,13 @@ export default async function Page({params}: {params: {lang: TLang}}) {
 
 
             {/* THREE */}
-            <div className="py-10 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl bg-opacity-80 max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="py-10 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
                 <MarqueeDemo dictionary={dict.app}/>
             </div>
 
             
             {/* FOUR */}
-            <div className="overflow-hidden flex flex-col items-center text-white py-20 md:py-40 lg:py-56 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative bg-opacity-80 max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-base-content py-20 md:py-40 lg:py-56 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -173,8 +173,8 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                     {
                         cardsData2.map((data, key) => {
                             return (
-                                <div key={key} className="card bg-base-300 w-80 min-h-64 md:w-96 rounded-2xl z-0 bg-opacity-40 border-[#27aaa3] border-[2px] border-dashed">
-                                    <div className="card-body bg-base-300 hover:bg-[#175a57] transition-all z-50 rounded-2xl glass">
+                                <div key={key} className="card bg-base-100 w-80 min-h-64 md:w-96 rounded-2xl z-0 border-[#27aaa3] border-[2px] border-dashed">
+                                    <div className="card-body bg-base-100 hover:bg-[#175a57] transition-all z-50 rounded-2xl ">
                                         <Image width={100} height={100}  src={data.iconUrl} alt="icon" className="rounded-full w-12 z-50"/>
                                         { /* @ts-ignore */ }
                                         <h2 className="card-title mt-2">{dict.app.landing.purpose.cards[data.id]?.title || ""}</h2>
@@ -187,33 +187,33 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                                                     return (
                                                         <div className="flex flex-row gap-2 flex-wrap">
 
-                                                            <Link href={`${data.telegram?.ChadCoder39}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-[#2294c5]">
+                                                            <Link href={`${data.telegram?.ChadCoder39}`} target="_blank" className="btn btn-sm  text-base-content bg-[#2294c5]">
                                                                 <Image src={"/assets/icons/telegram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
                                                                 python_enjoyer1
                                                             </Link>
                                                       
 
-                                                            <Link href={`${data.github?.ChadCoder39}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
+                                                            <Link href={`${data.github?.ChadCoder39}`} target="_blank" className="btn btn-sm  text-base-content bg-black">
                                                                 <Image src={"/assets/icons/github-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
                                                                 ChadCoder39
                                                             </Link>
 
-                                                            <Link href={`${data.telegram?.rDrayBen}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-[#2294c5]">
+                                                            <Link href={`${data.telegram?.rDrayBen}`} target="_blank" className="btn btn-sm  text-base-content bg-[#2294c5]">
                                                                 <Image src={"/assets/icons/telegram-logo.png"} width={20} height={20} alt="git" className="rounded-full"/>
                                                                 rabotiahov
                                                             </Link>
                                                     
-                                                            <Link href={`${data.github?.rDrayBen}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
+                                                            <Link href={`${data.github?.rDrayBen}`} target="_blank" className="btn btn-sm  text-base-content bg-black">
                                                                 <Image src={"/assets/icons/github-logo.png"} width={20} height={20} alt="git" className="rounded-full"/>
                                                                 rDrayBen
                                                             </Link>
 
-                                                            <Link href={`${data.youtube?.hikaru}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-red-600">
+                                                            <Link href={`${data.youtube?.hikaru}`} target="_blank" className="btn btn-sm  text-base-content bg-red-600">
                                                                 <Image src={"/assets/icons/youtube-logo.png"} width={20} height={20} alt="yt" className="rounded-full"/>
                                                                 hikaruyoshimura
                                                             </Link>
 
-                                                            <Link href={`${data.x?.hikaru}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
+                                                            <Link href={`${data.x?.hikaru}`} target="_blank" className="btn btn-sm  text-base-content bg-black">
                                                                 <Image src={"/assets/icons/x-logo.png"} width={20} height={20} alt="x" className="rounded-full"/>
                                                                 HikaruYoshimura
                                                             </Link>
@@ -224,18 +224,18 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                                                 if (data.id == "about") {
                                                     return (
                                                         <div className="flex flex-row gap-2 flex-wrap">
-                                                            <Link href={`${data.telegram?.bada9te}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-[#2294c5] hover:bg-[#1f5b75]">
+                                                            <Link href={`${data.telegram?.bada9te}`} target="_blank" className="btn  btn-sm  text-base-content bg-[#2294c5] hover:bg-[#1f5b75]">
                                                                 <Image src={"/assets/icons/telegram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
                                                                 bada9te
                                                             </Link>
 
 
-                                                            <Link href={`${data.github?.bada9te}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-black">
+                                                            <Link href={`${data.github?.bada9te}`} target="_blank" className="btn  btn-sm  text-base-content bg-black">
                                                                 <Image src={"/assets/icons/github-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
                                                                 bada9te
                                                             </Link>
 
-                                                            <Link href={`${data.instagram?.bada9te}`} target="_blank" className="btn btn-primary btn-sm glass text-white bg-pink-600">
+                                                            <Link href={`${data.instagram?.bada9te}`} target="_blank" className="btn  btn-sm  text-base-content bg-pink-600">
                                                                 <Image src={"/assets/icons/instagram-logo.png"} width={20} height={20} alt="tg" className="rounded-full"/>
                                                                 bada9te
                                                             </Link>

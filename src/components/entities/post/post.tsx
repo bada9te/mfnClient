@@ -112,14 +112,14 @@ export default function Post(props: {
 
 
     return (
-        <div className={`card w-fit md:${fullWidth ? 'w-full' : 'w-80 max-w-80'} min-h-[360px] bg-base-300 shadow-xl max-h-[550px] text-white rounded-xl relative overflow-hidden`}>
+        <div className={`card w-fit md:${fullWidth ? 'w-full' : 'w-80 max-w-80'} min-h-[360px] bg-base-100 shadow-xl max-h-[550px] text-base-content rounded-xl relative overflow-hidden`}>
             <div className="h-fit p-2 flex flex-row gap-3 cursor-pointer rounded-t-xl absolute top-0">
                 <div className="dropdown w-full dropdown-end text-start">
                     <button 
                         className="
                         relative
                         h-full
-                        text-white font-bold 
+                        text-base-content font-bold 
                         flex items-center 
                         justify-start p-1 pr-2
                         rounded-full
@@ -136,7 +136,7 @@ export default function Post(props: {
                             {data?.owner?.nick}
                         </p>
                     </button>
-                    <ul tabIndex={0} className="dropdown-content menu glass bg-base-300 rounded-box z-[1] w-52 p-2 mt-3 shadow bg-opacity-20">
+                    <ul tabIndex={0} className="dropdown-content menu  bg-base-300 rounded-box z-[1] w-52 p-2 mt-3 shadow">
                         <li><Link href={data?.owner?._id === user?._id ? "/profile/me/1" : `/profile/${data.owner?._id}/1`}>
                             <UserIcon/>
                             {dictionary.entities.post["open-profile"]}
@@ -198,7 +198,7 @@ export default function Post(props: {
                 }
                 <h2 className="card-title text-2xl">
                     {data?.title}
-                    <div className="badge badge-secondary glass bg-[#1ba39c] text-white">{data?.category}</div>
+                    <div className="badge bg-[#1ba39c] text-base-content">{data?.category}</div>
                 </h2>
                 <p className="text-lg">{data?.description}</p>
             </div>
@@ -206,7 +206,7 @@ export default function Post(props: {
             <div className={`flex flex-row flex-wrap gap-2 mx-2 mt-2 thin-scrollbar text-[#b2ccd6] relative ${handleRemove && "opacity-60"}`}>
 
                 <div 
-                    className={`badge glass badge-md ${!handleRemove && 'cursor-pointer'} ${user?.likedPosts.find((i: string) => i === data._id) ? "badge-error bg-red-500" : "badge-neutral"}`} 
+                    className={`badge badge-md hover:bg-error hover:text-black ${!handleRemove && 'cursor-pointer'} ${user?.likedPosts.find((i: string) => i === data._id) && "badge-error bg-error"}`} 
                     onClick={handleSwitchLike}
                 >
                     <Heart className="inline-block h-6 w-6 border-0" fill={user?.likedPosts.find((i: string) => i === data._id) ? "#ef4444" : "#b2ccd6"}/>
@@ -214,19 +214,19 @@ export default function Post(props: {
                 </div>
 
                 <div 
-                    className={`badge glass badge-md ${!handleRemove && 'cursor-pointer'} ${user?.savedPosts.find((i: string) => i === data._id) ? "badge-warning bg-yellow-500" : "badge-neutral"}`} 
+                    className={`badge badge-md hover:bg-warning hover:text-black ${!handleRemove && 'cursor-pointer'} ${user?.savedPosts.find((i: string) => i === data._id) && "badge-warning bg-warning"}`} 
                     onClick={handleSwitchInSaved}
                 >
                     <Bookmark className="inline-block h-6 w-6" fill={user?.savedPosts.find((i: string) => i === data._id) ? "#eab308" : "#b2ccd6"}/>
                     <span className="w-full">{dictionary.entities.post["total-saves"]} {formatNumber(data.saves as number)}</span>
                 </div>
 
-                <div className="badge badge-md glass">
+                <div className="badge badge-md">
                     <Clock8 className="inline-block h-6 w-6"/>
                     <span className="w-full">{formatTime(duration)}</span>
                 </div>
 
-                <div className="badge badge-md glass">
+                <div className="badge badge-md">
                     <Calendar1 className="inline-block h-5 w-5 mr-1"/>
                     <span className="w-full">{getTimeSince(new Date(+data.createdAt))}</span>
                 </div>

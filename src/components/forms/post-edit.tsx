@@ -208,8 +208,8 @@ export default function PostEditForm(props: {
             refDialog={cropperModalRef}
             handleImageCropModalClose={handleImageCropModalClose}
         />
-        <div className="card overflow-hidden bg-base-300 shadow-xl glass rounded-2xl">
-            <div className="card-body m-1 pulsar-shadow text-white glass bg-base-300 shadow-2xl rounded-2xl">
+        <div className="card overflow-hidden bg-base-100 shadow-xl  rounded-2xl">
+            <div className="card-body m-1 pulsar-shadow text-base-content  bg-base-100 shadow-2xl rounded-2xl">
                 <div className="divider divider-primary">{dictionary.forms["post-edit-upload"].edit}</div>
 
                 <form role="form" onSubmit={handleSubmitTitle(onSubmitTitle)} noValidate>
@@ -234,7 +234,7 @@ export default function PostEditForm(props: {
                         </div>
                     </label>
 
-                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                         {dictionary.forms["post-edit-upload"].save}
                     </button>
                 </form>
@@ -262,7 +262,7 @@ export default function PostEditForm(props: {
                     </label>
 
 
-                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                         {dictionary.forms["post-edit-upload"].save}
                     </button>
                 </form>
@@ -275,7 +275,7 @@ export default function PostEditForm(props: {
                         </div>
                         <input 
                             type="file" 
-                            className="join-item file-input file-input-bordered w-full bg-base-300 file:text-white placeholder:text-gray-200" 
+                            className="join-item file-input file-input-bordered w-full bg-base-300 file:text-base-content placeholder:text-gray-200" 
                             onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
                             {...registerImage("image", {
                                 required: { value: true, message: dictionary.forms["post-edit-upload"].required }
@@ -289,7 +289,7 @@ export default function PostEditForm(props: {
                         }
                     </label>
 
-                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                         {dictionary.forms["post-edit-upload"].save}
                     </button>
                 </form>
@@ -301,7 +301,7 @@ export default function PostEditForm(props: {
                             <span className="label-text-alt">.mp3, .wav</span>
                         </div>
                       
-                        <input type="file" className="join-item file-input file-input-bordered w-full bg-base-300 file:text-white" {
+                        <input type="file" className="join-item file-input file-input-bordered w-full bg-base-300 file:text-base-content" {
                             ...registerAudio("audio", {
                                 required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                             })
@@ -314,7 +314,7 @@ export default function PostEditForm(props: {
                             </label>
                         }
                     </label>
-                    <button type="submit" className="w-full glass group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                         {dictionary.forms["post-edit-upload"].save}
                     </button>
                 </form>

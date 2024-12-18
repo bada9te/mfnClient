@@ -52,9 +52,9 @@ export default function LoginForm({
     }
 
     return (
-        <div className="card bg-base-300 shadow-xl glass rounded-2xl flex flex-row w-fit">
+        <div className="card bg-base-100 shadow-xl  rounded-2xl flex flex-row w-fit">
             <div className="flex flex-row">
-                <div className="card-body m-1 text-white glass bg-base-300 shadow-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl pulsar-shadow">
+                <div className="card-body m-1 text-base-content bg-base-100 shadow-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl pulsar-shadow">
                     <form role="form" onSubmit={handleSubmit(onSubmit)} noValidate className="w-64 md:w-80">
                         <div className="divider divider-primary">{dictionary.forms.login["sign-in"]}</div>
 
@@ -105,7 +105,7 @@ export default function LoginForm({
 
 
                         <div className="form-control mt-6">
-                            <button disabled={loading} type="submit" className="glass group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                            <button disabled={loading} type="submit" className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                                 {
                                     loading && <span className="loading loading-dots loading-sm mx-2"></span>
                                 }

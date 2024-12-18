@@ -15,7 +15,7 @@ export default function RightbarDrawerUser({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     return (
-        <div className="card w-80 bg-base-300 shadow-2xl">
+        <div className="card w-80 bg-base-100 shadow-2xl p-2">
             {
                 /*
                 <figure className="max-h-48">
@@ -33,11 +33,11 @@ export default function RightbarDrawerUser({
                     <p className="font-bold text-lg">{data.nick}</p>
                 </div>
                 <div className="flex flex-row gap-2 flex-wrap mt-3 font-bold">
-                    <div className="badge glass bg-[#1ba39c] text-white">{data.subscribers?.length} {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].followers}</div>
-                    <div className="badge glass text-white">{data.subscribedOn?.length} {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].following}</div>
+                    <div className="badge  bg-[#1ba39c] text-base-content">{data.subscribers?.length} {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].followers}</div>
+                    <div className="badge  text-base-content">{data.subscribedOn?.length} {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].following}</div>
                 </div>
             </div>
-            <Link href={`/profile/${data._id}/1`} className="btn btn-sm w-full shadow-lg text-white m-2">
+            <Link href={`/profile/${data._id}/1`} className="btn btn-sm w-full shadow-lg text-base-content">
                 <UserIcon/>
                 {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].profile}
             </Link>

@@ -152,7 +152,7 @@ export default function NetworkInformation({
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button onClick={onClose}>close</button>
                 </form>
-                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col glass">
+                <div className="modal-box text-gray-300 max-w-[350px] w-[100vw] h-fit md:max-w-[600px] md:w-[600px] no-scrollbar text-start flex flex-col ">
                     <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px' }}>
                         {/* if there is a button in form, it will close the modal */}
                         <MainButton handler={onClose} color="error" width="25px" height="25px" padding="1">
@@ -164,7 +164,7 @@ export default function NetworkInformation({
 
                     <div className="flex-1 h-fit w-full flex flex-col justify-center items-start overflow-y-auto overflow-x-hidden mt-5 no-scrollbar">
                         <p className="font-bold mb-2">{dictionary.modals["network-information"]["total-per-posts"]}</p>
-                        <div className="stats shadow bg-base-300 glass w-full stats-vertical md:stats-horizontal">
+                        <div className="stats shadow bg-base-300  w-full stats-vertical md:stats-horizontal">
                             <div className="stat place-items-center">
                                 <div className="stat-title">{post1Title}</div>
                                 <div className="stat-value text-green-400">
@@ -188,10 +188,10 @@ export default function NetworkInformation({
 
                         <p className="font-bold my-2">{dictionary.modals["network-information"]["possible-withdraw"]}</p>
 
-                        <div className="stats shadow bg-base-300 glass w-full stats-vertical md:stats-horizontal">
+                        <div className="stats shadow bg-base-300  w-full stats-vertical md:stats-horizontal">
                             <div className="stat place-items-center">
                                 <div className="stat-title">{post1Title}</div>
-                                <div className="stat-value text-white">
+                                <div className="stat-value text-base-content">
                                     { data ? Number(data.battleTokensTransfers1 || 0) : '---' }
                                 </div>
                                 <div className="stat-desc flex flex-row gap-1 items-center justify-center mt-2">
@@ -200,7 +200,7 @@ export default function NetworkInformation({
                             </div>
                             <div className="stat place-items-center">
                                 <div className="stat-title">{post2Title}</div>
-                                <div className="stat-value text-white">
+                                <div className="stat-value text-base-content">
                                     { data ? Number(data.battleTokensTransfers2 || 0) : '---' }
                                 </div>
                                 <div className="stat-desc flex flex-row gap-1 items-center justify-center mt-2">
@@ -210,7 +210,7 @@ export default function NetworkInformation({
                         </div>
 
                         <button 
-                            className="btn btn-primary glass btn-sm w-full text-white mt-5" 
+                            className="btn   btn-sm w-full text-base-content mt-5" 
                             disabled={!battleisFInished || possibleWithdrawal == 0}
                             onClick={handelWithdraw}
                         >

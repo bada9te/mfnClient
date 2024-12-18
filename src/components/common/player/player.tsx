@@ -136,7 +136,7 @@ export default function AudioPlayer({
               <PlayerTrackInfo dictionary={dictionary}/>
               <div className="divider divider-primary my-8 md:my-3">
                 <div className='join w-full flex flex-row justify-center'>
-                  <button className='join-item btn btn-sm btn-primary glass text-white' onClick={handleToggle}>
+                  <button className='join-item btn btn-sm   text-base-content' onClick={handleToggle}>
                     {
                       (isPlaying) 
                       ? 
@@ -149,13 +149,13 @@ export default function AudioPlayer({
                       </svg>
                     }
                   </button>
-                  <button className='join-item btn btn-sm btn-primary glass text-white' onClick={handleStop}>
+                  <button className='join-item btn btn-sm   text-base-content' onClick={handleStop}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                       <path d="M5.25 3A2.25 2.25 0 0 0 3 5.25v9.5A2.25 2.25 0 0 0 5.25 17h9.5A2.25 2.25 0 0 0 17 14.75v-9.5A2.25 2.25 0 0 0 14.75 3h-9.5Z" />
                     </svg>
                   </button>
                   <button 
-                    className={`${isMute ? 'bg-base-300 text-red-400' : 'text-white'} join-item btn btn-sm btn-primary glass`}
+                    className={`${isMute ? 'bg-base-300 text-red-400' : 'text-base-content'} join-item btn btn-sm  `}
                     onClick={handleMuteToggle}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
@@ -163,7 +163,7 @@ export default function AudioPlayer({
                     </svg>
                   </button>
                   <button 
-                    className={`${isLoop ? 'bg-base-300 text-green-400' : "text-white"} join-item btn btn-sm btn-primary glass`}
+                    className={`${isLoop ? 'bg-base-300 text-green-400' : "text-base-content"} join-item btn btn-sm  `}
                     onClick={handleLoopToggle}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">

@@ -47,9 +47,9 @@ export default function SupportForm({
     }
 
     return (
-        <div className="card bg-base-300 shadow-xl glass rounded-2xl">
+        <div className="card bg-base-100 shadow-xl  rounded-2xl">
             <div className="flex flex-row md:min-h-[400px] lg:min-h-[600px]">
-                <form role="form" className="card-body pulsar-shadow m-1 glass bg-base-300 shadow-2xl text-white z-50 rounded-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
+                <form role="form" className="card-body pulsar-shadow m-1  bg-base-100 shadow-2xl text-base-content z-50 rounded-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="divider divider-primary">{dictionary.forms.support["support-details"]}</div>
 
                     <label className="form-control w-full max-w-xs">
@@ -117,7 +117,7 @@ export default function SupportForm({
                         }
                     </div>
                     <div className="form-control mt-4">
-                        <button disabled={loading} type="submit" className="glass group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                        <button disabled={loading} type="submit" className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
                             {
                                 loading && <span className="loading loading-dots loading-sm mx-2"></span>
                             }

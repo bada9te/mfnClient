@@ -36,7 +36,7 @@ export default function ProfileProgress(props: {
     }
 
     return (
-        <div className="stats stats-vertical xl:stats-horizontal glass max-w-full rounded-2xl text-white">
+        <div className="stats stats-vertical xl:stats-horizontal  max-w-full rounded-2xl text-base-content">
             <div className="stat relative flex justify-center flex-col gap-1">
                 <div className="stat-title text-center text-wrap max-w-40 self-center">{dictionary.common["profile-card"]["profile-progress"].level}</div>
                 <span onClick={refreshStatistics}><RefreshBtn/></span>
@@ -57,7 +57,7 @@ export default function ProfileProgress(props: {
                     <Image src={"/assets/icons/challenge.png"} alt="trophy" width={1000} height={1000} className="w-10"/>
                     {data.achievements?.length || 0}/{achievementsTotal || '...'}</div>
                 <div className="stat-actions">
-                    <Link href={`/profile/${user?._id === userId ? "me" : userId}/achievements`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["list-of-challenges"]}</Link>
+                    <Link href={`/profile/${user?._id === userId ? "me" : userId}/achievements`} className="btn btn-sm text-base-content w-full">{dictionary.common["profile-card"]["profile-progress"]["list-of-challenges"]}</Link>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@ export default function ProfileProgress(props: {
                 <div className="stat-actions">
                     {
                         data.maxLikesPostId &&
-                        <Link href={`/post/${data.maxLikesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full" >{dictionary.common["profile-card"]["profile-progress"]["most-liked-track"]}</Link>
+                        <Link href={`/post/${data.maxLikesPostId}/${userId}`} className="btn btn-sm text-base-content w-full" >{dictionary.common["profile-card"]["profile-progress"]["most-liked-track"]}</Link>
                     }
                 </div>
             </div>
@@ -85,7 +85,7 @@ export default function ProfileProgress(props: {
                     {
                         data.maxSavesPostId
                         &&
-                        <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm btn-primary glass text-white w-full">{dictionary.common["profile-card"]["profile-progress"]["most-saved-track"]}</Link>
+                        <Link href={`/post/${data.maxSavesPostId}/${userId}`} className="btn btn-sm text-base-content w-full">{dictionary.common["profile-card"]["profile-progress"]["most-saved-track"]}</Link>
                     }
                 </div>
             </div>

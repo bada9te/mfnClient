@@ -1,6 +1,6 @@
 export default function RightbarDrawerUserSkeleton() {
     return (
-        <div className="card w-80 h-[337px] bg-base-300 glass shadow-2xl">
+        <div className="card w-80 h-[337px] bg-base-300  shadow-2xl">
             <div className="h-80 w-80 skeleton rounded-b-none"></div>
             <div className="card-body">
                 <div className="flex flex-row gap-4 items-center">

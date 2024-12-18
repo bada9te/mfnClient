@@ -44,7 +44,7 @@ export default function PinnedTracks({
     }
 
     return (
-        <div className="w-full md:w-[800px] lg:w-full pb-10 bg-[#107973] p-0 md:p-5 rounded-2xl glass shadow-2xl flex justify-center flex-col items-center">
+        <div className="w-full md:w-[800px] lg:w-full pb-10 bg-[#107973] p-0 md:p-5 rounded-2xl  shadow-2xl flex justify-center flex-col items-center">
             <p className="font-bold text-4xl text-center md:text-start mt-5 md:mt-0 w-full flex flex-row gap-3 items-center">
                 <Pin />
                 {dictionary.common["profile-card"]["pinned-tracks"].pinned}

@@ -11,7 +11,7 @@ export default function Footer({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     return (
-        <footer className="footer p-10 bg-base-300 text-neutral-content rounded-2xl shadow-2xl overflow-hidden relative bg-opacity-80">
+        <footer className="footer p-10 bg-base-300 text-neutral-content rounded-2xl shadow-2xl overflow-hidden relative">
             <DotPattern
                 className={cn(
                 "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
@@ -24,22 +24,22 @@ export default function Footer({
             <nav>
                 <h6 className="footer-title">{dictionary?.common.footer["quick-nav"]}</h6>
                 <div className="flex flex-wrap gap-4 max-w-72 z-20">
-                    <Link href={"/"} className="hover:text-white">
+                    <Link href={"/"} className="hover:text-base-content">
                         {dictionary.common.footer.home}
                     </Link>
-                    <Link href={"/battles/in-progress/1"} className="hover:text-white">
+                    <Link href={"/battles/in-progress/1"} className="hover:text-base-content">
                         {dictionary.common.footer.battles}
                     </Link>
-                    <Link href={"/playlists/explore/1"} className="hover:text-white">
+                    <Link href={"/playlists/explore/1"} className="hover:text-base-content">
                         {dictionary.common.footer.playlists}
                     </Link>
-                    <Link href={"/profile/me/upload"} className="hover:text-white">
+                    <Link href={"/profile/me/upload"} className="hover:text-base-content">
                         {dictionary.common.footer["new-post"]}
                     </Link>
-                    <Link href={"/support"} className="hover:text-white">
+                    <Link href={"/support"} className="hover:text-base-content">
                         {dictionary.common.footer.support}
                     </Link>
-                    <Link href={"/faq"} className="hover:text-white">
+                    <Link href={"/faq"} className="hover:text-base-content">
                         {dictionary.common.footer.faq}
                     </Link>
                 </div>

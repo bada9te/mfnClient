@@ -75,17 +75,17 @@ export default function ProfileButton({
                     account.address 
                     &&
                     <span className="join p-4 px-0 w-fit flex z-20 mx-2">
-                        <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce] flex md:hidden rounded-l-xl" onClick={handlebalanceInfoClick}>
+                        <span className="join-item badge bg-[#2f818f]  text-base-content cursor-pointer hover:bg-[#20d8ce] flex md:hidden rounded-l-xl" onClick={handlebalanceInfoClick}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
                                 <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM9 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6.75 8a.75.75 0 0 0 0 1.5h.75v1.75a.75.75 0 0 0 1.5 0v-2.5A.75.75 0 0 0 8.25 8h-1.5Z" clipRule="evenodd" />
                             </svg>
                         </span>
-                        <span className="badge glass text-white flex-1 text-start justify-start hidden md:flex">{`${userBalance ? (Number(userBalance) / 10**Number(decimals)).toFixed(3) : 0} USDC`}
+                        <span className="badge  text-base-content flex-1 text-start justify-start hidden md:flex">{`${userBalance ? (Number(userBalance) / 10**Number(decimals)).toFixed(3) : 0} USDC`}
                             {/* @ts-ignore */}
                             <Image src={USDCAddresses[account.chainId]?.icon} alt="chain-logo" width={16} height={16} className="ml-2"/>
                         </span>
                         
-                        <span className="join-item badge bg-[#2f818f] glass text-white cursor-pointer hover:bg-[#20d8ce]" onClick={onBalanceRefetch}>
+                        <span className="join-item badge bg-[#2f818f]  text-base-content cursor-pointer hover:bg-[#20d8ce]" onClick={onBalanceRefetch}>
                             <RefreshCcw size={16}/>
                         </span>
                     </span>
@@ -114,7 +114,7 @@ export default function ProfileButton({
                 </div>
             </div>
 
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-56 glass bg-base-content text-black">
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-56  bg-base-content text-black">
                 {/* Conditional rendering based on user presence */}
                 {user?.user?._id ? (
                     <>

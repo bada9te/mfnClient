@@ -43,7 +43,7 @@ export default function ImageCropperModal(props: {
 
     return (
         <dialog ref={refDialog} className="modal w-full cursor-default h-full absolute">
-            <div className="modal-box glass  text-gray-300 min-w-[100vw] min-h-[100vh] no-scrollbar text-start flex flex-col">
+            <div className="modal-box   text-gray-300 min-w-[100vw] min-h-[100vh] no-scrollbar text-start flex flex-col">
                 <h4 className="font-bold text-lg z-50">{dictionary.modals.cropper.cropping}</h4>
 
                 <div className="flex-1 min-h-full w-full flex justify-center items-start overflow-y-auto overflow-x-hidden mt-5 thin-scrollbar">
@@ -60,8 +60,8 @@ export default function ImageCropperModal(props: {
                 </div>
 
                 <div className="modal-action z-50"> 
-                    <button className="btn glass btn-primary text-white" onClick={handleCancelImageCropping}>{dictionary.modals.cropper.cancel}</button>
-                    <button className="btn btn-primary glass text-white" onClick={handleImageCropping}>{dictionary.modals.cropper.submit}</button>
+                    <button className="btn   text-base-content" onClick={handleCancelImageCropping}>{dictionary.modals.cropper.cancel}</button>
+                    <button className="btn   text-base-content" onClick={handleImageCropping}>{dictionary.modals.cropper.submit}</button>
                 </div>
             </div>
         </dialog>
