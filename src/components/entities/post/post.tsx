@@ -15,7 +15,7 @@ import formatNumber from "@/utils/common-functions/formatNumber";
 import Image from "next/image";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { switchPostInLiked, switchPostInSaved } from "@/lib/redux/slices/user";
-import { Bookmark, CheckCheck, Clock8, Cog, Flag, Heart, Link2, LinkIcon, ListPlus, Pause, PinOff, Play, Share, Timer, User as UserIcon } from "lucide-react";
+import { Bookmark, Calendar1, CheckCheck, Clock8, Cog, Flag, Heart, Link2, LinkIcon, ListPlus, Pause, PinOff, Play, Share, Timer, User as UserIcon } from "lucide-react";
 import MainButton from "@/components/common/main-button/main-button";
 import getTimeSince from "@/utils/common-functions/getTimeSince";
 import getIpfsUrl from "@/utils/common-functions/getIpfsUrl";
@@ -112,29 +112,29 @@ export default function Post(props: {
 
 
     return (
-        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white glass rounded-xl`}>
-            <div className="h-16 flex flex-row gap-3 cursor-pointer rounded-t-xl">
+        <div className={`card w-fit md:${fullWidth ? 'w-full ' : 'w-80 max-w-80'} bg-base-300 shadow-xl max-h-[550px] text-white rounded-xl relative overflow-hidden`}>
+            <div className="h-fit p-2 flex flex-row gap-3 cursor-pointer rounded-t-xl absolute top-0">
                 <div className="dropdown w-full dropdown-end text-start">
                     <button 
                         className="
                         relative
-                        rounded-none
                         h-full
                         text-white font-bold 
                         flex items-center 
-                        justify-start px-4
-                        rounded-t-xl
-                        shadow-lg bg-base-300 border-base-300 w-full bg-opacity-80"
+                        justify-start p-1 pr-2
+                        rounded-full
+                        shadow-lg bg-base-300 border-base-300 w-full"
                         role="button"
                     >
-                        <div className="avatar p-0">
-                            <div className="w-10 rounded-full shadow-lg">
+                        <div className="avatar">
+                            <div className="w-7 rounded-full shadow-lg">
                                 <Image alt="avatar" width={400} height={400}
                                     src={data.owner?.avatar ? getIpfsUrl(data.owner?.avatar) : '/assets/bgs/clear.png'}/>  
                             </div>
                         </div>
-                        <p className="text-primary drop-shadow-lg pr-5 flex-1">{data?.owner?.nick}</p>
-                        <span className="absolute top-2 right-2 text-sm text-gray-400">{getTimeSince(new Date(+data.createdAt))}</span>
+                        <p className="text-base-content text-sm drop-shadow-lg pl-1 flex-1 flex flex-row items-center justify-center gap-2">
+                            {data?.owner?.nick}
+                        </p>
                     </button>
                     <ul tabIndex={0} className="dropdown-content menu glass bg-base-300 rounded-box z-[1] w-52 p-2 mt-3 shadow bg-opacity-20">
                         <li><Link href={data?.owner?._id === user?._id ? "/profile/me/1" : `/profile/${data.owner?._id}/1`}>
@@ -203,59 +203,50 @@ export default function Post(props: {
                 <p className="text-lg">{data?.description}</p>
             </div>
             
-            <div className={`flex flex-row gap-2 mx-2 mt-2 thin-scrollbar text-[#b2ccd6] relative ${handleRemove && "opacity-60"}`}>
-                <div className="stat text-center bg-base-300 glass w-fit rounded-lg p-4">
-                    <div 
-                        className={`${!handleRemove && 'cursor-pointer'} ${user?.likedPosts.find((i: string) => i === data._id) && "text-red-500"}`} 
-                        onClick={handleSwitchLike}
-                    >
-                        <Heart className="inline-block h-6 w-6 border-0" fill={user?.likedPosts.find((i: string) => i === data._id) ? "#ef4444" : "#b2ccd6"}/>
-                    </div>
-                    <div className="stat-title text-base-content">{dictionary.entities.post["total-likes"]}</div>
-                    <div className="text-base-content text-sm font-semibold">{formatNumber(data.likes as number)}</div>
+            <div className={`flex flex-row flex-wrap gap-2 mx-2 mt-2 thin-scrollbar text-[#b2ccd6] relative ${handleRemove && "opacity-60"}`}>
+
+                <div 
+                    className={`badge glass badge-md ${!handleRemove && 'cursor-pointer'} ${user?.likedPosts.find((i: string) => i === data._id) ? "badge-error bg-red-500" : "badge-neutral"}`} 
+                    onClick={handleSwitchLike}
+                >
+                    <Heart className="inline-block h-6 w-6 border-0" fill={user?.likedPosts.find((i: string) => i === data._id) ? "#ef4444" : "#b2ccd6"}/>
+                    <span className="w-full">{dictionary.entities.post["total-likes"]} {formatNumber(data.likes as number)}</span>
                 </div>
 
-                <div className="stat text-center bg-base-300 glass w-fit rounded-lg p-4">
-                    <div 
-                        className={`${!handleRemove && 'cursor-pointer'} ${user?.savedPosts.find((i: string) => i === data._id) && "text-yellow-500"}`} 
-                        onClick={handleSwitchInSaved}
-                    >
-                        <Bookmark className="inline-block h-6 w-6" fill={user?.savedPosts.find((i: string) => i === data._id) ? "#eab308" : "#b2ccd6"}/>
-                    </div>
-                    <div className="stat-title text-base-content">{dictionary.entities.post["total-saves"]}</div>
-                    <div className="text-base-content text-sm font-semibold">{formatNumber(data.saves as number)}</div>
+                <div 
+                    className={`badge glass badge-md ${!handleRemove && 'cursor-pointer'} ${user?.savedPosts.find((i: string) => i === data._id) ? "badge-warning bg-yellow-500" : "badge-neutral"}`} 
+                    onClick={handleSwitchInSaved}
+                >
+                    <Bookmark className="inline-block h-6 w-6" fill={user?.savedPosts.find((i: string) => i === data._id) ? "#eab308" : "#b2ccd6"}/>
+                    <span className="w-full">{dictionary.entities.post["total-saves"]} {formatNumber(data.saves as number)}</span>
+                </div>
+
+                <div className="badge badge-md glass">
+                    <Clock8 className="inline-block h-6 w-6"/>
+                    <span className="w-full">{formatTime(duration)}</span>
+                </div>
+
+                <div className="badge badge-md glass">
+                    <Calendar1 className="inline-block h-5 w-5 mr-1"/>
+                    <span className="w-full">{getTimeSince(new Date(+data.createdAt))}</span>
                 </div>
                 
-                <div className="stat shadow-none text-center rounded-lg p-0 relative w-full">
-                    <div className="flex flex-col w-full gap-2 justify-self-end items-end justify-end h-full">
-                        <div className="self-end justify-self-end p-1 bg-orange-400 glass rounded-lg flex flex-row items-center justify-center gap-1 text-[#2f343c] w-full">
-                            <Clock8 />
-                            {formatTime(duration)}
-                        </div>
-                    </div>
-                </div>
             </div>
                 
 
-            <div className="card-actions justify-center pt-2 flex flex-row overflow-hidden rounded-xl text-[#20252e]">
+            <div className="card-actions justify-center p-2 mt-2 flex flex-row text-[#20252e]">
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?
-                        <MainButton
-                            color="error"
-                            handler={handlePauseCLick}
-                        >
-                            <Pause fill="#20252e" className="mr-1 w-5 h-5"/>
+                        <button className="btn btn-sm w-full btn-error" onClick={handlePauseCLick}>
+                            <Pause className="w-5 h-5"/>
                             {dictionary.entities.post.pause}
-                        </MainButton>
+                        </button>
                         :
-                        <MainButton
-                            color="primary"
-                            handler={handlePlayCLick}
-                        >
-                            <Play fill="#20252e" className="mr-1 w-5 h-5"/>
+                        <button className="btn btn-sm w-full shadow-lg" onClick={handlePlayCLick}>
+                            <Play className="w-5 h-5"/>
                             {dictionary.entities.post.play}
-                        </MainButton>
+                        </button>
                 }
             </div>
             <div className="bg-base-300 absolute bottom-[-44px] flex items-center rounded-2xl">

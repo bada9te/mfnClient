@@ -1,7 +1,7 @@
 "use client"
 import ProfileButtonAlternative from "@/components/common/profile-button/profile-button-alternative";
 import { getDictionary } from "@/dictionaries/dictionaries";
-import { ChartBarStacked, Earth, ListMusic, Swords } from "lucide-react";
+import { ChartBarStacked, Earth, ListMusic, Search, Swords } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,6 +17,8 @@ export default function AlternativeAppbar({
                     className="rounded-full w-10"/>
                 <span className="hidden lg:flex text-sm">Music From Nothing</span>
             </Link>
+            
+
             <div className="h-full flex flex-col justify-between">
 
                 <ul 
@@ -30,7 +32,7 @@ export default function AlternativeAppbar({
                         </Link>
                     </li>
                     <li>
-                        <details>
+                        
                             <summary>
                                 <Swords/>
                                 {dictionary?.bars.appbar.battles}
@@ -40,10 +42,10 @@ export default function AlternativeAppbar({
                                 <li><Link href={"/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
                                 <li><Link href={"/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
                             </ul>
-                        </details>
+                       
                     </li>
                     <li>
-                        <details>
+                        
                             <summary>
                                 <ListMusic/>
                                 {dictionary?.bars.appbar.playlists}
@@ -53,7 +55,7 @@ export default function AlternativeAppbar({
                                 <li><Link href={"/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
                                 <li><Link href={"/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
                             </ul>
-                        </details>
+                        
                     </li>
                     <li>
                         <details>
