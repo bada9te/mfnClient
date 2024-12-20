@@ -114,7 +114,7 @@ export default function Post(props: {
     return (
         <div className={`card w-fit md:${fullWidth ? 'w-full' : 'w-80 max-w-80'} min-h-[360px] bg-base-100 shadow-xl max-h-[550px] text-base-content rounded-xl relative overflow-hidden`}>
             <div className="h-fit p-2 flex flex-row gap-3 cursor-pointer rounded-t-xl absolute top-0">
-                <div className="dropdown w-full dropdown-end text-start">
+                <div className="dropdown w-full dropdown-start text-start">
                     <button 
                         className="
                         relative

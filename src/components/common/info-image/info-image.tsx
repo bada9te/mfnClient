@@ -9,8 +9,8 @@ export default function InfoImage(props: {
             <Image
                 src={props.image}
                 alt={'logo'}
-                width={300}
-                height={300}
+                width={400}
+                height={400}
                 className="rounded-full w-24"
             />
             <span className="font-bold text-center max-w-72">{props.text}</span>

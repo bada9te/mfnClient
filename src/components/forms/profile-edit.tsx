@@ -248,7 +248,7 @@ export default function ProfileEditForm(props: {
 
     return (
         <div className="card overflow-hidden bg-base-100 shadow-xl  rounded-2xl md:rounded-2xl mx-2 md:mx-0">
-            <div className="bg-base-100 card-body m-1 pulsar-shadow text-base-content md:rounded-2xl shadow-2xl  p-4 md:p-6">
+            <div className="bg-base-100 card-body m-1 text-base-content md:rounded-2xl shadow-2xl  p-4 md:p-6">
                 <div className="divider divider-primary">{dictionary.forms["profile-edit"].basics}</div>
 
                 <form role="form" onSubmit={handleSubmitNick(onSubmitNick)} noValidate>
@@ -446,7 +446,7 @@ export default function ProfileEditForm(props: {
                             </svg>
                             {userData?.user.twitter?.name ? userData.user.twitter.name : dictionary.forms["profile-edit"]["connect-twitter"]}
                         </Link>
-                        <button disabled={buttonMustBeDisabled(userData as UserQuery).twitter} className="btn btn-error join-item  hover:bg-red-500 text-base-content w-[60px]" onClick={handleUnlinkTwitter}>
+                        <button disabled={buttonMustBeDisabled(userData as UserQuery).twitter} className="btn btn-error join-item text-base-300 w-[60px]" onClick={handleUnlinkTwitter}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path fillRule="evenodd" d="M19.892 4.09a3.75 3.75 0 0 0-5.303 0l-4.5 4.5c-.074.074-.144.15-.21.229l4.965 4.966a3.75 3.75 0 0 0-1.986-4.428.75.75 0 0 1 .646-1.353 5.253 5.253 0 0 1 2.502 6.944l5.515 5.515a.75.75 0 0 1-1.061 1.06l-18-18.001A.75.75 0 0 1 3.521 2.46l5.294 5.295a5.31 5.31 0 0 1 .213-.227l4.5-4.5a5.25 5.25 0 1 1 7.425 7.425l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.756-1.757a3.75 3.75 0 0 0 0-5.304ZM5.846 11.773a.75.75 0 0 1 0 1.06l-1.757 1.758a3.75 3.75 0 0 0 5.303 5.304l3.129-3.13a.75.75 0 1 1 1.06 1.061l-3.128 3.13a5.25 5.25 0 1 1-7.425-7.426l1.757-1.757a.75.75 0 0 1 1.061 0Zm2.401.26a.75.75 0 0 1 .957.458c.18.512.474.992.885 1.403.31.311.661.555 1.035.733a.75.75 0 0 1-.647 1.354 5.244 5.244 0 0 1-1.449-1.026 5.232 5.232 0 0 1-1.24-1.965.75.75 0 0 1 .46-.957Z" clipRule="evenodd" />
                             </svg>
@@ -464,7 +464,7 @@ export default function ProfileEditForm(props: {
                             </svg>
                             {userData?.user.google?.email ? userData.user.google?.email : dictionary.forms["profile-edit"]["connect-google"]}
                         </Link>
-                        <button disabled={buttonMustBeDisabled(userData as UserQuery).google} className="btn btn-error join-item  hover:bg-red-500 text-base-content w-[60px]" onClick={handleUnlinkGoogle}>
+                        <button disabled={buttonMustBeDisabled(userData as UserQuery).google} className="btn btn-error join-item text-base-300 w-[60px]" onClick={handleUnlinkGoogle}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path fillRule="evenodd" d="M19.892 4.09a3.75 3.75 0 0 0-5.303 0l-4.5 4.5c-.074.074-.144.15-.21.229l4.965 4.966a3.75 3.75 0 0 0-1.986-4.428.75.75 0 0 1 .646-1.353 5.253 5.253 0 0 1 2.502 6.944l5.515 5.515a.75.75 0 0 1-1.061 1.06l-18-18.001A.75.75 0 0 1 3.521 2.46l5.294 5.295a5.31 5.31 0 0 1 .213-.227l4.5-4.5a5.25 5.25 0 1 1 7.425 7.425l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.756-1.757a3.75 3.75 0 0 0 0-5.304ZM5.846 11.773a.75.75 0 0 1 0 1.06l-1.757 1.758a3.75 3.75 0 0 0 5.303 5.304l3.129-3.13a.75.75 0 1 1 1.06 1.061l-3.128 3.13a5.25 5.25 0 1 1-7.425-7.426l1.757-1.757a.75.75 0 0 1 1.061 0Zm2.401.26a.75.75 0 0 1 .957.458c.18.512.474.992.885 1.403.31.311.661.555 1.035.733a.75.75 0 0 1-.647 1.354 5.244 5.244 0 0 1-1.449-1.026 5.232 5.232 0 0 1-1.24-1.965.75.75 0 0 1 .46-.957Z" clipRule="evenodd" />
                             </svg>
@@ -484,7 +484,7 @@ export default function ProfileEditForm(props: {
                             </svg>
                             { userData?.user.facebook?.name ? userData.user.facebook?.name : dictionary.forms["profile-edit"]["connect-facebook"] }
                         </Link>
-                        <button disabled={buttonMustBeDisabled(userData as UserQuery).facebook} className="btn btn-error join-item  hover:bg-red-500 text-base-content w-[60px]" onClick={handleUnlinkFacebook}>
+                        <button disabled={buttonMustBeDisabled(userData as UserQuery).facebook} className="btn btn-error join-item text-base-300 w-[60px]" onClick={handleUnlinkFacebook}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path fillRule="evenodd" d="M19.892 4.09a3.75 3.75 0 0 0-5.303 0l-4.5 4.5c-.074.074-.144.15-.21.229l4.965 4.966a3.75 3.75 0 0 0-1.986-4.428.75.75 0 0 1 .646-1.353 5.253 5.253 0 0 1 2.502 6.944l5.515 5.515a.75.75 0 0 1-1.061 1.06l-18-18.001A.75.75 0 0 1 3.521 2.46l5.294 5.295a5.31 5.31 0 0 1 .213-.227l4.5-4.5a5.25 5.25 0 1 1 7.425 7.425l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.756-1.757a3.75 3.75 0 0 0 0-5.304ZM5.846 11.773a.75.75 0 0 1 0 1.06l-1.757 1.758a3.75 3.75 0 0 0 5.303 5.304l3.129-3.13a.75.75 0 1 1 1.06 1.061l-3.128 3.13a5.25 5.25 0 1 1-7.425-7.426l1.757-1.757a.75.75 0 0 1 1.061 0Zm2.401.26a.75.75 0 0 1 .957.458c.18.512.474.992.885 1.403.31.311.661.555 1.035.733a.75.75 0 0 1-.647 1.354 5.244 5.244 0 0 1-1.449-1.026 5.232 5.232 0 0 1-1.24-1.965.75.75 0 0 1 .46-.957Z" clipRule="evenodd" />
                             </svg>

@@ -170,7 +170,7 @@ export default function PostUploadForm({
             handleImageCropModalClose={handleImageCropModalClose}
         />
         <div className="card overflow-hidden bg-base-100 shadow-xl  rounded-2xl">
-            <form role="form" className="card-body m-1 pulsar-shadow text-base-content  bg-base-100 shadow-2xl rounded-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <form role="form" className="card-body m-1 text-base-content  bg-base-100 shadow-2xl rounded-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="divider divider-primary">{dictionary.forms["post-edit-upload"].setup}</div>
 
                 <label className="form-control w-full max-w-xs">

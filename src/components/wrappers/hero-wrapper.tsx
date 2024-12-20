@@ -11,7 +11,7 @@ export default function HeroWrapper(props: {
     const { children, title, description, disableMarginsOnMobile } = props;
 
     return (
-        <div className="w-full p-2 pt-6 md:px-4 md:pt-4">
+        <div className="w-full p-2 md:px-4 pt-4">
             <div className={`hero min-h-screen md:rounded-2xl shadow-2xl text-base-content bg-base-300 relative rounded-2xl overflow-hidden`}>
                 <DotPattern
                     className={cn(

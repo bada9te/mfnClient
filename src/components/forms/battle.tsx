@@ -147,7 +147,7 @@ export default function BattleForm({
 
     return (
         <div className="card overflow-hidden bg-base-300 shadow-xl  rounded-2xl">
-            <div className="card-body m-1 pulsar-shadow text-base-content  bg-base-300 shadow-2xl px-4 rounded-2xl">
+            <div className="card-body m-1 text-base-content  bg-base-300 shadow-2xl px-4 rounded-2xl">
                 <div className="divider divider-primary px-4 md:px-0">{dictionary.forms.battle.setup}</div>
                 <div className="flex flex-wrap gap-5 mt-5 w-full justify-around mb-10">
                     <div className="flex flex-col gap-3">

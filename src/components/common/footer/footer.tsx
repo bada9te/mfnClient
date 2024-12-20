@@ -18,7 +18,7 @@ export default function Footer({
                 )}
             />
             <aside>
-                <Image className="rounded-full z-10" src={'/assets/logo.png'} alt={"logo"} width={100} height={100} />
+                <Image className="rounded-full z-10 w-24" src={'/assets/logo.png'} alt={"logo"} width={400} height={400} />
                 <p>Music From Nothing<br/>{new Date().getFullYear()}</p>
             </aside>
             <nav>

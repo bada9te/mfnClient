@@ -209,7 +209,7 @@ export default function PostEditForm(props: {
             handleImageCropModalClose={handleImageCropModalClose}
         />
         <div className="card overflow-hidden bg-base-100 shadow-xl  rounded-2xl">
-            <div className="card-body m-1 pulsar-shadow text-base-content  bg-base-100 shadow-2xl rounded-2xl">
+            <div className="card-body m-1 text-base-content  bg-base-100 shadow-2xl rounded-2xl">
                 <div className="divider divider-primary">{dictionary.forms["post-edit-upload"].edit}</div>
 
                 <form role="form" onSubmit={handleSubmitTitle(onSubmitTitle)} noValidate>
