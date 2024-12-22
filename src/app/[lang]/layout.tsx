@@ -1,13 +1,12 @@
-import AppBar from "@/components/bars/appbar/appbar";
-import BottomNav from "@/components/bars/bottom-nav/bottom-nav";
-import Footer from "@/components/common/footer/footer";
+import AppBar from "@/app/components/bars/appbar";
+import BottomNav from "@/app/components/bars/bottom-nav/bottom-nav";
+import Footer from "@/app/components/common/footer/footer";
 import NextTopLoader from "nextjs-toploader";
-import CategoriesContainerLeftbar from "@/components/containers/categories-container/categories-container-leftbar";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
-import AvatarGrid from "@/components/common/avatar-grid/avatar-grid";
-import WeAreUsingCookiesModal from "@/components/modals/cookie-info-modal";
-import AlternativeAppbar from "@/components/bars/alternative-appbar/alternative-appbar";
+import AvatarGrid from "@/app/components/common/avatar-grid/avatar-grid";
+import WeAreUsingCookiesModal from "./components/cookie-info-modal";
+import AlternativeAppbar from "@/app/components/bars/alternative-appbar";
 
 export default async function RootLayout({
   children,

@@ -1,68 +1,18 @@
 
-import ProjectLinks from "@/components/common/project-links/projects-links";
-import RegisterExploreBtns from "@/components/common/register-explore-btns/register-explore-btns";
-import DotPattern from "@/components/magicui-components/dot-pattern";
-import { MarqueeDemo } from "@/components/magicui-components/landing-cards-scrolling";
-import Ripple from "@/components/magicui-components/ripple";
-import { getDictionary } from "@/dictionaries/dictionaries";
-import { cn } from "@/lib/utils";
+import ProjectLinks from "@/app/components/common/project-links/projects-links";
+import RegisterExploreBtns from "@/app/components/common/register-explore-btns/register-explore-btns";
+import DotPattern from "@/app/components/magicui-components/dot-pattern";
+import { MarqueeDemo } from "@/app/components/magicui-components/landing-cards-scrolling";
+import Ripple from "@/app/components/magicui-components/ripple";
+import { cn } from "../utils/common-functions/cn";
 import { TLang } from "@/types/language";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { getDictionary } from "../dictionaries/dictionaries";
+import { cardsData1, cardsData2 } from "@/static-data/landing";
 
-const cardsData1 = [
-    {
-        id: 'explore',
-        iconUrl: "/assets/icons/logo_clear.png",
-    },
-    {
-        id: 'anywhere',
-        iconUrl: "/assets/icons/logo_clear.png",
-    },
-    {
-        id: 'community',
-        iconUrl: "/assets/icons/logo_clear.png",
-    },
-    {
-        id: 'start',
-        iconUrl: "/assets/icons/logo_clear.png",
-    },
-];
 
-const cardsData2 = [
-    {
-        id: "listening",
-        iconUrl:  "/assets/icons/logo_clear.png"
-    },
-    {
-        id: "musical",
-        iconUrl:  "/assets/icons/logo_clear.png"
-    },
-    {
-        id: "musician",
-        iconUrl:  "/assets/icons/logo_clear.png"
-    },
-    {
-        id: "just",
-        iconUrl:  "/assets/icons/logo_clear.png"
-    },
-    {
-        id: "gratitude",
-        iconUrl:  "/assets/icons/logo_clear.png",
-        github: { rDrayBen: "https://github.com/rDrayBen", ChadCoder39: "https://github.com/ChadCoder39" },
-        telegram: { rDrayBen: 'https://t.me/rabotiahov', ChadCoder39: 'https://t.me/Yoperniy_teator' },
-        youtube: { hikaru: 'https://www.youtube.com/@hikaruyoshimura' },
-        x: { hikaru: 'https://x.com/HikaruYoshimura' }
-    },
-    {
-        id: "about",
-        iconUrl:  "/assets/icons/logo_clear.png",
-        github: { bada9te: 'https://github.com/bada9te' },
-        telegram: { bada9te: 'https://t.me/bada9te' },
-        instagram: { bada9te: 'https://www.instagram.com/bada9te/' }
-    }
-];
 
 export const metadata: Metadata = {
     title: 'Music From Nothing',

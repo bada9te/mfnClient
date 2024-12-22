@@ -1,6 +1,6 @@
-import LoginForm from "@/components/forms/login";
-import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import LoginForm from "./components/forms/login";
+import HeroWrapperForm from "@/app/components/wrappers/hero-wrapper-form";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
 import { Metadata } from "next";
 

@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/redux/store";
-import { setUser } from "@/lib/redux/slices/user";
-import envCfg from "@/config/env";
+import { useAppDispatch } from "@/app/lib/redux/store";
+import { setUser } from "@/app/lib/redux/slices/user";
+import envCfg from "@/app/config/env";
 import { TLang } from "@/types/language";
 import { deleteCookie } from "cookies-next";
-import { httpLogOut } from "@/utils/http-requests/auth";
+import { httpLogOut } from "@/app/utils/http-requests/auth";
 import { useAccount, useDisconnect } from "wagmi";
 
 export default function LogoutPage({params}: {params: {lang: TLang}}) {

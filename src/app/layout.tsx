@@ -1,11 +1,11 @@
 "use client"
 import "./globals.css";
 import { TLang } from "@/types/language";
-import ReduxProvider from "@/lib/redux/provider";
+import ReduxProvider from "./lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
-import {ApolloWrapper} from "@/lib/apollo/apollo-wrapper";
-import RainbowkitAppProvider from "@/utils/rainbowkit/provider";
-import { Anonymous_Pro, Montserrat } from "next/font/google";
+import {ApolloWrapper} from "./lib/apollo/apollo-wrapper";
+import RainbowkitAppProvider from "./lib/rainbowkit/provider";
+import { Montserrat } from "next/font/google";
 
 const font = Montserrat({
   subsets: ['latin', 'cyrillic'],

@@ -1,13 +1,13 @@
-import {PreloadQuery} from "@/lib/apollo/client";
-import {POSTS_SAVED_BY_USER_QUERY} from "@/utils/graphql-requests/posts";
+import {PreloadQuery} from "@/app/lib/apollo/client";
+import {POSTS_SAVED_BY_USER_QUERY} from "@/app/utils/graphql-requests/posts";
 import {Suspense} from "react";
-import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import PostsContainerSaved from "@/components/containers/posts-container/posts-container-saved";
+import PostsContainerSkeleton from "@/app/components/containers/posts-container/posts-container-skeleton";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import PostsContainerSaved from "@/app/components/containers/posts-container/posts-container-saved";
 import {cookies} from "next/headers";
-import envCfg from "@/config/env";
+import envCfg from "@/app/config/env";
 import { TLang } from "@/types/language";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

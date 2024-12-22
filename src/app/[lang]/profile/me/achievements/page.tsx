@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
 import { Suspense } from "react";
-import AchievementsContainer from "@/components/containers/achievements-container/achievements-container";
-import AchievementsContainerSkeleton from "@/components/containers/achievements-container/achievements-container-skeleton";
-import { PreloadQuery } from "@/lib/apollo/client";
-import { ACHIEVEMENTS_ALL_QUERY } from "@/utils/graphql-requests/achievements";
-import envCfg from "@/config/env";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import AchievementsContainer from "@/app/components/containers/achievements-container/achievements-container";
+import AchievementsContainerSkeleton from "@/app/components/containers/achievements-container/achievements-container-skeleton";
+import { PreloadQuery } from "@/app/lib/apollo/client";
+import { ACHIEVEMENTS_ALL_QUERY } from "@/app/utils/graphql-requests/achievements";
+import envCfg from "@/app/config/env";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
 import { Metadata } from "next";
 

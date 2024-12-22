@@ -1,13 +1,13 @@
-import ProfileCard from "@/components/common/profile-card/profile-card";
-import PostContainer from "@/components/containers/posts-container/post-container";
-import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
-import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
-import PostSkeleton from "@/components/entities/post/post-skeleton";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import { getDictionary } from "@/dictionaries/dictionaries";
-import { PreloadQuery } from "@/lib/apollo/client";
+import ProfileCard from "@/app/components/common/profile-card/profile-card";
+import PostContainer from "@/app/components/containers/posts-container/post-container";
+import PostsContainerProfile from "@/app/components/containers/posts-container/posts-container-profile";
+import PostsContainerSkeleton from "@/app/components/containers/posts-container/posts-container-skeleton";
+import PostSkeleton from "@/app/components/entities/post/post-skeleton";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { PreloadQuery } from "@/app/lib/apollo/client";
 import { TLang } from "@/types/language";
-import { POST_QUERY, POSTS_BY_OWNER_QUERY } from "@/utils/graphql-requests/posts";
+import { POST_QUERY, POSTS_BY_OWNER_QUERY } from "@/app/utils/graphql-requests/posts";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
