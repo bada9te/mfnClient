@@ -107,7 +107,7 @@ export default function Playlist(props: {
                         }
                     </div>
                 </div>
-                <div className="flex flex-wrap gap-5 md:gap-3 justify-around mb-10 mt-5">
+                <div className="flex flex-wrap gap-5 justify-around mb-10 mt-5">
                     {
                         posts?.map((post, index) => (
                             !isRemovingTrack 

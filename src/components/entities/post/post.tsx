@@ -203,7 +203,7 @@ export default function Post(props: {
                 <p className="text-lg">{data?.description}</p>
             </div>
             
-            <div className={`flex flex-row flex-wrap gap-2 mx-2 mt-2 thin-scrollbar text-[#b2ccd6] relative ${handleRemove && "opacity-60"}`}>
+            <div className={`flex flex-row flex-wrap gap-2 mx-5 mt-2 thin-scrollbar text-[#b2ccd6] relative ${handleRemove && "opacity-60"}`}>
 
                 <div 
                     className={`badge badge-md hover:bg-error hover:text-black ${!handleRemove && 'cursor-pointer'} ${user?.likedPosts.find((i: string) => i === data._id) && "badge-error bg-error"}`} 

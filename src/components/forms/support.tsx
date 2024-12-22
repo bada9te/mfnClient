@@ -47,9 +47,9 @@ export default function SupportForm({
     }
 
     return (
-        <div className="card bg-base-100 shadow-xl  rounded-2xl">
+        <div className="card bg-base-100 rounded-2xl">
             <div className="flex flex-row md:min-h-[400px] lg:min-h-[600px]">
-                <form role="form" className="card-body m-1  bg-base-100 shadow-2xl text-base-content z-50 rounded-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
+                <form role="form" className="card-body m-1 bg-base-100 text-base-content z-50 rounded-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="divider divider-primary">{dictionary.forms.support["support-details"]}</div>
 
                     <label className="form-control w-full max-w-xs">

@@ -247,8 +247,8 @@ export default function ProfileEditForm(props: {
     }
 
     return (
-        <div className="card overflow-hidden bg-base-100 shadow-xl  rounded-2xl md:rounded-2xl mx-2 md:mx-0">
-            <div className="bg-base-100 card-body m-1 text-base-content md:rounded-2xl shadow-2xl  p-4 md:p-6">
+        <div className="card overflow-hidden bg-base-100 rounded-2xl md:rounded-2xl mx-2 md:mx-0">
+            <div className="bg-base-100 card-body m-1 text-base-content md:rounded-2xl p-4 md:p-6">
                 <div className="divider divider-primary">{dictionary.forms["profile-edit"].basics}</div>
 
                 <form role="form" onSubmit={handleSubmitNick(onSubmitNick)} noValidate>

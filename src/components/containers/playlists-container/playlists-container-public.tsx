@@ -10,6 +10,7 @@ import InfoImage from "@/components/common/info-image/info-image";
 import {TPaginationProps} from "@/types/pagination";
 import RefreshButtonPerContainer from "@/components/common/refresh-btn-container/refresh-btn-container";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import PlaylistSkeleton from "@/components/entities/playlist/playlist-skeleton";
 
 
 export default function PlaylistsContainerPublic(props: TPaginationProps & {dictionary: Awaited<ReturnType<typeof getDictionary>>["components"] }) {

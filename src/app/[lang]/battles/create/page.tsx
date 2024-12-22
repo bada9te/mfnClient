@@ -22,7 +22,7 @@ export default async function Battles({params}: {params: {lang: TLang}}) {
                 description={dict.app.battles.create.description}
                 disableMarginsOnMobile
             >
-                <div className="card shadow-2xl bg-base-300">
+                <div className="card bg-base-300">
                     <BattleForm dictionary={dict.components}/>
                 </div>
             </HeroWrapperForm>
