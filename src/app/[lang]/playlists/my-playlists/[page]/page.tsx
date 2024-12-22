@@ -1,15 +1,15 @@
-import BarTabsPlaylists from "@/components/bars/bar-tabs/bar-tabs-playlists";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import PlaylistsContainerOwner from "@/components/containers/playlists-container/playlists-container-my";
+import BarTabsPlaylists from "../../components/navigation-bar";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import PlaylistsContainerOwner from "@/app/components/containers/playlists-container/playlists-container-my";
 import {cookies} from "next/headers";
 
-import {PreloadQuery} from "@/lib/apollo/client";
+import {PreloadQuery} from "@/app/lib/apollo/client";
 import {Suspense} from "react";
-import PlaylistsContainerSkeleton from "@/components/containers/playlists-container/playlists-container-skeleton";
-import {PLAYLISTS_BY_OWNER_ID_QUERY} from "@/utils/graphql-requests/playlists";
-import envCfg from "@/config/env";
+import PlaylistsContainerSkeleton from "@/app/components/containers/playlists-container/playlists-container-skeleton";
+import {PLAYLISTS_BY_OWNER_ID_QUERY} from "@/app/utils/graphql-requests/playlists";
+import envCfg from "@/app/config/env";
 import { TLang } from "@/types/language";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

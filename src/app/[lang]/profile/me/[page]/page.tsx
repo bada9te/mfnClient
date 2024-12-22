@@ -1,19 +1,19 @@
-import ProfileCard from "@/components/common/profile-card/profile-card";
-import {PreloadQuery} from "@/lib/apollo/client";
-import {POSTS_BY_OWNER_QUERY} from "@/utils/graphql-requests/posts";
+import ProfileCard from "@/app/components/common/profile-card/profile-card";
+import {PreloadQuery} from "@/app/lib/apollo/client";
+import {POSTS_BY_OWNER_QUERY} from "@/app/utils/graphql-requests/posts";
 import {Suspense} from "react";
-import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import PostsContainerProfile from "@/components/containers/posts-container/posts-container-profile";
+import PostsContainerSkeleton from "@/app/components/containers/posts-container/posts-container-skeleton";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import PostsContainerProfile from "@/app/components/containers/posts-container/posts-container-profile";
 import {cookies} from "next/headers";
-import {USER_ACHIEVEMENTS_DATA_QUERY, USER_PINNED_POSTS_QUERY, USER_QUERY} from "@/utils/graphql-requests/users";
-import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
-import { ACHIEVEMENTS_COUNT_QUERY } from "@/utils/graphql-requests/achievements";
-import envCfg from "@/config/env";
+import {USER_ACHIEVEMENTS_DATA_QUERY, USER_PINNED_POSTS_QUERY, USER_QUERY} from "@/app/utils/graphql-requests/users";
+import ProfileCardSkeleton from "@/app/components/common/profile-card/profile-card-skelton";
+import { ACHIEVEMENTS_COUNT_QUERY } from "@/app/utils/graphql-requests/achievements";
+import envCfg from "@/app/config/env";
 import { TLang } from "@/types/language";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Metadata } from "next";
-import PinnedTracks from "@/components/common/profile-card/pinned-tracks/pinned-tarcks";
+import PinnedTracks from "@/app/components/common/profile-card/components/pinned-tracks";
 
 
 export const metadata: Metadata = {

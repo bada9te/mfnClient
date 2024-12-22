@@ -1,16 +1,15 @@
-import BarTabsBattles from "@/components/bars/bar-tabs/bar-tabs-battles";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import {PreloadQuery} from "@/lib/apollo/client";
+import BarTabsBattles from "../../../components/navigation-bar";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import {PreloadQuery} from "@/app/lib/apollo/client";
 import {Suspense} from "react";
-import BattlesContainer from "@/components/containers/battles-container/battles-container";
-import BattlesContainerSkeleton from "@/components/containers/battles-container/battles-container-skeleton";
-import {BATTLES_BY_STATUS_QUERY, BATTLES_USER_PARTICIPATED_IN_QUERY} from "@/utils/graphql-requests/battles";
+import BattlesContainerSkeleton from "@/app/components/containers/battles-container/battles-container-skeleton";
+import { BATTLES_USER_PARTICIPATED_IN_QUERY} from "@/app/utils/graphql-requests/battles";
 import { TLang } from "@/types/language";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
-import envCfg from "@/config/env";
-import BattlesContainerUser from "@/components/containers/battles-container/battles-container-user";
+import envCfg from "@/app/config/env";
+import BattlesContainerUser from "@/app/components/containers/battles-container/battles-container-user";
 
 export const metadata: Metadata = {
     title: 'Music From Nothing - Finished battles',

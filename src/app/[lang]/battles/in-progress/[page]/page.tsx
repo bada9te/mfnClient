@@ -1,12 +1,12 @@
-import BarTabsBattles from "@/components/bars/bar-tabs/bar-tabs-battles";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import {BATTLES_BY_STATUS_QUERY} from "@/utils/graphql-requests/battles";
+import BarTabsBattles from "../../components/navigation-bar";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import {BATTLES_BY_STATUS_QUERY} from "@/app/utils/graphql-requests/battles";
 import {Suspense} from "react";
-import BattlesContainerSkeleton from "@/components/containers/battles-container/battles-container-skeleton";
-import BattlesContainer from "@/components/containers/battles-container/battles-container";
-import {PreloadQuery} from "@/lib/apollo/client";
+import BattlesContainerSkeleton from "@/app/components/containers/battles-container/battles-container-skeleton";
+import BattlesContainer from "@/app/components/containers/battles-container/battles-container";
+import {PreloadQuery} from "@/app/lib/apollo/client";
 import { TLang } from "@/types/language";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

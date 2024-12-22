@@ -1,13 +1,13 @@
-import ProfileCard from "@/components/common/profile-card/profile-card";
-import ProfileEditForm from "@/components/forms/profile-edit";
+import ProfileCard from "@/app/components/common/profile-card/profile-card";
+import ProfileEditForm from "./components/forms/profile-edit";
 import { cookies } from "next/headers";
-import { PreloadQuery } from "@/lib/apollo/client";
+import { PreloadQuery } from "@/app/lib/apollo/client";
 import { Suspense } from "react";
-import { USER_QUERY } from "@/utils/graphql-requests/users";
-import ProfileCardSkeleton from "@/components/common/profile-card/profile-card-skelton";
-import envCfg from "@/config/env";
+import { USER_QUERY } from "@/app/utils/graphql-requests/users";
+import ProfileCardSkeleton from "@/app/components/common/profile-card/profile-card-skelton";
+import envCfg from "@/app/config/env";
 import { TLang } from "@/types/language";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

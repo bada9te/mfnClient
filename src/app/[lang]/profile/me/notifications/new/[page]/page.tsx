@@ -1,14 +1,14 @@
-import NotificationsTabs from "@/components/bars/bar-tabs/bar-tabs-notifications";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import { PreloadQuery } from "@/lib/apollo/client";
-import { NOTIFICATIONS_QUERY } from "@/utils/graphql-requests/notifications";
+import NotificationsTabs from "../../components/navigation-bar";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import { PreloadQuery } from "@/app/lib/apollo/client";
+import { NOTIFICATIONS_QUERY } from "@/app/utils/graphql-requests/notifications";
 import { cookies } from "next/headers";
-import NotificationsContainerSkeleton from "@/components/containers/notifications-container/notifications-container-skeleton";
-import NotificationsContainer from "@/components/containers/notifications-container/notifications-container";
+import NotificationsContainerSkeleton from "@/app/components/containers/notifications-container/notifications-container-skeleton";
+import NotificationsContainer from "@/app/components/containers/notifications-container/notifications-container";
 import { Suspense } from "react";
-import envCfg from "@/config/env";
+import envCfg from "@/app/config/env";
 import { TLang } from "@/types/language";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

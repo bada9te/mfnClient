@@ -14,9 +14,6 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      colors: {
-        primary: "#FFFFFF",
-      },
       keyframes: {
         fullSpin: {
           '100%': {
@@ -56,7 +53,7 @@ const config: Config = {
       {
         dark: {
           ...require("daisyui/src/theming/themes")["dim"],
-          ".btn-primary:hover": {
+          ".:hover": {
             "background-color": "#1ba39c",
             "border-color": "#1ba39c",
           },

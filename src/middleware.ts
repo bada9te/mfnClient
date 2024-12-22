@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { cookies } from 'next/headers';
-import envCfg from './config/env';
+import envCfg from './app/config/env';
 import { match } from '@formatjs/intl-localematcher'
 // @ts-ignore
 import Negotiator from 'negotiator'
@@ -50,26 +50,6 @@ export async function middleware(request: NextRequest) {
     if (!pathnameHasLocale) {
         request.nextUrl.pathname = `/${urlLocale}${pathname}`;
     }
-
-    // if user wants to logout
-    /*
-        if (request.nextUrl.pathname === `/${urlLocale}/logout`) {
-            const res = NextResponse.redirect(new URL(`/${urlLocale}`, request.url));
-            res.cookies.set(envCfg.userIdCookieKey as string, "", {
-                expires: new Date(0),
-                path: '/',
-                domain: envCfg.serverDomain,
-            });
-
-            res.cookies.set(envCfg.userSessionCookieKey as string, "", {
-                expires: new Date(0),
-                path: '/',
-                domain: envCfg.serverDomain,
-            });
-
-            return res;
-        }
-    */
 
     // if user is trying to access auth routes
     if (pathname.startsWith(`${urlLocale}/login`) || pathname.startsWith(`${urlLocale}/register`)) {

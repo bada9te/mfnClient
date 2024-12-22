@@ -1,10 +1,10 @@
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import PostsContainerCategory from "@/components/containers/posts-container/posts-container-category";
-import {PreloadQuery} from "@/lib/apollo/client";
-import {POSTS_BY_CATEGORY_QUERY} from "@/utils/graphql-requests/posts";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import PostsContainerCategory from "@/app/components/containers/posts-container/posts-container-category";
+import {PreloadQuery} from "@/app/lib/apollo/client";
+import {POSTS_BY_CATEGORY_QUERY} from "@/app/utils/graphql-requests/posts";
 import {Suspense} from "react";
-import PostsContainerSkeleton from "@/components/containers/posts-container/posts-container-skeleton";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import PostsContainerSkeleton from "@/app/components/containers/posts-container/posts-container-skeleton";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
 import { Metadata } from "next";
 

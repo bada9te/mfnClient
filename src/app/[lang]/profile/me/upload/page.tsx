@@ -1,6 +1,6 @@
-import PostUploadForm from "@/components/forms/post-upload";
-import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import PostUploadForm from "./components/forms/post-upload";
+import HeroWrapperForm from "@/app/components/wrappers/hero-wrapper-form";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
 import { Metadata } from "next";
 

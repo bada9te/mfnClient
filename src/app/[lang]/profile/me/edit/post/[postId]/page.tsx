@@ -1,11 +1,11 @@
-import PostContainer from "@/components/containers/posts-container/post-container";
-import PostSkeleton from "@/components/entities/post/post-skeleton";
-import PostEditForm from "@/components/forms/post-edit";
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import { getDictionary } from "@/dictionaries/dictionaries";
-import { PreloadQuery } from "@/lib/apollo/client";
+import PostContainer from "@/app/components/containers/posts-container/post-container";
+import PostSkeleton from "@/app/components/entities/post/post-skeleton";
+import PostEditForm from "./components/forms/post-edit";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { PreloadQuery } from "@/app/lib/apollo/client";
 import { TLang } from "@/types/language";
-import { POST_QUERY } from "@/utils/graphql-requests/posts";
+import { POST_QUERY } from "@/app/utils/graphql-requests/posts";
 import { Metadata } from "next";
 import { Suspense } from "react";
 

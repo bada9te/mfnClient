@@ -1,11 +1,11 @@
-import HeroWrapper from "@/components/wrappers/hero-wrapper";
-import {PreloadQuery} from "@/lib/apollo/client";
+import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import {PreloadQuery} from "@/app/lib/apollo/client";
 import {Suspense} from "react";
-import {BATTLE_BY_ID_QUERY} from "@/utils/graphql-requests/battles";
-import BattleSkeleton from "@/components/entities/battle/battles-skeleton";
-import BattleContainer from "@/components/containers/battles-container/battle-container";
+import {BATTLE_BY_ID_QUERY} from "@/app/utils/graphql-requests/battles";
+import BattleSkeleton from "@/app/components/entities/battle/battles-skeleton";
+import BattleContainer from "@/app/components/containers/battles-container/battle-container";
 import { TLang } from "@/types/language";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

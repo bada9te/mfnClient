@@ -1,7 +1,7 @@
-import BarTabsBattles from "@/components/bars/bar-tabs/bar-tabs-battles";
-import BattleForm from "@/components/forms/battle";
-import HeroWrapperForm from "@/components/wrappers/hero-wrapper-form";
-import { getDictionary } from "@/dictionaries/dictionaries";
+import BarTabsBattles from "@/app/[lang]/battles/components/navigation-bar";
+import BattleForm from "./__components/forms/battle";
+import HeroWrapperForm from "@/app/components/wrappers/hero-wrapper-form";
+import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { TLang } from "@/types/language";
 import { Metadata } from "next";
 
@@ -22,7 +22,7 @@ export default async function Battles({params}: {params: {lang: TLang}}) {
                 description={dict.app.battles.create.description}
                 disableMarginsOnMobile
             >
-                <div className="card shadow-2xl bg-base-300">
+                <div className="card bg-base-300">
                     <BattleForm dictionary={dict.components}/>
                 </div>
             </HeroWrapperForm>

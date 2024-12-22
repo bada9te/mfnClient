@@ -1,9 +1,9 @@
 // app/api/upload/route.js
 
-import envCfg from '@/config/env';
+import envCfg from '@/app/config/env';
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { NextRequest } from 'next/server';
-import generateRandomString from '@/utils/common-functions/generateRandomString';
+import generateRandomString from '@/app/utils/common-functions/generateRandomString';
 
 
 const FILEBASE_BUCKET = envCfg.filebase_FILEBASE_BUCKET;
