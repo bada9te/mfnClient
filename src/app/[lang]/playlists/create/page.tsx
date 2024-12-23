@@ -1,5 +1,5 @@
 import BarTabsPlaylists from "../components/navigation-bar";
-import PlaylistForm from "./__components/forms/playlist";
+import PlaylistForm from "./components/forms/playlist";
 import HeroWrapperForm from "@/app/components/wrappers/hero-wrapper-form";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { TLang } from "@/types/language";

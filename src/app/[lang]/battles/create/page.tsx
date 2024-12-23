@@ -1,5 +1,5 @@
 import BarTabsBattles from "@/app/[lang]/battles/components/navigation-bar";
-import BattleForm from "./__components/forms/battle";
+import BattleForm from "./components/forms/battle";
 import HeroWrapperForm from "@/app/components/wrappers/hero-wrapper-form";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { TLang } from "@/types/language";

@@ -17,6 +17,7 @@ import { generateDEFAULT_MFN_CONTRACT_CFG } from "@/app/lib/rainbowkit/contract-
 import Image from "next/image";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { Text } from "lucide-react";
+import MainButton from "@/app/components/common/main-button/main-button";
 
 
 export const PostPlaceholder = (props: {
@@ -251,18 +252,18 @@ export default function BattleForm({
                             (() => {
                                 if (chainId !== blockchain && useBlockChain) {
                                     return (
-                                        <button onClick={() => switchChain({ chainId: blockchain as number })} className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                        <MainButton onClick={() => switchChain({ chainId: blockchain as number })} color="primary">
                                             Switch to {config.chains.find(i => i.id === blockchain)?.name}
-                                        </button>
+                                        </MainButton>
                                     );
                                 } else {
                                     return (
-                                        <button disabled={isLoading} type="submit" className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                        <MainButton disabled={isLoading} type="submit" color="primary">
                                             {
                                                 isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                                             }
                                             {dictionary.forms.battle.create} {useBlockChain ? `- ${config.chains.find(i => i.id === blockchain)?.name}` : ""}
-                                        </button>
+                                        </MainButton>
                                     )
                                 }
                             })()

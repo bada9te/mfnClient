@@ -32,7 +32,7 @@ export default function HeroWrapperForm(props: {
                             width={400}
                             height={400}
                         />
-                        <div className={`card shrink-0 w-fit ${!fullWidth && "max-w-md"} shadow-2xl bg-base-300`}>
+                        <div className={`card shrink-0 w-fit ${!fullWidth && "max-w-md"} bg-base-300`}>
                             {children}
                         </div>
                     </div>

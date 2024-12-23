@@ -1,7 +1,7 @@
 "use client"
 import { revalidatePathAction } from "@/app/utils/actions/revalidation";
 import Post from "@/app/components/entities/post/post";
-import { PostPlaceholder } from "@/app/[lang]/battles/create/__components/forms/battle";
+import { PostPlaceholder } from "@/app/[lang]/battles/create/components/forms/battle";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { useAppSelector } from "@/app/lib/redux/store";
 import { Post as TPost, useUserPinnedTracksSuspenseQuery, useUserSwitchPostPinnedMutation } from "@/app/utils/graphql-requests/generated/schema";

@@ -7,6 +7,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import { Text } from 'lucide-react';
+import MainButton from "@/app/components/common/main-button/main-button";
 
 type Inputs = {
     title: string,
@@ -83,12 +84,12 @@ export default function PlaylistForm({
                 </div>
 
                 <div className="form-control mt-4">
-                    <button disabled={isLoading} type="submit" className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <MainButton disabled={isLoading} type="submit" color="primary">
                         {
                             isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                         }
                         {dictionary.forms.playlist.submit}
-                    </button>
+                    </MainButton>
                 </div>
             </form>
         </div>
