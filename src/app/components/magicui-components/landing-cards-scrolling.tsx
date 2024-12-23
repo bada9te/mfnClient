@@ -20,18 +20,18 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        "relative w-64 cursor-pointer overflow-hidden rounded-xl border p-4 border-gray-50/[.1] bg-gray-50/[.10] hover:bg-gray-50/[.15]",
+        "relative w-64 cursor-pointer overflow-hidden rounded-xl p-4 bg-base-content",
       )}
     >
       <div className="flex flex-col text-base-content">
         <div className="flex flex-row items-center gap-2">
           <Image alt="info-image" width={10} height={10} className="rounded-full" src={img} />
-          <figcaption className="text-sm font-medium dark:text-base-content">
+          <figcaption className="text-sm font-medium text-base-300">
             {/* @ts-ignore */}
             {dictionary.landing.whishes[id].title}
           </figcaption>
         </div>
-        <blockquote className="mt-2 text-sm">
+        <blockquote className="mt-2 text-sm text-base-300">
           {/* @ts-ignore */}
           {dictionary.landing.whishes[id].body}
         </blockquote>
@@ -46,7 +46,7 @@ export function MarqueeDemo({
   dictionary: Awaited<ReturnType<typeof getDictionary>>["app"]
 }) {
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background md:shadow-xl">
+    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background">
       <Marquee pauseOnHover className="[--duration:20s]">
         {
           firstRow.map((review, key) => (

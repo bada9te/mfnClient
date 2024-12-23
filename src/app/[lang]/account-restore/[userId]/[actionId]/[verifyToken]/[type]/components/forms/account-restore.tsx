@@ -1,9 +1,10 @@
 "use client"
+import MainButton from "@/app/components/common/main-button/main-button";
 import { formsConstants } from "@/app/config/forms";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { useModerationActionDeleteMutation, useUserRestoreAccountMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { getCookie, deleteCookie } from "cookies-next";
-import { AsteriskSquare, RectangleEllipsis, Text } from "lucide-react";
+import { AsteriskSquare, RectangleEllipsis, Text, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -245,19 +246,17 @@ export default function AccountRestoreForm(props: {
                 
 
                 <div className="form-control mt-4">
-                    <button disabled={isLoading} type="submit" className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <MainButton disabled={isLoading} type="submit" color="primary">
                         {
                             isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                         }
                         {dictionary.forms["account-restore"].submit}
-                    </button>
+                    </MainButton>
                 </div>
 
                 <label className="label flex flex-col gap-3 justify-start items-start mt-5">
                     <button className="btn btn-error btn-sm  w-full bg-red-600 text-base-content hover:bg-red-400" onClick={handleModerationCancel}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                            <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clipRule="evenodd" />
-                        </svg>
+                        <X/>
                         {dictionary.forms["account-restore"].cancel}
                     </button>
                 </label>

@@ -51,7 +51,7 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        dark: {
+        dim: {
           ...require("daisyui/src/theming/themes")["dim"],
           ".:hover": {
             "background-color": "#1ba39c",

@@ -1,4 +1,4 @@
-import ProfileCard from "@/app/components/common/profile-card/profile-card";
+import ProfileCard from "@/app/[lang]/profile/components/profile-card/profile-card";
 import PostContainer from "@/app/components/containers/posts-container/post-container";
 import PostsContainerProfile from "@/app/components/containers/posts-container/posts-container-profile";
 import PostsContainerSkeleton from "@/app/components/containers/posts-container/posts-container-skeleton";

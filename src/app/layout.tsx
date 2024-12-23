@@ -20,7 +20,7 @@ export default function RootLayout({
   params: { lang: TLang }
 }>) {
   return (
-    <html lang={params.lang} data-theme="light">
+    <html lang={params.lang} data-theme="dim">
       <body className={font.className}>
         <RainbowkitAppProvider>
             <ApolloWrapper>

@@ -14,13 +14,13 @@ const getColor = (rarity: string) => {
 export default function Achievement(props: {data: TAchievement, isCompleted: boolean}) {
     const {data, isCompleted} = props;
     return (
-        <div className="card bg-base-300  text-neutral-content w-80 relative">
+        <div className="card bg-base-100 text-neutral-content w-80 relative">
             <div className={`w-2 h-full ${getColor(data.rarity || "")} absolute `}></div>
 
             {
                 isCompleted
                 &&
-                <CheckCheck />
+                <CheckCheck className="absolute top-3 left-5"/>
             }
 
             <div className="card-body items-center text-center">

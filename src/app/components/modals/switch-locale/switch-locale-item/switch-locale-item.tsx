@@ -17,7 +17,7 @@ export default function SwitchLocaleItem({locale, handleSelect, selected, title,
     }, [selected, locale]);
 
     return (
-        <div className={`card w-full md:w-[150px] shadow-xl rounded-xl ${selected === locale ? 'bg-base-100' : 'bg-base-300'} hover:bg-base-100 cursor-pointer `} onClick={() => handleSelect(locale)}>
+        <div className={`card w-full md:w-[150px] shadow-xl rounded-xl ${selected === locale ? 'bg-base-100' : 'bg-base-300'} duration-300 hover:bg-base-100 cursor-pointer `} onClick={() => handleSelect(locale)}>
             <div className="h-[40px] bg-base-200 rounded-lg flex flex-row justify-between items-center px-2">
                 <p className="font-bold text-base-content">{title}</p>
                 {

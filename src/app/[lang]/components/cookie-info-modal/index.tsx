@@ -31,18 +31,17 @@ export default function WeAreUsingCookiesModal() {
                 translate-x-[50%] md:translate-x-0 -left-1/2 
             "
         >
-            <div className="flex flex-row gap-4 bg-base-300 backdrop-blur-xl rounded-xl shadow-lg p-3 relative">
+            <div className="flex flex-row gap-4 bg-base-content backdrop-blur-xl rounded-xl shadow-lg p-3 relative">
                 <Image src={"/assets/icons/cookie.png"} alt="cookie" width={400} height={400} className="w-24 md:w-32 h-24 md:h-32"/>
-                <div className="w-full h-full text-base-content">
+                <div className="w-full h-full text-base-300">
                     <span className="text-md font-bold">We use only essential cookies to provide you with the best possible experience on our website.</span>
                     <br/>
                     <p className="text-sm max-w-72 mt-1">Authentication cookies are necessary for secure logins.</p>
                     <div className="m-2 md:m-0 block md:absolute bottom-5 right-5 justify-self-end self-end">
                         <MainButton
-                            handler={handleCookieOk}
+                            onClick={handleCookieOk}
+                            className="w-[80px] h-[20px]"
                             color="primary"
-                            width="80px"
-                            height="20px"
                         >
                             Ok
                         </MainButton>

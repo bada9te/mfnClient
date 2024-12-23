@@ -1,4 +1,5 @@
 "use client"
+import MainButton from "@/app/components/common/main-button/main-button";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { useUserConfirmAccountMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { RectangleEllipsis } from "lucide-react";
@@ -71,12 +72,12 @@ export default function AccountConfirminationForm(props: {
                 </label>
 
                 <div className="form-control mt-4">
-                    <button disabled={isLoading} type="submit" className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <MainButton color="primary" disabled={isLoading} type="submit">
                         {
                             isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                         }
                         {dictionary.forms["account-confirmination"].confirm}
-                    </button>
+                    </MainButton>
                 </div>
             </form>
         </div>

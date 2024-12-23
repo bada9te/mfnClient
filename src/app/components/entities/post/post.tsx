@@ -232,7 +232,32 @@ export default function Post(props: {
                 </div>
                 
             </div>
-                
+            
+            {
+                (handleSelect || handleRemove) &&
+                <div className="bg-base-300 absolute top-[100px] right-0 flex items-center gap-2 justify-start w-full rounded-none p-2 backdrop-blur-md bg-opacity-55">
+                    {
+                        handleSelect && 
+                        <button
+                            onClick={() => handleSelect(data)}
+                            className="w-fit h-fit p-1 btn btn-xs btn-primary"
+                        >
+                            <CheckCheck width={16}/>
+                            {dictionary.entities.post.select}
+                        </button>
+                    }
+                    {
+                        handleRemove &&
+                        <button
+                            onClick={() => handleRemove(data)}
+                            className="w-fit h-fit p-1 btn btn-xs btn-error rounded-full"
+                        >
+                            <PinOff width={16}/>
+                            {dictionary.entities.post.delete}
+                        </button>
+                    }
+                </div>
+            }
 
             <div className="card-actions justify-center p-2 mt-2 flex flex-row text-[#20252e]">
                 {
@@ -247,32 +272,6 @@ export default function Post(props: {
                             <Play className="w-5 h-5"/>
                             {dictionary.entities.post.play}
                         </button>
-                }
-            </div>
-            <div className="bg-base-300 absolute bottom-[-44px] flex items-center rounded-2xl">
-                {
-                    handleSelect && 
-                    <MainButton
-                        handler={() => handleSelect(data)}
-                        color="success"
-                        height="8"
-                        width="fit"
-                    >
-                        <CheckCheck className="mr-1"/>
-                        {dictionary.entities.post.select}
-                    </MainButton>
-                }
-                {
-                    handleRemove &&
-                    <MainButton
-                        handler={() => handleRemove(data)}
-                        color="error"
-                        height="8"
-                        width="fit"
-                    >
-                        <PinOff className="mr-1"/>
-                        {dictionary.entities.post.delete}
-                    </MainButton>
                 }
             </div>
         </div>
