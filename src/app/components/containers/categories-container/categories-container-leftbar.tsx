@@ -1,5 +1,5 @@
 "use client"
-import CategoryLeftBar from "@/app/components/bars/category-leftbar/category-leftbar";
+import CategoryLeftBar from "@/app/[lang]/components/bars/category-leftbar";
 import {genres} from "@/static-data/categories";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
 import formatNumber from "@/app/utils/common-functions/formatNumber";

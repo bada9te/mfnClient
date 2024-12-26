@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useRef, useState } from "react";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
-import SwitchLocaleItem from "./switch-locale-item/switch-locale-item";
+import SwitchLocaleItem from "./switch-locale-item";
 import { usePathname, useRouter } from "next/navigation";
 import { TLang } from "@/types/language";
 import { setCookie, getCookie } from "cookies-next";

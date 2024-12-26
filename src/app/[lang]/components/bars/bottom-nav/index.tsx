@@ -1,11 +1,11 @@
 "use client"
-import LeftBarDrawer from "./components/leftbar-drawer/leftbar-drawer"
-import RightBarDrawer from "./components/righbar-drawer/rightbar-drawer";
+import LeftBarDrawer from "./components/leftbar-drawer"
+import RightBarDrawer from "./components/righbar-drawer";
 import Link from "next/link";
 import {useAppSelector} from "@/app/lib/redux/store";
 import {usePathname} from "next/navigation";
 import {useRef} from "react";
-import PlayerModal from "./components/player-modal/player-modal";
+import PlayerModal from "./components/player-modal";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { AudioLines, BadgePlus, Music, UserSearch } from "lucide-react";
 

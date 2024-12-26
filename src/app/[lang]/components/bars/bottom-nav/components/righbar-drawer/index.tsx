@@ -4,8 +4,8 @@ import {setTab} from "@/app/lib/redux/slices/bottom-bar";
 import {useAppDispatch} from "@/app/lib/redux/store";
 import { User, useUsersByNicknameLazyQuery } from "@/app/utils/graphql-requests/generated/schema";
 import {LegacyRef, useEffect, useState} from "react";
-import RightbarDrawerUser from "./rigthbar-drawer-user/rightbar-drawer-user";
-import RightbarDrawerUserSkeleton from "./rigthbar-drawer-user/rightbar-drawer-user-skeleton";
+import RightbarDrawerUser from "./rigthbar-drawer-user";
+import RightbarDrawerUserSkeleton from "./rigthbar-drawer-user/skeleton";
 import { getDictionary } from "@/app/dictionaries/dictionaries";
 import { Search } from "lucide-react";
 
