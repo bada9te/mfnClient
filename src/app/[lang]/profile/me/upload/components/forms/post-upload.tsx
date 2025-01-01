@@ -1,15 +1,15 @@
 "use client"
-import {genres} from "@/static-data/categories";
+import {genres} from "@/app/data/categories";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useSnackbar} from "notistack";
 import {usePostCreateMutation} from "@/app/utils/graphql-requests/generated/schema";
 import {useAppSelector} from "@/app/lib/redux/store";
 import {useRouter} from "next/navigation";
 import { useRef, useState } from "react";
-import ImageCropperModal from "@/app/components/modals/cropper-modal";
+import ImageCropperModal from "@/app/[lang]/components/modals/cropper-modal";
 import blobToFile, { IBlob } from "@/app/utils/common-functions/blobToFile";
 import { revalidatePathAction } from "@/app/utils/actions/revalidation";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { Text } from "lucide-react";
 import validateFile from "@/app/utils/common-functions/fileValidator";
 

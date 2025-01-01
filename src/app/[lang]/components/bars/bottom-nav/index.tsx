@@ -6,7 +6,7 @@ import {useAppSelector} from "@/app/lib/redux/store";
 import {usePathname} from "next/navigation";
 import {useRef} from "react";
 import PlayerModal from "./components/player-modal";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { AudioLines, BadgePlus, Music, UserSearch } from "lucide-react";
 
 export default function BottomNav({

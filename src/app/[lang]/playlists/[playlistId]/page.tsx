@@ -1,9 +1,9 @@
-import PlaylistContainer from "@/app/components/containers/playlists-container/playlist-container";
-import PlaylistSkeleton from "@/app/components/entities/playlist/playlist-skeleton";
-import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import PlaylistContainer from "@/app/[lang]/components/containers/playlists-container/playlist-container";
+import PlaylistSkeleton from "../../components/entities/playlist/playlist-skeleton";
+import HeroWrapper from "../../components/wrappers/hero-wrapper";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { PreloadQuery } from "@/app/lib/apollo/client";
-import { TLang } from "@/types/language";
+import { TLang } from "@/app/types/language";
 import { PLAYLIST_QUERY } from "@/app/utils/graphql-requests/playlists";
 import { Metadata } from "next";
 import { Suspense } from "react";

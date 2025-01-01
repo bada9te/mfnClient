@@ -1,7 +1,7 @@
 import AccountRestoreForm from "./components/forms/account-restore";
-import HeroWrapperForm from "@/app/components/wrappers/hero-wrapper-form";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
-import { TLang } from "@/types/language";
+import HeroWrapperForm from "@/app/[lang]/components/wrappers/hero-wrapper-form";
+import { getDictionary } from "@/app/translations/dictionaries";
+import { TLang } from "@/app/types/language";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

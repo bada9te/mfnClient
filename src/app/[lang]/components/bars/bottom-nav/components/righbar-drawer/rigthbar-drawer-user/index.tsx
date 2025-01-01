@@ -1,7 +1,7 @@
 "use client"
 import { User } from "@/app/utils/graphql-requests/generated/schema";
 import Image from "next/image";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import getIpfsUrl from "@/app/utils/common-functions/getIpfsUrl";
 import Link from "next/link";
 import { UserIcon } from "lucide-react";

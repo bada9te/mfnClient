@@ -1,8 +1,8 @@
 "use client"
 import { revalidatePathAction } from "@/app/utils/actions/revalidation";
-import Post from "@/app/components/entities/post/post";
+import Post from "@/app/[lang]/components/entities/post/post";
 import { PostPlaceholder } from "@/app/[lang]/battles/create/components/forms/battle";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { useAppSelector } from "@/app/lib/redux/store";
 import { Post as TPost, useUserPinnedTracksSuspenseQuery, useUserSwitchPostPinnedMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { Pin } from "lucide-react";

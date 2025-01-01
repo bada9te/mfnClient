@@ -1,4 +1,4 @@
-import { TLang } from "@/types/language";
+import { TLang } from "@/app/types/language";
 import { useEffect, useState } from "react";
 
 

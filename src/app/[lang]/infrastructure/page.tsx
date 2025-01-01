@@ -1,4 +1,4 @@
-import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import HeroWrapper from "../components/wrappers/hero-wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import ChainsInfo from "./components/chains-info";

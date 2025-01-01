@@ -1,6 +1,6 @@
 "use client"
-import MainButton from "@/app/components/common/main-button/main-button";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { useUserConfirmAccountMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { RectangleEllipsis } from "lucide-react";
 import { useRouter } from "next/navigation";

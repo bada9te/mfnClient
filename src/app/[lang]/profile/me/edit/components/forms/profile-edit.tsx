@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/redux/store";
 import { setUser } from "@/app/lib/redux/slices/user";
 import { useEffect, useState } from "react";
 import { revalidatePathAction } from "@/app/utils/actions/revalidation";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import Link from "next/link";
 import envCfg from "@/app/config/env";
 import { setCookie } from "cookies-next";

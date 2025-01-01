@@ -1,12 +1,12 @@
 "use client"
-import InfoImage from "@/app/components/common/info-image/info-image";
+import InfoImage from "@/app/[lang]/components/common/info-image/info-image";
 import {setTab} from "@/app/lib/redux/slices/bottom-bar";
 import {useAppDispatch} from "@/app/lib/redux/store";
 import { User, useUsersByNicknameLazyQuery } from "@/app/utils/graphql-requests/generated/schema";
 import {LegacyRef, useEffect, useState} from "react";
 import RightbarDrawerUser from "./rigthbar-drawer-user";
 import RightbarDrawerUserSkeleton from "./rigthbar-drawer-user/skeleton";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { Search } from "lucide-react";
 
 export default function RightBarDrawer(props: {

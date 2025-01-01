@@ -1,5 +1,5 @@
 "use client"
-import ImageCropperModal from "@/app/components/modals/cropper-modal";
+import ImageCropperModal from "@/app/[lang]/components/modals/cropper-modal";
 import { setUserAvatar, setUserBackground } from "@/app/lib/redux/slices/user";
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/store";
 import blobToFile, { IBlob } from "@/app/utils/common-functions/blobToFile";
@@ -9,7 +9,7 @@ import { useCallback, useRef, useState } from "react";
 import { useSnackbar } from "notistack";
 import ProfileProgress from "./components/profile-progress";
 import Image from "next/image";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import getIpfsUrl from "@/app/utils/common-functions/getIpfsUrl";
 import validateFile from "@/app/utils/common-functions/fileValidator";
 import { UserMinus, UserPlus } from "lucide-react";

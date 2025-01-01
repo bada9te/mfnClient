@@ -1,16 +1,16 @@
 
-import ProjectLinks from "@/app/components/common/project-links/projects-links";
-import RegisterExploreBtns from "@/app/components/common/register-explore-btns/register-explore-btns";
-import DotPattern from "@/app/components/magicui-components/dot-pattern";
-import { MarqueeDemo } from "@/app/components/magicui-components/landing-cards-scrolling";
-import Ripple from "@/app/components/magicui-components/ripple";
+import ProjectLinks from "@/app/[lang]/components/common/project-links/projects-links";
+import RegisterExploreBtns from "@/app/[lang]/components/common/register-explore-btns/register-explore-btns";
+import DotPattern from "@/app/[lang]/components/magicui-components/dot-pattern";
+import { MarqueeDemo } from "@/app/[lang]/components/magicui-components/landing-cards-scrolling";
+import Ripple from "@/app/[lang]/components/magicui-components/ripple";
 import { cn } from "../utils/common-functions/cn";
-import { TLang } from "@/types/language";
+import { TLang } from "@/app/types/language";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getDictionary } from "../dictionaries/dictionaries";
-import { cardsData1, cardsData2 } from "@/static-data/landing";
+import { getDictionary } from "../translations/dictionaries";
+import { cardsData1, cardsData2 } from "@/app/data/landing";
 
 
 

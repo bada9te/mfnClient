@@ -1,6 +1,6 @@
 "use client"
 import "./globals.css";
-import { TLang } from "@/types/language";
+import { TLang } from "@/app/types/language";
 import ReduxProvider from "./lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "./lib/apollo/apollo-wrapper";

@@ -5,12 +5,12 @@ import {formsConstants} from "@/app/config/forms";
 import {useSnackbar} from "notistack";
 import {useUserCreateMutation} from "@/app/utils/graphql-requests/generated/schema";
 import {useRouter} from 'next/navigation';
-import FormsSocials from "@/app/components/common/forms-socials/forms-socials";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import FormsSocials from "@/app/[lang]/components/common/forms-socials/forms-socials";
+import { getDictionary } from "@/app/translations/dictionaries";
 import Image from "next/image";
 import { useState } from "react";
 import { Mail, SquareAsterisk, Text } from "lucide-react";
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 
 type Inputs = {
     email: string;

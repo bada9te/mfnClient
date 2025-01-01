@@ -1,15 +1,15 @@
 import BarTabsBattles from "../../../components/navigation-bar";
-import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import HeroWrapper from "@/app/[lang]/components/wrappers/hero-wrapper";
 import {PreloadQuery} from "@/app/lib/apollo/client";
 import {Suspense} from "react";
-import BattlesContainerSkeleton from "@/app/components/containers/battles-container/battles-container-skeleton";
+import BattlesContainerSkeleton from "@/app/[lang]/components/containers/battles-container/battles-container-skeleton";
 import { BATTLES_USER_PARTICIPATED_IN_QUERY} from "@/app/utils/graphql-requests/battles";
-import { TLang } from "@/types/language";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { TLang } from "@/app/types/language";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import envCfg from "@/app/config/env";
-import BattlesContainerUser from "@/app/components/containers/battles-container/battles-container-user";
+import BattlesContainerUser from "@/app/[lang]/components/containers/battles-container/battles-container-user";
 
 export const metadata: Metadata = {
     title: 'Music From Nothing - Finished battles',

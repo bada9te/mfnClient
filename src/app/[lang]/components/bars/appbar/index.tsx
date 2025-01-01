@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ProfileButton from "./components/profile-button";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { ChartBarStacked, Earth, ListMusic, Menu, Swords } from "lucide-react";
 
 export default function AppBar({

@@ -1,11 +1,11 @@
 "use client"
 import React, { useEffect, useRef, useState } from "react";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import SwitchLocaleItem from "./switch-locale-item";
 import { usePathname, useRouter } from "next/navigation";
-import { TLang } from "@/types/language";
+import { TLang } from "@/app/types/language";
 import { setCookie, getCookie } from "cookies-next";
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 import { X } from "lucide-react";
 
 export default function SwitchLocaleModal({button, dictionary}: {button: React.ReactElement; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {

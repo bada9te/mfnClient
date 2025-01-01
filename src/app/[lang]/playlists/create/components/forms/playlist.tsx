@@ -1,13 +1,13 @@
 "use client"
 import { revalidatePathAction } from "@/app/utils/actions/revalidation";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { useAppSelector } from "@/app/lib/redux/store";
 import { usePlaylistCreateMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import { Text } from 'lucide-react';
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 
 type Inputs = {
     title: string,

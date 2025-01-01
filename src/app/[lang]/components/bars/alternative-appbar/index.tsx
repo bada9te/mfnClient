@@ -1,6 +1,6 @@
 "use client"
 import ProfileButtonAlternative from "./components/profile-button-alternative";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { ChartBarStacked, Earth, ListMusic, Swords } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

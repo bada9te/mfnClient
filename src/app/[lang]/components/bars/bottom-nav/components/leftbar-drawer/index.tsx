@@ -3,10 +3,10 @@ import {useAppDispatch, useAppSelector} from "@/app/lib/redux/store";
 import {setTab} from "@/app/lib/redux/slices/bottom-bar";
 import React, {LegacyRef, useEffect, useState} from "react";
 import { usePostsByTitleLazyQuery, Post as TPost } from "@/app/utils/graphql-requests/generated/schema";
-import Post from "@/app/components/entities/post/post";
-import InfoImage from "@/app/components/common/info-image/info-image";
-import PostSkeleton from "@/app/components/entities/post/post-skeleton";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import Post from "@/app/[lang]/components/entities/post/post";
+import InfoImage from "@/app/[lang]/components/common/info-image/info-image";
+import PostSkeleton from "@/app/[lang]/components/entities/post/post-skeleton";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { Search } from "lucide-react";
 
 export default function LeftBarDrawer(props: {

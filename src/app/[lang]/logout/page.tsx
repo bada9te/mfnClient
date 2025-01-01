@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/app/lib/redux/store";
 import { setUser } from "@/app/lib/redux/slices/user";
 import envCfg from "@/app/config/env";
-import { TLang } from "@/types/language";
+import { TLang } from "@/app/types/language";
 import { deleteCookie } from "cookies-next";
 import { httpLogOut } from "@/app/utils/http-requests/auth";
 import { useAccount, useDisconnect } from "wagmi";

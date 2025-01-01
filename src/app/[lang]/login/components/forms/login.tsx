@@ -8,13 +8,13 @@ import {useRouter} from "next/navigation";
 import {useAppDispatch} from "@/app/lib/redux/store";
 import {setUnreadNotificationsCount, setUser} from "@/app/lib/redux/slices/user";
 import {setCookie} from "cookies-next";
-import FormsSocials from "@/app/components/common/forms-socials/forms-socials";
+import FormsSocials from "@/app/[lang]/components/common/forms-socials/forms-socials";
 import envCfg from "@/app/config/env";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import Image from "next/image";
 import { useState } from "react";
 import { Mail, SquareAsterisk } from "lucide-react";
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 
 
 type Inputs = {

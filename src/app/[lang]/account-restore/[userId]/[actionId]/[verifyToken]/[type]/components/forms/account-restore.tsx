@@ -1,7 +1,7 @@
 "use client"
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 import { formsConstants } from "@/app/config/forms";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { useModerationActionDeleteMutation, useUserRestoreAccountMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { getCookie, deleteCookie } from "cookies-next";
 import { AsteriskSquare, RectangleEllipsis, Text, X } from "lucide-react";

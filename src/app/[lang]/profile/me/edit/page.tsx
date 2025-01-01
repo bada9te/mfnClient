@@ -6,8 +6,8 @@ import { Suspense } from "react";
 import { USER_QUERY } from "@/app/utils/graphql-requests/users";
 import ProfileCardSkeleton from "@/app/[lang]/profile/components/profile-card/profile-card-skelton";
 import envCfg from "@/app/config/env";
-import { TLang } from "@/types/language";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { TLang } from "@/app/types/language";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

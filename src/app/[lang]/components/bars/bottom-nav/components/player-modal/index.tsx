@@ -2,9 +2,9 @@
 import { setTab } from "@/app/lib/redux/slices/bottom-bar";
 import { useAppDispatch } from "@/app/lib/redux/store";
 import React, { useEffect, useRef, useState } from "react";
-import AudioPlayer from "@/app/components/common/player/player";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
-import MainButton from "@/app/components/common/main-button/main-button";
+import AudioPlayer from "@/app/[lang]/components/common/player/player";
+import { getDictionary } from "@/app/translations/dictionaries";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 import { X } from "lucide-react";
 
 export default function PlayerModal({button, dictionary}: {button: React.ReactElement; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {

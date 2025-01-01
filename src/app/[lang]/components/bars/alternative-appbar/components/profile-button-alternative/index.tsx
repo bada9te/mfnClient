@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useSnackbar } from "notistack";
 import Image from "next/image";
 import { USDCAddresses } from "@/app/lib/rainbowkit/config";
-import { type getDictionary } from "@/app/dictionaries/dictionaries";
+import { type getDictionary } from "@/app/translations/dictionaries";
 import SwitchLocaleModal from "../../../components/switch-locale-modal";
 import { BadgeHelp, Bell, Bookmark, Cog, DoorOpen, Languages, LogIn, RefreshCcw, User, Wallet } from "lucide-react";
 import getIpfsUrl from "@/app/utils/common-functions/getIpfsUrl";

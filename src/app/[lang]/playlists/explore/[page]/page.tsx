@@ -1,12 +1,12 @@
 import BarTabsPlaylists from "../../components/navigation-bar";
-import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
-import PlaylistsContainerPublic from "@/app/components/containers/playlists-container/playlists-container-public";
+import HeroWrapper from "@/app/[lang]/components/wrappers/hero-wrapper";
+import PlaylistsContainerPublic from "@/app/[lang]/components/containers/playlists-container/playlists-container-public";
 import {PreloadQuery} from "@/app/lib/apollo/client";
 import {Suspense} from "react";
-import PlaylistsContainerSkeleton from "@/app/components/containers/playlists-container/playlists-container-skeleton";
+import PlaylistsContainerSkeleton from "@/app/[lang]/components/containers/playlists-container/playlists-container-skeleton";
 import {PLAYLISTS_PUBLIC_AWAILABLE_QUERY} from "@/app/utils/graphql-requests/playlists";
-import { TLang } from "@/types/language";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { TLang } from "@/app/types/language";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -1,6 +1,6 @@
 "use client"
-import Footer from "@/app/components/common/footer/footer";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import Footer from "@/app/[lang]/components/common/footer/footer";
+import { getDictionary } from "@/app/translations/dictionaries";
 
 export default function CentralBlock({children, dictionary}: {
     children?: React.ReactNode;

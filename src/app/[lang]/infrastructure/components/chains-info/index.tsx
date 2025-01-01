@@ -1,4 +1,4 @@
-import ChainImage from "@/app/components/common/chain-image/chain-image";
+import ChainImage from "@/app/[lang]/components/common/chain-image/chain-image";
 import { MFNAddresses, USDCAddresses, config } from "@/app/lib/rainbowkit/config";
 import shortenAddress from "@/app/utils/common-functions/shortenAddress";
 import Link from "next/link";

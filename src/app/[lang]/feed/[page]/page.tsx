@@ -1,11 +1,11 @@
-import PostsContainerFeed from "@/app/components/containers/posts-container/posts-container-feed";
-import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import PostsContainerFeed from "@/app/[lang]/components/containers/posts-container/posts-container-feed";
+import HeroWrapper from "../../components/wrappers/hero-wrapper";
 import {PreloadQuery} from "@/app/lib/apollo/client";
 import {POSTS_QUERY} from "@/app/utils/graphql-requests/posts";
 import {Suspense} from "react";
-import PostsContainerSkeleton from "@/app/components/containers/posts-container/posts-container-skeleton";
-import { TLang } from "@/types/language";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import PostsContainerSkeleton from "@/app/[lang]/components/containers/posts-container/posts-container-skeleton";
+import { TLang } from "@/app/types/language";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
