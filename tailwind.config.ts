@@ -15,6 +15,10 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       keyframes: {
+        grid: {
+          "0%": { transform: "translateY(-50%)" },
+          "100%": { transform: "translateY(0)" },
+        },
         fullSpin: {
           '100%': {
             transform: 'rotate(-360deg)'
@@ -38,6 +42,7 @@ const config: Config = {
         },
       },
       animation: {
+        grid: "grid 15s linear infinite",
         fullSpin: 'fullSpin 10s linear infinite',
         ripple: "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",
         marquee: "marquee var(--duration) linear infinite",

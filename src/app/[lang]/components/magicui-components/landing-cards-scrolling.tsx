@@ -20,18 +20,18 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        "relative w-64 cursor-pointer overflow-hidden rounded-xl p-4 bg-base-content",
+        "relative w-64 cursor-pointer overflow-hidden rounded-xl p-4 bg-base-100",
       )}
     >
       <div className="flex flex-col text-base-content">
         <div className="flex flex-row items-center gap-2">
           <Image alt="info-image" width={10} height={10} className="rounded-full" src={img} />
-          <figcaption className="text-sm font-medium text-base-300">
+          <figcaption className="text-sm font-medium">
             {/* @ts-ignore */}
             {dictionary.landing.whishes[id].title}
           </figcaption>
         </div>
-        <blockquote className="mt-2 text-sm text-base-300">
+        <blockquote className="mt-2 text-sm">
           {/* @ts-ignore */}
           {dictionary.landing.whishes[id].body}
         </blockquote>
