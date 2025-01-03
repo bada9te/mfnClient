@@ -6,11 +6,11 @@ import Link from "next/link";
 export default function ChainsInfo() {
     console.log(Object.entries(MFNAddresses))
     return (
-        <div className="flex flex-row flex-wrap gap-4">
+        <div className="flex flex-row justify-center flex-wrap gap-4">
             {
                 Object.entries(MFNAddresses).map((data, key) => {
                     return (
-                        <div key={key} className="card bg-base-100 w-96 shadow-xl h-fit">
+                        <div key={key} className="card bg-base-100 w-80 md:w-96 shadow-xl h-fit">
                             <div className="card-body text-start">
                                 <div className="card-title flex flex-row gap-4">
                                     <ChainImage chainId={Number(data[0])}/> 
