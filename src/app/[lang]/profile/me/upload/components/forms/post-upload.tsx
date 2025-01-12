@@ -12,6 +12,7 @@ import { revalidatePathAction } from "@/app/utils/actions/revalidation";
 import { getDictionary } from "@/app/translations/dictionaries";
 import { Text } from "lucide-react";
 import validateFile from "@/app/utils/common-functions/fileValidator";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 
 type Inputs = {
     title: string;
@@ -177,14 +178,14 @@ export default function PostUploadForm({
                     <div className="label">
                         <span className="label-text-alt">{dictionary.forms["post-edit-upload"].title}</span>
                     </div>
-                    <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                    <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                         <input type="text" placeholder={dictionary.forms["post-edit-upload"].title} className="placeholder:text-gray-200 grow"
                             {...register("title", {
                                 maxLength: { value: 15, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 15` },
                                 required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                             })}
                         />
-                        <Text/>
+                        <Text size={16}/>
                     </label>
                     <div className="label">
                         {
@@ -198,14 +199,14 @@ export default function PostUploadForm({
                     <div className="label">
                         <span className="label-text-alt">{dictionary.forms["post-edit-upload"].description}</span>
                     </div>
-                    <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                    <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                         <input type="text" placeholder={dictionary.forms["post-edit-upload"].description} className="placeholder:text-gray-200 grow"
                             {...register("description", {
                                 maxLength: { value: 25, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 25` },
                                 required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                             })}
                         />
-                        <Text/>
+                        <Text size={16}/>
                     </label>
                     <div className="label">
                         {
@@ -222,7 +223,7 @@ export default function PostUploadForm({
                     </div>
                     <input 
                         type="file" 
-                        className="file-input file-input-bordered w-full file:text-base-content file:placeholder:text-gray-200 bg-base-300" 
+                        className="file-input file-input-sm file-input-bordered w-full file:text-base-content file:placeholder:text-gray-200 bg-base-300" 
                         onInput={e => handlePicture((e.target as HTMLInputElement).files?.[0] || null)}
                         {...register("image", {
                             required: { value: true, message: dictionary.forms["post-edit-upload"].required }
@@ -241,7 +242,7 @@ export default function PostUploadForm({
                         <span className="label-text">{dictionary.forms["post-edit-upload"].audio}</span>
                         <span className="label-text-alt">.mp3, .wav</span>
                     </div>
-                    <input type="file" className="file-input file-input-bordered w-full file:text-base-content bg-base-300" {
+                    <input type="file" className="file-input file-input-sm file-input-bordered w-full file:text-base-content bg-base-300" {
                         ...register("audio", {
                             required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                         })
@@ -258,7 +259,7 @@ export default function PostUploadForm({
                     <div className="label">
                         <span className="label-text">{dictionary.forms["post-edit-upload"].genre}</span>
                     </div>
-                    <select className="btn text-start bg-base-300" {
+                    <select className="btn btn-sm text-start bg-base-200" {
                         ...register("genre", {
                             required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                         })
@@ -281,12 +282,12 @@ export default function PostUploadForm({
                 </div>
 
                 <div className="form-control mt-4">
-                    <button disabled={isLoading} type="submit" className=" group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <MainButton type="submit" color="primary" disabled={isLoading}>
                         {
                             isLoading && <span className="loading loading-dots loading-sm mx-2"></span>
                         }
                         {dictionary.forms["post-edit-upload"].submit}
-                    </button>
+                    </MainButton>
                 </div>
             </form>
         </div>

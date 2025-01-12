@@ -63,7 +63,7 @@ export default function LoginForm({
                             <div className="label">
                                 <span className="label-text-alt">{dictionary.forms.login.email}</span>
                             </div>
-                            <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                 <input type="email" placeholder={dictionary.forms.login.email} className="placeholder:text-gray-200 grow" {
                                     ...register("email", {
                                         pattern: formsConstants.emailRegex,
@@ -71,7 +71,7 @@ export default function LoginForm({
                                     })
                                 }/>
 
-                            <Mail />
+                                <kbd><Mail size={16}/></kbd>
                             </label>
                             <div className="label">
                                 {
@@ -86,7 +86,7 @@ export default function LoginForm({
                             <div className="label">
                                 <span className="label-text-alt">{dictionary.forms.login.password}</span>
                             </div>
-                            <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                 <input type="password" placeholder={dictionary.forms.login.password} className="placeholder:text-gray-200 grow"
                                     {...register("password", {
                                         minLength: { value: 8, message: `${dictionary.forms.login["min-length"]} 8` },
@@ -94,7 +94,7 @@ export default function LoginForm({
                                         required: { value: true, message: `${dictionary.forms.login.required}` }
                                     })}
                                 />
-                                <SquareAsterisk/>
+                                <kbd><SquareAsterisk size={16}/></kbd>
                             </label>
                             <div className="label">
                                 {

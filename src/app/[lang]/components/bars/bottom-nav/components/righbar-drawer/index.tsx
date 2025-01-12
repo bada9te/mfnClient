@@ -52,7 +52,7 @@ export default function RightBarDrawer(props: {
                     style={{ backgroundSize: '400px 1000px', backgroundPosition: 'right' }}
                 >
                     {/* Sidebar content here */}
-                    <label className="input input-bordered flex items-center justify-between gap-2 bg-base-100 my-2">
+                    <label className="input input-sm input-bordered flex items-center justify-between gap-2 bg-base-100 my-2">
                         <input type="text" className="w-fit placeholder:text-gray-200 text-base-content" placeholder={props.dictionary?.modals["rightbar-drawer"]["rightbar-drawer"].search} onChange={e => setSq(e.target.value)} />
                         <Search />
                     </label>

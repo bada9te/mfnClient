@@ -12,6 +12,7 @@ import Link from "next/link";
 import envCfg from "@/app/config/env";
 import { setCookie } from "cookies-next";
 import { MailCheck, Text } from "lucide-react";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 
 
 type InputsNickname = {
@@ -256,7 +257,7 @@ export default function ProfileEditForm(props: {
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms["profile-edit"].nickname}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                             <input type="text" placeholder={dictionary.forms["profile-edit"].nickname} className="placeholder:text-gray-200 grow"
                                 {...registerNick("nickname", {
                                     minLength: { value: 4, message: `${dictionary.forms["profile-edit"]["min-length"]} 4` },
@@ -264,7 +265,7 @@ export default function ProfileEditForm(props: {
                                     required: { value: true, message: dictionary.forms["profile-edit"].required },
                                 })}
                             />
-                            <Text/>
+                            <Text size={16}/>
                         </label>
                         <div className="label">
                             {
@@ -273,9 +274,9 @@ export default function ProfileEditForm(props: {
                             }
                         </div>
                     </label>
-                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <MainButton color="primary" type="submit" className="w-full">
                         {dictionary.forms["profile-edit"].save}
-                    </button>
+                    </MainButton>
                 </form>
 
                 <form role="form" onSubmit={handleSubmitDescr(onSubmitDescription)} noValidate>
@@ -283,7 +284,7 @@ export default function ProfileEditForm(props: {
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms["profile-edit"].description}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                             <input type="text" placeholder={dictionary.forms["profile-edit"].description} className="placeholder:text-gray-200 grow"
                                 {...registerDescr("description", {
                                     minLength: { value: 4, message: `${dictionary.forms["profile-edit"]["min-length"]} 4` },
@@ -291,7 +292,7 @@ export default function ProfileEditForm(props: {
                                     required: { value: true, message: dictionary.forms["profile-edit"].required },
                                 })}
                             />
-                            <Text/>
+                            <Text size={16}/>
                         </label>
                         <div className="label">
                             {
@@ -300,9 +301,9 @@ export default function ProfileEditForm(props: {
                             }
                         </div>
                     </label>
-                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <MainButton color="primary" type="submit" className="w-full">
                         {dictionary.forms["profile-edit"].save}
-                    </button>
+                    </MainButton>
                 </form>
 
                 <div className="divider divider-primary mt-10">{dictionary.forms["profile-edit"].email}</div>
@@ -321,14 +322,14 @@ export default function ProfileEditForm(props: {
                                                 <div className="label">
                                                     <span className="label-text-alt">{dictionary.forms["profile-edit"]["link-email-new"]}</span>
                                                 </div>
-                                                <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                                <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                                     <input type="text" placeholder={dictionary.forms["profile-edit"]["link-email-new"]} className="placeholder:text-gray-200 grow"
                                                         {...registerLinkEmail("newEmail", {
                                                             pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
                                                             required: { value: true, message: dictionary.forms["profile-edit"].required },
                                                         })}
                                                     />
-                                                    <MailCheck/>
+                                                    <MailCheck size={16}/>
                                                 </label>
                                                 <div className="label">
                                                     {
@@ -338,9 +339,10 @@ export default function ProfileEditForm(props: {
                                                 </div>
                                             </label>
                         
-                                            <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+
+                                            <MainButton color="primary" type="submit" className="w-full">
                                                 {dictionary.forms["profile-edit"].request}
-                                            </button>
+                                            </MainButton>
                                         </form>
                                     </>
                                 );
@@ -351,7 +353,7 @@ export default function ProfileEditForm(props: {
                                             <div className="label">
                                                 <span className="label-text-alt">{dictionary.forms["profile-edit"]["old-email"]}</span>
                                             </div>
-                                            <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                            <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                                 <input type="email" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="placeholder:text-gray-200 grow"
                                                     {...registerEmail("oldEmail", {
                                                         pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
@@ -364,7 +366,7 @@ export default function ProfileEditForm(props: {
                                                         }
                                                     })}
                                                 />
-                                                <MailCheck/>
+                                                <MailCheck size={16}/>
                                             </label>
                                             <div className="label">
                                                 {
@@ -373,9 +375,9 @@ export default function ProfileEditForm(props: {
                                                 }
                                             </div>
                                         </label>
-                                        <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                        <MainButton color="primary" type="submit" className="w-full">
                                             {dictionary.forms["profile-edit"].request}
-                                        </button>
+                                        </MainButton>
                                     </form>
                                 );
                             }
@@ -403,7 +405,7 @@ export default function ProfileEditForm(props: {
                                             <div className="label">
                                                 <span className="label-text-alt">{dictionary.forms["profile-edit"].password}</span>
                                             </div>
-                                            <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                            <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                                 <input type="text" placeholder={dictionary.forms["profile-edit"]["old-email"]} className="placeholder:text-gray-200 grow"
                                                     {...registerPassword("oldEmail", {
                                                         pattern: {value: formsConstants.emailRegex, message: dictionary.forms["profile-edit"]["email-not-valid"]},
@@ -416,7 +418,7 @@ export default function ProfileEditForm(props: {
                                                         }
                                                     })}
                                                 />
-                                                <MailCheck/>
+                                                <MailCheck size={16}/>
                                             </label>
                                             <div className="label">
                                                 {
@@ -426,9 +428,9 @@ export default function ProfileEditForm(props: {
                                             </div>
                                         </label>
 
-                                        <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                                        <MainButton color="primary" type="submit" className="w-full">
                                             {dictionary.forms["profile-edit"].request}
-                                        </button>
+                                        </MainButton>
                                     </form>
                                 );
                             }

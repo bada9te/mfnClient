@@ -51,7 +51,7 @@ export default function EmailVerificationForm({
                     <div className="label">
                         <span className="label-text-alt">{dictionary.forms["email-verification"]["your-current-email"]}</span>
                     </div>
-                    <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                    <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                         <input type="email" placeholder={dictionary.forms["email-verification"].email} className="placeholder:text-gray-200 grow" {
                             ...register("email", {
                                 required: { value: true, message: dictionary.forms["email-verification"].required },
@@ -59,7 +59,7 @@ export default function EmailVerificationForm({
                             })
                         }/>
 
-                        <MailCheck/>
+                        <MailCheck size={16}/>
                     </label>
                     <div className="label">
                         {

@@ -58,13 +58,13 @@ export default function PlaylistForm({
                     <div className="label">
                         <span className="label-text-alt">{dictionary.forms.playlist.title}</span>
                     </div>
-                    <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                    <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                         <input type="text" placeholder={dictionary.forms.playlist.title} className="placeholder:text-gray-200 grow"
                             {...register("title", {
                                 required: { value: true, message: dictionary.forms.playlist.required }
                             })}
                         />
-                        <Text/>
+                        <Text size={16}/>
                     </label>
                     <div className="label">
                         {

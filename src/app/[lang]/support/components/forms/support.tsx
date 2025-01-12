@@ -57,7 +57,7 @@ export default function SupportForm({
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms.support.email}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                             <input type="email" placeholder={dictionary.forms.support.email} className="placeholder:text-gray-200 grow" {
                                 ...register("email", {
                                     pattern: { value: formsConstants.emailRegex, message: dictionary.forms.support["email-not-valid"] },
@@ -65,7 +65,7 @@ export default function SupportForm({
                                 })
                             }/>
 
-                            <Mail/>
+                            <Mail size={16}/>
                         </label>
                         <div className="label">
                             {
@@ -79,14 +79,14 @@ export default function SupportForm({
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms.support.reason}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                             <input type="text" placeholder={dictionary.forms.support.reason} className="placeholder:text-gray-200 grow" 
                                 {...register("contactReason", {
                                     required: {value: true, message: dictionary.forms.support.required}
                                 })}
                             />
 
-                            <CircleHelp />
+                            <CircleHelp size={16}/>
                         </label>
                         <div className="label">
                             {
@@ -101,14 +101,14 @@ export default function SupportForm({
                         <label className="label">
                             <span className="label-text">{dictionary.forms.support["support-details"]}</span>
                         </label>
-                        <textarea className="textarea textarea-bordered resize-none bg-base-300 placeholder:text-gray-200" rows={4} placeholder={dictionary.forms.support["support-details"]} {
+                        <textarea className="textarea textarea-bordered resize-none placeholder:text-gray-200 bg-base-200" rows={4} placeholder={dictionary.forms.support["support-details"]} {
                             ...register("details", {
                                 minLength: {value: 10, message: `${dictionary.forms.support["min-length"]} 10`},
                                 required: {value: true, message: dictionary.forms.support.required},
                             })
                         }></textarea>
 
-                        <Text className="absolute right-3 top-12"/>
+                        <Text className="absolute right-3 top-12" size={16}/>
 
                         {
                             errors.details &&
