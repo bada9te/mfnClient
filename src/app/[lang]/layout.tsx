@@ -7,6 +7,7 @@ import { TLang } from "@/app/types/language";
 import AvatarGrid from "@/app/[lang]/components/common/avatar-grid/avatar-grid";
 import WeAreUsingCookiesModal from "./components/cookie-info-modal";
 import AlternativeAppbar from "@/app/[lang]/components/bars/alternative-appbar";
+import PlayerModal from "./components/modals/player-modal";
 
 export default async function RootLayout({
   children,
@@ -73,6 +74,7 @@ export default async function RootLayout({
             <BottomNav dictionary={dict.components}/>
         </div>
 
+        <PlayerModal dictionary={dict.components}/>
         <WeAreUsingCookiesModal/>
     </div>
   );

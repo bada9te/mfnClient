@@ -68,7 +68,7 @@ export default function SelectTrackModal({
                 <div className="modal-box   text-gray-300 w-[100vw] h-fit no-scrollbar text-start flex flex-col">
                     <form method="dialog" style={{ width:"32px", position: 'absolute', right: '14px', top: '14px', marginBottom: '24px', zIndex: 10 }}>
                         {/* if there is a button in form, it will close the modal */}
-                        <MainButton onClick={onClose} color="error" className="w-8 h-fit">
+                        <MainButton onClick={onClose} color="error" className="w-[25px] h-[25px] p-1">
                             <X/>
                         </MainButton>
                     </form>
@@ -106,7 +106,7 @@ export default function SelectTrackModal({
 
                     <div className="modal-action z-50"> 
                         <div className="w-full flex flex-row gap-4">
-                            <input ref={inputRef} className="input input-bordered join-item w-full bg-base-300 placeholder:text-gray-200" placeholder="Track title" />
+                            <input ref={inputRef} className="input input-sm input-bordered join-item w-full bg-base-200 placeholder:text-gray-200" placeholder="Track title" />
                             <MainButton
                                 onClick={handleSearch}
                                 color="primary"

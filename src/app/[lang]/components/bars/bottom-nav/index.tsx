@@ -2,12 +2,12 @@
 import LeftBarDrawer from "./components/leftbar-drawer"
 import RightBarDrawer from "./components/righbar-drawer";
 import Link from "next/link";
-import {useAppSelector} from "@/app/lib/redux/store";
+import {useAppDispatch, useAppSelector} from "@/app/lib/redux/store";
 import {usePathname} from "next/navigation";
 import {useRef} from "react";
-import PlayerModal from "./components/player-modal";
 import { getDictionary } from "@/app/translations/dictionaries";
 import { AudioLines, BadgePlus, Music, UserSearch } from "lucide-react";
+import { setModalIsOpened } from "@/app/lib/redux/slices/player";
 
 export default function BottomNav({
     dictionary
@@ -18,6 +18,7 @@ export default function BottomNav({
     const pathname = usePathname();
     const leftbarOpenerRef = useRef<HTMLInputElement | undefined>(undefined);
     const rightbarOpenerRef = useRef<HTMLInputElement | undefined>(undefined);
+    const dispatch = useAppDispatch();
     
 
     const handleOpen = (type: "left" | "right" | "center") => {
@@ -30,6 +31,11 @@ export default function BottomNav({
             case "right":
                 rightbarOpenerRef && rightbarOpenerRef.current?.click();
         }
+    }
+
+    // opens music-player modal
+    const openPlayerModal = () => {
+        dispatch(setModalIsOpened(true));
     }
 
 
@@ -47,15 +53,11 @@ export default function BottomNav({
                     <BadgePlus/>
                     <span className="btm-nav-label">{dictionary?.bars["bottom-nav"]["new-post"]}</span>
                 </Link>
-                <PlayerModal
-                    dictionary={dictionary}
-                    button={
-                        <button className={bottomBarTab === "player" ? "active" : ""}>
-                            <AudioLines/>
-                            <span className="btm-nav-label">{dictionary?.bars["bottom-nav"].player}</span>
-                        </button>
-                    }
-                />
+                
+                <button className={bottomBarTab === "player" ? "active" : ""} onClick={openPlayerModal}>
+                    <AudioLines/>
+                    <span className="btm-nav-label">{dictionary?.bars["bottom-nav"].player}</span>
+                </button>
                 
                 <button className={bottomBarTab === "people" ? "active" : ""} onClick={() => handleOpen("right")}>
                     <UserSearch/>

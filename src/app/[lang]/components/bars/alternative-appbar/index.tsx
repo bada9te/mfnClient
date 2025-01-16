@@ -9,6 +9,7 @@ import SearchItem from "./components/search-item";
 import { useAppSelector } from "@/app/lib/redux/store";
 import { cn } from "@/app/utils/common-functions/cn";
 import { usePostsByTitleLazyQuery, useUsersByNicknameLazyQuery } from "@/app/utils/graphql-requests/generated/schema";
+import getIpfsUrl from "@/app/utils/common-functions/getIpfsUrl";
 
 export default function AlternativeAppbar({
     dictionary
@@ -94,10 +95,13 @@ export default function AlternativeAppbar({
                                     return usersByNicknameData.usersByNickname.map((i, key) => {
                                         return (
                                             <li key={key} className="suggestion-item flex items-center gap-2">
-                                                <button className="btn btn-neutral btn-sm">{i.nick}</button>
+                                                <Link href={`/profile/${i._id}/1`} className="btn btn-neutral btn-sm flex flex-row gap-2 items-center justify-center px-1 pr-2">
+                                                    <Image src={i.avatar.length ? getIpfsUrl(i.avatar) : '/assets/bgs/clear.png'} alt="user" width={100} height={100} className="w-5 h-5 rounded-full"/>
+                                                    <span>{i.nick}</span>
+                                                </Link>
                                             </li>
                                         );
-                                    })
+                                    });
                                     
                                 }
                             })()
@@ -110,10 +114,10 @@ export default function AlternativeAppbar({
                                     return postsByTitleData.postsByTitle.map((i, key) => {
                                         return (
                                             <li key={key} className="suggestion-item flex items-center gap-2">
-                                                <button className="btn btn-neutral btn-sm">{i.title}</button>
+                                                <Link href={`/post/${i._id}/${i.owner?._id}`} className="btn btn-neutral btn-sm">{i.title}</Link>
                                             </li>
                                         );
-                                    })
+                                    });
                                 }
                             })()
                         }
@@ -139,13 +143,13 @@ export default function AlternativeAppbar({
                 </div>
             )}
 
-            <div className="h-full flex flex-col justify-between">
+            <div className="h-full grid grid-rows-8 gap-3 overflow-hidden">
                 <ul 
                     tabIndex={0}      
                     className={
                         cn(
-                            user?._id ? 'max-h-[330px]' : 'max-h-full',
-                            `w-full bg-base-100 text-base-content menu menu-sm dropdown-content overflow-y-auto no-scrollbar z-[1] p-2 shadow rounded-box flex flex-col flex-nowrap`
+                            'overflow-y-auto h-full grid-rows-subgrid row-span-3',
+                            `w-full bg-base-100 text-base-content menu menu-sm dropdown-content no-scrollbar z-[1] p-2 shadow rounded-box flex flex-col flex-nowrap`
                         )
                     }
                 >
@@ -167,17 +171,15 @@ export default function AlternativeAppbar({
                         </ul>
                     </li>
                     <li>
-                        
-                            <summary>
-                                <ListMusic/>
-                                {dictionary?.bars.appbar.playlists}
-                            </summary>
-                            <ul className="p-2 text-base-content shadow-none">
-                                <li><Link href={"/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
-                                <li><Link href={"/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
-                                <li><Link href={"/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
-                            </ul>
-                        
+                        <summary>
+                            <ListMusic/>
+                            {dictionary?.bars.appbar.playlists}
+                        </summary>
+                        <ul className="p-2 text-base-content shadow-none">
+                            <li><Link href={"/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
+                            <li><Link href={"/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
+                            <li><Link href={"/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
+                        </ul>
                     </li>
                     <li>
                         <details>
@@ -205,7 +207,9 @@ export default function AlternativeAppbar({
                     </li>
                 </ul>
 
-                <ProfileButtonAlternative dictionary={dictionary}/>
+                <div className="grid-rows-subgrid row-span-5 flex items-end">
+                    <ProfileButtonAlternative dictionary={dictionary}/>
+                </div>
             </div>
            
         </div>

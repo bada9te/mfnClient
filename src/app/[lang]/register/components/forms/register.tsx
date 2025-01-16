@@ -56,7 +56,9 @@ export default function RegisterForm({
             <div className="flex flex-row">
                 <div className="card-body m-1 bg-base-100 text-base-content rounded-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl">
                 <form role="form" onSubmit={handleSubmit(onSubmit)} noValidate className="w-64 md:w-80">
-                    <div className="divider divider-primary">{dictionary.forms.register.register}</div>
+                        <div className="flex flex-row text-3xl font-bold mb-4">
+                            {dictionary.forms.register.register}
+                        </div>
 
                         <label className="form-control w-full max-w-xs">
                             <div className="label">

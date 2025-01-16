@@ -1,14 +1,14 @@
 "use client"
 import envCfg from '@/app/config/env';
 import { getDictionary } from '@/app/translations/dictionaries';
-import { useAppSelector } from '@/app/lib/redux/store';
+import { useAppDispatch, useAppSelector } from '@/app/lib/redux/store';
 import getIpfsUrl from '@/app/utils/common-functions/getIpfsUrl';
-import { usePostsMostRecentByFollowingLazyQuery, usePostsMostRecentLazyQuery, usePostsMostRecentQuery } from '@/app/utils/graphql-requests/generated/schema';
+import { usePostsMostRecentByFollowingLazyQuery, usePostsMostRecentLazyQuery } from '@/app/utils/graphql-requests/generated/schema';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import PlayerModal from '../../bars/bottom-nav/components/player-modal';
 import { AudioLines, BadgePlus } from 'lucide-react';
+import { setModalIsOpened } from '@/app/lib/redux/slices/player';
 
 
 const AvatarGrid = ({
@@ -23,6 +23,7 @@ const AvatarGrid = ({
   const [showFollowing, setShowFollowing] = useState(true);
   const [showRecents, setShowRecents] = useState(true);
   const [urls, setUrls] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
 
   const handleShowFollowingToggle = () => {
     if (!showFollowing == true && user) {
@@ -58,10 +59,10 @@ const AvatarGrid = ({
     }
   }, [user]);
 
-  useEffect(() => {
-
-  }, [])
-
+  // opens music-player modal
+  const openPlayerModal = () => {
+    dispatch(setModalIsOpened(true));
+  }
 
   return (
     <div className='bg-base-300 flex items-center justify-between flex-col gap-4 py-4 pb-1 rounded-2xl shadow-xl min-h-full text-base-content'>
@@ -174,15 +175,11 @@ const AvatarGrid = ({
             <BadgePlus/>
             <span className="text-sm">{dictionary?.bars["bottom-nav"]["new-post"]}</span>
         </Link>
-        <PlayerModal
-            dictionary={dictionary}
-            button={
-                <button className='btn btn-ghost h-fit rounded-none p-4'>
-                    <AudioLines/>
-                    <span className="text-sm">{dictionary?.bars["bottom-nav"].player}</span>
-                </button>
-            }
-        />
+
+        <button className='btn btn-ghost h-fit rounded-none p-4' onClick={openPlayerModal}>
+            <AudioLines/>
+            <span className="text-sm">{dictionary?.bars["bottom-nav"].player}</span>
+        </button>
       </div>
     </div>
   );

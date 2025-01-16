@@ -52,7 +52,9 @@ export default function PlaylistForm({
     return (
         <div className="card overflow-hidden bg-base-100 rounded-2xl">
             <form role="form" className="card-body m-1 text-base-content  bg-base-100 rounded-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="divider divider-primary">{dictionary.forms.playlist.setup}</div>
+                <div className="flex flex-row text-3xl font-bold mb-4">
+                    {dictionary.forms.playlist.setup}
+                </div>
 
                 <label className="form-control w-full">
                     <div className="label">

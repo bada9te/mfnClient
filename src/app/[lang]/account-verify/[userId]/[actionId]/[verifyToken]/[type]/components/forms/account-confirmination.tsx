@@ -54,14 +54,14 @@ export default function AccountConfirminationForm(props: {
                     <div className="label">
                         <span className="label-text-alt">{dictionary.forms["account-confirmination"].code}</span>
                     </div>
-                    <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                    <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                         <input type="text" placeholder={dictionary.forms["account-confirmination"].code} className="placeholder:text-gray-200 grow" {
                             ...register("code", {
                                 required: { value: true, message: dictionary.forms["account-confirmination"].required },
                             })
                         }/>
 
-                        <RectangleEllipsis/>
+                        <RectangleEllipsis size={16}/>
                     </label>
                     <div className="label">
                         {

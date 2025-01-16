@@ -149,7 +149,10 @@ export default function BattleForm({
     return (
         <div className="card overflow-hidden bg-base-100 rounded-2xl">
             <div className="card-body m-1 text-base-content bg-base-100 px-4 rounded-2xl">
-                <div className="divider divider-primary px-4 md:px-0">{dictionary.forms.battle.setup}</div>
+
+                <div className="flex flex-row text-3xl font-bold mb-4">
+                    {dictionary.forms.battle.setup}
+                </div>
                 <div className="flex flex-wrap gap-5 mt-5 w-full justify-around mb-10">
                     <div className="flex flex-col gap-3">
                         <p className='font-bold text-lg'>{dictionary.forms.battle["your-track"]}</p>

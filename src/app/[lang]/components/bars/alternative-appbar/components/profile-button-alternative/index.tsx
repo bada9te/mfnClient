@@ -90,7 +90,7 @@ export default function ProfileButtonAlternative({
                             <div className="dropdown dropdown-start dropdown-top bg-opacity-0 rounded-full">
                                 <button className="rounded-full">
                                     <Image 
-                                        src={getIpfsUrl(user?.user?.avatar)} 
+                                        src={user?.user?.avatar?.length ? getIpfsUrl(user?.user?.avatar) : '/assets/bgs/clear.png'} 
                                         alt={`Avatar`} 
                                         className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" 
                                         width={100} 
@@ -196,10 +196,11 @@ export default function ProfileButtonAlternative({
                     
                     <figure>
                         <Image 
-                            src={getIpfsUrl(user?.user?.background)} 
+                            src={user?.user?.background?.length ? getIpfsUrl(user?.user?.background) : '/assets/bgs/clear.png'} 
                             alt={`background`} 
                             width={1000} 
                             height={400}
+                            className="max-h-[200px]"
                         />
                     </figure>
                     <div className="card-body">

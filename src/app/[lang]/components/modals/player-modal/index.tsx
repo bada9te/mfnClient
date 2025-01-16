@@ -1,16 +1,18 @@
 "use client"
 import { setTab } from "@/app/lib/redux/slices/bottom-bar";
-import { useAppDispatch } from "@/app/lib/redux/store";
+import { setModalIsOpened } from "@/app/lib/redux/slices/player";
+import { useAppDispatch, useAppSelector } from "@/app/lib/redux/store";
 import React, { useEffect, useRef, useState } from "react";
 import AudioPlayer from "@/app/[lang]/components/common/player/player";
 import { getDictionary } from "@/app/translations/dictionaries";
 import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 import { X } from "lucide-react";
 
-export default function PlayerModal({button, dictionary}: {button: React.ReactElement; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
+export default function PlayerModal({dictionary}: {dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const dispatch = useAppDispatch();
     const [isMounted, setIsMounted] = useState(false);
+    const modalIsOpened = useAppSelector(state => state.player.modalIsOpened);
 
     useEffect(() => {
         setIsMounted(true);
@@ -23,7 +25,15 @@ export default function PlayerModal({button, dictionary}: {button: React.ReactEl
 
     const onClose = () => {
         dispatch(setTab(null));
+        dispatch(setModalIsOpened(false));
     }
+
+    // open player modal if it was opened before
+    useEffect(() => {
+        if (modalIsOpened) {
+            handleOpen();
+        }
+    }, [modalIsOpened]);
 
     if (!isMounted) {
         return;
@@ -31,9 +41,6 @@ export default function PlayerModal({button, dictionary}: {button: React.ReactEl
 
     return (
         <>
-            {React.cloneElement(button, {
-                onClick: handleOpen,
-            })}
             <dialog ref={ref} className="modal w-full cursor-default">
                 <form method="dialog" className="modal-backdrop w-[100vw]">
                     <button onClick={onClose}>close</button>

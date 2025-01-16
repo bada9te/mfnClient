@@ -4,7 +4,7 @@ import PlaylistForm from './playlist'
 import { getDictionary } from '@/app/translations/dictionaries'
 import { MockedProvider } from "@apollo/client/testing";
 import { gql } from '@apollo/client';
-import ReduxProvider from '@/lib/redux/provider';
+import ReduxProvider from '@/app/lib/redux/provider';
 
 jest.mock('next/headers', () => {
     return {
