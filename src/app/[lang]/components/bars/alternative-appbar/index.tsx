@@ -148,7 +148,7 @@ export default function AlternativeAppbar({
                     tabIndex={0}      
                     className={
                         cn(
-                            'overflow-y-auto h-full grid-rows-subgrid row-span-3',
+                            'overflow-y-auto h-full grid-rows-subgrid row-span-4',
                             `w-full bg-base-100 text-base-content menu menu-sm dropdown-content no-scrollbar z-[1] p-2 shadow rounded-box flex flex-col flex-nowrap`
                         )
                     }
@@ -207,7 +207,7 @@ export default function AlternativeAppbar({
                     </li>
                 </ul>
 
-                <div className="grid-rows-subgrid row-span-5 flex items-end">
+                <div className="grid-rows-subgrid row-span-4 flex items-end">
                     <ProfileButtonAlternative dictionary={dictionary}/>
                 </div>
             </div>
