@@ -1,5 +1,5 @@
 "use client"
-import PostSkeleton from "@/app/components/entities/post/post-skeleton";
+import PostSkeleton from "@/app/[lang]/components/entities/post/post-skeleton";
 
 
 export default function PinnedTracks() {

@@ -7,6 +7,7 @@ export interface IPlayerSlice {
     isMute: boolean;
     volume: number;
     post: Post | null;
+    modalIsOpened: boolean;
 }
 
 
@@ -15,7 +16,8 @@ const initialState: IPlayerSlice = {
     isLoop: false,
     isMute: false,
     volume: 0.3,
-    post: null
+    post: null,
+    modalIsOpened: false,
 };
 
 
@@ -45,6 +47,9 @@ export const playerSlice = createSlice({
         },
         setVolume: (state, action) => {
             state.volume = action.payload;
+        },
+        setModalIsOpened: (state, action) => {
+            state.modalIsOpened = action.payload;
         }
     },
 });
@@ -55,5 +60,6 @@ export const {
     setIsLoop,
     setIsMute,
     setVolume,
+    setModalIsOpened,
 } = playerSlice.actions;
 export default playerSlice.reducer;

@@ -1,23 +1,23 @@
 "use client"
-import Post from "@/app/components/entities/post/post";
+import Post from "@/app/[lang]/components/entities/post/post";
 import { SubmitHandler, useForm } from "react-hook-form";
-import SelectTrackModal from "@/app/components/modals/select-track-modal";
+import SelectTrackModal from "@/app/[lang]/components/modals/select-track-modal";
 import { useState } from "react";
 import { Post as TPost, useBattleCreateMutation, useBattleDeleteByIdMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { useSnackbar } from "notistack";
 import { revalidatePathAction } from "@/app/utils/actions/revalidation";
 import { useAppSelector } from "@/app/lib/redux/store";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { config, MFNAddresses } from "@/app/lib/rainbowkit/config"
 import { useAccount, useBalance, useSwitchChain, useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "@wagmi/core";
-import ChainImage from "@/app/components/common/chain-image/chain-image";
-import InfoImage from "@/app/components/common/info-image/info-image";
+import ChainImage from "@/app/[lang]/components/common/chain-image/chain-image";
+import InfoImage from "@/app/[lang]/components/common/info-image/info-image";
 import { generateDEFAULT_MFN_CONTRACT_CFG } from "@/app/lib/rainbowkit/contract-functions/contract-functions";
 import Image from "next/image";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { Text } from "lucide-react";
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 
 
 export const PostPlaceholder = (props: {
@@ -149,7 +149,10 @@ export default function BattleForm({
     return (
         <div className="card overflow-hidden bg-base-100 rounded-2xl">
             <div className="card-body m-1 text-base-content bg-base-100 px-4 rounded-2xl">
-                <div className="divider divider-primary px-4 md:px-0">{dictionary.forms.battle.setup}</div>
+
+                <div className="flex flex-row text-3xl font-bold mb-4">
+                    {dictionary.forms.battle.setup}
+                </div>
                 <div className="flex flex-wrap gap-5 mt-5 w-full justify-around mb-10">
                     <div className="flex flex-col gap-3">
                         <p className='font-bold text-lg'>{dictionary.forms.battle["your-track"]}</p>
@@ -188,7 +191,7 @@ export default function BattleForm({
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms.battle["battle-title"]}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                             <input type="text" placeholder={dictionary.forms.battle["battle-title"]} className="placeholder:text-gray-200 grow" {
                                 ...register("title", {
                                     required: {value: true, message: dictionary.forms.battle["title-requited"]},
@@ -197,7 +200,7 @@ export default function BattleForm({
                                 })
                             }/>
 
-                            <Text/>
+                            <Text size={16}/>
                         </label>
                         <div className="label">
                             {

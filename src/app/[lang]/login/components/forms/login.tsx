@@ -8,13 +8,13 @@ import {useRouter} from "next/navigation";
 import {useAppDispatch} from "@/app/lib/redux/store";
 import {setUnreadNotificationsCount, setUser} from "@/app/lib/redux/slices/user";
 import {setCookie} from "cookies-next";
-import FormsSocials from "@/app/components/common/forms-socials/forms-socials";
+import FormsSocials from "@/app/[lang]/components/common/forms-socials/forms-socials";
 import envCfg from "@/app/config/env";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import Image from "next/image";
 import { useState } from "react";
 import { Mail, SquareAsterisk } from "lucide-react";
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 
 
 type Inputs = {
@@ -57,13 +57,15 @@ export default function LoginForm({
             <div className="flex flex-row">
                 <div className="card-body m-1 text-base-content bg-base-100 rounded-r-2xl xl:rounded-r-none rounded-l-2xl">
                     <form role="form" onSubmit={handleSubmit(onSubmit)} noValidate className="w-64 md:w-80">
-                        <div className="divider divider-primary">{dictionary.forms.login["sign-in"]}</div>
+                        <div className="flex flex-row text-3xl font-bold mb-4">
+                            {dictionary.forms.login["sign-in"]}
+                        </div>
 
                         <label className="form-control w-full max-w-xs">
                             <div className="label">
                                 <span className="label-text-alt">{dictionary.forms.login.email}</span>
                             </div>
-                            <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                 <input type="email" placeholder={dictionary.forms.login.email} className="placeholder:text-gray-200 grow" {
                                     ...register("email", {
                                         pattern: formsConstants.emailRegex,
@@ -71,7 +73,7 @@ export default function LoginForm({
                                     })
                                 }/>
 
-                            <Mail />
+                                <kbd><Mail size={16}/></kbd>
                             </label>
                             <div className="label">
                                 {
@@ -86,7 +88,7 @@ export default function LoginForm({
                             <div className="label">
                                 <span className="label-text-alt">{dictionary.forms.login.password}</span>
                             </div>
-                            <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                            <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                 <input type="password" placeholder={dictionary.forms.login.password} className="placeholder:text-gray-200 grow"
                                     {...register("password", {
                                         minLength: { value: 8, message: `${dictionary.forms.login["min-length"]} 8` },
@@ -94,7 +96,7 @@ export default function LoginForm({
                                         required: { value: true, message: `${dictionary.forms.login.required}` }
                                     })}
                                 />
-                                <SquareAsterisk/>
+                                <kbd><SquareAsterisk size={16}/></kbd>
                             </label>
                             <div className="label">
                                 {

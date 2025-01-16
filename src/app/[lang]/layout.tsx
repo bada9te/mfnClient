@@ -1,12 +1,13 @@
-import AppBar from "@/app/components/bars/appbar";
-import BottomNav from "@/app/components/bars/bottom-nav/bottom-nav";
-import Footer from "@/app/components/common/footer/footer";
+import AppBar from "@/app/[lang]/components/bars/appbar";
+import BottomNav from "./components/bars/bottom-nav";
+import Footer from "@/app/[lang]/components/common/footer/footer";
 import NextTopLoader from "nextjs-toploader";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
-import { TLang } from "@/types/language";
-import AvatarGrid from "@/app/components/common/avatar-grid/avatar-grid";
+import { getDictionary } from "@/app/translations/dictionaries";
+import { TLang } from "@/app/types/language";
+import AvatarGrid from "@/app/[lang]/components/common/avatar-grid/avatar-grid";
 import WeAreUsingCookiesModal from "./components/cookie-info-modal";
-import AlternativeAppbar from "@/app/components/bars/alternative-appbar";
+import AlternativeAppbar from "@/app/[lang]/components/bars/alternative-appbar";
+import PlayerModal from "./components/modals/player-modal";
 
 export default async function RootLayout({
   children,
@@ -27,9 +28,9 @@ export default async function RootLayout({
         {/* Grid layout */}
         <div className="flex-1 grid grid-cols-[auto_1fr_auto] lg:grid-cols-[320px_auto_120px] grid-rows-1 overflow-hidden">
             {/* Left sidebar (hidden on smaller screens) */}
-            <div className="hidden lg:block col-start-1 col-end-2">
+            <div className="hidden lg:block col-start-1 col-end-2 z-10">
                 <div className="card h-screen fixed w-[120px] lg:w-[320px]">
-                    <div className="overflow-y-auto flex flex-col gap-4 py-6 pb-20 pl-4 no-scrollbar h-full">
+                    <div className="flex flex-col gap-4 py-6 pl-4 no-scrollbar h-full">
                         <AlternativeAppbar dictionary={dict.components}/>
                     </div>
                 </div>
@@ -37,7 +38,7 @@ export default async function RootLayout({
 
             {/* Main content area */}
             <div className="col-start-2 col-end-3 flex-1">
-                <div className="card w-full my-14 lg:mt-2 lg:mb-[72px]">
+                <div className="card w-full my-14 lg:my-2">
                     <div className="card-body p-0 gap-0">
                         <NextTopLoader 
                             color="#fff"
@@ -60,7 +61,7 @@ export default async function RootLayout({
             {/* Right sidebar (hidden on smaller screens) */}
             <div className="hidden lg:block col-start-3 col-end-4">
                 <div className="card w-[100px] h-screen fixed">
-                    <div className="overflow-y-auto flex-col py-6 pb-20 no-scrollbar h-full">
+                    <div className="overflow-y-auto flex-col py-6 no-scrollbar h-full">
                         <AvatarGrid dictionary={dict.components}/>
                     </div>
                 </div>
@@ -68,11 +69,12 @@ export default async function RootLayout({
         </div>
 
         {/* Bottom navigation bar */}
-        <div className="bg-gray-800 text-base-content">
+        <div className="block lg:hidden bg-gray-800 text-base-content">
             {/* BottomNav content goes here */}
             <BottomNav dictionary={dict.components}/>
         </div>
 
+        <PlayerModal dictionary={dict.components}/>
         <WeAreUsingCookiesModal/>
     </div>
   );

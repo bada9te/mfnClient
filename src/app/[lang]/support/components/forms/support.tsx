@@ -1,7 +1,7 @@
 "use client"
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 import { formsConstants } from "@/app/config/forms";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { useSupportRequestCreateMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { CircleHelp, Mail, Text } from "lucide-react";
 import Image from "next/image";
@@ -51,13 +51,15 @@ export default function SupportForm({
         <div className="card bg-base-100 rounded-2xl">
             <div className="flex flex-row md:min-h-[400px] lg:min-h-[600px]">
                 <form role="form" className="card-body m-1 bg-base-100 text-base-content z-50 rounded-2xl rounded-r-2xl xl:rounded-r-none rounded-l-2xl w-80 md:w-96" onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <div className="divider divider-primary">{dictionary.forms.support["support-details"]}</div>
+                    <div className="flex flex-row text-3xl font-bold mb-4">
+                        {dictionary.forms.support["support-details"]}
+                    </div>
 
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms.support.email}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                             <input type="email" placeholder={dictionary.forms.support.email} className="placeholder:text-gray-200 grow" {
                                 ...register("email", {
                                     pattern: { value: formsConstants.emailRegex, message: dictionary.forms.support["email-not-valid"] },
@@ -65,7 +67,7 @@ export default function SupportForm({
                                 })
                             }/>
 
-                            <Mail/>
+                            <Mail size={16}/>
                         </label>
                         <div className="label">
                             {
@@ -79,14 +81,14 @@ export default function SupportForm({
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms.support.reason}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                             <input type="text" placeholder={dictionary.forms.support.reason} className="placeholder:text-gray-200 grow" 
                                 {...register("contactReason", {
                                     required: {value: true, message: dictionary.forms.support.required}
                                 })}
                             />
 
-                            <CircleHelp />
+                            <CircleHelp size={16}/>
                         </label>
                         <div className="label">
                             {
@@ -101,14 +103,14 @@ export default function SupportForm({
                         <label className="label">
                             <span className="label-text">{dictionary.forms.support["support-details"]}</span>
                         </label>
-                        <textarea className="textarea textarea-bordered resize-none bg-base-300 placeholder:text-gray-200" rows={4} placeholder={dictionary.forms.support["support-details"]} {
+                        <textarea className="textarea textarea-bordered resize-none placeholder:text-gray-200 bg-base-200" rows={4} placeholder={dictionary.forms.support["support-details"]} {
                             ...register("details", {
                                 minLength: {value: 10, message: `${dictionary.forms.support["min-length"]} 10`},
                                 required: {value: true, message: dictionary.forms.support.required},
                             })
                         }></textarea>
 
-                        <Text className="absolute right-3 top-12"/>
+                        <Text className="absolute right-3 top-12" size={16}/>
 
                         {
                             errors.details &&

@@ -1,6 +1,6 @@
 "use client"
 
-import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import HeroWrapper from "./components/wrappers/hero-wrapper";
 import Image from "next/image";
 
 export default function ErrorPage() {

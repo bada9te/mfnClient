@@ -1,10 +1,10 @@
 "use client"
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 import { formsConstants } from "@/app/config/forms";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { useModerationActionDeleteMutation, useUserRestoreAccountMutation } from "@/app/utils/graphql-requests/generated/schema";
 import { getCookie, deleteCookie } from "cookies-next";
-import { AsteriskSquare, RectangleEllipsis, Text, X } from "lucide-react";
+import { AsteriskSquare, MailCheck, RectangleEllipsis, Text, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -101,17 +101,14 @@ export default function AccountRestoreForm(props: {
                                             <span className="label-text">{dictionary.forms["account-restore"]["new-email"]}</span>
                                         </div>
                                     
-                                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                             <input type="email" placeholder={dictionary.forms["account-restore"]["new-email"]} className="placeholder:text-gray-200 grow"
                                                 {...register("newValue", {
                                                     required: { value: true, message: dictionary.forms["account-restore"].required },
                                                     pattern: { value: formsConstants.emailRegex, message: dictionary.forms["account-restore"]["email-not-valid"] }
                                                 })}
                                             />
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
-                                                <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
-                                                <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
-                                            </svg>
+                                            <MailCheck size={16}/>
                                         </label>
 
                                         {
@@ -127,7 +124,7 @@ export default function AccountRestoreForm(props: {
                                             <span className="label-text">{dictionary.forms["account-restore"]["confirm-email"]}</span>
                                         </div>
                                     
-                                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                             <input type="text" placeholder={dictionary.forms["account-restore"]["confirm-email"]} className="placeholder:text-gray-200 grow"
                                                 {...register("email", {
                                                     required: { value: true, message: dictionary.forms["account-restore"].required },
@@ -161,7 +158,7 @@ export default function AccountRestoreForm(props: {
                                             <span className="label-text">{dictionary.forms["account-restore"]["new-password"]}</span>
                                         </div>
                                     
-                                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                             <input type="password" placeholder={dictionary.forms["account-restore"]["new-password"]} className="placeholder:text-gray-200 grow"
                                                 {...register("newValue", {
                                                     minLength: { value: 8, message: `${dictionary.forms["account-restore"]["min-length"]} 8` },
@@ -169,7 +166,7 @@ export default function AccountRestoreForm(props: {
                                                     required: { value: true, message: dictionary.forms["account-restore"].required }
                                                 })}
                                             />
-                                            <AsteriskSquare/>
+                                            <AsteriskSquare size={16}/>
                                         </label>
 
                                         {
@@ -185,7 +182,7 @@ export default function AccountRestoreForm(props: {
                                             <span className="label-text">{dictionary.forms["account-restore"]["confirm-password"]}</span>
                                         </div>
                                     
-                                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                        <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                             <input type="password" placeholder={dictionary.forms["account-restore"]["confirm-password"]} className="placeholder:text-gray-200 grow"
                                                 {...register("confirmPassword", {
                                                     minLength: { value: 8, message: `${dictionary.forms["account-restore"]["min-length"]} 8` },
@@ -200,7 +197,7 @@ export default function AccountRestoreForm(props: {
                                                     }
                                                 })}
                                             />
-                                            <RectangleEllipsis/>
+                                            <RectangleEllipsis size={16}/>
                                         </label>
 
                                         {
@@ -219,7 +216,7 @@ export default function AccountRestoreForm(props: {
                                         <span className="label-text">{dictionary.forms["account-restore"]["new-email"]}</span>
                                     </div>
                                 
-                                    <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                                    <label className="input input-bordered flex items-center gap-2 input-sm bg-base-200">
                                         <input type="text" placeholder={dictionary.forms["account-restore"]["new-email"]} className="placeholder:text-gray-200 grow"
                                             {...register("newValue", {
                                                 required: { value: true, message: dictionary.forms["account-restore"].required },
@@ -229,7 +226,7 @@ export default function AccountRestoreForm(props: {
                                                 }
                                             })}
                                         />
-                                        <Text/>
+                                        <Text size={16}/>
                                     </label>
 
                                     {
@@ -255,7 +252,7 @@ export default function AccountRestoreForm(props: {
                 </div>
 
                 <label className="label flex flex-col gap-3 justify-start items-start mt-5">
-                    <button className="btn btn-error btn-sm  w-full bg-red-600 text-base-content hover:bg-red-400" onClick={handleModerationCancel}>
+                    <button className="btn btn-error btn-sm hover:bg-red-400" onClick={handleModerationCancel}>
                         <X/>
                         {dictionary.forms["account-restore"].cancel}
                     </button>

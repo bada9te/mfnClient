@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import EmailVerificationForm from './email-verification'
-import { getDictionary } from '@/app/dictionaries/dictionaries'
+import { getDictionary } from '@/app/translations/dictionaries'
 import { MockedProvider } from "@apollo/client/testing";
 import { gql } from '@apollo/client';
 

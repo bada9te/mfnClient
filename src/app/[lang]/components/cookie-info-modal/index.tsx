@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import MainButton from "@/app/components/common/main-button/main-button";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 import { useEffect, useState } from "react";
 
 export default function WeAreUsingCookiesModal() {

@@ -1,16 +1,17 @@
 
-import ProjectLinks from "@/app/components/common/project-links/projects-links";
-import RegisterExploreBtns from "@/app/components/common/register-explore-btns/register-explore-btns";
-import DotPattern from "@/app/components/magicui-components/dot-pattern";
-import { MarqueeDemo } from "@/app/components/magicui-components/landing-cards-scrolling";
-import Ripple from "@/app/components/magicui-components/ripple";
+import ProjectLinks from "@/app/[lang]/components/common/project-links/projects-links";
+import RegisterExploreBtns from "@/app/[lang]/components/common/register-explore-btns/register-explore-btns";
+import DotPattern from "@/app/[lang]/components/magicui-components/dot-pattern";
+import { MarqueeDemo } from "@/app/[lang]/components/magicui-components/landing-cards-scrolling";
+import Ripple from "@/app/[lang]/components/magicui-components/ripple";
 import { cn } from "../utils/common-functions/cn";
-import { TLang } from "@/types/language";
+import { TLang } from "@/app/types/language";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getDictionary } from "../dictionaries/dictionaries";
-import { cardsData1, cardsData2 } from "@/static-data/landing";
+import { getDictionary } from "../translations/dictionaries";
+import { cardsData1, cardsData2 } from "@/app/data/landing";
+import { RetroGrid } from "./components/magicui-components/retro-grid";
 
 
 
@@ -25,8 +26,9 @@ export default async function Page({params}: {params: {lang: TLang}}) {
         <>
             {/* ONE */}
             <div className="overflow-hidden flex flex-col items-center text-base-content m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative min-h-[600px] max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
+                <RetroGrid opacity={0.3}/>
                 <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg">
-                    <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full shadow-2xl w-32 md:w-48"/>
+                    <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full w-32 md:w-48 animate-fullSpin" style={{ boxShadow: '0px 0px 30px #1ca39f' }}/>
                     <Ripple />
                 </div>
                 <div className="flex flex-col justify-start items-center gap-4 h-fit z-10 mb-48 lg:mb-32 absolute bottom-0">

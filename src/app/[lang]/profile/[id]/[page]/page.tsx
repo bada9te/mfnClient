@@ -1,15 +1,15 @@
 import ProfileCard from "@/app/[lang]/profile/components/profile-card/profile-card";
 import { PreloadQuery } from "@/app/lib/apollo/client";
 import { Suspense } from "react";
-import PostsContainerSkeleton from "@/app/components/containers/posts-container/posts-container-skeleton";
-import PostsContainerProfile from "@/app/components/containers/posts-container/posts-container-profile";
+import PostsContainerSkeleton from "@/app/[lang]/components/containers/posts-container/posts-container-skeleton";
+import PostsContainerProfile from "@/app/[lang]/components/containers/posts-container/posts-container-profile";
 import { POSTS_BY_OWNER_QUERY } from "@/app/utils/graphql-requests/posts";
 import ProfileCardSkeleton from "@/app/[lang]/profile/components/profile-card/profile-card-skelton";
-import HeroWrapper from "@/app/components/wrappers/hero-wrapper";
+import HeroWrapper from "@/app/[lang]/components/wrappers/hero-wrapper";
 import { USER_ACHIEVEMENTS_DATA_QUERY, USER_PINNED_POSTS_QUERY, USER_QUERY } from "@/app/utils/graphql-requests/users";
 import { ACHIEVEMENTS_COUNT_QUERY } from "@/app/utils/graphql-requests/achievements";
-import { TLang } from "@/types/language";
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { TLang } from "@/app/types/language";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { Metadata } from "next";
 import PinnedTracks from "@/app/[lang]/profile/components/profile-card/components/pinned-tracks";
 

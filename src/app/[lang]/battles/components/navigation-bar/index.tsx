@@ -1,5 +1,5 @@
 "use client"
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import Link from "next/link";
 
 

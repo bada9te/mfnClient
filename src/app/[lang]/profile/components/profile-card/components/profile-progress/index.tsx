@@ -1,5 +1,5 @@
 "use client"
-import { getDictionary } from "@/app/dictionaries/dictionaries";
+import { getDictionary } from "@/app/translations/dictionaries";
 import { useAppSelector } from "@/app/lib/redux/store";
 import { UserAchievementsData, UserAchievementsDataQuery } from "@/app/utils/graphql-requests/generated/schema";
 import { ApolloQueryResult } from "@apollo/client";
