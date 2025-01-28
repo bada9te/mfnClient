@@ -47,7 +47,7 @@ export default function Notification({data, dictionary}: {data: TNotification; d
 
 
     return (
-        <div className="card bg-base-300 shadow-xl w-full text-start ">
+        <div className="card bg-base-100 shadow-xl w-full text-start ">
             <div className="card-body relative">
                 <p className="absolute top-4 right-5">{getTimeSince(new Date(+data.createdAt))} ago</p>
                 <h2 className="card-title">

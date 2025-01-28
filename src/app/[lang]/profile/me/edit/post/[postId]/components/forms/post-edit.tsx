@@ -9,6 +9,7 @@ import blobToFile, { IBlob } from "@/app/utils/common-functions/blobToFile";
 import { getDictionary } from "@/app/translations/dictionaries";
 import { Text } from "lucide-react";
 import validateFile from "@/app/utils/common-functions/fileValidator";
+import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 
 type InputsTitle = {
     title: string;
@@ -184,6 +185,7 @@ export default function PostEditForm(props: {
 
     const updatePost = async(what: string, value: string) => {
         enqueueSnackbar("Updating...", {autoHideDuration: 1500})
+
         updatePostMutation({
             variables: {
                 input: {
@@ -210,21 +212,24 @@ export default function PostEditForm(props: {
         />
         <div className="card overflow-hidden bg-base-100  rounded-2xl">
             <div className="card-body m-1 text-base-content  bg-base-100 rounded-2xl">
-                <div className="divider divider-primary">{dictionary.forms["post-edit-upload"].edit}</div>
+                <div className="flex flex-row text-3xl font-bold mb-4">
+                    {dictionary.forms["post-edit-upload"].edit}
+                </div>
 
                 <form role="form" onSubmit={handleSubmitTitle(onSubmitTitle)} noValidate>
+
                     <label className="form-control w-full">
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms["post-edit-upload"].title}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-sm input-bordered flex items-center gap-2 bg-base-300">
                             <input type="text" placeholder={dictionary.forms["post-edit-upload"].title} className="placeholder:text-gray-200 grow"
                                 {...registerTitle("title", {
                                     maxLength: { value: 15, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 15` },
                                     required: { value: true, message: `${dictionary.forms["post-edit-upload"].required}` }
                                 })}
                             />
-                            <Text/>
+                            <Text size={16}/>
                         </label>
                         <div className="label">
                             {
@@ -233,10 +238,10 @@ export default function PostEditForm(props: {
                             }
                         </div>
                     </label>
-
-                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    
+                    <MainButton type="submit" color="primary" className="w-full">
                         {dictionary.forms["post-edit-upload"].save}
-                    </button>
+                    </MainButton>
                 </form>
                 
                 <form onSubmit={handleSubmitDescr(onSubmitDescr)} noValidate>
@@ -244,14 +249,14 @@ export default function PostEditForm(props: {
                         <div className="label">
                             <span className="label-text-alt">{dictionary.forms["post-edit-upload"].description}</span>
                         </div>
-                        <label className="input input-bordered flex items-center gap-2 bg-base-300">
+                        <label className="input input-sm input-bordered flex items-center gap-2 bg-base-300">
                             <input type="text" placeholder={dictionary.forms["post-edit-upload"].description} className="placeholder:text-gray-200 grow"
                                 {...registerDescr("description", {
                                     maxLength: { value: 25, message: `${dictionary.forms["post-edit-upload"]["max-length"]} 25` },
                                     required: { value: true, message: dictionary.forms["post-edit-upload"].required }
                                 })}
                             />
-                            <Text/>
+                            <Text size={16}/>
                         </label>
                         <div className="label">
                             {
@@ -261,10 +266,9 @@ export default function PostEditForm(props: {
                         </div>
                     </label>
 
-
-                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <MainButton type="submit" color="primary" className="w-full">
                         {dictionary.forms["post-edit-upload"].save}
-                    </button>
+                    </MainButton>
                 </form>
                 
                 <form onSubmit={handleSubmitImage(onSubmitImage)} noValidate>
@@ -288,10 +292,10 @@ export default function PostEditForm(props: {
                             </label>
                         }
                     </label>
-
-                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    
+                    <MainButton type="submit" color="primary" className="w-full">
                         {dictionary.forms["post-edit-upload"].save}
-                    </button>
+                    </MainButton>
                 </form>
                 
                 <form onSubmit={handleSubmitAudio(onSubmitAudio)} noValidate>
@@ -314,16 +318,16 @@ export default function PostEditForm(props: {
                             </label>
                         }
                     </label>
-                    <button type="submit" className="w-full  group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#29d8cf] to-[#1ba39c] border-[#1ba39c] bg-transparent px-6 font-medium dark:text-base-content text-black transition-all duration-100 [box-shadow:5px_5px_rgb(17_99_95)] active:translate-x-[3px] active:translate-y-[3px] active:[box-shadow:0px_0px_rgb(17_99_95)] disabled:opacity-55">
+                    <MainButton type="submit" color="primary" className="w-full">
                         {dictionary.forms["post-edit-upload"].save}
-                    </button>
+                    </MainButton>
                 </form>
 
                 <label className="form-control w-full">
                     <div className="label">
                         <span className="label-text">{dictionary.forms["post-edit-upload"].genre}</span>
                     </div>
-                    <select className="btn text-start bg-base-300" onChange={onGenreChange}>
+                    <select className="btn btn-sm text-start bg-base-300" onChange={onGenreChange}>
                         {
                             genres.map((gen, key) => {
                                 return <option className="bg-[#272727] text-lg" key={key} value={gen.id}>{gen.id}</option>
