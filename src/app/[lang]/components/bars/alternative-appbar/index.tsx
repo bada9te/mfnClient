@@ -10,6 +10,7 @@ import { useAppSelector } from "@/app/lib/redux/store";
 import { cn } from "@/app/utils/common-functions/cn";
 import { usePostsByTitleLazyQuery, useUsersByNicknameLazyQuery } from "@/app/utils/graphql-requests/generated/schema";
 import getIpfsUrl from "@/app/utils/common-functions/getIpfsUrl";
+import WalletInfo from "./components/wallet-info";
 
 export default function AlternativeAppbar({
     dictionary

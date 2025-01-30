@@ -25,7 +25,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
     return (
         <>
             {/* ONE */}
-            <div className="overflow-hidden flex flex-col items-center text-base-content m-2 mt-6 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative min-h-[600px] max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative min-h-[600px] mt-4 m-2 md:mx-4">
                 <RetroGrid opacity={0.3}/>
                 <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg">
                     <Image width={200} height={200}  src={"/assets/logo.png"} alt="logo" className="rounded-full w-32 md:w-48 animate-fullSpin" style={{ boxShadow: '0px 0px 30px #1ca39f' }}/>
@@ -49,7 +49,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
             </div>
 
             {/* TWO */}
-            <div className="overflow-hidden flex flex-col items-center text-base-content py-10 m-2 md:mx-4 md:mt-4 border-none relative bg-base-300 rounded-2xl max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-base-content py-10 border-none relative bg-base-300 rounded-2xl m-2 md:mx-4">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -99,13 +99,17 @@ export default async function Page({params}: {params: {lang: TLang}}) {
 
 
             {/* THREE */}
-            <div className="py-10 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
-                <MarqueeDemo dictionary={dict.app}/>
-            </div>
+            {
+                /*
+                    <div className="border-none bg-base-300 rounded-2xl max-w-fit">
+                        <MarqueeDemo dictionary={dict.app}/>
+                    </div>
+                */
+            }
 
             
             {/* FOUR */}
-            <div className="overflow-hidden flex flex-col items-center text-base-content py-20 md:py-40 lg:py-56 m-2 md:mx-4 md:mt-4 border-none bg-base-300 rounded-2xl relative max-w-[calc(100vw-17px)] lg:max-w-[calc(100vw-475px)]">
+            <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative m-2 md:mx-4">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -212,9 +216,10 @@ export default async function Page({params}: {params: {lang: TLang}}) {
 
 
             {/* FIVE */}
-            <div className="m-2 md:mx-4 md:mt-4">
+            <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative m-2 md:mx-4">
                 <Image src={"/assets/bgs/people2.png"} alt="people" width={1920} height={640} className="rounded-2xl shadow-2xl"/>
             </div>
+            
         </>
     );
 }

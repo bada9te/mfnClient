@@ -139,7 +139,7 @@ export default function Battle(props: {
 
     return (
         <div className={
-                `card bg-base-300 w-full shadow-2xl 
+                `card bg-base-100 w-full shadow-2xl 
                 ${battleData.finished && (battleData.post1Score > battleData.post2Score ? "bg-gradient-to-r from-green-400/30 to-red-400/30": "bg-gradient-to-r from-red-400/30 to-green-400/30")}
             `}>
             <div className="card-body justify-center items-center flex flex-col gap-5 p-4 pt-5 relative">
@@ -150,7 +150,7 @@ export default function Battle(props: {
                         USDC_decimals={Number(decimals)}
                         battleisFInished={+new Date(+battleData.willFinishAt) - new Date().getTime() < 0}
                         button={
-                            <div className="cursor-pointer hover:bg-[#19a29b] absolute top-0 right-0 rounded-none rounded-tr-2xl rounded-bl-2xl text-base-content flex flex-row gap-2 items-center justify-center p-2">
+                            <div className="bg-base-300 cursor-pointer hover:bg-[#19a29b] absolute top-0 right-0 rounded-none rounded-tr-2xl rounded-bl-2xl text-base-content flex flex-row gap-2 items-center justify-center p-2">
                                 <ChainImage chainId={battleData.chainId}/>
                                 {config.chains.find(i => i.id === battleData.chainId)?.name}
                             </div>
