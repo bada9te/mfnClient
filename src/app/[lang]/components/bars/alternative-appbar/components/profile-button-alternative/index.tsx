@@ -15,6 +15,7 @@ import SwitchLocaleModal from "../../../components/switch-locale-modal";
 import { BadgeHelp, Bell, Bookmark, Cog, DoorOpen, Languages, LogIn, RefreshCcw, User, Wallet } from "lucide-react";
 import getIpfsUrl from "@/app/utils/common-functions/getIpfsUrl";
 import { useUserAchievementsDataLazyQuery } from "@/app/utils/graphql-requests/generated/schema";
+import WalletInfo from "../wallet-info";
 
 
 
@@ -203,13 +204,33 @@ export default function ProfileButtonAlternative({
                             className="max-h-[200px]"
                         />
                     </figure>
+                    
+                    <div 
+                        className="
+                            absolute top-0 right-0 p-1 
+                            rounded-none 
+                            z-10 bg-base-100 text-[12px] rounded-tr-2xl 
+                            rounded-bl-2xl px-2 
+                            flex flex-row gap-1 items-center justify-center
+                            cursor-pointer
+                        "
+                        onClick={onBalanceRefetch}
+                    >
+                        {Number(userBalance)} 
+                        <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={16} height={16} />
+                    </div>
+                    
+
                     <div className="card-body">
                         <h2 className="card-title">{user.user.nick}</h2>
                         <p>{user.user.description}</p>
                     </div>
                 </div>
             }
-            <div className="flex flex-col bg-base-300 w-full rounded-box p-3">
+
+            <WalletInfo/>
+
+            <div className="flex flex-col bg-base-300 w-full rounded-box p-3 py-2">
                 <div className="flex flex-row gap-1">
                     <div className="btn btn-sm w-10 h-10">
                         <Link href="/support"> 
@@ -248,6 +269,7 @@ export default function ProfileButtonAlternative({
                     </div>
                 </div>
             </div>
+
         </div>
     );
    
