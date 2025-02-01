@@ -21,3 +21,5 @@ export const MFNWarning = React.forwardRef((props, ref) => {
         </div>
     );
 });
+
+MFNWarning.displayName = "MFNWarning";

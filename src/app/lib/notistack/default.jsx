@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 
 export const MFNDefault = React.forwardRef((props, ref) => {
@@ -21,3 +22,5 @@ export const MFNDefault = React.forwardRef((props, ref) => {
         </div>
     );
 });
+
+MFNDefault.displayName = "MFNDefault";

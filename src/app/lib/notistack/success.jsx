@@ -21,3 +21,5 @@ export const MFNSuccess = React.forwardRef((props, ref) => {
         </div>
     );
 });
+
+MFNSuccess.displayName = "MFNSuccess";
