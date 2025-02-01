@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/translations/dictionaries.ts", "src/app/api/files/route"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/translations/dictionaries.ts", "src/app/api/files/route", "src/app/lib/notistack/success.jsx"],
   "exclude": ["node_modules"]
 }

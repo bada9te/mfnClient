@@ -1,28 +1,51 @@
 "use client"
-import { MFNAddresses } from "@/app/lib/rainbowkit/config";
+import { MFNAddresses, USDCAddresses } from "@/app/lib/rainbowkit/config";
 import { getDictionary } from "@/app/translations/dictionaries";
 import { useAccount, useReadContract } from "wagmi";
 import MFNAbi from "@/app/lib/rainbowkit/abis/MusicFromNothingAbi.json";
 import { RefreshCcw } from "lucide-react";
+import { useEffect, useState } from "react";
 
 
 export default function RefreshButtonPerContainer({
     handleClick,
     dictionary,
     addWithdrawAllBtn,
+    handleWithdrawClick,
 }: {
     handleClick: () => void;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"];
     addWithdrawAllBtn?: boolean;
+    handleWithdrawClick?: () => void;
 }) {
+    const [isMounted, setIsMounted] = useState(false);
+
     const account = useAccount();
     const { data: possibleWithdrawalFromAllBattles, isLoading } = useReadContract({
         // @ts-ignore
-        address: MFNAddresses[account.chainId]?.address as string,
+        address: MFNAddresses[account.chainId] as string,
         abi: MFNAbi,
         functionName: "calculateWithdrawalTokensFromAllBattles",
         args: [account.address]
     });
+
+    const { data: decimals } = useReadContract({
+        // @ts-ignore
+        address: USDCAddresses[account.chainId]?.address || "0x",
+        // @ts-ignore
+        abi: USDCAddresses[account.chainId]?.abi || [],
+        functionName: "decimals",
+    });
+
+    const amount = Number(possibleWithdrawalFromAllBattles) / 10**Number(decimals);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return;
+    }
 
     return (
         <div className="w-full flex flex-col justify-center items-center gap-4">
@@ -35,7 +58,7 @@ export default function RefreshButtonPerContainer({
                 addWithdrawAllBtn ?
                 <button 
                     className="z-40 btn btn-sm text-base-content w-80" 
-                    onClick={handleClick} 
+                    onClick={handleWithdrawClick} 
                     disabled={!possibleWithdrawalFromAllBattles}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -48,7 +71,7 @@ export default function RefreshButtonPerContainer({
                         ?
                         <span className="loading loading-spinner loading-xs"></span>
                         :
-                        <span className="text-[#25e7de]">{String(possibleWithdrawalFromAllBattles || 0).slice(0, 7)}</span>
+                        <span className="text-[#25e7de]">{amount || 0}</span>
                     })
                 </button> :
                 null

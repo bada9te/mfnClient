@@ -205,20 +205,22 @@ export default function ProfileButtonAlternative({
                         />
                     </figure>
                     
-                    <div 
-                        className="
-                            absolute top-0 right-0 p-1 
-                            rounded-none 
-                            z-10 bg-base-100 text-[12px] rounded-tr-2xl 
-                            rounded-bl-2xl px-2 
-                            flex flex-row gap-1 items-center justify-center
-                            cursor-pointer
-                        "
-                        onClick={onBalanceRefetch}
-                    >
-                        {Number(userBalance)} 
-                        <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={16} height={16} />
-                    </div>
+                    { account.address && 
+                        <div 
+                            className="
+                                absolute top-0 right-0 p-1 
+                                rounded-none 
+                                z-10 bg-base-100 text-[12px] rounded-tr-2xl 
+                                rounded-bl-2xl px-2 
+                                flex flex-row gap-1 items-center justify-center
+                                cursor-pointer
+                            "
+                            onClick={onBalanceRefetch}
+                        >
+                            {Number(userBalance)} 
+                            <Image src={"/assets/icons/usd-coin.svg"} alt="usdc" width={16} height={16} />
+                        </div>
+                    }
                     
 
                     <div className="card-body">
@@ -228,7 +230,8 @@ export default function ProfileButtonAlternative({
                 </div>
             }
 
-            <WalletInfo/>
+            { user.user?._id &&  <WalletInfo/>}
+            
 
             <div className="flex flex-col bg-base-300 w-full rounded-box p-3 py-2">
                 <div className="flex flex-row gap-1">

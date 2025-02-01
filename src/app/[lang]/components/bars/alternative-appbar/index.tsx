@@ -5,12 +5,12 @@ import { ChartBarStacked, Earth, ListMusic, Swords } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import SearchItem from "./components/search-item";
 import { useAppSelector } from "@/app/lib/redux/store";
 import { cn } from "@/app/utils/common-functions/cn";
 import { usePostsByTitleLazyQuery, useUsersByNicknameLazyQuery } from "@/app/utils/graphql-requests/generated/schema";
 import getIpfsUrl from "@/app/utils/common-functions/getIpfsUrl";
-import WalletInfo from "./components/wallet-info";
+import { useSnackbar } from "notistack";
+
 
 export default function AlternativeAppbar({
     dictionary
@@ -20,6 +20,8 @@ export default function AlternativeAppbar({
     const user = useAppSelector(state => state.user.user);
     const [searchTerm, setSearchTerm] = useState(""); // Add state for search term
     const inputRef = useRef<HTMLInputElement>(null); // Create a ref for the input
+    const [ showSuggestions, setShowSuggestions ] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
 
     const [usersQuery, { data: usersByNicknameData, loading: usersByNicknameLoading }] = useUsersByNicknameLazyQuery();
     const [postsQuery, { data: postsByTitleData, loading: postsByTitleLoading }] = usePostsByTitleLazyQuery();
@@ -72,13 +74,15 @@ export default function AlternativeAppbar({
                     placeholder="Search" 
                     value={searchTerm} 
                     onChange={(e) => setSearchTerm(e.target.value)} // Update state on input change
+                    onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => setShowSuggestions(false)}
                 />
                 <kbd className="kbd kbd-sm">⌘</kbd>
                 <kbd className="text-base-content">+</kbd>
                 <kbd className="kbd kbd-sm">S</kbd>
             </label>
 
-            {searchTerm && ( // Conditionally render suggestions
+            {searchTerm && showSuggestions && ( // Conditionally render suggestions
                 <div className="absolute top-36 left-8 w-80 z-50 p-4 rounded-2xl shadow-xl bg-base-content text-base-300 max-h-64 overflow-y-auto thin-scrollbar">
                     <ul className="flex gap-2 flex-row flex-wrap">
                         {
