@@ -7,10 +7,18 @@ import {ApolloWrapper} from "./lib/apollo/apollo-wrapper";
 import RainbowkitAppProvider from "./lib/rainbowkit/provider";
 import { Montserrat } from "next/font/google";
 
+import { MFNSuccess } from "./lib/notistack/success";
+import { MFNDefault } from "./lib/notistack/default";
+import { MFNError } from "./lib/notistack/error"
+import { MFNWarning } from "./lib/notistack/warning";
+
+
 const font = Montserrat({
   subsets: ['latin', 'cyrillic'],
   weight: '400'
-})
+});
+
+
 
 export default function RootLayout({
   children,
@@ -24,7 +32,19 @@ export default function RootLayout({
       <body className={font.className}>
         <RainbowkitAppProvider>
             <ApolloWrapper>
-                <SnackbarProvider maxSnack={5}>
+                <SnackbarProvider 
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                  maxSnack={5} 
+                  Components={{
+                    default: MFNDefault,
+                    success: MFNSuccess,
+                    error: MFNError,
+                    warning: MFNWarning,
+                  }}
+                >
                     <ReduxProvider>
                       {children}
                     </ReduxProvider>

@@ -258,7 +258,7 @@ export default function Post(props: {
                 </div>
             }
 
-            <div className="card-actions justify-center p-2 mt-2 flex flex-row text-[#20252e]">
+            <div className="card-actions justify-center p-2 mt-2 mb-1 flex flex-row text-[#20252e]">
                 {
                     player.isPlaying && player.post?._id === data?._id
                         ?

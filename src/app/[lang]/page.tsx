@@ -1,4 +1,3 @@
-
 import ProjectLinks from "@/app/[lang]/components/common/project-links/projects-links";
 import RegisterExploreBtns from "@/app/[lang]/components/common/register-explore-btns/register-explore-btns";
 import DotPattern from "@/app/[lang]/components/magicui-components/dot-pattern";
@@ -99,14 +98,10 @@ export default async function Page({params}: {params: {lang: TLang}}) {
 
 
             {/* THREE */}
-            {
-                /*
-                    <div className="border-none bg-base-300 rounded-2xl max-w-fit">
-                        <MarqueeDemo dictionary={dict.app}/>
-                    </div>
-                */
-            }
-
+            <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative m-2 md:mx-4 p-3">
+                <MarqueeDemo dictionary={dict.app}/>
+            </div> 
+                
             
             {/* FOUR */}
             <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative m-2 md:mx-4">

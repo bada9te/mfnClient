@@ -66,11 +66,8 @@ export default function Playlist(props: {
             <div className="collapse-title text-xl font-medium text-start">
                 <span className="flex flex-row items-center">
                     {title} 
-                    {' '}
-                    (
-                        {posts?.length} 
-                        <NotebookTabs className="ml-1"/>
-                    )
+
+                    
                 </span>
             </div>
             <div className="collapse-content">
@@ -95,7 +92,7 @@ export default function Playlist(props: {
                                         </button>
                                     }
                                 />
-                                <button className={`btn btn-sm join-item ${isRemovingTrack && 'btn-error bg-red-900'}`} onClick={() => setIsRemovingTrack(!isRemovingTrack)}>
+                                <button className={`btn btn-sm join-item ${isRemovingTrack && 'btn-error'}`} onClick={() => setIsRemovingTrack(!isRemovingTrack)}>
                                     <Minus className="mr-1"/>
                                     <span className="hidden md:block">{dictionary.entities.playlist["remove-track"]}</span>
                                 </button>
