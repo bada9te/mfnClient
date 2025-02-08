@@ -1,7 +1,7 @@
+"use client"
 import React from "react";
 
 export const MFNSuccess = React.forwardRef((props, ref) => {
-    console.log(props)
     return (
         <div 
             {...props} 

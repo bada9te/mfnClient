@@ -4,7 +4,7 @@ import { setUserAvatar, setUserBackground } from "@/app/lib/redux/slices/user";
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/store";
 import blobToFile, { IBlob } from "@/app/utils/common-functions/blobToFile";
 import {useAchievemenmtsCountSuspenseQuery, UserAchievementsData, useUserAchievementsDataSuspenseQuery, useUserSuspenseQuery, useUserSwitchSubscriptionMutation, useUserUpdateMutation} from "@/app/utils/graphql-requests/generated/schema";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useSnackbar } from "notistack";
 import ProfileProgress from "./components/profile-progress";
@@ -37,6 +37,7 @@ export default function ProfileCard(props: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { isEditable, userId, disableMargins, dictionary } = props;
+    const [ isMounted, setIsMounted ] = useState(false);
     const [ imageURL, setImageURL ] = useState<string>("");
     const [ imageType, setImageType ] = useState<"avatar" | "background">("avatar");
     const [ file, setFile ] = useState<File | null>(null);
@@ -176,6 +177,12 @@ export default function ProfileCard(props: {
         enqueueSnackbar("Link copied", { autoHideDuration: 1500, variant: 'success' });
     }
 
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+ 
+
     return (
         <>
             <ImageCropperModal
@@ -211,6 +218,7 @@ export default function ProfileCard(props: {
                                 ?
                                 <>
                                     {
+                                        isMounted &&
                                         (() => {
                                             if (data?.user._id == user?._id) {
                                                 return;

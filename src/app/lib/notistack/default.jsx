@@ -1,8 +1,8 @@
+"use client"
 // @ts-nocheck
 import React from "react";
 
 export const MFNDefault = React.forwardRef((props, ref) => {
-    console.log(props)
     return (
         <div 
             {...props} 

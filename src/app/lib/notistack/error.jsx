@@ -1,8 +1,8 @@
+"use client"
 // @ts-nocheck
 import React from "react";
 
 export const MFNError = React.forwardRef((props, ref) => {
-    console.log(props)
     return (
         <div 
             {...props} 

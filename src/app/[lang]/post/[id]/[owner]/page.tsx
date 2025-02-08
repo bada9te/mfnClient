@@ -25,27 +25,29 @@ export default async function PostPage({params}: {params: {id: string, owner: st
         >
             <div className="card w-full">
                 <div className="flex flex-col-reverse lg:flex-row justify-center items-center lg:items-start gap-5">
-                    <PreloadQuery
-                        query={POST_QUERY}
-                        variables={{
-                            _id: params.id
-                        }}
-                    >
-                        <Suspense fallback={<PostSkeleton/>}>
-                            <PostContainer postId={params.id} dictionary={dict.components}/>
-                        </Suspense>
-                    </PreloadQuery>
+                    <div className="min-w-80 mt-5">
+                        <PreloadQuery
+                            query={POST_QUERY}
+                            variables={{
+                                _id: params.id
+                            }}
+                        >
+                            <Suspense fallback={<PostSkeleton/>}>
+                                <PostContainer postId={params.id} dictionary={dict.components}/>
+                            </Suspense>
+                        </PreloadQuery>
+                    </div>
 
 
                     {
-                        Number(params.owner) ?
+                        params.owner ?
                         <ProfileCard userId={params.owner} disableMargins dictionary={dict.components}/> :
                         null
                     }
                 </div>
 
                 {
-                    Number(params.owner) ?
+                    params.owner ?
                     <>
                         <div className="divider divider-primary my-10">More tracks</div>
                         <div className="flex flex-wrap justify-center md:justify-center gap-5 lg:gap-14">

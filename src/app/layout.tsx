@@ -33,6 +33,10 @@ export default function RootLayout({
         <RainbowkitAppProvider>
             <ApolloWrapper>
                 <SnackbarProvider 
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
                   maxSnack={5} 
                   Components={{
                     default: MFNDefault,

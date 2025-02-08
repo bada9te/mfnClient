@@ -1,7 +1,7 @@
+"use client"
 import React from "react";
 
 export const MFNWarning = React.forwardRef((props, ref) => {
-    console.log(props)
     return (
         <div 
             {...props} 
