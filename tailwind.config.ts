@@ -69,6 +69,32 @@ const config: Config = {
             "background-color": "#1ba39c",
           },
         },
+        nord: {
+          ...require("daisyui/src/theming/themes")["nord"],
+          ".:hover": {
+            "background-color": "#1ba39c",
+            "border-color": "#1ba39c",
+          },
+          ".btn": {
+            "border-radius": "14px",
+          },
+          ".divider-primary::before, .divider-primary::after": {
+            "background-color": "#1ba39c",
+          },
+        },
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          ".:hover": {
+            "background-color": "#1ba39c",
+            "border-color": "#1ba39c",
+          },
+          ".btn": {
+            "border-radius": "14px",
+          },
+          ".divider-primary::before, .divider-primary::after": {
+            "background-color": "#1ba39c",
+          },
+        },
       },
     ],
   },
