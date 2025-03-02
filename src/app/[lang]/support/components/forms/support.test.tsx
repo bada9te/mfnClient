@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import SupportForm from '../../app/[lang]/support/components/forms/support'
+import SupportForm from "@/app/[lang]/support/components/forms/support";
 import { getDictionary } from '@/app/translations/dictionaries'
 import { MockedProvider } from "@apollo/client/testing";
 import { gql } from '@apollo/client';
