@@ -19,7 +19,7 @@ export default function Footer({
             />
             <aside>
                 <Image className="rounded-full z-10 w-24" src={'/assets/logo.png'} alt={"logo"} width={400} height={400} />
-                <p>Music From Nothing<br/>{new Date().getFullYear()}</p>
+                <p>Tunes Hub<br/>{new Date().getFullYear()}</p>
             </aside>
             <nav>
                 <h6 className="footer-title">{dictionary?.common.footer["quick-nav"]}</h6>

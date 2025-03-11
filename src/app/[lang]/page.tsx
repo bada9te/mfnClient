@@ -15,7 +15,7 @@ import { RetroGrid } from "./components/magicui-components/retro-grid";
 
 
 export const metadata: Metadata = {
-    title: 'Music From Nothing',
+    title: 'Tunes Hub',
     description: 'The music-streaming platform',
 }
 
@@ -48,7 +48,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
             </div>
 
             {/* TWO */}
-            <div className="overflow-hidden flex flex-col items-center text-base-content py-10 border-none relative bg-base-300 rounded-2xl m-2 md:mx-4">
+            <div className="overflow-hidden flex flex-col items-center text-base-content py-10 md:py-24 border-none relative bg-base-300 rounded-2xl m-2 md:mx-4">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
@@ -108,7 +108,7 @@ export default async function Page({params}: {params: {lang: TLang}}) {
                 
             
             {/* FOUR */}
-            <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative m-2 md:mx-4">
+            <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative m-2 py-32 md:py-56 md:mx-4">
                 <DotPattern
                     className={cn(
                     "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",

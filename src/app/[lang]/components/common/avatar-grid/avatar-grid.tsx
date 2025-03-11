@@ -26,16 +26,16 @@ const AvatarGrid = ({
   const dispatch = useAppDispatch();
 
   const handleShowFollowingToggle = () => {
-    if (!showFollowing == true && user) {
-      getMostRecentByFollowing({ variables: { user: user?._id as string } });
+    if (!showFollowing && user) {
+      getMostRecentByFollowing({ variables: { user: user?._id as string } }).catch(console.log);
     }
     localStorage.setItem("showFollowingRightbar", JSON.stringify({data: !showFollowing}));
     setShowFollowing(!showFollowing);
   }
 
   const handleShowRecentsToggle = () => {
-    if (!showRecents == true) {
-      getmostRecent();
+    if (!showRecents) {
+      getmostRecent().catch(console.log);
     }
     localStorage.setItem("showRecentsRightbar", JSON.stringify({data: !showRecents}));
     setShowRecents(!showRecents);

@@ -5,7 +5,7 @@ import { TLang } from "@/app/types/language";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'Music From Nothing - Register',
+    title: 'Tunes Hub - Register',
     description: 'Start the new journey',
 }
 

@@ -63,7 +63,7 @@ export default function AlternativeAppbar({
             <Link className="btn bg-base-100 hover:bg-base-content hover:text-base-300 w-full h-fit text-base-content p-3" href={'/'}>
                 <Image src={'/assets/logo.png'} alt={'logo'} width={400} height={400}
                     className="rounded-full w-10 shadow-xl"/>
-                <span className="hidden lg:flex text-sm">Music From Nothing</span>
+                <span className="hidden lg:flex text-sm">Tunes Hub</span>
             </Link>
 
             <label className="input input-bordered flex items-center gap-2 input-sm">

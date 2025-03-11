@@ -12,7 +12,7 @@ import { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: 'Music From Nothing - Achievements',
+    title: 'Tunes Hub - Achievements',
     description: 'The list of challenges',
 }
 

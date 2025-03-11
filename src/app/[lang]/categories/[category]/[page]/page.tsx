@@ -9,7 +9,7 @@ import { TLang } from "@/app/types/language";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'Music From Nothing - Category',
+    title: 'Tunes Hub - Category',
     description: 'Category',
 }
 

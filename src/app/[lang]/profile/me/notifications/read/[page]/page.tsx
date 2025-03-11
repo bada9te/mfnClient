@@ -12,7 +12,7 @@ import { getDictionary } from "@/app/translations/dictionaries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'Music From Nothing - Reviewed notifications',
+    title: 'Tunes Hub - Reviewed notifications',
     description: 'Reviewed notifications',
 }
 

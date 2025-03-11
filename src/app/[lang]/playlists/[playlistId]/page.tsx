@@ -9,7 +9,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-    title: 'Music From Nothing - Playlist',
+    title: 'Tunes Hub - Playlist',
     description: 'Playlist',
 }
 

@@ -12,7 +12,7 @@ import envCfg from "@/app/config/env";
 import BattlesContainerUser from "@/app/[lang]/components/containers/battles-container/battles-container-user";
 
 export const metadata: Metadata = {
-    title: 'Music From Nothing - Finished battles',
+    title: 'Tunes Hub - Finished battles',
     description: 'Finished battles',
 }
 

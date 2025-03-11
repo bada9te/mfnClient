@@ -72,8 +72,8 @@ export default function AppBar({
                 <Link className="btn btn-ghost text-xl" href={'/'}>
                     <Image src={'/assets/logo.png'} alt={'logo'} width={40} height={40}
                            className="rounded-full hidden lg:block"/>
-                    <span className="hidden md:flex">Music From Nothing</span>
-                    <span className="flex md:hidden">MFN</span>
+                    <span className="hidden md:flex">Tunes Hub</span>
+                    <span className="flex md:hidden">TH</span>
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">

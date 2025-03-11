@@ -17,7 +17,7 @@ import PinnedTracks from "@/app/[lang]/profile/components/profile-card/component
 
 
 export const metadata: Metadata = {
-    title: 'Music From Nothing - Profile',
+    title: 'Tunes Hub - Profile',
     description: 'Profile',
 }
 

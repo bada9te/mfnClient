@@ -2,7 +2,7 @@
     "app": {
         "landing": {
             "welcome": {
-                "header": "Willkommen bei Music From Nothing",
+                "header": "Willkommen bei Tunes Hub",
                 "subheader": "Die Musik-Streaming-Plattform"
             },
             "compose": {
@@ -23,7 +23,7 @@
                     },
                     "start": {
                         "title": "🚀 Los geht's",
-                        "description": "Treten Sie ''Music from Nothing'' bei und lassen Sie die Musik beginnen!"
+                        "description": "Treten Sie ''Tunes Hub'' bei und lassen Sie die Musik beginnen!"
                     }
                 }
             },
