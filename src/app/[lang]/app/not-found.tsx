@@ -6,9 +6,9 @@ export default function ErrorPage() {
     return (
         <HeroWrapper
             title=":("
-            description=""
+            description="404 Content not found"
         >
-            <Image src={"/assets/bgs/404.png"} alt="404" className="w-72" width={1000} height={1000} />
+            <></>
         </HeroWrapper>
     );
 }

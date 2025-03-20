@@ -250,7 +250,7 @@ export default function ProfileButtonAlternative({
                         }
                     />
 
-                    <div className="btn btn-sm w-44 h-10 flex flex-row gap-2">
+                    <div className="btn btn-primary btn-sm w-44 h-10 flex flex-row gap-2">
                         {
                             user?.user 
                             ?

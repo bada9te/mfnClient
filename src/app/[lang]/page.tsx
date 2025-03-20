@@ -19,11 +19,12 @@ export default function Landing() {
     const [hoverCard1, setHoveredCard1] = useState<number | undefined>(undefined);
     return (
         <div
-             className="w-full min-h-screen bg-cover bg-center bg-[#004a46] relative"
+             className={`w-full min-h-screen bg-cover bg-center relative`}
         >
             <div
-                className="absolute top-0 left-0 h-full w-full bg-cover bg-center"
+                className="absolute top-0 left-0 h-full w-full bg-cover bg-center transition-all duration-400"
                 style={{
+                    backgroundColor: !openAppHovered ? "#3b3e40" : "#004a46",
                     backgroundImage: "url(/assets/landing/landing-1-no-sun.png)",
                     filter: openAppHovered ? "none" : "grayscale(100%)"
                 }}
@@ -63,13 +64,13 @@ export default function Landing() {
                 {windows.map((window, index) => (
                     <div
                         key={index}
-                        className="w-56 h-[600px] bg-cover rounded-2xl border-2 border-white backdrop-blur-md blur-none transition-all duration-500"
+                        className="w-56 h-[600px] bg-cover rounded-2xl border-0 border-white backdrop-blur-md blur-none transition-all duration-500"
                         style={{
                             backgroundImage: hoverCard1 == index || openAppHovered ? "url(/assets/landing/text-landing-1-filled.png)" : "url(/assets/landing/text-landing-1.png)",
                             backgroundSize: "700% auto", // Scale background across all windows
                             backgroundPosition: `${window.left} center`, // Align different sections of the image
                             backgroundClip: "padding-box",
-                            filter:  hoverCard1 == index || openAppHovered ? "none" : "grayscale(100%) blur(3px)", // Makes the image black & white
+                            filter:  hoverCard1 == index || openAppHovered ? "none" : "grayscale(100%)", // Makes the image black & white
                             boxShadow: hoverCard1 == index || openAppHovered ? "0 0 5px #34d4cd, 0 0 10px #34d4cd, 0 0 20px #34d4cd, 0 0 30px #34d4cd, 0 0 40px #34d4cd, 0 0 50px #34d4cd, 0 0 75px #34d4cd" : "none"
                         }}
                         onMouseEnter={() => {

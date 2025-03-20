@@ -197,7 +197,7 @@ export default function Post(props: {
                 }
                 <h2 className="card-title text-2xl">
                     {data?.title}
-                    <div className="badge bg-[#1ba39c] text-base-content">{data?.category}</div>
+                    <div className="badge bg-[#1ba39c] text-white">{data?.category}</div>
                 </h2>
                 <p className="text-lg">{data?.description}</p>
             </div>

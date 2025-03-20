@@ -57,7 +57,7 @@ const config: Config = {
     themes: [
       {
         dim: {
-          ...require("daisyui/src/theming/themes")["dim"],
+          ...require("daisyui/src/theming/themes")["dark"],
           ".:hover": {
             "background-color": "#1ba39c",
             "border-color": "#1ba39c",
@@ -65,31 +65,15 @@ const config: Config = {
           ".btn": {
             "border-radius": "14px",
           },
-          ".divider-primary::before, .divider-primary::after": {
-            "background-color": "#1ba39c",
+          ".btn-primary": {
+            "background-color": "#1ca49e",
+            "border-color": "#1ca49e",
+            "color": "#fff",
           },
-        },
-        nord: {
-          ...require("daisyui/src/theming/themes")["nord"],
-          ".:hover": {
-            "background-color": "#1ba39c",
-            "border-color": "#1ba39c",
-          },
-          ".btn": {
-            "border-radius": "14px",
-          },
-          ".divider-primary::before, .divider-primary::after": {
-            "background-color": "#1ba39c",
-          },
-        },
-        light: {
-          ...require("daisyui/src/theming/themes")["light"],
-          ".:hover": {
-            "background-color": "#1ba39c",
-            "border-color": "#1ba39c",
-          },
-          ".btn": {
-            "border-radius": "14px",
+          ".btn-primary:hover": {
+            "background-color": "#3d3d3d",
+            "border-color": "#3d3d3d",
+            "color": "#fff",
           },
           ".divider-primary::before, .divider-primary::after": {
             "background-color": "#1ba39c",
