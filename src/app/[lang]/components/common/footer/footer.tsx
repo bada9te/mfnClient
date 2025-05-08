@@ -11,7 +11,7 @@ export default function Footer({
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     return (
-        <footer className="footer p-10 bg-base-300 text-neutral-content rounded-2xl shadow-2xl overflow-hidden relative">
+        <footer className="footer p-10 bg-base-300 text-base-content rounded-2xl shadow-2xl overflow-hidden relative">
             <DotPattern
                 className={cn(
                 "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",

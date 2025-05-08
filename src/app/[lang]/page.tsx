@@ -98,9 +98,13 @@ export default async function Page({params}: {params: {lang: TLang}}) {
 
 
             {/* THREE */}
-            <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative m-2 md:mx-4 p-3">
-                <MarqueeDemo dictionary={dict.app}/>
-            </div> 
+            {
+                /*
+                    <div className="overflow-hidden flex flex-col items-center text-base-content border-none bg-base-300 rounded-2xl relative m-2 md:mx-4 p-3">
+                        <MarqueeDemo dictionary={dict.app}/>
+                    </div> 
+                */
+            }
                 
             
             {/* FOUR */}
