@@ -31,7 +31,7 @@ export default function RegisterExploreBtns({
                     {dictionary.common["register-explore-btns"].register}
                 </Link>
             }
-            <Link href={`/src/app/%5Blang%5D/feed/1`} className="join-item btn  btn-sm  text-base-content w-full">
+            <Link href={`/feed/1`} className="join-item btn  btn-sm  text-base-content w-full">
                 <Telescope/>
                 {dictionary.common["register-explore-btns"].explore}
             </Link>

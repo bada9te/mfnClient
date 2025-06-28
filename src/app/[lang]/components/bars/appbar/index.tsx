@@ -19,7 +19,7 @@ export default function AppBar({
                     </div>
                     <ul tabIndex={0}
                         className=" bg-base-content text-black menu menu-sm dropdown-content max-h-[500px] overflow-y-auto thin-scrollbar mt-3 z-[1] p-2 shadow rounded-box w-52 flex flex-col flex-nowrap">
-                        <li><Link href={"/src/app/%5Blang%5D/feed/1"}>
+                        <li><Link href={"/feed/1"}>
                             <Earth/>
                             {dictionary?.bars.appbar.feed}
                         </Link></li>
@@ -29,9 +29,9 @@ export default function AppBar({
                                 {dictionary?.bars.appbar.battles}
                             </a>
                             <ul className="p-2">
-                                <li><Link href={"/src/app/%5Blang%5D/battles/in-progress/1"}>{dictionary?.bars.appbar["in-progress"]}</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
+                                <li><Link href={"/battles/in-progress/1"}>{dictionary?.bars.appbar["in-progress"]}</Link></li>
+                                <li><Link href={"/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
+                                <li><Link href={"/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
                             </ul>
                         </li>
                         <li>
@@ -40,9 +40,9 @@ export default function AppBar({
                                 {dictionary?.bars.appbar.playlists}
                             </a>
                             <ul className="p-2">
-                                <li><Link href={"/src/app/%5Blang%5D/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
+                                <li><Link href={"/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
+                                <li><Link href={"/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
+                                <li><Link href={"/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
                             </ul>
                         </li>
                         <li>
@@ -51,20 +51,20 @@ export default function AppBar({
                                 {dictionary?.bars.appbar.categories}
                             </a>
                             <ul className="p-2">
-                                <li><Link href={"/src/app/%5Blang%5D/categories/country/1"}>Country</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/pop/1"}>Pop</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/classical/1"}>Classical</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/funk/1"}>Funk</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/soul/1"}>Soul</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/hip-hop/1"}>Hip hop</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/rock/1"}>Rock</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/electronic/1"}>Electronic</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/latin/1"}>Latin</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/jazz/1"}>Jazz</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/blues/1"}>Blues</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/folk/1"}>Folk</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/metal/1"}>Metal</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/reggae/1"}>Reggae</Link></li>
+                                <li><Link href={"/categories/country/1"}>Country</Link></li>
+                                <li><Link href={"/categories/pop/1"}>Pop</Link></li>
+                                <li><Link href={"/categories/classical/1"}>Classical</Link></li>
+                                <li><Link href={"/categories/funk/1"}>Funk</Link></li>
+                                <li><Link href={"/categories/soul/1"}>Soul</Link></li>
+                                <li><Link href={"/categories/hip-hop/1"}>Hip hop</Link></li>
+                                <li><Link href={"/categories/rock/1"}>Rock</Link></li>
+                                <li><Link href={"/categories/electronic/1"}>Electronic</Link></li>
+                                <li><Link href={"/categories/latin/1"}>Latin</Link></li>
+                                <li><Link href={"/categories/jazz/1"}>Jazz</Link></li>
+                                <li><Link href={"/categories/blues/1"}>Blues</Link></li>
+                                <li><Link href={"/categories/folk/1"}>Folk</Link></li>
+                                <li><Link href={"/categories/metal/1"}>Metal</Link></li>
+                                <li><Link href={"/categories/reggae/1"}>Reggae</Link></li>
                             </ul>
                         </li>
                     </ul>
@@ -78,7 +78,7 @@ export default function AppBar({
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 bg-base-300 rounded-xl">
-                    <li><Link href={"/src/app/%5Blang%5D/feed/1"}>
+                    <li><Link href={"/feed/1"}>
                         <Earth/>
                         {dictionary?.bars.appbar.feed}
                     </Link></li>
@@ -89,9 +89,9 @@ export default function AppBar({
                                 {dictionary?.bars.appbar.battles}
                             </summary>
                             <ul className="p-2  bg-base-content text-black">
-                                <li><Link href={"/src/app/%5Blang%5D/battles/in-progress/1"}>{dictionary?.bars.appbar["in-progress"]}</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
+                                <li><Link href={"/battles/in-progress/1"}>{dictionary?.bars.appbar["in-progress"]}</Link></li>
+                                <li><Link href={"/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
+                                <li><Link href={"/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
                             </ul>
                         </details>
                     </li>
@@ -102,9 +102,9 @@ export default function AppBar({
                                 {dictionary?.bars.appbar.playlists}
                             </summary>
                             <ul className="p-2  bg-base-content text-black">
-                                <li><Link href={"/src/app/%5Blang%5D/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
+                                <li><Link href={"/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
+                                <li><Link href={"/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
+                                <li><Link href={"/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
                             </ul>
                         </details>
                     </li>
@@ -115,20 +115,20 @@ export default function AppBar({
                                 {dictionary?.bars.appbar.categories}
                             </summary>
                             <ul className="p-2  bg-base-content text-black">
-                                <li><Link href={"/src/app/%5Blang%5D/categories/country/1"}>Country</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/pop/1"}>Pop</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/classical/1"}>Classical</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/funk/1"}>Funk</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/soul/1"}>Soul</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/hip-hop/1"}>Hip hop</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/rock/1"}>Rock</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/electronic/1"}>Electronic</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/latin/1"}>Latin</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/jazz/1"}>Jazz</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/blues/1"}>Blues</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/folk/1"}>Folk</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/metal/1"}>Metal</Link></li>
-                                <li><Link href={"/src/app/%5Blang%5D/categories/reggae/1"}>Reggae</Link></li>
+                                <li><Link href={"/categories/country/1"}>Country</Link></li>
+                                <li><Link href={"/categories/pop/1"}>Pop</Link></li>
+                                <li><Link href={"/categories/classical/1"}>Classical</Link></li>
+                                <li><Link href={"/categories/funk/1"}>Funk</Link></li>
+                                <li><Link href={"/categories/soul/1"}>Soul</Link></li>
+                                <li><Link href={"/categories/hip-hop/1"}>Hip hop</Link></li>
+                                <li><Link href={"/categories/rock/1"}>Rock</Link></li>
+                                <li><Link href={"/categories/electronic/1"}>Electronic</Link></li>
+                                <li><Link href={"/categories/latin/1"}>Latin</Link></li>
+                                <li><Link href={"/categories/jazz/1"}>Jazz</Link></li>
+                                <li><Link href={"/categories/blues/1"}>Blues</Link></li>
+                                <li><Link href={"/categories/folk/1"}>Folk</Link></li>
+                                <li><Link href={"/categories/metal/1"}>Metal</Link></li>
+                                <li><Link href={"/categories/reggae/1"}>Reggae</Link></li>
                             </ul>
                         </details>
                     </li>

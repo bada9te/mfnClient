@@ -49,7 +49,7 @@ export default function BottomNav({
                     <span className="btm-nav-label">{dictionary?.bars["bottom-nav"].tracks}</span>
                 </button>
 
-                <Link href={"/src/app/%5Blang%5D/profile/me/upload"} className={pathname === "/profile/me/upload" ? "active" : ""}>
+                <Link href={"/profile/me/upload"} className={pathname === "/profile/me/upload" ? "active" : ""}>
                     <BadgePlus/>
                     <span className="btm-nav-label">{dictionary?.bars["bottom-nav"]["new-post"]}</span>
                 </Link>

@@ -136,7 +136,7 @@ export default function Post(props: {
                         </p>
                     </button>
                     <ul tabIndex={0} className="dropdown-content menu  bg-base-300 rounded-box z-[1] w-52 p-2 mt-3 shadow">
-                        <li><Link href={data?.owner?._id === user?._id ? "/src/app/%5Blang%5D/profile/me/1" : `/src/app/%5Blang%5D/profile/${data.owner?._id}/1`}>
+                        <li><Link href={data?.owner?._id === user?._id ? "/profile/me/1" : `/profile/${data.owner?._id}/1`}>
                             <UserIcon/>
                             {dictionary.entities.post["open-profile"]}
                         </Link></li>
@@ -157,7 +157,7 @@ export default function Post(props: {
                         {
                             editable
                             &&
-                            <li><Link href={`/src/app/%5Blang%5D/profile/me/edit/post/${data._id}`}>
+                            <li><Link href={`/profile/me/edit/post/${data._id}`}>
                                 <Cog/>
                                 {dictionary.entities.post.edit}
                             </Link></li>

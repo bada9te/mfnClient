@@ -14,12 +14,12 @@ export default function BarTabsNotifications(props: {
             <Link 
                 role="tab" 
                 className={`tab ${activeTab === "new" && " bg-[#1ba39c] text-base-content"}`}
-                href={"/src/app/%5Blang%5D/profile/me/notifications/new/1"}
+                href={"/profile/me/notifications/new/1"}
             >{dictionary?.bars["bar-tabs"]["bar-tabs-notifications"].new}</Link>
             <Link 
                 role="tab" 
                 className={`tab ${activeTab === "read" && " bg-[#1ba39c] text-base-content"}`}
-                href={"/src/app/%5Blang%5D/profile/me/notifications/read/1"}
+                href={"/profile/me/notifications/read/1"}
             >{dictionary?.bars["bar-tabs"]["bar-tabs-notifications"].reviewed}</Link>
         </div>
     );

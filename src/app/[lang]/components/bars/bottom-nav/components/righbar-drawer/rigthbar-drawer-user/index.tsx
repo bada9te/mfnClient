@@ -37,7 +37,7 @@ export default function RightbarDrawerUser({
                     <div className="badge  text-base-content">{data.subscribedOn?.length} {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].following}</div>
                 </div>
             </div>
-            <Link href={`/src/app/%5Blang%5D/profile/${data._id}/1`} className="btn btn-sm w-full shadow-lg text-base-content">
+            <Link href={`/profile/${data._id}/1`} className="btn btn-sm w-full shadow-lg text-base-content">
                 <UserIcon/>
                 {dictionary.modals["rightbar-drawer"]["rightbar-drawer-user"].profile}
             </Link>

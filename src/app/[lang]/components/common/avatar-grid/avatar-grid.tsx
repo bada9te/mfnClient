@@ -93,7 +93,7 @@ const AvatarGrid = ({
                   (() => {
                     if (recentTracksByFollowing?.postsMostRecentByFollowing?.length) {
                       return recentTracksByFollowing?.postsMostRecentByFollowing && recentTracksByFollowing.postsMostRecentByFollowing.map((recentTrack, index) => (
-                        <Link href={`/src/app/%5Blang%5D/profile/${recentTrack.owner?._id}/1`} key={index}>
+                        <Link href={`/profile/${recentTrack.owner?._id}/1`} key={index}>
                           <Image src={recentTrack.owner?.avatar ? `${envCfg.serverBase}/files/${recentTrack.owner.avatar}` : '/assets/icons/logo_clear.png'} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
                         </Link>
                       ))
@@ -144,7 +144,7 @@ const AvatarGrid = ({
                   (() => {
                     if (recentTracks?.postsMostRecent?.length) {
                       return recentTracks?.postsMostRecent && recentTracks.postsMostRecent.map((recentTrack, index) => (
-                        <Link href={`/src/app/%5Blang%5D/profile/${recentTrack.owner?._id}/1`} key={index}>
+                        <Link href={`/profile/${recentTrack.owner?._id}/1`} key={index}>
                           <Image src={recentTrack.owner?.avatar ? getIpfsUrl(recentTrack.owner.avatar) : `https://avatar.vercel.sh/${index}`} alt={`Avatar ${index}`} className="rounded-full h-14 w-14 shadow-2xl cursor-pointer border-[3px] border-[#21d4ce]" width={100} height={100}/>
                         </Link>
                       ))
@@ -171,7 +171,7 @@ const AvatarGrid = ({
       
 
       <div className='flex flex-col gap-2 items-center justify-center p-2'>
-        <Link href={"/src/app/%5Blang%5D/profile/me/upload"} className='btn btn-ghost h-fit rounded-none p-2'>
+        <Link href={"/profile/me/upload"} className='btn btn-ghost h-fit rounded-none p-2'>
             <BadgePlus/>
             <span className="text-sm">{dictionary?.bars["bottom-nav"]["new-post"]}</span>
         </Link>

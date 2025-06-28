@@ -27,13 +27,13 @@ export default function Footer({
                     <Link href={"/public"} className="hover:text-base-content">
                         {dictionary.common.footer.home}
                     </Link>
-                    <Link href={"/src/app/%5Blang%5D/battles/in-progress/1"} className="hover:text-base-content">
+                    <Link href={"/battles/in-progress/1"} className="hover:text-base-content">
                         {dictionary.common.footer.battles}
                     </Link>
-                    <Link href={"/src/app/%5Blang%5D/playlists/explore/1"} className="hover:text-base-content">
+                    <Link href={"/playlists/explore/1"} className="hover:text-base-content">
                         {dictionary.common.footer.playlists}
                     </Link>
-                    <Link href={"/src/app/%5Blang%5D/profile/me/upload"} className="hover:text-base-content">
+                    <Link href={"/profile/me/upload"} className="hover:text-base-content">
                         {dictionary.common.footer["new-post"]}
                     </Link>
                     <Link href={"/support"} className="hover:text-base-content">

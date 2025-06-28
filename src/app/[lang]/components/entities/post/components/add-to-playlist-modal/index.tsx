@@ -164,7 +164,7 @@ export default function AddToPlaylistModal({
                         </>
                         :
                         <div className="flex flex-col items-center justify-center">
-                            <Link href={"/src/app/%5Blang%5D/playlists/create"}>Create new playlist</Link>
+                            <Link href={"/playlists/create"}>Create new playlist</Link>
                         </div>
                     }
                 </div>

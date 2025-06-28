@@ -87,7 +87,7 @@ export default function PlayerTrackInfo({
                 <div className="flex flex-col gap-1 w-full"> 
                     <p className="text-base-content text-2xl font-bold">{data?.post?.title}</p>
                     <p className="text-base-content text-md font-bold">{data?.post?.description}</p>
-                    <Link className="mt-3 btn   btn-sm text-base-content" href={`/src/app/%5Blang%5D/post/${data?.post._id}/${data?.post.owner?._id}`}>
+                    <Link className="mt-3 btn   btn-sm text-base-content" href={`/post/${data?.post._id}/${data?.post.owner?._id}`}>
                         {dictionary.common.player["track-info"]["track-details"]}
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                             <path fillRule="evenodd" d="M15.28 9.47a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L13.69 10 9.97 6.28a.75.75 0 0 1 1.06-1.06l4.25 4.25ZM6.03 5.22l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L8.69 10 4.97 6.28a.75.75 0 0 1 1.06-1.06Z" clipRule="evenodd" />
@@ -108,7 +108,7 @@ export default function PlayerTrackInfo({
                             <path fillRule="evenodd" d="M10 2c-1.716 0-3.408.106-5.07.31C3.806 2.45 3 3.414 3 4.517V17.25a.75.75 0 0 0 1.075.676L10 15.082l5.925 2.844A.75.75 0 0 0 17 17.25V4.517c0-1.103-.806-2.068-1.93-2.207A41.403 41.403 0 0 0 10 2Z" clipRule="evenodd" />
                         </svg>
                     </button>
-                    <Link className="join-item btn  btn-sm  flex justify-center items-center text-base-content" href={`/src/app/%5Blang%5D/post/${data?.post._id}/${data?.post.owner?._id}`}>
+                    <Link className="join-item btn  btn-sm  flex justify-center items-center text-base-content" href={`/post/${data?.post._id}/${data?.post.owner?._id}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                             <path fillRule="evenodd" d="M15.28 9.47a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L13.69 10 9.97 6.28a.75.75 0 0 1 1.06-1.06l4.25 4.25ZM6.03 5.22l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L8.69 10 4.97 6.28a.75.75 0 0 1 1.06-1.06Z" clipRule="evenodd" />
                         </svg>

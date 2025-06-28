@@ -100,7 +100,7 @@ export default function AlternativeAppbar({
                                     return usersByNicknameData.usersByNickname.map((i, key) => {
                                         return (
                                             <li key={key} className="suggestion-item flex items-center gap-2">
-                                                <Link href={`/src/app/%5Blang%5D/profile/${i._id}/1`} className="btn btn-neutral btn-sm flex flex-row gap-2 items-center justify-center px-1 pr-2">
+                                                <Link href={`/profile/${i._id}/1`} className="btn btn-neutral btn-sm flex flex-row gap-2 items-center justify-center px-1 pr-2">
                                                     <Image src={i.avatar.length ? getIpfsUrl(i.avatar) : '/assets/bgs/clear.png'} alt="user" width={100} height={100} className="w-5 h-5 rounded-full"/>
                                                     <span>{i.nick}</span>
                                                 </Link>
@@ -119,7 +119,7 @@ export default function AlternativeAppbar({
                                     return postsByTitleData.postsByTitle.map((i, key) => {
                                         return (
                                             <li key={key} className="suggestion-item flex items-center gap-2">
-                                                <Link href={`/src/app/%5Blang%5D/post/${i._id}/${i.owner?._id}`} className="btn btn-neutral btn-sm">{i.title}</Link>
+                                                <Link href={`/post/${i._id}/${i.owner?._id}`} className="btn btn-neutral btn-sm">{i.title}</Link>
                                             </li>
                                         );
                                     });
@@ -159,7 +159,7 @@ export default function AlternativeAppbar({
                     }
                 >
                     <li>
-                        <Link href={"/src/app/%5Blang%5D/feed/1"}>
+                        <Link href={"/feed/1"}>
                             <Earth/>
                             {dictionary?.bars.appbar.feed}
                         </Link>
@@ -170,9 +170,9 @@ export default function AlternativeAppbar({
                             {dictionary?.bars.appbar.battles}
                         </summary>
                         <ul className="p-3 text-base-content shadow-none">
-                            <li><Link href={"/src/app/%5Blang%5D/battles/in-progress/1"}>{dictionary?.bars.appbar["in-progress"]}</Link></li>
-                            <li><Link href={"/src/app/%5Blang%5D/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
-                            <li><Link href={"/src/app/%5Blang%5D/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
+                            <li><Link href={"/battles/in-progress/1"}>{dictionary?.bars.appbar["in-progress"]}</Link></li>
+                            <li><Link href={"/battles/finished/1"}>{dictionary?.bars.appbar.finished}</Link></li>
+                            <li><Link href={"/battles/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
                         </ul>
                     </li>
                     <li>
@@ -181,9 +181,9 @@ export default function AlternativeAppbar({
                             {dictionary?.bars.appbar.playlists}
                         </summary>
                         <ul className="p-2 text-base-content shadow-none">
-                            <li><Link href={"/src/app/%5Blang%5D/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
-                            <li><Link href={"/src/app/%5Blang%5D/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
-                            <li><Link href={"/src/app/%5Blang%5D/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
+                            <li><Link href={"/playlists/explore/1"}>{dictionary?.bars.appbar.explore}</Link></li>
+                            <li><Link href={"/playlists/my-playlists/1"}>{dictionary?.bars.appbar["my-playlists"]}</Link></li>
+                            <li><Link href={"/playlists/create"}>{dictionary?.bars.appbar["create-new"]}</Link></li>
                         </ul>
                     </li>
                     <li>
@@ -193,20 +193,20 @@ export default function AlternativeAppbar({
                                 {dictionary?.bars.appbar.categories}
                             </summary>
                             <div className="flex flex-row flex-wrap gap-2 p-3">
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/country/1"}>Country</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/pop/1"}>Pop</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/classical/1"}>Classical</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/funk/1"}>Funk</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/soul/1"}>Soul</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/hip-hop/1"}>Hip hop</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/rock/1"}>Rock</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/electronic/1"}>Electronic</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/latin/1"}>Latin</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/jazz/1"}>Jazz</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/blues/1"}>Blues</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/folk/1"}>Folk</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/metal/1"}>Metal</Link></div>
-                                <div className="badge badge-neutral"><Link href={"/src/app/%5Blang%5D/categories/reggae/1"}>Reggae</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/country/1"}>Country</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/pop/1"}>Pop</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/classical/1"}>Classical</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/funk/1"}>Funk</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/soul/1"}>Soul</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/hip-hop/1"}>Hip hop</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/rock/1"}>Rock</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/electronic/1"}>Electronic</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/latin/1"}>Latin</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/jazz/1"}>Jazz</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/blues/1"}>Blues</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/folk/1"}>Folk</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/metal/1"}>Metal</Link></div>
+                                <div className="badge badge-neutral"><Link href={"/categories/reggae/1"}>Reggae</Link></div>
                             </div>
                         </details>
                     </li>
