@@ -9,7 +9,7 @@ import { mainnetChains, testnetChains } from './config';
 
 
 const config = getDefaultConfig({
-    appName: "Music From Nothing",
+    appName: "Tunes Hub",
     projectId: envCfg.rainbowkitId as string,
     // @ts-ignore
     chains: envCfg.envType === "production" ? mainnetChains : testnetChains,
