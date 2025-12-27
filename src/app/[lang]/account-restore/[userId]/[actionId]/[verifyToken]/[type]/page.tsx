@@ -16,7 +16,8 @@ export default async function AccountRestore({params}: {params: {
     type: string;
     lang: TLang;
 }}) {
-    const dict = await getDictionary(params.lang);
+    const {lang, userId, actionId, verifyToken, type} = await params;
+    const dict = await getDictionary(lang);
 
     return (
         <HeroWrapperForm
@@ -24,7 +25,7 @@ export default async function AccountRestore({params}: {params: {
             title={dict.app["account-restore"].restore.title}
             description={dict.app["account-restore"].restore.description}
         >
-            <AccountRestoreForm {...params} dictionary={dict.components}/>
+            <AccountRestoreForm {...{userId, actionId, verifyToken, type}} dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

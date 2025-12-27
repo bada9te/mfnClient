@@ -16,14 +16,15 @@ export default async function AccountVerify({params}: {params: {
     type: string;
     lang: TLang;
 }}) {
-    const dict = await getDictionary(params.lang);
+    const { lang, ...rest } = await params;
+    const dict = await getDictionary(lang);
     return (
         <HeroWrapperForm
             bgStyles="bg-[url('/assets/bgs/loginFormBG.png')] bg-left"
             title={dict.app["account-verify"].title}
             description={dict.app["account-verify"].description}
         >
-            <AccountConfirminationForm {...params} dictionary={dict.components}/>
+            <AccountConfirminationForm {...rest} dictionary={dict.components}/>
         </HeroWrapperForm>
     );
 }

@@ -16,8 +16,9 @@ export const metadata: Metadata = {
 }
 
 export default async function EditProfile({params}: {params: {lang: TLang}}) {
+    const { lang } = await params;
     const myId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
-    const dict = await getDictionary(params.lang);
+    const dict = await getDictionary(lang);
     return (
         <>
             <PreloadQuery

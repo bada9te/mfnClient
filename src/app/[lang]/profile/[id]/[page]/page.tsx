@@ -19,14 +19,15 @@ export const metadata: Metadata = {
 }
 
 export default async function ProfileId({params}: {params: {page: number, id: string, lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const {lang, page, id} = await params;
+    const dict = await getDictionary(lang);
     return (
         <>
             <PreloadQuery query={ACHIEVEMENTS_COUNT_QUERY}>
-                <PreloadQuery query={USER_ACHIEVEMENTS_DATA_QUERY} variables={{ _id: params.id }}>
-                    <PreloadQuery query={USER_QUERY} variables={{ _id: params.id }}>
+                <PreloadQuery query={USER_ACHIEVEMENTS_DATA_QUERY} variables={{ _id: id }}>
+                    <PreloadQuery query={USER_QUERY} variables={{ _id: id }}>
                         <Suspense fallback={<ProfileCardSkeleton/>}>
-                            <ProfileCard userId={params.id} dictionary={dict.components}/>
+                            <ProfileCard userId={id} dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
                 </PreloadQuery>
@@ -40,27 +41,27 @@ export default async function ProfileId({params}: {params: {page: number, id: st
                         <PreloadQuery
                             query={USER_PINNED_POSTS_QUERY}
                             variables={{
-                                _id: params.id
+                                _id: id
                             }}
                         >
                             <Suspense fallback={"LOADING..."}>
-                                <PinnedTracks dictionary={dict.components} userId={params.id}/>
+                                <PinnedTracks dictionary={dict.components} userId={id}/>
                             </Suspense>
                         </PreloadQuery>
                         <PreloadQuery 
                             query={POSTS_BY_OWNER_QUERY}
                             variables={{
-                                offset: (params.page - 1) * 12,
+                                offset: (page - 1) * 12,
                                 limit: 12,
-                                owner: params.id
+                                owner: id
                             }}
                         >
                             <Suspense fallback={<PostsContainerSkeleton/>}>
                                 <PostsContainerProfile
-                                    page={params.page}
-                                    offset={(params.page - 1) * 12} 
+                                    page={page}
+                                    offset={(page - 1) * 12} 
                                     limit={12}
-                                    profileId={params.id}
+                                    profileId={id}
                                     dictionary={dict.components}
                                 />
                             </Suspense>

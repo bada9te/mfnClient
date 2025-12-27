@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Register({params}: {params: {lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
     return (
         <HeroWrapperForm
             bgStyles="bg-[url('/assets/bgs/loginFormBG.png')] bg-left"

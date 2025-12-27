@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Playlist({params}: {params: {playlistId: string, lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const { lang, playlistId } = await params;
+    const dict = await getDictionary(lang);
     return (
         <HeroWrapper
             title={dict.app.playlists.id.title}
@@ -25,11 +26,11 @@ export default async function Playlist({params}: {params: {playlistId: string, l
                     <PreloadQuery
                         query={PLAYLIST_QUERY}
                         variables={{
-                            _id: params.playlistId
+                            _id: playlistId
                         }}
                     >
                         <Suspense fallback={<PlaylistSkeleton/>}>
-                            <PlaylistContainer playlistId={params.playlistId} dictionary={dict.components}/>
+                            <PlaylistContainer playlistId={playlistId} dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
                 </div>

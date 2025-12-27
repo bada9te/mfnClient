@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Battles({params}: {params: {page: number, lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const {lang, page} = await params;
+    const dict = await getDictionary(lang);
     const myId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
 
     return (
@@ -34,16 +35,16 @@ export default async function Battles({params}: {params: {page: number, lang: TL
                             query={BATTLES_USER_PARTICIPATED_IN_QUERY}
                             variables={{
                                 userId: myId,
-                                offset: (params.page - 1) * 6,
+                                offset: (page - 1) * 6,
                                 limit: 6,
                             }}
                         >
                             <Suspense fallback={<BattlesContainerSkeleton/>}>
                                 <BattlesContainerUser
-                                    offset={(params.page - 1) * 6}
+                                    offset={(page - 1) * 6}
                                     limit={6}
                                     userId={myId}
-                                    page={params.page}
+                                    page={page}
                                     dictionary={dict.components}
                                 />
                             </Suspense>

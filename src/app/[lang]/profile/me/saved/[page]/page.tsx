@@ -16,8 +16,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
+    const {lang, page} = await params;
     const userId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
-    const dict = await getDictionary(params.lang);
+    const dict = await getDictionary(lang);
     return (
         <HeroWrapper
             title={dict.app.profile.me.saved.title}
@@ -28,13 +29,13 @@ export default async function Feed({params}: {params: { page: number, lang: TLan
                     <PreloadQuery
                         query={POSTS_SAVED_BY_USER_QUERY}
                         variables={{
-                            offset: (params.page - 1) * 12,
+                            offset: (page - 1) * 12,
                             limit: 12,
                             user: userId
                         }}
                     >
                         <Suspense fallback={<PostsContainerSkeleton/>}>
-                            <PostsContainerSaved offset={(params.page - 1) * 12} limit={12} page={params.page} userId={userId} dictionary={dict.components}/>
+                            <PostsContainerSaved offset={(page - 1) * 12} limit={12} page={page} userId={userId} dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
                 </div>

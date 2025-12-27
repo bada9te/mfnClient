@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+import daisyui from "daisyui";
 
 const config: Config = {
 
@@ -50,7 +50,38 @@ const config: Config = {
       }
     },
   },
+  plugins: [
+    daisyui,
+  ],
+  daisyui: {
+    themes: [
+      {
+        dim: {
+          ...require("daisyui/src/theming/themes")["dark"],
+          ".:hover": {
+            "background-color": "#1ba39c",
+            "border-color": "#1ba39c",
+          },
+          ".btn": {
+            "border-radius": "14px",
+          },
+          ".btn-primary": {
+            "background-color": "#1ca49e",
+            "border-color": "#1ca49e",
+            "color": "#fff",
+          },
+          ".btn-primary:hover": {
+            "background-color": "#3d3d3d",
+            "border-color": "#3d3d3d",
+            "color": "#fff",
+          },
+          ".divider-primary::before, .divider-primary::after": {
+            "background-color": "#1ba39c",
+          },
+        },
+      },
+    ],
+  },
 };
 export default config;
-
 

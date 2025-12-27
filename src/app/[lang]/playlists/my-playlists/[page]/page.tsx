@@ -18,8 +18,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Playlists({params}: {params: {page: number, lang: TLang}}) {
+    const {lang, page} = await params;
     const myId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
-    const dict = await getDictionary(params.lang);
+    const dict = await getDictionary(lang);
     return (
         <>
             <BarTabsPlaylists activeTab="my-playlists" dictionary={dict.components}/>
@@ -33,14 +34,14 @@ export default async function Playlists({params}: {params: {page: number, lang: 
                             query={PLAYLISTS_BY_OWNER_ID_QUERY}
                             variables={{
                                 owner: myId,
-                                offset: (params.page - 1) * 12,
+                                offset: (page - 1) * 12,
                                 limit: 12
                             }}
                         >
                             <Suspense fallback={<PlaylistsContainerSkeleton/>}>
                                 <PlaylistsContainerOwner
-                                    page={params.page}
-                                    offset={(params.page - 1) * 12}
+                                    page={page}
+                                    offset={(page - 1) * 12}
                                     limit={12}
                                     ownerId={myId}
                                     dictionary={dict.components}

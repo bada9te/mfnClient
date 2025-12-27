@@ -14,10 +14,11 @@ export const metadata: Metadata = {
 }
 
 export default async function Categories({params}: {params: {category: string, page: number, lang: TLang}}) {
-    let category = params.category.replaceAll('-', ' ');
+    const {lang, page, category: categoryFromProps} = await params;
+    let category = categoryFromProps.replaceAll('-', ' ');
     category = category.substring(0, 1).toUpperCase() + category.substring(1, category.length);
 
-    const dict = await getDictionary(params.lang)
+    const dict = await getDictionary(lang)
     return (
         <HeroWrapper
             title={category}
@@ -28,17 +29,17 @@ export default async function Categories({params}: {params: {category: string, p
                     <PreloadQuery
                         query={POSTS_BY_CATEGORY_QUERY}
                         variables={{
-                            offset: (params.page - 1) * 12,
+                            offset: (page - 1) * 12,
                             limit: 12,
-                            category: params.category
+                            category: category
                         }}
                     >
                         <Suspense fallback={<PostsContainerSkeleton/>}>
                             <PostsContainerCategory
-                                offset={(params.page - 1) * 12}
+                                offset={(page - 1) * 12}
                                 limit={12}
-                                page={params.page}
-                                category={params.category}
+                                page={page}
+                                category={category}
                                 dictionary={dict.components}
                             />
                         </Suspense>

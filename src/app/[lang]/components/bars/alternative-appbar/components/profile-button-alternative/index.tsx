@@ -261,14 +261,13 @@ export default function ProfileButtonAlternative({
                                 </a>
                             </Link>
                             :
-                            <Link href="/login" legacyBehavior>
-                                <a className="flex flex-row gap-2 items-center justify-center">
+                            <Link href="/login">
+                                <div className="flex flex-row gap-2 items-center justify-center">
                                     <LogIn />
                                     {dictionary?.common["profile-button"].login}
-                                </a>
+                                </div>
                             </Link>
                         }
-                        
                     </div>
                 </div>
             </div>

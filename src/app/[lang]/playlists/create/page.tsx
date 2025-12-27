@@ -11,7 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Playlists({params}: {params: {lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
     return (
         <>
             <BarTabsPlaylists activeTab="create" dictionary={dict.components}/>

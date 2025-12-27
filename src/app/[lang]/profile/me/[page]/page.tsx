@@ -23,8 +23,9 @@ export const metadata: Metadata = {
 
 
 export default async function Profile({params}: {params: { page: number, lang: TLang }}) {
+    const {lang, page} = await params;
     const myId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
-    const dict = await getDictionary(params.lang);
+    const dict = await getDictionary(lang);
 
     return (
         <>
@@ -56,16 +57,16 @@ export default async function Profile({params}: {params: { page: number, lang: T
                         <PreloadQuery
                             query={POSTS_BY_OWNER_QUERY}
                             variables={{
-                                offset: (params.page - 1) * 12,
+                                offset: (page - 1) * 12,
                                 limit: 12,
                                 owner: myId
                             }}
                         >
                             <Suspense fallback={<PostsContainerSkeleton/>}>
                                 <PostsContainerProfile
-                                    offset={(params.page - 1) * 12}
+                                    offset={(page - 1) * 12}
                                     limit={12}
-                                    page={params.page}
+                                    page={page}
                                     profileId={myId}
                                     dictionary={dict.components}
                                 />

@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 }
 
 export default async function PostPage({params}: {params: {id: string, owner: string, lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const {lang, id, owner} = await params;
+    const dict = await getDictionary(lang);
     return (
         <HeroWrapper
             title={dict.app.post.title}
@@ -29,38 +30,38 @@ export default async function PostPage({params}: {params: {id: string, owner: st
                         <PreloadQuery
                             query={POST_QUERY}
                             variables={{
-                                _id: params.id
+                                _id: id
                             }}
                         >
                             <Suspense fallback={<PostSkeleton/>}>
-                                <PostContainer postId={params.id} dictionary={dict.components}/>
+                                <PostContainer postId={id} dictionary={dict.components}/>
                             </Suspense>
                         </PreloadQuery>
                     </div>
 
 
                     {
-                        params.owner ?
-                        <ProfileCard userId={params.owner} disableMargins dictionary={dict.components}/> :
+                        owner ?
+                        <ProfileCard userId={owner} disableMargins dictionary={dict.components}/> :
                         null
                     }
                 </div>
 
                 {
-                    params.owner ?
+                    owner ?
                     <>
                         <div className="divider divider-primary my-10">More tracks</div>
                         <div className="flex flex-wrap justify-center md:justify-center gap-5 lg:gap-14">
                             <PreloadQuery
                                 query={POSTS_BY_OWNER_QUERY}
                                 variables={{
-                                    owner: params.owner,
+                                    owner: owner,
                                     offset: 0,
                                     limit: 6
                                 }}
                             >
                                 <Suspense fallback={<PostsContainerSkeleton/>}>
-                                    <PostsContainerProfile profileId={params.owner} offset={0} limit={6} page={1} paginationHidden dictionary={dict.components}/>
+                                    <PostsContainerProfile profileId={owner} offset={0} limit={6} page={1} paginationHidden dictionary={dict.components}/>
                                 </Suspense>
                             </PreloadQuery>
                         </div>

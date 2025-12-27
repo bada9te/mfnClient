@@ -17,8 +17,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Notifications({params}: {params: { page: number, lang: TLang }}) {
+    const {lang, page} = await params;
     const receiver = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
-    const dict = await getDictionary(params.lang);
+    const dict = await getDictionary(lang);
     return (
         <>
             <NotificationsTabsBattles activeTab={"read"} dictionary={dict.components}/>
@@ -33,14 +34,14 @@ export default async function Notifications({params}: {params: { page: number, l
                             variables={{
                                 receiverId: receiver, 
                                 checked: true, 
-                                offset: (params.page - 1) * 12, 
+                                offset: (page - 1) * 12, 
                                 limit: 12
                             }}
                         >
                             <Suspense fallback={<NotificationsContainerSkeleton/>}>
                                 <NotificationsContainer
-                                    page={params.page}
-                                    offset={(params.page - 1) * 12}
+                                    page={page}
+                                    offset={(page - 1) * 12}
                                     limit={12}
                                     checked={true}
                                     receiverId={receiver}

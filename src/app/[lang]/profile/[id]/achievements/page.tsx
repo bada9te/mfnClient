@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Challenges({params}: {params: {id: string, lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
     return (
         <HeroWrapper
             title={dict.app.profile.id.achievements.title}
@@ -26,7 +27,7 @@ export default async function Challenges({params}: {params: {id: string, lang: T
                         query={ACHIEVEMENTS_ALL_QUERY}
                     >
                         <Suspense fallback={<AchievementsContainerSkeleton/>}>
-                            <AchievementsContainer userId={params.id}/>
+                            <AchievementsContainer userId={id}/>
                         </Suspense>
                     </PreloadQuery>
                 </div>

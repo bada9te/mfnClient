@@ -19,7 +19,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Page({params}: {params: {lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
     return (
         <>
             {/* ONE */}

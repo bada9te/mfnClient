@@ -15,7 +15,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Playlists({params}: {params: {page: number, lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const {lang, page} = await params;
+    const dict = await getDictionary(lang);
     return (
         <>
             <BarTabsPlaylists activeTab="explore" dictionary={dict.components}/>
@@ -29,14 +30,14 @@ export default async function Playlists({params}: {params: {page: number, lang: 
                         <PreloadQuery
                             query={PLAYLISTS_PUBLIC_AWAILABLE_QUERY}
                             variables={{
-                                offset: (params.page - 1) * 6,
+                                offset: (page - 1) * 6,
                                 limit: 6
                             }}
                         >
                             <Suspense fallback={<PlaylistsContainerSkeleton/>}>
                                 <PlaylistsContainerPublic
-                                    page={params.page}
-                                    offset={(params.page - 1) * 6}
+                                    page={page}
+                                    offset={(page - 1) * 6}
                                     limit={6}
                                     dictionary={dict.components}
                                 />

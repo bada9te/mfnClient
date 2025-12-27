@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
-    const dict = await getDictionary(params.lang);
+    const {lang, page} = await params;
+    const dict = await getDictionary(lang);
     return (
         <HeroWrapper
             title={dict.app.feed.title}
@@ -25,12 +26,12 @@ export default async function Feed({params}: {params: { page: number, lang: TLan
                     <PreloadQuery
                         query={POSTS_QUERY}
                         variables={{
-                            offset: (params.page - 1) * 12,
+                            offset: (page - 1) * 12,
                             limit: 12
                         }}
                     >
                         <Suspense fallback={<PostsContainerSkeleton/>}>
-                            <PostsContainerFeed offset={(params.page - 1) * 12} limit={12} page={params.page} dictionary={dict.components}/>
+                            <PostsContainerFeed offset={(page - 1) * 12} limit={12} page={page} dictionary={dict.components}/>
                         </Suspense>
                     </PreloadQuery>
                 </div>

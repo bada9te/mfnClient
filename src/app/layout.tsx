@@ -17,7 +17,7 @@ const font = Montserrat({
   weight: '400'
 });
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: React.PropsWithChildren<LayoutProps<'/'>>) {
   return (

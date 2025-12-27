@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Battles({params}: {params: {id: string, lang: TLang}}) {
-    const dict = await getDictionary(params.lang);
+    const { lang, id } = await params;
+    const dict = await getDictionary(lang);
     return (
         <>
             <HeroWrapper
@@ -27,11 +28,11 @@ export default async function Battles({params}: {params: {id: string, lang: TLan
                         <PreloadQuery
                             query={BATTLE_BY_ID_QUERY}
                             variables={{
-                                _id: params.id
+                                _id: id
                             }}
                         >
                             <Suspense fallback={<BattleSkeleton/>}>
-                                <BattleContainer id={params.id} dictionary={dict.components}/>
+                                <BattleContainer id={id} dictionary={dict.components}/>
                             </Suspense>
                         </PreloadQuery>
                     </div>

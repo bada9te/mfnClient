@@ -119,13 +119,11 @@ export default function ProfileButton({
                 {user?.user?._id ? (
                     <>
                         <li>
-                            <Link href="/src/app/[lang]/profile/me/1" className="justify-between" legacyBehavior>
-                                <a>
-                                    <div className="flex flex-wrap gap-1">
-                                        <User/>
-                                        {dictionary?.common["profile-button"].profile}
-                                    </div>
-                                </a>
+                            <Link href="/src/app/[lang]/profile/me/1" className="justify-between">
+                                <div className="flex flex-wrap gap-1">
+                                    <User/>
+                                    {dictionary?.common["profile-button"].profile}
+                                </div>
                             </Link>
                         </li>
                         {
@@ -169,65 +167,51 @@ export default function ProfileButton({
                             
                         }
                         <li>
-                            <Link href="/src/app/[lang]/profile/me/notifications/new/1" className="justify-between" legacyBehavior>
-                                <a>
+                            <Link href="/src/app/[lang]/profile/me/notifications/new/1" className="justify-between">
                                     <div className="flex flex-wrap gap-1">
                                         <Bell/>
                                         {dictionary?.common["profile-button"].notifications}
                                     </div>
                                     <span className="badge">{user.unreadNotifications}</span>
-                                </a>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/src/app/[lang]/profile/me/edit" legacyBehavior>
-                                <a>
+                            <Link href="/src/app/[lang]/profile/me/edit">
                                     <Cog/>
                                     {dictionary?.common["profile-button"]["edit-profile"]}
-                                </a>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/src/app/[lang]/profile/me/saved/1" legacyBehavior>
-                                <a>
+                            <Link href="/src/app/[lang]/profile/me/saved/1">
                                     <Bookmark/>
                                     {dictionary?.common["profile-button"].saved}
-                                </a>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/support" legacyBehavior>
-                                <a>
+                            <Link href="/support">
                                     <BadgeHelp/>
                                     {dictionary?.common["profile-button"].support}
-                                </a>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/logout" className="text-error" legacyBehavior>
-                                <a>
+                            <Link href="/logout" className="text-error">
                                     <DoorOpen />
                                     {dictionary?.common["profile-button"].logout}
-                                </a>
                             </Link>
                         </li>
                     </>
                 ) : (
                     <>
                         <li>
-                            <Link href="/support" legacyBehavior>
-                                <a>
+                            <Link href="/support">
                                     <BadgeHelp/>
                                     {dictionary?.common["profile-button"].support}
-                                </a>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/login" legacyBehavior>
-                                <a>
+                            <Link href="/login" >
                                     <LogIn />
                                     {dictionary?.common["profile-button"].login}
-                                </a>
                             </Link>
                         </li>
                     </>

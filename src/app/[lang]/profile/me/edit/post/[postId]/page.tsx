@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 
 
 export default async function EditPost({params}: {params: {postId: string, lang: TLang}}) {
-    const dict = await getDictionary(params.lang)
+    const { lang, postId } = await params;
+    const dict = await getDictionary(lang)
     return (
         <HeroWrapper
             title={dict.app.profile.me.edit.post.title}
@@ -27,13 +28,13 @@ export default async function EditPost({params}: {params: {postId: string, lang:
                     <PreloadQuery
                         query={POST_QUERY}
                         variables={{
-                            _id: params.postId 
+                            _id: postId 
                         }}
                     >
                         <Suspense fallback={<PostSkeleton/>}>
-                            <PostContainer postId={params.postId} dictionary={dict.components}/>
+                            <PostContainer postId={postId} dictionary={dict.components}/>
                         </Suspense>
-                        <PostEditForm posId={params.postId} dictionary={dict.components}/>
+                        <PostEditForm posId={postId} dictionary={dict.components}/>
                     </PreloadQuery>
                 </div>
             </div>

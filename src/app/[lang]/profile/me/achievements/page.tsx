@@ -18,8 +18,9 @@ export const metadata: Metadata = {
 
 
 export default async function Challenges({params}: {params: {lang: TLang}}) {
+    const { lang } = await params;
     const currentUserId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
-    const dict = await getDictionary(params.lang);
+    const dict = await getDictionary(lang);
     return (
         <HeroWrapper
             title={dict.app.profile.me.achievements.title}
