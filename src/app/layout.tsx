@@ -1,6 +1,5 @@
 "use client"
 import "./globals.css";
-import { TLang } from "@/app/types/language";
 import ReduxProvider from "./lib/redux/provider";
 import { SnackbarProvider } from 'notistack';
 import {ApolloWrapper} from "./lib/apollo/apollo-wrapper";
@@ -18,26 +17,20 @@ const font = Montserrat({
   weight: '400'
 });
 
-
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params
-}: Readonly<{
-  children: React.ReactNode;
-  params: { lang: TLang }
-}>) {
+}: React.PropsWithChildren<LayoutProps<'/'>>) {
   return (
-    <html lang={params.lang} data-theme="dim">
+    <html data-theme="dim">
       <body className={font.className}>
         <RainbowkitAppProvider>
             <ApolloWrapper>
-                <SnackbarProvider 
+                <SnackbarProvider
                   anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'center',
                   }}
-                  maxSnack={5} 
+                  maxSnack={5}
                   Components={{
                     default: MFNDefault,
                     success: MFNSuccess,

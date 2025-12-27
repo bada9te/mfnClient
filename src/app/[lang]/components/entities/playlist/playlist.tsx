@@ -17,18 +17,20 @@ export default function Playlist(props: {
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {
     const { posts, title, _id, editable, expanded, dictionary } = props;
-    const [ deletePlaylist ] = usePlaylistDeleteByIdMutation({
-        variables: {
-            _id
-        }
-    });
+    const [ deletePlaylist ] = usePlaylistDeleteByIdMutation();
     const [ swicthTrack ] = usePlaylistSwicthTrackMutation();
     const { enqueueSnackbar } = useSnackbar();
     const [ isRemovingTrack, setIsRemovingTrack ] = useState(false);
 
     const handleSelfDelete = () => {
         enqueueSnackbar("Deleting playlist...", {autoHideDuration: 1500});
-        deletePlaylist().then(_ => {
+        deletePlaylist(
+            {
+                variables: {
+                    _id
+                }
+            }
+        ).then(_ => {
             enqueueSnackbar("Playlist deleted", {autoHideDuration: 2000, variant: 'success'});
             revalidatePathAction("/playlists/my-playlists", "page");
             revalidatePathAction("/playlists/explore", "page");

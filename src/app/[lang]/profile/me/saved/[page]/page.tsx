@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
-    const userId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
+    const userId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(params.lang);
     return (
         <HeroWrapper

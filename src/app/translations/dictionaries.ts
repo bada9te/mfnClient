@@ -11,6 +11,6 @@ const dictionaries = {
 
 
 export const getDictionary = async (locale: TLang) => {
-  let preffrerdlanguage = cookies().get("language")?.value || locale;
+  let preffrerdlanguage = (await cookies()).get("language")?.value || locale;
   return dictionaries[preffrerdlanguage as TLang]?.() ?? dictionaries.en();
 }

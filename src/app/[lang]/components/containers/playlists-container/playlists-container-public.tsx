@@ -24,13 +24,13 @@ export default function PlaylistsContainerPublic(props: TPaginationProps & {dict
         <>
             <RefreshButtonPerContainer handleClick={() => refetch({offset, limit})} dictionary={dictionary}/>
             {
-                data?.playlistsPublicAvailable.playlists?.length
+                data?.playlistsPublicAvailable?.playlists?.length
                 ?
                 <>
                     {
-                        data?.playlistsPublicAvailable.playlists?.map((playlist, key) => {
+                        data?.playlistsPublicAvailable?.playlists?.map((playlist, key) => {
                             return (
-                                <Playlist key={key} _id={playlist._id} title={playlist.title} posts={playlist.tracks as TPost[]} dictionary={dictionary}/>
+                                <Playlist key={key} _id={playlist?._id as string} title={playlist?.title as string} posts={playlist?.tracks as TPost[]} dictionary={dictionary}/>
                             );
                         })
                     }

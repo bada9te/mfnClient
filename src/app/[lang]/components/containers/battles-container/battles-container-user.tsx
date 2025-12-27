@@ -33,7 +33,7 @@ export default function BattlesContainerUser(props: TPaginationProps & { userId:
             address: MFNAddresses[chainId],
             abi: MfnAbi,
             functionName: "withdrawTokensFromAllBattles"
-        }).then(async (hash) => {
+        } as any).then(async (hash) => {
             enqueueSnackbar("TX sent, waiting for confirminations...", { autoHideDuration: 4000 });
             await waitForTransactionReceipt(config, {
                 hash,
@@ -55,7 +55,7 @@ export default function BattlesContainerUser(props: TPaginationProps & { userId:
                 handleWithdrawClick={handleWithdrawAllClick}
             />
             {
-                data?.battlesUserParticipatedIn.battles?.length
+                data?.battlesUserParticipatedIn?.battles?.length
                 ?
                 <>
                     {

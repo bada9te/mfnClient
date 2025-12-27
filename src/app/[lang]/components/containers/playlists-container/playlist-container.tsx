@@ -16,9 +16,9 @@ export default function PlaylistContainer(props: {
 
     return (
         <Playlist 
-            _id={playlistData?.playlist._id as string} 
-            title={playlistData?.playlist.title as string} 
-            posts={playlistData?.playlist.tracks as Post[]} 
+            _id={playlistData?.playlist?._id as string}
+            title={playlistData?.playlist?.title as string}
+            posts={playlistData?.playlist?.tracks as Post[]}
             expanded 
             dictionary={props.dictionary}
         />

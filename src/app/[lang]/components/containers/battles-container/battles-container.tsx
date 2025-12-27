@@ -21,7 +21,7 @@ export default function BattlesContainer(props: TPaginationProps & { finished: b
         <>
             <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, finished})} dictionary={dictionary}/>
             {
-                data?.battlesByStatus.battles?.length
+                data?.battlesByStatus?.battles?.length
                 ?
                 <>
                     {

@@ -49,14 +49,7 @@ export default function ProfileCard(props: {
     const refBackground = useRef<HTMLInputElement | null>(null);
 
     const [ updateUser ] = useUserUpdateMutation();
-    const [ switchSubscription ] = useUserSwitchSubscriptionMutation({
-        variables: {
-            input: {
-                subscriberId: user?._id as string,
-                userId,
-            }
-        }
-    });
+    const [ switchSubscription ] = useUserSwitchSubscriptionMutation();
 
     const { data } = useUserSuspenseQuery({
         variables: {
@@ -84,7 +77,16 @@ export default function ProfileCard(props: {
 
     const handleSubscriptionChange = () => {
         enqueueSnackbar("Processing...", {autoHideDuration: 1500});
-        switchSubscription().then(data => {
+        switchSubscription(
+            {
+                variables: {
+                    input: {
+                        subscriberId: user?._id as string,
+                        userId,
+                    }
+                }
+            }
+        ).then(data => {
             //console.log(data);
             enqueueSnackbar("Done", {autoHideDuration: 2000, variant: 'success'});
         }).catch(_ => {
@@ -112,8 +114,8 @@ export default function ProfileCard(props: {
                 return;
             }
             
-            if ((imageType == "avatar" && data?.user.avatar) || (imageType == "background" && data?.user.background))  {
-                await fetch(`/api/files?file=${imageType == "avatar" ? data.user.avatar.split('_')[0] : data.user.background.split('_')[0]}`, { method: "DELETE" })
+            if ((imageType == "avatar" && data?.user?.avatar) || (imageType == "background" && data?.user?.background))  {
+                await fetch(`/api/files?file=${imageType == "avatar" ? data?.user?.avatar?.split('_')[0] : data?.user?.background?.split('_')[0]}`, { method: "DELETE" })
                     .catch(console.log);
             }
             
@@ -194,24 +196,24 @@ export default function ProfileCard(props: {
             />
             <div className={`m-2 mt-6 md:m-4 mb-0 card w-full text-base-content rounded-2xl md:rounded-2xl shadow-2xl bg-base-300`}>
                 <figure className="max-h-48">
-                    <Image width={1000} height={400} className="w-full" src={data?.user.background ? getIpfsUrl(data.user.background) : '/assets/bgs/clear.png'} alt="background"/>
+                    <Image width={1000} height={400} className="w-full" src={data?.user?.background ? getIpfsUrl(data.user.background) : '/assets/bgs/clear.png'} alt="background"/>
                 </figure>
                    
                 <div className="card-body flex flex-col  gap-5">
                     <div className="avatar flex justify-center">
                         <div className="w-32 h-32 mask mask-hexagon">
                             
-                            <Image width={400} height={400} src={data?.user.avatar ? getIpfsUrl(data.user.avatar) : '/assets/bgs/clear.png'} alt="avatar" />
+                            <Image width={400} height={400} src={data?.user?.avatar ? getIpfsUrl(data.user.avatar) : '/assets/bgs/clear.png'} alt="avatar" />
                                
                         </div>
                     </div>
                     <div>
                         <h2 className="card-title flex flex-col md:flex-row justify-center items-center mb-2">
-                            {data?.user.nick}
-                            <div className="badge  bg-[#1ba39c] text-base-content">{data?.user.subscribers?.length} {dictionary.common["profile-card"].followers}</div>
-                            <div className="badge ">{data?.user.subscribedOn?.length} {dictionary.common["profile-card"].following}</div>
+                            {data?.user?.nick}
+                            <div className="badge  bg-[#1ba39c] text-base-content">{data?.user?.subscribers?.length} {dictionary.common["profile-card"].followers}</div>
+                            <div className="badge ">{data?.user?.subscribedOn?.length} {dictionary.common["profile-card"].following}</div>
                         </h2>
-                        <p className="mt-3 md:mt-0 text-center">{data?.user.description}</p>
+                        <p className="mt-3 md:mt-0 text-center">{data?.user?.description}</p>
                         <div className="card-actions justify-start mt-3">
                             {
                                 !isEditable
@@ -220,10 +222,10 @@ export default function ProfileCard(props: {
                                     {
                                         isMounted &&
                                         (() => {
-                                            if (data?.user._id == user?._id) {
+                                            if (data?.user?._id == user?._id) {
                                                 return;
                                             } else {
-                                                if (user?._id && data?.user.subscribers?.map(i => i._id)?.includes(user._id)) {
+                                                if (user?._id && data?.user?.subscribers?.map(i => i?._id)?.includes(user._id)) {
                                                     return (
                                                         <button className="btn btn-sm w-full bg-red-400/20  text-base-content" onClick={handleSubscriptionChange}>
                                                             <UserMinus/>
@@ -234,7 +236,7 @@ export default function ProfileCard(props: {
                                                     return (
                                                         <button className="btn btn-sm w-full bg-green-400/20 text-base-content" onClick={handleSubscriptionChange}>
                                                             <UserPlus/>
-                                                            {dictionary.common["profile-card"].follow} ({data?.user.subscribers?.length})
+                                                            {dictionary.common["profile-card"].follow} ({data?.user?.subscribers?.length})
                                                         </button>
                                                         
                                                     );

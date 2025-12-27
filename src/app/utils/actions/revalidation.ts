@@ -1,10 +1,6 @@
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
-
-export async function revalidateTagAction(tag: string) {
-    revalidateTag(tag);
-}
+import { revalidatePath } from "next/cache";
 
 export async function revalidatePathAction(path: string, type: "page" | "layout") {
     revalidatePath(path, type);

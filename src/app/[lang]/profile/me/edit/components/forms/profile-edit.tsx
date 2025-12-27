@@ -195,7 +195,7 @@ export default function ProfileEditForm(props: {
         await prepareLinkEmail({
             variables: {
                 input: {
-                    userId: userData?.user._id as string,
+                    userId: userData?.user?._id as string,
                     email: data.newEmail,
                 }
             }
@@ -311,7 +311,7 @@ export default function ProfileEditForm(props: {
                 <>
                     {
                         (() => {
-                            if (!userData?.user.local?.email) {
+                            if (!userData?.user?.local?.email) {
                                 return (
                                     <>
                                         <label className="label">
@@ -390,7 +390,7 @@ export default function ProfileEditForm(props: {
                 <>
                     {
                         (() => {
-                            if (!userData?.user.local?.email) {
+                            if (!userData?.user?.local?.email) {
                                 return (
                                     <>
                                         <label className="label">
@@ -442,11 +442,11 @@ export default function ProfileEditForm(props: {
                 
                 <div className="flex w-full flex-wrap gap-4">
                     <div className="join join-horizontal w-full">
-                        <Link href={envCfg.twitterAuthURL as string} className={`btn w-[calc(100%-60px)] join-item text-base-content  hover:bg-black ${userData?.user.twitter?.name && 'bg-black'}`}>
+                        <Link href={envCfg.twitterAuthURL as string} className={`btn w-[calc(100%-60px)] join-item text-base-content  hover:bg-black ${userData?.user?.twitter?.name && 'bg-black'}`}>
                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
                                 <path fill="#212121" fillRule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clipRule="evenodd"></path><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"></path><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"></polygon><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"></polygon>
                             </svg>
-                            {userData?.user.twitter?.name ? userData.user.twitter.name : dictionary.forms["profile-edit"]["connect-twitter"]}
+                            {userData?.user?.twitter?.name ? userData.user.twitter.name : dictionary.forms["profile-edit"]["connect-twitter"]}
                         </Link>
                         <button disabled={buttonMustBeDisabled(userData as UserQuery).twitter} className="btn btn-error join-item text-base-300 w-[60px]" onClick={handleUnlinkTwitter}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -456,7 +456,7 @@ export default function ProfileEditForm(props: {
                     </div>
                     
                     <div className="join join-horizontal w-full">
-                        <Link href={envCfg.googleAuthURL as string} className={`btn w-[calc(100%-60px)] join-item  hover:bg-white hover:text-black ${userData?.user.google?.email ? 'bg-white/80 text-black' : 'text-base-content hover:text-black'}`}>
+                        <Link href={envCfg.googleAuthURL as string} className={`btn w-[calc(100%-60px)] join-item  hover:bg-white hover:text-black ${userData?.user?.google?.email ? 'bg-white/80 text-black' : 'text-base-content hover:text-black'}`}>
                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -464,7 +464,7 @@ export default function ProfileEditForm(props: {
                                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                                 <path d="M1 1h22v22H1z" fill="none"/>
                             </svg>
-                            {userData?.user.google?.email ? userData.user.google?.email : dictionary.forms["profile-edit"]["connect-google"]}
+                            {userData?.user?.google?.email ? userData.user.google?.email : dictionary.forms["profile-edit"]["connect-google"]}
                         </Link>
                         <button disabled={buttonMustBeDisabled(userData as UserQuery).google} className="btn btn-error join-item text-base-300 w-[60px]" onClick={handleUnlinkGoogle}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -474,7 +474,7 @@ export default function ProfileEditForm(props: {
                     </div>
 
                     <div className="join join-horizontal w-full">
-                        <Link tabIndex={undefined} href={envCfg.facebookAuthURL as string} className={`btn w-[calc(100%-60px)] join-item  text-base-content hover:bg-blue-500 ${userData?.user.facebook?.name && 'bg-blue-500'}`}>
+                        <Link tabIndex={undefined} href={envCfg.facebookAuthURL as string} className={`btn w-[calc(100%-60px)] join-item  text-base-content hover:bg-blue-500 ${userData?.user?.facebook?.name && 'bg-blue-500'}`}>
                             <svg fill="#0091ff" height="25px" width="25px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310" stroke="#0091ff">
                             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                             <g id="SVGRepo_iconCarrier"> 
@@ -484,7 +484,7 @@ export default function ProfileEditForm(props: {
                                 </g> 
                                 </g>
                             </svg>
-                            { userData?.user.facebook?.name ? userData.user.facebook?.name : dictionary.forms["profile-edit"]["connect-facebook"] }
+                            { userData?.user?.facebook?.name ? userData.user.facebook?.name : dictionary.forms["profile-edit"]["connect-facebook"] }
                         </Link>
                         <button disabled={buttonMustBeDisabled(userData as UserQuery).facebook} className="btn btn-error join-item text-base-300 w-[60px]" onClick={handleUnlinkFacebook}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">

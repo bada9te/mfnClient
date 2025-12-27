@@ -16,7 +16,7 @@ export default function BattleContainer({id, dictionary}: {id: string, dictionar
     return (
         <>
             {
-                data?.battleById._id
+                data?.battleById?._id
                 ?
                 <Battle battleData={data.battleById as TBattle} dictionary={dictionary}/>
                 :

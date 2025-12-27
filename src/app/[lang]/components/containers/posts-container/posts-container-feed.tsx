@@ -21,7 +21,7 @@ export default function PostsContainerFeed(props: TPaginationProps & { dictionar
         <>
             <RefreshButtonPerContainer handleClick={() => refetch({offset, limit})} dictionary={dictionary}/>
             {
-                data?.posts.posts?.length
+                data?.posts?.posts?.length
                 ?
                 <>
                     {

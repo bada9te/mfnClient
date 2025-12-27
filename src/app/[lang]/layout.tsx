@@ -9,14 +9,12 @@ import WeAreUsingCookiesModal from "./components/cookie-info-modal";
 import AlternativeAppbar from "@/app/[lang]/components/bars/alternative-appbar";
 import PlayerModal from "./components/modals/player-modal";
 
-export default async function RootLayout({
-  children,
-  params
-}: Readonly<{
-  children: React.ReactNode;
-  params: {lang: TLang}
-}>) {
-    const dict = await getDictionary(params.lang)
+export default async function LangAppLayout({
+    children,
+    params,
+}: React.PropsWithChildren<LayoutProps<'/[lang]'>>) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang as TLang);
   return (
     <div className="min-h-screen flex flex-col">
         {/* AppBar */}
@@ -24,7 +22,7 @@ export default async function RootLayout({
             {/* AppBar content goes here */}
             <AppBar dictionary={dict.components}/>
         </div>
-            
+
         {/* Grid layout */}
         <div className="flex-1 grid grid-cols-[auto_1fr_auto] lg:grid-cols-[320px_auto_120px] grid-rows-1 overflow-hidden">
             {/* Left sidebar (hidden on smaller screens) */}
@@ -40,7 +38,7 @@ export default async function RootLayout({
             <div className="col-start-2 col-end-3 flex-1">
                 <div className="card w-full my-14 lg:my-2">
                     <div className="card-body p-0 gap-0">
-                        <NextTopLoader 
+                        <NextTopLoader
                             color="#fff"
                             initialPosition={0.18}
                             crawlSpeed={200}
@@ -57,7 +55,7 @@ export default async function RootLayout({
                     </div>
                 </div>
             </div>
-            
+
             {/* Right sidebar (hidden on smaller screens) */}
             <div className="hidden lg:block col-start-3 col-end-4">
                 <div className="card w-[100px] h-screen fixed">

@@ -29,9 +29,9 @@ export default function AchievementsContainer(props: {userId: string}) {
                 achievements?.allAchievements?.map((i, key) => {
                     return (
                         <Achievement 
-                            data={i} 
+                            data={i as any}
                             key={key} 
-                            isCompleted={Boolean(uuuuuuuu?.userAchievementsData?.achievements?.includes(Number(i.posNumber)))}
+                            isCompleted={Boolean(uuuuuuuu?.userAchievementsData?.achievements?.includes(Number(i?.posNumber)))}
                         />
                     );
                 })

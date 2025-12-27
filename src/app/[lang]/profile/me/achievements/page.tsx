@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 
 export default async function Challenges({params}: {params: {lang: TLang}}) {
-    const currentUserId = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
+    const currentUserId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(params.lang);
     return (
         <HeroWrapper

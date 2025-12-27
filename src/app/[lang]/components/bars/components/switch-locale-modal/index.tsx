@@ -8,7 +8,7 @@ import { setCookie, getCookie } from "cookies-next";
 import MainButton from "@/app/[lang]/components/common/main-button/main-button";
 import { X } from "lucide-react";
 
-export default function SwitchLocaleModal({button, dictionary}: {button: React.ReactElement; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
+export default function SwitchLocaleModal({button, dictionary}: {button: React.ReactElement<any>; dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]}) {
     const ref = useRef<HTMLDialogElement | null>(null);
     const [isMounted, setIsMounted] = useState(false);
     const [selectedLocale, setSelectedLocale] = useState("en");

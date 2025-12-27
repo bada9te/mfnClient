@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Notifications({params}: {params: { page: number, lang: TLang }}) {
-    const receiver = cookies().get(envCfg.userIdCookieKey as string)?.value as string;
+    const receiver = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(params.lang);
     return (
         <>

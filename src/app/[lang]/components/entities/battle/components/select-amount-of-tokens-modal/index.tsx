@@ -6,7 +6,7 @@ import { Wallet, X } from "lucide-react";
 
 
 export default function SelectAmountOfMFNTokens({button, type, handleClose, dictionary}: {
-    button: React.ReactElement, 
+    button: React.ReactElement<any>, 
     type: "post1Score" | "post2Score", 
     handleClose: (amount: number, type: "post1Score" | "post2Score") => void;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]

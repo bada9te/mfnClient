@@ -16,7 +16,7 @@ export default function AddToPlaylistModal({
     dictionary,
     postId,
 }: {
-    button: React.ReactElement; 
+    button: React.ReactElement<any>; 
     postId: string;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"];
 }) {

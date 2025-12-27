@@ -23,7 +23,7 @@ export default function PostsContainerProfile(props: TPaginationProps & { profil
         <>
             <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, owner: profileId})} dictionary={dictionary}/>
             {
-                data?.postsByOwner.posts?.length
+                data?.postsByOwner?.posts?.length
                 ?
                 <>
                     {

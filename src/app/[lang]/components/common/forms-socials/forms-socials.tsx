@@ -31,7 +31,10 @@ export default function FormsSocials({
         if (account.address) {
             const processSigning = async(msg: string) => {
                 try {
-                    const signHex = await signMessageAsync({ message: msg });
+                    const signHex = await signMessageAsync({
+                        account: account.address,
+                        message: msg
+                    });
                     httpWeb3Login(
                         account.address as string,
                         msg,

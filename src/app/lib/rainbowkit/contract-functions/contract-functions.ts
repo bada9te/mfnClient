@@ -7,7 +7,7 @@ export const generateDEFAULT_MFN_CONTRACT_CFG = (chainId: number) => {
         // @ts-ignore
         address: MFNAddresses[chainId],
         abi: mfnAbi,
-    }
+    } as any;
 }
 
 export const contractCreateBattle = async(
@@ -115,7 +115,7 @@ export const contractGetAllImportantDataForBattle = async(
                 args: [user, battleId, post2Id]
             }
         ],
-    });
+    } as any);
 
     return data;
 }

@@ -27,7 +27,7 @@ export default function NetworkInformation({
     USDC_decimals
 }: {
     networkName: string;
-    button: React.ReactElement; 
+    button: React.ReactElement<any>; 
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"];
     post1Title: string;
     post2Title: string;
@@ -127,7 +127,7 @@ export default function NetworkInformation({
                 battleId,
                 data.totalTokensPerPost1 > data.totalTokensPerPost2 ? post1Id : post2Id,
             ],
-        }).then(async hash => {
+        } as any).then(async hash => {
             enqueueSnackbar("Waiting for TX receipt...", { autoHideDuration: 2000 });
             await waitForTransactionReceipt(config, {
                 hash,

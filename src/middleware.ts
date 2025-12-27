@@ -16,9 +16,9 @@ let protectedRoutes = [
     '/profile/me',
 ];
 
-function getLocale(request: NextRequest) {
-    if (cookies().has("language")) {
-        const cookieLANG = cookies().get("language")?.value;
+async function getLocale(request: NextRequest) {
+    if ((await cookies()).has("language")) {
+        const cookieLANG = (await cookies()).get("language")?.value;
         if (locales.includes(cookieLANG as string)) {
             return cookieLANG;
         }
@@ -29,7 +29,7 @@ function getLocale(request: NextRequest) {
 }
 
 export async function middleware(request: NextRequest) {
-    const isLoggedIn = cookies().get(envCfg.userIdCookieKey as string)?.value;
+    const isLoggedIn = (await cookies()).get(envCfg.userIdCookieKey as string)?.value;
 
     const pathname = request.nextUrl.pathname;
 
@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
 
     // specify locale if not pre-defined
     if (!urlLocale) {
-        urlLocale = getLocale(request);
+        urlLocale = await getLocale(request);
     }
     if (!pathnameHasLocale) {
         request.nextUrl.pathname = `/${urlLocale}${pathname}`;

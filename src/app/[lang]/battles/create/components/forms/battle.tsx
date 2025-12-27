@@ -115,7 +115,7 @@ export default function BattleForm({
                         input.post2,
                         1,
                     ],
-                }).then(async(hash) => {
+                } as any).then(async(hash) => {
                     await waitForTransactionReceipt(config, {
                         hash,
                         confirmations: 2

@@ -12,7 +12,7 @@ export default function ReportModal({
     postId,
     dictionary
 }: {
-    button: React.ReactElement;
+    button: React.ReactElement<any>;
     postId: string;
     dictionary: Awaited<ReturnType<typeof getDictionary>>["components"]
 }) {

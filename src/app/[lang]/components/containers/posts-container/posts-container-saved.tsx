@@ -21,7 +21,7 @@ export default function PostsContainerSaved(props: TPaginationProps & { userId: 
         <>
             <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, user: userId})} dictionary={dictionary}/>
             {
-                data?.postsSavedByUser.posts?.length
+                data?.postsSavedByUser?.posts?.length
                 ?
                 <>
                     {

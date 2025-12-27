@@ -28,7 +28,7 @@ export default function NotificationsContainer(props: TPaginationProps & { check
         enqueueSnackbar("Deleting...", {autoHideDuration: 1500});
         deleteVisibleNotifications({
             variables: {
-                ids: data?.notifications.notifications?.map(i => i._id) as string[]
+                ids: data?.notifications?.notifications?.map(i => i?._id) as string[]
             }
         }).then(_ => {
             enqueueSnackbar("Visible notifications deleted", {autoHideDuration: 2000, variant: 'success'});
@@ -44,7 +44,7 @@ export default function NotificationsContainer(props: TPaginationProps & { check
         enqueueSnackbar("Processing...", {autoHideDuration: 1500});
         markVisibleNotificationsAsRead({
             variables: {
-                ids: data?.notifications.notifications?.map(i => i._id) as string[]
+                ids: data?.notifications?.notifications?.map(i => i?._id) as string[]
             }
         }).then(_ => {
             enqueueSnackbar("Visible notifications marked as read", {autoHideDuration: 2000, variant: 'success'});

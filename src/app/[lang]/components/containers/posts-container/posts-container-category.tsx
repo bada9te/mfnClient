@@ -20,7 +20,7 @@ export default function PostsContainerCategory(props: TPaginationProps & {catego
         <>
             <RefreshButtonPerContainer handleClick={() => refetch({offset, limit, category})} dictionary={dictionary}/>
             {
-                data?.postsByCategory.posts?.length
+                data?.postsByCategory?.posts?.length
                 ?
                 <>
                     {

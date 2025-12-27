@@ -1,6 +1,52 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* =========================
+   DaisyUI Theme: dim
+   ========================= */
+[data-theme="dim"] {
+  /* ---- Base colors (copied from dark theme, customize as needed) ---- */
+  --p: 172 66% 36%; /* primary */
+  --pf: 0 0% 100%;
+  --s: 0 0% 20%;
+  --sf: 0 0% 100%;
+  --a: 172 66% 36%;
+  --af: 0 0% 100%;
+  --n: 220 13% 18%;
+  --nf: 0 0% 100%;
+  --b1: 220 13% 18%;
+  --b2: 220 13% 15%;
+  --b3: 220 13% 12%;
+  --bc: 0 0% 100%;
+
+  /* ---- Custom hover background ---- */
+  --fallback-p: #1ba39c;
+}
+
+/* =========================
+   Component overrides
+   ========================= */
+[data-theme="dim"] .btn {
+  border-radius: 14px;
+}
+
+[data-theme="dim"] .btn-primary {
+  background-color: #1ca49e;
+  border-color: #1ca49e;
+  color: #fff;
+}
+
+[data-theme="dim"] .btn-primary:hover {
+  background-color: #3d3d3d;
+  border-color: #3d3d3d;
+  color: #fff;
+}
+
+[data-theme="dim"] .divider-primary::before,
+[data-theme="dim"] .divider-primary::after {
+  background-color: #1ba39c;
+}
+
 
 
 :root {

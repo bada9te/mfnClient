@@ -44,7 +44,14 @@ export default function PlayerTrackInfo({
             enqueueSnackbar("Not authenticated", {autoHideDuration: 1000});
             return;
         }
-        await switchLike();
+        await switchLike({
+            variables: {
+                input: {
+                    userId: user._id,
+                    postId: post?._id as string,
+                }
+            }
+        });
     }
 
     // on save click
@@ -53,7 +60,14 @@ export default function PlayerTrackInfo({
             enqueueSnackbar("Not authenticated", {autoHideDuration: 1000});
             return;
         }
-        await switchInSaved();
+        await switchInSaved({
+            variables: {
+                input: {
+                    userId: user._id,
+                    postId: post?._id as string,
+                }
+            }
+        });
     }
 
     useEffect(() => {
