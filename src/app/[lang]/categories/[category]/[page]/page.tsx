@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: 'Category',
 }
 
-export default async function Categories({params}: {params: {category: string, page: number, lang: TLang}}) {
+export default async function Categories({params}: {params: Promise<{category: string, page: number, lang: TLang}>}) {
     const {lang, page, category: categoryFromProps} = await params;
     let category = categoryFromProps.replaceAll('-', ' ');
     category = category.substring(0, 1).toUpperCase() + category.substring(1, category.length);

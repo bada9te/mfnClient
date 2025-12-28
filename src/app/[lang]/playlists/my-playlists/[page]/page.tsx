@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: 'My playlists',
 }
 
-export default async function Playlists({params}: {params: {page: number, lang: TLang}}) {
+export default async function Playlists({params}: {params: Promise<{page: number, lang: TLang}>}) {
     const {lang, page} = await params;
     const myId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(lang);

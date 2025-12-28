@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: 'Battle',
 }
 
-export default async function Battles({params}: {params: {id: string, lang: TLang}}) {
+export default async function Battles({params}: {params: Promise<{id: string, lang: TLang}>}) {
     const { lang, id } = await params;
     const dict = await getDictionary(lang);
     return (

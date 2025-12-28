@@ -10,7 +10,7 @@ import { deleteCookie } from "cookies-next";
 import { httpLogOut } from "@/app/utils/http-requests/auth";
 import { useAccount, useDisconnect } from "wagmi";
 
-export default function LogoutPage({params}: {params: {lang: TLang}}) {
+export default function LogoutPage({params}: {params: Promise<{lang: TLang}>}) {
     const router = useRouter();
     const account = useAccount();
     const { disconnect } = useDisconnect();

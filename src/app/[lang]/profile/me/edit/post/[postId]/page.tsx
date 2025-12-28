@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 }
 
 
-export default async function EditPost({params}: {params: {postId: string, lang: TLang}}) {
+export default async function EditPost({params}: {params: Promise<{postId: string, lang: TLang}>}) {
     const { lang, postId } = await params;
     const dict = await getDictionary(lang)
     return (

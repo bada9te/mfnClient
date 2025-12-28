@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: 'List of new tracks',
 }
 
-export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
+export default async function Feed({params}: {params: Promise<{ page: number, lang: TLang }>}) {
     const {lang, page} = await params;
     const dict = await getDictionary(lang);
     return (

@@ -9,13 +9,13 @@ export const metadata: Metadata = {
     description: 'Restore the account',
 }
 
-export default async function AccountRestore({params}: {params: {
+export default async function AccountRestore({params}: {params: Promise<{
     userId: string;
     actionId: string;
     verifyToken: string;
     type: string;
     lang: TLang;
-}}) {
+}>}) {
     const {lang, userId, actionId, verifyToken, type} = await params;
     const dict = await getDictionary(lang);
 

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description: 'The music-streaming platform',
 }
 
-export default async function Page({params}: {params: {lang: TLang}}) {
+export default async function Page({params}: {params: Promise<{lang: TLang}>}) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
     return (

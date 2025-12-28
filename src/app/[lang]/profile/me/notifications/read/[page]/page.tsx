@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: 'Reviewed notifications',
 }
 
-export default async function Notifications({params}: {params: { page: number, lang: TLang }}) {
+export default async function Notifications({params}: {params: Promise<{ page: number, lang: TLang }>}) {
     const {lang, page} = await params;
     const receiver = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(lang);

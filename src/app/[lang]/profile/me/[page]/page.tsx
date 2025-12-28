@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 }
 
 
-export default async function Profile({params}: {params: { page: number, lang: TLang }}) {
+export default async function Profile({params}: {params: Promise<{ page: number, lang: TLang }>}) {
     const {lang, page} = await params;
     const myId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(lang);

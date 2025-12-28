@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     description: 'Account verification',
 }
 
-export default async function EmailVerification({params}: {params: {lang: TLang}}) {
+export default async function EmailVerification({params}: {params: Promise<{lang: TLang}>}) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
     return (

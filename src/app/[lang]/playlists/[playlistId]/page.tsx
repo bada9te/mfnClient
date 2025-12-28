@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: 'Playlist',
 }
 
-export default async function Playlist({params}: {params: {playlistId: string, lang: TLang}}) {
+export default async function Playlist({params}: {params: Promise<{playlistId: string, lang: TLang}>}) {
     const { lang, playlistId } = await params;
     const dict = await getDictionary(lang);
     return (

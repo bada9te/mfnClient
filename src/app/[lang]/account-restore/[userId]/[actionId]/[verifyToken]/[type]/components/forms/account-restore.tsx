@@ -46,12 +46,12 @@ export default function AccountRestoreForm(props: {
                     newValue: data.newValue
                 },
             },
-        }).then(_ => {
+        }).then(() => {
             type == "link-email" && deleteCookie("link-email-request-value");
             reset();
             router.replace('/login');
             enqueueSnackbar("Done", { autoHideDuration: 4000, variant: 'success' });
-        }).catch(_ => {
+        }).catch(() => {
             enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 3000, variant: 'error' });
         }).finally(() => {
             setIsLoading(false);
@@ -69,11 +69,11 @@ export default function AccountRestoreForm(props: {
                     verifyToken,
                 }
             }
-        }).then(_ => {
+        }).then(() => {
             reset();
             router.replace('/login');
             enqueueSnackbar("Done", { autoHideDuration: 4000, variant: 'warning' });
-        }).catch(_ => {
+        }).catch(() => {
             enqueueSnackbar("Sth went wrong, pls try again later", { autoHideDuration: 3000, variant: 'error' });
         });
     }

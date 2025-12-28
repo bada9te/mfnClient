@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     description: 'Post creation',
 }
 
-export default async function UploadNewPost({params}: {params: {lang: TLang}}) {
+export default async function UploadNewPost({params}: {params: Promise<{lang: TLang}>}) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
     return (

@@ -2,14 +2,13 @@ import { HttpLink } from "@apollo/client";
 import {
   registerApolloClient,
   ApolloClient,
-    InMemoryCache
-} from "@apollo/experimental-nextjs-app-support";
+  InMemoryCache
+} from "@apollo/client-integration-nextjs";
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({
-    devtools: {
-      enabled: false,
-    },
+
+    devtools: { enabled: process.env.NODE_ENV === 'development' }, // optional
     cache: new InMemoryCache(),
     link: new HttpLink({
       // this needs to be an absolute url, as relative urls cannot be used in SSR
@@ -18,6 +17,7 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
       // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
       fetchOptions: { cache: "no-store",  },
       credentials: 'include',
+      fetch: fetch
     }),
   });
 });

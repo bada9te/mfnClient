@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: 'Feed',
 }
 
-export default async function Feed({params}: {params: { page: number, lang: TLang }}) {
+export default async function Feed({params}: {params: Promise<{ page: number, lang: TLang }>}) {
     const {lang, page} = await params;
     const userId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(lang);

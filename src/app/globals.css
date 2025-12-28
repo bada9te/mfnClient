@@ -18,9 +18,8 @@
 }
 
 html {
-
   background-size: 240% 240%;
-  animation: gradient-animation 60s ease infinite;
+
   transition: all .1s;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -69,18 +68,6 @@ body {
   .main-layout-card {
     height: calc(100vh - 125px);
     max-height: calc(100vh - 125px);
-  }
-  
-  @keyframes gradient-animation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
   }
   
   .btm-nav > *:where(.active) {

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: 'Profile edit',
 }
 
-export default async function EditProfile({params}: {params: {lang: TLang}}) {
+export default async function EditProfile({params}: {params: Promise<{lang: TLang}>}) {
     const { lang } = await params;
     const myId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(lang);

@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     description: 'The list of challenges',
 }
 
-export default async function Challenges({params}: {params: {id: string, lang: TLang}}) {
-    const { lang } = await params;
+export default async function Challenges({params}: {params: Promise<{id: string, lang: TLang}>}) {
+    const { lang, id } = await params;
     const dict = await getDictionary(lang);
     return (
         <HeroWrapper

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: 'Post',
 }
 
-export default async function PostPage({params}: {params: {id: string, owner: string, lang: TLang}}) {
+export default async function PostPage({params}: {params: Promise<{id: string, owner: string, lang: TLang}>}) {
     const {lang, id, owner} = await params;
     const dict = await getDictionary(lang);
     return (

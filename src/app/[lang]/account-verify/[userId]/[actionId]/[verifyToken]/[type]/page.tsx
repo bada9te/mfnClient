@@ -9,13 +9,13 @@ export const metadata: Metadata = {
     description: 'Account verification',
 }
 
-export default async function AccountVerify({params}: {params: {
+export default async function AccountVerify({params}: {params: Promise<{
     userId: string;
     actionId: string;
     verifyToken: string;
     type: string;
     lang: TLang;
-}}) {
+}>}) {
     const { lang, ...rest } = await params;
     const dict = await getDictionary(lang);
     return (

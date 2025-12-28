@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description: 'Battles in progress',
 }
 
-export default async function Battles({params}: {params: {page: number, lang: TLang}}) {
+export default async function Battles({params}: {params: Promise<{page: number, lang: TLang}>}) {
     const { lang, page } = await params;
     const dict = await getDictionary(lang);
     return (

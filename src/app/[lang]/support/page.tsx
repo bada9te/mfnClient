@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     description: 'Support',
 }
 
-export default async function Support({params}: {params: {lang: TLang}}) {
+export default async function Support({params}: {params: Promise<{lang: TLang}>}) {
     const { lang } = await params;
     const dict = await getDictionary(lang)
     return (

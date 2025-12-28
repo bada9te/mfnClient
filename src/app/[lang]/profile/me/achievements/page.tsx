@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 }
 
 
-export default async function Challenges({params}: {params: {lang: TLang}}) {
+export default async function Challenges({params}: {params: Promise<{lang: TLang}>}) {
     const { lang } = await params;
     const currentUserId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;
     const dict = await getDictionary(lang);

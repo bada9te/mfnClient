@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description: 'Profile',
 }
 
-export default async function ProfileId({params}: {params: {page: number, id: string, lang: TLang}}) {
+export default async function ProfileId({params}: {params: Promise<{page: number, id: string, lang: TLang}>}) {
     const {lang, page, id} = await params;
     const dict = await getDictionary(lang);
     return (

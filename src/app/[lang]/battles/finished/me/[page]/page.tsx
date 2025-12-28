@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: 'Finished battles',
 }
 
-export default async function Battles({params}: {params: {page: number, lang: TLang}}) {
+export default async function Battles({params}: {params: Promise<{page: number, lang: TLang}>}) {
     const {lang, page} = await params;
     const dict = await getDictionary(lang);
     const myId = (await cookies()).get(envCfg.userIdCookieKey as string)?.value as string;

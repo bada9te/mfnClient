@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     description: 'Start the new journey',
 }
 
-export default async function Register({params}: {params: {lang: TLang}}) {
+export default async function Register({params}: {params: Promise<{lang: TLang}>}) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
     return (
